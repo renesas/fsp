@@ -1080,8 +1080,15 @@ void spi_b_tei_isr (void)
     {
         R_BSP_IrqDisable(irq);
 
+        /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
+         * (See Section 38.2.1 SPI Control Register in the RA6T2 manual R01UH0886EJ0100). */
+        R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+
         /* Disable the SPI Transfer. */
         p_ctrl->p_regs->SPCR_b.SPE = 0;
+
+        /* Re-enable the TXI IRQ and clear the pending IRQ. */
+        R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
 
         /* Signal that a transfer has completed. */
         r_spi_b_call_callback(p_ctrl, SPI_EVENT_TRANSFER_COMPLETE);
@@ -1102,8 +1109,15 @@ void spi_b_eri_isr (void)
     IRQn_Type               irq    = R_FSP_CurrentIrqGet();
     spi_b_instance_ctrl_t * p_ctrl = (spi_b_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
+    /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
+     * (See Section 38.2.1 SPI Control Register in the RA6T2 manual R01UH0886EJ0100). */
+    R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+
     /* Disable the SPI Transfer. */
     p_ctrl->p_regs->SPCR_b.SPE = 0;
+
+    /* Re-enable the TXI IRQ and clear the pending IRQ. */
+    R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
 
     /* Read the status register. */
     uint32_t status = p_ctrl->p_regs->SPSR;

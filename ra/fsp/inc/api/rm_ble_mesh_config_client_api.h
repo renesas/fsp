@@ -22,11 +22,11 @@
 #define RM_BLE_MESH_CONFIG_CLIENT_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_CONFIG_CLIENT_API BLE Mesh Model Configuration Client Interface
- * @brief Interface for Bluetooth Low Energy Mesh Model Configuration Client functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_CONFIG_CLIENT_API BLE Mesh Model Configuration Client Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Model Configuration Client functions.
  *
- * @section RM_BLE_MESH_CONFIG_CLIENT_API_Summary Summary
+ * @section   RM_BLE_MESH_CONFIG_CLIENT_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Configuration Client (BLE MESH MODEL CONFIG CLIENT) middleware provides Bluetooth Low Energy Mesh Model Configuration Client functionality.
  *
  * The Bluetooth Low Energy Mesh Model Configuration Client interface can be implemented by:
@@ -121,7 +121,7 @@ typedef struct st_rm_ble_mesh_config_client_api
      * @param[in]  p_parameter  Pointer to parameter associated with Request Opcode.
      * @param[in]  rsp_opcode   Response Opcode.
      */
-    fsp_err_t (* sendReliablePdu)(rm_ble_mesh_config_client_ctrl_t * const p_ctrl,
+    fsp_err_t (* sendReliablePdu)(rm_ble_mesh_config_client_ctrl_t * const p_ctrl,      ///< Pointer to control structure.
                                   uint32_t                                 req_opcode,  ///< Request opcode.
                                   void const * const                       p_parameter, ///< parameter associated with Request Opcode.
                                   uint32_t                                 rsp_opcode   ///< Response opcode.
@@ -131,9 +131,9 @@ typedef struct st_rm_ble_mesh_config_client_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_config_client_instance
 {
-    rm_ble_mesh_config_client_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_ble_mesh_config_client_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_config_client_api_t const * p_api;  ///< Pointer to the API structure for this instance
+    rm_ble_mesh_config_client_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_config_client_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_config_client_api_t const * p_api;  ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_config_client_instance_t;
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

@@ -29,6 +29,8 @@
  * The motor angle interface can be implemented by:
  * - @ref MOTOR_ESTIMATE
  * - @ref MOTOR_SENSE_ENCODER
+ * - @ref MOTOR_SENSE_INDUCTION
+ * - @ref MOTOR_SENSE_HALL
  *
  * @{
  **********************************************************************************************************************/
@@ -81,20 +83,47 @@ typedef struct st_motor_angle_voltage_reference
     float vq;                          ///< q-axis voltage reference
 } motor_angle_voltage_reference_t;
 
+/** A/D conversion data */
+typedef struct st_motor_angle_ad_data
+{
+    float sin_ad_data;                 ///< sin A/D data of induction sensor
+    float cos_ad_data;                 ///< cos A/D data of induction sensor
+} motor_angle_ad_data_t;
+
 /* encoder angle adjustment status */
 typedef enum e_motor_sense_encoder_angle_adjust
 {
     MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE = 1, ///< Roter Angle Adjustment to pull in 90degree
     MOTOR_SENSE_ENCODER_ANGLE_ADJUST_0_DEGREE,      ///< Roter Angle Adjustment to pull in 0degree
     MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH,        ///< Roter Angle Adjustment Finish
+    MOTOR_SENSE_ENCODER_ANGLE_ADJUST_OPENLOOP,      ///< Roter Angle Adjustment Finish
 } motor_sense_encoder_angle_adjust_t;
+
+/* openloop status to measure indcution sensor offset */
+typedef enum e_motor_angle_open_loop
+{
+    MOTOR_ANGLE_OPEN_LOOP_INACTIVE = 0, ///< Openloop inactive
+    MOTOR_ANGLE_OPEN_LOOP_ACTIVE,       ///< Openloop active
+} motor_angle_open_loop_t;
 
 /** Motor angle encoder adjustment info */
 typedef struct st_motor_angle_encoder_info
 {
     motor_sense_encoder_angle_adjust_t e_adjust_status; ///< Encoder Adjustment Status
     uint8_t u1_adjust_count_full;                       ///< Adjustment count became full
+
+    /* For induction sensor */
+    motor_angle_open_loop_t e_open_loop_status;         ///< Openloop status
+    float f_openloop_speed;                             ///< Openloop speed
+    float f_openloop_id_ref;                            ///< Openloop d-axis current
 } motor_angle_encoder_info_t;
+
+/** Flag for induction correction error status */
+typedef enum  e_motor_angle_error
+{
+    MOTOR_ANGLE_ERROR_NONE      = 0,   ///< No error happen
+    MOTOR_ANGLE_ERROR_INDUCTION = 1,   ///< Error happens in induction sensor correction process
+} motor_angle_error_t;
 
 /** Functions implemented as application interface will follow these APIs. */
 typedef struct st_motor_angle_api
@@ -103,6 +132,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_Open()
      * - @ref RM_MOTOR_SENSE_ENCODER_Open()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_Open()
+     * - @ref RM_MOTOR_SENSE_HALL_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -113,6 +144,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_Close()
      * - @ref RM_MOTOR_SENSE_ENCODER_Close()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_Close()
+     * - @ref RM_MOTOR_SENSE_HALL_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -122,6 +155,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_Reset()
      * - @ref RM_MOTOR_SENSE_ENCODER_Reset()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_Reset()
+     * - @ref RM_MOTOR_SENSE_HALL_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -131,6 +166,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_CurrentSet()
      * - @ref RM_MOTOR_SENSE_ENCODER_CurrentSet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_CurrentSet()
+     * - @ref RM_MOTOR_SENSE_HALL_CurrentSet()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  p_st_current   Pointer to current structure
@@ -143,6 +180,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_SpeedSet()
      * - @ref RM_MOTOR_SENSE_ENCODER_SpeedSet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_SpeedSet()
+     * - @ref RM_MOTOR_SENSE_HALL_SpeedSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  speed_ctrl   Control reference of rotational speed [rad/s]
@@ -154,6 +193,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_FlagPiCtrlSet()
      * - @ref RM_MOTOR_SENSE_ENCODER_FlagPiCtrlSet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_FlagPiCtrlSet()
+     * - @ref RM_MOTOR_SENSE_HALL_FlagPiCtrlSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  flag_pi      The flag of PI control runs
@@ -164,6 +205,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_InternalCalculate()
      * - @ref RM_MOTOR_SENSE_ENCODER_InternalCalculate()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_InternalCalculate()
+     * - @ref RM_MOTOR_SENSE_HALL_InternalCalculate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -173,6 +216,8 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_AngleSpeedGet()
      * - @ref RM_MOTOR_SENSE_ENCODER_AngleSpeedGet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_AngleSpeedGet()
+     * - @ref RM_MOTOR_SENSE_HALL_AngleSpeedGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_angl       Memory address to get rotor angle data
@@ -186,24 +231,50 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_AngleAdjust()
      * - @ref RM_MOTOR_SENSE_ENCODER_AngleAdjust()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_AngleAdjust()
+     * - @ref RM_MOTOR_SENSE_HALL_AngleAdjust()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* angleAdjust)(motor_angle_ctrl_t * const p_ctrl);
 
-    /** Encoder Cyclic Process.
+    /** DEPRECATED Encoder Cyclic Process.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_EncoderCyclic()
      * - @ref RM_MOTOR_SENSE_ENCODER_EncoderCyclic()
+     * - @ref RM_MOTOR_SENSE_HALL_EncoderCyclic()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* encoderCyclic)(motor_angle_ctrl_t * const p_ctrl);
 
+    /** Cyclic Process. please
+     * @par Implemented as
+     * - @ref RM_MOTOR_ESTIMATE_CyclicProcess()
+     * - @ref RM_MOTOR_SENSE_ENCODER_CyclicProcess()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_CyclicProcess()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* cyclicProcess)(motor_angle_ctrl_t * const p_ctrl);
+
+    /** Set sensor A/D data into the Motor_Angle.
+     * @par Implemented as
+     * - @ref RM_MOTOR_ESTIMATE_SensorDataSet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_SensorDataSet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_SensorDataSet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_ad_data    Pointer to A/D conversion data
+     */
+    fsp_err_t (* sensorDataSet)(motor_angle_ctrl_t * const p_ctrl, motor_angle_ad_data_t * const p_ad_data);
+
     /** Get estimated d/q-axis component from the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_EstimatedComponentGet()
      * - @ref RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_EstimatedComponentGet()
+     * - @ref RM_MOTOR_SENSE_HALL_EstimatedComponentGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_ed         Memory address to get estimated d-axis component
@@ -215,9 +286,11 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_InfoGet()
      * - @ref RM_MOTOR_SENSE_ENCODER_InfoGet()
+     * - @ref RM_MOTOR_SENSE_INDUCTION_InfoGet()
+     * - @ref RM_MOTOR_SENSE_HALL_InfoGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_info       Memory address to get encoder calculate information
+     * @param[out] p_info       Memory address to get angle internal information
      */
     fsp_err_t (* infoGet)(motor_angle_ctrl_t * const p_ctrl, motor_angle_encoder_info_t * const p_info);
 
@@ -225,6 +298,7 @@ typedef struct st_motor_angle_api
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_ParameterUpdate()
      * - @ref RM_MOTOR_SENSE_ENCODER_ParameterUpdate()
+     * - @ref RM_MOTOR_SENSE_HALL_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

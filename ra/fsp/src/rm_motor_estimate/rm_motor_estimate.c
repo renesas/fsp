@@ -74,6 +74,8 @@ const motor_angle_api_t g_motor_angle_on_motor_estimate =
     .angleAdjust           = RM_MOTOR_ESTIMATE_AngleAdjust,
     .encoderCyclic         = RM_MOTOR_ESTIMATE_EncoderCyclic,
     .infoGet               = RM_MOTOR_ESTIMATE_InfoGet,
+    .cyclicProcess         = RM_MOTOR_ESTIMATE_CyclicProcess,
+    .sensorDataSet         = RM_MOTOR_ESTIMATE_SensorDataSet,
 };
 
 /*******************************************************************************************************************//**
@@ -527,6 +529,31 @@ fsp_err_t RM_MOTOR_ESTIMATE_InfoGet (motor_angle_ctrl_t * const p_ctrl, motor_an
     FSP_PARAMETER_NOT_USED(p_info);
 
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Perform induction cyclic process. Implements @ref motor_angle_api_t::cyclicProcess
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ESTIMATE_CyclicProcess (motor_angle_ctrl_t * const p_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Set sensor data. Implements @ref motor_angle_api_t::sensorDataSet
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ESTIMATE_SensorDataSet (motor_angle_ctrl_t * const p_ctrl, motor_angle_ad_data_t * const p_ad_data)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_ad_data);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

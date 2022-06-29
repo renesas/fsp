@@ -22,12 +22,12 @@
 #define RM_BLE_MESH_PROVISION_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup  RENESAS_INTERFACES
  * @defgroup RM_BLE_MESH_PROVISION_API BLE Mesh Provision Interface
- * @brief Interface for Bluetooth Low Energy Mesh Provision functions.
+ * @brief    Interface for Bluetooth Low Energy Mesh Provision functions.
  *
  * @section RM_BLE_MESH_PROVISION_API_Summary Summary
- * The BLE Mesh Provision interface for the Bluetooth Low Energy Mesh Provision  (BLE MESH PROVISION) peripheral provides Bluetooth Low Energy Mesh Provision functionality.
+ * The BLE Mesh Provision interface for the Bluetooth Low Energy Mesh Provision (BLE MESH PROVISION) peripheral provides Bluetooth Low Energy Mesh Provision functionality.
  *
  * The Bluetooth Low Energy Mesh interface can be implemented by:
  * - @ref RM_BLE_MESH_PROVISION
@@ -51,7 +51,7 @@ FSP_HEADER
 
 /** Provisioning array size requirements */
 
-/** Provisioning key netkey size */
+/** Provisioning key NetKey size */
 #define RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE    16
 
 /** Provisioning OOB value size */
@@ -70,7 +70,7 @@ FSP_HEADER
 /** Handle to reference the active provisioning context */
 typedef uint8_t rm_ble_mesh_provision_handle_t;
 
-/** Provisiong Roles */
+/** Provisioning Roles */
 typedef enum e_rm_ble_mesh_provision_role
 {
     RM_BLE_MESH_PROVISION_ROLE_DEVICE      = 0x01, ///< Device role
@@ -128,10 +128,10 @@ typedef enum e_rm_ble_mesh_provision_output_oob_action
 /** Provisioning Input OOB action values */
 typedef enum e_rm_ble_mesh_provision_input_oob_action
 {
-    RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_PUSH         = (0), ///< Iuput OOB action push
+    RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_PUSH         = (0), ///< Input OOB action push
     RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_TWIST        = (1), ///< Input OOB action twist
-    RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_NUMERIC      = (2), ///< Iuput OOB action numeric
-    RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_ALPHANUMERIC = (3), ///< Iuput OOB action alphanumeric
+    RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_NUMERIC      = (2), ///< Input OOB action numeric
+    RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_ALPHANUMERIC = (3), ///< Input OOB action alphanumeric
 } rm_ble_mesh_provision_input_oob_action_t;
 
 /** Specification defined transport Opcodes for PB-ADV bearer */
@@ -174,16 +174,16 @@ typedef enum e_rm_ble_mesh_provision_error_code
 /** Provisioning LinkClose Error codes */
 typedef enum e_rm_ble_mesh_provision_link_close_reason
 {
-    RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_SUCCESS = 0x00, ///< Linkclose error code reason success
-    RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_TIMEOUT = 0x01, ///< Linkclose error code reason timeout
-    RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_FAIL    = 0x02, ///< Linkclose error code reason fail
+    RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_SUCCESS = 0x00, ///< Link close error code reason success
+    RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_TIMEOUT = 0x01, ///< Link close error code reason timeout
+    RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_FAIL    = 0x02, ///< Link close error code reason fail
 } rm_ble_mesh_provision_link_close_reason_t;
 
 /** Provisioning OOB type masks for ADV data */
 typedef enum e_rm_ble_mesh_provision_oob_type
 {
     RM_BLE_MESH_PROVISION_OOB_TYPE_OTHER          = (1 << 0),  ///< Other OOB type mask
-    RM_BLE_MESH_PROVISION_OOB_TYPE_URI            = (1 << 1),  ///< Uri OOB type mask
+    RM_BLE_MESH_PROVISION_OOB_TYPE_URI            = (1 << 1),  ///< URI OOB type mask
     RM_BLE_MESH_PROVISION_OOB_TYPE_2DMRC          = (1 << 2),  ///< 2DMRC OOB type mask
     RM_BLE_MESH_PROVISION_OOB_TYPE_BARCODE        = (1 << 3),  ///< Bar code OOB type mask
     RM_BLE_MESH_PROVISION_OOB_TYPE_NFC            = (1 << 4),  ///< NFC OOB type mask
@@ -208,17 +208,16 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * with the following values as parameters in the
      * @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_UNPROVISIONED_BEACON.
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_UNPROVISIONED_BEACON.
      * @param [in] event_result
-     * @param [in] event_data Pointer to the array with the UUID of the device.
-     * @param [in] event_datalen RM_BLE_MESH_DEVICE_UUID_SIZE
+     * @param [in] event_data     Pointer to the array with the UUID of the device.
+     * @param [in] event_datalen  RM_BLE_MESH_DEVICE_UUID_SIZE
      *
      * \note This event is received by the Provisioner application. On reception of
      * this event, the application shall make use of the RM_BLE_MESH_PROVISION_Bind() to initiate
      * the provisioning procedure.
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_UNPROVISIONED_BEACON = 0x01,
 
@@ -227,21 +226,20 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * complete, with the following values as parameters in the
      * @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data When local provisioner, this contains peer device
-     * capabilities and when local device, this contains the attention timeout
-     * value.
-     * @param [in] event_datalen When local provisioner, sizeof(@ref
-     * rm_ble_mesh_provision_capabilities_t) and when local device, sizeof(uint32_t).
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     When local provisioner, this contains peer device
+     *                            capabilities and when local device,
+     *                            this contains the attention timeout value.
+     * @param [in] event_datalen  When local provisioner,
+     *                            sizeof(@ref rm_ble_mesh_provision_capabilities_t)
+     *                            and when local device, sizeof(uint32_t).
      *
      * \note When local provisioner, the appliation shall select the required
      * capability from the received capabilities and choose to start the procedure
-     * by calling @ref RM_BLE_MESH_PROVISION_SendPdu() put RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP as the third argument..
+     * by calling @ref RM_BLE_MESH_PROVISION_SendPdu() put RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP as the third argument.
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP = 0x02,
 
@@ -249,14 +247,12 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * This event indicates to the application the OOB random data that is to be
      * displayed on the UI via the @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_DISPLAY.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data Pointer to OOB information as in @ref rm_ble_mesh_provision_oob_info_t.
-     * @param [in] event_datalen sizeof (@ref rm_ble_mesh_provision_oob_info_t).
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_DISPLAY.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     Pointer to OOB information as in @ref rm_ble_mesh_provision_oob_info_t.
+     * @param [in] event_datalen  sizeof (@ref rm_ble_mesh_provision_oob_info_t).
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_DISPLAY = 0x03,
 
@@ -264,14 +260,12 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * This event indicates to the application requesting for OOB random data that
      * is to be used in the procedure via the @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_ENTRY.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data Pointer to OOB information as in @ref rm_ble_mesh_provision_oob_info_t.
-     * @param [in] event_datalen sizeof (@ref rm_ble_mesh_provision_oob_info_t).
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_ENTRY.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     Pointer to OOB information as in @ref rm_ble_mesh_provision_oob_info_t.
+     * @param [in] event_datalen  sizeof (@ref rm_ble_mesh_provision_oob_info_t).
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_ENTRY = 0x04,
 
@@ -280,16 +274,14 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * Input of OOB when this capability is negotiated via the
      * @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_DEVINPUT_COMPLETE.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data NULL.
-     * @param [in] event_datalen 0.
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_DEVINPUT_COMPLETE.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     NULL.
+     * @param [in] event_datalen  0.
      *
      * \note This event is generated only for the provisioner application.
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_DEVINPUT_COMPLETE = 0x05,
 
@@ -297,16 +289,14 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * This event indicates to the application requesting for Provisional data to be
      * sent to the peer device via the @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO_REQ.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data NULL.
-     * @param [in] event_datalen 0.
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO_REQ.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     NULL.
+     * @param [in] event_datalen  0.
      *
      * \note This event is generated only for the provisioner application.
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO_REQ = 0x06,
 
@@ -314,16 +304,14 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * This event indicates to the application the Provisional data received
      * from the Provisioner via the @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data Pointer to the provisioning data @ref rm_ble_mesh_provision_data_t.
-     * @param [in] event_datalen sizeof(@ref rm_ble_mesh_provision_data_t).
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     Pointer to the provisioning data @ref rm_ble_mesh_provision_data_t.
+     * @param [in] event_datalen  sizeof(@ref rm_ble_mesh_provision_data_t).
      *
      * \note This event is generated only for the device application.
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO = 0x07,
 
@@ -331,14 +319,12 @@ typedef enum e_rm_ble_mesh_provision_event_type
      * This event indicates to the application that the provisioning procedure
      * is complete via the @ref rm_ble_mesh_provision_callback_args_t callback.
      *
-     * @param [in] phandle Pointer to the Provisioning context handle
-     * @param [in] event_type @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_COMPLETE.
-     * @param [in] event_result  FSP_SUCCESS on successful procedure completion, else
-     * an Error Code.
-     * @param [in] event_data NULL.
-     * @param [in] event_datalen 0.
+     * @param [in] phandle        Pointer to the Provisioning context handle
+     * @param [in] event_type     @ref RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_COMPLETE.
+     * @param [in] event_result   FSP_SUCCESS on successful procedure completion, else an Error Code.
+     * @param [in] event_data     NULL.
+     * @param [in] event_datalen  0.
      *
-     * @return FSP_SUCCESS (always)
      */
     RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_COMPLETE = 0x08,
 } rm_ble_mesh_provision_event_type_t;
@@ -407,7 +393,7 @@ typedef struct st_rm_ble_mesh_provision_method
     rm_ble_mesh_provision_oob_info_t oob;
 } rm_ble_mesh_provision_method_t;
 
-/** Data exchanged during Provisiong procedure */
+/** Data exchanged during Provisioning procedure */
 typedef struct st_rm_ble_mesh_provision_data
 {
     /** NetKey */
@@ -417,7 +403,7 @@ typedef struct st_rm_ble_mesh_provision_data
     uint16_t keyid;
 
     /**
-     * Flags bitmask
+     * Flags bit-mask
      * bit 0: Key Refresh Flag.
      *        0: Not-In-Phase2
      *        1: In-Phase2
@@ -466,7 +452,7 @@ typedef struct st_rm_ble_mesh_provision_cfg
     uint32_t channel;                                                    ///< Select a channel corresponding to the channel number of the hardware.
     rm_ble_mesh_provision_capabilities_t * p_capabilities;               ///< Device capabilities used for Provisioning
     rm_ble_mesh_instance_t const         * p_mesh_instance;              ///< Instance structure of BLE Mesh
-    void (* p_callback)(rm_ble_mesh_provision_callback_args_t * p_args); ///< Callback.
+    void (* p_callback)(rm_ble_mesh_provision_callback_args_t * p_args); ///< Callback function.
     void const * p_context;                                              ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                               ///< Placeholder for user extension.
 } rm_ble_mesh_provision_cfg_t;
@@ -478,8 +464,8 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - RM_BLE_MESH_PROVISION_Open()
      *
-     * @param [in]  p_ctrl       Pointer to control structure.
-     * @param [in]  p_cfg        Pointer to pin configuration structure.
+     * @param [in]  p_ctrl  Pointer to control structure.
+     * @param [in]  p_cfg   Pointer to pin configuration structure.
      */
     fsp_err_t (* open)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, rm_ble_mesh_provision_cfg_t const * const p_cfg);
 
@@ -487,7 +473,7 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_Close()
      *
-     * @param [in] p_ctrl  Pointer to control structure.
+     * @param [in]  p_ctrl  Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_provision_ctrl_t * const p_ctrl);
 
@@ -495,12 +481,10 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_Setup()
      *
-     * @param [in] p_ctrl   Pointer to control structure.
-     * @param [in] role     Provisioniong role to be setup - Device or Provisioner.
-     * @param [in] info     Device information.
-     * @param [in] timeout  The time period for which the setup shall be active.
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl   Pointer to control structure.
+     * @param [in]  role     Provisioning role to be setup - Device or Provisioner.
+     * @param [in]  info     Device information.
+     * @param [in]  timeout  The time period for which the setup shall be active.
      */
     fsp_err_t (* setup)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, rm_ble_mesh_provision_role_t role,
                         rm_ble_mesh_provision_device_info_t info, uint16_t timeout);
@@ -509,16 +493,13 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_Bind()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     * @param [in] info      Device information.
-     * @param [in] attention The attention duration in seconds to be configured by the device.
-     *                       This parameter is dont care if the role is RM_BLE_MESH_PROVISION_ROLE_DEVICE.
-     * @param [out] p_handle Pointer to handle.
+     * @param [in]  p_ctrl     Pointer to control structure.
+     * @param [in]  info       Device information.
+     * @param [in]  attention  Attention duration.
+     * @param [out] p_handle   Pointer to handle.
      *
      * @note This API is for use by the Provisioner application only upon
      *  reception of an Unprovisioned Device Beacon.
-     *
-     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* bind)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, rm_ble_mesh_provision_device_info_t info,
                        uint8_t attention, rm_ble_mesh_provision_handle_t * const p_handle);
@@ -527,29 +508,25 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_SendPdu()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     * @param [in] p_handle  Pointer to provisioning context to be used.
-     * @param [in] type Following PDU types are handled -
-     *                  PROV_PDU_TYPE_START
-     *                  PROV_PDU_TYPE_INPUT_CMPLT
-     *                  PROV_PDU_TYPE_DATA
-     * @param [in] pdu_data  Pointer to the data corresponding to the above PDUs
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl    Pointer to control structure.
+     * @param [in]  p_handle  Pointer to provisioning context to be used.
+     * @param [in]  type      Following PDU types are handled -
+     *                         @ref RM_BLE_MESH_PROVISION_PDU_TYPE_START
+     *                         @ref RM_BLE_MESH_PROVISION_PDU_TYPE_INPUT_COMPLETE
+     *                         @ref RM_BLE_MESH_PROVISION_PDU_TYPE_DATA
+     * @param [in]  pdu_data  Pointer to the data corresponding to the above PDUs.
      */
     fsp_err_t (* sendPdu)(rm_ble_mesh_provision_ctrl_t * const p_ctrl,
                           rm_ble_mesh_provision_handle_t const * const p_handle, rm_ble_mesh_provision_pdu_type_t type,
                           rm_ble_mesh_buffer_t pdu_data);
 
-    /** Set the display authval.
+    /** Set the display Auth-Value.
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_SetAuthVal()
      *
-     * @param [in] p_ctrl     Pointer to control structure.
-     * @param [in] p_handle   Pointer to provisioning context to be used.
-     * @param [in] auth_value The buffer structure that is stored authentication data and data size.
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl      Pointer to control structure.
+     * @param [in]  p_handle    Pointer to provisioning context to be used.
+     * @param [in]  auth_value  Pointer to the Authval (UINT32 *) or (uint8_t *).
      */
     fsp_err_t (* setAuthVal)(rm_ble_mesh_provision_ctrl_t * const p_ctrl,
                              rm_ble_mesh_provision_handle_t const * const p_handle, rm_ble_mesh_buffer_t auth_value);
@@ -561,8 +538,6 @@ typedef struct st_rm_ble_mesh_provision_api
      * @param [in] p_ctrl    Pointer to control structure.
      * @param [in] p_handle  Pointer to provisioning context to be used.
      * @param [in] reason    Reason for termination.
-     *
-     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* abort)(rm_ble_mesh_provision_ctrl_t * const         p_ctrl,
                         rm_ble_mesh_provision_handle_t const * const p_handle,
@@ -572,12 +547,9 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_GetLocalPublicKey()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     *
-     * @param [out] public_key To a pointer of uint8_t array of length
-     *               @ref RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl      Pointer to control structure.
+     * @param [out] public_key  To a pointer of uint8_t array of length
+     *                          @ref RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE.
      */
     fsp_err_t (* getLocalPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const public_key);
 
@@ -585,12 +557,9 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_SetLocalPublicKey()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     *
-     * @param [out] public_key To a pointer of uint8_t array of length
-     *               @ref RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl      Pointer to control structure.
+     * @param [out] public_key  To a pointer of uint8_t array of length
+     *                          @ref RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE.
      */
     fsp_err_t (* setLocalPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const public_key);
 
@@ -598,11 +567,8 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_GenerateRandomizedNumber()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     *
-     * @param [out] p_key    Pointer to buffer to store random number
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl   Pointer to control structure.
+     * @param [out] p_key    Pointer to buffer to store random number.
      */
     fsp_err_t (* generateRandomizedNumber)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const p_key);
 
@@ -610,12 +576,9 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_SetOobPublicKey()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     *
-     * @param [in] p_key     Pointer to Public Key
-     * @param [out] size     Size of public key
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl   Pointer to control structure.
+     * @param [in]  p_key    Pointer to public key.
+     * @param [in]  size     Size of public key.
      */
     fsp_err_t (* setOobPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const p_key,
                                   uint8_t size);
@@ -624,12 +587,9 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_SetOobAuthInfo()
      *
-     * @param [in] p_ctrl       Pointer to control structure.
-     *
-     * @param [out] p_auth_info Pointer to authentication information.
-     * @param [out] size        Size of authentication information.
-     *
-     * @return FSP_SUCCESS or Error Code on failure
+     * @param [in]  p_ctrl       Pointer to control structure.
+     * @param [in]  p_auth_info  Pointer to authentication information.
+     * @param [in]  size         Size of authentication information.
      */
     fsp_err_t (* setOobAuthInfo)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const p_auth_info,
                                  uint8_t size);

@@ -18,6 +18,7 @@
  *
  *  This file is part of mbed TLS (https://tls.mbed.org)
  */
+
 /*
  *  The AES block cipher was designed by Vincent Rijmen and Joan Daemen.
  *
@@ -1401,6 +1402,8 @@ exit:
 /*
  * AES-CTR buffer encryption/decryption
  */
+#define MBEDTLS_32BIT_ALIGNED(x) !(x & 0x03)
+#define MBEDTLS_AES_CTR_BLOCK_SIZE 16
 int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
                        size_t length,
                        size_t *nc_off,
@@ -1415,7 +1418,71 @@ int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
     AES_VALIDATE_RET( output != NULL );
     FSP_PARAMETER_NOT_USED(nc_off);
     FSP_PARAMETER_NOT_USED(stream_block);
-    return mbedtls_internal_aes_encrypt_decrypt_ctr (ctx, length, nonce_counter, input, output);
+    bool src_unaligned = !MBEDTLS_32BIT_ALIGNED((uint32_t) &input[0]);
+    bool dst_unaligned = !MBEDTLS_32BIT_ALIGNED((uint32_t) &output[0]);
+
+    if (src_unaligned || dst_unaligned)
+    {
+        uint8_t * buf_in  = (uint8_t *) input;
+        uint8_t * buf_out = output;
+        uint8_t * p_in  = (uint8_t *) input;
+        uint8_t * p_out = output;
+        int ret = 0;
+        uint32_t  num_loops =  length / MBEDTLS_AES_CTR_BLOCK_SIZE;
+        uint8_t   local_in[MBEDTLS_AES_CTR_BLOCK_SIZE];
+        uint8_t   local_out[MBEDTLS_AES_CTR_BLOCK_SIZE];
+
+        if(src_unaligned)
+        {
+            memset(local_in, 0, sizeof(local_in));
+            p_in = &local_in[0];
+        }
+
+        if(dst_unaligned)
+        {
+            p_out = &local_out[0];
+        }
+
+        for (uint32_t i = 0; i < num_loops; i++)
+        {
+            if(src_unaligned)
+            {
+                memcpy(&local_in[0], &buf_in[0], MBEDTLS_AES_CTR_BLOCK_SIZE);
+            }
+
+            ret = mbedtls_internal_aes_encrypt_decrypt_ctr (ctx, MBEDTLS_AES_CTR_BLOCK_SIZE, nonce_counter, (const unsigned char *)&p_in[0], (unsigned char *)&p_out[0]);
+            if (0 != ret)
+            {
+                return ret;
+            }
+            else
+            {
+                if(dst_unaligned)
+                {
+                    memcpy(&buf_out[0], &p_out[0], MBEDTLS_AES_CTR_BLOCK_SIZE);
+                    buf_out += MBEDTLS_AES_CTR_BLOCK_SIZE;
+                }
+                else
+                {
+                    p_out  += MBEDTLS_AES_CTR_BLOCK_SIZE;
+                }
+
+                if(src_unaligned)
+                {
+                    buf_in  += MBEDTLS_AES_CTR_BLOCK_SIZE;
+                }
+                else
+                {
+                    p_in  += MBEDTLS_AES_CTR_BLOCK_SIZE;
+                }
+            }
+        }
+        return ret;
+    }
+    else
+    {
+        return mbedtls_internal_aes_encrypt_decrypt_ctr (ctx, length, nonce_counter, input, output);
+    }
 }
 #endif /* MBEDTLS_CIPHER_MODE_CTR */
 

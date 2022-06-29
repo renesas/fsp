@@ -266,7 +266,9 @@ void R_BSP_SecurityInit (void)
     R_PSCU->MSSAR = BSP_TZ_CFG_MSSAR;
 
     /* Initialize Type 2 SARs. */
-    R_CPSCU->CSAR    = BSP_TZ_CFG_CSAR;        /* Cache Security Attribution. */
+  #ifdef BSP_TZ_CFG_CSAR
+    R_CPSCU->CSAR = BSP_TZ_CFG_CSAR;           /* Cache Security Attribution. */
+  #endif
     R_SYSTEM->RSTSAR = BSP_TZ_CFG_RSTSAR;      /* RSTSRn Security Attribution. */
     R_SYSTEM->LVDSAR = BSP_TZ_CFG_LVDSAR;      /* LVD Security Attribution. */
     R_SYSTEM->CGFSAR = BSP_TZ_CFG_CGFSAR;      /* CGC Security Attribution. */

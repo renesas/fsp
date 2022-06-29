@@ -131,12 +131,14 @@ const motor_angle_api_t g_motor_angle_on_motor_encoder =
     .angleSpeedGet         = RM_MOTOR_SENSE_ENCODER_AngleSpeedGet,
     .angleAdjust           = RM_MOTOR_SENSE_ENCODER_AngleAdjust,
     .encoderCyclic         = RM_MOTOR_SENSE_ENCODER_EncoderCyclic,
+    .cyclicProcess         = RM_MOTOR_SENSE_ENCODER_CyclicProcess,
     .infoGet               = RM_MOTOR_SENSE_ENCODER_InfoGet,
     .parameterUpdate       = RM_MOTOR_SENSE_ENCODER_ParameterUpdate,
     .currentSet            = RM_MOTOR_SENSE_ENCODER_CurrentSet,
     .speedSet              = RM_MOTOR_SENSE_ENCODER_SpeedSet,
     .flagPiCtrlSet         = RM_MOTOR_SENSE_ENCODER_FlagPiCtrlSet,
     .estimatedComponentGet = RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet,
+    .sensorDataSet         = RM_MOTOR_SENSE_ENCODER_SensorDataSet,
 };
 
 /*******************************************************************************************************************//**
@@ -571,6 +573,28 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_EncoderCyclic (motor_angle_ctrl_t * const p_ctr
 }
 
 /*******************************************************************************************************************//**
+ * @brief Perform cyclic process. Implements @ref motor_angle_api_t::cyclicProcess
+ *
+ * @retval FSP_SUCCESS              Successfully data calculated.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_SENSE_ENCODER_CyclicProcess (motor_angle_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_sense_encoder_instance_ctrl_t * p_instance_ctrl = (motor_sense_encoder_instance_ctrl_t *) p_ctrl;
+
+#if (MOTOR_SENSE_ENCODER_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl != NULL);
+    MOTOR_SENSE_ENCODER_ERROR_RETURN(MOTOR_SENSE_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    rm_motor_sense_encoder_cyclic(p_instance_ctrl);
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
  * @brief Gets information of Encoder Angle Module. Implements @ref motor_angle_api_t::infoGet
  *
  * @retval FSP_SUCCESS              Successfully data calculated.
@@ -704,6 +728,20 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet (motor_angle_ctrl_t * con
     FSP_PARAMETER_NOT_USED(p_ctrl);
     FSP_PARAMETER_NOT_USED(p_ed);
     FSP_PARAMETER_NOT_USED(p_eq);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Set sensor data. Implements @ref motor_angle_api_t::sensorDataSet
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_SENSE_ENCODER_SensorDataSet (motor_angle_ctrl_t * const    p_ctrl,
+                                                motor_angle_ad_data_t * const p_ad_data)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_ad_data);
 
     return FSP_ERR_UNSUPPORTED;
 }

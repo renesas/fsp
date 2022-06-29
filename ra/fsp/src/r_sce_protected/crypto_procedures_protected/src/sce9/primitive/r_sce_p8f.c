@@ -342,7 +342,7 @@ fsp_err_t R_SCE_AesKeyWrapSub(uint32_t *InData_Cmd, uint32_t *InData_KeyIndex, i
             SCE->REG_ECH = 0x00000004U;
             SCE->REG_ECH = 0x0000a8e0U;
             SCE->REG_ECH = 0x00000005U;
-            for(iLoop = 0; iLoop < KEY_INDEX_SIZE-5; iLoop = iLoop + 4)
+            for(iLoop = 0; iLoop < (uint32_t)KEY_INDEX_SIZE-5; iLoop = iLoop + 4)
             {
                 SCE->REG_104H = 0x00000362U;
                 SCE->REG_D0H = 0x40000000U;

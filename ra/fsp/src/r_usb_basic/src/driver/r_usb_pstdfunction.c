@@ -46,6 +46,9 @@
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
+ #if (BSP_CFG_RTOS == 1)
+extern uint8_t g_usb_peri_usbx_is_configured[USB_NUM_USBIP];
+ #endif                                /* (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
  * Private global variables and functions
@@ -376,6 +379,8 @@ void usb_pdriver_init (usb_instance_ctrl_t * ctrl, usb_cfg_t const * const cfg)
         cfg_usbx.p_usb_reg = &g_usbx_descriptor;
         usb_pstd_ux_descriptor_to_basic(&cfg_usbx);
         usb_peri_registration(ctrl, &cfg_usbx);
+
+        g_usb_peri_usbx_is_configured[cfg->module_number] = USB_NO;
     }
  #else                                 /* #if (BSP_CFG_RTOS == 1) */
     usb_peri_registration(ctrl, cfg);

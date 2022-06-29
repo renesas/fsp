@@ -285,8 +285,10 @@ static fsp_err_t ctsu_transfer_close(ctsu_instance_ctrl_t * const p_instance_ctr
 static fsp_err_t ctsu_transfer_configure(ctsu_instance_ctrl_t * const p_instance_ctrl);
 
  #if (BSP_FEATURE_CTSU_VERSION == 2)
+  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
 static void ctsu_transer_count_element(uint32_t element_mask, uint16_t * num_element);
 
+  #endif
  #endif
 #endif
 static void ctsu_initial_offset_tuning(ctsu_instance_ctrl_t * const p_instance_ctrl);
@@ -1328,6 +1330,69 @@ fsp_err_t R_CTSU_DataGet (ctsu_ctrl_t * const p_ctrl, uint16_t * p_data)
 }
 
 /*******************************************************************************************************************//**
+ * @brief This function tunes the offset register(SO). Call after the measurement is completed.
+ * If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete.
+ * Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS.
+ * It is recommended to run this routine after R_CTSU_Open().
+ * It can be recalled and tuned again.
+ * When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set.
+ * Implements @ref ctsu_api_t::offsetTuning.
+ *
+ * Example:
+ * @snippet r_ctsu_example.c R_CTSU_OffsetTuning
+ *
+ * @retval FSP_SUCCESS              CTSU successfully configured.
+ * @retval FSP_ERR_ASSERTION        Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_CTSU_SCANNING    Scanning this instance.
+ * @retval FSP_ERR_CTSU_INCOMPLETE_TUNING      Incomplete initial offset tuning.
+ **********************************************************************************************************************/
+fsp_err_t R_CTSU_OffsetTuning (ctsu_ctrl_t * const p_ctrl)
+{
+    fsp_err_t              err             = FSP_SUCCESS;
+    ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) p_ctrl;
+    uint16_t               element_id;
+
+#if (CTSU_CFG_PARAM_CHECKING_ENABLE == 1)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(CTSU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+    FSP_ERROR_RETURN(CTSU_STATE_SCANNING != p_instance_ctrl->state, FSP_ERR_CTSU_SCANNING);
+
+    if (CTSU_TUNING_COMPLETE == p_instance_ctrl->tuning)
+    {
+        for (element_id = 0; element_id < p_instance_ctrl->num_elements; element_id++)
+        {
+            /* Counter clear for re-offset tuning */
+            *(p_instance_ctrl->p_tuning_count + element_id) = 0;
+            *(p_instance_ctrl->p_tuning_diff + element_id)  = 0;
+        }
+    }
+
+    p_instance_ctrl->tuning = CTSU_TUNING_INCOMPLETE;
+
+    if (CTSU_STATE_SCANNED == p_instance_ctrl->state)
+    {
+        ctsu_correction_exec(p_instance_ctrl);
+
+        if (CTSU_TUNING_INCOMPLETE == p_instance_ctrl->tuning)
+        {
+            if ((CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md) ||
+                (CTSU_MODE_MUTUAL_FULL_SCAN == p_instance_ctrl->md))
+            {
+                ctsu_initial_offset_tuning(p_instance_ctrl);
+            }
+        }
+
+        p_instance_ctrl->state = CTSU_STATE_IDLE;
+    }
+
+    FSP_ERROR_RETURN(CTSU_TUNING_COMPLETE == p_instance_ctrl->tuning, FSP_ERR_CTSU_INCOMPLETE_TUNING);
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
  * @brief This function scan stops the sensor as scanning by the CTSU.
  * Implements @ref ctsu_api_t::scanStop.
  * @retval FSP_SUCCESS              CTSU successfully scan stop.
@@ -2094,6 +2159,7 @@ fsp_err_t ctsu_transfer_configure (ctsu_instance_ctrl_t * const p_instance_ctrl)
 }
 
  #if (BSP_FEATURE_CTSU_VERSION == 2)
+  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
 static void ctsu_transer_count_element (uint32_t element_mask, uint16_t * num_element)
 {
     uint8_t n;
@@ -2108,6 +2174,7 @@ static void ctsu_transer_count_element (uint32_t element_mask, uint16_t * num_el
     }
 }
 
+  #endif
  #endif
 
 #endif

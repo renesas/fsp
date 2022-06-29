@@ -22,11 +22,11 @@
 #define RM_BLE_MESH_BEARER_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_BEARER_API BLE Mesh Bearer Interface
- * @brief Interface for Bluetooth Low Energy Mesh Bearer functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_BEARER_API BLE Mesh Bearer Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Bearer functions.
  *
- * @section RM_BLE_MESH_BEARER_API_Summary Summary
+ * @section   RM_BLE_MESH_BEARER_API_Summary Summary
  * The BLE Mesh Bearer interface for the Bluetooth Low Energy Mesh Bearer (BLE MESH BEARER) peripheral provides Bluetooth Low Energy Mesh Bearer functionality.
  *
  * The Bluetooth Low Energy Mesh Bearer interface can be implemented by:
@@ -248,7 +248,7 @@ typedef struct st_rm_ble_mesh_bearer_beacon_info
     rm_ble_mesh_buffer_t * uri;
 } rm_ble_mesh_bearer_beacon_info_t;
 
-/** Bearer GATT Channel informartion related data structure */
+/** Bearer GATT Channel information related data structure */
 typedef struct st_rm_ble_mesh_bearer_ch_info
 {
     /** Identifies the MTU for the Bearer Channel */
@@ -266,10 +266,10 @@ typedef struct st_rm_ble_mesh_bearer_ch_info
  */
 typedef struct st_rm_ble_mesh_bearer_ntf_callback_args
 {
-    rm_ble_mesh_bearer_handle_t        * p_handle;
-    rm_ble_mesh_bearer_interface_event_t event;
-    uint8_t * p_data;                  ///< Data associated with the event if any or NULL.
-    uint16_t  data_length;             ///< Size of the event data. 0 if event data is NULL.
+    rm_ble_mesh_bearer_handle_t        * p_handle; ///< Bearer handle identifier.
+    rm_ble_mesh_bearer_interface_event_t event;    ///< Bearer interface event.
+    uint8_t * p_data;                              ///< Data associated with the event if any or NULL.
+    uint16_t  data_length;                         ///< Size of the event data. 0 if event data is NULL.
 } rm_ble_mesh_bearer_ntf_callback_args_t;
 
 /**
@@ -317,7 +317,7 @@ typedef struct st_rm_ble_mesh_bearer_api
      * - @ref RM_BLE_MESH_BEARER_Close()
      *
      * @param[in]  p_ctrl
-     *        Pointer to control structure.
+     *             Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl);
 
@@ -325,17 +325,14 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_RegisterInterface()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] brr_type
-     *         Bearer Type
+     * @param[in]  brr_type
+     *             Bearer Type.
      *
-     * @param [in] p_callback
-     *         Details describing Application Notification Callback
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
-     *
+     * @param[in]  p_callback
+     *             Pointer to details describing application notification callback.
      */
     fsp_err_t (* registerInterface)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, rm_ble_mesh_bearer_type_t brr_type,
                                     rm_ble_mesh_bearer_ntf_callback_result_t (* p_callback)(
@@ -345,17 +342,14 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_RegisterBeaconHandler()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] bcon_type
-     *         Beacon type - Unprovisioned Device or Secure Network.
+     * @param[in]  bcon_type
+     *             Beacon type - Unprovisioned Device or Secure Network.
      *
-     * @param [in] p_handler
-     *         Callback handler to be registered for the given beacon type.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
-     *
+     * @param[in]  p_handler
+     *             Pointer to callback handler to be registered for the given beacon type.
      */
     fsp_err_t (* registerBeaconHandler)(rm_ble_mesh_bearer_ctrl_t * const               p_ctrl,
                                         rm_ble_mesh_bearer_beacon_type_t                bcon_type,
@@ -366,20 +360,17 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_AddBearer()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] brr_type
-     *         Bearer Type
+     * @param[in]  brr_type
+     *             Bearer Type.
      *
-     * @param [in] brr_info
-     *         Details describing the Bearer being added
+     * @param[in]  p_brr_info
+     *             Pointer to details describing the Bearer being added.
      *
-     * @param [out] brr_handle
-     *         Handle to the bearer that is added. Used in data APIs.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
-     *
+     * @param[out] p_brr_handle
+     *             Pointer to handle to the bearer that is added. Used in data APIs.
      */
     fsp_err_t (* addBearer)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, rm_ble_mesh_bearer_type_t brr_type,
                             rm_ble_mesh_bearer_info_t const * const p_brr_info,
@@ -389,17 +380,14 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_RemoveBearer()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] brr_type
-     *         Bearer Type
+     * @param[in]  brr_type
+     *             Bearer Type.
      *
-     * @param [in] brr_handle
-     *         Handle to the bearer that is added. Used in data APIs.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
-     *
+     * @param[in]  p_brr_handle
+     *             Pointer to handle to the bearer is removed. Used in data APIs.
      */
     fsp_err_t (* removeBearer)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, rm_ble_mesh_bearer_type_t brr_type,
                                rm_ble_mesh_bearer_handle_t const * const p_brr_handle);
@@ -408,17 +396,14 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_ObserveBeacon()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] bcon_type
-     *         Type of beacon to observe - Active/Passive.
+     * @param[in]  bcon_type
+     *             Type of beacon to observe - Active/Passive.
      *
-     * @param [in] enable
-     *         Enable or Disable the observation procedure.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
-     *
+     * @param[in]  enable
+     *             Enable or Disable the observation procedure.
      */
     fsp_err_t (* observeBeacon)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t bcon_type, uint8_t enable);
 
@@ -426,23 +411,22 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_BcastUnprovisionedBeacon()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] type
-     *         Active or Passive Broadcast type.
+     * @param[in]  type
+     *             Active or Passive Broadcast type.
      *
-     * @param [in] dev_uuid
-     *         Device UUID uniquely identifying this device.
-     * @param [in] oob_info
-     *         OOB Information
+     * @param[in]  p_dev_uuid
+     *             Pointer to device UUID uniquely identifying this device.
      *
-     * @param [in] uri
-     *         Optional Parameter. NULL if not present.
-     *         Points to the length and payload pointer of the URI string to be
-     *         advertised interleaving with the unprovisioned beacon.
+     * @param[in]  oob_info
+     *             OOB Information.
      *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[in]  p_uri
+     *             Pointer to optional Parameter. NULL if not present.
+     *             Points to the length and payload pointer of the URI string to be
+     *             advertised interleaving with the unprovisioned beacon.
      */
     fsp_err_t (* bcastUnprovisionedBeacon)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t type,
                                            uint8_t const * const p_dev_uuid, uint16_t oob_info,
@@ -452,19 +436,17 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_BroadcastBeacon()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] type
-     *         The type of beacon
+     * @param[in]  type
+     *             The type of beacon.
      *
-     * @param [in] packet
-     *         Beacon data
+     * @param[in]  p_packet
+     *             Pointer to beacon data.
      *
-     * @param [in] length
-     *         Beacon data length
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[in]  length
+     *             Beacon data length.
      */
     fsp_err_t (* broadcastBeacon)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t type,
                                   uint8_t const * const p_packet, uint16_t length);
@@ -473,25 +455,25 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_StartProxyAdv()
      *
-     * @param [in] p_ctrl    Pointer to control structure.
-     * @param [in] type
-     *         Proxy ADV Type:
-     *         0x00 - Network ID
-     *         0x01 - Node Identity
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] data
-     *         Data to be advertised by Proxy.
-     *         If the "type" is:
-     *         0x00 - Network ID    - 8 Bytes of Network ID
-     *         0x01 - Node Identity - 8 Bytes Hash, 8 Bytes Random num
+     * @param[in]  type
+     *             Proxy ADV Type:
+     *              0x00 - Network ID
+     *              0x01 - Node Identity
      *
-     * @param [in] datalen
-     *         Length of the data to be advertised by Proxy.
-     *         If the "type" is:
-     *         0x00 - Network ID    - 8 Bytes of Network ID
-     *         0x01 - Node Identity - 8 Bytes Hash, 8 Bytes Random num
+     * @param[in]  p_data
+     *             Pointer to data to be advertised by Proxy.
+     *             If the "type" is:
+     *              0x00 - Network ID    - 8 Bytes of Network ID
+     *              0x01 - Node Identity - 8 Bytes Hash, 8 Bytes Random number
      *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[in]  datalen
+     *             Length of the data to be advertised by Proxy.
+     *             If the "type" is:
+     *              0x00 - Network ID    - 8 Bytes of Network ID
+     *              0x01 - Node Identity - 8 Bytes Hash, 8 Bytes Random number
      */
     fsp_err_t (* startProxyAdv)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t type, uint8_t const * const p_data,
                                 uint16_t datalen);
@@ -500,20 +482,17 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_SendPdu()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] brr_handle
-     *         Bearer handle on which PDU is to be sent.
+     * @param[in]  p_brr_handle
+     *             Pointer to bearer handle on which PDU is to be sent.
      *
-     * @param [in] brr_type
-     *         Bearer Type.
+     * @param[in]  brr_type
+     *             Bearer Type.
      *
-     * @param [in] buffer
-     *         PDU data to be sent.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
-     *
+     * @param[in]  p_buffer
+     *             Pointer to PDU data to be sent.
      */
     fsp_err_t (* sendPdu)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl,
                           rm_ble_mesh_bearer_handle_t const * const p_brr_handle, rm_ble_mesh_bearer_type_t brr_type,
@@ -523,28 +502,23 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_GetPacketRssi()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] rssi_value
-     *         RSSI value.
+     * @param[out] p_rssi_value
+     *             Pointer to RSSI value.
      *
-     * @return RSSI value of the current packet in context.
-     *
-     * @note This applies only when the packet is received over ADV bearer
+     * @note       This applies only when the packet is received over ADV bearer.
      *
      */
-    fsp_err_t (* getPacketRssi)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t * rssi_value);
+    fsp_err_t (* getPacketRssi)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t * p_rssi_value);
 
     /** Put the bearer to sleep.
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_Sleep()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
-     *
-     * @return API_SUCCESS
-     *
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      */
     fsp_err_t (* sleep)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl);
 
@@ -552,14 +526,12 @@ typedef struct st_rm_ble_mesh_bearer_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_BEARER_Wakeup()
      *
-     * @param [in] p_ctrl
-     *         Pointer to control structure.
-     * @param mode
-     *         Identifies the mode (BRR_TX/BRR_RX) for which bearer is requested
-     *         for wakeup.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @return API_SUCCESS
-     *
+     * @param[in]  mode
+     *             Identifies the mode (BRR_TX/BRR_RX) for which bearer is requested
+     *             for wakeup.
      */
     fsp_err_t (* wakeup)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t mode);
 } rm_ble_mesh_bearer_api_t;
@@ -567,9 +539,9 @@ typedef struct st_rm_ble_mesh_bearer_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_bearer_instance
 {
-    rm_ble_mesh_bearer_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_ble_mesh_bearer_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_bearer_api_t const * p_api;  ///< Pointer to the API structure for this instance
+    rm_ble_mesh_bearer_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_bearer_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_bearer_api_t const * p_api;  ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_bearer_instance_t;
 
 /*******************************************************************************************************************//**

@@ -61,6 +61,8 @@
  ******************************************************************************/
 extern void usb_peri_usbx_set_control_length(usb_setup_t * p_req);
 
+extern uint8_t g_usb_peri_usbx_is_configured[USB_NUM_USBIP];
+
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
@@ -1414,6 +1416,7 @@ static void usb_pstd_set_configuration0 (usb_utr_t * p_utr)
   #if defined(USB_CFG_PHID_USE)
             _ux_system_slave->ux_system_slave_remote_wakeup_enabled = UX_FALSE;
   #endif                               /* #if defined(USB_CFG_PHID_USE) */
+            g_usb_peri_usbx_is_configured[p_utr->ip] = USB_YES;
             _ux_device_stack_configuration_set((uint32_t) g_usb_pstd_config_num);
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
         }

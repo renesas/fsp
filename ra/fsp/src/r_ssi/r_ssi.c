@@ -353,9 +353,8 @@ fsp_err_t R_SSI_Write (i2s_ctrl_t * const p_ctrl, void const * const p_src, uint
     FSP_ERROR_RETURN(SSI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(NULL != p_src);
 
-    /* bytes must be a non-zero multiple of the FIFO access size multiplied by 2 (for the left and right channel). */
+    /* bytes must be a non-zero */
     FSP_ASSERT(bytes > 0U);
-    FSP_ASSERT(0U == (bytes % (2U << p_instance_ctrl->fifo_access_size)));
 #endif
 
     /* If a transfer instance is provided for write, reset the transfer. Otherwise store data to transmit in the
@@ -403,9 +402,8 @@ fsp_err_t R_SSI_Read (i2s_ctrl_t * const p_ctrl, void * const p_dest, uint32_t c
     FSP_ERROR_RETURN(SSI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(NULL != p_dest);
 
-    /* bytes must be a non-zero multiple of the FIFO access size multiplied by 2 (for the left and right channel). */
+    /* bytes must be a non-zero */
     FSP_ASSERT(bytes > 0U);
-    FSP_ASSERT(0U == (bytes % (2U << p_instance_ctrl->fifo_access_size)));
 #endif
 
     /* If a transfer instance is provided for read, reset the transfer. Otherwise store data to receive in the receive
@@ -458,9 +456,8 @@ fsp_err_t R_SSI_WriteRead (i2s_ctrl_t * const p_ctrl,
     FSP_ASSERT(NULL != p_dest);
     FSP_ERROR_RETURN(SSI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    /* bytes must be a non-zero multiple of the FIFO access size multiplied by 2 (for the left and right channel). */
+    /* bytes must be a non-zero */
     FSP_ASSERT(bytes > 0U);
-    FSP_ASSERT(0U == (bytes % (2U << p_instance_ctrl->fifo_access_size)));
 #endif
 
     /* If a transfer instance is provided for write, reset the transfer. Reset the transmit FIFO first since the
@@ -793,6 +790,10 @@ static void r_ssi_stop_sub (ssi_instance_ctrl_t * const p_instance_ctrl)
     ssicr |= (1U << SSI_PRV_SSICR_IIEN_BIT);
 
     p_instance_ctrl->p_reg->SSICR = ssicr;
+
+    uint32_t ssifcr = p_instance_ctrl->p_reg->SSIFCR;
+    ssifcr &= ~(R_SSI0_SSIFCR_TIE_Msk | R_SSI0_SSIFCR_RIE_Msk);
+    p_instance_ctrl->p_reg->SSIFCR = ssifcr;
 
 #if SSI_CFG_DTC_ENABLE
 

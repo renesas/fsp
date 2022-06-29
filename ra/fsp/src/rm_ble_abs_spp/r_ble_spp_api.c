@@ -36,43 +36,62 @@
 /******************************************************************************
  * Macros
  ******************************************************************************/
-#define BLE_MODULE_RESET_TIMEOUT           (50)
-#define BLE_MODULE_STABILIZE_TIMEOUT       (500)
-#define BLE_MODULE_COMMAND_RECV_TIMEOUT    (1000)
-#define BLE_MODULE_MTU_MAX                 (128)
+#define BLE_MODULE_RESET_TIMEOUT                 (50)
+#define BLE_MODULE_STABILIZE_TIMEOUT             (500)
+#define BLE_MODULE_COMMAND_RECV_TIMEOUT          (10)
+#define BLE_MODULE_START_FW_UPLOAD_TIMEOUT       (2000)
+#define BLE_MODULE_END_FW_UPLOAD_TIMEOUT         (4000)
+#define BLE_MODULE_MTU_MAX                       (128)
+#define BLE_MODULE_SEND_FIRMWARE_DATA_SIZE       (128)
+#define BLE_MODULE_READY_RETRY_COUNT             (15)
+
+#define BLE_MODULE_SPP_SPI_READ_HEADER_SIZE      (4U)
+#define BLE_MODULE_SPP_SPI_READ_CHECKSUM_SIZE    (2U)
+#define BLE_MODULE_SPP_SPI_READ_EVENT_SIZE       (2U)
+#define BLE_MODULE_SPP_MAX_PACKET_SIZE           (255)
 
 #define BLE_PARAMETER_NOT_USED(p)    (void) ((p))
 
 #define ENDIAN_LSB16(n)              (uint8_t) (n & 0xFF)
 #define ENDIAN_MSB16(n)              (uint8_t) (n >> 8)
 
-#define R_BLE_SPP_EVENT_CONN_IND           (0x0783)
-#define R_BLE_SPP_EVENT_DISCONN_IND        (0x0784)
-#define R_BLE_SPP_EVENT_SET_DISABLE_ADV    (0x0721)
-#define R_BLE_SPP_EVENT_SET_ENABLE_ADV     (0x070A)
-#define R_BLE_SPP_EVENT_SET_ADV_SRES       (0x0722)
-#define R_BLE_SPP_EVENT_SET_ADV_PARAM      (0x0720)
-#define R_BLE_SPP_EVENT_GET_ATTR           (0x072A)
-#define R_BLE_SPP_EVENT_SET_ATTR           (0x0729)
-#define R_BLE_SPP_EVENT_DATA_RECEIVED      (0x07A0)
-#define R_BLE_SPP_EVENT_SET_MAC_ID         (0x0725)
-#define R_BLE_SPP_EVENT_SEND_NOTIFY        (0x071C)
-#define R_BLE_SPP_EVENT_SEND_INDICATION    (0x0726)
-#define R_BLE_SPP_EVENT_SET_TX_POWER       (0x0705)
+/*
+ * State the current SPI read operation:
+ * - IDLE:     No SPI read operation in progress.
+ * - HEADER:   Reading the packet header in order to get the length of the payload.
+ * - BODY:     Packet header has been read and the payload is in progress.
+ */
+#define BLE_MODULE_SPI_READ_STATE_IDLE      (0)
+#define BLE_MODULE_SPI_READ_STATE_HEADER    (1)
+#define BLE_MODULE_SPI_READ_STATE_BODY      (2)
 
-#define BLE_SPP_COMMAND(command, reply_event)                           \
-    {                                                                   \
-        uint16_t cmd_status = (uint16_t) (command);                     \
-                                                                        \
-        if (!cmd_status)                                                \
-        {                                                               \
-            cmd_status = r_ble_spp_api_check_return_valid(reply_event); \
-        }                                                               \
-                                                                        \
-        if (cmd_status)                                                 \
-        {                                                               \
-            return BLE_ERR_INVALID_PTR;                                 \
-        }                                                               \
+#define R_BLE_SPP_EVENT_CONN_IND            (0x0783)
+#define R_BLE_SPP_EVENT_DISCONN_IND         (0x0784)
+#define R_BLE_SPP_EVENT_SET_DISABLE_ADV     (0x0721)
+#define R_BLE_SPP_EVENT_SET_ENABLE_ADV      (0x070A)
+#define R_BLE_SPP_EVENT_SET_ADV_SRES        (0x0722)
+#define R_BLE_SPP_EVENT_SET_ADV_PARAM       (0x0720)
+#define R_BLE_SPP_EVENT_GET_ATTR            (0x072A)
+#define R_BLE_SPP_EVENT_SET_ATTR            (0x0729)
+#define R_BLE_SPP_EVENT_DATA_RECEIVED       (0x07A0)
+#define R_BLE_SPP_EVENT_SET_MAC_ID          (0x0725)
+#define R_BLE_SPP_EVENT_SEND_NOTIFY         (0x071C)
+#define R_BLE_SPP_EVENT_SEND_INDICATION     (0x0726)
+#define R_BLE_SPP_EVENT_SET_TX_POWER        (0x0705)
+
+#define BLE_SPP_COMMAND(command, reply_event, timeout)                           \
+    {                                                                            \
+        uint16_t cmd_status = (uint16_t) (command);                              \
+                                                                                 \
+        if (!cmd_status)                                                         \
+        {                                                                        \
+            cmd_status = r_ble_spp_api_check_return_valid(reply_event, timeout); \
+        }                                                                        \
+                                                                                 \
+        if (cmd_status)                                                          \
+        {                                                                        \
+            return BLE_ERR_INVALID_PTR;                                          \
+        }                                                                        \
     }
 
 /******************************************************************************
@@ -106,7 +125,7 @@ static int r_ble_spp_api_fsp_callback_read(void * const   p_context,
 #endif
 static int          r_ble_spp_api_fsp_callback_close(void * p_context);
 static void         r_ble_spp_api_mw_callback(r_ble_spp_payload_t * p_payload);
-static ble_status_t r_ble_spp_api_check_return_valid(uint32_t expected_spp_reply);
+static ble_status_t r_ble_spp_api_check_return_valid(uint32_t expected_spp_reply, uint32_t timeout);
 static void         r_ble_spp_api_delay_ms(uint32_t ms);
 
 /******************************************************************************
@@ -115,18 +134,19 @@ static void         r_ble_spp_api_delay_ms(uint32_t ms);
 
 static r_ble_spp_payload_t g_current_spp_payload;
 static r_ble_spp_payload_t g_current_spp_async_payload;
-static volatile uint32_t   g_spp_cmd_ready   = 0;
-static volatile uint32_t   g_spp_cmd_unknown = 0;
-static volatile uint32_t   g_spp_cmd_failed  = 0;
-static volatile uint32_t   g_spp_cmd_async   = 0;
-static r_ble_spp_cfg_t     r_ble_spp_api_transport_api;
+static volatile uint32_t   g_spp_cmd_ready     = 0;
+static volatile uint32_t   g_spp_cmd_unknown   = 0;
+static volatile uint32_t   g_spp_cmd_failed    = 0;
+static volatile uint32_t   g_spp_cmd_async     = 0;
 static volatile uint32_t   g_transfer_complete = 0;
+static r_ble_spp_cfg_t     r_ble_spp_api_transport_api;
 static bool                g_dynamic_profile_set;
 
 ble_gap_app_cb_t g_gap_cb   = NULL;
 ble_event_cb_t   g_cb_event = NULL;
-ble_gatt_client_application_callback_t g_spp_gatt_client_cb = NULL;
-ble_gatt_server_application_callback_t g_spp_gatt_server_cb = NULL;
+ble_gatt_client_application_callback_t     g_spp_gatt_client_cb = NULL;
+ble_gatt_server_application_callback_t     g_spp_gatt_server_cb = NULL;
+ble_vendor_specific_application_callback_t g_spp_vendor_cb      = NULL;
 
 uint32_t ble_version_major   = 0;
 uint32_t ble_version_minor   = 0;
@@ -137,7 +157,10 @@ static const uint8_t g_ch_map_lut[8] = {0, 0, 1, 0, 2, 0, 1, 3};
 
 #if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
 
-static volatile uint8_t g_data_ready = 0;
+/* Global state for managing SPI read operations. */
+static uint8_t  g_spi_rx_buffer[BLE_MODULE_SPP_MAX_PACKET_SIZE];
+static uint8_t  g_spi_tx_buffer[BLE_MODULE_SPP_MAX_PACKET_SIZE];
+static uint32_t g_spi_read_state;
 
 #endif
 
@@ -170,11 +193,19 @@ ble_status_t R_BLE_Open (void)
  #endif
 #endif
 
+    g_spp_cmd_ready     = 0;
+    g_spp_cmd_unknown   = 0;
+    g_spp_cmd_failed    = 0;
+    g_spp_cmd_async     = 0;
+    g_transfer_complete = 0;
+    g_spp_vendor_cb     = gp_instance_ctrl->p_cfg->vendor_specific_callback;
+
     r_ble_spp_api_transport_api.p_context = (void *) gp_instance_ctrl->p_cfg;
 
 #if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
     r_ble_spp_api_transport_api.config_flag = BLE_SPP_COMMS_UART;
 #elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    g_spi_read_state                        = BLE_MODULE_SPI_READ_STATE_IDLE;
     r_ble_spp_api_transport_api.Read        = r_ble_spp_api_fsp_callback_read;
     r_ble_spp_api_transport_api.config_flag = BLE_SPP_COMMS_SPI;
 #endif
@@ -191,7 +222,8 @@ ble_status_t R_BLE_Open (void)
 
     if (R_BLE_SPP_GAP_Open(&r_ble_spp_api_transport_api) == R_BLE_SPP_SUCCESS)
     {
-        FSP_ERROR_RETURN(BLE_SUCCESS, r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_BLE_READY));
+        FSP_ERROR_RETURN(BLE_SUCCESS,
+                         r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_BLE_READY, BLE_MODULE_RESET_TIMEOUT));
     }
 
     return BLE_SUCCESS;
@@ -199,12 +231,6 @@ ble_status_t R_BLE_Open (void)
 
 ble_status_t R_BLE_Close (void)
 {
-    /* Diconnect any connection already established */
-    R_BLE_SPP_GAP_Disconnect();
-
-    /* Restart the device */
-    R_BLE_SPP_GAP_Restart();
-
     /* Close the communication port */
     R_BLE_SPP_GAP_Close(&r_ble_spp_api_transport_api);
 
@@ -249,11 +275,15 @@ ble_status_t R_BLE_GATTS_SetDbInst (st_ble_gatts_db_cfg_t * p_db_inst)
             params.uuidLen        = qe_ble_profile[i].uuid_length;
             params.write_flag     = qe_ble_profile[i].notify_write;
 
-            BLE_SPP_COMMAND(R_BLE_SPP_GAP_Config_Profile(&params), R_BLE_SPP_EVENT_DYNAMIC_ATTRIBUTE_CREATE);
+            BLE_SPP_COMMAND(R_BLE_SPP_GAP_Config_Profile(&params),
+                            R_BLE_SPP_EVENT_DYNAMIC_ATTRIBUTE_CREATE,
+                            BLE_MODULE_RESET_TIMEOUT);
         }
 
         /* Finalize the profile table on the device */
-        BLE_SPP_COMMAND(R_BLE_SPP_GAP_Profile_Complete(), R_BLE_SPP_EVENT_DYNAMIC_ATTRIBUTE_COMPLETE);
+        BLE_SPP_COMMAND(R_BLE_SPP_GAP_Profile_Complete(),
+                        R_BLE_SPP_EVENT_DYNAMIC_ATTRIBUTE_COMPLETE,
+                        BLE_MODULE_RESET_TIMEOUT);
 
         g_gap_cb(BLE_GAP_EVENT_DISCONN_IND, BLE_SUCCESS, NULL);
 
@@ -267,7 +297,7 @@ ble_status_t R_BLE_GAP_StopAdv (uint8_t adv_hdl)
 {
     BLE_PARAMETER_NOT_USED(adv_hdl);
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_StopAdv(), R_BLE_SPP_EVENT_SET_DISABLE_ADV);
+    BLE_SPP_COMMAND(R_BLE_SPP_GAP_StopAdv(), R_BLE_SPP_EVENT_SET_DISABLE_ADV, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -275,17 +305,14 @@ ble_status_t R_BLE_GAP_StopAdv (uint8_t adv_hdl)
 ble_status_t R_BLE_GAP_SetAdvSresData (st_ble_gap_adv_data_t * p_adv_srsp_data)
 {
     r_ble_spp_adv_data_t advertising_data;
-    advertising_data.data_type   = R_BLE_SPP_ADV_DATA_MODE;
+    advertising_data.data_type   = (r_ble_spp_adv_type_t) p_adv_srsp_data->data_type;
     advertising_data.data_length = p_adv_srsp_data->data_length;
     advertising_data.p_data      = p_adv_srsp_data->p_data;
 
     /* Set advertising data */
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvSresData(&advertising_data), R_BLE_SPP_EVENT_SET_ADV_SRES);
-
-    advertising_data.data_type = R_BLE_SPP_SCAN_RSP_DATA_MODE;
-
-    /* Set scan response data */
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvSresData(&advertising_data), R_BLE_SPP_EVENT_SET_ADV_SRES);
+    BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvSresData(&advertising_data),
+                    R_BLE_SPP_EVENT_SET_ADV_SRES,
+                    BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -310,7 +337,7 @@ ble_status_t R_BLE_GAP_StartAdv (uint8_t adv_hdl, uint16_t duration, uint8_t max
     BLE_PARAMETER_NOT_USED(duration);
     BLE_PARAMETER_NOT_USED(max_extd_adv_evts);
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_StartAdv(), R_BLE_SPP_EVENT_SET_ENABLE_ADV);
+    BLE_SPP_COMMAND(R_BLE_SPP_GAP_StartAdv(), R_BLE_SPP_EVENT_SET_ENABLE_ADV, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -324,14 +351,14 @@ ble_status_t R_BLE_GAP_SetAdvParam (st_ble_gap_adv_param_t * p_adv_param)
 
     r_ble_spp_adv_param_t adv_param;
     adv_param.adv_ch_map    = chan_map;
-    adv_param.filter_policy = p_adv_param->filter_policy;
-    adv_param.adv_phy       = 0x01;
-    adv_param.sec_adv_phy   = 0x01;
-    adv_param.adv_prop_type = 0x0000;
+    adv_param.filter_policy = (r_ble_spp_filter_policy_t) p_adv_param->filter_policy;
+    adv_param.adv_phy       = R_BLE_SPP_SET_PHYS_PREF_1M;
+    adv_param.sec_adv_phy   = R_BLE_SPP_SET_PHYS_PREF_1M;
+    adv_param.adv_prop_type = R_BLE_SPP_ADV_TYPE_CONNECTABLE_UNDIRECTED;
     adv_param.adv_intv_min  = p_adv_param->adv_intv_min;
     adv_param.adv_intv_max  = p_adv_param->adv_intv_max;
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvParam(&adv_param), R_BLE_SPP_EVENT_SET_ADV_PARAM);
+    BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvParam(&adv_param), R_BLE_SPP_EVENT_SET_ADV_PARAM, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -378,7 +405,7 @@ ble_status_t R_BLE_GATTS_GetAttr (uint16_t conn_hdl, uint16_t attr_hdl, st_ble_g
     value.attr_hdl       = attr_hdl;
     value.value          = gatt_value;
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_GetAttr(&value), R_BLE_SPP_EVENT_GET_ATTR);
+    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_GetAttr(&value), R_BLE_SPP_EVENT_GET_ATTR, BLE_MODULE_RESET_TIMEOUT);
 
     p_value->p_value   = &g_current_spp_payload.out_data[1];
     p_value->value_len = gatt_value.value_len;
@@ -397,7 +424,7 @@ ble_status_t R_BLE_GATTS_SetAttr (uint16_t conn_hdl, uint16_t attr_hdl, st_ble_g
     value.attr_hdl       = attr_hdl;
     value.value          = gatt_value;
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_SetAttr(&value), R_BLE_SPP_EVENT_SET_ATTR);
+    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_SetAttr(&value), R_BLE_SPP_EVENT_SET_ATTR, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -413,7 +440,7 @@ ble_status_t R_BLE_GATTS_Notification (uint16_t conn_hdl, st_ble_gatt_hdl_value_
     value.attr_hdl       = p_ntf_data->attr_hdl;
     value.value          = gatt_value;
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_Notification(&value), R_BLE_SPP_EVENT_SEND_NOTIFY);
+    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_Notification(&value), R_BLE_SPP_EVENT_SEND_NOTIFY, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -429,7 +456,7 @@ ble_status_t R_BLE_GATTS_Indication (uint16_t conn_hdl, st_ble_gatt_hdl_value_pa
     value.attr_hdl       = p_ind_data->attr_hdl;
     value.value          = gatt_value;
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_Indication(&value), R_BLE_SPP_EVENT_SEND_INDICATION);
+    BLE_SPP_COMMAND(R_BLE_SPP_GATTS_Indication(&value), R_BLE_SPP_EVENT_SEND_INDICATION, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -441,14 +468,14 @@ ble_status_t R_BLE_VS_SetBdAddr (uint8_t area, st_ble_dev_addr_t * p_addr)
 
     if (R_BLE_SPP_GAP_SetMACID((r_ble_spp_peer_addrType_t) p_addr->type, (uint8_t *) p_addr->addr) == R_BLE_SPP_SUCCESS)
     {
-        status = r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_SET_MAC_ID);
+        status = r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_SET_MAC_ID, BLE_MODULE_RESET_TIMEOUT);
         if (status)
         {
             return BLE_ERR_INVALID_PTR;
         }
     }
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_Init(), R_BLE_SPP_EVENT_BLE_INIT);
+    BLE_SPP_COMMAND(R_BLE_SPP_GAP_Init(), R_BLE_SPP_EVENT_BLE_INIT, BLE_MODULE_RESET_TIMEOUT);
 
     return BLE_SUCCESS;
 }
@@ -499,7 +526,7 @@ ble_status_t R_BLE_VS_SetTxPower (uint16_t conn_hdl, uint8_t tx_power)
 
     if (R_BLE_SPP_GAP_SetTxPower(tx_power) == R_BLE_SPP_SUCCESS)
     {
-        status = r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_SET_TX_POWER);
+        status = r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_SET_TX_POWER, BLE_MODULE_RESET_TIMEOUT);
         if (status)
         {
             return BLE_ERR_INVALID_PTR;
@@ -511,6 +538,153 @@ ble_status_t R_BLE_VS_SetTxPower (uint16_t conn_hdl, uint8_t tx_power)
     }
 
     return BLE_SUCCESS;
+}
+
+ble_status_t R_BLE_VS_StartFirmwareUpdate (void)
+{
+    /* Send the 'Start firmware Update' command. */
+    if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_Start_Firmware_Update())
+    {
+        return BLE_ERR_INVALID_MODE;
+    }
+
+    return BLE_SUCCESS;
+}
+
+ble_status_t R_BLE_VS_SendFirmwareData (uint16_t index, uint16_t length, uint8_t const * const p_data)
+{
+    /* The maximum data size is 128 bytes. */
+    if ((BLE_MODULE_SEND_FIRMWARE_DATA_SIZE < length) || (NULL == p_data))
+    {
+        return BLE_ERR_INVALID_ARG;
+    }
+
+    /* Send the 'Send Firmware Data' command. */
+    if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_Send_Firmware_Data(index, length, (uint8_t *) p_data))
+    {
+        return BLE_ERR_INVALID_MODE;
+    }
+
+    return BLE_SUCCESS;
+}
+
+ble_status_t R_BLE_VS_EndFirmwareUpdate (uint16_t end_index)
+{
+    /* Send the 'End Firmware Update' command. */
+    if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_End_Firmware_Update(end_index, ~end_index))
+    {
+        return BLE_ERR_INVALID_MODE;
+    }
+
+    return BLE_SUCCESS;
+}
+
+ble_status_t R_BLE_VS_GetFirmwareVersion (void)
+{
+    if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_GetVersion())
+    {
+        return BLE_ERR_INVALID_MODE;
+    }
+
+    return BLE_SUCCESS;
+}
+
+ble_status_t R_BLE_VS_RestartModule (void)
+{
+    /* Send the Reboot command. */
+    if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_Reboot())
+    {
+        return BLE_ERR_INVALID_MODE;
+    }
+
+    /* Wait for the command to be sent. */
+    uint32_t timeout = BLE_MODULE_COMMAND_RECV_TIMEOUT;
+    while (--timeout && 0 == g_transfer_complete)
+    {
+        r_ble_spp_api_delay_ms(1);
+    }
+
+    /* Verify that the command was sent successfully. */
+    if (0 == timeout)
+    {
+        return BLE_ERR_RSP_TIMEOUT;
+    }
+
+    /* There is no response to the Reboot command. Periodically poll the device until it is ready. */
+    for (uint32_t i = 0; i < BLE_MODULE_READY_RETRY_COUNT; i++)
+    {
+        /* Reset global state used for synchronization with interrupts. */
+        g_spp_cmd_ready  = 0;
+        g_spp_cmd_failed = 0;
+
+        /* The R_BLE_SPP driver must be closed first, in order to issue the 'BLE Ready' command. */
+        if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_Close(&r_ble_spp_api_transport_api))
+        {
+            return BLE_ERR_INVALID_MODE;
+        }
+
+        if (R_BLE_SPP_SUCCESS != R_BLE_SPP_GAP_Open(&r_ble_spp_api_transport_api))
+        {
+            return BLE_ERR_INVALID_MODE;
+        }
+
+        if (BLE_SUCCESS == r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_BLE_READY, BLE_MODULE_COMMAND_RECV_TIMEOUT))
+        {
+            /* Get the status field from the command response. */
+            ble_status_t response_status = g_current_spp_payload.out_data[0];
+
+            /* Notify the application that the device is ready (The firmware update procedure has completed). */
+            g_spp_vendor_cb((uint16_t) g_current_spp_payload.event_id, response_status, NULL);
+
+            return BLE_SUCCESS;
+        }
+    }
+
+    return BLE_ERR_RSP_TIMEOUT;
+}
+
+ble_status_t R_BLE_VS_UpdateModuleFirmware (uint8_t const * const p_firmware_image, uint32_t firmware_image_size)
+{
+    /* Start the firmware update procedure and wait for a response. */
+    BLE_SPP_COMMAND(R_BLE_VS_StartFirmwareUpdate(),
+                    BLE_VS_EVENT_START_FW_UPDATE_COMP,
+                    BLE_MODULE_START_FW_UPLOAD_TIMEOUT);
+
+    /* Calculate the total number of frames to send. */
+    uint16_t total_frames =
+        (uint16_t) ((firmware_image_size + BLE_MODULE_SEND_FIRMWARE_DATA_SIZE - 1) /
+                    BLE_MODULE_SEND_FIRMWARE_DATA_SIZE);
+    uint16_t last_index = total_frames - 1;
+
+    for (uint16_t i = 0; i < last_index; i++)
+    {
+        /* Send the next 'Send Firmware Data' command and wait for a response. */
+        BLE_SPP_COMMAND(R_BLE_VS_SendFirmwareData(i, BLE_MODULE_SEND_FIRMWARE_DATA_SIZE,
+                                                  p_firmware_image + (i * BLE_MODULE_SEND_FIRMWARE_DATA_SIZE)),
+                        BLE_VS_EVENT_SEND_FW_DATA_COMP,
+                        BLE_MODULE_RESET_TIMEOUT);
+    }
+
+    /* Calculate the size of the last data frame. */
+    uint16_t last_frame_size = firmware_image_size % BLE_MODULE_SEND_FIRMWARE_DATA_SIZE;
+    if (0 == last_frame_size)
+    {
+        last_frame_size = BLE_MODULE_SEND_FIRMWARE_DATA_SIZE;
+    }
+
+    /* Send the last 'Send Firmware Data' command and wait for a response. */
+    BLE_SPP_COMMAND(R_BLE_VS_SendFirmwareData(last_index, last_frame_size,
+                                              p_firmware_image + (last_index * BLE_MODULE_SEND_FIRMWARE_DATA_SIZE)),
+                    BLE_VS_EVENT_SEND_FW_DATA_COMP,
+                    BLE_MODULE_RESET_TIMEOUT);
+
+    /* Send the 'End Firmware Update' command and wait for a response. */
+    BLE_SPP_COMMAND(R_BLE_VS_EndFirmwareUpdate(last_index),
+                    BLE_VS_EVENT_END_FW_UPDATE_COMP,
+                    BLE_MODULE_END_FW_UPLOAD_TIMEOUT);
+
+    /* Reboot the module. */
+    return R_BLE_VS_RestartModule();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -792,8 +966,6 @@ static int r_ble_spp_api_fsp_callback_read (void * const   p_context,
     }
 
     return R_BLE_SPP_SUCCESS;
-
-    return err;
 }
 
 #endif
@@ -808,7 +980,12 @@ static int r_ble_spp_api_fsp_callback_close (void * p_context)
     err = bkup_context->p_spi_instance->p_api->close(bkup_context->p_spi_instance->p_ctrl);
 #endif
 
-    return err;
+    if (FSP_SUCCESS != err)
+    {
+        return R_BLE_APP_TRANSPORT_READ_ERROR;
+    }
+
+    return R_BLE_SPP_SUCCESS;
 }
 
 ble_status_t R_BLE_Execute (void)
@@ -822,23 +999,6 @@ ble_status_t R_BLE_Execute (void)
         g_cb_event();
         g_cb_event = NULL;
     }
-
-#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
-
-    /* If an asynchronous command was received then the data ready pin will be asserted. */
-    if (!g_data_ready)
-    {
-        return status;
-    }
-
-    g_data_ready = 0;
-
-    /* Read the event data. */
-    R_BLE_SPP_SPI_Read(&g_current_spp_payload);
-
-    /* Process the event. */
-    r_ble_spp_api_mw_callback(&g_current_spp_payload);
-#endif
 
     if (g_spp_cmd_async)
     {
@@ -909,6 +1069,38 @@ ble_status_t R_BLE_Execute (void)
                 g_gap_cb(BLE_GAP_EVENT_ADV_OFF, BLE_SUCCESS, NULL);
                 break;
             }
+
+            case R_BLE_SPP_EVENT_BLE_READY:
+            case BLE_VS_EVENT_START_FW_UPDATE_COMP:
+            case BLE_VS_EVENT_SEND_FW_DATA_COMP:
+            case BLE_VS_EVENT_END_FW_UPDATE_COMP:
+            case BLE_VS_EVENT_OTA_START_NOTIFY:
+            case BLE_VS_EVENT_OTA_END_NOTIFY:
+            case BLE_VS_EVENT_OTA_ERROR_NOTIFY:
+            {
+                /* Get the status field from the command response. */
+                ble_status_t response_status = g_current_spp_async_payload.out_data[0];
+
+                g_spp_vendor_cb((uint16_t) g_current_spp_async_payload.event_id, response_status, NULL);
+                break;
+            }
+
+            case BLE_VS_EVENT_GET_FW_VERSION_COMP:
+            {
+                /* Get the status field from the command response. */
+                ble_status_t response_status = g_current_spp_async_payload.out_data[0];
+
+                /* Get the firmware version field from the command response. */
+                st_ble_vs_evt_data_t vendor_data =
+                {
+                    .p_param   = &g_current_spp_async_payload.out_data[1],
+                    .param_len = sizeof(st_ble_vs_get_fw_version_comp_evt_t)
+                };
+
+                g_spp_vendor_cb((uint16_t) g_current_spp_async_payload.event_id, response_status, &vendor_data);
+
+                break;
+            }
         }
 
         g_spp_cmd_async = 0;
@@ -925,12 +1117,19 @@ static void r_ble_spp_api_mw_callback (r_ble_spp_payload_t * p_payload)
         case R_BLE_SPP_EVENT_CONN_IND:
         case R_BLE_SPP_EVENT_DISCONN_IND:
         case R_BLE_SPP_EVENT_DATA_RECEIVED:
+        case BLE_VS_EVENT_OTA_START_NOTIFY:
+        case BLE_VS_EVENT_OTA_END_NOTIFY:
+        case BLE_VS_EVENT_OTA_ERROR_NOTIFY:
+        case BLE_VS_EVENT_GET_FW_VERSION_COMP:
         {
             g_current_spp_async_payload = *p_payload;
             g_spp_cmd_async             = 1;
             break;
         }
 
+        case BLE_VS_EVENT_START_FW_UPDATE_COMP:
+        case BLE_VS_EVENT_SEND_FW_DATA_COMP:
+        case BLE_VS_EVENT_END_FW_UPDATE_COMP:
         case R_BLE_SPP_EVENT_SET_ENABLE_ADV:
         case R_BLE_SPP_EVENT_SET_DISABLE_ADV:
         {
@@ -995,7 +1194,7 @@ void rm_ble_spp_callback (uart_callback_args_t * p_args)
             break;
         }
 
-        case UART_EVENT_TX_DATA_EMPTY:
+        case UART_EVENT_TX_COMPLETE:
         {
             g_transfer_complete = 1;
             break;
@@ -1024,7 +1223,50 @@ void rm_ble_spp_host_spi_callback (spi_callback_args_t * p_args)
         R_BSP_PinAccessDisable();
  #endif
 
-        g_transfer_complete = 1;
+        if (BLE_MODULE_SPI_READ_STATE_IDLE != g_spi_read_state)
+        {
+            /* A SPI read operation has completed. */
+            static uint32_t g_event_length = 0;
+
+            /* If the body of the packet has been read successfully, then pass the data on to the r_ble_spp layer. */
+            if (BLE_MODULE_SPI_READ_STATE_BODY == g_spi_read_state)
+            {
+                uint8_t * p_payload = &g_spi_rx_buffer[BLE_MODULE_SPP_SPI_READ_HEADER_SIZE];
+                for (uint32_t i = 0; i < g_event_length; i++)
+                {
+                    r_ble_spp_rx_char_callback(p_payload[i]);
+                }
+
+                /* The SPI read operation has completed. */
+                g_spi_read_state = BLE_MODULE_SPI_READ_STATE_IDLE;
+
+                /* Re-enable the data ready IRQ so that the next event can be processed. */
+                R_BSP_IrqEnableNoClear(gp_instance_ctrl->p_cfg->p_irq_instance->p_cfg->irq);
+            }
+            else
+            {
+                /* The packet header has been read, the body must now be read. */
+                g_spi_read_state = BLE_MODULE_SPI_READ_STATE_BODY;
+
+                /* Get the length of the payload from the header. */
+                g_event_length = g_spi_rx_buffer[5];
+
+                /* Calculate the total event length. */
+                g_event_length += BLE_MODULE_SPP_SPI_READ_EVENT_SIZE;
+                g_event_length += BLE_MODULE_SPP_SPI_READ_CHECKSUM_SIZE;
+
+                r_ble_spp_api_fsp_callback_read((void * const) gp_instance_ctrl->p_cfg,
+                                                g_spi_tx_buffer,
+                                                g_spi_rx_buffer,
+                                                BLE_MODULE_SPP_SPI_READ_HEADER_SIZE + g_event_length,
+                                                8);
+            }
+        }
+        else
+        {
+            /* A SPI write operation has been completed. */
+            g_transfer_complete = 1;
+        }
     }
 }
 
@@ -1032,14 +1274,32 @@ void rm_ble_spp_data_ready_callback (external_irq_callback_args_t * p_args)
 {
     BLE_PARAMETER_NOT_USED(p_args);
 
-    g_data_ready = 1;
+    /* Temporarily mask the data ready interrupt so that SPI read operations don't interrupted. */
+    R_BSP_IrqDisable(gp_instance_ctrl->p_cfg->p_irq_instance->p_cfg->irq);
+
+    /* Kick off first read operation. This reads the length of the event packet. */
+    g_spi_read_state = BLE_MODULE_SPI_READ_STATE_HEADER;
+
+    /* Set SPI transmit data used to start a read operation. */
+    g_spi_tx_buffer[0] = 0x04;         // NOLINT(readability-magic-numbers)
+    g_spi_tx_buffer[1] = 0x8B;         // NOLINT(readability-magic-numbers)
+    g_spi_tx_buffer[2] = 0x00;         // NOLINT(readability-magic-numbers)
+    g_spi_tx_buffer[3] = 0x80;         // NOLINT(readability-magic-numbers)
+
+    r_ble_spp_api_fsp_callback_read((void * const) gp_instance_ctrl->p_cfg,
+                                    g_spi_tx_buffer,
+                                    g_spi_rx_buffer,
+                                    BLE_MODULE_SPP_SPI_READ_HEADER_SIZE + BLE_MODULE_SPP_SPI_READ_EVENT_SIZE,
+                                    8);
 }
 
 #endif
 
-static ble_status_t r_ble_spp_api_check_return_valid (uint32_t expected_spp_reply)
+static ble_status_t r_ble_spp_api_check_return_valid (uint32_t expected_spp_reply, uint32_t timeout)
 {
-    uint32_t countdown = BLE_MODULE_RESET_TIMEOUT;
+    ble_status_t status = BLE_SUCCESS;
+
+    uint32_t countdown = timeout;
 
     /* Wait for data transmit to complete */
     while (--countdown && !g_transfer_complete)
@@ -1047,20 +1307,11 @@ static ble_status_t r_ble_spp_api_check_return_valid (uint32_t expected_spp_repl
         r_ble_spp_api_delay_ms(1);
     }
 
-#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
-
     /* Wait for data receive to complete */
     while (--countdown && !g_spp_cmd_ready && !g_spp_cmd_failed)
-#else
-
-    /* Wait for the data ready pin to be asserted. */
-    while (--countdown && !g_data_ready)
-#endif
     {
         r_ble_spp_api_delay_ms(1);
     }
-
-#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
 
     /* Check if the command response is ready. */
     if (g_spp_cmd_ready)
@@ -1068,45 +1319,24 @@ static ble_status_t r_ble_spp_api_check_return_valid (uint32_t expected_spp_repl
         /* Check if the expected response was received. */
         if (g_current_spp_payload.event_id != expected_spp_reply)
         {
-            return BLE_ERR_HC_UNKNOWN_HCI_CMD;
+            status = BLE_ERR_HC_UNKNOWN_HCI_CMD;
         }
     }
     /* Check if the command failed. */
     else if (g_spp_cmd_failed)
     {
-        return BLE_ERR_HC_CMD_DISALLOWED;
+        status = BLE_ERR_HC_CMD_DISALLOWED;
     }
-
-#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
-
-    /* Check if the data ready pin was asserted in response to the command. */
-    if (g_data_ready)
-    {
-        /* Read the response to the command. */
-        R_BLE_SPP_SPI_Read(&g_current_spp_payload);
-
-        /* Check if the expected response was received. */
-        if (g_current_spp_payload.event_id != expected_spp_reply)
-        {
-            return BLE_ERR_HC_UNKNOWN_HCI_CMD;
-        }
-    }
-#endif
     else
     {
-
         /* No response was received. */
-        return BLE_ERR_RSP_TIMEOUT;
+        status = BLE_ERR_RSP_TIMEOUT;
     }
 
-#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
     g_spp_cmd_ready  = 0;
     g_spp_cmd_failed = 0;
-#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
-    g_data_ready = 0;
-#endif
 
-    return BLE_SUCCESS;
+    return status;
 }
 
 static void r_ble_spp_api_delay_ms (uint32_t ms)

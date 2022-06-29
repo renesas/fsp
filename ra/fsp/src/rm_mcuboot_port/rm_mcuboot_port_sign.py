@@ -33,6 +33,8 @@ if os.getenv('MCUBOOT_IMAGE_VERSION') is not None:
     else:
         sys.argv.insert(sys.argv.index('sign') + 1, '--version')
         sys.argv.insert(sys.argv.index('sign') + 2, os.getenv('MCUBOOT_IMAGE_VERSION'))
+        message_str = 'Packaging application image with version from environment variable MCUBOOT_IMAGE_VERSION: ' + os.getenv('MCUBOOT_IMAGE_VERSION')
+
 if '-v' in sys.argv or '--version' in sys.argv:
     # Do nothing, version is passed from command line
     pass
@@ -56,9 +58,30 @@ if mcuboot_image_signing_key is not None:
     else:
         sys.argv.insert(sys.argv.index('sign') + 1, '--key')
         sys.argv.insert(sys.argv.index('sign') + 2, mcuboot_image_signing_key)
-        print('Packaging application image with version from environment variable MCUBOOT_IMAGE_VERSION: ' + os.getenv('MCUBOOT_IMAGE_VERSION') + ' and key from MCUBOOT_IMAGE_SIGNING_KEY ' + mcuboot_image_signing_key)
+        message_str += ' and key from MCUBOOT_IMAGE_SIGNING_KEY: ' + mcuboot_image_signing_key
+
+# Determine Encryption key
+mcuboot_image_enc_key = os.getenv('MCUBOOT_IMAGE_ENC_KEY')
+if mcuboot_image_enc_key is not None:
+    # Key defined in environment variable
+    # Verify the key exists
+    if not os.path.exists(mcuboot_image_enc_key):
+        print('ERROR: Could not find conversion tool set in MCUBOOT_IMAGE_ENC_KEY: ' + mcuboot_image_enc_key)
+        sys.exit(1)
+    # Add key to command line
+    if '-E' in sys.argv or '--encrypt' in sys.argv:
+        print('ERROR: Remove -E and --encrypt from Signing Options > Custom and Signing Options > TrustZone > Custom (Image 2) to use MCUBOOT_IMAGE_ENC_KEY.')
+        sys.exit(1)
+    else:
+        sys.argv.insert(sys.argv.index('sign') + 1, '--encrypt')
+        sys.argv.insert(sys.argv.index('sign') + 2, mcuboot_image_enc_key)
+        message_str += ' and encryption key from MCUBOOT_IMAGE_ENC_KEY: ' + mcuboot_image_enc_key
+        # Updated the file extension to include encrypted
+        output_file = sys.argv[-1]
+        output_file = output_file + '.encrypted'
+        sys.argv[-1] = output_file
 else:
-    print('Packaging application image with version from environment variable MCUBOOT_IMAGE_VERSION: ' + os.getenv('MCUBOOT_IMAGE_VERSION'))
+    print(' ')
 
 # Determine if the input file is .elf or binary format
 input_file = sys.argv[-2]
@@ -111,6 +134,7 @@ with open(input_file, 'rb') as f:
         # Update command line to pass binary instead of elf file to imgtool
         sys.argv[-2] = temp_unsigned_binary
 
+print (message_str)
 # Launch imgtool with python3
 sys.path.append(boot_project_root + '/ra/mcu-tools/MCUboot/scripts')
 

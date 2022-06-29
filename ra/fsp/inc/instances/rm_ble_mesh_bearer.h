@@ -99,7 +99,7 @@ fsp_err_t RM_BLE_MESH_BEARER_SendPdu(rm_ble_mesh_bearer_ctrl_t * const         p
                                      rm_ble_mesh_bearer_handle_t const * const p_brr_handle,
                                      rm_ble_mesh_bearer_type_t                 brr_type,
                                      rm_ble_mesh_buffer_t const * const        p_buffer);
-fsp_err_t RM_BLE_MESH_BEARER_GetPacketRssi(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t * rssi_value);
+fsp_err_t RM_BLE_MESH_BEARER_GetPacketRssi(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t * p_rssi_value);
 fsp_err_t RM_BLE_MESH_BEARER_Sleep(rm_ble_mesh_bearer_ctrl_t * const p_ctrl);
 fsp_err_t RM_BLE_MESH_BEARER_Wakeup(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t mode);
 

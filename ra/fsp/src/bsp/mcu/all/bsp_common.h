@@ -285,6 +285,42 @@ __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
 #if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
 
 /*******************************************************************************************************************//**
+ * Converts a clock's CKDIVCR register value to a clock divider (Eg: SPICKDIVCR).
+ *
+ * @return     Clock Divider
+ **********************************************************************************************************************/
+__STATIC_INLINE uint32_t R_FSP_ClockDividerGet (uint32_t ckdivcr)
+{
+    if (2U >= ckdivcr)
+    {
+        /* clock_div:
+         * - Clock Divided by 1: 0
+         * - Clock Divided by 2: 1
+         * - Clock Divided by 4: 2
+         */
+        return 1 << ckdivcr;
+    }
+    else if (3U == ckdivcr)
+    {
+        /* Clock Divided by 6 */
+        return 6U;
+    }
+    else if (4U == ckdivcr)
+    {
+        /* Clock Divided by 8 */
+        return 8U;
+    }
+    else if (5U == ckdivcr)
+    {
+        /* Clock Divided by 3 */
+        return 3U;
+    }
+
+    /* Clock Divided by 5 */
+    return 5U;
+}
+
+/*******************************************************************************************************************//**
  * Gets the frequency of a SCI/SPI clock.
  *
  * @return     Frequency of requested clock in Hertz.
@@ -292,10 +328,10 @@ __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
 __STATIC_INLINE uint32_t R_FSP_SciSpiClockHzGet (void)
 {
     uint32_t                scispidivcr = R_SYSTEM->SCISPICKDIVCR;
-    uint32_t                clock_div   = (scispidivcr & FSP_PRIV_SCKDIVCR_DIV_MASK);
+    uint32_t                clock_div   = R_FSP_ClockDividerGet(scispidivcr & FSP_PRIV_SCKDIVCR_DIV_MASK);
     fsp_priv_source_clock_t scispicksel = (fsp_priv_source_clock_t) R_SYSTEM->SCISPICKCR_b.SCISPICKSEL;
 
-    return R_BSP_SourceClockHzGet(scispicksel) >> clock_div;
+    return R_BSP_SourceClockHzGet(scispicksel) / clock_div;
 }
 
 #endif

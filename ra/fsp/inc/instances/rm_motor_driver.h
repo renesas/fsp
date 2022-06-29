@@ -106,6 +106,10 @@ typedef struct st_motor_driver_instance_ctrl
     float f_iv_ad;                     ///< V phase current [A]
     float f_iw_ad;                     ///< W phase current [A]
     float f_vdc_ad;                    ///< Main line voltage [V]
+
+    float f_sin_ad;                    ///< Sin signal output of induction sensor [V]
+    float f_cos_ad;                    ///< Cos signal output of induction sensor [V]
+
     float f_refu;                      ///< Calculated U Phase output voltage [V]
     float f_refv;                      ///< Calculated V Phase output voltage [V]
     float f_refw;                      ///< Calculated W Phase output voltage [V]

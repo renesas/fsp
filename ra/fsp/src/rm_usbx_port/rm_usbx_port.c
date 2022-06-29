@@ -45,9 +45,17 @@
   #include "r_usb_hhid_cfg.h"
  #endif                                /* defined(USB_CFG_HHID_USE) */
 
+ #if defined(USB_CFG_HCDC_USE)
+  #include "ux_host_class_cdc_acm.h"
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
+
  #if defined(USB_CFG_PHID_USE)
   #include "r_usb_phid_cfg.h"
  #endif                                /* defined(USB_CFG_HHID_USE) */
+
+ #if defined(USB_CFG_HPRN_USE)
+  #include "ux_host_class_printer.h"
+ #endif                                /* defined(USB_CFG_HPRN_USE) */
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #include "ux_host_stack.h"
@@ -573,6 +581,9 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         }
 
   #else                                /* defined(USB_CFG_PMSC_USE) */
+   #if defined(USB_CFG_PCDC_USE)
+                        transfer_request->ux_slave_transfer_request_completion_code = UX_TRANSFER_ERROR;
+   #endif                              /* defined(USB_PCDC_USE) */
                         status = (uint32_t) UX_SUCCESS;
   #endif /* define(USB_CFG_PMSC_USE */
                     }
@@ -595,6 +606,9 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         }
 
   #else                                /* defined(USB_CFG_PMSC_USE) */
+   #if defined(USB_CFG_PCDC_USE)
+                        transfer_request->ux_slave_transfer_request_completion_code = UX_SUCCESS;
+   #endif                              /* defined(USB_PCDC_USE) */
                         status = (uint32_t) UX_SUCCESS;
   #endif /* define(USB_CFG_PMSC_USE */
                     }
@@ -739,7 +753,6 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
             }
             else
             {
-  #if (defined(USB_CFG_PAUD_USE) || defined(USB_CFG_OTG_USE))
                 if (parameter == (void *) UX_DEVICE_CONFIGURED)
                 {
                     if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
@@ -747,7 +760,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_CONFIGURED);
                     }
                 }
-  #endif                               /* (defined(USB_CFG_PAUD_USE) || defined(USB_CFG_OTG_USE)) */
+
                 status = (uint32_t) UX_SUCCESS;
             }
 
@@ -1366,6 +1379,10 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
     driver.ifclass = (uint16_t) USB_IFCLS_MAS; /* Interface class : HID */
   #endif /* defined(USB_CFG_HCDC_USE) */
 
+  #if defined(USB_CFG_HPRN_USE)
+    driver.ifclass = (uint16_t) USB_IFCLS_PRN; /* Interface class : Printer */
+  #endif /* defined(USB_CFG_HPRN_USE) */
+
   #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
     driver.p_tpl = (uint16_t *) USB_CFG_TPL_TABLE;
   #else                                                              /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
@@ -1405,7 +1422,7 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 {
-  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE)
+  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HPRN_USE)
     uint16_t  speed;
     uint16_t  length;
     uint16_t  offset;
@@ -1436,6 +1453,10 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 
    #if defined(USB_CFG_HMSC_USE)
     usb_class = USB_CLASS_INTERNAL_HMSC;
+   #endif
+
+   #if defined(USB_CFG_HPRN_USE)
+    usb_class = USB_CLASS_INTERNAL_HPRN;
    #endif
 
     offset = 0;
@@ -1651,6 +1672,10 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
     *g_p_usb_host_actural_length[p_utr->ip][0] = p_utr->read_req_len - p_utr->tranlen;
   #endif                               /* #if defined(USB_CFG_HHID_USE) */
 
+  #if defined(USB_CFG_HPRN_USE)
+    *g_p_usb_host_actural_length[p_utr->ip][0] = p_utr->read_req_len - p_utr->tranlen;
+  #endif                               /* #if defined(USB_CFG_HPRN_USE) */
+
     tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
 }                                      /* End of function usb_pstd_transfer_complete_cb() */
 
@@ -1667,6 +1692,9 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
     uint8_t       pipe;
     UX_TRANSFER * transfer_request;
     uint16_t      pipe_reg;
+  #if defined(USB_CFG_HCDC_USE)
+    UX_HOST_CLASS_CDC_ACM * cdc_acm;
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_OTG_USE)
     UINT           status;
@@ -1687,6 +1715,12 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
 
     pipe             = (uint8_t) p_utr->keyword;
     transfer_request = g_p_usb_host_usbx_transfer_request[p_utr->ip][pipe];
+
+  #if defined(USB_CFG_HCDC_USE)
+
+    /* Get the class instance for this transfer request.  */
+    cdc_acm = (UX_HOST_CLASS_CDC_ACM *) transfer_request->ux_transfer_request_class_instance;
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
     if (USB_PIPE0 == pipe)
     {
@@ -1752,6 +1786,31 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
         transfer_request->ux_transfer_request_completion_function(transfer_request);
     }
   #endif                               /* defined(USB_CFG_HHID_USE) */
+
+  #if defined(USB_CFG_HPRN_USE)
+    transfer_request->ux_transfer_request_completion_code = UX_SUCCESS;
+    if (UX_NULL != transfer_request->ux_transfer_request_completion_function)
+    {
+        transfer_request->ux_transfer_request_completion_function(transfer_request);
+    }
+  #endif                               /* defined(USB_CFG_HPRN_USE) */
+
+  #if defined(USB_CFG_HCDC_USE)
+
+    /* Check for the CDC-Data Class.*/
+    /* Check if there is a transfer request completion callback function is registered.*/
+    /* Check the error condition */
+    if ((USB_IFCLS_CDCD == cdc_acm->ux_host_class_cdc_acm_interface->ux_interface_descriptor.bInterfaceClass) &&
+        (NULL != transfer_request->ux_transfer_request_completion_function) &&
+        (USB_DATA_ERR != p_utr->status))
+    {
+        /* Set the transfer code to completed.*/
+        transfer_request->ux_transfer_request_completion_code = UX_SUCCESS;
+
+        /* Invoke the transfer completion callback function */
+        transfer_request->ux_transfer_request_completion_function(transfer_request);
+    }
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_OTG_USE)
     status = tx_semaphore_info_get(&transfer_request->ux_transfer_request_semaphore,

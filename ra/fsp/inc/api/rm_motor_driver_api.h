@@ -87,6 +87,9 @@ typedef struct st_motor_driver_current_get
     float iw;                          ///< W phase current [A]
     float vdc;                         ///< Main Line Voltage [V]
     float va_max;                      ///< maximum magnitude of voltage vector
+
+    float sin_ad;                      ///< Induction sensor sin signal
+    float cos_ad;                      ///< Induction sensor cos signal
 } motor_driver_current_get_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
@@ -104,6 +107,9 @@ typedef struct st_motor_driver_cfg
     adc_channel_t          iv_ad_ch;   ///< A/D Channel for V Phase Current
     adc_channel_t          iw_ad_ch;   ///< A/D Channel for W Phase Current
     adc_channel_t          vdc_ad_ch;  ///< A/D Channel for Main Line Voltage
+
+    adc_channel_t sin_ad_ch;           ///< A/D Channel for induction sensor sin signal
+    adc_channel_t cos_ad_ch;           ///< A/D Channel for induction sensor cos signal
 
     adc_instance_t const * p_adc2_instance;
 

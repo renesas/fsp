@@ -101,6 +101,10 @@ uint16_t g_usb_peri_connected;                          /* Status for USB connec
 usb_pcdreg_t g_usb_pstd_driver;
 usb_setup_t  g_usb_pstd_req_reg;                        /* Device Request - Request structure */
 
+ #if (BSP_CFG_RTOS == 1)
+uint8_t g_usb_peri_usbx_is_configured[USB_NUM_USBIP];
+ #endif /* (BSP_CFG_RTOS == 1) */
+
 volatile uint8_t g_usb_is_otg_attach_interrupt[USB_NUM_USBIP];
 
  #if (BSP_CFG_RTOS == 1)
@@ -469,8 +473,12 @@ static void usb_pstd_interrupt (usb_utr_t * p_mess)
                 USB_PRINTF0("VBUS int detach\n");
                 usb_pstd_detach_process(p_mess); /* USB detach */
   #if (BSP_CFG_RTOS == 1)
-                _ux_device_stack_disconnect();
-  #endif /* (BSP_CFG_RTOS == 1) */
+                if (USB_YES == g_usb_peri_usbx_is_configured[p_mess->ip])
+                {
+                    _ux_device_stack_disconnect();
+                    g_usb_peri_usbx_is_configured[p_mess->ip] = USB_NO;
+                }
+  #endif                               /* (BSP_CFG_RTOS == 1) */
 
   #if defined(USB_CFG_OTG_USE)
                 if (USB_YES == g_is_A_device[p_mess->ip])
@@ -2221,7 +2229,13 @@ void usb_peri_detach (usb_utr_t * ptr, uint16_t usb_state, uint16_t data2)
                 tx_semaphore_delete(&g_usb_peri_usbx_sem[pipe]);
             }
 
-            _ux_device_stack_disconnect();
+            if (USB_YES == g_usb_peri_usbx_is_configured[ptr->ip])
+            {
+                /* The "ux_device_stack_disconnect" function must be not executed when attaching USB device to USB Host. */
+                /* Because the unnecessary detaching event is notfied to the application program when attaching USB device to USB Host. */
+                /* But, when doing the warm start PC, the "ux_device_stack_disconnect" function must be executed. */
+                _ux_device_stack_disconnect();
+            }
         }
     }
 

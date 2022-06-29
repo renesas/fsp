@@ -33,9 +33,9 @@
 FSP_HEADER
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup  RENESAS_INTERFACES
  * @defgroup RM_BLE_MESH_SCENE_SERVER_API BLE Mesh Scene Server Interface
- * @brief Interface for Bluetooth Low Energy Mesh Model Scene Server functions.
+ * @brief    Interface for Bluetooth Low Energy Mesh Model Scene Server functions.
  *
  * @section RM_BLE_MESH_SCENE_SERVER_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Scene Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Scene Server functionality.
@@ -76,27 +76,28 @@ typedef enum e_rm_ble_mesh_scene_srv_event
 /** Mesh model scene server callback parameter definition */
 typedef struct st_rm_ble_mesh_scene_server_callback_args
 {
-    void const * p_context;
-    rm_ble_mesh_access_model_handle_t * p_handle;
-    rm_ble_mesh_scene_srv_event_t       event_type;
-    uint8_t * p_event_data;
-    uint16_t  event_data_length;
+    void const * p_context;                         ///< Placeholder for user data.
+    rm_ble_mesh_access_model_handle_t * p_handle;   ///< Access Model handle.
+    rm_ble_mesh_scene_srv_event_t       event_type; ///< Scene event types.
+    uint8_t * p_event_data;                         ///< Pointer to event data.
+    uint16_t  event_data_length;                    ///< Event data length.
 } rm_ble_mesh_scene_server_callback_args_t;
 
 /**
- * Access Layer Model Publication Timeout Callback.
+ * Mesh model scene server publication timeout callback.
  *
  * Access Layer calls the registered callback to indicate Publication Timeout
  * for the associated model.
  *
- * \param handle        Model Handle.
- * \param blob          Blob if any or NULL.
+ * \param p_context       User data.
+ * \param p_handle        Model Handle.
+ * \param p_blob          Blob if any or NULL.
  */
 typedef struct st_rm_ble_mesh_scene_server_timeout_callback_args
 {
-    void const * p_context;
-    rm_ble_mesh_access_model_handle_t * p_handle;
-    void * p_blob;
+    void const * p_context;                       ///< Placeholder for user data.
+    rm_ble_mesh_access_model_handle_t * p_handle; ///< Access Model handle.
+    void * p_blob;                                ///< Binary Large Object.
 } rm_ble_mesh_scene_server_timeout_callback_args_t;
 
 /** BLE MESH SCENE SERVER control block.  Allocate an instance specific control block to pass into the BLE mesh model scene server API calls.
@@ -109,15 +110,15 @@ typedef void rm_ble_mesh_scene_server_ctrl_t;
 typedef struct st_rm_ble_mesh_scene_server_cfg
 {
     /** the parameters for initialization. */
-    rm_ble_mesh_access_instance_t const * p_access_instance;
-    rm_ble_mesh_access_model_handle_t     model_handle;
-    rm_ble_mesh_access_model_handle_t     setup_server_handle;
+    rm_ble_mesh_access_instance_t const * p_access_instance;                                ///< Access Layer instance structure.
+    rm_ble_mesh_access_model_handle_t     model_handle;                                     ///< Access Model handle.
+    rm_ble_mesh_access_model_handle_t     setup_server_handle;                              ///< Access Model handle for setup server.
 
     /* Pointer to callback and optional working memory */
-    void * (*p_callback)(rm_ble_mesh_scene_server_callback_args_t * p_args);
-    void (* p_timeout_callback)(rm_ble_mesh_scene_server_timeout_callback_args_t * p_args);
-    void const * p_context;            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
-    void const * p_extend;             ///< Placeholder for user extension.
+    void * (*p_callback)(rm_ble_mesh_scene_server_callback_args_t * p_args);                ///< Mesh model scene server callback.
+    void (* p_timeout_callback)(rm_ble_mesh_scene_server_timeout_callback_args_t * p_args); ///< Mesh model scene server publication timeout callback.
+    void const * p_context;                                                                 ///< Placeholder for user data.
+    void const * p_extend;                                                                  ///< Placeholder for user extension.
 } rm_ble_mesh_scene_server_cfg_t;
 
 /** Shared Interface definition for BLE MESH */

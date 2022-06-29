@@ -1036,7 +1036,6 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
         }
 
         case NX_TCPIP_OFFLOAD_TCP_SOCKET_DISCONNECT:
-        case NX_TCPIP_OFFLOAD_UDP_SOCKET_UNBIND:
         {
             /* Disconnect socket */
             i = (UINT) (((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context);
@@ -1051,10 +1050,25 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
             break;
         }
 
+        case NX_TCPIP_OFFLOAD_UDP_SOCKET_UNBIND:
+        {
+            /* Disconnect socket */
+            i = (UINT) (((NX_UDP_SOCKET *) socket_ptr)->nx_udp_socket_tcpip_offload_context);
+            if (nx_driver_sockets[i].remote_port)
+            {
+                status = rm_wifi_onchip_silex_socket_disconnect(nx_driver_sockets[i].socket_id);
+            }
+
+            /* Reset socket to free this entry.  */
+            nx_driver_sockets[i].socket_ptr  = NX_NULL;
+            nx_driver_sockets[i].remote_port = 0;
+            break;
+        }
+
         case NX_TCPIP_OFFLOAD_UDP_SOCKET_BIND:
         {
             /* Store the index of driver socket.  */
-            ((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context = (VOID *) i;
+            ((NX_UDP_SOCKET *) socket_ptr)->nx_udp_socket_tcpip_offload_context = (VOID *) i;
 
             /* Create UDP socket */
             if (rm_wifi_onchip_silex_socket_create(i, RM_NETXDUO_WIFI_SOCKET_TYPE_UDP, RM_NETXDUO_WIFI_SOCKET_IPV4)) // Create a UDP socket
@@ -1072,7 +1086,7 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
 
         case NX_TCPIP_OFFLOAD_UDP_SOCKET_SEND:
         {
-            i = (UINT) (((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context);
+            i = (UINT) (((NX_UDP_SOCKET *) socket_ptr)->nx_udp_socket_tcpip_offload_context);
 
             /* Initialize the current packet to the input packet pointer.  */
             current_packet = packet_ptr;

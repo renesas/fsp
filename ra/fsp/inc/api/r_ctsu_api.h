@@ -299,6 +299,14 @@ typedef struct st_ctsu_api
      * @param[in]  p_insert_data       Pointer to insert data.
      */
     fsp_err_t (* dataInsert)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_insert_data);
+
+    /** Adjust the offset value to tune the sensor.
+     * @par Implemented as
+     * - @ref R_CTSU_OffsetTuning()
+     *
+     * @param[in]  p_ctrl          Pointer to control structure.
+     */
+    fsp_err_t (* offsetTuning)(ctsu_ctrl_t * const p_ctrl);
 } ctsu_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

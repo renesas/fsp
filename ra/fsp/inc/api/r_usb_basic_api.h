@@ -241,6 +241,7 @@ typedef enum e_usb_class
     USB_CLASS_HVND,                    ///< HVND Class
     USB_CLASS_HMSC,                    ///< HMSC Class
     USB_CLASS_PMSC,                    ///< PMSC Class
+    USB_CLASS_HPRN,                    ///< HPRN Class
     USB_CLASS_REQUEST,                 ///< USB Class Request
     USB_CLASS_END                      ///< USB Class End Code
 } usb_class_t;

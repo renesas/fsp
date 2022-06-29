@@ -87,9 +87,14 @@ typedef struct st_motor_current_output
 
     uint8_t u1_flag_get_iref;          ///< Flag to set d/q-axis current reference
 
-    /* Encoder Interface */
+    /* Encoder interface */
     uint8_t u1_adjust_status;          ///< Angle adjustment satatus
     uint8_t u1_adjust_count_full;      ///< Angle adjustment count full
+
+    /* Induction sensor adjustment interface */
+    uint8_t u1_openloop_status;        ///< Openloop status
+    float   f_openloop_speed;          ///< Openloop speed
+    float   f_openloop_id_ref;         ///< Openloop d-axis current
 } motor_current_output_t;
 
 /* Input parameters */

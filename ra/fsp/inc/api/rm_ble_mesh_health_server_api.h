@@ -33,11 +33,11 @@
 FSP_HEADER
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_HEALTH_SERVER_API BLE Mesh Health Server Interface
- * @brief Interface for Bluetooth Low Energy Mesh Model Health Server functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_HEALTH_SERVER_API BLE Mesh Health Server Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Model Health Server functions.
  *
- * @section RM_BLE_MESH_HEALTH_SERVER_API_Summary Summary
+ * @section   RM_BLE_MESH_HEALTH_SERVER_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Health Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Health Server functionality.
  *
  * The Bluetooth Low Energy Mesh Model Health Server interface can be implemented by:
@@ -72,10 +72,10 @@ typedef enum e_rm_ble_mesh_health_server_events
 typedef struct st_rm_ble_mesh_model_health_callback_args
 {
     void const * p_context;
-    rm_ble_mesh_access_model_handle_t * p_handle;
-    rm_ble_mesh_health_server_events_t  event_type;
-    uint8_t * p_event_data;
-    uint16_t  event_data_length;
+    rm_ble_mesh_access_model_handle_t * p_handle;   ///< Access model handle.
+    rm_ble_mesh_health_server_events_t  event_type; ///< Application events defined for Health Server Model.
+    uint8_t * p_event_data;                         ///< Event data.
+    uint16_t  event_data_length;                    ///< Event data length.
 } rm_ble_mesh_model_health_callback_args_t;
 
 /**
@@ -87,7 +87,7 @@ typedef struct st_rm_ble_mesh_model_health_callback_args
 typedef void (* rm_ble_mesh_health_server_self_test_function)(uint8_t test_id, uint16_t company_id);
 
 /**
- * Health Server Self Test Funtion Structure.
+ * Health Server Self Test Function Structure.
  */
 typedef struct st_rm_ble_mesh_health_server_self_test
 {
@@ -108,14 +108,14 @@ typedef void rm_ble_mesh_health_server_ctrl_t;
 typedef struct st_rm_ble_mesh_health_server_cfg
 {
     /** the parameters for initialization. */
-    rm_ble_mesh_access_instance_t const   * p_access_instance;
-    rm_ble_mesh_health_server_self_test_t * p_self_tests;
-    uint16_t company_id;
-    uint32_t num_self_tests;
+    rm_ble_mesh_access_instance_t const   * p_access_instance; ///< Access Layer instance structure.
+    rm_ble_mesh_health_server_self_test_t * p_self_tests;      ///< Health Server self test function structure.
+    uint16_t company_id;                                       ///< Company ID.
+    uint32_t num_self_tests;                                   ///< Number of self test.
 
     void (* p_callback)(rm_ble_mesh_model_health_callback_args_t * p_args);
-    void const * p_context;            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
-    void const * p_extend;             ///< Placeholder for user extension.
+    void const * p_context;                                    ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void const * p_extend;                                     ///< Placeholder for user extension.
 } rm_ble_mesh_health_server_cfg_t;
 
 /** Shared Interface definition for BLE MESH */
@@ -169,9 +169,9 @@ typedef struct st_rm_ble_mesh_health_server_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_health_server_instance
 {
-    rm_ble_mesh_health_server_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_ble_mesh_health_server_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_health_server_api_t const * p_api;  ///< Pointer to the API structure for this instance
+    rm_ble_mesh_health_server_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_health_server_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_health_server_api_t const * p_api;  ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_health_server_instance_t;
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

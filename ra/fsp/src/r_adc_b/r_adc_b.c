@@ -356,7 +356,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
         }
         else
         {
-            p_instance_ctrl->cached_adsystr = (adc_group_mask_t) (1 << p_adc_group->scan_group_id);
+            p_instance_ctrl->cached_adsystr |= (adc_group_mask_t) (1 << p_adc_group->scan_group_id);
         }
 
         /* Configure External Triggers, ELC Triggers, GPT Triggers, Self-diagnosis / Disconnect detect */
@@ -536,7 +536,7 @@ fsp_err_t R_ADC_B_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
  * If the unit was configured for ELC, GPT, or external hardware triggering, then this function allows the trigger
  * signal to get to the ADC unit. The function is not able to control the generation of the trigger itself.
  * If the unit was configured for software triggering, This function was added to this ADC version for compatability
- * with r_adc driver. For additional flexibility, it is recommended R_ADC_B_GroupScanStart.
+ * with r_adc driver. For additional flexibility, it is recommended to use R_ADC_B_ScanGroupStart.
  *
  * @pre Call R_ADC_B_ScanCfg after R_ADC_B_Open before starting a scan.
  * @pre Call R_ADC_B_Calibrate and wait for calibration to complete before starting a scan.
@@ -573,6 +573,11 @@ fsp_err_t R_ADC_B_ScanStart (adc_ctrl_t * p_ctrl)
  * get to the ADC unit. The function itself is not able to control the generation of peripheral triggers. If the unit
  * was configured for software triggering, then this function starts the software triggered scan.
  *
+ * @note Except for Group Priority Operation, if ADC0 or ADC1 are currently performing an A/D conversion operation,
+ * attempting to start another scan group that uses the same A/D converter will be ignored. This also applies to
+ * starting multiple groups at one time. When Group Priority Operation is not enabled, only the lowest numbered group
+ * will be started (for each ADC converter), other groups will be ignored.
+ *
  * @pre Call R_ADC_B_ScanCfg after R_ADC_B_Open before starting a scan.
  * @pre Call R_ADC_B_Calibrate and wait for calibration to complete before starting a scan.
  *
@@ -592,9 +597,9 @@ fsp_err_t R_ADC_B_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_ma
     FSP_ERROR_RETURN(ADC_B_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(ADC_B_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 
-    adc_group_mask_t configured_channels =
+    adc_group_mask_t configured_groups =
         (adc_group_mask_t) (p_instance_ctrl->cached_adtrgenr | p_instance_ctrl->cached_adsystr);
-    FSP_ERROR_RETURN(0 != (configured_channels & group_mask), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(0 != (configured_groups & group_mask), FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 == (group_mask & R_ADC_B->ADGRSR), FSP_ERR_IN_USE);
 #endif
 
@@ -937,7 +942,7 @@ fsp_err_t R_ADC_B_Calibrate (adc_ctrl_t * const p_ctrl, void const * p_extend)
     R_ADC_B->ADCALSTR = adc_cal0 | adc_cal1;
 
     /* Error Status Check */
-    uint32_t read_err = R_ADC_B->ADERSCR ||
+    uint32_t read_err = R_ADC_B->ADERSR ||
                         R_ADC_B->ADOVFERSR ||
                         R_ADC_B->ADOVFCHSR0 ||
                         R_ADC_B->ADOVFEXSR;

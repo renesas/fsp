@@ -51,7 +51,9 @@ FSP_HEADER
 typedef enum  e_motor_current_control_type
 {
     MOTOR_CURRENT_CONTROL_TYPE_SENSORLESS = 0,
-    MOTOR_CURRENT_CONTROL_TYPE_ENCODER    = 1
+    MOTOR_CURRENT_CONTROL_TYPE_ENCODER    = 1,
+    MOTOR_CURRENT_CONTROL_TYPE_HALL       = 2,
+    MOTOR_CURRENT_CONTROL_TYPE_INDUCTION  = 3,
 } motor_current_control_type_t;
 
 /** Selection of shunt type */
@@ -158,6 +160,10 @@ typedef struct st_motor_current_instance_ctrl
     float   f_phase_err;                          ///< Error of motor phase
     uint8_t u1_flag_crnt_offset;                  ///< Finish flag to measure current offset
 
+    /* For induction sensor control */
+    float f_sin_ad_data;                          ///< A/D converted data of induction sensor sin wave
+    float f_cos_ad_data;                          ///< A/D converted data of induction sensor cos wave
+
     motor_current_cfg_t const * p_cfg;
 
     motor_current_pi_params_t st_pi_id;           ///< D-axis current PI controller
@@ -224,6 +230,8 @@ fsp_err_t RM_MOTOR_CURRENT_ParameterUpdate(motor_current_ctrl_t * const      p_c
 
 void rm_motor_current_encoder_cyclic(motor_current_instance_t const * p_ctrl);
 void rm_motor_current_encoder_angle_adjust(motor_current_instance_t const * p_ctrl);
+void rm_motor_current_induction_cyclic(motor_current_instance_t const * p_ctrl);
+void rm_motor_current_induction_angle_adjust(motor_current_instance_t const * p_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

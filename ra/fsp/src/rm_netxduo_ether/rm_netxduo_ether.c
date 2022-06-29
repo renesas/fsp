@@ -341,6 +341,12 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
             break;
         }
 
+        case NX_LINK_SET_PHYSICAL_ADDRESS:
+        {
+            driver_req_ptr->nx_ip_driver_status = NX_NOT_SUPPORTED;
+            break;
+        }
+
         default:
         {
             break;

@@ -50,6 +50,10 @@
  #include "r_usb_pprn_api.h"
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
 
+#if defined(USB_CFG_HPRN_USE)
+ #include "r_usb_hprn_cfg.h"
+#endif                                 /* defined(USB_CFG_HPRN_USE) */
+
 #if defined(USB_CFG_PMSC_USE)
  #include "r_usb_pmsc_api.h"
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
@@ -120,7 +124,19 @@ static const uint8_t g_usb_pipe_host[] =
     USB_NULL,              USB_NULL,
     USB_NULL,              USB_NULL,
     USB_NULL,              USB_NULL,
- #endif                                /* defined(USB_CFG_HHID_USE) */
+ #endif                                           /* defined(USB_CFG_HHID_USE) */
+
+ #if defined(USB_CFG_HPRN_USE)
+    USB_CFG_HPRN_BULK_IN,  USB_CFG_HPRN_BULK_OUT, /* HPRN: Address 1 */
+    USB_CFG_HPRN_BULK_IN,  USB_CFG_HPRN_BULK_OUT, /* HPRN: Address 2 using Hub */
+    USB_NULL,              USB_NULL,              /* HPRN: Address 3 using Hub */
+    USB_NULL,              USB_NULL,              /* HPRN: Address 4 using Hub */
+ #else                                            /* defined(USB_CFG_HPRN_USE) */
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+ #endif                                /* defined(USB_CFG_HPRN_USE) */
 };
 #endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
@@ -267,6 +283,17 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
 
     /* PMSC */
     USB_NULL, USB_NULL,                              /* USB_PMSC  (14) */
+
+    /* HPRN */
+#if defined(USB_CFG_HPRN_USE)
+ #if (BSP_CFG_RTOS == 1)
+    USB_NULL, USB_NULL,                              /* USB_HPRN (15) */
+ #else                                               /* #if (BSP_CFG_RTOS == 1) */
+    usb_hprn_read_complete, usb_hprn_write_complete, /* USB_HPRN (15) */
+ #endif /* #if (BSP_CFG_RTOS == 1) */
+#else
+    USB_NULL, USB_NULL,                              /* USB_HPRN (15) */
+#endif
 };                                                   /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
 
 #if defined(USB_CFG_PCDC_USE)

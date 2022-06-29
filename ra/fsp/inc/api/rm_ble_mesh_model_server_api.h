@@ -33,11 +33,11 @@
 FSP_HEADER
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_MODEL_SERVER_API BLE Mesh Model Server Interface
- * @brief Interface for Bluetooth Low Energy Mesh Model Model Server functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_MODEL_SERVER_API BLE Mesh Model Server Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Model Model Server functions.
  *
- * @section RM_BLE_MESH_MODEL_SERVER_API_Summary Summary
+ * @section   RM_BLE_MESH_MODEL_SERVER_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Server (BLE MESH MODEL SERVER) middleware provides Bluetooth Low Energy Mesh Model Model Server functionality.
  *
  * The Bluetooth Low Energy Mesh Model Model Server interface can be implemented by:
@@ -100,6 +100,7 @@ typedef enum e_rm_ble_mesh_model_server_user_access
     /** User Access - the device property can be read and written */
     RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_READ_WRITE = 0x03,
 
+    /** User Access - the invalid device property id */
     RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_INVALID_PROPERTY_ID = 0xFF,
 } rm_ble_mesh_model_server_user_access_t;
 
@@ -252,7 +253,7 @@ typedef enum e_rm_ble_mesh_model_server_state_types
 
     RM_BLE_MESH_MODEL_SERVER_MAX_NUM_OF_STATES = (RM_BLE_MESH_MODEL_SERVER_STATE_MOVE_LEVEL + 1),
 
-/* Additional supporting structure type defines */
+    /* Additional supporting structure type defines */
     RM_BLE_MESH_MODEL_SERVER_EXT_TID_AND_TRANSITION_STRUCT = 128,
     RM_BLE_MESH_MODEL_SERVER_EXT_STATUS_STRUCT             = 129,
     RM_BLE_MESH_MODEL_SERVER_STATE_SENSOR_SERIES           = 130,
@@ -311,18 +312,20 @@ typedef struct st_rm_ble_mesh_model_server_generic_prop_srv_ids_info
      * a set of device properties
      */
     uint16_t * property_ids;
-    uint16_t   property_ids_count;
+
+    /** Count of property_ids */
+    uint16_t property_ids_count;
 } rm_ble_mesh_model_server_generic_prop_srv_ids_info_t;
 
 /** Mesh model server callback parameter definition */
 typedef struct st_rm_ble_mesh_model_server_callback_args
 {
     void const * p_context;
-    rm_ble_mesh_access_model_req_msg_context_t * p_msg_context;
-    rm_ble_mesh_access_req_msg_raw_t           * p_msg_raw;
-    rm_ble_mesh_access_model_req_msg_t         * p_req_type;
-    rm_ble_mesh_access_model_state_parameter_t * p_state_parameter;
-    rm_ble_mesh_access_extended_parameter_t    * p_extended_parameter;
+    rm_ble_mesh_access_model_req_msg_context_t * p_msg_context;        ///< Context of the message.
+    rm_ble_mesh_access_req_msg_raw_t           * p_msg_raw;            ///< Uninterpreted/raw received message for a specific model instance.
+    rm_ble_mesh_access_model_req_msg_t         * p_req_type;           ///< Requested message type for a specific model instance.
+    rm_ble_mesh_access_model_state_parameter_t * p_state_parameter;    ///< Model specific state parameters in a request or response message.
+    rm_ble_mesh_access_extended_parameter_t    * p_extended_parameter; ///< Additional parameters in a Model specific request or response message.
 } rm_ble_mesh_model_server_callback_args_t;
 
 /**
@@ -336,8 +339,8 @@ typedef struct st_rm_ble_mesh_model_server_callback_args
  */
 typedef struct st_rm_ble_mesh_model_server_timeout_callback_args
 {
-    void const * p_context;
-    rm_ble_mesh_access_model_handle_t * p_handle;
+    void const * p_context;                       ///< Placeholder for user data.
+    rm_ble_mesh_access_model_handle_t * p_handle; ///< Access Model handle.
     void * p_blob;
 } rm_ble_mesh_model_server_timeout_callback_args_t;
 
@@ -354,10 +357,10 @@ typedef struct st_rm_ble_mesh_model_server_cfg
     rm_ble_mesh_access_instance_t const * p_access_instance;
 
     /* Pointer to callback and optional working memory */
-    void (* p_callback)(rm_ble_mesh_model_server_callback_args_t * p_args);
-    void (* p_timeout_callback)(rm_ble_mesh_model_server_timeout_callback_args_t * p_args);
-    void const * p_context;            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
-    void const * p_extend;             ///< Placeholder for user extension.
+    void (* p_callback)(rm_ble_mesh_model_server_callback_args_t * p_args);                 ///< Mesh model server callback.
+    void (* p_timeout_callback)(rm_ble_mesh_model_server_timeout_callback_args_t * p_args); ///< Access Layer Model publication timeout callback.
+    void const * p_context;                                                                 ///< Placeholder for user data.
+    void const * p_extend;                                                                  ///< Placeholder for user extension.
 } rm_ble_mesh_model_server_cfg_t;
 
 /** Shared Interface definition for BLE MESH */
@@ -451,9 +454,9 @@ typedef struct st_rm_ble_mesh_model_server_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_model_server_instance
 {
-    rm_ble_mesh_model_server_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_ble_mesh_model_server_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_model_server_api_t const * p_api;  ///< Pointer to the API structure for this instance
+    rm_ble_mesh_model_server_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_model_server_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_model_server_api_t const * p_api;  ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_model_server_instance_t;
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

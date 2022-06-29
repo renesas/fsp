@@ -22,11 +22,11 @@
 #define RM_BLE_MESH_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_API BLE Mesh Interface
- * @brief Interface for Bluetooth Low Energy Abstraction functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_API BLE Mesh Interface
+ * @brief     Interface for Bluetooth Low Energy Abstraction functions.
  *
- * @section RM_BLE_MESH_API_Summary Summary
+ * @section   RM_BLE_MESH_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh (BLE MESH) peripheral provides Bluetooth Low Energy Mesh functionality.
  *
  * The Bluetooth Low Energy Mesh interface can be implemented by:
@@ -63,55 +63,55 @@ typedef enum e_rm_ble_mesh_error_code
 {
     RM_BLE_MESH_SUCCESS = 0x0000,
 
-/** Invalid Address */
+    /** Invalid Address */
     RM_BLE_MESH_INVALID_ADDRESS = 0x0001,
 
-/** Invalid Model */
+    /** Invalid Model */
     RM_BLE_MESH_INVALID_MODEL = 0x0002,
 
-/** Invalid AppKey Index */
+    /** Invalid AppKey Index */
     RM_BLE_MESH_INVALID_APPKEY_INDEX = 0x0003,
 
-/** Invalid NetKey Index */
+    /** Invalid NetKey Index */
     RM_BLE_MESH_INVALID_NETKEY_INDEX = 0x0004,
 
-/** Insufficient Resources */
+    /** Insufficient Resources */
     RM_BLE_MESH_INSUFFICIENT_RESOURCES = 0x0005,
 
-/** Key Index Already Stored */
+    /** Key Index Already Stored */
     RM_BLE_MESH_KEY_INDEX_ALREADY_STORED = 0x0006,
 
-/** Invalid Publish Parameters */
+    /** Invalid Publish Parameters */
     RM_BLE_MESH_INVALID_PUBLISH_PARAMETER = 0x0007,
 
-/** Not a Subscribe Model */
+    /** Not a Subscribe Model */
     RM_BLE_MESH_NOT_A_SUBSCRIBE_MODEL = 0x0008,
 
-/** Storage Failure */
+    /** Storage Failure */
     RM_BLE_MESH_STORAGE_FAILURE = 0x0009,
 
-/** Feature Not Supported */
+    /** Feature Not Supported */
     RM_BLE_MESH_FEATURE_NOT_SUPPORTED = 0x000A,
 
-/** Cannot Update */
+    /** Cannot Update */
     RM_BLE_MESH_CANNOT_UPDATE = 0x000B,
 
-/** Cannot Remove */
+    /** Cannot Remove */
     RM_BLE_MESH_CANNOT_REMOVE = 0x000C,
 
-/** Cannot Bind */
+    /** Cannot Bind */
     RM_BLE_MESH_CANNOT_BIND = 0x000D,
 
-/** Temporarily Unable to Change State */
+    /** Temporarily Unable to Change State */
     RM_BLE_MESH_TEMP_UNABLE_TO_CHANGE_STATE = 0x000E,
 
-/** Cannot Set */
+    /** Cannot Set */
     RM_BLE_MESH_CANNOT_SET = 0x000F,
 
-/** Unspecified Error */
+    /** Unspecified Error */
     RM_BLE_MESH_UNSPECIFIED_ERROR = 0x0010,
 
-/** Invalid Binding */
+    /** Invalid Binding */
     RM_BLE_MESH_INVALID_BINDING = 0x0011,
 } rm_ble_mesh_error_code_t;
 
@@ -133,8 +133,10 @@ typedef enum e_rm_ble_mesh_feature_select
 
 typedef enum e_rm_ble_mesh_feature_state
 {
+    /** BLE Mesh featre status - Disable */
     RM_BLE_MESH_FEATURE_STATE_DISABLE = 0x0,
 
+    /** BLE Mesh featre status - Enable */
     RM_BLE_MESH_FEATURE_STATE_ENABLE = 0x1,
 } rm_ble_mesh_feature_state_t;
 
@@ -148,7 +150,7 @@ typedef struct st_rm_ble_mesh_buffer
     uint16_t length;
 } rm_ble_mesh_buffer_t;
 
-/** Access Stasus Transision Type */
+/** Access Status Transition Type */
 typedef struct st_rm_ble_mesh_access_state_transition
 {
     /** Transition Timer */
@@ -216,14 +218,14 @@ typedef struct st_rm_ble_mesh_cfg
     uint32_t maximum_ltrn_sar_context;
 
     /**
-     *  Maximum number of messages that the friend is capabale to queue
+     *  Maximum number of messages that the friend is capable to queue
      *  for a single Low Power Node.
      */
     uint32_t maximum_friend_message_queue;
 
     /**
      *  Maximum number of subscription addresses that the friend
-     *  is capabale to store for a single Low Power Node.
+     *  is capable to store for a single Low Power Node.
      */
     uint32_t maximum_friend_subscription_list;
 
@@ -291,7 +293,7 @@ typedef struct st_rm_ble_mesh_cfg
     /** Lower Transport Segment Transmission Count - default value */
     uint32_t ltrn_rtx_count;
 
-    /** Lower Transport Acknowledgement Timeout in milliseconds */
+    /** Lower Transport Acknowledgment Timeout in milliseconds */
     uint32_t ltrn_ack_timeout;
 
     /** Lower Transport Incomplete Timeout in milliseconds */
@@ -341,14 +343,14 @@ typedef struct st_rm_ble_mesh_cfg
     /** Vendor ID */
     uint32_t default_vendor_id;
 
-    void const * p_context;            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void const * p_context;            ///< Placeholder for user data.
     void const * p_extend;             ///< Placeholder for user extension.
 } rm_ble_mesh_cfg_t;
 
 /** BLE MESH functions implemented at the HAL layer will follow this API. */
 typedef struct st_rm_ble_mesh_api
 {
-    /** Open ble mesh middleware.
+    /** Open BLE mesh middleware.
      * @par Implemented as
      * - @ref RM_BLE_MESH_Open()
      *
@@ -357,7 +359,7 @@ typedef struct st_rm_ble_mesh_api
      */
     fsp_err_t (* open)(rm_ble_mesh_ctrl_t * const p_ctrl, rm_ble_mesh_cfg_t const * const p_cfg);
 
-    /** Close ble mesh middleware.
+    /** Close BLE mesh middleware.
      * @par Implemented as
      * - @ref RM_BLE_MESH_Close()
      *
@@ -369,18 +371,16 @@ typedef struct st_rm_ble_mesh_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_StartTransitionTimer()
      *
-     * @param [in] p_ctrl
-     *        Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] transition
-     *         State Transition data structure, which includes the timeout,
-     *         transition start and complete callback etc.
+     * @param[in]  p_transition
+     *             Pointer to state transition data structure, which includes the timeout,
+     *             transition start and complete callback etc.
      *
-     * @param [out] transition_time_handle
-     *         Transition Time Handle, which can be used to stop the transition
-     *         timer if required.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[out] p_transition_time_handle
+     *             Pointer to transition time handle, which can be used to stop the transition
+     *             timer if required.
      */
     fsp_err_t (* startTransitionTimer)(rm_ble_mesh_ctrl_t * const                          p_ctrl,
                                        rm_ble_mesh_access_state_transition_t const * const p_transition,
@@ -390,14 +390,12 @@ typedef struct st_rm_ble_mesh_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_StopTransitionTimer()
      *
-     * @param [in] p_ctrl
-     *        Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     *  @param [in] transition_time_handle
-     *         Transition Time Handle, returned by the Start Transition Timer
-     *         interface.
-     *
-     *  @return API_SUCCESS or an error code indicating reason for failure
+     * @param[in]  transition_time_handle
+     *             Transition time handle, returned by the Start Transition Timer
+     *             interface.
      */
     fsp_err_t (* stopTransitionTimer)(rm_ble_mesh_ctrl_t * const p_ctrl, uint16_t transition_time_handle);
 
@@ -405,17 +403,15 @@ typedef struct st_rm_ble_mesh_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_GetRemainingTransitionTime()
      *
-     * @param [in] p_ctrl
-     *        Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] transition_time_handle
-     *         Transition Time Handle, returned by the Start Transition Timer
-     *         interface.
+     * @param[in]  transition_time_handle
+     *             Transition time handle, returned by the Start Transition Timer
+     *             interface.
      *
-     * @param [out] remaining_transition_time
-     *         Remaining Transition Time.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[out] p_remaining_transition_time
+     *             Pointer to remaining transition time.
      */
     fsp_err_t (* getRemainingTransitionTime)(rm_ble_mesh_ctrl_t * const p_ctrl, uint16_t transition_time_handle,
                                              uint8_t * const p_remaining_transition_time);
@@ -424,57 +420,51 @@ typedef struct st_rm_ble_mesh_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_GetRemainingTransitionTimeWithOffset()
      *
-     * @param [in] p_ctrl
-     *        Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] transition_time_handle
-     *         Transition Time Handle, returned by the Start Transition Timer
-     *         interface.
+     * @param[in]  transition_time_handle
+     *             Transition time handle, returned by the Start Transition Timer
+     *             interface.
      *
-     * @param [in] offset_in_ms
-     *         Offset in ms.
+     * @param[in]  offset_in_ms
+     *             Offset in millisecond.
      *
-     * @param [out] remaining_transition_time
-     *         Remaining Transition Time.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[out] p_remaining_transition_time
+     *             Pointer to remaining transition time.
      */
     fsp_err_t (* getRemainingTransitionTimeWithOffset)(rm_ble_mesh_ctrl_t * const p_ctrl,
                                                        uint16_t transition_time_handle, uint32_t offset_in_ms,
                                                        uint8_t * const p_remaining_transition_time);
 
-    /** To convert transition time from milisecond.
+    /** To convert transition time from millisecond.
      * @par Implemented as
      * - @ref RM_BLE_MESH_ConvertTransitionTimeFromMs()
      *
-     * @param [in] p_ctrl
-     *        Pointer to control structure.
+     * @param[in]  p_ctrl
+     *             Pointer to control structure.
      *
-     * @param [in] transition_time_in_ms
-     *         Transition Time in milisecond.
+     * @param[in]  transition_time_in_ms
+     *             Transition time in millisecond.
      *
-     * @param [out] transition_time
-     *         Converted value in Generic Default Transition Time state format.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param[out] p_transition_time
+     *             Pointer to converted value in Generic Default Transition Time state format.
      */
     fsp_err_t (* convertTransitionTimeFromMs)(rm_ble_mesh_ctrl_t * const p_ctrl, uint32_t transition_time_in_ms,
                                               uint8_t * const p_transition_time);
 
-    /** To convert transition time to milisecond.
+    /** To convert transition time to millisecond.
      * @par Implemented as
      * - @ref RM_BLE_MESH_ConvertTransitionTimeToMs()
      *
-     * @param [in] p_ctrl
-     *        Pointer to control structure.
+     * @param [in]  p_ctrl
+     *              Pointer to control structure.
      *
-     * @param [in] transition_time
-     *         Transition time in Generic Default Transition Time state format.
+     * @param [in]  transition_time
+     *              Transition time in Generic Default Transition Time state format.
      *
-     * @param [out] transition_time_in_ms
-     *         Converted value of Transition Time in milisecond.
-     *
-     * @return API_SUCCESS or an error code indicating reason for failure
+     * @param [out] p_transition_time_in_ms
+     *              Pointer to converted value of transition time in millisecond.
      */
     fsp_err_t (* convertTransitionTimeToMs)(rm_ble_mesh_ctrl_t * const p_ctrl, uint8_t transition_time,
                                             uint32_t * const p_transition_time_in_ms);
@@ -483,9 +473,9 @@ typedef struct st_rm_ble_mesh_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_instance
 {
-    rm_ble_mesh_ctrl_t      * p_ctrl;  ///< Pointer to the control structure for this instance
-    rm_ble_mesh_cfg_t const * p_cfg;   ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_api_t const * p_api;   ///< Pointer to the API structure for this instance
+    rm_ble_mesh_ctrl_t      * p_ctrl;  ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_cfg_t const * p_cfg;   ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_api_t const * p_api;   ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_instance_t;
 
 /*******************************************************************************************************************//**

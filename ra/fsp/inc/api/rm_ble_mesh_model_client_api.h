@@ -33,11 +33,11 @@
 FSP_HEADER
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_MODEL_CLIENT_API BLE Mesh Model Client Interface
- * @brief Interface for Bluetooth Low Energy Mesh Model Model Client functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_MODEL_CLIENT_API BLE Mesh Model Client Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Model Model Client functions.
  *
- * @section RM_BLE_MESH_MODEL_CLIENT_API_Summary Summary
+ * @section   RM_BLE_MESH_MODEL_CLIENT_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Client (BLE MESH MODEL CLIENT) middleware provides Bluetooth Low Energy Mesh Model Client functionality.
  *
  * The Bluetooth Low Energy Mesh Model Client interface can be implemented by:
@@ -74,9 +74,9 @@ FSP_HEADER
 /** Mesh model client callback parameter definition */
 typedef struct st_rm_ble_mesh_model_client_callback_args
 {
-    void const * p_context;
-    rm_ble_mesh_access_model_req_msg_context_t * p_msg_context;
-    rm_ble_mesh_access_req_msg_raw_t           * p_msg_raw;
+    void const * p_context;                                     ///< Placeholder for user data.
+    rm_ble_mesh_access_model_req_msg_context_t * p_msg_context; ///< Context of message received for a specific model instance.
+    rm_ble_mesh_access_req_msg_raw_t           * p_msg_raw;     ///< Uninterpreted/raw received message for a specific model instance.
 } rm_ble_mesh_model_client_callback_args_t;
 
 /** BLE MESH MODEL CLIENT control block.  Allocate an instance specific control block to pass into the BLE mesh model health client API calls.
@@ -89,12 +89,12 @@ typedef void rm_ble_mesh_model_client_ctrl_t;
 typedef struct st_rm_ble_mesh_model_client_cfg
 {
     /** the parameters for initialization. */
-    rm_ble_mesh_access_instance_t const * p_access_instance;
+    rm_ble_mesh_access_instance_t const * p_access_instance;                ///< Access Layer instance structure.
 
     /* Pointer to callback and optional working memory */
-    void (* p_callback)(rm_ble_mesh_model_client_callback_args_t * p_args);
-    void const * p_context;            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
-    void const * p_extend;             ///< Placeholder for user extension.
+    void (* p_callback)(rm_ble_mesh_model_client_callback_args_t * p_args); ///< Mesh model client callback.
+    void const * p_context;                                                 ///< Placeholder for user data.
+    void const * p_extend;                                                  ///< Placeholder for user extension.
 } rm_ble_mesh_model_client_cfg_t;
 
 /** Shared Interface definition for BLE MESH */
@@ -152,7 +152,7 @@ typedef struct st_rm_ble_mesh_model_client_api
      */
     fsp_err_t (* close)(rm_ble_mesh_model_client_ctrl_t * const p_ctrl);
 
-    /** API to set Model client model handle.
+    /** DEPRECATED - API to set Model client model handle.
      * @par Implemented as
      * - @ref RM_MESH_GENERIC_BATTERY_CLT_SetModelHandle()
      * - @ref RM_MESH_GENERIC_DTT_CLT_SetModelHandle()
@@ -171,6 +171,7 @@ typedef struct st_rm_ble_mesh_model_client_api
      * - @ref RM_MESH_SCHEDULER_CLT_SetModelHandle()
      * - @ref RM_MESH_TIME_CLT_SetModelHandle()
      * - @ref RM_MESH_SENSOR_CLT_SetModelHandle()
+     * - @ref RM_MESH_HEALTH_CLIENT_SetModelHandle()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  model_handle  Model handle to be assigned.

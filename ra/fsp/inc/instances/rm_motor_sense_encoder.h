@@ -250,6 +250,11 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet(motor_angle_ctrl_t * cons
                                                        float * const              p_ed,
                                                        float * const              p_eq);
 
+fsp_err_t RM_MOTOR_SENSE_ENCODER_CyclicProcess(motor_angle_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_SENSE_ENCODER_SensorDataSet(motor_angle_ctrl_t * const    p_ctrl,
+                                               motor_angle_ad_data_t * const p_ad_data);
+
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 

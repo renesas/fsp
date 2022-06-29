@@ -107,6 +107,7 @@ static rtos_mbx_id_t g_hmsc_req_mbx_hdl;
 static rtos_mbx_id_t g_hcdc_mbx_hdl;
 static rtos_mbx_id_t g_hhid_mbx_hdl;
 static rtos_mbx_id_t g_pmsc_mbx_hdl;
+static rtos_mbx_id_t g_hprn_mbx_hdl;
 
 static rtos_mbx_id_t g_pipe0_hdl[USB_NUM_USBIP][USB_MAXDEVADDR];     /* USB Transfer MBX for PIPE0 wait que */
 static rtos_mbx_id_t g_pipe_hdl[USB_NUM_USBIP][USB_MAXPIPE_NUM + 1]; /* USB Transfer MBX for PIPE1-9 wait que */
@@ -126,6 +127,7 @@ rtos_mbx_id_t * g_mbx_table[] =
     &g_hcdc_mbx_hdl,                   /* A mailbox handler of USB HCDC task */
     &g_hhid_mbx_hdl,                   /* A mailbox handler of USB HHID task */
     &g_pmsc_mbx_hdl,                   /* A mailbox handler of USB PMSC task */
+    &g_hprn_mbx_hdl,                   /* A mailbox handler of USB HPRN task */
 };
 
  #if (BSP_CFG_RTOS == 2)
@@ -208,6 +210,9 @@ static uint8_t g_rtos_usb_hcdc_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
   #if defined(USB_CFG_HHID_USE)
 static uint8_t g_rtos_usb_hhid_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
   #endif                               /* defined(USB_CFG_HHID_USE) */
+  #if defined(USB_CFG_HPRN_USE)
+static uint8_t g_rtos_usb_hprn_mbx[sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)];
+  #endif                               /* defined(USB_CFG_HPRN_USE) */
 
 static TX_BLOCK_POOL g_usb_block_pool_hdl;
 static uint8_t       g_usb_rtos_fixed_memblk[((sizeof(usb_utr_t) + sizeof(void *)) * NUM_OF_BLOCK)];
@@ -328,6 +333,18 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
             return err;
         }
    #endif                              /* defined(USB_CFG_HHID_USE) */
+
+   #if defined(USB_CFG_HPRN_USE)
+
+        /** USB Host Printer **/
+        g_hprn_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
+        if (NULL == g_hprn_mbx_hdl)
+        {
+            err = UsbRtos_Err_Init_Mbx;
+
+            return err;
+        }
+   #endif                              /* defined(USB_CFG_HPRN_USE) */
 
         /** Create memory pool using for each task **/
         /** USB HCD task **/
@@ -841,7 +858,21 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-   #endif                                                    /* defined(USB_CFG_HHID_USE) */
+   #endif                              /* defined(USB_CFG_HHID_USE) */
+
+   #if defined(USB_CFG_HPRN_USE)
+
+        /** USB Host Printer **/
+        ret =
+            tx_queue_create(&g_hprn_mbx_hdl, "USB_HPRN_MBX", TX_1_ULONG, &g_rtos_usb_hprn_mbx[0],
+                            (sizeof(ULONG) * (TX_1_ULONG) *(QUEUE_SIZE)));
+        if (TX_SUCCESS != ret)
+        {
+            err = UsbRtos_Err_Init_Mbx;
+
+            return err;
+        }
+   #endif                                                    /* defined(USB_CFG_HPRN_USE) */
 
         ret = tx_thread_create(&g_hcd_tsk_hdl,               /** Pointer to a thread control block.              **/
                                "HCD_TASK",                   /** Pointer to the name of the thread.              **/
@@ -1106,6 +1137,12 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         vQueueDelete(g_hhid_mbx_hdl);
    #endif                              /* defined(USB_CFG_HHID_USE) */
 
+   #if defined(USB_CFG_HPRN_USE)
+
+        /** USB Host Printer **/
+        vQueueDelete(g_hprn_mbx_hdl);
+   #endif                              /* defined(USB_CFG_HPRN_USE) */
+
         /** Delete memory pool using for each task **/
         /** USB HCD task **/
         vQueueDelete(g_hcd_mpl_hdl);
@@ -1364,6 +1401,18 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
             return err;
         }
    #endif                              /* defined(USB_CFG_HHID_USE) */
+
+   #if defined(USB_CFG_HPRN_USE)
+
+        /** USB Host Printer **/
+        ret = tx_queue_delete(&g_hprn_mbx_hdl);
+        if (TX_SUCCESS != ret)
+        {
+            err = UsbRtos_Err_Init_Mbx;
+
+            return err;
+        }
+   #endif                              /* defined(USB_CFG_HPRN_USE) */
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
     }
 

@@ -90,6 +90,11 @@ typedef struct st_motor_speed_input
     uint8_t u1_adjust_status;          ///< Angle adjustment satatus
     uint8_t u1_adjust_mode;            ///< Angle adjustment mode
     uint8_t u1_adjust_count_full;      ///< Angle adjustment count full
+
+    /* Interface with induction sensor */
+    uint8_t u1_openloop_status;        ///< Openloop status
+    float   f_openloop_speed;          ///< Openloop speed
+    float   f_openloop_id_ref;         ///< Openloop d-axis current
 } motor_speed_input_t;
 
 /* Structure of output parameters */

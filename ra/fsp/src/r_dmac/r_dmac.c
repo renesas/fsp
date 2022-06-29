@@ -112,7 +112,7 @@ static void      r_dmac_config_transfer_info(dmac_instance_ctrl_t * p_ctrl, tran
 
 #if DMAC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_dma_open_parameter_checking(dmac_instance_ctrl_t * const p_ctrl, transfer_cfg_t const * const p_cfg);
-static fsp_err_t r_dmac_info_paramter_checking(transfer_info_t const * const p_info);
+static fsp_err_t r_dmac_reconfigure_paramter_checking(transfer_info_t const * const p_info);
 static fsp_err_t r_dmac_enable_parameter_checking(dmac_instance_ctrl_t * const p_ctrl);
 
 #endif
@@ -201,7 +201,7 @@ fsp_err_t R_DMAC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_
 #if DMAC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl != NULL);
     FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
-    err = r_dmac_info_paramter_checking(p_info);
+    err = r_dmac_reconfigure_paramter_checking(p_info);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
@@ -536,22 +536,16 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
         /* Enable transfer end interrupt requests. */
         dmint |= DMAC_PRV_DMINT_DTIE_MASK;
 
-        if (TRANSFER_IRQ_EACH == p_info->transfer_settings_word_b.irq)
+        /* Enable the transfer end escape interrupt requests.
+         * Repeat size end and Extended Repeat area overflow requests are not
+         * used with Repeat-Block mode. Reference section 16.2.9 "DMINT : DMA Interrupt Setting Register"
+         * of RA6M4 hardware manual R01UH0890EJ0110. */
+        if ((TRANSFER_IRQ_EACH == p_info->transfer_settings_word_b.irq) &&
+            (TRANSFER_MODE_REPEAT_BLOCK != p_info->transfer_settings_word_b.mode))
         {
-            if (TRANSFER_MODE_REPEAT_BLOCK == p_info->transfer_settings_word_b.mode)
-            {
-                /* Enable the transfer end escape interrupt requests.
-                 * Repeat size end and Extended Repeat area overflow requests are not
-                 * used with Repeat-Block mode. Reference section 16.2.9 "DMINT : DMA Interrupt Setting Register"
-                 * of RA6M4 hardware manual R01UH0890EJ0110. */
-                dmint |= DMAC_PRV_DMINT_ESIE_MASK;
-            }
-            else
-            {
-                /* Enable the transfer end escape interrupt requests
-                 * (Repeat size end and Extended Repeat area overflow requests). */
-                dmint |= (DMAC_PRV_DMINT_RPTIE_MASK | DMAC_PRV_DMINT_ESIE_MASK);
-            }
+            /* Enable the transfer end escape interrupt requests
+             * (Repeat size end and Extended Repeat area overflow requests). */
+            dmint |= (DMAC_PRV_DMINT_RPTIE_MASK | DMAC_PRV_DMINT_ESIE_MASK);
         }
 
         /* Enable the IRQ in the NVIC. */
@@ -643,7 +637,7 @@ static fsp_err_t r_dma_open_parameter_checking (dmac_instance_ctrl_t * const p_c
         FSP_ERROR_RETURN(p_extend->irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
 
-    fsp_err_t err = r_dmac_info_paramter_checking(p_cfg->p_info);
+    fsp_err_t err = r_dmac_reconfigure_paramter_checking(p_cfg->p_info);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
@@ -657,7 +651,7 @@ static fsp_err_t r_dma_open_parameter_checking (dmac_instance_ctrl_t * const p_c
  * @retval FSP_SUCCESS              The transfer info is valid.
  * @retval FSP_ERR_ASSERTION        A transfer info setting is invalid.
  **********************************************************************************************************************/
-static fsp_err_t r_dmac_info_paramter_checking (transfer_info_t const * const p_info)
+static fsp_err_t r_dmac_reconfigure_paramter_checking (transfer_info_t const * const p_info)
 {
     FSP_ASSERT(p_info != NULL);
 
@@ -665,6 +659,9 @@ static fsp_err_t r_dmac_info_paramter_checking (transfer_info_t const * const p_
     {
         FSP_ASSERT(p_info->length <= DMAC_REPEAT_BLOCK_MAX_LENGTH);
     }
+
+    FSP_ASSERT((TRANSFER_MODE_REPEAT_BLOCK != p_info->transfer_settings_word_b.mode) ||
+               (TRANSFER_IRQ_EACH != p_info->transfer_settings_word_b.irq));
 
     return FSP_SUCCESS;
 }

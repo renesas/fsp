@@ -438,6 +438,20 @@ fsp_err_t RM_MOTOR_CURRENT_ParameterGet (motor_current_ctrl_t * const   p_ctrl,
         p_st_output->u1_adjust_status     = (uint8_t) temp_info.e_adjust_status;
         p_st_output->u1_adjust_count_full = temp_info.u1_adjust_count_full;
     }
+    else if (MOTOR_CURRENT_CONTROL_TYPE_INDUCTION == p_extended_cfg->u1_control_type)
+    {
+        p_angle->p_api->infoGet(p_angle->p_ctrl, &temp_info);
+        p_st_output->u1_adjust_status     = (uint8_t) temp_info.e_adjust_status;
+        p_st_output->u1_adjust_count_full = temp_info.u1_adjust_count_full;
+
+        p_st_output->u1_openloop_status = (uint8_t) temp_info.e_open_loop_status;
+        p_st_output->f_openloop_speed   = temp_info.f_openloop_speed;
+        p_st_output->f_openloop_id_ref  = temp_info.f_openloop_id_ref;
+    }
+    else
+    {
+        /* Do nothing */
+    }
 
     return err;
 }
@@ -589,7 +603,7 @@ void rm_motor_current_encoder_cyclic (motor_current_instance_t const * p_ctrl)
     motor_current_instance_ctrl_t * p_instance_ctrl  = (motor_current_instance_ctrl_t *) p_ctrl->p_ctrl;
     motor_angle_instance_t const  * p_angle_instance = p_instance_ctrl->p_angle_instance;
 
-    p_angle_instance->p_api->encoderCyclic(p_angle_instance->p_ctrl);
+    p_angle_instance->p_api->cyclicProcess(p_angle_instance->p_ctrl);
 }
 
 /***********************************************************************************************************************
@@ -599,6 +613,37 @@ void rm_motor_current_encoder_cyclic (motor_current_instance_t const * p_ctrl)
  * Return Value  : None
  **********************************************************************************************************************/
 void rm_motor_current_encoder_angle_adjust (motor_current_instance_t const * p_ctrl)
+{
+    motor_current_instance_ctrl_t * p_instance_ctrl  = (motor_current_instance_ctrl_t *) p_ctrl->p_ctrl;
+    motor_angle_instance_t const  * p_angle_instance = p_instance_ctrl->p_angle_instance;
+
+    if (MOTOR_CURRENT_FLG_SET == p_instance_ctrl->u1_active)
+    {
+        p_angle_instance->p_api->angleAdjust(p_angle_instance->p_ctrl);
+    }
+}
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_current_induction_cyclic
+ * Description   : Wrapper Cyclic Process of Induction sensor Control by Current Control
+ * Arguments     : p_ctrl - The pointer to current control
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_current_induction_cyclic (motor_current_instance_t const * p_ctrl)
+{
+    motor_current_instance_ctrl_t * p_instance_ctrl  = (motor_current_instance_ctrl_t *) p_ctrl->p_ctrl;
+    motor_angle_instance_t const  * p_angle_instance = p_instance_ctrl->p_angle_instance;
+
+    p_angle_instance->p_api->cyclicProcess(p_angle_instance->p_ctrl);
+}
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_current_induction_angle_adjust
+ * Description   : Wrapper Angle Adjustment Process of Induction sensor Control by Current Control
+ * Arguments     : p_ctrl - The pointer to current control
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_current_induction_angle_adjust (motor_current_instance_t const * p_ctrl)
 {
     motor_current_instance_ctrl_t * p_instance_ctrl  = (motor_current_instance_ctrl_t *) p_ctrl->p_ctrl;
     motor_angle_instance_t const  * p_angle_instance = p_instance_ctrl->p_angle_instance;
@@ -661,7 +706,9 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
             f_iu_ad  = temp_drv_crnt_get.iu;
             f_iw_ad  = temp_drv_crnt_get.iw;
             f_vdc_ad = temp_drv_crnt_get.vdc;
-            p_instance_ctrl->f_va_max = temp_drv_crnt_get.va_max;
+            p_instance_ctrl->f_va_max      = temp_drv_crnt_get.va_max;
+            p_instance_ctrl->f_sin_ad_data = temp_drv_crnt_get.sin_ad;
+            p_instance_ctrl->f_cos_ad_data = temp_drv_crnt_get.cos_ad;
 
             if (MOTOR_CURRENT_SHUNT_TYPE_2_SHUNT == p_extended_cfg->shunt)
             {
@@ -780,6 +827,28 @@ static void motor_current_angle_cyclic (motor_current_instance_t * p_instance)
     }
     else if (MOTOR_CURRENT_CONTROL_TYPE_ENCODER == p_extended_cfg->u1_control_type)
     {
+        /* Position & speed calculation */
+        p_angle->p_api->internalCalculate(p_angle->p_ctrl);
+
+        /* Speed & angle detection */
+        p_angle->p_api->angleSpeedGet(p_angle->p_ctrl, &(p_ctrl->f_rotor_angle), &(p_ctrl->f_speed_rad),
+                                      &(p_ctrl->f_position_rad));
+    }
+    else if (MOTOR_CURRENT_CONTROL_TYPE_HALL == p_extended_cfg->u1_control_type)
+    {
+        /* Speed & angle detection */
+        p_angle->p_api->angleSpeedGet(p_angle->p_ctrl, &(p_ctrl->f_rotor_angle), &(p_ctrl->f_speed_rad),
+                                      &(p_ctrl->f_phase_err));
+    }
+    else if (MOTOR_CURRENT_CONTROL_TYPE_INDUCTION == p_extended_cfg->u1_control_type)
+    {
+        motor_angle_ad_data_t temp_ad_data;
+        temp_ad_data.sin_ad_data = p_ctrl->f_sin_ad_data;
+        temp_ad_data.cos_ad_data = p_ctrl->f_cos_ad_data;
+
+        /* Set induction sensor output */
+        p_angle->p_api->sensorDataSet(p_angle->p_ctrl, &temp_ad_data);
+
         /* Position & speed calculation */
         p_angle->p_api->internalCalculate(p_angle->p_ctrl);
 

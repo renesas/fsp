@@ -766,6 +766,40 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
     return ret;
 }
 
+int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
+{
+    fsp_err_t ret        = FSP_SUCCESS;
+    int       key_rounds = ctx->nr;
+
+    if (10 == key_rounds)
+    {
+        ret = HW_SCE_Aes128EncryptDecryptFinal();
+    }
+    else if (12 == key_rounds)
+    {
+        ret = HW_SCE_Aes192EncryptDecryptFinal();
+    }
+    else if (14 == key_rounds)
+    {
+        ret = HW_SCE_Aes256EncryptDecryptFinal();
+    }
+    else
+    {
+        return -1;
+    }
+
+    if (FSP_SUCCESS != ret)
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+
+    /* Once final is successful, change operation state back to SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT to allow same AES key to
+     * be used for subsequent operations */
+    ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT;
+
+    return 0;
+}
+
   #else
 int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
                                               unsigned int          length,
@@ -835,6 +869,13 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
     }
 
     return ret;
+}
+
+int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
+{
+    FSP_PARAMETER_NOT_USED(ctx);
+
+    return 0;
 }
 
   #endif

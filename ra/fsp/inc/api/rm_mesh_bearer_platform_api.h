@@ -22,9 +22,9 @@
 #define RM_MESH_BEARER_PLATFORM_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup  RENESAS_INTERFACES
  * @defgroup RM_MESH_BEARER_PLATFORM_API BLE Mesh Bearer Platform Interface
- * @brief Interface for Bluetooth Low Energy Mesh Bearer Platform functions.
+ * @brief    Interface for Bluetooth Low Energy Mesh Bearer Platform functions.
  *
  * @section RM_MESH_BEARER_PLATFORM_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Bearer Platform (BLE MESH BEARER PLATFORM) peripheral provides Bluetooth Low Energy Mesh Bearer Platform functionality.
@@ -80,7 +80,7 @@ typedef enum e_rm_mesh_bearer_platform_gatt_mode
     /** Provision GATT mode */
     RM_MESH_BEARER_PLATFORM_GATT_MODE_PROVISION,
 
-    /** Proxy GATT mode*/
+    /** Proxy GATT mode */
     RM_MESH_BEARER_PLATFORM_GATT_MODE_PROXY,
 } rm_mesh_bearer_platform_gatt_mode_t;
 
@@ -139,7 +139,7 @@ typedef struct st_rm_mesh_bearer_platform_api
      * @param[in]  p_ctrl            Pointer to control structure.
      * @param[in]  p_remote_address  Pointer to remote device address.
      * @param[in]  address_type      Address type.
-     * @param[in]  mode              GATT interface mode, either RM_MESH_BEARER_PLATFORM_GATT_MODE_PROVISION or RM_MESH_BEARER_PLATFORM_GATT_MODE_PROXY.
+     * @param[in]  mode              GATT interface mode, either @ref RM_MESH_BEARER_PLATFORM_GATT_MODE_PROVISION or @ref RM_MESH_BEARER_PLATFORM_GATT_MODE_PROXY.
      */
     fsp_err_t (* connect)(rm_mesh_bearer_platform_ctrl_t * const p_ctrl, uint8_t * p_remote_address,
                           uint8_t address_type, rm_mesh_bearer_platform_gatt_mode_t mode);

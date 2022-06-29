@@ -327,6 +327,10 @@ typedef struct st_i3c_cfg
     void const * p_extend;
 } i3c_cfg_t;
 
+/** I3C control block.  Allocate an instance specific control block to pass into the I3C API calls.
+ * @par Implemented as
+ * - i3c_instance_ctrl_t
+ */
 typedef void i3c_ctrl_t;
 
 /** I3C functions implemented at the HAL layer will follow this API. */

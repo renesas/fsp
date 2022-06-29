@@ -246,8 +246,9 @@ typedef enum e_usb_class_internal
     USB_CLASS_INTERNAL_HVND,           ///< HVND Class      12
     USB_CLASS_INTERNAL_HMSC,           ///< HMSC Class      13
     USB_CLASS_INTERNAL_PMSC,           ///< PMSC Class      14
-    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      15
-    USB_CLASS_INTERNAL_END             ///< USB Class       16
+    USB_CLASS_INTERNAL_HPRN,           ///< HPRN Class      15
+    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      16
+    USB_CLASS_INTERNAL_END             ///< USB Class       17
 } usb_class_internal_t;
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

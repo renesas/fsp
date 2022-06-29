@@ -54,6 +54,10 @@
  #include "r_usb_hhid_cfg.h"
 #endif                                 /* defined(USB_CFG_HHID_USE) */
 
+#if defined(USB_CFG_HPRN_USE)
+ #include "r_usb_hprn_cfg.h"
+#endif                                 /* defined(USB_CFG_HPRN_USE) */
+
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
  #if (USB_CFG_DMA == USB_CFG_ENABLE)
@@ -1724,6 +1728,62 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
             break;
         }
 
+        case USB_CLASS_INTERNAL_HPRN:
+        {
+ #if defined(USB_CFG_HPRN_USE)
+            if (USB_EP_BULK == type)
+            {
+                if (USB_PIPE_DIR_IN == dir)
+                {
+                    switch (address)
+                    {
+                        case 1:        /* Root port device1 */
+                        case 2:        /* Hub downport device1 */
+                        {
+                            pipe_no = USB_CFG_HPRN_BULK_IN;
+                            break;
+                        }
+
+                        case 3:        /* Hub downport device2 */
+                        {
+                            pipe_no = USB_NULL;
+                            break;
+                        }
+
+                        default:
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    switch (address)
+                    {
+                        case 1:        /* Root port device1 */
+                        case 2:        /* Hub downport device1 */
+                        {
+                            pipe_no = USB_CFG_HPRN_BULK_OUT;
+                            break;
+                        }
+
+                        case 3:        /* Hub downport device2 */
+                        {
+                            pipe_no = USB_NULL;
+                            break;
+                        }
+
+                        default:
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+ #endif                                /* defined(USB_CFG_HPRN_USE) */
+            break;
+        }
+
         case USB_HUB:
         {
             pipe_no = USB_HUB_PIPE;
@@ -1894,6 +1954,29 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
             break;
         }
   #endif                               /* defined(USB_CFG_HVND_USE) */
+
+  #if defined(USB_CFG_HPRN_USE)
+        case USB_CFG_HPRN_BULK_IN:
+        {
+   #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+   #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
+            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+   #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
+            break;
+        }
+
+        case USB_CFG_HPRN_BULK_OUT:
+        {
+   #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+   #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
+            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
+   #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
+            break;
+        }
+  #endif                               /* defined(USB_CFG_HPRN_USE) */
+
         default:
         {
             /* Error */

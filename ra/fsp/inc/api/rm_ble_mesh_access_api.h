@@ -22,12 +22,12 @@
 #define RM_BLE_MESH_ACCESS_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_ACCESS_API BLE Mesh Access Interface
- * @brief Interface for Bluetooth Low Energy Mesh Access functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_ACCESS_API BLE Mesh Access Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Access functions.
  *
- * @section RM_BLE_MESH_ACCESS_API_Summary Summary
- * The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Netwrok Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality.
+ * @section   RM_BLE_MESH_ACCESS_API_Summary Summary
+ * The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Network Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality.
  *
  * The Bluetooth Low Energy Mesh Network Access interface can be implemented by:
  * - @ref RM_BLE_MESH_ACCESS
@@ -93,7 +93,6 @@ typedef uint32_t rm_ble_mesh_access_device_key_handle_t;
 typedef enum e_rm_ble_mesh_access_model_req_msg_type
 {
     /** Model Specific Request Message Type: Get */
-
     RM_BLE_MESH_ACCESS_MODEL_REQ_MSG_TYPE_GET = 0,
 
     /** Model Specific Request Message Type: Set */
@@ -121,862 +120,862 @@ typedef enum e_rm_ble_mesh_access_message_opcode
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_FAULT_STATUS                 = 0x05,
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_HEARTBEAT_PUBLICATION_STATUS = 0x06,
 
-/** Config AppKey Delete Opcode */
+    /** Config AppKey Delete Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_APPKEY_DELETE = 0x8000,
 
-/** Config AppKey Get Opcode */
+    /** Config AppKey Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_APPKEY_GET = 0x8001,
 
-/** Config AppKey List Opcode */
+    /** Config AppKey List Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_APPKEY_LIST = 0x8002,
 
-/** Config AppKey Status Opcode */
+    /** Config AppKey Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_APPKEY_STATUS = 0x8003,
 
-/** Health Attention Get Opcode */
+    /** Health Attention Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_ATTENTION_GET = 0x8004,
 
-/** Health Attention Set Opcode */
+    /** Health Attention Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_ATTENTION_SET = 0x8005,
 
-/** Health Attention Set Unacknowledged Opcode */
+    /** Health Attention Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_ATTENTION_SET_UNACKNOWLEDGED = 0x8006,
 
-/** Health Attention Status Opcode */
+    /** Health Attention Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_ATTENTION_STATUS = 0x8007,
 
-/** Config Composition Data Get Opcode */
+    /** Config Composition Data Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_COMPOSITION_DATA_GET = 0x8008,
 
-/** Config Beacon Get Opcode */
+    /** Config Beacon Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_BEACON_GET = 0x8009,
 
-/** Config Beacon Set Opcode */
+    /** Config Beacon Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_BEACON_SET = 0x800A,
 
-/** Config Beacon Status Opcode */
+    /** Config Beacon Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_BEACON_STATUS = 0x800B,
 
-/** Config Deafault TTL Get Opcode */
+    /** Config Deafault TTL Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_DEFAULT_TTL_GET = 0x800C,
 
-/** Config Deafault TTL Set Opcode */
+    /** Config Deafault TTL Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_DEFAULT_TTL_SET = 0x800D,
 
-/** Config Deafault TTL Status Opcode */
+    /** Config Deafault TTL Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_DEFAULT_TTL_STATUS = 0x800E,
 
-/** Config Friend Get Opcode */
+    /** Config Friend Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_FRIEND_GET = 0x800F,
 
-/** Config Friend Set Opcode */
+    /** Config Friend Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_FRIEND_SET = 0x8010,
 
-/** Config Friend Status Opcode */
+    /** Config Friend Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_FRIEND_STATUS = 0x8011,
 
-/** Config GATT Proxy Get Opcode */
+    /** Config GATT Proxy Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_GATT_PROXY_GET = 0x8012,
 
-/** Config GATT Proxy Set Opcode */
+    /** Config GATT Proxy Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_GATT_PROXY_SET = 0x8013,
 
-/** Config GATT Proxy Status Opcode */
+    /** Config GATT Proxy Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_GATT_PROXY_STATUS = 0x8014,
 
-/** Config Key Refresh Phase Get Opcode */
+    /** Config Key Refresh Phase Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_KEY_REFRESH_PHASE_GET = 0x8015,
 
-/** Config Key Refresh Phase Set Opcode */
+    /** Config Key Refresh Phase Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_KEY_REFRESH_PHASE_SET = 0x8016,
 
-/** Config Key Refresh Phase Status Opcode */
+    /** Config Key Refresh Phase Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_KEY_REFRESH_PHASE_STATUS = 0x8017,
 
-/** Config Model Publication Get Opcode */
+    /** Config Model Publication Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_PUBLICATION_GET = 0x8018,
 
-/** Config Model Publication Status Opcode */
+    /** Config Model Publication Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_PUBLICATION_STATUS = 0x8019,
 
-/** Config Model Publication Virtual Address Set Opcode */
+    /** Config Model Publication Virtual Address Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_PUBLICATION_VIRTUAL_ADDRESS_SET = 0x801A,
 
-/** Config Model Subscription Add Opcode */
+    /** Config Model Subscription Add Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_ADD = 0x801B,
 
-/** Config Model Subscription Delete Opcode */
+    /** Config Model Subscription Delete Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_DELETE = 0x801C,
 
-/** Config Model Subscription Delete All Opcode */
+    /** Config Model Subscription Delete All Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_DELETE_ALL = 0x801D,
 
-/** Config Model Subscription Overwrite Opcode */
+    /** Config Model Subscription Overwrite Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_OVERWRITE = 0x801E,
 
-/** Config Model Subscription Status Opcode */
+    /** Config Model Subscription Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_STATUS = 0x801F,
 
-/** Config Model Subscription Virtual Address Add Opcode */
+    /** Config Model Subscription Virtual Address Add Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_VIRTUAL_ADDRESS_ADD = 0x8020,
 
-/** Config Model Subscription Virtual Address Delete Opcode */
+    /** Config Model Subscription Virtual Address Delete Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_VIRTUAL_ADDRESS_DELETE = 0x8021,
 
-/** Config Model Subscription Virtual Address Overwrite Opcode */
+    /** Config Model Subscription Virtual Address Overwrite Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_SUBSCRIPTION_VIRTUAL_ADDRESS_OVERWRITE = 0x8022,
 
-/** Config Network Transmit Get Opcode */
+    /** Config Network Transmit Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETWORK_TRANSMIT_GET = 0x8023,
 
-/** Config Network Transmit Set Opcode */
+    /** Config Network Transmit Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETWORK_TRANSMIT_SET = 0x8024,
 
-/** Config Network Transmit Status Opcode */
+    /** Config Network Transmit Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETWORK_TRANSMIT_STATUS = 0x8025,
 
-/** Config Relay Get Opcode */
+    /** Config Relay Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_RELAY_GET = 0x8026,
 
-/** Config Relay Set Opcode */
+    /** Config Relay Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_RELAY_SET = 0x8027,
 
-/** Config Relay Status Opcode */
+    /** Config Relay Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_RELAY_STATUS = 0x8028,
 
-/** Config SIG Model Subscription Get Opcode */
+    /** Config SIG Model Subscription Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_SIG_MODEL_SUBSCRIPTION_GET = 0x8029,
 
-/** Config SIG Model Subscription List Opcode */
+    /** Config SIG Model Subscription List Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_SIG_MODEL_SUBSCRIPTION_LIST = 0x802A,
 
-/** Config Vendor Model Subscription Get Opcode */
+    /** Config Vendor Model Subscription Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_VENDOR_MODEL_SUBSCRIPTION_GET = 0x802B,
 
-/** Config Vendor Model Subscription List Opcode */
+    /** Config Vendor Model Subscription List Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_VENDOR_MODEL_SUBSCRIPTION_LIST = 0x802C,
 
-/** Config Low Power Node PollTimeout Get Opcode */
+    /** Config Low Power Node PollTimeout Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_LOW_POWER_NODE_POLLTIMEOUT_GET = 0x802D,
 
-/** Config Low Power Node PollTimeout Status Opcode */
+    /** Config Low Power Node PollTimeout Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_LOW_POWER_NODE_POLLTIMEOUT_STATUS = 0x802E,
 
-/** Health Fault Clear Opcode */
+    /** Health Fault Clear Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_FAULT_CLEAR = 0x802F,
 
-/** Health Fault Clear Unacknowledged Opcode */
+    /** Health Fault Clear Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_FAULT_CLEAR_UNACKNOWLEDGED = 0x8030,
 
-/** Health Fault Get Opcode */
+    /** Health Fault Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_FAULT_GET = 0x8031,
 
-/** Health Fault Test Opcode */
+    /** Health Fault Test Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_FAULT_TEST = 0x8032,
 
-/** Health Fault Test Unacknowledged Opcode */
+    /** Health Fault Test Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_FAULT_TEST_UNACKNOWLEDGED = 0x8033,
 
-/** Health Period Get Opcode */
+    /** Health Period Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_PERIOD_GET = 0x8034,
 
-/** Health Period Set Opcode */
+    /** Health Period Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_PERIOD_SET = 0x8035,
 
-/** Health Period Set Unacknowledged Opcode */
+    /** Health Period Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_PERIOD_SET_UNACKNOWLEDGED = 0x8036,
 
-/** Health Period Status Opcode */
+    /** Health Period Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_HEALTH_PERIOD_STATUS = 0x8037,
 
-/** Config Heartbeat Publication Get Opcode */
+    /** Config Heartbeat Publication Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_HEARTBEAT_PUBLICATION_GET = 0x8038,
 
-/** Config Heartbeat Publication Set Opcode */
+    /** Config Heartbeat Publication Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_HEARTBEAT_PUBLICATION_SET = 0x8039,
 
-/** Config Heartbeat Subscription Get Opcode */
+    /** Config Heartbeat Subscription Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_HEARTBEAT_SUBSCRIPTION_GET = 0x803A,
 
-/** Config Heartbeat Subscription Set Opcode */
+    /** Config Heartbeat Subscription Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_HEARTBEAT_SUBSCRIPTION_SET = 0x803B,
 
-/** Config Heartbeat Subscription Status Opcode */
+    /** Config Heartbeat Subscription Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_HEARTBEAT_SUBSCRIPTION_STATUS = 0x803C,
 
-/** Config Model App Bind Opcode */
+    /** Config Model App Bind Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_APP_BIND = 0x803D,
 
-/** Config Model App Status Opcode */
+    /** Config Model App Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_APP_STATUS = 0x803E,
 
-/** Config Model App Unbind Opcode */
+    /** Config Model App Unbind Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_MODEL_APP_UNBIND = 0x803F,
 
-/** Config NetKey Add Opcode */
+    /** Config NetKey Add Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETKEY_ADD = 0x8040,
 
-/** Config NetKey Delete Opcode */
+    /** Config NetKey Delete Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETKEY_DELETE = 0x8041,
 
-/** Config NetKey Get Opcode */
+    /** Config NetKey Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETKEY_GET = 0x8042,
 
-/** Config NetKey List Opcode */
+    /** Config NetKey List Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETKEY_LIST = 0x8043,
 
-/** Config NetKey Status Opcode */
+    /** Config NetKey Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETKEY_STATUS = 0x8044,
 
-/** Config NetKey Update Opcode */
+    /** Config NetKey Update Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NETKEY_UPDATE = 0x8045,
 
-/** Config Node Identity Get Opcode */
+    /** Config Node Identity Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NODE_IDENTITY_GET = 0x8046,
 
-/** Config Node Identity Set Opcode */
+    /** Config Node Identity Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NODE_IDENTITY_SET = 0x8047,
 
-/** Config Node Identity Status Opcode */
+    /** Config Node Identity Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NODE_IDENTITY_STATUS = 0x8048,
 
-/** Config Node Reset Opcode */
+    /** Config Node Reset Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NODE_RESET = 0x8049,
 
-/** Config Node Reset Status Opcode */
+    /** Config Node Reset Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_NODE_RESET_STATUS = 0x804A,
 
-/** Config SIG Model App Get Opcode */
+    /** Config SIG Model App Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_SIG_MODEL_APP_GET = 0x804B,
 
-/** Config SIG Model App List Opcode */
+    /** Config SIG Model App List Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_SIG_MODEL_APP_LIST = 0x804C,
 
-/** Config Vendor Model App Get Opcode */
+    /** Config Vendor Model App Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_VENDOR_MODEL_APP_GET = 0x804D,
 
-/** Config Vendor Model App List Opcode */
+    /** Config Vendor Model App List Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_CONFIG_VENDOR_MODEL_APP_LIST = 0x804E,
 
-/** Generic OnOff */
-/** Generic OnOff Get Opcode */
+    /** Generic OnOff */
+    /** Generic OnOff Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONOFF_GET = 0x8201,
 
-/** Generic OnOff Set Opcode */
+    /** Generic OnOff Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONOFF_SET = 0x8202,
 
-/** Generic OnOff Set Unacknowledged Opcode */
+    /** Generic OnOff Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONOFF_SET_UNACKNOWLEDGED = 0x8203,
 
-/** Generic OnOff Status Opcode */
+    /** Generic OnOff Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONOFF_STATUS = 0x8204,
 
-/** Generic Level */
-/** Generic Level Get Opcode */
+    /** Generic Level */
+    /** Generic Level Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LEVEL_GET = 0x8205,
 
-/** Generic Level Set Opcode */
+    /** Generic Level Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LEVEL_SET = 0x8206,
 
-/** Generic Level Set Unacknowledged Opcode */
+    /** Generic Level Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LEVEL_SET_UNACKNOWLEDGED = 0x8207,
 
-/** Generic Level Status Opcode */
+    /** Generic Level Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LEVEL_STATUS = 0x8208,
 
-/** Generic Delta Set Opcode */
+    /** Generic Delta Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_DELTA_SET = 0x8209,
 
-/** Generic Delta Set Unacknowledged Opcode */
+    /** Generic Delta Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_DELTA_SET_UNACKNOWLEDGED = 0x820A,
 
-/** Generic Move Set Opcode */
+    /** Generic Move Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MOVE_SET = 0x820B,
 
-/** Generic Move Set Unacknowledged Opcode */
+    /** Generic Move Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MOVE_SET_UNACKNOWLEDGED = 0x820C,
 
-/** Generic Default Transition Time */
-/** Generic Default Transition Time Get Opcode */
+    /** Generic Default Transition Time */
+    /** Generic Default Transition Time Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_DEFAULT_TRANSITION_TIME_GET = 0x820D,
 
-/** Generic Default Transition Time Set Opcode */
+    /** Generic Default Transition Time Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_DEFAULT_TRANSITION_TIME_SET = 0x820E,
 
-/** Generic Default Transition Time Set Unacknowledged Opcode */
+    /** Generic Default Transition Time Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_DEFAULT_TRANSITION_TIME_SET_UNACKNOWLEDGED = 0x820F,
 
-/** Generic Default Transition Time Status Opcode */
+    /** Generic Default Transition Time Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_DEFAULT_TRANSITION_TIME_STATUS = 0x8210,
 
-/** Generic Power OnOff */
-/** Generic Power OnOff Get Opcode */
+    /** Generic Power OnOff */
+    /** Generic Power OnOff Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONPOWERUP_GET = 0x8211,
 
-/** Generic Power OnOff Status Opcode */
+    /** Generic Power OnOff Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONPOWERUP_STATUS = 0x8212,
 
-/** Generic Power OnOff Setup */
-/** Generic Power OnOff Setup Set Opcode */
+    /** Generic Power OnOff Setup */
+    /** Generic Power OnOff Setup Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONPOWERUP_SET = 0x8213,
 
-/** Generic Power OnOff Setup Set Unacknowledged Opcode */
+    /** Generic Power OnOff Setup Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ONPOWERUP_SET_UNACKNOWLEDGED = 0x8214,
 
-/** Generic Power Level */
-/** Generic Power Level Get Opcode */
+    /** Generic Power Level */
+    /** Generic Power Level Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_LEVEL_GET = 0x8215,
 
-/** Generic Power Level Set Opcode */
+    /** Generic Power Level Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_LEVEL_SET = 0x8216,
 
-/** Generic Power Level Set Unacknowledged Opcode */
+    /** Generic Power Level Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_LEVEL_SET_UNACKNOWLEDGED = 0x8217,
 
-/** Generic Power Level Status Opcode */
+    /** Generic Power Level Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_LEVEL_STATUS = 0x8218,
 
-/** Generic Power Last Get Opcode */
+    /** Generic Power Last Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_LAST_GET = 0x8219,
 
-/** Generic Power Last Status Opcode */
+    /** Generic Power Last Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_LAST_STATUS = 0x821A,
 
-/** Generic Power Default Get Opcode */
+    /** Generic Power Default Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_DEFAULT_GET = 0x821B,
 
-/** Generic Power Default Status Opcode */
+    /** Generic Power Default Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_DEFAULT_STATUS = 0x821C,
 
-/** Generic Power Range Get Opcode */
+    /** Generic Power Range Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_RANGE_GET = 0x821D,
 
-/** Generic Power Range Status Opcode */
+    /** Generic Power Range Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_RANGE_STATUS = 0x821E,
 
-/** Generic Power Level Setup */
-/** Generic Power Default Set Opcode */
+    /** Generic Power Level Setup */
+    /** Generic Power Default Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_DEFAULT_SET = 0x821F,
 
-/** Generic Power Default Set Unacknowledged Opcode */
+    /** Generic Power Default Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_DEFAULT_SET_UNACKNOWLEDGED = 0x8220,
 
-/** Generic Power Range Set Opcode */
+    /** Generic Power Range Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_RANGE_SET = 0x8221,
 
-/** Generic Power Range Set Unacknowledged Opcode */
+    /** Generic Power Range Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_POWER_RANGE_SET_UNACKNOWLEDGED = 0x8222,
 
-/** Generic Battery */
-/** Generic Battery Get Opcode */
+    /** Generic Battery */
+    /** Generic Battery Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_BATTERY_GET = 0x8223,
 
-/** Generic Battery Status Opcode */
+    /** Generic Battery Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_BATTERY_STATUS = 0x8224,
 
-/** Generic Location */
-/** Generic Location Global Get Opcode */
+    /** Generic Location */
+    /** Generic Location Global Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_GLOBAL_GET = 0x8225,
 
-/** Generic Location Global Status Opcode */
+    /** Generic Location Global Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_GLOBAL_STATUS = 0x40,
 
-/** Generic Location Local Get Opcode */
+    /** Generic Location Local Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_LOCAL_GET = 0x8226,
 
-/** Generic Location Local Status Opcode */
+    /** Generic Location Local Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_LOCAL_STATUS = 0x8227,
 
-/** Generic Location Setup */
-/** Generic Location Global Set Opcode */
+    /** Generic Location Setup */
+    /** Generic Location Global Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_GLOBAL_SET = 0x41,
 
-/** Generic Location Global Set Unacknowledged Opcode */
+    /** Generic Location Global Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_GLOBAL_SET_UNACKNOWLEDGED = 0x42,
 
-/** Generic Location Local Set Opcode */
+    /** Generic Location Local Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_LOCAL_SET = 0x8228,
 
-/** Generic Location Local Set Unacknowledged Opcode */
+    /** Generic Location Local Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_LOCATION_LOCAL_SET_UNACKNOWLEDGED = 0x8229,
 
-/** Generic Manufacturer Property */
-/** Generic Manufacturer Properties Get Opcode */
+    /** Generic Manufacturer Property */
+    /** Generic Manufacturer Properties Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MANUFACTURER_PROPERTIES_GET = 0x822A,
 
-/** Generic Manufacturer Properties Status Opcode */
+    /** Generic Manufacturer Properties Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MANUFACTURER_PROPERTIES_STATUS = 0x43,
 
-/** Generic Manufacturer Property Get Opcode */
+    /** Generic Manufacturer Property Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MANUFACTURER_PROPERTY_GET = 0x822B,
 
-/** Generic Manufacturer Property Set Opcode */
+    /** Generic Manufacturer Property Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MANUFACTURER_PROPERTY_SET = 0x44,
 
-/** Generic Manufacturer Property Set Unacknowledged Opcode */
+    /** Generic Manufacturer Property Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MANUFACTURER_PROPERTY_SET_UNACKNOWLEDGED = 0x45,
 
-/** Generic Manufacturer Property Status Opcode */
+    /** Generic Manufacturer Property Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_MANUFACTURER_PROPERTY_STATUS = 0x46,
 
-/** Generic Admin Property */
-/** Generic Admin Properties Get Opcode */
+    /** Generic Admin Property */
+    /** Generic Admin Properties Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ADMIN_PROPERTIES_GET = 0x822C,
 
-/** Generic Admin Properties Status Opcode */
+    /** Generic Admin Properties Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ADMIN_PROPERTIES_STATUS = 0x47,
 
-/** Generic Admin Property Get Opcode */
+    /** Generic Admin Property Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ADMIN_PROPERTY_GET = 0x822D,
 
-/** Generic Admin Property Set Opcode */
+    /** Generic Admin Property Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ADMIN_PROPERTY_SET = 0x48,
 
-/** Generic Admin Property Set Unacknowledged Opcode */
+    /** Generic Admin Property Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ADMIN_PROPERTY_SET_UNACKNOWLEDGED = 0x49,
 
-/** Generic Admin Property Status Opcode */
+    /** Generic Admin Property Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_ADMIN_PROPERTY_STATUS = 0x4A,
 
-/** Generic User Property */
-/** Generic User Properties Get Opcode */
+    /** Generic User Property */
+    /** Generic User Properties Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_USER_PROPERTIES_GET = 0x822E,
 
-/** Generic User Properties Status Opcode */
+    /** Generic User Properties Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_USER_PROPERTIES_STATUS = 0x4B,
 
-/** Generic User Property Get Opcode */
+    /** Generic User Property Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_USER_PROPERTY_GET = 0x822F,
 
-/** Generic User Property Set Opcode */
+    /** Generic User Property Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_USER_PROPERTY_SET = 0x4C,
 
-/** Generic User Property Set Unacknowledged Opcode */
+    /** Generic User Property Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_USER_PROPERTY_SET_UNACKNOWLEDGED = 0x4D,
 
-/** Generic User Property Status Opcode */
+    /** Generic User Property Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_USER_PROPERTY_STATUS = 0x4E,
 
-/** Generic Client Property */
-/** Generic Client Properties Get Opcode */
+    /** Generic Client Property */
+    /** Generic Client Properties Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_CLIENT_PROPERTIES_GET = 0x4F,
 
-/** Generic Client Properties Status Opcode */
+    /** Generic Client Properties Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_GENERIC_CLIENT_PROPERTIES_STATUS = 0x50,
 
-/** Sensor */
-/** Sensor Descriptor Get Opcode */
+    /** Sensor */
+    /** Sensor Descriptor Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_DESCRIPTOR_GET = 0x8230,
 
-/** Sensor Descriptor Status Opcode */
+    /** Sensor Descriptor Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_DESCRIPTOR_STATUS = 0x51,
 
-/** Sensor Get Opcode */
+    /** Sensor Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_GET = 0x8231,
 
-/** Sensor Status Opcode */
+    /** Sensor Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_STATUS = 0x52,
 
-/** Sensor Column Get Opcode */
+    /** Sensor Column Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_COLUMN_GET = 0x8232,
 
-/** Sensor Column Status Opcode */
+    /** Sensor Column Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_COLUMN_STATUS = 0x53,
 
-/** Sensor Series Get Opcode */
+    /** Sensor Series Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SERIES_GET = 0x8233,
 
-/** Sensor Series Status Opcode */
+    /** Sensor Series Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SERIES_STATUS = 0x54,
 
-/** Sensor Setup */
-/** Sensor Cadence Get Opcode */
+    /** Sensor Setup */
+    /** Sensor Cadence Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_CADENCE_GET = 0x8234,
 
-/** Sensor Cadence Set Opcode */
+    /** Sensor Cadence Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_CADENCE_SET = 0x55,
 
-/** Sensor Cadence Set Unacknowledged Opcode */
+    /** Sensor Cadence Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_CADENCE_SET_UNACKNOWLEDGED = 0x56,
 
-/** Sensor Cadence Status Opcode */
+    /** Sensor Cadence Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_CADENCE_STATUS = 0x57,
 
-/** Sensor Settings Get Opcode */
+    /** Sensor Settings Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SETTINGS_GET = 0x8235,
 
-/** Sensor Settings Status Opcode */
+    /** Sensor Settings Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SETTINGS_STATUS = 0x58,
 
-/** Sensor Setting Get Opcode */
+    /** Sensor Setting Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SETTING_GET = 0x8236,
 
-/** Sensor Setting Set Opcode */
+    /** Sensor Setting Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SETTING_SET = 0x59,
 
-/** Sensor Setting Set Unacknowledged Opcode */
+    /** Sensor Setting Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SETTING_SET_UNACKNOWLEDGED = 0x5A,
 
-/** Sensor Setting Status Opcode */
+    /** Sensor Setting Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SENSOR_SETTING_STATUS = 0x5B,
 
-/** Time */
-/** Time Get Opcode */
+    /** Time */
+    /** Time Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_GET = 0x8237,
 
-/** Time Set Opcode */
+    /** Time Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_SET = 0x5C,
 
-/** Time Status Opcode */
+    /** Time Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_STATUS = 0x5D,
 
-/** Time Role Get Opcode */
+    /** Time Role Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_ROLE_GET = 0x8238,
 
-/** Time Role Set Opcode */
+    /** Time Role Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_ROLE_SET = 0x8239,
 
-/** Time Role Status Opcode */
+    /** Time Role Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_ROLE_STATUS = 0x823A,
 
-/** Time Zone Get Opcode */
+    /** Time Zone Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_ZONE_GET = 0x823B,
 
-/** Time Zone Set Opcode */
+    /** Time Zone Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_ZONE_SET = 0x823C,
 
-/** Time Zone Status Opcode */
+    /** Time Zone Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TIME_ZONE_STATUS = 0x823D,
 
-/** Time - TAI UTC Delta Get Opcode */
+    /** Time - TAI UTC Delta Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TAI_UTC_DELTA_GET = 0x823E,
 
-/** Time - TAI UTC Delta Set Opcode */
+    /** Time - TAI UTC Delta Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TAI_UTC_DELTA_SET = 0x823F,
 
-/** Time - TAI UTC Delta Status Opcode */
+    /** Time - TAI UTC Delta Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_TAI_UTC_DELTA_STATUS = 0x8240,
 
-/** Scene */
-/** Scene Get Opcode */
+    /** Scene */
+    /** Scene Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_GET = 0x8241,
 
-/** Scene Recall Opcode */
+    /** Scene Recall Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_RECALL = 0x8242,
 
-/** Scene Recall Unacknowledged Opcode */
+    /** Scene Recall Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_RECALL_UNACKNOWLEDGED = 0x8243,
 
-/** Scene Status Opcode */
+    /** Scene Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_STATUS = 0x5E,
 
-/** Scene Register Get Opcode */
+    /** Scene Register Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_REGISTER_GET = 0x8244,
 
-/** Scene Register Status Opcode */
+    /** Scene Register Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_REGISTER_STATUS = 0x8245,
 
-/** Scene Setup */
-/** Scene Store Opcode */
+    /** Scene Setup */
+    /** Scene Store Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_STORE = 0x8246,
 
-/** Scene Store Unacknowledged Opcode */
+    /** Scene Store Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_STORE_UNACKNOWLEDGED = 0x8247,
 
-/** Scene Delete Opcode */
+    /** Scene Delete Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_DELETE = 0x829E,
 
-/** Scene Delete Unacknowledged Opcode */
+    /** Scene Delete Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCENE_DELETE_UNACKNOWLEDGED = 0x829F,
 
-/** Scheduler */
-/** Scheduler Action Get Opcode */
+    /** Scheduler */
+    /** Scheduler Action Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCHEDULER_ACTION_GET = 0x8248,
 
-/** Scheduler Action Status Opcode */
+    /** Scheduler Action Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCHEDULER_ACTION_STATUS = 0x5F,
 
-/** Scheduler Get Opcode */
+    /** Scheduler Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCHEDULER_GET = 0x8249,
 
-/** Scheduler Status Opcode */
+    /** Scheduler Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCHEDULER_STATUS = 0x824A,
 
-/** Scheduler Setup */
-/** Scheduler Action Set Opcode */
+    /** Scheduler Setup */
+    /** Scheduler Action Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCHEDULER_ACTION_SET = 0x60,
 
-/** Scheduler Action Set Unacknowledged Opcode */
+    /** Scheduler Action Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_SCHEDULER_ACTION_SET_UNACKNOWLEDGED = 0x61,
 
-/** Light Lightness */
-/** Light Lightness Get Opcode */
+    /** Light Lightness */
+    /** Light Lightness Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_GET = 0x824B,
 
-/** Light Lightness Set Opcode */
+    /** Light Lightness Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_SET = 0x824C,
 
-/** Light Lightness Set Unacknowledged Opcode */
+    /** Light Lightness Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_SET_UNACKNOWLEDGED = 0x824D,
 
-/** Light Lightness Status Opcode */
+    /** Light Lightness Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_STATUS = 0x824E,
 
-/** Light Lightness Linear Get Opcode */
+    /** Light Lightness Linear Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_LINEAR_GET = 0x824F,
 
-/** Light Lightness Linear Set Opcode */
+    /** Light Lightness Linear Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_LINEAR_SET = 0x8250,
 
-/** Light Lightness Linear Set Unacknowledged Opcode */
+    /** Light Lightness Linear Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_LINEAR_SET_UNACKNOWLEDGED = 0x8251,
 
-/** Light Lightness Linear Status Opcode */
+    /** Light Lightness Linear Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_LINEAR_STATUS = 0x8252,
 
-/** Light Lightness Last Get Opcode */
+    /** Light Lightness Last Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_LAST_GET = 0x8253,
 
-/** Light Lightness Last Status Opcode */
+    /** Light Lightness Last Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_LAST_STATUS = 0x8254,
 
-/** Light Lightness Default Get Opcode */
+    /** Light Lightness Default Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_DEFAULT_GET = 0x8255,
 
-/** Light Lightness Default Status Opcode */
+    /** Light Lightness Default Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_DEFAULT_STATUS = 0x8256,
 
-/** Light Lightness Range Get Opcode */
+    /** Light Lightness Range Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_RANGE_GET = 0x8257,
 
-/** Light Lightness Range Status Opcode */
+    /** Light Lightness Range Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_RANGE_STATUS = 0x8258,
 
-/** Light Lightness Setup */
-/** Light Lightness Range Set Opcode */
+    /** Light Lightness Setup */
+    /** Light Lightness Range Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_DEFAULT_SET = 0x8259,
 
-/** Light Lightness Range Set Unacknowledged Opcode */
+    /** Light Lightness Range Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_DEFAULT_SET_UNACKNOWLEDGED = 0x825A,
 
-/** Light Lightness Range Set Opcode */
+    /** Light Lightness Range Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_RANGE_SET = 0x825B,
 
-/** Light Lightness Range Set Unacknowledged Opcode */
+    /** Light Lightness Range Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LIGHTNESS_RANGE_SET_UNACKNOWLEDGED = 0x825C,
 
-/** Light CTL */
-/** Light CTL Get Opcode */
+    /** Light CTL */
+    /** Light CTL Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_GET = 0x825D,
 
-/** Light CTL Set Opcode */
+    /** Light CTL Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_SET = 0x825E,
 
-/** Light CTL Set Unacknowledged Opcode */
+    /** Light CTL Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_SET_UNACKNOWLEDGED = 0x825F,
 
-/** Light CTL Status Opcode */
+    /** Light CTL Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_STATUS = 0x8260,
 
-/** Light CTL Temperature Get Opcode */
+    /** Light CTL Temperature Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_GET = 0x8261,
 
-/** Light CTL Temperature Range Get Opcode */
+    /** Light CTL Temperature Range Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_RANGE_GET = 0x8262,
 
-/** Light CTL Temperature Range Status Opcode */
+    /** Light CTL Temperature Range Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_RANGE_STATUS = 0x8263,
 
-/** Light CTL Temperature Set Opcode */
+    /** Light CTL Temperature Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_SET = 0x8264,
 
-/** Light CTL Temperature Set Unacknowledged Opcode */
+    /** Light CTL Temperature Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_SET_UNACKNOWLEDGED = 0x8265,
 
-/** Light CTL Temperature Status Opcode */
+    /** Light CTL Temperature Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_STATUS = 0x8266,
 
-/** Light CTL Default Get Opcode */
+    /** Light CTL Default Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_DEFAULT_GET = 0x8267,
 
-/** Light CTL Default Status Opcode */
+    /** Light CTL Default Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_DEFAULT_STATUS = 0x8268,
 
-/** Light CTL Setup */
-/** Light CTL Default Set Opcode */
+    /** Light CTL Setup */
+    /** Light CTL Default Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_DEFAULT_SET = 0x8269,
 
-/** Light CTL Default Set Unacknowledged Opcode */
+    /** Light CTL Default Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_DEFAULT_SET_UNACKNOWLEDGED = 0x826A,
 
-/** Light CTL Default Range Set Opcode */
+    /** Light CTL Default Range Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_RANGE_SET = 0x826B,
 
-/** Light CTL Default Range Set Unacknowledged Opcode */
+    /** Light CTL Default Range Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_CTL_TEMPERATURE_RANGE_SET_UNACKNOWLEDGED = 0x826C,
 
-/** Light HSL */
-/** Light HSL Get Opcode */
+    /** Light HSL */
+    /** Light HSL Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_GET = 0x826D,
 
-/** Light HSL HUE Get Opcode */
+    /** Light HSL HUE Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_HUE_GET = 0x826E,
 
-/** Light HSL HUE Set Opcode */
+    /** Light HSL HUE Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_HUE_SET = 0x826F,
 
-/** Light HSL HUE Set Unacknowledged Opcode */
+    /** Light HSL HUE Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_HUE_SET_UNACKNOWLEDGED = 0x8270,
 
-/** Light HSL HUE Status Opcode */
+    /** Light HSL HUE Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_HUE_STATUS = 0x8271,
 
-/** Light HSL Saturation Get Opcode */
+    /** Light HSL Saturation Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_SATURATION_GET = 0x8272,
 
-/** Light HSL Saturation Set Opcode */
+    /** Light HSL Saturation Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_SATURATION_SET = 0x8273,
 
-/** Light HSL Saturation Set Unacknowledged Opcode */
+    /** Light HSL Saturation Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_SATURATION_SET_UNACKNOWLEDGED = 0x8274,
 
-/** Light HSL Saturation Status Opcode */
+    /** Light HSL Saturation Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_SATURATION_STATUS = 0x8275,
 
-/** Light HSL Set Opcode */
+    /** Light HSL Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_SET = 0x8276,
 
-/** Light HSL Set Unacknowledged Opcode */
+    /** Light HSL Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_SET_UNACKNOWLEDGED = 0x8277,
 
-/** Light HSL Status Opcode */
+    /** Light HSL Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_STATUS = 0x8278,
 
-/** Light HSL Target Get Opcode */
+    /** Light HSL Target Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_TARGET_GET = 0x8279,
 
-/** Light HSL Target Status Opcode */
+    /** Light HSL Target Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_TARGET_STATUS = 0x827A,
 
-/** Light HSL Default Get Opcode */
+    /** Light HSL Default Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_DEFAULT_GET = 0x827B,
 
-/** Light HSL Default Status Opcode */
+    /** Light HSL Default Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_DEFAULT_STATUS = 0x827C,
 
-/** Light HSL Range Get Opcode */
+    /** Light HSL Range Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_RANGE_GET = 0x827D,
 
-/** Light HSL Range Status Opcode */
+    /** Light HSL Range Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_RANGE_STATUS = 0x827E,
 
-/** Light HSL Setup */
-/** Light HSL Default Set Opcode */
+    /** Light HSL Setup */
+    /** Light HSL Default Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_DEFAULT_SET = 0x827F,
 
-/** Light HSL Default Set Unacknowledged Opcode */
+    /** Light HSL Default Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_DEFAULT_SET_UNACKNOWLEDGED = 0x8280,
 
-/** Light HSL Range Set Opcode */
+    /** Light HSL Range Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_RANGE_SET = 0x8281,
 
-/** Light HSL Range Set Unacknowledged Opcode */
+    /** Light HSL Range Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_HSL_RANGE_SET_UNACKNOWLEDGED = 0x8282,
 
-/** Light xyL */
-/** Light xyL Get Opcode */
+    /** Light xyL */
+    /** Light xyL Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_GET = 0x8283,
 
-/** Light xyL Set Opcode */
+    /** Light xyL Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_SET = 0x8284,
 
-/** Light xyL Set Unacknowledged Opcode */
+    /** Light xyL Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_SET_UNACKNOWLEDGED = 0x8285,
 
-/** Light xyL Status Opcode */
+    /** Light xyL Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_STATUS = 0x8286,
 
-/** Light xyL Target Get Opcode */
+    /** Light xyL Target Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_TARGET_GET = 0x8287,
 
-/** Light xyL Target Status Opcode */
+    /** Light xyL Target Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_TARGET_STATUS = 0x8288,
 
-/** Light xyL Default Get Opcode */
+    /** Light xyL Default Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_DEFAULT_GET = 0x8289,
 
-/** Light xyL Default Status Opcode */
+    /** Light xyL Default Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_DEFAULT_STATUS = 0x828A,
 
-/** Light xyL Range Get Opcode */
+    /** Light xyL Range Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_RANGE_GET = 0x828B,
 
-/** Light xyL Range Status Opcode */
+    /** Light xyL Range Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_RANGE_STATUS = 0x828C,
 
-/** Light xyL Setup */
-/** Light xyL Default Set Opcode */
+    /** Light xyL Setup */
+    /** Light xyL Default Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_DEFAULT_SET = 0x828D,
 
-/** Light xyL Default Set Unacknowledged Opcode */
+    /** Light xyL Default Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_DEFAULT_SET_UNACKNOWLEDGED = 0x828E,
 
-/** Light xyL Range Set Opcode */
+    /** Light xyL Range Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_RANGE_SET = 0x828F,
 
-/** Light xyL Range Set Unacknowledged Opcode */
+    /** Light xyL Range Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_XYL_RANGE_SET_UNACKNOWLEDGED = 0x8290,
 
-/** Light Control */
-/** Light LC Mode Get Opcode */
+    /** Light Control */
+    /** Light LC Mode Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_MODE_GET = 0x8291,
 
-/** Light LC Mode Set Opcode */
+    /** Light LC Mode Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_MODE_SET = 0x8292,
 
-/** Light LC Mode Set Unacknowledged Opcode */
+    /** Light LC Mode Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_MODE_SET_UNACKNOWLEDGED = 0x8293,
 
-/** Light LC Mode Status Opcode */
+    /** Light LC Mode Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_MODE_STATUS = 0x8294,
 
-/** Light LC Occupancy Mode Get Opcode */
+    /** Light LC Occupancy Mode Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_OM_GET = 0x8295,
 
-/** Light LC Occupancy Mode Set Opcode */
+    /** Light LC Occupancy Mode Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_OM_SET = 0x8296,
 
-/** Light LC Occupancy Mode Set Unacknowledged Opcode */
+    /** Light LC Occupancy Mode Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_OM_SET_UNACKNOWLEDGED = 0x8297,
 
-/** Light LC Occupancy Mode Status Opcode */
+    /** Light LC Occupancy Mode Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_OM_STATUS = 0x8298,
 
-/** Light LC Light OnOff Get Opcode */
+    /** Light LC Light OnOff Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_LIGHT_ONOFF_GET = 0x8299,
 
-/** Light LC Light OnOff Set Opcode */
+    /** Light LC Light OnOff Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_LIGHT_ONOFF_SET = 0x829A,
 
-/** Light LC Light OnOff Set Unacknowledged Opcode */
+    /** Light LC Light OnOff Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_LIGHT_ONOFF_SET_UNACKNOWLEDGED = 0x829B,
 
-/** Light LC Light OnOff Status Opcode */
+    /** Light LC Light OnOff Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_LIGHT_ONOFF_STATUS = 0x829C,
 
-/** Light LC Property Get Opcode */
+    /** Light LC Property Get Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_PROPERTY_GET = 0x829D,
 
-/** Light LC Property Set Opcode */
+    /** Light LC Property Set Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_PROPERTY_SET = 0x62,
 
-/** Light LC Property Set Unacknowledged Opcode */
+    /** Light LC Property Set Unacknowledged Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_PROPERTY_SET_UNACKNOWLEDGED = 0x63,
 
-/** Light LC Property Status Opcode */
+    /** Light LC Property Status Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_LIGHT_LC_PROPERTY_STATUS = 0x64,
 
-/** Invalid Opcode */
+    /** Invalid Opcode */
     RM_BLE_MESH_ACCESS_MESSAGE_OPCODE_INVALID = 0xFFFFFFFF,
 } rm_ble_mesh_access_message_opcode_t;
 
@@ -1334,7 +1333,7 @@ typedef struct st_rm_ble_mesh_access_model_state_parameter
     void * state;
 } rm_ble_mesh_access_model_state_parameter_t;
 
-/** Additional paramters in a Model specific request or response message */
+/** Additional parameters in a Model specific request or response message */
 typedef struct st_rm_ble_mesh_access_extended_parameter
 {
     /** State/Extended Type */
@@ -1350,8 +1349,7 @@ typedef struct st_rm_ble_mesh_access_extended_parameter
  */
 typedef struct st_rm_ble_mesh_access_device_entry
 {
-    /** Unicast Address of the first element */
-
+    /** Unicast address of the first element */
     rm_ble_mesh_network_address_t uaddr;
 
     /** Number of Elements */
@@ -1379,6 +1377,7 @@ typedef struct st_rm_ble_mesh_access_model_callback_args
  * Access Layer calls the registered callback to indicate Publication Timeout
  * for the associated model.
  *
+ * \param p_context     Placeholder for user data.
  * \param handle        Model Handle.
  * \param blob          Blob if any or NULL.
  */
@@ -1395,14 +1394,7 @@ typedef struct st_rm_ble_mesh_access_timeout_callback_args
  * Access Layer calls the registered callback to indicate events occurred to the
  * application.
  *
- * \param handle        Model Handle.
- * \param saddr         16 bit Source Address.
- * \param daddr         16 bit Destination Address.
- * \param subnet_handle Subnet Handle.
- * \param appkey_handle AppKey Handle.
- * \param opcode        Opcode.
- * \param data_param    Data associated with the event if any or NULL.
- * \param data_len      Size of the event data. 0 if event data is NULL.
+ * \param p_args        Access Layer application asynchronous notification callback arguments.
  */
 typedef void (* rm_ble_mesh_access_model_callback_t)(rm_ble_mesh_access_model_callback_args_t * p_args);
 
@@ -1412,8 +1404,7 @@ typedef void (* rm_ble_mesh_access_model_callback_t)(rm_ble_mesh_access_model_ca
  * Access Layer calls the registered callback to indicate Publication Timeout
  * for the associated model.
  *
- * \param handle        Model Handle.
- * \param blob          Blob if any or NULL.
+ * \param p_args        Access Layer Model publication timeout callback arguments.
  */
 typedef void (* rm_ble_mesh_access_timeout_callback_t)(rm_ble_mesh_access_timeout_callback_args_t * p_args);
 
@@ -1466,7 +1457,7 @@ typedef struct st_rm_ble_mesh_access_server_state
  */
 typedef struct st_rm_ble_mesh_access_provisioned_device_entry
 {
-    /** Unicast Address of the first element */
+    /** Unicast address of the first element */
     rm_ble_mesh_network_address_t uaddr;
 
     /** Number of Elements */
@@ -1479,7 +1470,7 @@ typedef struct st_rm_ble_mesh_access_associated_keys
     /** Privacy key */
     uint8_t privacy_key[RM_BLE_MESH_ACCESS_KEY_SIZE];
 
-    /** Encription key */
+    /** Encryption key */
     uint8_t encrypt_key[RM_BLE_MESH_ACCESS_KEY_SIZE];
 
     /** Beacon key */
@@ -1531,8 +1522,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_Open()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] p_cfg   Pointer to configuration structure.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  p_cfg   Pointer to configuration structure.
      */
     fsp_err_t (* open)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_access_cfg_t const * const p_cfg);
 
@@ -1540,7 +1531,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_Close()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
+     * @param[in]  p_ctrl  Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_access_ctrl_t * const p_ctrl);
 
@@ -1548,8 +1539,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_RegisterModel()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] p_model          Pointer to model structure.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  p_model          Pointer to model structure.
      * @param[out] p_model_handle   Pointer to model handle.
      */
     fsp_err_t (* registerModel)(rm_ble_mesh_access_ctrl_t * const         p_ctrl,
@@ -1560,8 +1551,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetElementHandle()
      *
-     * @param[in] p_ctrl     Pointer to control structure.
-     * @param[in] elem_addr  Address of the corresponding element.
+     * @param[in]  p_ctrl     Pointer to control structure.
+     * @param[in]  elem_addr  Address of the corresponding element.
      * @param[out] p_handle   Pointer to model handle.
      */
     fsp_err_t (* getElementHandle)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_address_t elem_addr,
@@ -1571,8 +1562,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetElementHandleForModelHandle()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] model_handle   Model handle.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  model_handle   Model handle.
      * @param[out] p_elem_handle  Pointer to element handle.
      */
     fsp_err_t (* getElementHandleForModelHandle)(rm_ble_mesh_access_ctrl_t * const           p_ctrl,
@@ -1583,9 +1574,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetModelHandle()
      *
-     * @param[in] p_ctrl       Pointer to control structure.
-     * @param[in] elem_handle  Element Identifier associated with the Model.
-     * @param[in] model_id     Model Identifier for which the model handle to be searched.
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  elem_handle  Element identifier associated with the Model.
+     * @param[in]  model_id     Model identifier for which the model handle to be searched.
      * @param[out] p_handle     Pointer to model handle.
      */
     fsp_err_t (* getModelHandle)(rm_ble_mesh_access_ctrl_t * const         p_ctrl,
@@ -1597,10 +1588,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_Publish()
      *
-     * @param[in] p_ctrl             Pointer to control structure.
-     * @param[in] p_handl            Pointer to model handle.
-     * @param[in] p_publish_message  Pointer to received message structure.
-     * @param[in] reliable           MS_TRUE for reliable message. MS_FALSE otherwise.
+     * @param[in]  p_ctrl             Pointer to control structure.
+     * @param[in]  p_handl            Pointer to model handle.
+     * @param[in]  p_publish_message  Pointer to received message structure.
+     * @param[in]  reliable           MS_TRUE for reliable message. MS_FALSE otherwise.
      */
     fsp_err_t (* publish)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                           rm_ble_mesh_access_model_handle_t const * const p_handle,
@@ -1610,10 +1601,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_ReliablePublish()
      *
-     * @param[in] p_ctrl             Pointer to control structure.
-     * @param[in] p_handl            Pointer to model handle.
-     * @param[in] p_publish_message  Pointer to raw received message structure.
-     * @param[in] rsp_opcode         Response opcode.
+     * @param[in]  p_ctrl             Pointer to control structure.
+     * @param[in]  p_handl            Pointer to model handle.
+     * @param[in]  p_publish_message  Pointer to raw received message structure.
+     * @param[in]  rsp_opcode         Response opcode.
      */
     fsp_err_t (* reliablePublish)(rm_ble_mesh_access_ctrl_t * const               p_ctrl,
                                   rm_ble_mesh_access_model_handle_t const * const p_handle,
@@ -1624,10 +1615,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_Reply()
      *
-     * @param[in] p_ctrl             Pointer to control structure.
-     * @param[in] p_req_msg_context  Pointer to context of received message structure.
-     * @param[in] ttl                Time to live.
-     * @param[in] p_req_msg_raw      Pointer to received message structure.
+     * @param[in]  p_ctrl             Pointer to control structure.
+     * @param[in]  p_req_msg_context  Pointer to context of received message structure.
+     * @param[in]  ttl                Time to live.
+     * @param[in]  p_req_msg_raw      Pointer to received message structure.
      */
     fsp_err_t (* reply)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                         rm_ble_mesh_access_model_req_msg_context_t const * const p_req_msg_context, uint8_t ttl,
@@ -1637,10 +1628,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_ReplyAndPublish()
      *
-     * @param[in] p_ctrl             Pointer to control structure.
-     * @param[in] p_req_msg_context  Pointer to context of received message structure.
-     * @param[in] p_req_msg_raw      Pointer to received message structure.
-     * @param[in] p_publish_setting  Pointer to publish setting structure.
+     * @param[in]  p_ctrl             Pointer to control structure.
+     * @param[in]  p_req_msg_context  Pointer to context of received message structure.
+     * @param[in]  p_req_msg_raw      Pointer to received message structure.
+     * @param[in]  p_publish_setting  Pointer to publish setting structure.
      */
     fsp_err_t (* replyAndPublish)(rm_ble_mesh_access_ctrl_t * const                        p_ctrl,
                                   rm_ble_mesh_access_model_req_msg_context_t const * const p_req_msg_context,
@@ -1651,9 +1642,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SendPdu()
      *
-     * @param[in] p_ctrl   Pointer to control structure.
-     * @param[in] p_pdu    Pointer to pdu structure.
-     * @param[in] reliable If requires lower transport Ack, set reliable as TRUE.
+     * @param[in]  p_ctrl   Pointer to control structure.
+     * @param[in]  p_pdu    Pointer to PDU structure.
+     * @param[in]  reliable If requires lower transport ACK, set reliable as TRUE.
      */
     fsp_err_t (* sendPdu)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_access_pdu_t const * const p_pdu,
                           uint8_t reliable);
@@ -1662,7 +1653,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetCompositionData()
      *
-     * @param[in] p_ctrl    Pointer to control structure.
+     * @param[in]  p_ctrl    Pointer to control structure.
      * @param[out] p_buffer  Pointer to buffer structure.
      */
     fsp_err_t (* getCompositionData)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_buffer_t * const p_buffer);
@@ -1671,7 +1662,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_Reset()
      *
-     * @param[in] p_ctrl    Pointer to control structure.
+     * @param[in]  p_ctrl    Pointer to control structure.
      */
     fsp_err_t (* reset)(rm_ble_mesh_access_ctrl_t * const p_ctrl);
 
@@ -1679,7 +1670,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetElementCount()
      *
-     * @param[in] p_ctrl    Pointer to control structure.
+     * @param[in]  p_ctrl   Pointer to control structure.
      * @param[out] p_count  Pointer to number of elements.
      */
     fsp_err_t (* getElementCount)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_count);
@@ -1688,8 +1679,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetPrimaryUnicastAddress()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] addr    Primary Unicast Address to be set.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  addr    Primary Unicast address to be set.
      */
     fsp_err_t (* setPrimaryUnicastAddress)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                            rm_ble_mesh_network_address_t     addr);
@@ -1698,7 +1689,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetPrimaryUnicastAddress()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
+     * @param[in]  p_ctrl  Pointer to control structure.
      * @param[out] p_addr  Pointer to address.
      */
     fsp_err_t (* getPrimaryUnicastAddress)(rm_ble_mesh_access_ctrl_t * const     p_ctrl,
@@ -1708,8 +1699,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetDefaultTtl()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] ttl     Default TTL to be set.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  ttl     Default TTL to be set.
      */
     fsp_err_t (* setDefaultTtl)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t ttl);
 
@@ -1717,8 +1708,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetDefaultTtl()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] ttl     Pointer to ttl.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  p_ttl   Pointer to TTL.
      */
     fsp_err_t (* getDefaultTtl)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t const * const p_ttl);
 
@@ -1726,9 +1717,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetIvIndex()
      *
-     * @param[in] p_ctrl          Pointer to control structure.
-     * @param[in] iv_index        IV Index to be set.
-     * @param[in] iv_update_flag  IV Update Flag.
+     * @param[in]  p_ctrl          Pointer to control structure.
+     * @param[in]  iv_index        IV index to be set.
+     * @param[in]  iv_update_flag  IV update flag.
      */
     fsp_err_t (* setIvIndex)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint32_t iv_index, uint8_t iv_update_flag);
 
@@ -1736,7 +1727,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetIvIndex()
      *
-     * @param[in] p_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl            Pointer to control structure.
      * @param[out] p_iv_index        Pointer to index.
      * @param[out] p_iv_update_flag  Pointer to update flag.
      */
@@ -1747,8 +1738,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetIvIndexByIvi()
      *
-     * @param[in] p_ctrl       Pointer to control structure.
-     * @param[in] ivi          Least Significant bit of the IV Index used in the nonce to authenticate and encrypt the Network PDU.
+     * @param[in]  p_ctrl      Pointer to control structure.
+     * @param[in]  ivi         Least significant bit of the IV index used in the once to authenticate and encrypt the network PDU.
      * @param[out] p_iv_index  Pointer to index.
      */
     fsp_err_t (* getIvIndexByIvi)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t ivi, uint32_t * const p_iv_index);
@@ -1757,9 +1748,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetFeaturesField()
      *
-     * @param[in] p_ctrl   Pointer to control structure.
-     * @param[in] enable   Enable or Disable.
-     * @param[in] feature  Relay, proxy, friend or Low Power.
+     * @param[in]  p_ctrl   Pointer to control structure.
+     * @param[in]  enable   Enable or Disable.
+     * @param[in]  feature  Relay, proxy, friend or low power.
      */
     fsp_err_t (* setFeaturesField)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t enable, uint8_t feature);
 
@@ -1767,9 +1758,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetFeaturesField()
      *
-     * @param[in] p_ctrl   Pointer to control structure.
-     * @param[in] enable   Pointer to enable.
-     * @param[in] feature  Relay, proxy, friend or Low Power.
+     * @param[in]  p_ctrl    Pointer to control structure.
+     * @param[in]  p_enable  Pointer to enable.
+     * @param[in]  feature   Relay, proxy, friend or low power.
      */
     fsp_err_t (* getFeaturesField)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_enable, uint8_t feature);
 
@@ -1777,7 +1768,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetFeatures()
      *
-     * @param[in] p_ctrl       Pointer to control structure.
+     * @param[in]  p_ctrl      Pointer to control structure.
      * @param[out] p_features  Pointer to features.
      */
     fsp_err_t (* getFeatures)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_features);
@@ -1786,7 +1777,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetFriendshipRole()
      *
-     * @param[in] p_ctrl          Pointer to control structure.
+     * @param[in]  p_ctrl         Pointer to control structure.
      * @param[out] p_friend_role  Pointer to friend role.
      */
     fsp_err_t (* getFriendshipRole)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_friend_role);
@@ -1795,7 +1786,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetFriendshipRole()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
+     * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] friend_role  Friend role.
      */
     fsp_err_t (* setFriendshipRole)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t friend_role);
@@ -1804,10 +1795,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_AddDeviceKey()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] p_dev_key     Pointer to device Key.
-     * @param[in] uaddr         Unicast Address of the first element.
-     * @param[in] num_elements  Number of elements.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  p_dev_key     Pointer to device Key.
+     * @param[in]  uaddr         Unicast address of the first element.
+     * @param[in]  num_elements  Number of elements.
      */
     fsp_err_t (* addDeviceKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t const * const p_dev_key,
                                rm_ble_mesh_network_address_t uaddr, uint8_t num_elements);
@@ -1816,9 +1807,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetDeviceKey()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] dev_key_index  Device Key Index.
-     * @param[out] p_dev_key      Pointer to Device Key to be returned.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  dev_key_index  Device key index.
+     * @param[out] p_dev_key      Pointer to device key to be returned.
      */
     fsp_err_t (* getDeviceKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t dev_key_index,
                                uint8_t ** const p_dev_key);
@@ -1827,7 +1818,7 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_RemoveAllDeviceKeys()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
+     * @param[in]  p_ctrl         Pointer to control structure.
      */
     fsp_err_t (* removeAllDeviceKeys)(rm_ble_mesh_access_ctrl_t * const p_ctrl);
 
@@ -1835,9 +1826,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetProvisionedDeviceList()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] p_prov_dev_list  Pointer to provisioned device lList structure.
-     * @param[in] p_num_entries    Pointer to number of entries.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  p_prov_dev_list  Pointer to provisioned device list structure.
+     * @param[in]  p_num_entries    Pointer to number of entries.
      */
     fsp_err_t (* getProvisionedDeviceList)(rm_ble_mesh_access_ctrl_t * const                           p_ctrl,
                                            rm_ble_mesh_access_provisioned_device_entry_t const * const p_prov_dev_list,
@@ -1847,9 +1838,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetDeviceKeyHandle()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] prim_elem_uaddr  Primary element address to be searched.
-     * @param[in] p_handle         Pointer to handle.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  prim_elem_uaddr  Primary element address to be searched.
+     * @param[in]  p_handle         Pointer to handle.
      */
     fsp_err_t (* getDeviceKeyHandle)(rm_ble_mesh_access_ctrl_t * const              p_ctrl,
                                      rm_ble_mesh_network_address_t                  prim_elem_uaddr,
@@ -1859,10 +1850,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetAppKey()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] appkey_handle  AppKey Handle.
-     * @param[out] p_app_key     Pointer to AppKey to be returned.
-     * @param[out] p_aid         Pointer to AID to be returned.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  appkey_handle  AppKey Handle.
+     * @param[out] p_app_key      Pointer to AppKey to be returned.
+     * @param[out] p_aid          Pointer to AID to be returned.
      */
     fsp_err_t (* getAppKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_appkey_handle_t appkey_handle,
                             uint8_t ** const p_app_key, uint8_t * const p_aid);
@@ -1871,22 +1862,22 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_AddUpdateNetkey()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] netkey_index  Identifies global Index of NetKey. A 12-bit value.
-     * @param[out] opcode       To identify Add or Update NetKey.
-     * @param[out] net_key      Pointer to Netkey.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  netkey_index  Identifies global index of NetKey. A 12bits value.
+     * @param[in]  opcode        To identify Add or Update NetKey.
+     * @param[out] p_net_key     Pointer to NetKey.
      */
     fsp_err_t (* addUpdateNetkey)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint16_t netkey_index, uint32_t opcode,
-                                  uint8_t const * const net_key);
+                                  uint8_t const * const p_net_key);
 
     /**  To add Security Credential of a LPN or the Friend.
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_AddFriendSecurityCredential()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Identifies associated subnet.
-     * @param[in] friend_index   Friend Index.
-     * @param[in] info           Security credential of a LPN or the friend.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Identifies associated subnet.
+     * @param[in]  friend_index   Friend Index.
+     * @param[in]  info           Security credential of a LPN or the friend.
      */
     fsp_err_t (* addFriendSecurityCredential)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                               rm_ble_mesh_network_subnet_handle_t subnet_handle, uint16_t friend_index,
@@ -1896,9 +1887,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_DeleteFriendSecurityCredential()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Identifies associated subnet.
-     * @param[in] friend_index   Friend Index.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Identifies associated subnet.
+     * @param[in]  friend_index   Friend index.
      */
     fsp_err_t (* deleteFriendSecurityCredential)(rm_ble_mesh_access_ctrl_t * const   p_ctrl,
                                                  rm_ble_mesh_network_subnet_handle_t subnet_handle,
@@ -1908,8 +1899,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_FindSubnet()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] netkey_index      Identifies global Index of NetKey, corresponding Subnet to be returned.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  netkey_index     Identifies global Index of NetKey, corresponding Subnet to be returned.
      * @param[out] p_subnet_handle  Pointer to subnet handle.
      */
     fsp_err_t (* findSubnet)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint16_t netkey_index,
@@ -1919,8 +1910,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_FindMasterSubnet()
      *
-     * @param[in] p_ctrl                   Pointer to control structure.
-     * @param[in] friend_subnet_handle     Idetifies the friend subnet handle, corresponding to friend subnet handle.
+     * @param[in]  p_ctrl                  Pointer to control structure.
+     * @param[in]  friend_subnet_handle    Identifies the friend subnet handle, corresponding to friend subnet handle.
      * @param[out] p_master_subnet_handle  Pointer to master subnet handle.
      */
     fsp_err_t (* findMasterSubnet)(rm_ble_mesh_access_ctrl_t * const           p_ctrl,
@@ -1931,8 +1922,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_DeleteNetKey()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle of the Subnet for which NetKey to be deleted.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Handle of the subnet for which NetKey to be deleted.
      */
     fsp_err_t (* deleteNetKey)(rm_ble_mesh_access_ctrl_t * const   p_ctrl,
                                rm_ble_mesh_network_subnet_handle_t subnet_handle);
@@ -1941,9 +1932,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetNetKey()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle of the Subnet for which NetKey to be deleted.
-     * @param[in] p_net_key      Pointer to Netkey.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Target subnet handle to get net key.
+     * @param[in]  p_net_key      Pointer to NetKey.
      */
     fsp_err_t (* getNetKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_subnet_handle_t subnet_handle,
                             uint8_t * const p_net_key);
@@ -1952,9 +1943,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetNetKeyIndexList()
      *
-     * @param[in] p_ctrl               Pointer to control structure.
-     * @param[in] p_netkey_count       Pointer to Netkey count.
-     * @param[in] p_netkey_index_list  Pointer to Netkey index list.
+     * @param[in]  p_ctrl               Pointer to control structure.
+     * @param[in]  p_netkey_count       Pointer to NetKey count.
+     * @param[in]  p_netkey_index_list  Pointer to NetKey index list.
      */
     fsp_err_t (* getNetKeyIndexList)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint16_t * const p_netkey_count,
                                      uint16_t * const p_netkey_index_list);
@@ -1963,8 +1954,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_LookUpNid()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] nid               NID to be searched in all known subnets for match.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  nid              NID to be searched in all known subnets for match.
      * @param[out] p_subnet_handle  Pointer to subnet handle.
      * @param[out] p_key_set        Pointer to key set.
      */
@@ -1976,9 +1967,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_LookUpNetworkId()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] p_network_id      Network ID to be searched in all known subnets for match.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  p_network_id     Pointer to network ID to be searched in all known subnets for match.
      * @param[out] p_subnet_handle  Pointer to subnet handle.
+     * @param[out] p_key_set        Pointer to key settings.
      */
     fsp_err_t (* lookUpNetworkId)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t const * const p_network_id,
                                   rm_ble_mesh_network_subnet_handle_t * const p_subnet_handle,
@@ -1986,10 +1978,10 @@ typedef struct st_rm_ble_mesh_access_api
 
     /**  To search for AID.
      * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_LookUpNetworkId()
+     * - @ref RM_BLE_MESH_ACCESS_LookUpAid()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] aid               AID to be searched in all known AppKeys for match.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  aid              AID to be searched in all known AppKeys for match.
      * @param[out] p_appkey_handle  Pointer to AppKey handle.
      * @param[out] p_app_key        Pointer to AppKey.
      */
@@ -2000,8 +1992,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetProvisioningData()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] p_prov_data       Pointer to provisioning data structure.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  p_prov_data      Pointer to provisioning data structure.
      */
     fsp_err_t (* setProvisioningData)(rm_ble_mesh_access_ctrl_t * const          p_ctrl,
                                       rm_ble_mesh_provision_data_t const * const p_prov_data);
@@ -2010,19 +2002,19 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetSubnetNid()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] handle  Handle identifing the subnet.
-     * @param[out] p_nid  Pointer to NID.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  handle  Handle identifying the subnet.
+     * @param[out] p_nid   Pointer to NID.
      */
     fsp_err_t (* getSubnetNid)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_subnet_handle_t handle,
                                uint8_t * const p_nid);
 
-    /**  To get Privacy Key associated with a subnet.
+    /**  To get privacy Key associated with a subnet.
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetSubnetPrivacyKey()
      *
-     * @param[in] p_ctrl          Pointer to control structure.
-     * @param[in] handle          Handle identifing the subnet.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  handle         Handle identifying the subnet.
      * @param[out] p_privacy_key  Pointer to Privacy Key.
      */
     fsp_err_t (* getSubnetPrivacyKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
@@ -2032,8 +2024,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetSubnetNetworkId()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] handle         Handle identifing the subnet.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  handle        Handle identifying the subnet.
      * @param[out] p_network_id  Pointer to Network ID.
      */
     fsp_err_t (* getSubnetNetworkId)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
@@ -2043,8 +2035,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetSubnetBeaconKey()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] handle  Handle identifing the subnet.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  handle        Handle identifying the subnet.
      * @param[out] p_beacon_key  Pointer to Beacon Key.
      */
     fsp_err_t (* getSubnetBeaconKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
@@ -2054,8 +2046,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetSubnetIdentityKey()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] handle           Handle identifing the subnet.
+     * @param[in]  p_ctrl          Pointer to control structure.
+     * @param[in]  handle          Handle identifying the subnet.
      * @param[out] p_identity_key  Pointer to Identity Key.
      */
     fsp_err_t (* getSubnetIdentityKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
@@ -2065,9 +2057,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetSubnetEncryptionKey()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] handle          Handle identifing the subnet.
-     * @param[out] p_encrypt_key  Pointer to Encyption Key.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  handle         Handle identifying the subnet.
+     * @param[out] p_encrypt_key  Pointer to Encryption Key.
      */
     fsp_err_t (* getSubnetEncryptionKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                          rm_ble_mesh_network_subnet_handle_t handle, uint8_t * const p_encrypt_key);
@@ -2076,9 +2068,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetNodeIdentity()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle identifing the subnet.
-     * @param[out] p_id_state    Pointer to node Identity state.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Handle identifying the subnet.
+     * @param[out] p_id_state     Pointer to node identity state.
      */
     fsp_err_t (* getNodeIdentity)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                   rm_ble_mesh_network_subnet_handle_t subnet_handle, uint8_t * const p_id_state);
@@ -2087,32 +2079,32 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetNodeIdentity()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle identifing the subnet.
-     * @param[out] p_id_state    Pointer to node Identity state.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Handle identifying the subnet.
+     * @param[out] p_id_state     Pointer to node identity state.
      */
     fsp_err_t (* setNodeIdentity)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                   rm_ble_mesh_network_subnet_handle_t subnet_handle, uint8_t * const p_id_state);
 
-    /**  To get Key Refresh Phase.
+    /**  To get Key refresh phase.
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetKeyRefreshPhase()
      *
-     * @param[in] p_ctrl                Pointer to control structure.
-     * @param[in] subnet_handle         Handle identifing the subnet.
+     * @param[in]  p_ctrl               Pointer to control structure.
+     * @param[in]  subnet_handle        Handle identifying the subnet.
      * @param[out] p_key_refresh_state  Pointer to key refresh phase state.
      */
     fsp_err_t (* getKeyRefreshPhase)(rm_ble_mesh_access_ctrl_t * const   p_ctrl,
                                      rm_ble_mesh_network_subnet_handle_t subnet_handle,
                                      uint8_t * const                     p_key_refresh_state);
 
-    /**  To set Key Refresh Phase.
+    /**  To set Key refresh phase.
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetKeyRefreshPhase()
      *
-     * @param[in] p_ctrl               Pointer to control structure.
-     * @param[in] subnet_handle        Handle identifing the subnet.
-     * @param[in] p_key_refresh_state  Pointer to key refresh phase state.
+     * @param[in]  p_ctrl               Pointer to control structure.
+     * @param[in]  subnet_handle        Handle identifying the subnet.
+     * @param[in]  p_key_refresh_state  Pointer to key refresh phase state.
      */
     fsp_err_t (* setKeyRefreshPhase)(rm_ble_mesh_access_ctrl_t * const   p_ctrl,
                                      rm_ble_mesh_network_subnet_handle_t subnet_handle,
@@ -2122,9 +2114,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetTransmitState()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] tx_state_type  Transmit State Type (Network or Relay).
-     * @param[in] tx_state       Composite state (3-bits of Tx Count and 5-bits of Tx Interval Steps).
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  tx_state_type  Transmit state type (Network or Relay).
+     * @param[in]  tx_state       Composite state (3bits of TX count and 5bits of TX interval steps).
      */
     fsp_err_t (* setTransmitState)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t tx_state_type, uint8_t tx_state);
 
@@ -2132,9 +2124,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetTransmitState()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] tx_state_type  Transmit State Type (Network or Relay).
-     * @param[out] p_tx_state    Pointer to tx state.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  tx_state_type  Transmit State Type (Network or Relay).
+     * @param[out] p_tx_state     Pointer to TX state.
      */
     fsp_err_t (* getTransmitState)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t tx_state_type,
                                    uint8_t * const p_tx_state);
@@ -2143,10 +2135,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_AddAppKey()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle of the Subnet for which AppKey to be added.
-     * @param[in] appkey_index   Identifies global Index of AppKey. A 12-bit value.
-     * @param[in] p_app_key      Pointer to AppKey.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Handle of the subnet for which AppKey to be added.
+     * @param[in]  appkey_index   Identifies global Index of AppKey. A 12bits value.
+     * @param[in]  p_app_key      Pointer to AppKey.
      */
     fsp_err_t (* addAppKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_subnet_handle_t subnet_handle,
                             uint16_t appkey_index, uint8_t const * const p_app_key);
@@ -2155,10 +2147,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_UpdateAppKey()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle of the Subnet for which AppKey to be updated/deleted.
-     * @param[in] appkey_index   Identifies global Index of AppKey. A 12-bit value.
-     * @param[in] p_app_key      Pointer to AppKey.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Handle of the Subnet for which AppKey to be updated/deleted.
+     * @param[in]  appkey_index   Identifies global Index of AppKey. A 12bits value.
+     * @param[in]  p_app_key      Pointer to AppKey.
      */
     fsp_err_t (* updateAppKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                rm_ble_mesh_network_subnet_handle_t subnet_handle, uint16_t appkey_index,
@@ -2168,10 +2160,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_DeleteAppKey()
      *
-     * @param[in] p_ctrl         Pointer to control structure.
-     * @param[in] subnet_handle  Handle of the Subnet for which AppKey to be updated/deleted.
-     * @param[in] appkey_index   Identifies global Index of AppKey. A 12-bit value.
-     * @param[in] p_app_key      Pointer to AppKey.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[in]  subnet_handle  Handle of the Subnet for which AppKey to be updated/deleted.
+     * @param[in]  appkey_index   Identifies global index of AppKey. A 12bits value.
+     * @param[in]  p_app_key      Pointer to AppKey.
      */
     fsp_err_t (* deleteAppKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                rm_ble_mesh_network_subnet_handle_t subnet_handle, uint16_t appkey_index,
@@ -2181,10 +2173,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetAppKeyHandle()
      *
-     * @param[in] p_ctrl             Pointer to control structure.
-     * @param[in] subnet_handle      Handle of the Subnet for which AppKey to be updated.
-     * @param[in] appkey_index       Identifies global Index of AppKey. A 12-bit value.
-     * @param[in] p_app_key          Pointer to AppKey.
+     * @param[in]  p_ctrl            Pointer to control structure.
+     * @param[in]  subnet_handle     Handle of the Subnet for which AppKey to be gotten.
+     * @param[in]  appkey_index      Identifies global Index of AppKey. A 12bits value.
+     * @param[in]  p_app_key         Pointer to AppKey.
      * @param[out] p_app_key_handle  Pointer to AppKey handle.
      */
     fsp_err_t (* getAppKeyHandle)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
@@ -2196,8 +2188,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetAppKeyIndexList()
      *
-     * @param[in] p_ctrl                Pointer to control structure.
-     * @param[in] subnet_handle         Handle of the Subnet for which AppKey to be returned.
+     * @param[in]  p_ctrl               Pointer to control structure.
+     * @param[in]  subnet_handle        Handle of the Subnet for which AppKey to be returned.
      * @param[out] p_appkey_count       Pointer to AppKey count.
      * @param[out] p_appkey_index_list  Pointer to AppKey index list.
      */
@@ -2209,9 +2201,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_BindModelWithAppKey()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] model_handle  Model handle identifing the model.
-     * @param[in] appkey_index  Pointer to AppKey index.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  model_handle  Model handle identifying the model.
+     * @param[in]  appkey_index  Identifies global index of AppKey. A 12bits value.
      */
     fsp_err_t (* bindModelWithAppKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                       rm_ble_mesh_access_model_handle_t model_handle, uint16_t appkey_index);
@@ -2220,9 +2212,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_UnbindModelWithAppKey()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] model_handle  Model handle identifing the model.
-     * @param[in] appkey_index  Identifies global Index of AppKey. A 12-bit value.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  model_handle  Model handle identifying the model.
+     * @param[in]  appkey_index  Identifies global index of AppKey. A 12bits value.
      */
     fsp_err_t (* unbindModelWithAppKey)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                         rm_ble_mesh_access_model_handle_t model_handle, uint16_t appkey_index);
@@ -2231,8 +2223,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetModelAppKeyList()
      *
-     * @param[in] p_ctrl                Pointer to control structure.
-     * @param[in] model_handle          Handle of the Model for which AppKey to be returned.
+     * @param[in]  p_ctrl               Pointer to control structure.
+     * @param[in]  model_handle         Handle of the Model for which AppKey to be returned.
      * @param[out] p_appkey_count       pointer to AppKey count.
      * @param[out] p_appkey_index_list  Pointer to AppKey index list.
      */
@@ -2244,9 +2236,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetModelPublication()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] model_handle     Handle of the Model for which Publication info to be set.
-     * @param[out] p_publish_info  Pointer to publication information structure.
+     * @param[in]  p_ctrl          Pointer to control structure.
+     * @param[in]  model_handle    Handle of the Model for which Publication info to be set.
+     * @param[in]  p_publish_info  Pointer to publication information structure.
      */
     fsp_err_t (* setModelPublication)(rm_ble_mesh_access_ctrl_t * const         p_ctrl,
                                       rm_ble_mesh_access_model_handle_t         model_handle,
@@ -2256,9 +2248,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_SetModelPublicationPeriodDivisor()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] model_handle     Handle of the Model for which Publication info to be set.
-     * @param[in] period_divisor   The value range for the Health Fast Period Divisor state is 0 through 15, all other values are prohibited.
+     * @param[in]  p_ctrl          Pointer to control structure.
+     * @param[in]  model_handle    Handle of the Model for which Publication info to be set.
+     * @param[in]  period_divisor  The value range for the Health Fast Period Divisor state is 0 through 15, all other values are prohibited.
      */
     fsp_err_t (* setModelPublicationPeriodDivisor)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                                    rm_ble_mesh_access_model_handle_t model_handle,
@@ -2268,9 +2260,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetModelPublication()
      *
-     * @param[in] p_ctrl           Pointer to control structure.
-     * @param[in] model_handle     Handle of the Model for which Publication info to be returned.
-     * @param[out] p_publish_info  Pointer to publication information structure..
+     * @param[in]  p_ctrl          Pointer to control structure.
+     * @param[in]  model_handle    Handle of the Model for which Publication info to be returned.
+     * @param[out] p_publish_info  Pointer to publication information structure.
      */
     fsp_err_t (* getModelPublication)(rm_ble_mesh_access_ctrl_t * const         p_ctrl,
                                       rm_ble_mesh_access_model_handle_t         model_handle,
@@ -2280,9 +2272,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_AddModelSubscription()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] model_handle  Handle of the Model for which address to be added in the subscription list.
-     * @param[in] p_sub_addr    Pointer to address structure.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  model_handle  Handle of the Model for which address to be added in the subscription list.
+     * @param[in]  p_sub_addr    Pointer to address structure.
      */
     fsp_err_t (* addModelSubscription)(rm_ble_mesh_access_ctrl_t * const          p_ctrl,
                                        rm_ble_mesh_access_model_handle_t          model_handle,
@@ -2292,9 +2284,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_DeleteModelSubscription()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] model_handle  Handle of the Model for which address to be deleteed in the subscription list.
-     * @param[in] p_sub_addr    Pointer to address structure.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  model_handle  Handle of the Model for which address to be deleted in the subscription list.
+     * @param[in]  p_sub_addr    Pointer to address structure.
      */
     fsp_err_t (* deleteModelSubscription)(rm_ble_mesh_access_ctrl_t * const          p_ctrl,
                                           rm_ble_mesh_access_model_handle_t          model_handle,
@@ -2304,8 +2296,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_DeleteAllModelSubscription()
      *
-     * @param[in] p_ctrl        Pointer to control structure.
-     * @param[in] model_handle  Handle of the Model for which the subscription list to be discarded.
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  model_handle  Handle of the Model for which the subscription list to be discarded.
      */
     fsp_err_t (* deleteAllModelSubscription)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                              rm_ble_mesh_access_model_handle_t model_handle);
@@ -2314,10 +2306,10 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetModelSubscriptionList()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] model_handle      Handle of the Model for which the subscription addresses to be returned.
-     * @param[in] p_sub_addr_count  Pointer to maximum number of subscription address.
-     * @param[in] p_sub_addr_list   Pointer to subscription addresses.
+     * @param[in]  p_ctrl            Pointer to control structure.
+     * @param[in]  model_handle      Handle of the Model for which the subscription addresses to be returned.
+     * @param[in]  p_sub_addr_count  Pointer to maximum number of subscription address.
+     * @param[out] p_sub_addr_list   Pointer to subscription addresses.
      */
     fsp_err_t (* getModelSubscriptionList)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                            rm_ble_mesh_access_model_handle_t model_handle,
@@ -2328,9 +2320,9 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_GetAllModelSubscriptionList()
      *
-     * @param[in] p_ctrl            Pointer to control structure.
-     * @param[in] p_sub_addr_count  Pointer to maximum number of subscription address.
-     * @param[in] p_sub_addr_list   Pointer to maximum number of subscription address.
+     * @param[in]  p_ctrl            Pointer to control structure.
+     * @param[in]  p_sub_addr_count  Pointer to maximum number of subscription address.
+     * @param[out] p_sub_addr_list   Pointer to subscription addresses.
      */
     fsp_err_t (* getAllModelSubscriptionList)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                               uint16_t * const p_sub_addr_count, uint16_t * const p_sub_addr_list);
@@ -2339,8 +2331,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_IsValidElementAddress()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] addr    Unicast address to search.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  addr    A valid element address, to be checked.
      */
     fsp_err_t (* isValidElementAddress)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_address_t addr);
 
@@ -2348,8 +2340,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_IsFixedGroupAddressToBeProcessed()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] addr    A valid fixed group address, to be checked.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  addr    A valid fixed group address, to be checked.
      */
     fsp_err_t (* isFixedGroupAddressToBeProcessed)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                                    rm_ble_mesh_network_address_t     addr);
@@ -2358,8 +2350,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_IsValidSubscriptionAddress()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] addr    Address to search.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  addr    A valid subscription address, to be checked.
      */
     fsp_err_t (* isValidSubscriptionAddress)(rm_ble_mesh_access_ctrl_t * const p_ctrl,
                                              rm_ble_mesh_network_address_t     addr);
@@ -2368,8 +2360,8 @@ typedef struct st_rm_ble_mesh_access_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_ACCESS_EnableIvUpdateTestMode()
      *
-     * @param[in] p_ctrl  Pointer to control structure.
-     * @param[in] mode    This flag is used to either enable or disable the IV update test mode feature.
+     * @param[in]  p_ctrl  Pointer to control structure.
+     * @param[in]  mode    This flag is used to either enable or disable the IV update test mode feature.
      */
     fsp_err_t (* enableIvUpdateTestMode)(rm_ble_mesh_access_ctrl_t * const        p_ctrl,
                                          rm_ble_mesh_access_iv_update_test_mode_t mode);
@@ -2378,9 +2370,9 @@ typedef struct st_rm_ble_mesh_access_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_access_instance
 {
-    rm_ble_mesh_access_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_ble_mesh_access_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_access_api_t const * p_api;  ///< Pointer to the API structure for this instance
+    rm_ble_mesh_access_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_access_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_access_api_t const * p_api;  ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_access_instance_t;
 
 /*******************************************************************************************************************//**

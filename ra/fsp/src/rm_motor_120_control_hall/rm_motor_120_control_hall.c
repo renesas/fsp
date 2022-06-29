@@ -192,6 +192,18 @@ fsp_err_t RM_MOTOR_120_CONTROL_HALL_Open (motor_120_control_ctrl_t * const      
                                                            p_extended_cfg->p_v_hall_irq_instance->p_cfg);
         p_extended_cfg->p_w_hall_irq_instance->p_api->open(p_extended_cfg->p_w_hall_irq_instance->p_ctrl,
                                                            p_extended_cfg->p_w_hall_irq_instance->p_cfg);
+        p_extended_cfg->p_u_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_u_hall_irq_instance->p_ctrl,
+                                                                  rm_motor_120_control_hall_interrupt,
+                                                                  p_instance_ctrl,
+                                                                  NULL);
+        p_extended_cfg->p_v_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_v_hall_irq_instance->p_ctrl,
+                                                                  rm_motor_120_control_hall_interrupt,
+                                                                  p_instance_ctrl,
+                                                                  NULL);
+        p_extended_cfg->p_w_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_w_hall_irq_instance->p_ctrl,
+                                                                  rm_motor_120_control_hall_interrupt,
+                                                                  p_instance_ctrl,
+                                                                  NULL);
         p_extended_cfg->p_u_hall_irq_instance->p_api->enable(p_extended_cfg->p_u_hall_irq_instance->p_ctrl);
         p_extended_cfg->p_v_hall_irq_instance->p_api->enable(p_extended_cfg->p_v_hall_irq_instance->p_ctrl);
         p_extended_cfg->p_w_hall_irq_instance->p_api->enable(p_extended_cfg->p_w_hall_irq_instance->p_ctrl);
@@ -622,11 +634,10 @@ fsp_err_t RM_MOTOR_120_CONTROL_HALL_ParameterUpdate (motor_120_control_ctrl_t * 
  ******************************************************************************/
 void rm_motor_120_control_hall_interrupt (external_irq_callback_args_t * p_args)
 {
-    motor_120_control_instance_t           * p_instance      = (motor_120_control_instance_t *) p_args->p_context;
     motor_120_control_hall_instance_ctrl_t * p_instance_ctrl =
-        (motor_120_control_hall_instance_ctrl_t *) p_instance->p_ctrl;
+        (motor_120_control_hall_instance_ctrl_t *) p_args->p_context;
     motor_120_control_hall_extended_cfg_t * p_extended_cfg =
-        (motor_120_control_hall_extended_cfg_t *) p_instance->p_cfg->p_extend;
+        (motor_120_control_hall_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
     if (p_instance_ctrl->u4_adc_interrupt_cnt == 0)
     {

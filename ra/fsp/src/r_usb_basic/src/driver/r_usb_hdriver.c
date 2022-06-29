@@ -136,7 +136,7 @@ static void usb_hstd_otg_mode_to_peri(usb_utr_t * p_utr);
 static void usb_pdriver_init_otg(void);
 extern void usb_pstd_ux_descriptor_to_basic(usb_cfg_t * p_cfg);
 
-extern volatile uint16_t g_usb_open_class[];
+extern volatile uint32_t g_usb_open_class[];
 extern usb_cfg_t       * g_p_usb_otg_cfg;
 extern usb_descriptor_t  g_usbx_descriptor;
  #endif                                /* defined(USB_CFG_OTG_USE) */

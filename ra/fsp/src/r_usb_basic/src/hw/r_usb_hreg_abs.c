@@ -356,8 +356,7 @@ void usb_hstd_detach_process (usb_utr_t * ptr)
                 /* Agreement device address */
                 if (usb_hstd_get_devsel(ptr, i) == addr)
                 {
-                    /* PID=BUF ? */
-                    if (USB_PID_BUF == usb_cstd_get_pid(ptr, i))
+                    if (USB_NULL != g_p_usb_hstd_pipe[ptr->ip][i])
                     {
                         /* End of data transfer (IN/OUT) */
                         usb_hstd_forced_termination(ptr, i, (uint16_t) USB_DATA_STOP);

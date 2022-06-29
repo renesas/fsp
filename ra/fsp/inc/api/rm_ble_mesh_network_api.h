@@ -22,11 +22,11 @@
 #define RM_BLE_MESH_NETWORK_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
- * @defgroup RM_BLE_MESH_NETWORK_API BLE Mesh Network Interface
- * @brief Interface for Bluetooth Low Energy Mesh Network functions.
+ * @ingroup   RENESAS_INTERFACES
+ * @defgroup  RM_BLE_MESH_NETWORK_API BLE Mesh Network Interface
+ * @brief     Interface for Bluetooth Low Energy Mesh Network functions.
  *
- * @section RM_BLE_MESH_NETWORK_API_Summary Summary
+ * @section   RM_BLE_MESH_NETWORK_API_Summary Summary
  * The BLE Mesh Network interface for the Bluetooth Low Energy Mesh Network (BLE MESH NETWORK) peripheral provides Bluetooth Low Energy Mesh Network functionality.
  *
  * The Bluetooth Low Energy Mesh interface can be implemented by:
@@ -75,7 +75,7 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** Ignore netcache wrapping. */
+/** Ignore network cache wrapping. */
 typedef  enum e_rm_ble_mesh_network_old_packet_treatment
 {
     /** Old packets will be dropped. */
@@ -88,15 +88,15 @@ typedef  enum e_rm_ble_mesh_network_old_packet_treatment
 /** Whether to enable the RX callback event or not. */
 typedef  enum e_rm_ble_mesh_network_rx_state_event
 {
-    RM_BLE_MESH_NETWORK_RX_STATE_EVENT_DISABLE = 0, ///< Rx state callback disable
-    RM_BLE_MESH_NETWORK_RX_STATE_EVENT_ENABLE  = 1, ///< Rx state callback enable
+    RM_BLE_MESH_NETWORK_RX_STATE_EVENT_DISABLE = 0, ///< RX state callback disable
+    RM_BLE_MESH_NETWORK_RX_STATE_EVENT_ENABLE  = 1, ///< RX state callback enable
 } rm_ble_mesh_network_rx_state_event_t;
 
 /** Whether to enable the TX callback event or not. */
 typedef  enum e_rm_ble_mesh_network_tx_state_event
 {
-    RM_BLE_MESH_NETWORK_TX_STATE_EVENT_DISABLE = 0, ///< Tx state callback disable
-    RM_BLE_MESH_NETWORK_TX_STATE_EVENT_ENABLE  = 1, ///< Tx state callback enable
+    RM_BLE_MESH_NETWORK_TX_STATE_EVENT_DISABLE = 0, ///< TX state callback disable
+    RM_BLE_MESH_NETWORK_TX_STATE_EVENT_ENABLE  = 1, ///< TX state callback enable
 } rm_ble_mesh_network_tx_state_event_t;
 
 /** Address Type */
@@ -153,23 +153,23 @@ typedef  enum e_rm_ble_mesh_network_proxy_config_opcode
  */
 typedef  enum e_rm_ble_mesh_network_gatt_proxy_state
 {
-/** GATT Proxy State - Invalid/Not Initialized */
+    /** GATT Proxy State - Invalid/Not Initialized */
     RM_BLE_MESH_NETWORK_GATT_PROXY_STATE_NULL = 0x00,
 
-/** GATT Proxy State - Ready/Initialized */
+    /** GATT Proxy State - Ready/Initialized */
     RM_BLE_MESH_NEgTWORK_GATT_PROXY_STATE_READY = 0x01,
 
-/** GATT Proxy State - Connected */
+    /** GATT Proxy State - Connected */
     RM_BLE_MESH_NETWORK_GATT_PROXY_STATE_CONNECTED = 0x02,
 } rm_ble_mesh_network_gatt_proxy_state_t;
 
 /** GATT Proxy ADV Modes */
 typedef  enum e_rm_ble_mesh_network_gatt_proxy_adv_mode
 {
-/** Network ID Type */
+    /** Network ID Type */
     RM_BLE_MESH_NETWORK_GATT_PROXY_ADV_MODE_NET_ID = 0x01,
 
-/** Node Idetity Type */
+    /** Node Identity Type */
     RM_BLE_MESH_NETWORK_GATT_PROXY_ADV_MODE_NODE_ID = 0x02,
 } rm_ble_mesh_network_gatt_proxy_adv_mode_t;
 
@@ -188,7 +188,7 @@ typedef  enum e_rm_ble_mesh_network_event
     /** GATT Proxy Event - Receive */
     RM_BLE_MESH_NETWORK_EVENT_RECIEVE = 0x03,
 
-    /** GATT Proxy Event - Tx queue empty */
+    /** GATT Proxy Event - TX queue empty */
     RM_BLE_MESH_NETWORK_EVENT_TX_QUEUE_EMPTY = 0x04,
 } rm_ble_mesh_network_event_t;
 
@@ -221,8 +221,8 @@ typedef struct st_rm_ble_mesh_network_header
     uint8_t nid;
 
     /**
-     * Indicates use of a new Netkey to which the network
-     * is being updated to
+     * Indicates use of a new NetKey to which the network
+     * is being updated to.
      */
     uint8_t new_key;
 
@@ -238,7 +238,7 @@ typedef struct st_rm_ble_mesh_network_header
     /** 16 Bit Destination Address */
     rm_ble_mesh_network_address_t dst_addr;
 
-    /** 24 bit sequence number - currently filled only in recption path */
+    /** 24 bit sequence number - currently filled only in reception path */
     uint32_t seq_num;
 } rm_ble_mesh_network_header_t;
 
@@ -276,10 +276,10 @@ typedef struct st_rm_ble_mesh_network_proxy_address_list
 typedef struct st_rm_ble_mesh_network_callback_args
 {
     rm_ble_mesh_network_event_t              event;               ///< Event code.
-    rm_ble_mesh_network_header_t           * p_header;            ///< Network header type
-    rm_ble_mesh_network_subnet_handle_t      subnet_handle;       ///< Subnet handle
-    rm_ble_mesh_network_interface_handle_t * p_network_interface; ///< Network interface handle
-    rm_ble_mesh_buffer_t event_data;                              /// < Event data
+    rm_ble_mesh_network_header_t           * p_header;            ///< Network header type.
+    rm_ble_mesh_network_subnet_handle_t      subnet_handle;       ///< Subnet handle.
+    rm_ble_mesh_network_interface_handle_t * p_network_interface; ///< Network interface handle.
+    rm_ble_mesh_buffer_t event_data;                              ///< Event data.
     void const         * p_context;                               ///< Context provided to user during callback.
 } rm_ble_mesh_network_callback_args_t;
 
@@ -307,7 +307,7 @@ typedef struct st_rm_ble_mesh_network_cfg
 /** BLE MESH NETWORK functions implemented at the HAL layer will follow this API. */
 typedef struct st_rm_ble_mesh_network_api
 {
-    /** Register Inerface with Network Layer.
+    /** Register Interface with Network Layer.
      * @par Implemented as
      * - @ref RM_BLE_MESH_NETWORK_Open()
      *
@@ -316,7 +316,7 @@ typedef struct st_rm_ble_mesh_network_api
      */
     fsp_err_t (* open)(rm_ble_mesh_network_ctrl_t * const p_ctrl, rm_ble_mesh_network_cfg_t const * const p_cfg);
 
-    /** Unregister Inerface with Network Layer.
+    /** Unregister Interface with Network Layer.
      * @par Implemented as
      * - @ref RM_BLE_MESH_NETWORK_Close()
      *
@@ -334,7 +334,7 @@ typedef struct st_rm_ble_mesh_network_api
     fsp_err_t (* broadcastSecureBeacon)(rm_ble_mesh_network_ctrl_t * const  p_ctrl,
                                         rm_ble_mesh_network_subnet_handle_t subnet_handle);
 
-    /** Extension API to send Network PDUs on selected network interfaces.
+    /** Extension API to send network PDUs on selected network interfaces.
      * @par Implemented as
      * - @ref RM_BLE_MESH_NETWORK_SendPduOnInterface()
      *
@@ -429,8 +429,8 @@ typedef struct st_rm_ble_mesh_network_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_NETWORK_AllocateSeqNumber()
      *
-     * @param[in]   p_ctrl         Pointer to control structure.
-     * @param[out]  p_seq_num      Location where sequence number to be filled.
+     * @param[in]  p_ctrl         Pointer to control structure.
+     * @param[out] p_seq_num      Location where sequence number to be filled.
      */
     fsp_err_t (* allocateSeqNumber)(rm_ble_mesh_network_ctrl_t * const p_ctrl, uint32_t * const p_seq_num);
 
@@ -438,8 +438,8 @@ typedef struct st_rm_ble_mesh_network_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_NETWORK_GetSeqNumberState()
      *
-     * @param[in]   p_ctrl           Pointer to control structure.
-     * @param[out]  p_seq_num_state  Location where sequence number state to be filled.
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[out] p_seq_num_state  Location where sequence number state to be filled.
      */
     fsp_err_t (* getSeqNumberState)(rm_ble_mesh_network_ctrl_t * const             p_ctrl,
                                     rm_ble_mesh_network_seq_number_state_t * const p_seq_num_state);
@@ -466,9 +466,9 @@ typedef struct st_rm_ble_mesh_network_api
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_ble_mesh_network_instance
 {
-    rm_ble_mesh_network_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_ble_mesh_network_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance
-    rm_ble_mesh_network_api_t const * p_api;  ///< Pointer to the API structure for this instance
+    rm_ble_mesh_network_ctrl_t      * p_ctrl; ///< Pointer to the control structure for this instance.
+    rm_ble_mesh_network_cfg_t const * p_cfg;  ///< Pointer to the configuration structure for this instance.
+    rm_ble_mesh_network_api_t const * p_api;  ///< Pointer to the API structure for this instance.
 } rm_ble_mesh_network_instance_t;
 
 /*******************************************************************************************************************//**

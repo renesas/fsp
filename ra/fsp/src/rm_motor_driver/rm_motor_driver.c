@@ -366,6 +366,10 @@ fsp_err_t RM_MOTOR_DRIVER_CurrentGet (motor_driver_ctrl_t * const        p_ctrl,
     p_current_get->vdc    = p_instance_ctrl->f_vdc_ad;
     p_current_get->va_max = rm_motor_driver_mod_get_vamax(&(p_instance_ctrl->st_modulation));
 
+    /* For induction sensor */
+    p_current_get->sin_ad = p_instance_ctrl->f_sin_ad;
+    p_current_get->cos_ad = p_instance_ctrl->f_cos_ad;
+
     return FSP_SUCCESS;
 }
 
@@ -585,7 +589,7 @@ static void rm_motor_driver_set_uvw_duty (motor_driver_instance_ctrl_t * p_ctrl,
  **********************************************************************************************************************/
 static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
 {
-    uint16_t u2_addata[4]                      = {0U};
+    uint16_t u2_addata[6]                      = {0U};
     float    f_addata[3]                       = {0.0F};
     motor_driver_cfg_t const    * p_cfg        = p_ctrl->p_cfg;
     motor_driver_extended_cfg_t * p_extend_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
@@ -605,6 +609,10 @@ static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
 
         p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[2]);
         p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[3]);
+
+        /* For induction sensor */
+        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[4]);
+        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[5]);
     }
 
     f_addata[0] = (float) u2_addata[0];
@@ -620,6 +628,10 @@ static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
 
     p_ctrl->f_vdc_ad = (float) u2_addata[3] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
                        p_extend_cfg->f_ad_voltage_conversion;
+
+    /* For induction sensor */
+    p_ctrl->f_sin_ad = (float) u2_addata[4];
+    p_ctrl->f_cos_ad = (float) u2_addata[5];
 }                                      /* End of function rm_motor_driver_current_get */
 
 /***********************************************************************************************************************
@@ -630,7 +642,7 @@ static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p_ctrl)
 {
-    uint16_t u2_addata                         = 0U;
+    uint16_t u2_addata[3]                      = {0U};
     float    f_Iac_ad[2]                       = {0.0F};
     float    f_addata[3]                       = {0.0F};
     float    f_Iac_ad2                         = 0.0F;
@@ -652,7 +664,11 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
             /* wait A/D conversion finish */
         }
 
-        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata);
+        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[0]);
+
+        /* Get induction sensor output */
+        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[1]);
+        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[2]);
 
         /* Get double buffer data */
         p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_A, &u2_Iac_raw0);
@@ -664,7 +680,11 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
 
     /* Using ADC_B module */
     /* Get Vdc */
-    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata);
+    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[0]);
+
+    /* Get induction sensor output */
+    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[1]);
+    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[2]);
 
     /* Get FIFO data */
     R_ADC_B_FifoRead(p_cfg->p_adc_instance->p_ctrl, ADC_GROUP_MASK_0, &temp_fifo);
@@ -675,8 +695,12 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
 #endif
 
     /* Get main line voltage */
-    p_ctrl->f_vdc_ad = (float) u2_addata * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+    p_ctrl->f_vdc_ad = (float) u2_addata[0] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
                        p_extend_cfg->f_ad_voltage_conversion;
+
+    /* Get induction sensor output sin/cos */
+    p_ctrl->f_sin_ad = (float) u2_addata[1];
+    p_ctrl->f_cos_ad = (float) u2_addata[2];
 
     /* Translate double buffer A/D data to 3 phase currents */
     f_Iac_ad[0] = (float) (u2_Iac_raw0 - (uint16_t) p_ctrl->f_offset_iu);

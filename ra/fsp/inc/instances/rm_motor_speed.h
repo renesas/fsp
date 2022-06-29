@@ -70,7 +70,9 @@ FSP_HEADER
 typedef enum  e_motor_speed_control_type
 {
     MOTOR_SPEED_CONTROL_TYPE_SENSORLESS = 0, ///< Sensorless type
-    MOTOR_SPEED_CONTROL_TYPE_ENCODER    = 1  ///< Encoder type
+    MOTOR_SPEED_CONTROL_TYPE_ENCODER    = 1, ///< Encoder type
+    MOTOR_SPEED_CONTROL_TYPE_HALL       = 2, ///< Hall type
+    MOTOR_SPEED_CONTROL_TYPE_INDUCTION  = 3, ///< Induction type
 } motor_speed_control_type_t;
 
 typedef struct st_motor_speed_pi_params

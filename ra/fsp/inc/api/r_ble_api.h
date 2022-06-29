@@ -9683,6 +9683,20 @@ typedef struct
 } st_ble_vs_get_scan_ch_map_comp_evt_t;
 
 /******************************************************************************************************************//**
+ *  @struct st_ble_vs_get_fw_version_comp_evt_t
+ *  @brief  This structure notifies the current firmware version.
+ **********************************************************************************************************************/
+typedef struct
+{
+    /**
+     *  @brief The result of get firmware version.
+     */
+    uint8_t major;
+    uint8_t minor;
+    uint8_t special;
+} st_ble_vs_get_fw_version_comp_evt_t;
+
+/******************************************************************************************************************//**
  * @typedef ble_vs_app_cb_t
  * @brief   ble_vs_app_cb_t is the Vendor Specific Event callback function type.
  * @param[in] event_type    The type of Vendor Specific Event.
@@ -10058,6 +10072,166 @@ typedef enum
      *  st_ble_vs_get_scan_ch_map_comp_evt_t
      */
     BLE_VS_EVENT_GET_SCAN_CH_MAP = 0x800F,
+
+    /**
+     *  @brief This event notifies that START_FW_UPDATE command has completed.
+     *
+     * ## Event Code: 0x072C
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_START_FW_UPDATE_COMP = 0x072C,
+
+    /**
+     *  @brief This event notifies that SEND_FW_DATA command has completed.
+     *
+     * ## Event Code: 0x072D
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_SEND_FW_DATA_COMP = 0x072D,
+
+    /**
+     *  @brief This event notifies that END_FW_UPDATE command has completed.
+     *
+     * ## Event Code: 0x072E
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_END_FW_UPDATE_COMP = 0x072E,
+
+    /**
+     *  @brief This event notifies that END_FW_UPDATE command has completed.
+     *
+     * ## Event Code: 0x0772
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  st_ble_vs_get_fw_version_comp_evt_t
+     */
+    BLE_VS_EVENT_GET_FW_VERSION_COMP = 0x0772,
+
+    /**
+     *  @brief This event notifies that module is ready.
+     *
+     * ## Event Code: 0x0746
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_MODULE_READY_COMP = 0x0746,
+
+    /**
+     *  @brief This event notifies that OTA firmware update has been started.
+     *
+     * ## Event Code: 0x09B0
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_OTA_START_NOTIFY = 0x09B0,
+
+    /**
+     *  @brief This event notifies that OTA firmware update has been completed successfully.
+     *
+     * ## Event Code: 0x09C0
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_OTA_END_NOTIFY = 0x09C0,
+
+    /**
+     *  @brief This event notifies that OTA firmware update has failed.
+     *
+     * ## Event Code: 0x09D0
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_OTA_ERROR_NOTIFY = 0x09D0,
 
     /**
      *  @brief  Invalid VS Event.
@@ -12655,6 +12829,75 @@ ble_status_t R_BLE_VS_SetScanChMap(uint16_t ch_map);
  * @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
 ble_status_t R_BLE_VS_GetScanChMap(void);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_StartFirmwareUpdate(void)
+ * @brief    This function starts the firmware update procedure.
+ * @details  The result of this API call is notified in BLE_VS_EVENT_START_FW_UPDATE_COMP event.
+ * @retval   BLE_SUCCESS(0x0000)  Success
+ * @retval   BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval   BLE_ERR_UNSUPPORTED This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_StartFirmwareUpdate(void);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_SendFirmwareData(uint16_t index, uint16_t length, uint8_t const * const p_data)
+ * @brief     This function sends a firmware update data frame.
+ * @param[in] index  The index of the current data frame.
+ * @param[in] length The length of the current data frame.
+ * @param[in] p_data A pointer to the data frame.
+ * @details   The result of this API call is notified in BLE_VS_EVENT_SEND_FW_DATA_COMP event.
+ * @retval    BLE_SUCCESS(0x0000)  Success
+ * @retval    BLE_ERR_INVALID_ARG  An input parameter was invalid
+ * @retval    BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval    BLE_ERR_UNSUPPORTED This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_SendFirmwareData(uint16_t index, uint16_t length, uint8_t const * const p_data);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_EndFirmwareUpdate(uint16_t end_index)
+ * @brief     This function ends the firmware update procedure.
+ * @param[in] end_index The index of the last data frame.
+ * @details   The result of this API call is notified in BLE_VS_EVENT_END_FW_UPDATE_COMP event.
+ * @retval    BLE_SUCCESS(0x0000)  Success
+ * @retval    BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval    BLE_ERR_UNSUPPORTED This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_EndFirmwareUpdate(uint16_t end_index);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_GetFirmwareVersion()
+ * @brief     This function requests the BLE module firmware version.
+ * @details   The result of this API call is notified in BLE_VS_EVENT_GET_FW_VERSION_COMP event.
+ * @retval    BLE_SUCCESS(0x0000)  Success
+ * @retval    BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval    BLE_ERR_UNSUPPORTED This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_GetFirmwareVersion(void);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_RestartModule(void)
+ * @brief   This function restarts the module.
+ * @details The result of this API call is notified in BLE_VS_EVENT_MODULE_READY_COMP event.
+ * @retval  BLE_SUCCESS(0x0000)  Success
+ * @retval  BLE_ERR_RSP_TIMEOUT  A command did not receive a response
+ * @retval  BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval  BLE_ERR_UNSUPPORTED This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_RestartModule(void);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_UpdateModuleFirmware(void)
+ * @brief   This function starts the firmware update procedure and blocks until the procedure has completed.
+ * @param[in] p_firmware_image  The index of the current data frame.
+ * @param[in] firmware_image_size The length of the current data frame.
+ * @retval    BLE_SUCCESS(0x0000)  Success
+ * @retval    BLE_ERR_INVALID_ARG  An input parameter was invalid
+ * @retval    BLE_ERR_RSP_TIMEOUT  A command did not receive a response
+ * @retval    BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval    BLE_ERR_UNSUPPORTED  This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_UpdateModuleFirmware(uint8_t const * const p_firmware_image, uint32_t firmware_image_size);
 
 /*@}*/
 
