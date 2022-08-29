@@ -14,7 +14,6 @@ var searchData=
   ['network_5fcache_5fsize',['network_cache_size',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a05af06094b50b6420fc89028b605142c',1,'rm_ble_mesh_cfg_t']]],
   ['network_5finterfaces_5fnum',['network_interfaces_num',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a856494b40a52e0d22bdeaf9e1a470a50',1,'rm_ble_mesh_cfg_t']]],
   ['network_5fsequence_5fnum_5fcache_5fsize',['network_sequence_num_cache_size',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a588efacab1795c0ccdbcecaf47438a2e',1,'rm_ble_mesh_cfg_t']]],
-  ['networkcredentials_5ft',['NetworkCredentials_t',['../struct_network_credentials__t.html',1,'']]],
   ['new_5fhysteresis_5fratio',['new_hysteresis_ratio',['../group___t_o_u_c_h___a_p_i.html#a428f2406d03b5145e58c6e20441281cd',1,'touch_sensitivity_info_t']]],
   ['new_5fkey',['new_key',['../group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#aaaf9cd2e49a3de24041587f80bcf2167',1,'rm_ble_mesh_network_header_t']]],
   ['new_5fthreshold_5fratio',['new_threshold_ratio',['../group___t_o_u_c_h___a_p_i.html#a1c7eb001375ed21c8830473011319f40',1,'touch_sensitivity_info_t']]],

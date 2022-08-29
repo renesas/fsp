@@ -6,6 +6,8 @@ var searchData=
   ['storage',['Storage',['../group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html',1,'']]],
   ['system',['System',['../group___r_e_n_e_s_a_s___s_y_s_t_e_m___m_o_d_u_l_e_s.html',1,'']]],
   ['segger_20emwin_20ra_20port_20_28rm_5femwin_5fport_29',['SEGGER emWin RA Port (rm_emwin_port)',['../group___r_m___e_m_w_i_n___p_o_r_t.html',1,'']]],
+  ['secure_20key_20injection_20_28r_5fsce_5fkey_5finjection_29',['Secure Key Injection (r_sce_key_injection)',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html',1,'']]],
+  ['sce_20key_20injection_20interface',['SCE key injection Interface',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html',1,'']]],
   ['sce_20protected_20mode',['SCE Protected Mode',['../group___s_c_e___p_r_o_t_e_c_t_e_d.html',1,'']]],
   ['sce_20interface',['SCE Interface',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html',1,'']]],
   ['secure_20crypto_20engine_20_28r_5fsce_5fprotected_5fcavp_29',['Secure Crypto Engine (r_sce_protected_cavp)',['../group___s_c_e___p_r_o_t_e_c_t_e_d___c_a_v_p.html',1,'']]],

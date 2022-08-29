@@ -15,6 +15,7 @@ var searchData=
   ['keymatrix_5ftrig_5frising',['KEYMATRIX_TRIG_RISING',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#gga5ef5011ed342570c52df788c61cb3e8da53a78a1a2c5e55a8208c2cbfe6ee0a29',1,'r_keymatrix_api.h']]],
   ['keymatrix_5ftrigger_5ft',['keymatrix_trigger_t',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga5ef5011ed342570c52df788c61cb3e8d',1,'r_keymatrix_api.h']]],
   ['keys',['keys',['../group___g_a_p___a_p_i.html#a92ff8aaef443b5cde52a35cffc3846c8',1,'st_ble_gap_key_ex_param_t']]],
+  ['keyupdatekeywrap',['KeyUpdateKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af240f4f39e5eeb5514616b5be0ab1bb3',1,'sce_key_injection_api_t']]],
   ['key_20matrix_20_28r_5fkint_29',['Key Matrix (r_kint)',['../group___k_i_n_t.html',1,'']]],
   ['kint_5finstance_5fctrl_5ft',['kint_instance_ctrl_t',['../group___k_i_n_t.html#structkint__instance__ctrl__t',1,'']]]
 ];

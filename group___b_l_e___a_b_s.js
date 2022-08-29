@@ -1,7 +1,7 @@
 var group___b_l_e___a_b_s =
 [
     [ "abs_advertising_parameter_t", "group___b_l_e___a_b_s.html#structabs__advertising__parameter__t", [
-      [ "advertising_parameter", "group___b_l_e___a_b_s.html#af7ddc7df0644ac7b8e4cbebf8d4b5bb0", null ],
+      [ "advertising_parameter", "group___b_l_e___a_b_s.html#a74834500f4a3275dfedaf311ca198b80", null ],
       [ "advertising_status", "group___b_l_e___a_b_s.html#a405afac397b8a3595f073dde8e334bb3", null ],
       [ "remote_device_address", "group___b_l_e___a_b_s.html#a699d72b43a98e57d2bbd666390db824f", null ]
     ] ],
@@ -28,15 +28,7 @@ var group___b_l_e___a_b_s =
       [ "elapsed_timeout_ms", "group___b_l_e___a_b_s.html#aee1aa1e6596594a3e6e59750bd32a9fc", null ],
       [ "p_cfg", "group___b_l_e___a_b_s.html#a138c96348a47e31183b564336995902a", null ]
     ] ],
-    [ "st_ble_rf_notify_t", "group___b_l_e___a_b_s.html#structst__ble__rf__notify__t", [
-      [ "enable", "group___b_l_e___a_b_s.html#a587aa1c5d26d1d5fdd7d9f89bdff0490", null ],
-      [ "start_cb", "group___b_l_e___a_b_s.html#ad43914320d5fe6092aa178001fb682e5", null ],
-      [ "close_cb", "group___b_l_e___a_b_s.html#ac19d3c8d643a228fd406c0f1b438343a", null ],
-      [ "dsleep_cb", "group___b_l_e___a_b_s.html#a1536379c9198dbe12427ff960da32f0c", null ]
-    ] ],
     [ "ble_abs_timer_cb_t", "group___b_l_e___a_b_s.html#ga8768f046a3e7483970d6924283d100d0", null ],
-    [ "ble_mcu_clock_change_cb_t", "group___b_l_e___a_b_s.html#gab865cd3aaf770851d0ef9658be418099", null ],
-    [ "ble_rf_notify_cb_t", "group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b", null ],
     [ "e_ble_timer_type_t", "group___b_l_e___a_b_s.html#ga0e5e4f38584f2573ac3a550ddfbc8845", [
       [ "BLE_TIMER_ONE_SHOT", "group___b_l_e___a_b_s.html#gga0e5e4f38584f2573ac3a550ddfbc8845a8500edadaabfe0046434878734e1310e", null ],
       [ "BLE_TIMER_PERIODIC", "group___b_l_e___a_b_s.html#gga0e5e4f38584f2573ac3a550ddfbc8845a87bd7518fbf8e062b823a0b692730a03", null ]

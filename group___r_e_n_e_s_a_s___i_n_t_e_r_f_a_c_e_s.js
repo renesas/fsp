@@ -66,6 +66,7 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "PTP Interface", "group___p_t_p___a_p_i.html", "group___p_t_p___a_p_i" ],
     [ "RTC Interface", "group___r_t_c___a_p_i.html", "group___r_t_c___a_p_i" ],
     [ "SCE Interface", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i" ],
+    [ "SCE key injection Interface", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i" ],
     [ "SD/MMC Interface", "group___s_d_m_m_c___a_p_i.html", "group___s_d_m_m_c___a_p_i" ],
     [ "SLCDC Interface", "group___s_l_c_d_c___a_p_i.html", "group___s_l_c_d_c___a_p_i" ],
     [ "SPI Flash Interface", "group___s_p_i___f_l_a_s_h___a_p_i.html", "group___s_p_i___f_l_a_s_h___a_p_i" ],
@@ -85,5 +86,6 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "USB PPRN Interface", "group___u_s_b___p_p_r_n___a_p_i.html", null ],
     [ "Virtual EEPROM Interface", "group___r_m___v_e_e___a_p_i.html", "group___r_m___v_e_e___a_p_i" ],
     [ "WDT Interface", "group___w_d_t___a_p_i.html", "group___w_d_t___a_p_i" ],
+    [ "WiFi Interface", "group___w_i_f_i___a_p_i.html", "group___w_i_f_i___a_p_i" ],
     [ "ZMOD4XXX Middleware Interface", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html", "group___r_m___z_m_o_d4_x_x_x___a_p_i" ]
 ];

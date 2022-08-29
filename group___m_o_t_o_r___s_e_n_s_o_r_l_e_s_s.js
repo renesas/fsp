@@ -1,14 +1,5 @@
 var group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s =
 [
-    [ "motor_sensorless_callback_args_t", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#structmotor__sensorless__callback__args__t", [
-      [ "p_context", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ad3e134020bdb396a6a5f6c0e06226aca", null ]
-    ] ],
-    [ "motor_sensorless_callback_event_t", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga5e036b0387612b957e20cd7a79d68140", [
-      [ "MOTOR_SENSORLESS_CALLBACK_EVENT_SPEED_FORWARD", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gga5e036b0387612b957e20cd7a79d68140afbefdcd47c8903d9a7fd234200cc5d6e", null ],
-      [ "MOTOR_SENSORLESS_CALLBACK_EVENT_SPEED_BACKWARD", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gga5e036b0387612b957e20cd7a79d68140a5b1fa4f23d53e33815150057880ca20f", null ],
-      [ "MOTOR_SENSORLESS_CALLBACK_EVENT_CURRENT_FORWARD", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gga5e036b0387612b957e20cd7a79d68140affd51f2b59b8345238a5224a124292bd", null ],
-      [ "MOTOR_SENSORLESS_CALLBACK_EVENT_CURRENT_BACKWARD", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gga5e036b0387612b957e20cd7a79d68140a95e9ae9d5de4012c0093aeafd67fbeae", null ]
-    ] ],
     [ "RM_MOTOR_SENSORLESS_Open", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga6825d930d49b00b475d84b435da23a03", null ],
     [ "RM_MOTOR_SENSORLESS_Close", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga23cbbc2134c7357859a9a810a5aa2dcd", null ],
     [ "RM_MOTOR_SENSORLESS_Reset", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga31f166c241521b3d83e8b20c53b8e374", null ],

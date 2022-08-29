@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -216,80 +216,6 @@ This setting is not related to GLCDC Layer 1 or 2. </td></tr>
 <tr>
 <td>Memory Allocation &gt; AA Font Conversion Buffer Size</td><td>Value must be a non-negative integer</td><td>400 </td><td>Set the size of the conversion buffer for anti-aliased font glyphs. This should be set to the size (in bytes) of the largest AA character to be rendered. </td></tr>
 <tr>
-<td>Configuration &gt; Multi-thread Support</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enable or disable multithreading support. </td></tr>
-<tr>
-<td>Configuration &gt; Number of emWin-supported threads</td><td>Manual Entry</td><td>5 </td><td>If multithreading support is enabled this configuration specifies the number of different tasks that can call emWin functions. </td></tr>
-<tr>
-<td>Configuration &gt; Touch Panel Support</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enable or disable touch panel support. </td></tr>
-<tr>
-<td>Configuration &gt; Mouse Support</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Enable or disable support for mouse input. </td></tr>
-<tr>
-<td>Configuration &gt; Memory Devices</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enable or disable support for memory devices, which allow the user to allocate their own memory in the GUI heap. </td></tr>
-<tr>
-<td>Configuration &gt; Text Rotation</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enable or disable support for displaying rotated text. </td></tr>
-<tr>
-<td>Configuration &gt; Window Manager</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enable or disable the emWin Window Manager (WM). </td></tr>
-<tr>
-<td>Configuration &gt; Bidirectional Text</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Enable or disable support for bidirectional text (such as Arabic or Hebrew). </td></tr>
-<tr>
-<td>Configuration &gt; Debug Logging Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-None (0)</li>
-<li>
-Parameter checking only (1)</li>
-<li>
-All checks enabled (2)</li>
-<li>
-Log errors (3)</li>
-<li>
-Log warnings (4)</li>
-<li>
-Log all messages (5)</li>
-</ul>
-</td><td>All checks enabled (2) </td><td>Set the debug logging level. </td></tr>
-<tr>
 <td>LCD Settings &gt; Wait for Vertical Sync</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -333,7 +259,11 @@ Unless you are sure of the subsampling used in and the size of the input JPEG im
 </p>
 <h2><a class="anchor" id="rm-emwin-port-hw-config"></a>
 Hardware Configuration</h2>
-<p>No clocks or pins are directly required by this module. Please consult the submodules' documentation for their requirements. </p><hr/>
+<p>No clocks or pins are directly required by this module. Please consult the submodules' documentation for their requirements.</p>
+<h2><a class="anchor" id="rm-emwin-port-lib-config"></a>
+Library Configuration</h2>
+<p>emWin is provided as a pre-compiled library. To maximize compatibility the build-time options are configured as follows:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define GUI_OS                (1) // Context switch support enabled</span></div><div class="line"><span class="preprocessor">#define GUI_MAXTASK           (1) // One task supported by default (can be increased at runtime via GUITASK_SetMaxTask())</span></div><div class="line"><span class="preprocessor">#define GUI_NUM_LAYERS        (3) // Up to three displays supported</span></div><div class="line"><span class="preprocessor">#define GUI_SUPPORT_TOUCH     (1) // Support touch screens</span></div><div class="line"><span class="preprocessor">#define GUI_SUPPORT_MOUSE     (1) // Support a mouse</span></div><div class="line"><span class="preprocessor">#define GUI_SUPPORT_MEMDEV    (1) // Memory devices available</span></div><div class="line"><span class="preprocessor">#define GUI_WINSUPPORT        (1) // Window manager available</span></div><div class="line"><span class="preprocessor">#define GUI_SUPPORT_BIDI      (1) // Bidirectional text enabled</span></div><div class="line"><span class="preprocessor">#define GUI_DEBUG_LEVEL       (2) // Parameter and consistency checks enabled (no logging)</span></div></div><!-- fragment --><p>All other options are left at the default settings in <code>GUI_ConfDefaults.h</code>. </p><hr/>
 <h1><a class="anchor" id="rm-emwin-port-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm-emwin-port-getting_started"></a>
@@ -405,6 +335,7 @@ Limitations</h2>
 <li>Hardware acceleration is not available when using color modes lower than 16 bits.</li>
 <li>Hardware acceleration is not available for SEGGER's RLE image format.</li>
 <li>Rotated screen modes are not supported.</li>
+<li>Because emWin is provided as a pre-compiled library the build-time options are fixed. See the <a class="el" href="group___r_m___e_m_w_i_n___p_o_r_t.html#rm-emwin-port-lib-config">Library Configuration</a> section for the supplied configuration.</li>
 </ul>
 <hr/>
 <h1><a class="anchor" id="rm-emwin-port-examples"></a>
@@ -420,7 +351,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

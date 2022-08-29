@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -473,8 +473,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gab4823b86315f1b32fe6f2c0d56c2b139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadf7235ba7fd675f3416ef98c55b810f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6">sci_uart_rx_fifo_trigger_t</a> </td></tr>
 <tr class="separator:gadf7235ba7fd675f3416ef98c55b810f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga373d96cc125e44fc8491e98bf54a0459"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga373d96cc125e44fc8491e98bf54a0459">sci_uart_start_bit_detect_t</a> </td></tr>
-<tr class="separator:ga373d96cc125e44fc8491e98bf54a0459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d278bc6b5096aa0dbe36e5c953cf073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga8d278bc6b5096aa0dbe36e5c953cf073">sci_uart_start_bit_t</a> </td></tr>
+<tr class="separator:ga8d278bc6b5096aa0dbe36e5c953cf073"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga39a35f02d1e2aa6560591dc6a54de2f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga39a35f02d1e2aa6560591dc6a54de2f6">sci_uart_noise_cancellation_t</a> </td></tr>
 <tr class="separator:ga39a35f02d1e2aa6560591dc6a54de2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9522502f434bcaa2bbaf9cb1321ce542"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga9522502f434bcaa2bbaf9cb1321ce542">sci_uart_rs485_enable_t</a> </td></tr>
@@ -513,7 +513,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="ad2ae7dabefedfac1576f536170589948"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
+<a id="a683b056e5a834fee088d451f9eed0534"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -597,7 +597,7 @@ clock</td>
 <td class="fielddoc">
 The source clock for the baud-rate generator. If internal optionally output baud rate on SCK. </td></tr>
 <tr><td class="fieldtype">
-<a id="a6b174dd36d6537f68ceec607cffc7db4"></a><a class="el" href="group___s_c_i___u_a_r_t.html#ga373d96cc125e44fc8491e98bf54a0459">sci_uart_start_bit_detect_t</a></td>
+<a id="a553d9e2a24e696b7ef0e4621a2db01d9"></a><a class="el" href="group___s_c_i___u_a_r_t.html#ga8d278bc6b5096aa0dbe36e5c953cf073">sci_uart_start_bit_t</a></td>
 <td class="fieldname">
 rx_edge_start</td>
 <td class="fielddoc">
@@ -714,22 +714,22 @@ RS-485 settings. </td></tr>
 
 </div>
 </div>
-<a id="ga373d96cc125e44fc8491e98bf54a0459"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga373d96cc125e44fc8491e98bf54a0459">&#9670;&nbsp;</a></span>sci_uart_start_bit_detect_t</h2>
+<a id="ga8d278bc6b5096aa0dbe36e5c953cf073"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8d278bc6b5096aa0dbe36e5c953cf073">&#9670;&nbsp;</a></span>sci_uart_start_bit_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___s_c_i___u_a_r_t.html#ga373d96cc125e44fc8491e98bf54a0459">sci_uart_start_bit_detect_t</a></td>
+          <td class="memname">enum <a class="el" href="group___s_c_i___u_a_r_t.html#ga8d278bc6b5096aa0dbe36e5c953cf073">sci_uart_start_bit_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Asynchronous Start Bit Edge Detection configuration. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga373d96cc125e44fc8491e98bf54a0459a0deedd3c52b11560e66d4a9d070e54f0"></a>SCI_UART_START_BIT_LOW_LEVEL&#160;</td><td class="fielddoc"><p>Detect low level on RXDn pin as start bit. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8d278bc6b5096aa0dbe36e5c953cf073a0deedd3c52b11560e66d4a9d070e54f0"></a>SCI_UART_START_BIT_LOW_LEVEL&#160;</td><td class="fielddoc"><p>Detect low level on RXDn pin as start bit. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga373d96cc125e44fc8491e98bf54a0459ae9f9dfdd5a009ef6f90f5319c4651b22"></a>SCI_UART_START_BIT_FALLING_EDGE&#160;</td><td class="fielddoc"><p>Detect falling level on RXDn pin as start bit. </p>
+<tr><td class="fieldname"><a id="gga8d278bc6b5096aa0dbe36e5c953cf073ae9f9dfdd5a009ef6f90f5319c4651b22"></a>SCI_UART_START_BIT_FALLING_EDGE&#160;</td><td class="fielddoc"><p>Detect falling level on RXDn pin as start bit. </p>
 </td></tr>
 </table>
 
@@ -1244,7 +1244,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

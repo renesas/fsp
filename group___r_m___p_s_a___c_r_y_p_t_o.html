@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -179,7 +179,7 @@ Functions</h2></td></tr>
 <p>Hardware acceleration for the mbedCrypto implementation of the ARM PSA Crypto API. </p>
 <h1><a class="anchor" id="rm-psa-crypto-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd><b>The PSA Crypto module does not provide any interfaces to the user. This release uses the Mbed TLSversion 2.24.0 which conforms to the PSA Crypto API 1.0 specification. Consult the ARM documentation at <a href="https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface">https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface</a> for further information.</b> FSP 3.0 onward adopts a change by ARM where mbedCrypto has been integrated back to MbedTLS and the term mbedCrypto has been deprecated. The mbedCrypto term in FSP now refers to the crypto portion of the MbedTLS module.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd><b>The PSA Crypto module does not provide any interfaces to the user. This release uses the mbedTLS version 3.1.0 which conforms to the PSA Crypto API 1.0 specification. Consult the ARM documentation at <a href="https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface">https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface</a> for further information.</b> FSP 3.0 onward adopts a change by ARM where mbedCrypto has been integrated back to MbedTLS and the term mbedCrypto has been deprecated. The mbedCrypto term in FSP now refers to the crypto portion of the MbedTLS module.</dd></dl>
 <h2>HW Overview</h2>
 <table class="doxtable">
 <tr>
@@ -190,6 +190,8 @@ Overview</h1>
 <td>SCE7 </td><td>RA6M3, RA6M2, RA6M1, RA6T1 </td></tr>
 <tr>
 <td>SCE5 </td><td>RA4W1, RA4M1 </td></tr>
+<tr>
+<td>SCE5B </td><td>RA6T2 </td></tr>
 <tr>
 <td>AES Engine </td><td>RA2A1, RA2E1, RA2E2, RA2L1 </td></tr>
 </table>
@@ -211,7 +213,7 @@ Features</h2>
 <li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_plaintext_export"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_export"></a></li>
 </ul>
 </li>
-<li>ECC <a class="anchor" id="um_ECC_hardware_acceleration"></a><ul>
+<li>ECC<ul>
 <li>Curves:<ul>
 <li>SECP256R1 <a class="anchor" id="um_ECC_key_generation_256K1"></a></li>
 <li>SECP256K1 <a class="anchor" id="um_ECC_key_generation_256R1"></a></li>
@@ -261,6 +263,8 @@ The following build time configurations are defined in arm/mbedtls/config.h:<br 
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECC</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_ECP_ALT </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECDSA </td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_ECDSA_SIGN_ALT and MBEDTLS_ECDSA_VERIFY_ALT </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECDH </td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_ECDH_ALT </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_RSA_ALT. </td></tr>
 <tr>
@@ -660,14 +664,6 @@ Undefine</li>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_READ_MACRO value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_read </td><td>MBEDTLS_PLATFORM_NV_SEED_READ_MACRO value </td></tr>
 <tr>
-<td>Platform &gt; MBEDTLS_PARAM_FAILED</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_PARAM_FAILED </td></tr>
-<tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -702,21 +698,13 @@ Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_DEPRECATED_REMOVED </td></tr>
 <tr>
-<td>General &gt; MBEDTLS_CHECK_PARAMS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_CHECK_RETURN_WARNING</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Define </td><td>MBEDTLS_CHECK_PARAMS </td></tr>
-<tr>
-<td>General &gt; MBEDTLS_CHECK_PARAMS_ASSERT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_CHECK_PARAMS_ASSERT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CHECK_RETURN_WARNING </td></tr>
 <tr>
 <td>General &gt; MBEDTLS_ERROR_STRERROR_DUMMY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -741,6 +729,14 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_MEMORY_BACKTRACE </td></tr>
+<tr>
+<td>General &gt; MBEDTLS_PSA_CRYPTO_CLIENT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_CLIENT </td></tr>
 <tr>
 <td>General &gt; MBEDTLS_PSA_CRYPTO_SPM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -850,13 +846,21 @@ Undefine</li>
 <tr>
 <td>General &gt; MBEDTLS_MEMORY_ALIGN_MULTIPLE value</td><td>Manual Entry</td><td>4 </td><td>MBEDTLS_MEMORY_ALIGN_MULTIPLE value </td></tr>
 <tr>
-<td>Cipher &gt; Alternate &gt; MBEDTLS_ARC4_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_CHECK_RETURN</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_ARC4_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_CHECK_RETURN </td></tr>
+<tr>
+<td>General &gt; MBEDTLS_IGNORE_RETURN</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_IGNORE_RETURN </td></tr>
 <tr>
 <td>Cipher &gt; Alternate &gt; MBEDTLS_ARIA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -865,14 +869,6 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_ARIA_ALT </td></tr>
-<tr>
-<td>Cipher &gt; Alternate &gt; MBEDTLS_BLOWFISH_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_BLOWFISH_ALT </td></tr>
 <tr>
 <td>Cipher &gt; Alternate &gt; MBEDTLS_CAMELLIA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -931,14 +927,6 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_NIST_KW_ALT </td></tr>
-<tr>
-<td>Cipher &gt; Alternate &gt; MBEDTLS_XTEA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_XTEA_ALT </td></tr>
 <tr>
 <td>Cipher &gt; Alternate &gt; MBEDTLS_DES_SETKEY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1070,22 +1058,6 @@ Undefine</li>
 <tr>
 <td>Cipher &gt; MBEDTLS_AES_C</td><td>Define</td><td>Define </td><td>MBEDTLS_AES_C </td></tr>
 <tr>
-<td>Cipher &gt; MBEDTLS_ARC4_C</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_ARC4_C </td></tr>
-<tr>
-<td>Cipher &gt; MBEDTLS_BLOWFISH_C</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_BLOWFISH_C </td></tr>
-<tr>
 <td>Cipher &gt; MBEDTLS_CAMELLIA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1157,14 +1129,6 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_NIST_KW_C </td></tr>
-<tr>
-<td>Cipher &gt; MBEDTLS_XTEA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_XTEA_C </td></tr>
 <tr>
 <td>Public Key Cryptography (PKC) &gt; DHM &gt; Alternate &gt; MBEDTLS_DHM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1390,6 +1354,14 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_ECDH_COMPUTE_SHARED_ALT </td></tr>
 <tr>
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_NO_FALLBACK</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_ECP_NO_FALLBACK </td></tr>
+<tr>
 <td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_NIST_OPTIM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1405,14 +1377,6 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_ECP_RESTARTABLE </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDH_LEGACY_CONTEXT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_ECDH_LEGACY_CONTEXT </td></tr>
 <tr>
 <td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDSA_DETERMINISTIC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1461,16 +1425,6 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_ECJPAKE_C </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_MAX_BITS</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_ECP_MAX_BITS </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_MAX_BITS value</td><td>Manual Entry</td><td>521 </td><td>MBEDTLS_ECP_MAX_BITS value </td></tr>
 <tr>
 <td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_WINDOW_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1664,22 +1618,6 @@ Undefine</li>
 <tr>
 <td>Public Key Cryptography (PKC) &gt; MBEDTLS_MPI_MAX_SIZE value</td><td>Manual Entry</td><td>1024 </td><td>MBEDTLS_MPI_MAX_SIZE value </td></tr>
 <tr>
-<td>Hash &gt; Alternate &gt; MBEDTLS_MD2_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_MD2_ALT </td></tr>
-<tr>
-<td>Hash &gt; Alternate &gt; MBEDTLS_MD4_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_MD4_ALT </td></tr>
-<tr>
 <td>Hash &gt; Alternate &gt; MBEDTLS_MD5_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1711,22 +1649,6 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_SHA512_ALT </td></tr>
-<tr>
-<td>Hash &gt; Alternate &gt; MBEDTLS_MD2_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_MD2_PROCESS_ALT </td></tr>
-<tr>
-<td>Hash &gt; Alternate &gt; MBEDTLS_MD4_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_MD4_PROCESS_ALT </td></tr>
 <tr>
 <td>Hash &gt; Alternate &gt; MBEDTLS_MD5_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1776,14 +1698,6 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_SHA512_SMALLER </td></tr>
 <tr>
-<td>Hash &gt; MBEDTLS_SHA512_NO_SHA384</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_SHA512_NO_SHA384 </td></tr>
-<tr>
 <td>Hash &gt; MBEDTLS_MD_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1792,29 +1706,13 @@ Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_MD_C </td></tr>
 <tr>
-<td>Hash &gt; MBEDTLS_MD2_C</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_MD2_C </td></tr>
-<tr>
-<td>Hash &gt; MBEDTLS_MD4_C</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_MD4_C </td></tr>
-<tr>
 <td>Hash &gt; MBEDTLS_MD5_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_MD5_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_MD5_C </td></tr>
 <tr>
 <td>Hash &gt; MBEDTLS_RIPEMD160_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1832,6 +1730,14 @@ Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_SHA1_C </td></tr>
 <tr>
+<td>Hash &gt; MBEDTLS_SHA224_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Define </td><td>MBEDTLS_SHA224_C </td></tr>
+<tr>
 <td>Hash &gt; MBEDTLS_SHA256_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1839,6 +1745,14 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_SHA256_C </td></tr>
+<tr>
+<td>Hash &gt; MBEDTLS_SHA384_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_SHA384_C </td></tr>
 <tr>
 <td>Hash &gt; MBEDTLS_SHA512_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1888,13 +1802,29 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_POLY1305_C </td></tr>
 <tr>
-<td>RNG &gt; MBEDTLS_TEST_NULL_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Storage &gt; MBEDTLS_FS_IO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_TEST_NULL_ENTROPY </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_FS_IO </td></tr>
+<tr>
+<td>Storage &gt; MBEDTLS_PSA_CRYPTO_STORAGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_STORAGE_C </td></tr>
+<tr>
+<td>Storage &gt; MBEDTLS_PSA_ITS_FILE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PSA_ITS_FILE_C </td></tr>
 <tr>
 <td>RNG &gt; MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1920,6 +1850,14 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_ENTROPY_NV_SEED </td></tr>
 <tr>
+<td>RNG &gt; MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG </td></tr>
+<tr>
 <td>RNG &gt; MBEDTLS_PSA_INJECT_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1937,14 +1875,6 @@ Undefine</li>
 </td><td>Define </td><td>MBEDTLS_CTR_DRBG_C </td></tr>
 <tr>
 <td>RNG &gt; MBEDTLS_CTR_DRBG_C_ALT</td><td>Define</td><td>Define </td><td>MBEDTLS_CTR_DRBG_C_ALT </td></tr>
-<tr>
-<td>RNG &gt; MBEDTLS_HAVEGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_HAVEGE_C </td></tr>
 <tr>
 <td>RNG &gt; MBEDTLS_CTR_DRBG_ENTROPY_LEN</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -2074,15 +2004,7 @@ Undefine</li>
 <tr>
 <td>RNG &gt; MBEDTLS_ENTROPY_MIN_HARDWARE value</td><td>Manual Entry</td><td>32 </td><td>MBEDTLS_ENTROPY_MIN_HARDWARE value </td></tr>
 <tr>
-<td>Storage &gt; MBEDTLS_FS_IO</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_FS_IO </td></tr>
-<tr>
-<td>Storage &gt; MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Key Configuration &gt; MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
@@ -2090,21 +2012,31 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER </td></tr>
 <tr>
-<td>Storage &gt; MBEDTLS_PSA_CRYPTO_STORAGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Key Configuration &gt; MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_STORAGE_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS </td></tr>
 <tr>
-<td>Storage &gt; MBEDTLS_PSA_ITS_FILE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Key Configuration &gt; MBEDTLS_PSA_KEY_SLOT_COUNT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_PSA_ITS_FILE_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_KEY_SLOT_COUNT </td></tr>
+<tr>
+<td>Key Configuration &gt; MBEDTLS_PSA_KEY_SLOT_COUNT value</td><td>Manual Entry</td><td>32 </td><td>MBEDTLS_PSA_KEY_SLOT_COUNT value </td></tr>
+<tr>
+<td>HMAC &gt; MBEDTLS_PSA_HMAC_DRBG_MD_TYPE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Define </td><td>MBEDTLS_PSA_HMAC_DRBG_MD_TYPE </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-psa-crypto-sha256-configuration"></a>
@@ -2195,9 +2127,9 @@ PSA Crypto Non-secure callable example</div></div>
 Examples</h1>
 <h2>Hash Example</h2>
 <p>This is an example on calculating the SHA256 hash using the PSA Crypto API.</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> uint8_t NIST_SHA256ShortMsgLen200[] =</div><div class="line">{</div><div class="line">    0x2e, 0x7e, 0xa8, 0x4d, 0xa4, 0xbc, 0x4d, 0x7c, 0xfb, 0x46, 0x3e, 0x3f, 0x2c, 0x86, 0x47, 0x05,</div><div class="line">    0x7a, 0xff, 0xf3, 0xfb, 0xec, 0xec, 0xa1, 0xd2, 00</div><div class="line">};</div><div class="line"><span class="keyword">const</span> uint8_t NIST_SHA256ShortMsgLen200_expected[] =</div><div class="line">{</div><div class="line">    0x76, 0xe3, 0xac, 0xbc, 0x71, 0x88, 0x36, 0xf2, 0xdf, 0x8a, 0xd2, 0xd0, 0xd2, 0xd7, 0x6f, 0x0c,</div><div class="line">    0xfa, 0x5f, 0xea, 0x09, 0x86, 0xbe, 0x91, 0x8f, 0x10, 0xbc, 0xee, 0x73, 0x0d, 0xf4, 0x41, 0xb9</div><div class="line">};</div><div class="line"><span class="keywordtype">void</span> psa_crypto_sha256_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    psa_algorithm_t      alg               = PSA_ALG_SHA_256;</div><div class="line">    psa_hash_operation_t operation         = {0};</div><div class="line">    <span class="keywordtype">size_t</span>               expected_hash_len = PSA_HASH_SIZE(alg);</div><div class="line">    uint8_t              actual_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span>               actual_hash_len;</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE and the TRNG */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Platform initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;operation, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash setup failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;operation, NIST_SHA256ShortMsgLen200, <span class="keyword">sizeof</span>(NIST_SHA256ShortMsgLen200)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash calculation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_finish(&amp;operation, &amp;actual_hash[0], <span class="keyword">sizeof</span>(actual_hash), &amp;actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Reading calculated hash failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;actual_hash[0], &amp;NIST_SHA256ShortMsgLen200_expected[0], actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash compare of calculated value with expected value failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;expected_hash_len, &amp;actual_hash_len, <span class="keyword">sizeof</span>(expected_hash_len)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash size compare of calculated value with expected value failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* SHA256 calculation succeeded */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* De-initialize the platform. This is currently a placeholder function which does not do anything. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AES Example</h2>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint8_t NIST_SHA256ShortMsgLen200[] =</div><div class="line">{</div><div class="line">    0x2e, 0x7e, 0xa8, 0x4d, 0xa4, 0xbc, 0x4d, 0x7c, 0xfb, 0x46, 0x3e, 0x3f, 0x2c, 0x86, 0x47, 0x05,</div><div class="line">    0x7a, 0xff, 0xf3, 0xfb, 0xec, 0xec, 0xa1, 0xd2, 00</div><div class="line">};</div><div class="line"><span class="keyword">const</span> uint8_t NIST_SHA256ShortMsgLen200_expected[] =</div><div class="line">{</div><div class="line">    0x76, 0xe3, 0xac, 0xbc, 0x71, 0x88, 0x36, 0xf2, 0xdf, 0x8a, 0xd2, 0xd0, 0xd2, 0xd7, 0x6f, 0x0c,</div><div class="line">    0xfa, 0x5f, 0xea, 0x09, 0x86, 0xbe, 0x91, 0x8f, 0x10, 0xbc, 0xee, 0x73, 0x0d, 0xf4, 0x41, 0xb9</div><div class="line">};</div><div class="line"><span class="keywordtype">void</span> psa_crypto_sha256_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    psa_algorithm_t      alg               = PSA_ALG_SHA_256;</div><div class="line">    psa_hash_operation_t operation         = {0};</div><div class="line">    <span class="keywordtype">size_t</span>               expected_hash_len = PSA_HASH_LENGTH(alg);</div><div class="line">    uint8_t              actual_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span>               actual_hash_len;</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE and the TRNG */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Platform initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;operation, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash setup failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;operation, NIST_SHA256ShortMsgLen200, <span class="keyword">sizeof</span>(NIST_SHA256ShortMsgLen200)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash calculation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_finish(&amp;operation, &amp;actual_hash[0], <span class="keyword">sizeof</span>(actual_hash), &amp;actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Reading calculated hash failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;actual_hash[0], &amp;NIST_SHA256ShortMsgLen200_expected[0], actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash compare of calculated value with expected value failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;expected_hash_len, &amp;actual_hash_len, <span class="keyword">sizeof</span>(expected_hash_len)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash size compare of calculated value with expected value failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* SHA256 calculation succeeded */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* De-initialize the platform. This is currently a placeholder function which does not do anything. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AES Example</h2>
 <p>This is an example on using the PSA Crypto API to generate an AES256 key, encrypting and decrypting multi-block data and using PKCS7 padding.</p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> psa_status_t cipher_operation (psa_cipher_operation_t * operation,</div><div class="line">                                      <span class="keyword">const</span> uint8_t          * input,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   input_size,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   part_size,</div><div class="line">                                      uint8_t                * output,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   output_size,</div><div class="line">                                      <span class="keywordtype">size_t</span>                 * output_len)</div><div class="line">{</div><div class="line">    psa_status_t status;</div><div class="line">    <span class="keywordtype">size_t</span>       bytes_to_write = 0;</div><div class="line">    <span class="keywordtype">size_t</span>       bytes_written  = 0;</div><div class="line">    <span class="keywordtype">size_t</span>       len            = 0;</div><div class="line"></div><div class="line">    *output_len = 0;</div><div class="line">    <span class="keywordflow">while</span> (bytes_written != input_size)</div><div class="line">    {</div><div class="line">        bytes_to_write = (input_size - bytes_written &gt; part_size ?</div><div class="line">                          part_size :</div><div class="line">                          input_size - bytes_written);</div><div class="line"></div><div class="line">        status = psa_cipher_update(operation,</div><div class="line">                                   input + bytes_written,</div><div class="line">                                   bytes_to_write,</div><div class="line">                                   output + *output_len,</div><div class="line">                                   output_size - *output_len,</div><div class="line">                                   &amp;len);</div><div class="line">        <span class="keywordflow">if</span> (PSA_SUCCESS != status)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">return</span> status;</div><div class="line">        }</div><div class="line"></div><div class="line">        bytes_written += bytes_to_write;</div><div class="line">        *output_len   += len;</div><div class="line">    }</div><div class="line"></div><div class="line">    status = psa_cipher_finish(operation, output + *output_len, output_size - *output_len, &amp;len);</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != status)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> status;</div><div class="line">    }</div><div class="line"></div><div class="line">    *output_len += len;</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> status;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> psa_crypto_aes256cbcmultipart_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">enum</span></div><div class="line">    {</div><div class="line">        block_size = PSA_BLOCK_CIPHER_BLOCK_SIZE(PSA_KEY_TYPE_AES), </div><div class="line">        key_bits   = 256,</div><div class="line">        input_size = 100,</div><div class="line">        part_size  = 10,</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx         = {0};</div><div class="line">    <span class="keyword">const</span> psa_algorithm_t    alg         = PSA_ALG_CBC_PKCS7;</div><div class="line">    psa_cipher_operation_t   operation_1 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    psa_cipher_operation_t   operation_2 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    <span class="keywordtype">size_t</span> iv_len = 0;</div><div class="line"></div><div class="line">    psa_key_handle_t     key_handle        = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               encrypted_length  = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               decrypted_length  = 0;</div><div class="line">    uint8_t              iv[block_size]    = {0};</div><div class="line">    uint8_t              input[input_size] = {0};</div><div class="line">    uint8_t              encrypted_data[input_size + block_size] = {0};</div><div class="line">    uint8_t              decrypted_data[input_size + block_size] = {0};</div><div class="line">    psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line">    psa_key_lifetime_t   lifetime;</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Platform initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_crypto_init())</div><div class="line">    {</div><div class="line">        <span class="comment">/* PSA Crypto Initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set key attributes */</span></div><div class="line">    psa_set_key_usage_flags(&amp;attributes, PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT);</div><div class="line">    psa_set_key_algorithm(&amp;attributes, alg);</div><div class="line"></div><div class="line">    <span class="comment">/* To use wrapped keys instead of plaintext use PSA_KEY_TYPE_AES_WRAPPED. */</span></div><div class="line">    psa_set_key_type(&amp;attributes, PSA_KEY_TYPE_AES);</div><div class="line">    psa_set_key_bits(&amp;attributes, key_bits);</div><div class="line"></div><div class="line">    lifetime = PSA_KEY_LIFETIME_VOLATILE;</div><div class="line"></div><div class="line">    <span class="comment">/* To use persistent keys:</span></div><div class="line"><span class="comment">     *......Use a lifetime value of PSA_KEY_LIFETIME_PERSISTENT</span></div><div class="line"><span class="comment">     * -    The file system must be initialized prior to calling the generate/import key functions.</span></div><div class="line"><span class="comment">     * -    Refer to the littlefs example to see how to format and mount the filesystem. */</span></div><div class="line">    psa_set_key_lifetime(&amp;attributes, lifetime);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_random(input, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Random number generation for input data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key(&amp;attributes, &amp;key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Generating AES 256 key and allocating to key slot failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_encrypt_setup(&amp;operation_1, key_handle, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Initializing the encryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_generate_iv(&amp;operation_1, iv, <span class="keyword">sizeof</span>(iv), &amp;iv_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Generating the random IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             cipher_operation(&amp;operation_1, input, input_size, part_size, encrypted_data, <span class="keyword">sizeof</span>(encrypted_data),</div><div class="line">                              &amp;encrypted_length))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Encryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort(&amp;operation_1))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Terminating the encryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_decrypt_setup(&amp;operation_2, key_handle, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Initializing the decryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_set_iv(&amp;operation_2, iv, <span class="keyword">sizeof</span>(iv)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Setting the IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             cipher_operation(&amp;operation_2, encrypted_data, encrypted_length, part_size, decrypted_data,</div><div class="line">                              <span class="keyword">sizeof</span>(decrypted_data), &amp;decrypted_length))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Decryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort(&amp;operation_2))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Terminating the decryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(input, decrypted_data, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Comparing the input data with decrypted data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_destroy_key(key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Destroying the key handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* All the operations succeeded */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the SCE */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AES-CCM Example</h2>
+<div class="fragment"><div class="line"><span class="keyword">static</span> psa_status_t cipher_operation (psa_cipher_operation_t * operation,</div><div class="line">                                      <span class="keyword">const</span> uint8_t          * input,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   input_size,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   part_size,</div><div class="line">                                      uint8_t                * output,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   output_size,</div><div class="line">                                      <span class="keywordtype">size_t</span>                 * output_len)</div><div class="line">{</div><div class="line">    psa_status_t status;</div><div class="line">    <span class="keywordtype">size_t</span>       bytes_to_write = 0;</div><div class="line">    <span class="keywordtype">size_t</span>       bytes_written  = 0;</div><div class="line">    <span class="keywordtype">size_t</span>       len            = 0;</div><div class="line"></div><div class="line">    *output_len = 0;</div><div class="line">    <span class="keywordflow">while</span> (bytes_written != input_size)</div><div class="line">    {</div><div class="line">        bytes_to_write = (input_size - bytes_written &gt; part_size ?</div><div class="line">                          part_size :</div><div class="line">                          input_size - bytes_written);</div><div class="line"></div><div class="line">        status = psa_cipher_update(operation,</div><div class="line">                                   input + bytes_written,</div><div class="line">                                   bytes_to_write,</div><div class="line">                                   output + *output_len,</div><div class="line">                                   output_size - *output_len,</div><div class="line">                                   &amp;len);</div><div class="line">        <span class="keywordflow">if</span> (PSA_SUCCESS != status)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">return</span> status;</div><div class="line">        }</div><div class="line"></div><div class="line">        bytes_written += bytes_to_write;</div><div class="line">        *output_len   += len;</div><div class="line">    }</div><div class="line"></div><div class="line">    status = psa_cipher_finish(operation, output + *output_len, output_size - *output_len, &amp;len);</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != status)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> status;</div><div class="line">    }</div><div class="line"></div><div class="line">    *output_len += len;</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> status;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> psa_crypto_aes256cbcmultipart_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">enum</span></div><div class="line">    {</div><div class="line">        block_size = PSA_BLOCK_CIPHER_BLOCK_LENGTH(PSA_KEY_TYPE_AES), </div><div class="line">        key_bits   = 256,</div><div class="line">        input_size = 100,</div><div class="line">        part_size  = 10,</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx         = {0};</div><div class="line">    <span class="keyword">const</span> psa_algorithm_t    alg         = PSA_ALG_CBC_PKCS7;</div><div class="line">    psa_cipher_operation_t   operation_1 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    psa_cipher_operation_t   operation_2 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    <span class="keywordtype">size_t</span> iv_len = 0;</div><div class="line"></div><div class="line">    psa_key_handle_t     key_handle        = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               encrypted_length  = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               decrypted_length  = 0;</div><div class="line">    uint8_t              iv[block_size]    = {0};</div><div class="line">    uint8_t              input[input_size] = {0};</div><div class="line">    uint8_t              encrypted_data[input_size + block_size] = {0};</div><div class="line">    uint8_t              decrypted_data[input_size + block_size] = {0};</div><div class="line">    psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line">    psa_key_lifetime_t   lifetime;</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Platform initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_crypto_init())</div><div class="line">    {</div><div class="line">        <span class="comment">/* PSA Crypto Initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set key attributes */</span></div><div class="line">    psa_set_key_usage_flags(&amp;attributes, PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT);</div><div class="line">    psa_set_key_algorithm(&amp;attributes, alg);</div><div class="line"></div><div class="line">    <span class="comment">/* To use wrapped keys instead of plaintext use PSA_KEY_TYPE_AES_WRAPPED. */</span></div><div class="line">    psa_set_key_type(&amp;attributes, PSA_KEY_TYPE_AES);</div><div class="line">    psa_set_key_bits(&amp;attributes, key_bits);</div><div class="line"></div><div class="line">    lifetime = PSA_KEY_LIFETIME_VOLATILE;</div><div class="line"></div><div class="line">    <span class="comment">/* To use persistent keys:</span></div><div class="line"><span class="comment">     *......Use a lifetime value of PSA_KEY_LIFETIME_PERSISTENT</span></div><div class="line"><span class="comment">     * -    The file system must be initialized prior to calling the generate/import key functions.</span></div><div class="line"><span class="comment">     * -    Refer to the littlefs example to see how to format and mount the filesystem. */</span></div><div class="line">    psa_set_key_lifetime(&amp;attributes, lifetime);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_random(input, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Random number generation for input data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key(&amp;attributes, &amp;key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Generating AES 256 key and allocating to key slot failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_encrypt_setup(&amp;operation_1, key_handle, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Initializing the encryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_generate_iv(&amp;operation_1, iv, <span class="keyword">sizeof</span>(iv), &amp;iv_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Generating the random IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             cipher_operation(&amp;operation_1, input, input_size, part_size, encrypted_data, <span class="keyword">sizeof</span>(encrypted_data),</div><div class="line">                              &amp;encrypted_length))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Encryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort(&amp;operation_1))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Terminating the encryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_decrypt_setup(&amp;operation_2, key_handle, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Initializing the decryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_set_iv(&amp;operation_2, iv, <span class="keyword">sizeof</span>(iv)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Setting the IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             cipher_operation(&amp;operation_2, encrypted_data, encrypted_length, part_size, decrypted_data,</div><div class="line">                              <span class="keyword">sizeof</span>(decrypted_data), &amp;decrypted_length))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Decryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort(&amp;operation_2))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Terminating the decryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(input, decrypted_data, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Comparing the input data with decrypted data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_destroy_key(key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Destroying the key handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* All the operations succeeded */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the SCE */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AES-CCM Example</h2>
 <p>This is an example on using the PSA Crypto API to generate an AES256 key, encrypting and decrypting multi-block data and using PKCS7 padding using AES-CCM.</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_random(input, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Random plaintext input generation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key(&amp;attributes, &amp;key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Key generation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="comment">/* AES-CCM Encryption */</span></div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             psa_aead_encrypt(key_handle, PSA_ALG_CCM, nonce, <span class="keyword">sizeof</span>(nonce), additional_data, <span class="keyword">sizeof</span>(additional_data),</div><div class="line">                              input, <span class="keyword">sizeof</span>(input), encrypt, <span class="keyword">sizeof</span>(encrypt), &amp;output_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* AES-CCM Encryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="comment">/* AES-CCM Decryption */</span></div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             psa_aead_decrypt(key_handle, PSA_ALG_CCM, nonce, <span class="keyword">sizeof</span>(nonce), additional_data, <span class="keyword">sizeof</span>(additional_data),</div><div class="line">                              encrypt, output_len, decrypt, <span class="keyword">sizeof</span>(decrypt), &amp;output_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* AES-CCM Decryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0U != memcmp(input, decrypt, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* The decrypted result did not match the plaintext input */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* All operations were successful */</span></div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <h2>CMAC Example</h2>
 <p>This is an example on using the PSA Crypto API to generate an AES256 key, followed by generation and verification of MAC for random data of known length.</p>
@@ -2311,7 +2243,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

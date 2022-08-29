@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,8 +171,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga49ab0814d37fe40570ef1c379a51ce0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00abf8118e145197cb6dad5502d4e1e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c.html#ga00abf8118e145197cb6dad5502d4e1e0">R_DOC_Close</a> (<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga00abf8118e145197cb6dad5502d4e1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac28b24a2533c5cf4c5172e634c437176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c.html#gac28b24a2533c5cf4c5172e634c437176">R_DOC_StatusGet</a> (<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___d_o_c___a_p_i.html#structdoc__status__t">doc_status_t</a> *const p_status)</td></tr>
-<tr class="separator:gac28b24a2533c5cf4c5172e634c437176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga70aa39aaa55dc31484304f3f4a9bcaca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c.html#ga70aa39aaa55dc31484304f3f4a9bcaca">R_DOC_Read</a> (<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl, uint32_t *p_result)</td></tr>
 <tr class="separator:ga70aa39aaa55dc31484304f3f4a9bcaca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c87ec15a954bacc0914a4b1b21e2700"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c.html#ga5c87ec15a954bacc0914a4b1b21e2700">R_DOC_Write</a> (<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl, uint32_t data)</td></tr>
@@ -323,43 +321,6 @@ Examples</h1>
 
 </div>
 </div>
-<a id="gac28b24a2533c5cf4c5172e634c437176"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac28b24a2533c5cf4c5172e634c437176">&#9670;&nbsp;</a></span>R_DOC_StatusGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DOC_StatusGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___d_o_c___a_p_i.html#structdoc__status__t">doc_status_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_status</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DEPRECATED - Returns the result of addition/subtraction.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Status successfully read. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One or more pointers point to NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga70aa39aaa55dc31484304f3f4a9bcaca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga70aa39aaa55dc31484304f3f4a9bcaca">&#9670;&nbsp;</a></span>R_DOC_Read()</h2>
 
@@ -490,7 +451,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

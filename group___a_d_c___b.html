@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -207,6 +207,7 @@ Features</h2>
 <p>The ADC_B module supports the following features:</p>
 <ul>
 <li>12 bit resolution</li>
+<li>Configurable high-speed and high-accuracy conversion methods.</li>
 <li>Configure scans to include:<ul>
 <li>Multiple analog channels</li>
 <li>Temperature sensor channel<a class="anchor" id="um_adc_api_support_the_on_chip_temperature_sensor"></a></li>
@@ -251,7 +252,8 @@ Configuration</h1>
 <dd>
 To avoid data being overwritten, when converting a channel multiple times within the same scan group use <a class="el" href="group___a_d_c___b.html#gaf3495a942e210aec9b563922a497d75f">R_ADC_B_FifoRead()</a> instead of <a class="el" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read()</a>. <a class="anchor" id="um_adc_multiple_groups"></a> <h2>Configuring a Scan</h2>
 </dd></dl>
-<p>To perform A/D conversion of a scan group the following should be configured:</p><ul>
+<p>To perform A/D conversion of a scan group the following should be configured:</p>
+<ul>
 <li>Assign the analog channel for conversion to a virtual channel.</li>
 <li>Assign the virtual channel to a scan group.</li>
 <li>Assign the scan group to an A/D Converter.</li>
@@ -292,15 +294,69 @@ Usage Notes</h1>
 <p>Calibration is required to use this peripheral; call <a class="el" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate()</a> after open, and prior to any other function. Self-Calibration should be performed any time ADC operating characteristics are modified, including after reset, releasing module-stop, when returning from software standby or deep software standby mode, or each time the ADC open function is called.</p>
 <dl class="section note"><dt>Note</dt><dd>Self-calibration is a non-blocking operation. The application should wait for an ADC_EVENT_CALIBRATION_COMPLETE callback before using other ADC_B functionality.</dd></dl>
 <h2><a class="anchor" id="adc_b-hal-module-operational-overview"></a>
-ADC_B Operational Modes</h2>
+ADC_B Operation Modes</h2>
 <p>The driver supports two primary operational modes, single-scan and continuous-scan. In single scan mode, one or more groups are scanned once per trigger. In continuous scan mode, one or more groups are started with a single trigger. Scans continue until <a class="el" href="group___a_d_c___b.html#ga129e300b5e495e9b8aa7afe2ab12f204">R_ADC_B_ScanStop()</a> is called. In each mode, analog groups and virtual channels are converted in ascending order.</p>
-<h3>Synchronous-Scan Mode</h3>
-<p><a class="anchor" id="um_adc_api_synchronous_mode"></a> When synchronous operation is enabled all A/D conversions are guaranteed to begin and end based on a user-configured period. When both conversion units are selected for synchronous scan they run from the same period, allowing for consistent timing of simultaneous conversions.</p>
+<h3>Single Scan Mode</h3>
+<ul>
+<li>Assign any selected analog input or analog channel to any scan group, and convert the selected analog input only once per scan group for each start condition.</li>
+<li>By selecting the scan start conditions for each scan group individually, A/D conversion for each scan group can be started at different times.</li>
+</ul>
+<h3>Continuous Scan Mode</h3>
+<ul>
+<li>Assign any selected analog input or analog channel to any scan group and repeat A/D conversion in scan group units after the first start condition. Conversion continues until the driver is closed.</li>
+</ul>
+<h3><a class="anchor" id="r-adc-b-background-scan-mode"></a>
+Background Continuous Scan Mode@anchor um_adc_b_background_scan</h3>
+<ul>
+<li>Assign any selected analog input or analog channel of the extended analog function to any scan group and repeat A/D conversion in scan group units after the first start condition. The A/D conversion is performed in the background until the driver is closed. In <a class="el" href="group___a_d_c___b.html#r-adc-b-background-scan-mode">Background Continuous Scan Mode<a class="anchor" id="um_adc_b_background_scan"></a></a>, if the A/D conversion data will be acquired at the point a start condition is entered.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="group___a_d_c___b.html#r-adc-b-background-scan-mode">Background Continuous Scan Mode<a class="anchor" id="um_adc_b_background_scan"></a></a> is only available for r-adc-b-hybrid-mode</dd></dl>
+<h3>Synchronous-Scan Mode<a class="anchor" id="um_adc_api_synchronous_mode"></a></h3>
+<p>When synchronous operation is enabled all A/D conversions are guaranteed to begin and end based on a user-configured period. When both conversion units are selected for synchronous scan they run from the same period, allowing for consistent timing of simultaneous conversions. Consult section 36.3.17 "Synchronous Operation" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</p>
+<h2>ADC_B Conversion Methods<a class="anchor" id="um_adc_b_conversion_method"></a></h2>
+<h3><a class="anchor" id="adc-b-sar-mode"></a>
+Successive Approximation Register (SAR) Mode</h3>
+<ul>
+<li>A/D Converter samples the signal source once, and convert by Successive Approximation Register method.</li>
+<li>Fast A/D conversion</li>
+<li>Up to 8 channels per 1 scan group.</li>
+<li>Support only single-ended input (excludeing Self-diagnosis function)</li>
+<li>Requires <a class="el" href="group___a_d_c___b.html#r-adc-b-digital-filter">Digital Filter Selection<a class="anchor" id="um_adc_b_digital_filter"></a></a> to be disabled</li>
+</ul>
+<h3><a class="anchor" id="adc-b-oversample-mode"></a>
+Oversampling Mode</h3>
+<ul>
+<li>A/D Converter oversamples the signal source, and converts analog to digital by Noise Shaping Successive Approximation Register method.</li>
+<li>High-accuracy A/D conversion</li>
+<li>Support up to 8 channels per 1 scan group</li>
+<li>Support single-ended input and differential input</li>
+<li>Requires <a class="el" href="group___a_d_c___b.html#r-adc-b-digital-filter">Digital Filter Selection<a class="anchor" id="um_adc_b_digital_filter"></a></a> to be enabled</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>The ADC peripheral supports specific high-speed, high-precision, and normal-precision channels. Consult Table 46.34 "A/D conversion characteristics" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</dd></dl>
+<h3><a class="anchor" id="r-adc-b-hybrid-mode"></a>
+Hybrid Mode</h3>
+<ul>
+<li>A/D Converter oversamples the signal source, and converts analog to digital by Noise Shaping Successive Approximation Register method.</li>
+<li><a class="el" href="group___a_d_c___b.html#r-adc-b-background-scan-mode">Background Continuous Scan Mode<a class="anchor" id="um_adc_b_background_scan"></a></a> operation enables both high-precision A/D conversion and fast conversion.</li>
+<li>Support up to 4 channels per 1 scan group</li>
+<li>Support single-ended input and differential input</li>
+<li>Requires <a class="el" href="group___a_d_c___b.html#r-adc-b-digital-filter">Digital Filter Selection<a class="anchor" id="um_adc_b_digital_filter"></a></a> to be enabled</li>
+</ul>
+<h2><a class="anchor" id="r-adc-b-digital-filter"></a>
+Digital Filter Selection@anchor um_adc_b_digital_filter</h2>
+<p>The following characteristics of the digital filter for the A/D converter unit may be selected:</p>
+<ul>
+<li>Sinc3 Filter (Over Sampling = 8)</li>
+<li>Minimum Phase Filter (Group Delay &lt; 5)</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>The digital filter must be disabled for ADC units configured to use <a class="el" href="group___a_d_c___b.html#adc-b-sar-mode">Successive Approximation Register (SAR) Mode</a> </dd>
+<dd>
+The digital filter must be enabled for ADC units configured to use <a class="el" href="group___a_d_c___b.html#adc-b-oversample-mode">Oversampling Mode</a> or <a class="el" href="group___a_d_c___b.html#r-adc-b-hybrid-mode">Hybrid Mode</a></dd></dl>
 <h2>Sample and Hold</h2>
 <p><a class="anchor" id="um_adc_api_configuring_sample_and_hold"></a>Enabling sample and hold on one or more channels instructs the ADC to perform sampling on all channels as soon as a group scan is started. Internal circuitry holds the sampled voltages until the conversion unit is ready.</p>
 <dl class="section note"><dt>Note</dt><dd>Each sample and hold unit is connected to two analog channels (0/1, 2/3 etc). When this function is enabled on both members of a pair only one of the two may be scanned at a time.</dd>
 <dd>
-Enabling sample and hold functionality reduces maximum scan frequency because the sample hold time is added to each scan. Refer to the hardware manual for details on the sample and hold time.</dd></dl>
+Enabling sample and hold functionality reduces maximum scan frequency because the sample hold time is added to each scan. Refer to the hardware manual for details on the sample and hold time. Consult section 46.4 "ADC Characteristics" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</dd></dl>
 <h2>Self-Diagnosis</h2>
 <p>ADC_B has a built-in self-diagnosis function that can be used to confirm the unit is working correctly. One of three self-diagnosis voltages can be converted and compared to reference values as shown below:</p>
 <table class="doxtable">
@@ -357,7 +413,8 @@ When 14-/12-/10-bit is selected as the data length of converted data the lower b
 <p>Interrupts are enabled by default. If scan-complete interrupts are disabled, <a class="el" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet()</a> can be used to poll the ADC_B driver to determine when the scan has completed. <a class="el" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read()</a> is used to access the converted ADC_B result.</p>
 <h2><a class="anchor" id="r-adc-b-ad-overflow"></a>
 A/D Conversion Overflow</h2>
-<p>A/D conversion overflow is detected when converted data exceeds the range that can be handled in the specified data format. When overflow occurs, data is restricted to the upper or lower limit value of the specified data format. Overflow is detected in the following cases:</p><ul>
+<p>A/D conversion overflow is detected when converted data exceeds the range that can be handled in the specified data format. When overflow occurs, data is restricted to the upper or lower limit value of the specified data format. Overflow is detected in the following cases:</p>
+<ul>
 <li>When the input to the A/D converter exceeds VREFH0 or falls below VREFL0</li>
 <li>When overflow occurs by the internal processing (calculation) for the A/D conversion data due to the following: – Gain Error and Offset Error Calibration – User Gain/Offset adjustment function – When using A/D-Converted Value Addition/Averaging Function – Data Formatting Process</li>
 </ul>
@@ -380,6 +437,9 @@ Data Structures</h2></td></tr>
 <tr class="separator:structadc__b__isr__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structadc__b__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__extended__cfg__t">adc_b_extended_cfg_t</a></td></tr>
 <tr class="separator:structadc__b__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode">adc_b_extended_cfg_t.__unnamed__.adc_b_converter_mode</a></td></tr>
+<tr class="memdesc:structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_B converter mode register data.  <a href="group___a_d_c___b.html#structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode">More...</a><br /></td></tr>
+<tr class="separator:structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structadc__b__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__instance__ctrl__t">adc_b_instance_ctrl_t</a></td></tr>
 <tr class="separator:structadc__b__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -389,6 +449,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga82447f8298334e5abad26eca41ad3925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga05a9bf3c320798b118419298caf3517e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga05a9bf3c320798b118419298caf3517e">adc_b_clock_divider_t</a> </td></tr>
 <tr class="separator:ga05a9bf3c320798b118419298caf3517e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99cbbb12770fa8ffdc806fefc8254904"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga99cbbb12770fa8ffdc806fefc8254904">adc_b_converter_mode_t</a> </td></tr>
+<tr class="separator:ga99cbbb12770fa8ffdc806fefc8254904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga266a796bc37d8e7309480b9376173c58"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga266a796bc37d8e7309480b9376173c58">adc_b_conversion_method_t</a> </td></tr>
+<tr class="separator:ga266a796bc37d8e7309480b9376173c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga05547edc7af118016d19b0e3be0da507"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga05547edc7af118016d19b0e3be0da507">adc_b_resolution_t</a> </td></tr>
 <tr class="separator:ga05547edc7af118016d19b0e3be0da507"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bfbcbbef0724dc1832e18c4341a2f9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga7bfbcbbef0724dc1832e18c4341a2f9b">adc_b_virtual_channel_t</a> </td></tr>
@@ -415,6 +479,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga412fa60ed7b57925b029422160f78cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0cf4db0b4a952d778f684106c460b559"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga0cf4db0b4a952d778f684106c460b559">adc_b_pga_gain_t</a> </td></tr>
 <tr class="separator:ga0cf4db0b4a952d778f684106c460b559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47f5cca81a64e12edb6b4a6877b28908"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga47f5cca81a64e12edb6b4a6877b28908">adc_b_digital_filter_selection_t</a> </td></tr>
+<tr class="separator:ga47f5cca81a64e12edb6b4a6877b28908"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8e1fdcabde406d7f117e79916aa4a3e8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8e1fdcabde406d7f117e79916aa4a3e8">adc_b_sampling_state_table_id_t</a> </td></tr>
 <tr class="separator:ga8e1fdcabde406d7f117e79916aa4a3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed54424ceb52ca54bbdf1fd9cf3193b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gaed54424ceb52ca54bbdf1fd9cf3193b4">adc_b_user_gain_table_id_t</a> </td></tr>
@@ -894,29 +960,29 @@ pga_gain[4]</td>
 <td class="fielddoc">
 PGA Gain selection. </td></tr>
 <tr><td class="fieldtype">
-<a id="a0fd4168e4bf25d2160b127dbe250e35c"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a814b524aedfa815b636ea9020809d668"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a548d372f0629f94d83c844bce9731031"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a8d57a10932e500fd2eeca9e41da6b88a"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a61c5ce4c72aef99676ec16e70d9c692b"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="ad1ac9d2d0de2f20ccdbf4da5817d20a0"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a9dd9e70f4297aae72b71c85bb044b266"></a>uint32_t</td>
+<a id="af5e42862ab384fe8c79f9a4f569676c8"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
-adc_b_mode</td>
+__unnamed__</td>
 <td class="fielddoc">
-ADC_B mode register data. </td></tr>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ac39ff3caac87bc1c123ab4040f2d9ea0"></a>uint32_t</td>
 <td class="fieldname">
@@ -924,13 +990,13 @@ scan_group_enable</td>
 <td class="fielddoc">
 Scan Group enable register data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a95f6186cf38972e1e3d12c951d092628"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="abff2d5f2be8b3ccca4564166fb2255c8"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ace9b344c4fc568ff03f14cea5b7263c6"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a98e774bfaf85e0e7606b0c69d61b21ca"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -942,7 +1008,7 @@ fifo_interrupt_enable_mask</td>
 <td class="fielddoc">
 FIFO interrupt enable register data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a49c1a710fc4a09be52bfb13458ca6d49"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a1da118ad5ccc5b3dea992083ecb0e3ba"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -996,7 +1062,7 @@ p_isr_cfg</td>
 <td class="fielddoc">
 Pointer to ISR configuration. </td></tr>
 <tr><td class="fieldtype">
-<a id="ae59b5b0db2bd8d396eae512ce469e6ad"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a66f1792234586ab27ce10a7e36c7d5d7"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1049,6 +1115,36 @@ Limiter clip interrupt enable register data. </td></tr>
 limiter_clip_tables[8]</td>
 <td class="fielddoc">
 Limiter clip Table register data. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode" id="structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode">&#9670;&nbsp;</a></span>adc_b_extended_cfg_t.__unnamed__.adc_b_converter_mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_b_extended_cfg_t.__unnamed__.adc_b_converter_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ADC_B converter mode register data. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a15d61712450a686a7f365adf4fef581f"></a><a class="el" href="group___a_d_c___b.html#ga99cbbb12770fa8ffdc806fefc8254904">adc_b_converter_mode_t</a></td>
+<td class="fieldname">
+mode: 2</td>
+<td class="fielddoc">
+ADC_B converter mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="aea9f6aca279138c58f705c8d4cb4b8ce"></a><a class="el" href="group___a_d_c___b.html#ga266a796bc37d8e7309480b9376173c58">adc_b_conversion_method_t</a></td>
+<td class="fieldname">
+method: 2</td>
+<td class="fielddoc">
+ADC_B converter method. </td></tr>
 </table>
 
 </div>
@@ -1120,6 +1216,52 @@ Limiter clip Table register data. </td></tr>
 <tr><td class="fieldname"><a id="gga05a9bf3c320798b118419298caf3517ea4fd4ef292c8232e64f8b38e692720b74"></a>ADC_B_CLOCK_DIV_7&#160;</td><td class="fielddoc"><p>ADC Clock Division 1/7. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga05a9bf3c320798b118419298caf3517ea72728d61eeb1eeb46db2468b8ae4566f"></a>ADC_B_CLOCK_DIV_8&#160;</td><td class="fielddoc"><p>ADC Clock Division 1/8. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga99cbbb12770fa8ffdc806fefc8254904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga99cbbb12770fa8ffdc806fefc8254904">&#9670;&nbsp;</a></span>adc_b_converter_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c___b.html#ga99cbbb12770fa8ffdc806fefc8254904">adc_b_converter_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC_B Conversion Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga99cbbb12770fa8ffdc806fefc8254904a5f1f450e7f3e006c4a1698739212d5ca"></a>ADC_B_CONVERTER_MODE_SINGLE_SCAN&#160;</td><td class="fielddoc"><p>Single scan mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga99cbbb12770fa8ffdc806fefc8254904a45c69e8a8c4c49665a660c73ec4dcc12"></a>ADC_B_CONVERTER_MODE_CONTINUOUS_SCAN&#160;</td><td class="fielddoc"><p>Continuous scan mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga99cbbb12770fa8ffdc806fefc8254904ae295465a8016ee01173a47dde9388aec"></a>ADC_B_CONVERTER_MODE_BACKGROUND_SCAN&#160;</td><td class="fielddoc"><p>Background continuous scan mode (Valid for Hybrid mode only) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga266a796bc37d8e7309480b9376173c58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga266a796bc37d8e7309480b9376173c58">&#9670;&nbsp;</a></span>adc_b_conversion_method_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c___b.html#ga266a796bc37d8e7309480b9376173c58">adc_b_conversion_method_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC_B Conversion Method </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga266a796bc37d8e7309480b9376173c58a1ab8e5acc9f17e35768b90b76aeb5dc8"></a>ADC_B_CONVERSION_METHOD_SAR&#160;</td><td class="fielddoc"><p>SAR conversion method. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga266a796bc37d8e7309480b9376173c58a2a8008293e96223ef64fbe57056280f3"></a>ADC_B_CONVERSION_METHOD_OVERSAMPLE&#160;</td><td class="fielddoc"><p>Oversampling conversion method. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga266a796bc37d8e7309480b9376173c58a8d1262b0ba68a7e7fc1a9bad42a574bb"></a>ADC_B_CONVERSION_METHOD_HYBRID&#160;</td><td class="fielddoc"><p>Hybrid conversion method. </p>
 </td></tr>
 </table>
 
@@ -1664,6 +1806,27 @@ Limiter clip Table register data. </td></tr>
 
 </div>
 </div>
+<a id="ga47f5cca81a64e12edb6b4a6877b28908"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47f5cca81a64e12edb6b4a6877b28908">&#9670;&nbsp;</a></span>adc_b_digital_filter_selection_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c___b.html#ga47f5cca81a64e12edb6b4a6877b28908">adc_b_digital_filter_selection_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC Digital Filter Selection </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga47f5cca81a64e12edb6b4a6877b28908a057b6ca487fa373bb2d76072dbf3e3a6"></a>ADC_B_DIGITAL_FILTER_MODE_SINC3&#160;</td><td class="fielddoc"><p>Digital filter Sinc3 filter (Oversampling Rate = 8) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47f5cca81a64e12edb6b4a6877b28908abb592ce9cfccbf57104303267a7b87b2"></a>ADC_B_DIGITAL_FILTER_MODE_PHASE&#160;</td><td class="fielddoc"><p>Digital filter Minimum phase filter (Group delay &lt; 2) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ga8e1fdcabde406d7f117e79916aa4a3e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8e1fdcabde406d7f117e79916aa4a3e8">&#9670;&nbsp;</a></span>adc_b_sampling_state_table_id_t</h2>
 
@@ -1980,7 +2143,6 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>An invalid group has been provided. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Unit is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>Unit not initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Another scan is still in progress (software trigger). </td></tr>
   </table>
   </dd>
 </dl>
@@ -2352,7 +2514,7 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

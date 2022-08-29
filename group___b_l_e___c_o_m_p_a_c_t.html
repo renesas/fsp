@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -277,13 +277,24 @@ If those functionalities need your system, select <a class="el" href="group___b_
 - This configuration dose not supports vender specific firmware update functionality APIs. </dd>
 <dd>
 Those APIs are only supported by <a class="el" href="group___b_l_e___a_b_s___s_p_p.html">SPP BLE Abstraction (rm_ble_abs_spp)</a> module.</dd></dl>
+<h3><a class="anchor" id="r-ble-compact-limitations-on-freertos"></a>
+Limitations on FreeRTOS environment</h3>
+<p>Developers should be aware of the following limitations when using the ble on FreeRTOS environment: When use deep sleep, sleep mode or standby mode, there is following two wake up option from RF module.</p><ul>
+<li>Using Semaphore</li>
+<li>Using Event Groups</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Event Groups is processing as a delay handler by timer task. </dd>
+<dd>
+Therefore, if blocked by interrupts or if the timer task is blocked by another high-priority task, </dd>
+<dd>
+the existing connection will be broken.</dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

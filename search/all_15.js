@@ -140,7 +140,6 @@ var searchData=
   ['tls_5fserverkeyexchangeverify',['TLS_ServerKeyExchangeVerify',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aa9ed4a931e02db087c68730ae517efc7',1,'sce_api_t']]],
   ['tls_5fsessionkeygenerate',['TLS_SessionKeyGenerate',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ac4c93c038cbe3e5c34a690010647502b',1,'sce_api_t']]],
   ['tls_5fverifydatagenerate',['TLS_VerifyDataGenerate',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a1aa3ab9256f21dcf928461899bea8e32',1,'sce_api_t']]],
-  ['tlstransportparams_5ft',['TlsTransportParams_t',['../struct_tls_transport_params__t.html',1,'']]],
   ['tlv_5fdata_5fsize',['tlv_data_size',['../group___p_t_p___a_p_i.html#a4479e95a75cf12039d631ff58c7e6b65',1,'ptp_callback_args_t']]],
   ['to_5fbe_5facked',['to_be_acked',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a6895c0b2e0bb194cd9ebb5b2b7fc1b97',1,'rm_ble_mesh_access_model_req_msg_t']]],
   ['to_5fpublish',['to_publish',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a7fe41e91f8e4add3fc12e46a0fecb90b',1,'rm_ble_mesh_access_publish_setting_t']]],

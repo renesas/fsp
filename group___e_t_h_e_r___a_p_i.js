@@ -1,6 +1,5 @@
 var group___e_t_h_e_r___a_p_i =
 [
-    [ "ether_instance_descriptor_t", "group___e_t_h_e_r___a_p_i.html#structether__instance__descriptor__t", null ],
     [ "ether_callback_args_t", "group___e_t_h_e_r___a_p_i.html#structether__callback__args__t", [
       [ "channel", "group___e_t_h_e_r___a_p_i.html#a3fbb224027c537cfb660c215d5f2a35d", null ],
       [ "event", "group___e_t_h_e_r___a_p_i.html#aa28fdd797448d1ed0d56604ec87b349a", null ],
@@ -18,8 +17,6 @@ var group___e_t_h_e_r___a_p_i =
       [ "padding_offset", "group___e_t_h_e_r___a_p_i.html#a5c1d94fec751bde17d1a54d911c39619", null ],
       [ "broadcast_filter", "group___e_t_h_e_r___a_p_i.html#a538e42b696b0b1b941e2a7a92cf9a6aa", null ],
       [ "p_mac_address", "group___e_t_h_e_r___a_p_i.html#afd4c3c463a931fa8068576f5bb410609", null ],
-      [ "p_rx_descriptors", "group___e_t_h_e_r___a_p_i.html#a9580ac1ebfaae9398ebee4f17562acb5", null ],
-      [ "p_tx_descriptors", "group___e_t_h_e_r___a_p_i.html#a01653c4335de922b635ef951dbccee3a", null ],
       [ "num_tx_descriptors", "group___e_t_h_e_r___a_p_i.html#aae2adf978d21f78a198689c42b484974", null ],
       [ "num_rx_descriptors", "group___e_t_h_e_r___a_p_i.html#ae672b5a15f85774b5b136a6e50073f68", null ],
       [ "pp_ether_buffers", "group___e_t_h_e_r___a_p_i.html#a81056220509a3158f9bea9ad526e1b60", null ],

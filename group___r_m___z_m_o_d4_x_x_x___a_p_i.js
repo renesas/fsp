@@ -38,12 +38,13 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "fast_aqi", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84160c2d9ba22577f86b7bbdb3521845", null ],
       [ "epa_aqi", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aeb49c4d0925d19ef93f1b7836acbcaf1", null ]
     ] ],
+    [ "rm_zmod4xxx_raq_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t", [
+      [ "control_signal", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abe7c7a383889bcc45958fb2f24afe497", null ],
+      [ "raq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aafd6e3d578d566d09fcae0b3b0c81851", null ]
+    ] ],
     [ "rm_zmod4xxx_cfg_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t", [
       [ "p_comms_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8cce7b013ebccc3b0b0aed0e9436e922", null ],
       [ "p_irq_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a692f0a4eaad2c9e8e8cdbb0a2e792dd9", null ],
-      [ "p_zmod4xxx_device", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6f8f729eb4708424f4b3ce970dc36f9e", null ],
-      [ "p_zmod4xxx_handle", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ac02d53dedacac7f55fa14decc4f1873f", null ],
-      [ "p_zmod4xxx_results", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ab5b9343965c3b4c93acc9081c0ad8a16", null ],
       [ "p_context", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abc68dcd903ac59de8c478b0d22d25bfa", null ],
       [ "p_extend", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af76dfeb408164a58e2571d56bcb40101", null ],
       [ "p_comms_callback", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8f25d9bf4ff36c9dcf976a029ef49c10", null ],
@@ -61,6 +62,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "sulfurOdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af2123328d6c1ced0cc62d9c98f5a8a7a", null ],
       [ "oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad56aa9708d3f48a92253eeda652edede", null ],
       [ "oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911", null ],
+      [ "raqDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa05768468433346424e7c695a0e0a4ed", null ],
       [ "temperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9", null ],
       [ "deviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069", null ],
       [ "close", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83", null ]

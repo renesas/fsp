@@ -70,16 +70,6 @@ var group___i_o_p_o_r_t___a_p_i =
       [ "IOPORT_PERIPHERAL_PGAOUT0", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ac44530278e8f5cd9db7c0aab1f434c18", null ],
       [ "IOPORT_PERIPHERAL_PGAOUT1", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8af931a6809462aee181fdb63ed0f7b405", null ]
     ] ],
-    [ "ioport_ethernet_channel_t", "group___i_o_p_o_r_t___a_p_i.html#gaf6a78fbc73b4e8acef86a12c21df2da0", [
-      [ "IOPORT_ETHERNET_CHANNEL_0", "group___i_o_p_o_r_t___a_p_i.html#ggaf6a78fbc73b4e8acef86a12c21df2da0ad6e933716d34a0fbba5b3d9f589f7637", null ],
-      [ "IOPORT_ETHERNET_CHANNEL_1", "group___i_o_p_o_r_t___a_p_i.html#ggaf6a78fbc73b4e8acef86a12c21df2da0a96f5c107a00efb1c4ccf9905540f1ee6", null ],
-      [ "IOPORT_ETHERNET_CHANNEL_END", "group___i_o_p_o_r_t___a_p_i.html#ggaf6a78fbc73b4e8acef86a12c21df2da0ab054bb3020a4a296f0da7a11362c017c", null ]
-    ] ],
-    [ "ioport_ethernet_mode_t", "group___i_o_p_o_r_t___a_p_i.html#gacaee6fc466858446638e79354043bb78", [
-      [ "IOPORT_ETHERNET_MODE_RMII", "group___i_o_p_o_r_t___a_p_i.html#ggacaee6fc466858446638e79354043bb78abcf9bf493cbb116eec49bc9e21424872", null ],
-      [ "IOPORT_ETHERNET_MODE_MII", "group___i_o_p_o_r_t___a_p_i.html#ggacaee6fc466858446638e79354043bb78a21cfd34dda01172d7b86269be63708bb", null ],
-      [ "IOPORT_ETHERNET_MODE_END", "group___i_o_p_o_r_t___a_p_i.html#ggacaee6fc466858446638e79354043bb78a398ef6c7ab1704004f04168fb31cf38a", null ]
-    ] ],
     [ "ioport_cfg_options_t", "group___i_o_p_o_r_t___a_p_i.html#gac617eebcb7c2c1e45fa8e04fc473e574", [
       [ "IOPORT_CFG_PORT_DIRECTION_INPUT", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb", null ],
       [ "IOPORT_CFG_PORT_DIRECTION_OUTPUT", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97", null ],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -885,7 +885,8 @@ If FIFO informations (write index, read index, overflow counter, unread_samples)
 <p>The application note [R01AN6311] using this module has an algorithm for biometric data calculation. The algorithm has the constraint of sampling rate (default: 100 samples per second). Please refer to the application note [R36AN0001EU] and OB1203 sensor page (<a href="https://www.renesas.com/jp/en/products/sensor-products/biosensors/ob1203-heart-rate-blood-oxygen-concentration-pulse-oximetry-proximity-light-and-color-sensor">https://www.renesas.com/jp/en/products/sensor-products/biosensors/ob1203-heart-rate-blood-oxygen-concentration-pulse-oximetry-proximity-light-and-color-sensor</a>)<br />
 R01AN6311 : <a href="https://www.renesas.com/document/apn/ob1203-sample-application-sample-code">https://www.renesas.com/document/apn/ob1203-sample-application-sample-code</a> <br />
 R36AN0001EU : <a href="https://www.renesas.com/document/apn/ob1203-pulse-oximeter-algorithm-spo2-heart-rate-and-respiration-rate">https://www.renesas.com/document/apn/ob1203-pulse-oximeter-algorithm-spo2-heart-rate-and-respiration-rate</a> <br />
- </p>
+</p>
+<p>If multiple operation modes is used with a single OB1203 sensor device, rm_ob1203 modules need to be used while switching between operation modes because modules cannot work in parallel. Threfore, a current rm_ob1203 module must be closed with <a class="el" href="group___r_m___o_b1203.html#gaff536e258d187d8efd6fac712ca885e1">RM_OB1203_Close()</a> before another rm_ob1203 module is opened with <a class="el" href="group___r_m___o_b1203.html#ga34d3b67d431ab9cdb45fa561196d8e85">RM_OB1203_Open()</a>.</p>
 <h1><a class="anchor" id="rm-ob1203-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -1858,7 +1859,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

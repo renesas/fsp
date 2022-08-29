@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -330,15 +330,15 @@ Disable</li>
 <tr>
 <td>Debug Random Address</td><td>Must be a valid device address</td><td>FF:FF:FF:FF:FF:FF </td><td>Random Address of firmware initial value. </td></tr>
 <tr>
-<td>Maximum number of connections</td><td>Value must be an integer between 1 and 7</td><td>7 </td><td>Maximum number of connections. </td></tr>
+<td>Maximum number of connections</td><td>Value must be an integer between 1 and 7, and lower than the value defined in ble module.</td><td>7 </td><td>Maximum number of connections. </td></tr>
 <tr>
-<td>Maximum connection data length</td><td>Value must be an integer between 27 and 251</td><td>251 </td><td>Maximum connection data length. </td></tr>
+<td>Maximum connection data length</td><td>Value must be an integer between 27 and 251, and lower than the value defined in ble module.</td><td>251 </td><td>Maximum connection data length. </td></tr>
 <tr>
-<td>Maximum advertising data length</td><td>Value must be an integer between 31 and 1650</td><td>1650 </td><td>Maximum advertising data length. </td></tr>
+<td>Maximum advertising data length</td><td>Value must be an integer between 31 and 1650, and lower than the value defined in ble module.</td><td>1650 </td><td>Maximum advertising data length. </td></tr>
 <tr>
-<td>Maximum advertising set number</td><td>Value must be an integer between 1 and 4</td><td>4 </td><td>Maximum advertising set number. </td></tr>
+<td>Maximum advertising set number</td><td>Value must be an integer between 1 and 4, and lower than the value defined in ble module.</td><td>4 </td><td>Maximum advertising set number. </td></tr>
 <tr>
-<td>Maximum periodic sync set number.</td><td>Value must be an integer between 1 and 2</td><td>2 </td><td>Maximum periodic sync set number. </td></tr>
+<td>Maximum periodic sync set number.</td><td>Value must be an integer between 1 and 2, and lower than the value defined in ble module.</td><td>2 </td><td>Maximum periodic sync set number. </td></tr>
 <tr>
 <td>Store Security Data</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -348,9 +348,9 @@ Enable</li>
 </ul>
 </td><td>Disable </td><td>Store Security Data in DataFlash. </td></tr>
 <tr>
-<td>Data Flash Block for Security Data</td><td>Value must be an integer between 0 and 7</td><td>0 </td><td>Data Flash Block for Security Data Management. </td></tr>
+<td>Data Flash Block for Security Data</td><td>Value must be an integer between 0 and 7, and lower than the value defined in ble module.</td><td>0 </td><td>Data Flash Block for Security Data Management. </td></tr>
 <tr>
-<td>Remote Device Bonding Number</td><td>Value must be an integer between 1 and 7</td><td>7 </td><td>Number of remote device bonding information. </td></tr>
+<td>Remote Device Bonding Number</td><td>Value must be an integer between 1 and 7, and lower than the value defined in ble module.</td><td>7 </td><td>Number of remote device bonding information. </td></tr>
 <tr>
 <td>Connection Event Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -432,7 +432,7 @@ Enable</li>
 </ul>
 </td><td>Disable </td><td>Set RF_DEEP_SLEEP wakeup notify enable/disable. </td></tr>
 <tr>
-<td>Bluetooth dedicated clock</td><td>Value must be an integer between 0 and 15</td><td>6 </td><td>Load capacitance adjustment. </td></tr>
+<td>Bluetooth dedicated clock</td><td>Value must be an integer between 0 and 15, and lower than the value defined in ble module.</td><td>6 </td><td>Load capacitance adjustment. </td></tr>
 <tr>
 <td>DC-DC converter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -466,7 +466,7 @@ MCU CLKOUT frequency 16.384kHz</li>
 </ul>
 </td><td>MCU CLKOUT frequency 32.768kHz </td><td>When BLE_ABS_CFG_RF_EXTERNAL_32K_ENABLE = 1, set frequency output from CLKOUT of MCU part. </td></tr>
 <tr>
-<td>Sleep Clock Accuracy(SCA)</td><td>Value must be an integer between 0 and 500</td><td>250 </td><td>When BLE_ABS_CFG_RF_EXTERNAL_32K_ENABLE = 1, set Sleep Clock Accuracy(SCA) for RF slow clock. </td></tr>
+<td>Sleep Clock Accuracy(SCA)</td><td>Value must be an integer between 0 and 500, and lower than the value defined in ble module.</td><td>250 </td><td>When BLE_ABS_CFG_RF_EXTERNAL_32K_ENABLE = 1, set Sleep Clock Accuracy(SCA) for RF slow clock. </td></tr>
 <tr>
 <td>Transmission Power Maximum Value</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -506,15 +506,15 @@ Enable</li>
 </ul>
 </td><td>Enable </td><td>Set RF_DEEP_SLEEP transition. </td></tr>
 <tr>
-<td>MCU Main Clock Frequency</td><td>Value must be an integer between 1000 and 20000</td><td>8000 </td><td>Set MCU Main Clock Frequency (kHz). Set clock source according to your board environment. HOCO: don't care. / Main Clock: 1000 to 20000 kHz / PLL Circuit: 4000 to 12500 kHz  </td></tr>
+<td>MCU Main Clock Frequency</td><td>Value must be an integer between 1000 and 20000, and lower than the value defined in ble module.</td><td>8000 </td><td>Set MCU Main Clock Frequency (kHz). Set clock source according to your board environment. HOCO: don't care. / Main Clock: 1000 to 20000 kHz / PLL Circuit: 4000 to 12500 kHz  </td></tr>
 <tr>
-<td>Code Flash(ROM) Device Data Block</td><td>Value must be an integer between -1 and 255</td><td>255 </td><td>Device specific data block on Code Flash (ROM). </td></tr>
+<td>Code Flash(ROM) Device Data Block</td><td>Value must be an integer between -1 and 255, and lower than the value defined in ble module.</td><td>255 </td><td>Device specific data block on Code Flash (ROM). </td></tr>
 <tr>
-<td>Device Specific Data Flash Block</td><td>Value must be an integer between -1 and 7</td><td>-1 </td><td>Device specific data block on E2 Data Flash. </td></tr>
+<td>Device Specific Data Flash Block</td><td>Value must be an integer between -1 and 7, and lower than the value defined in ble module.</td><td>-1 </td><td>Device specific data block on E2 Data Flash. </td></tr>
 <tr>
-<td>MTU Size Configured</td><td>Value must be an integer between 23 and 247</td><td>247 </td><td>MTU Size configured by GATT MTU exchange procedure. </td></tr>
+<td>MTU Size Configured</td><td>Value must be an integer between 23 and 247, and lower than the value defined in ble module.</td><td>247 </td><td>MTU Size configured by GATT MTU exchange procedure. </td></tr>
 <tr>
-<td>Timer Slot Maximum Number</td><td>Value must be an integer between 1 and 10</td><td>10 </td><td>The maximum number of timer slot. </td></tr>
+<td>Timer Slot Maximum Number</td><td>Value must be an integer between 1 and 10, and lower than the value defined in ble module.</td><td>10 </td><td>The maximum number of timer slot. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; BLE Abstraction (rm_ble_abs)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Networking &gt; BLE Abstraction (rm_ble_abs).<br />
@@ -626,20 +626,11 @@ Data Structures</h2></td></tr>
 <tr class="separator:structabs__scan__parameter__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structble__abs__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s.html#structble__abs__instance__ctrl__t">ble_abs_instance_ctrl_t</a></td></tr>
 <tr class="separator:structble__abs__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structst__ble__rf__notify__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s.html#structst__ble__rf__notify__t">st_ble_rf_notify_t</a></td></tr>
-<tr class="memdesc:structst__ble__rf__notify__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure is RF event notify management.  <a href="group___b_l_e___a_b_s.html#structst__ble__rf__notify__t">More...</a><br /></td></tr>
-<tr class="separator:structst__ble__rf__notify__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga8768f046a3e7483970d6924283d100d0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s.html#ga8768f046a3e7483970d6924283d100d0">ble_abs_timer_cb_t</a>) (uint32_t timer_hdl)</td></tr>
 <tr class="separator:ga8768f046a3e7483970d6924283d100d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab865cd3aaf770851d0ef9658be418099"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s.html#gab865cd3aaf770851d0ef9658be418099">ble_mcu_clock_change_cb_t</a>) (void)</td></tr>
-<tr class="memdesc:gab865cd3aaf770851d0ef9658be418099"><td class="mdescLeft">&#160;</td><td class="mdescRight">ble_mcu_clock_change_cb_t is the callback function type to use CLKOUT_RF as the MCU main clock source.  <a href="#gab865cd3aaf770851d0ef9658be418099">More...</a><br /></td></tr>
-<tr class="separator:gab865cd3aaf770851d0ef9658be418099"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafba5bc1961ba37dfcc185edf6481678b"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b">ble_rf_notify_cb_t</a>) (uint32_t)</td></tr>
-<tr class="memdesc:gafba5bc1961ba37dfcc185edf6481678b"><td class="mdescLeft">&#160;</td><td class="mdescRight">ble_rf_notify_cb_t is the RF event notify callback function type.  <a href="#gafba5bc1961ba37dfcc185edf6481678b">More...</a><br /></td></tr>
-<tr class="separator:gafba5bc1961ba37dfcc185edf6481678b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -662,7 +653,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="af7ddc7df0644ac7b8e4cbebf8d4b5bb0"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
+<a id="a74834500f4a3275dfedaf311ca198b80"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
 <td class="fieldname">
 advertising_parameter</td>
 <td class="fielddoc">
@@ -857,60 +848,6 @@ Pointer to the BLE ABS configuration block. </td></tr>
 
 </div>
 </div>
-<a name="structst__ble__rf__notify__t" id="structst__ble__rf__notify__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__rf__notify__t">&#9670;&nbsp;</a></span>st_ble_rf_notify_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct st_ble_rf_notify_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>This structure is RF event notify management. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a587aa1c5d26d1d5fdd7d9f89bdff0490"></a>uint32_t</td>
-<td class="fieldname">
-enable</td>
-<td class="fielddoc">
-Set enable/disable of each RF event notification. <p>Bit0 Notify Connection event start(0:Disable/1:Enable)<br />
- Bit1 Notify Advertising event start(0:Disable/1:Enable)<br />
- Bit2 Notify Scanning event start(0:Disable/1:Enable)<br />
- Bit3 Notify Initiating event start(0:Disable/1:Enable)<br />
- Bit4 Notify Connection event close(0:Disable/1:Enable)<br />
- Bit5 Notify Advertising event close(0:Disable/1:Enable)<br />
- Bit6 Notify Scanning event close(0:Disable/1:Enable)<br />
- Bit7 Notify Initiating event close(0:Disable/1:Enable)<br />
- Bit8 Notify RF_DEEP_SLEEP event start(0:Disable/1:Enable)<br />
- Bit9 Notify RF_DEEP_SLEEP event close(0:Disable/1:Enable)<br />
- Other Bit: Reserved for future use.<br />
-</p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="ad43914320d5fe6092aa178001fb682e5"></a><a class="el" href="group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b">ble_rf_notify_cb_t</a></td>
-<td class="fieldname">
-start_cb</td>
-<td class="fielddoc">
-Set callback function pointer for RF event start. </td></tr>
-<tr><td class="fieldtype">
-<a id="ac19d3c8d643a228fd406c0f1b438343a"></a><a class="el" href="group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b">ble_rf_notify_cb_t</a></td>
-<td class="fieldname">
-close_cb</td>
-<td class="fielddoc">
-Set callback function pointer for RF event close. </td></tr>
-<tr><td class="fieldtype">
-<a id="a1536379c9198dbe12427ff960da32f0c"></a><a class="el" href="group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b">ble_rf_notify_cb_t</a></td>
-<td class="fieldname">
-dsleep_cb</td>
-<td class="fielddoc">
-Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga8768f046a3e7483970d6924283d100d0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8768f046a3e7483970d6924283d100d0">&#9670;&nbsp;</a></span>ble_abs_timer_cb_t</h2>
@@ -924,52 +861,6 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>The timer callback invoked when the timer expired. </p>
-
-</div>
-</div>
-<a id="gab865cd3aaf770851d0ef9658be418099"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab865cd3aaf770851d0ef9658be418099">&#9670;&nbsp;</a></span>ble_mcu_clock_change_cb_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ble_mcu_clock_change_cb_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ble_mcu_clock_change_cb_t is the callback function type to use CLKOUT_RF as the MCU main clock source. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
-
-</div>
-</div>
-<a id="gafba5bc1961ba37dfcc185edf6481678b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafba5bc1961ba37dfcc185edf6481678b">&#9670;&nbsp;</a></span>ble_rf_notify_cb_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ble_rf_notify_cb_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ble_rf_notify_cb_t is the RF event notify callback function type. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">uint32_t</td><td>The infomation of RF event notification. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -1701,7 +1592,7 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

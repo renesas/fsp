@@ -14,7 +14,7 @@ var searchData=
   ['sci_5fuart_5frs485_5fde_5fpolarity_5ft',['sci_uart_rs485_de_polarity_t',['../group___s_c_i___u_a_r_t.html#ga0bd2440ef30f2feca9a2d129989bffce',1,'r_sci_uart.h']]],
   ['sci_5fuart_5frs485_5fenable_5ft',['sci_uart_rs485_enable_t',['../group___s_c_i___u_a_r_t.html#ga9522502f434bcaa2bbaf9cb1321ce542',1,'r_sci_uart.h']]],
   ['sci_5fuart_5frx_5ffifo_5ftrigger_5ft',['sci_uart_rx_fifo_trigger_t',['../group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6',1,'r_sci_uart.h']]],
-  ['sci_5fuart_5fstart_5fbit_5fdetect_5ft',['sci_uart_start_bit_detect_t',['../group___s_c_i___u_a_r_t.html#ga373d96cc125e44fc8491e98bf54a0459',1,'r_sci_uart.h']]],
+  ['sci_5fuart_5fstart_5fbit_5ft',['sci_uart_start_bit_t',['../group___s_c_i___u_a_r_t.html#ga8d278bc6b5096aa0dbe36e5c953cf073',1,'r_sci_uart.h']]],
   ['sdadc_5fcalibration_5ft',['sdadc_calibration_t',['../group___s_d_a_d_c.html#gaaea93412ee94494d96a4194efa8ff416',1,'r_sdadc.h']]],
   ['sdadc_5fchannel_5faverage_5ft',['sdadc_channel_average_t',['../group___s_d_a_d_c.html#ga6f7fea933d308bfc55dbca4f0f6ce630',1,'r_sdadc.h']]],
   ['sdadc_5fchannel_5fcount_5fformula_5ft',['sdadc_channel_count_formula_t',['../group___s_d_a_d_c.html#ga677ae3bb18c1bb15eb56d49a93a922eb',1,'r_sdadc.h']]],

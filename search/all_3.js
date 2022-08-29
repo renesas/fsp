@@ -440,8 +440,6 @@ var searchData=
   ['ble_5flib_5fextended',['BLE_LIB_EXTENDED',['../group___b_l_e___a_p_i.html#ga44879d8fd11abcf01b7bbbbab60d3c23',1,'r_ble_api.h']]],
   ['ble_5fmaster',['BLE_MASTER',['../group___g_a_p___a_p_i.html#gab17b69004eb9a80a36916e2e8baf21f8',1,'r_ble_api.h']]],
   ['ble_5fmax_5fno_5fof_5fadv_5fsets_5fsupported',['BLE_MAX_NO_OF_ADV_SETS_SUPPORTED',['../group___g_a_p___a_p_i.html#gab3493ebe5bfd669a30f846edb8f01fb5',1,'r_ble_api.h']]],
-  ['ble_5fmcu_5fclock_5fchange_5fcb_5ft',['ble_mcu_clock_change_cb_t',['../group___b_l_e___a_b_s.html#gab865cd3aaf770851d0ef9658be418099',1,'rm_ble_abs.h']]],
-  ['ble_5frf_5fnotify_5fcb_5ft',['ble_rf_notify_cb_t',['../group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b',1,'rm_ble_abs.h']]],
   ['ble_5fslave',['BLE_SLAVE',['../group___g_a_p___a_p_i.html#ga00dd0c529d5c67192b5e83752bd58a16',1,'r_ble_api.h']]],
   ['ble_5ftimer_5fone_5fshot',['BLE_TIMER_ONE_SHOT',['../group___b_l_e___a_b_s.html#gga0e5e4f38584f2573ac3a550ddfbc8845a8500edadaabfe0046434878734e1310e',1,'rm_ble_abs.h']]],
   ['ble_5ftimer_5fperiodic',['BLE_TIMER_PERIODIC',['../group___b_l_e___a_b_s.html#gga0e5e4f38584f2573ac3a550ddfbc8845a87bd7518fbf8e062b823a0b692730a03',1,'rm_ble_abs.h']]],

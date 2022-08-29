@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -184,8 +184,6 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:structether__instance__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a></td></tr>
-<tr class="separator:structether__instance__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structether__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a></td></tr>
 <tr class="separator:structether__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structether__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a></td></tr>
@@ -216,21 +214,6 @@ Enumerations</h2></td></tr>
 <tr class="separator:gad029483e98651bf40e3e3439ed6d1973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="structether__instance__descriptor__t" id="structether__instance__descriptor__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structether__instance__descriptor__t">&#9670;&nbsp;</a></span>ether_instance_descriptor_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct ether_instance_descriptor_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>EDMAC descriptor as defined in the hardware manual. Structure must be packed at 1 byte. </p>
-</div>
-</div>
-</div>
 <a name="structether__callback__args__t" id="structether__callback__args__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structether__callback__args__t">&#9670;&nbsp;</a></span>ether_callback_args_t</h2>
 
@@ -329,14 +312,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#afd4c3c463a931fa8068576f5bb410609">p_mac_address</a></td></tr>
 <tr class="memdesc:afd4c3c463a931fa8068576f5bb410609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer of MAC address. <br /></td></tr>
 <tr class="separator:afd4c3c463a931fa8068576f5bb410609"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9580ac1ebfaae9398ebee4f17562acb5"><td class="memItemLeft" align="right" valign="top"><a id="a9580ac1ebfaae9398ebee4f17562acb5"></a>
-<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a9580ac1ebfaae9398ebee4f17562acb5">p_rx_descriptors</a></td></tr>
-<tr class="memdesc:a9580ac1ebfaae9398ebee4f17562acb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive descriptor buffer pool. <br /></td></tr>
-<tr class="separator:a9580ac1ebfaae9398ebee4f17562acb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01653c4335de922b635ef951dbccee3a"><td class="memItemLeft" align="right" valign="top"><a id="a01653c4335de922b635ef951dbccee3a"></a>
-<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a01653c4335de922b635ef951dbccee3a">p_tx_descriptors</a></td></tr>
-<tr class="memdesc:a01653c4335de922b635ef951dbccee3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit descriptor buffer pool. <br /></td></tr>
-<tr class="separator:a01653c4335de922b635ef951dbccee3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae2adf978d21f78a198689c42b484974"><td class="memItemLeft" align="right" valign="top"><a id="aae2adf978d21f78a198689c42b484974"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#aae2adf978d21f78a198689c42b484974">num_tx_descriptors</a></td></tr>
 <tr class="memdesc:aae2adf978d21f78a198689c42b484974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transmission descriptor. <br /></td></tr>
@@ -850,7 +825,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

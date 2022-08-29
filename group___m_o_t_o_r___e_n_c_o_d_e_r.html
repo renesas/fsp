@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -160,7 +160,6 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___e_n_c_o_d_e_r.html
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Motor Encoder Vector Control (rm_motor_encoder)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html">Motor</a></div></div>  </div>
@@ -271,51 +270,13 @@ Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the motor encoder module in an application.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_encoder_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaecd01568f210cefeeb276b97ad04e4ee">RM_MOTOR_ENCODER_Open</a>(g_motor_encoder0.p_ctrl, g_motor_encoder0.p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set speed reference before motor run */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga63a42e780314d29c52f1dcf39797ec60">RM_MOTOR_ENCODER_SpeedSet</a>(g_motor_encoder0.p_ctrl, RM_MOTOR_ENCODER_TEST_OVER_SPEED_LIMIT);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set position reference before motor run */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga9b00009036879df702ff75bea45fb3c0">RM_MOTOR_ENCODER_PositionSet</a>(g_motor_encoder0.p_ctrl, &amp;g_posref_sample1);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start motor rotation */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga985687d27ae1c1678fcd8985b09f0b35">RM_MOTOR_ENCODER_Run</a>(g_motor_encoder0.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get current status */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga33da9fde0aadb4e8f565b96ff1c9b547">RM_MOTOR_ENCODER_StatusGet</a>(g_motor_encoder0.p_ctrl, &amp;smpl_status);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get current rotor angle */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga27fbe507dce70c440d1e65904364c2e0">RM_MOTOR_ENCODER_AngleGet</a>(g_motor_encoder0.p_ctrl, &amp;smpl_angle);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get current motor speed */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3c85184d654dd4e3dabbfc5d6b031b23">RM_MOTOR_ENCODER_SpeedGet</a>(g_motor_encoder0.p_ctrl, &amp;smpl_speed);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check error */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaceff5b6babf7eddc59469185a1c8e756">RM_MOTOR_ENCODER_ErrorCheck</a>(g_motor_encoder0.p_ctrl, &amp;smpl_error);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Stop motor rotation */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga7cd50e2d1aff3b470b007f06ee1032b8">RM_MOTOR_ENCODER_Stop</a>(g_motor_encoder0.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Stop motor rotation */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga583f5f46a956624fc746b7956ea5ed7c">RM_MOTOR_ENCODER_ErrorSet</a>(g_motor_encoder0.p_ctrl, MOTOR_ERROR_OVER_CURRENT_HW);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset Speed Control */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga2daebe4ca8593caf678284bb38f85909">RM_MOTOR_ENCODER_Reset</a>(g_motor_encoder0.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close Speed Control */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga9f21ecbab1a5056a36836231b5d68515">RM_MOTOR_ENCODER_Close</a>(g_motor_encoder0.p_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:structmotor__encoder__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#structmotor__encoder__callback__args__t">motor_encoder_callback_args_t</a></td></tr>
-<tr class="separator:structmotor__encoder__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga8482f9db6908b2be9cf7950493511c77"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga8482f9db6908b2be9cf7950493511c77">motor_encoder_ctrl_t</a> </td></tr>
 <tr class="separator:ga8482f9db6908b2be9cf7950493511c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0feb7dece163f5af5cccd8f307f630dc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga0feb7dece163f5af5cccd8f307f630dc">motor_encoder_ctrl_event_t</a> </td></tr>
 <tr class="separator:ga0feb7dece163f5af5cccd8f307f630dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b065368ba50cddebd05d19827444a80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3b065368ba50cddebd05d19827444a80">motor_encoder_callback_event_t</a> </td></tr>
-<tr class="separator:ga3b065368ba50cddebd05d19827444a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="structmotor__encoder__callback__args__t" id="structmotor__encoder__callback__args__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structmotor__encoder__callback__args__t">&#9670;&nbsp;</a></span>motor_encoder_callback_args_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct motor_encoder_callback_args_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Callback function parameter data </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a70a9b32f9cae823da8badb2db96b4c79"></a>void const  *</td>
-<td class="fieldname">
-p_context</td>
-<td class="fielddoc">
-Placeholder for user data. </td></tr>
-<tr><td class="fieldtype">
-<a id="a7f2e83b3588735aec634edd33015c6bf"></a><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3b065368ba50cddebd05d19827444a80">motor_encoder_callback_event_t</a></td>
-<td class="fieldname">
-event</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga8482f9db6908b2be9cf7950493511c77"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8482f9db6908b2be9cf7950493511c77">&#9670;&nbsp;</a></span>motor_encoder_ctrl_t</h2>
@@ -358,31 +319,6 @@ event</td>
 <tr><td class="fieldname"><a id="gga0feb7dece163f5af5cccd8f307f630dca82f8c047bb3aab9ad7bc54b3b3fe9f59"></a>MOTOR_ENCODER_CTRL_EVENT_ERROR&#160;</td><td class="fielddoc"><p>Error event. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga0feb7dece163f5af5cccd8f307f630dca567fcea426342a4355d0f00d215ac9a7"></a>MOTOR_ENCODER_CTRL_EVENT_RESET&#160;</td><td class="fielddoc"><p>Reset event. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga3b065368ba50cddebd05d19827444a80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3b065368ba50cddebd05d19827444a80">&#9670;&nbsp;</a></span>motor_encoder_callback_event_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3b065368ba50cddebd05d19827444a80">motor_encoder_callback_event_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Events that can trigger a callback function </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3b065368ba50cddebd05d19827444a80a441bafb64348024e6598746230e23dd3"></a>MOTOR_ENCODER_CALLBACK_EVENT_SPEED_FORWARD&#160;</td><td class="fielddoc"><p>Event forward speed control. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga3b065368ba50cddebd05d19827444a80a79318b8501c5ea3e1f7ee568615f1ed9"></a>MOTOR_ENCODER_CALLBACK_EVENT_SPEED_BACKWARD&#160;</td><td class="fielddoc"><p>Event backward speed control. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga3b065368ba50cddebd05d19827444a80a3ebc76cf450a71102b8e7a1d3e351f09"></a>MOTOR_ENCODER_CALLBACK_EVENT_CURRENT_FORWARD&#160;</td><td class="fielddoc"><p>Event forward current control. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga3b065368ba50cddebd05d19827444a80a204ebe3493007b4e043a7d4886ad0c5e"></a>MOTOR_ENCODER_CALLBACK_EVENT_CURRENT_BACKWARD&#160;</td><td class="fielddoc"><p>Event backward current control. </p>
 </td></tr>
 </table>
 
@@ -867,7 +803,7 @@ event</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

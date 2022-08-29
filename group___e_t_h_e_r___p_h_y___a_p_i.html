@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -196,6 +196,8 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:ga52ba7820524fdf3472ec06b109d4e9a5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga52ba7820524fdf3472ec06b109d4e9a5">ether_phy_lsi_type_t</a> </td></tr>
+<tr class="separator:ga52ba7820524fdf3472ec06b109d4e9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga113895595732b38ac87e4efecacb87de"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga113895595732b38ac87e4efecacb87de">ether_phy_flow_control_t</a> </td></tr>
 <tr class="separator:ga113895595732b38ac87e4efecacb87de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf227c12b47e90edc8ec5729bfccf9bfb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#gaf227c12b47e90edc8ec5729bfccf9bfb">ether_phy_link_speed_t</a> </td></tr>
@@ -242,6 +244,12 @@ Wait time for PHY-LSI reboot. </td></tr>
 mii_bit_access_wait_time</td>
 <td class="fielddoc">
 Wait time for MII/RMII access. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeb2cc4713df83f97adfc3097eda687dd"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga52ba7820524fdf3472ec06b109d4e9a5">ether_phy_lsi_type_t</a></td>
+<td class="fieldname">
+phy_lsi_type</td>
+<td class="fielddoc">
+Phy LSI type. </td></tr>
 <tr><td class="fieldtype">
 <a id="add4cd8ca627a9498f55650280392c7f0"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga113895595732b38ac87e4efecacb87de">ether_phy_flow_control_t</a></td>
 <td class="fieldname">
@@ -480,6 +488,33 @@ Pointer to the API structure for this instance. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga52ba7820524fdf3472ec06b109d4e9a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52ba7820524fdf3472ec06b109d4e9a5">&#9670;&nbsp;</a></span>ether_phy_lsi_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga52ba7820524fdf3472ec06b109d4e9a5">ether_phy_lsi_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Phy LSI </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5af54eff8466eb8c190b1f5ed76a89154b"></a>ETHER_PHY_LSI_TYPE_DEFAULT&#160;</td><td class="fielddoc"><p>Select default configuration. This type dose not change Phy LSI default setting by strapping option. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5a0b6ce5fcecaa476b673310ed1369c3a3"></a>ETHER_PHY_LSI_TYPE_KSZ8091RNB&#160;</td><td class="fielddoc"><p>Select configuration for KSZ8091RNB. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5a29cbe6685ab800c244b58a82fcdfc89e"></a>ETHER_PHY_LSI_TYPE_KSZ8041&#160;</td><td class="fielddoc"><p>Select configuration for KSZ8041. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5af3ca93247dd58484b187bba066282686"></a>ETHER_PHY_LSI_TYPE_DP83620&#160;</td><td class="fielddoc"><p>Select configuration for DP83620. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303"></a>ETHER_PHY_LSI_TYPE_ICS1894&#160;</td><td class="fielddoc"><p>Select configuration for ICS1894. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ga113895595732b38ac87e4efecacb87de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga113895595732b38ac87e4efecacb87de">&#9670;&nbsp;</a></span>ether_phy_flow_control_t</h2>
 
@@ -555,7 +590,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

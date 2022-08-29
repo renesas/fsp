@@ -5,6 +5,7 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "phy_lsi_address", "group___e_t_h_e_r___p_h_y___a_p_i.html#a9907944861b61fe8644b4b5d02ae4d48", null ],
       [ "phy_reset_wait_time", "group___e_t_h_e_r___p_h_y___a_p_i.html#ae29e06fe95faa1b7024dc3e8e48528f0", null ],
       [ "mii_bit_access_wait_time", "group___e_t_h_e_r___p_h_y___a_p_i.html#a336b9a7ec0bc861c1b0ac90f9052e447", null ],
+      [ "phy_lsi_type", "group___e_t_h_e_r___p_h_y___a_p_i.html#aeb2cc4713df83f97adfc3097eda687dd", null ],
       [ "flow_control", "group___e_t_h_e_r___p_h_y___a_p_i.html#add4cd8ca627a9498f55650280392c7f0", null ],
       [ "mii_type", "group___e_t_h_e_r___p_h_y___a_p_i.html#a339809c3abd9e0aef94670716425d5b9", null ],
       [ "p_context", "group___e_t_h_e_r___p_h_y___a_p_i.html#aef0526eeba00bb22b7062c58f5bc1e5e", null ],
@@ -23,6 +24,13 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "p_api", "group___e_t_h_e_r___p_h_y___a_p_i.html#a7d127f0f108bb037be0e02a5ef260735", null ]
     ] ],
     [ "ether_phy_ctrl_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c", null ],
+    [ "ether_phy_lsi_type_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#ga52ba7820524fdf3472ec06b109d4e9a5", [
+      [ "ETHER_PHY_LSI_TYPE_DEFAULT", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af54eff8466eb8c190b1f5ed76a89154b", null ],
+      [ "ETHER_PHY_LSI_TYPE_KSZ8091RNB", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a0b6ce5fcecaa476b673310ed1369c3a3", null ],
+      [ "ETHER_PHY_LSI_TYPE_KSZ8041", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a29cbe6685ab800c244b58a82fcdfc89e", null ],
+      [ "ETHER_PHY_LSI_TYPE_DP83620", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af3ca93247dd58484b187bba066282686", null ],
+      [ "ETHER_PHY_LSI_TYPE_ICS1894", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303", null ]
+    ] ],
     [ "ether_phy_flow_control_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#ga113895595732b38ac87e4efecacb87de", [
       [ "ETHER_PHY_FLOW_CONTROL_DISABLE", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea7bf987185751192bc208fd008e45b2a2", null ],
       [ "ETHER_PHY_FLOW_CONTROL_ENABLE", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea72cae4de16169f3d9d11aa3436947232", null ]

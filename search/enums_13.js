@@ -8,5 +8,15 @@ var searchData=
   ['wdt_5fwindow_5fend_5ft',['wdt_window_end_t',['../group___w_d_t___a_p_i.html#ga62d4360afabd1652aa7a1b9f624d7f61',1,'r_wdt_api.h']]],
   ['wdt_5fwindow_5fstart_5ft',['wdt_window_start_t',['../group___w_d_t___a_p_i.html#ga9e0c1284f5d75d4a090d988536e3f633',1,'r_wdt_api.h']]],
   ['wifi_5fonchip_5fsilex_5fsntp_5fdaylight_5fsavings_5fenable_5ft',['wifi_onchip_silex_sntp_daylight_savings_enable_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gaead8d483f1afd423d272960c4b3bea7c',1,'rm_wifi_onchip_silex.h']]],
-  ['wifi_5fonchip_5fsilex_5fsntp_5fenable_5ft',['wifi_onchip_silex_sntp_enable_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga28cec0db63a7cfc3d0f2e85e8d06b25a',1,'rm_wifi_onchip_silex.h']]]
+  ['wifi_5fonchip_5fsilex_5fsntp_5fenable_5ft',['wifi_onchip_silex_sntp_enable_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga28cec0db63a7cfc3d0f2e85e8d06b25a',1,'rm_wifi_onchip_silex.h']]],
+  ['wifiband_5ft',['WIFIBand_t',['../group___w_i_f_i___a_p_i.html#gac9f8e62a77e88873fee06557d6cca62a',1,'rm_wifi_api.h']]],
+  ['wifibandwidth_5ft',['WIFIBandwidth_t',['../group___w_i_f_i___a_p_i.html#ga20e7a1be7d118b5c90a32d396faf1b5a',1,'rm_wifi_api.h']]],
+  ['wifidevicemode_5ft',['WIFIDeviceMode_t',['../group___w_i_f_i___a_p_i.html#gac39f5f57f73b7001696721284bb4875a',1,'rm_wifi_api.h']]],
+  ['wifieventtype_5ft',['WIFIEventType_t',['../group___w_i_f_i___a_p_i.html#ga5f378e26dcdbf1998f2611fb3fe8210e',1,'rm_wifi_api.h']]],
+  ['wifiipaddresstype_5ft',['WIFIIPAddressType_t',['../group___w_i_f_i___a_p_i.html#gaf2fb98cf1e2b0684eec8ca7bc88a8f93',1,'rm_wifi_api.h']]],
+  ['wifiphymode_5ft',['WIFIPhyMode_t',['../group___w_i_f_i___a_p_i.html#ga0769586538a6a0a5f1a1810a79749b46',1,'rm_wifi_api.h']]],
+  ['wifipmmode_5ft',['WIFIPMMode_t',['../group___w_i_f_i___a_p_i.html#ga7babc2f33a8106a0cc75658af318fb3f',1,'rm_wifi_api.h']]],
+  ['wifireason_5ft',['WIFIReason_t',['../group___w_i_f_i___a_p_i.html#ga683449d7f800cd26861c83c08036537f',1,'rm_wifi_api.h']]],
+  ['wifireturncode_5ft',['WIFIReturnCode_t',['../group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222',1,'rm_wifi_api.h']]],
+  ['wifisecurity_5ft',['WIFISecurity_t',['../group___w_i_f_i___a_p_i.html#ga827dc938c214035b938c5ebe7d7b6816',1,'rm_wifi_api.h']]]
 ];

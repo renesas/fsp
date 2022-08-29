@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: rm_aws_cellular_sockets_wrapper Directory Reference</title>
+<title>RA Flexible Software Package Documentation: st_ble_rf_notify_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -76,7 +76,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_d31b4d437e0d6f733643e2306af5b5f1.html','');});
+$(document).ready(function(){initNavTree('structst__ble__rf__notify__t.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -158,28 +158,126 @@ $(document).ready(function(){initNavTree('dir_d31b4d437e0d6f733643e2306af5b5f1.h
     <div id="searchResults"></div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">rm_aws_cellular_sockets_wrapper Directory Reference</div>  </div>
+<div class="title">st_ble_rf_notify_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This structure is RF event notify management.  
+ <a href="structst__ble__rf__notify__t.html#details">More...</a></p>
+
+<p><code>#include &lt;r_ble_api.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:mbedtls__bio__freertos__cellular_8c"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>mbedtls_bio_freertos_cellular.c</b></td></tr>
-<tr class="memdesc:mbedtls__bio__freertos__cellular_8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements mbed TLS platform send/receive functions for cellular. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:sockets__wrapper_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>sockets_wrapper.h</b></td></tr>
-<tr class="memdesc:sockets__wrapper_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">FreeRTOS Sockets connect and disconnect function wrapper. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a587aa1c5d26d1d5fdd7d9f89bdff0490"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structst__ble__rf__notify__t.html#a587aa1c5d26d1d5fdd7d9f89bdff0490">enable</a></td></tr>
+<tr class="memdesc:a587aa1c5d26d1d5fdd7d9f89bdff0490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set enable/disable of each RF event notification.  <a href="#a587aa1c5d26d1d5fdd7d9f89bdff0490">More...</a><br /></td></tr>
+<tr class="separator:a587aa1c5d26d1d5fdd7d9f89bdff0490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad43914320d5fe6092aa178001fb682e5"><td class="memItemLeft" align="right" valign="top"><a id="ad43914320d5fe6092aa178001fb682e5"></a>
+ble_rf_notify_cb_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structst__ble__rf__notify__t.html#ad43914320d5fe6092aa178001fb682e5">start_cb</a></td></tr>
+<tr class="memdesc:ad43914320d5fe6092aa178001fb682e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback function pointer for RF event start. <br /></td></tr>
+<tr class="separator:ad43914320d5fe6092aa178001fb682e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac19d3c8d643a228fd406c0f1b438343a"><td class="memItemLeft" align="right" valign="top"><a id="ac19d3c8d643a228fd406c0f1b438343a"></a>
+ble_rf_notify_cb_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structst__ble__rf__notify__t.html#ac19d3c8d643a228fd406c0f1b438343a">close_cb</a></td></tr>
+<tr class="memdesc:ac19d3c8d643a228fd406c0f1b438343a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback function pointer for RF event close. <br /></td></tr>
+<tr class="separator:ac19d3c8d643a228fd406c0f1b438343a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1536379c9198dbe12427ff960da32f0c"><td class="memItemLeft" align="right" valign="top"><a id="a1536379c9198dbe12427ff960da32f0c"></a>
+ble_rf_notify_cb_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structst__ble__rf__notify__t.html#a1536379c9198dbe12427ff960da32f0c">dsleep_cb</a></td></tr>
+<tr class="memdesc:a1536379c9198dbe12427ff960da32f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback function pointer for RF_DEEP_SLEEP. <br /></td></tr>
+<tr class="separator:a1536379c9198dbe12427ff960da32f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This structure is RF event notify management. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a587aa1c5d26d1d5fdd7d9f89bdff0490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a587aa1c5d26d1d5fdd7d9f89bdff0490">&#9670;&nbsp;</a></span>enable</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t st_ble_rf_notify_t::enable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set enable/disable of each RF event notification. </p>
+<p>Bit0 Notify Connection event start(0:Disable/1:Enable)<br />
+ Bit1 Notify Advertising event start(0:Disable/1:Enable)<br />
+ Bit2 Notify Scanning event start(0:Disable/1:Enable)<br />
+ Bit3 Notify Initiating event start(0:Disable/1:Enable)<br />
+ Bit4 Notify Connection event close(0:Disable/1:Enable)<br />
+ Bit5 Notify Advertising event close(0:Disable/1:Enable)<br />
+ Bit6 Notify Scanning event close(0:Disable/1:Enable)<br />
+ Bit7 Notify Initiating event close(0:Disable/1:Enable)<br />
+ Bit8 Notify RF_DEEP_SLEEP event start(0:Disable/1:Enable)<br />
+ Bit9 Notify RF_DEEP_SLEEP event close(0:Disable/1:Enable)<br />
+ Other Bit: Reserved for future use.<br />
+</p>
+
+</div>
+</div>
+<a id="ad43914320d5fe6092aa178001fb682e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad43914320d5fe6092aa178001fb682e5">&#9670;&nbsp;</a></span>start_cb</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_rf_notify_cb_t st_ble_rf_notify_t::start_cb</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set callback function pointer for RF event start. </p>
+
+</div>
+</div>
+<a id="ac19d3c8d643a228fd406c0f1b438343a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac19d3c8d643a228fd406c0f1b438343a">&#9670;&nbsp;</a></span>close_cb</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_rf_notify_cb_t st_ble_rf_notify_t::close_cb</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set callback function pointer for RF event close. </p>
+
+</div>
+</div>
+<a id="a1536379c9198dbe12427ff960da32f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1536379c9198dbe12427ff960da32f0c">&#9670;&nbsp;</a></span>dsleep_cb</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_rf_notify_cb_t st_ble_rf_notify_t::dsleep_cb</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set callback function pointer for RF_DEEP_SLEEP. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>r_ble_api.h</li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_d31b4d437e0d6f733643e2306af5b5f1.html">rm_aws_cellular_sockets_wrapper</a></li>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+    <li class="navelem"><a class="el" href="structst__ble__rf__notify__t.html">st_ble_rf_notify_t</a></li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

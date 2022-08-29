@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -205,7 +205,7 @@ Overview</h1>
 <p>The Touch Middleware uses the <a class="el" href="group___c_t_s_u.html">CTSU (r_ctsu)</a> API and provides application-level APIs for scanning touch buttons, sliders, and wheels. This module is configured via the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a>.</p>
 <h2><a class="anchor" id="r-touch-features"></a>
 Features</h2>
-<p><a class="anchor" id="um_touch_slider_5position"></a><a class="anchor" id="um_touch_button_on_off"></a></p><ul>
+<p><a class="anchor" id="um_touch_slider_5position"></a><a class="anchor" id="um_touch_button_on_off"></a><a class="anchor" id="um_touch_mutual_button_on_off"></a></p><ul>
 <li>Supports touch buttons (Self and Mutual), sliders, and wheels</li>
 <li>Can retrieve the status of up to 64 buttons at once</li>
 <li>Software and external triggering</li>
@@ -835,11 +835,17 @@ Pointer to CTSU instance. </td></tr>
 </div><div class="memdoc">
 
 <p>Gets the 64-bit mask indicating which buttons are pressed. Also, this function gets the current position of where slider or wheel is being pressed. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0">touch_api_t::dataGet</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>FSP v4.0.0 or later,<ul>
+<li>The value of 'Secondary - Primary' is modified from uint16_t to int16_t. When the value of 'Secondary - Primary' is larger than 32767 and less than -32767, this API return FSP_ERR_INVALID_DATA.</li>
+<li>An upper limit is set for the value of Secondary. When the value of Secondary is larger than 45000, this API return FSP_ERR_INVALID_DATA.</li>
+</ul>
+</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data decoded. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>Accuracy of data is not guaranteed. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_INCOMPLETE_TUNING</td><td>Incomplete initial offset tuning. </td></tr>
   </table>
@@ -887,11 +893,17 @@ Pointer to CTSU instance. </td></tr>
 </div><div class="memdoc">
 
 <p>This function gets the current position of pad is being pressed. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3">touch_api_t::padDataGet</a> , g_touch_on_ctsu. </p>
+<dl class="section note"><dt>Note</dt><dd>FSP v4.0.0 or later,<ul>
+<li>The value of 'Secondary - Primary' is modified from uint16_t to int16_t. When the value of 'Secondary - Primary' is larger than 32767 and less than -32767, this API return FSP_ERR_INVALID_DATA.</li>
+<li>An upper limit is set for the value of Secondary. When the value of Secondary is larger than 45000, this API return FSP_ERR_INVALID_DATA.</li>
+</ul>
+</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data decoded. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>Accuracy of data is not guaranteed. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
   </table>
   </dd>
@@ -1126,7 +1138,7 @@ Pointer to CTSU instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

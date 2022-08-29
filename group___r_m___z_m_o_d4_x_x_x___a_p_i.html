@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -193,6 +193,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structrm__zmod4xxx__oaq__1st__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__oaq__2nd__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a></td></tr>
 <tr class="separator:structrm__zmod4xxx__oaq__2nd__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__zmod4xxx__raq__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a></td></tr>
+<tr class="separator:structrm__zmod4xxx__raq__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a></td></tr>
 <tr class="separator:structrm__zmod4xxx__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__api__t">rm_zmod4xxx_api_t</a></td></tr>
@@ -495,6 +497,36 @@ The Air Quality Index according to the EPA standard based on ozone. </td></tr>
 
 </div>
 </div>
+<a name="structrm__zmod4xxx__raq__data__t" id="structrm__zmod4xxx__raq__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__zmod4xxx__raq__data__t">&#9670;&nbsp;</a></span>rm_zmod4xxx_raq_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_zmod4xxx_raq_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ZMOD4XXX RAQ structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="abe7c7a383889bcc45958fb2f24afe497"></a>bool</td>
+<td class="fieldname">
+control_signal</td>
+<td class="fielddoc">
+Control signal input for raq lib. </td></tr>
+<tr><td class="fieldtype">
+<a id="aafd6e3d578d566d09fcae0b3b0c81851"></a>float</td>
+<td class="fieldname">
+raq</td>
+<td class="fielddoc">
+Concentration ratio for raq lib. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structrm__zmod4xxx__cfg__t" id="structrm__zmod4xxx__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrm__zmod4xxx__cfg__t">&#9670;&nbsp;</a></span>rm_zmod4xxx_cfg_t</h2>
 
@@ -517,18 +549,6 @@ The Air Quality Index according to the EPA standard based on ozone. </td></tr>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a692f0a4eaad2c9e8e8cdbb0a2e792dd9">p_irq_instance</a></td></tr>
 <tr class="memdesc:a692f0a4eaad2c9e8e8cdbb0a2e792dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to IRQ instance. <br /></td></tr>
 <tr class="separator:a692f0a4eaad2c9e8e8cdbb0a2e792dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f8f729eb4708424f4b3ce970dc36f9e"><td class="memItemLeft" align="right" valign="top"><a id="a6f8f729eb4708424f4b3ce970dc36f9e"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6f8f729eb4708424f4b3ce970dc36f9e">p_zmod4xxx_device</a></td></tr>
-<tr class="memdesc:a6f8f729eb4708424f4b3ce970dc36f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[DEPRECATED] This will be removed in FSP v4.0.0. Please use rm_zmod4xxx_lib_extended_cfg_t in rm_zmod4xxx.h <br /></td></tr>
-<tr class="separator:a6f8f729eb4708424f4b3ce970dc36f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac02d53dedacac7f55fa14decc4f1873f"><td class="memItemLeft" align="right" valign="top"><a id="ac02d53dedacac7f55fa14decc4f1873f"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ac02d53dedacac7f55fa14decc4f1873f">p_zmod4xxx_handle</a></td></tr>
-<tr class="memdesc:ac02d53dedacac7f55fa14decc4f1873f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[DEPRECATED] This will be removed in FSP v4.0.0. Please use rm_zmod4xxx_lib_extended_cfg_t in rm_zmod4xxx.h <br /></td></tr>
-<tr class="separator:ac02d53dedacac7f55fa14decc4f1873f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5b9343965c3b4c93acc9081c0ad8a16"><td class="memItemLeft" align="right" valign="top"><a id="ab5b9343965c3b4c93acc9081c0ad8a16"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ab5b9343965c3b4c93acc9081c0ad8a16">p_zmod4xxx_results</a></td></tr>
-<tr class="memdesc:ab5b9343965c3b4c93acc9081c0ad8a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">[DEPRECATED] This will be removed in FSP v4.0.0. Please use rm_zmod4xxx_lib_extended_cfg_t in rm_zmod4xxx.h <br /></td></tr>
-<tr class="separator:ab5b9343965c3b4c93acc9081c0ad8a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc68dcd903ac59de8c478b0d22d25bfa"><td class="memItemLeft" align="right" valign="top"><a id="abc68dcd903ac59de8c478b0d22d25bfa"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abc68dcd903ac59de8c478b0d22d25bfa">p_context</a></td></tr>
 <tr class="memdesc:abc68dcd903ac59de8c478b0d22d25bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
@@ -585,6 +605,8 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr class="separator:ad56aa9708d3f48a92253eeda652edede"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1d9b01a5d84a3a4a06dfd714f485911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911">oaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
 <tr class="separator:ad1d9b01a5d84a3a4a06dfd714f485911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa05768468433346424e7c695a0e0a4ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa05768468433346424e7c695a0e0a4ed">raqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:aa05768468433346424e7c695a0e0a4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a504a4e2266dc1ae46f27b752ade032e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">temperatureAndHumiditySet</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td></tr>
 <tr class="separator:a504a4e2266dc1ae46f27b752ade032e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a032f14a6414a147c3e05a28064d97069"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">deviceErrorCheck</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
@@ -871,6 +893,32 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a id="aa05768468433346424e7c695a0e0a4ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa05768468433346424e7c695a0e0a4ed">&#9670;&nbsp;</a></span>raqDataCalculate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::raqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate RAQ values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gadaee5fde2afbb40e28f40b1de50daf45">RM_ZMOD4XXX_RaqDataCalculate()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a504a4e2266dc1ae46f27b752ade032e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a504a4e2266dc1ae46f27b752ade032e9">&#9670;&nbsp;</a></span>temperatureAndHumiditySet</h2>
 
@@ -1049,7 +1097,7 @@ p_api</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

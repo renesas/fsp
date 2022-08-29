@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -496,6 +496,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>DMAC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DMAC support for the OSPI module. </td></tr>
 </table>
  <h2>Configurations for Storage &gt; OSPI RAM (r_ospi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI RAM (r_ospi).<br />
@@ -671,7 +679,7 @@ Byte1, Byte0, Byte3, Byte2</li>
 </ul>
 </td><td>Byte1, Byte0, Byte3, Byte2 </td><td>Byte order on the external bus </td></tr>
 <tr>
-<td>Chip Select Maximum Low Time (us)</td><td>Must be an integer greater than or equal to 0</td><td>4 </td><td>Chip Select Maximum Low Time (tCSM). </td></tr>
+<td>Chip Select Maximum Low Time (us)</td><td>Must be an integer between 0 to 511</td><td>4 </td><td>Chip Select Maximum Low Time (tCSM). </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-ospi-clock-configuration"></a>
@@ -1421,7 +1429,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

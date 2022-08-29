@@ -1,6 +1,5 @@
 var group___d_o_c___a_p_i =
 [
-    [ "doc_status_t", "group___d_o_c___a_p_i.html#structdoc__status__t", null ],
     [ "doc_callback_args_t", "group___d_o_c___a_p_i.html#structdoc__callback__args__t", [
       [ "p_context", "group___d_o_c___a_p_i.html#a347a5deb389e566a05d9c65e2368b57e", null ]
     ] ],
@@ -17,7 +16,6 @@ var group___d_o_c___a_p_i =
     [ "doc_api_t", "group___d_o_c___a_p_i.html#structdoc__api__t", [
       [ "open", "group___d_o_c___a_p_i.html#abbbbf13adc94767c3efdb1aaa7b948ae", null ],
       [ "close", "group___d_o_c___a_p_i.html#ad2214941bcd6ee492790b34239861dcf", null ],
-      [ "statusGet", "group___d_o_c___a_p_i.html#a444b4249b587c60f8fb5f2c60157808c", null ],
       [ "read", "group___d_o_c___a_p_i.html#ac1dc79126e15b9645898828e42c93eab", null ],
       [ "write", "group___d_o_c___a_p_i.html#ae2544a78047cbd0f852d24da5d3f1050", null ],
       [ "callbackSet", "group___d_o_c___a_p_i.html#a4a559e6ae7a841b6d0464232db650556", null ]

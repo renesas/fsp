@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -214,15 +214,15 @@ The following build time configurations are defined in fsp_cfg/rm_mesh_bearer_pl
 <tr>
 <td>Debug Random Address</td><td>Must be a valid device address</td><td>FF:FF:FF:FF:FF:FF </td><td>Random Address of firmware initial value. </td></tr>
 <tr>
-<td>Maximum number of connections</td><td>Value must be an integer between 1 and 7</td><td>7 </td><td>Maximum number of connections. </td></tr>
+<td>Maximum number of connections</td><td>Value must be an integer between 1 and 7, and lower than the value defined in ble module.</td><td>7 </td><td>Maximum number of connections. </td></tr>
 <tr>
-<td>Maximum connection data length</td><td>Value must be an integer between 27 and 251</td><td>251 </td><td>Maximum connection data length. </td></tr>
+<td>Maximum connection data length</td><td>Value must be an integer between 27 and 251, and lower than the value defined in ble module.</td><td>251 </td><td>Maximum connection data length. </td></tr>
 <tr>
-<td>Maximum advertising data length</td><td>Value must be an integer between 31 and 1650</td><td>1650 </td><td>Maximum advertising data length. </td></tr>
+<td>Maximum advertising data length</td><td>Value must be an integer between 31 and 1650, and lower than the value defined in ble module.</td><td>1650 </td><td>Maximum advertising data length. </td></tr>
 <tr>
-<td>Maximum advertising set number</td><td>Value must be an integer between 1 and 4</td><td>4 </td><td>Maximum advertising set number. </td></tr>
+<td>Maximum advertising set number</td><td>Value must be an integer between 1 and 4, and lower than the value defined in ble module.</td><td>4 </td><td>Maximum advertising set number. </td></tr>
 <tr>
-<td>Maximum periodic sync set number.</td><td>Value must be an integer between 1 and 2</td><td>2 </td><td>Maximum periodic sync set number. </td></tr>
+<td>Maximum periodic sync set number.</td><td>Value must be an integer between 1 and 2, and lower than the value defined in ble module.</td><td>2 </td><td>Maximum periodic sync set number. </td></tr>
 <tr>
 <td>Store Security Data</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -232,9 +232,9 @@ Enable</li>
 </ul>
 </td><td>Disable </td><td>Store Security Data in DataFlash. </td></tr>
 <tr>
-<td>Data Flash Block for Security Data</td><td>Value must be an integer between 0 and 7</td><td>0 </td><td>Data Flash Block for Security Data Management. </td></tr>
+<td>Data Flash Block for Security Data</td><td>Value must be an integer between 0 and 7, and lower than the value defined in ble module.</td><td>0 </td><td>Data Flash Block for Security Data Management. </td></tr>
 <tr>
-<td>Remote Device Bonding Number</td><td>Value must be an integer between 1 and 7</td><td>7 </td><td>Number of remote device bonding information. </td></tr>
+<td>Remote Device Bonding Number</td><td>Value must be an integer between 1 and 7, and lower than the value defined in ble module.</td><td>7 </td><td>Number of remote device bonding information. </td></tr>
 <tr>
 <td>Connection Event Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -316,7 +316,7 @@ Enable</li>
 </ul>
 </td><td>Disable </td><td>Set RF_DEEP_SLEEP wakeup notify enable/disable. </td></tr>
 <tr>
-<td>Bluetooth dedicated clock</td><td>Value must be an integer between 0 and 15</td><td>6 </td><td>Load capacitance adjustment. </td></tr>
+<td>Bluetooth dedicated clock</td><td>Value must be an integer between 0 and 15, and lower than the value defined in ble module.</td><td>6 </td><td>Load capacitance adjustment. </td></tr>
 <tr>
 <td>DC-DC converter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -350,7 +350,7 @@ MCU CLKOUT frequency 16.384kHz</li>
 </ul>
 </td><td>MCU CLKOUT frequency 32.768kHz </td><td>When MESH_BEARER_PLATFORM_CFG_RF_EXTERNAL_32K_ENABLE = 1, set frequency output from CLKOUT of MCU part. </td></tr>
 <tr>
-<td>Sleep Clock Accuracy(SCA)</td><td>Value must be an integer between 0 and 500</td><td>250 </td><td>When MESH_BEARER_PLATFORM_CFG_RF_EXTERNAL_32K_ENABLE = 1, set Sleep Clock Accuracy(SCA) for RF slow clock. </td></tr>
+<td>Sleep Clock Accuracy(SCA)</td><td>Value must be an integer between 0 and 500, and lower than the value defined in ble module.</td><td>250 </td><td>When MESH_BEARER_PLATFORM_CFG_RF_EXTERNAL_32K_ENABLE = 1, set Sleep Clock Accuracy(SCA) for RF slow clock. </td></tr>
 <tr>
 <td>Transmission Power Maximum Value</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -390,18 +390,18 @@ Enable</li>
 </ul>
 </td><td>Enable </td><td>Set RF_DEEP_SLEEP transition. </td></tr>
 <tr>
-<td>MCU Main Clock Frequency</td><td>Value must be an integer between 1000 and 20000</td><td>8000 </td><td>Set MCU Main Clock Frequency (kHz). Set clock source according to your board environment. HOCO: don't care. / Main Clock: 1000 to 20000 kHz / PLL Circuit: 4000 to 12500 kHz  </td></tr>
+<td>MCU Main Clock Frequency</td><td>Value must be an integer between 1000 and 20000, and lower than the value defined in ble module.</td><td>8000 </td><td>Set MCU Main Clock Frequency (kHz). Set clock source according to your board environment. HOCO: don't care. / Main Clock: 1000 to 20000 kHz / PLL Circuit: 4000 to 12500 kHz  </td></tr>
 <tr>
-<td>Code Flash(ROM) Device Data Block</td><td>Value must be an integer between -1 and 255</td><td>255 </td><td>Device specific data block on Code Flash (ROM). </td></tr>
+<td>Code Flash(ROM) Device Data Block</td><td>Value must be an integer between -1 and 255, and lower than the value defined in ble module.</td><td>255 </td><td>Device specific data block on Code Flash (ROM). </td></tr>
 <tr>
-<td>Device Specific Data Flash Block</td><td>Value must be an integer between -1 and 7</td><td>-1 </td><td>Device specific data block on E2 Data Flash. </td></tr>
+<td>Device Specific Data Flash Block</td><td>Value must be an integer between -1 and 7, and lower than the value defined in ble module.</td><td>-1 </td><td>Device specific data block on E2 Data Flash. </td></tr>
 <tr>
-<td>MTU Size Configured</td><td>Value must be an integer between 23 and 247</td><td>247 </td><td>MTU Size configured by GATT MTU exchange procedure. </td></tr>
+<td>MTU Size Configured</td><td>Value must be an integer between 23 and 247, and lower than the value defined in ble module.</td><td>247 </td><td>MTU Size configured by GATT MTU exchange procedure. </td></tr>
 <tr>
-<td>Timer Slot Maximum Number</td><td>Value must be an integer between 1 and 10</td><td>10 </td><td>The maximum number of timer slot. </td></tr>
+<td>Timer Slot Maximum Number</td><td>Value must be an integer between 1 and 10, and lower than the value defined in ble module.</td><td>10 </td><td>The maximum number of timer slot. </td></tr>
 </table>
- <h2>Configurations for Networking &gt; BLE Mesh Bearer Platform (rm_mesh_bearer_platform)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Networking &gt; BLE Mesh Bearer Platform (rm_mesh_bearer_platform).<br />
+ <h2>Configurations for Networking &gt; Bluetooth Low Energy Mesh Network modules &gt; BLE Mesh Bearer Platform (rm_mesh_bearer_platform)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Bluetooth Low Energy Mesh Network modules &gt; BLE Mesh Bearer Platform (rm_mesh_bearer_platform).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -1046,7 +1046,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

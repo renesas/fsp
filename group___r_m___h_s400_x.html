@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -202,6 +202,9 @@ Features</h2>
 <h2><a class="anchor" id="rm-hs400x-limitations"></a>
 Limitations</h2>
 <p>Alert feature is not supported. It will be supported in the future.</p>
+<h2><a class="anchor" id="rm-hs400x-notifications"></a>
+Notifications</h2>
+<p>The minimum frequency for the SCL clock in Hold measurement is 200kHz. Please configure <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aae2e38e76a2477e68f2685b403bdeb9a9">I2C_MASTER_RATE_FAST</a> or <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aaee266782cacb431c8623f7276063228b">I2C_MASTER_RATE_FASTPLUS</a> to "Rate" in <a class="el" href="group___i_i_c___m_a_s_t_e_r.html">I2C Master (r_iic_master)</a> or <a class="el" href="group___s_c_i___i2_c.html">I2C Master (r_sci_i2c)</a>.</p>
 <h1><a class="anchor" id="rm-hs400x-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_hs400x</h2>
@@ -288,7 +291,7 @@ Pin Configuration</h2>
 <p>This module use SDA and SCL pins of I2C Master and SCI I2C.</p>
 <h1><a class="anchor" id="rm-hs400x-usage_notes"></a>
 Usage Notes</h1>
-<p><br />
+<p><a href="https://www.renesas.com/document/dst/hs400x-datasheet">HS400x datasheet is here. </a> <br />
 This module supports three measurement type :</p><ul>
 <li>Hold measurement</li>
 <li>No-Hold measurement</li>
@@ -674,7 +677,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

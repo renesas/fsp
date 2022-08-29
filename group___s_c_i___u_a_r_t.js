@@ -13,7 +13,7 @@ var group___s_c_i___u_a_r_t =
     ] ],
     [ "sci_uart_extended_cfg_t", "group___s_c_i___u_a_r_t.html#structsci__uart__extended__cfg__t", [
       [ "clock", "group___s_c_i___u_a_r_t.html#aee928f639adab85124e31e500bfa6559", null ],
-      [ "rx_edge_start", "group___s_c_i___u_a_r_t.html#a6b174dd36d6537f68ceec607cffc7db4", null ],
+      [ "rx_edge_start", "group___s_c_i___u_a_r_t.html#a553d9e2a24e696b7ef0e4621a2db01d9", null ],
       [ "noise_cancel", "group___s_c_i___u_a_r_t.html#a0bbbfe8b19551f087925eed6409634e4", null ],
       [ "p_baud_setting", "group___s_c_i___u_a_r_t.html#a243def9a4105031a58642aa603cac6eb", null ],
       [ "rx_fifo_trigger", "group___s_c_i___u_a_r_t.html#a4f1ca52116b41cfc8ef07758a0554c2f", null ],
@@ -37,9 +37,9 @@ var group___s_c_i___u_a_r_t =
       [ "SCI_UART_RX_FIFO_TRIGGER_1", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6acbf7b549f4da64e02ba6a63e7fb96f43", null ],
       [ "SCI_UART_RX_FIFO_TRIGGER_MAX", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a8e41b6d8ad370ac8220019171cd2cbfd", null ]
     ] ],
-    [ "sci_uart_start_bit_detect_t", "group___s_c_i___u_a_r_t.html#ga373d96cc125e44fc8491e98bf54a0459", [
-      [ "SCI_UART_START_BIT_LOW_LEVEL", "group___s_c_i___u_a_r_t.html#gga373d96cc125e44fc8491e98bf54a0459a0deedd3c52b11560e66d4a9d070e54f0", null ],
-      [ "SCI_UART_START_BIT_FALLING_EDGE", "group___s_c_i___u_a_r_t.html#gga373d96cc125e44fc8491e98bf54a0459ae9f9dfdd5a009ef6f90f5319c4651b22", null ]
+    [ "sci_uart_start_bit_t", "group___s_c_i___u_a_r_t.html#ga8d278bc6b5096aa0dbe36e5c953cf073", [
+      [ "SCI_UART_START_BIT_LOW_LEVEL", "group___s_c_i___u_a_r_t.html#gga8d278bc6b5096aa0dbe36e5c953cf073a0deedd3c52b11560e66d4a9d070e54f0", null ],
+      [ "SCI_UART_START_BIT_FALLING_EDGE", "group___s_c_i___u_a_r_t.html#gga8d278bc6b5096aa0dbe36e5c953cf073ae9f9dfdd5a009ef6f90f5319c4651b22", null ]
     ] ],
     [ "sci_uart_noise_cancellation_t", "group___s_c_i___u_a_r_t.html#ga39a35f02d1e2aa6560591dc6a54de2f6", [
       [ "SCI_UART_NOISE_CANCELLATION_DISABLE", "group___s_c_i___u_a_r_t.html#gga39a35f02d1e2aa6560591dc6a54de2f6ae2520375d106830858c0897a2282f777", null ],

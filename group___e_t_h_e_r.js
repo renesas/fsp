@@ -1,5 +1,10 @@
 var group___e_t_h_e_r =
 [
+    [ "ether_instance_descriptor_t", "group___e_t_h_e_r.html#structether__instance__descriptor__t", null ],
+    [ "ether_extended_cfg_t", "group___e_t_h_e_r.html#structether__extended__cfg__t", [
+      [ "p_rx_descriptors", "group___e_t_h_e_r.html#a725dc0e4200c7ef25fa912a89f005e2f", null ],
+      [ "p_tx_descriptors", "group___e_t_h_e_r.html#a7399388b97420788499bf3d154558d77", null ]
+    ] ],
     [ "ether_instance_ctrl_t", "group___e_t_h_e_r.html#structether__instance__ctrl__t", [
       [ "open", "group___e_t_h_e_r.html#a5a47551251fa2ce32c2eb47789bfc1ec", null ],
       [ "p_ether_cfg", "group___e_t_h_e_r.html#abe2e7e26edeea76c44da7a17cec958d0", null ],

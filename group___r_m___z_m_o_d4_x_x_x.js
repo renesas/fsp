@@ -35,6 +35,7 @@ var group___r_m___z_m_o_d4_x_x_x =
     [ "RM_ZMOD4XXX_SulfurOdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaf200a9dc7ca8bf0601c2a2b96c341ecf", null ],
     [ "RM_ZMOD4XXX_Oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaeafe7943df31f237ac45310796df64b2", null ],
     [ "RM_ZMOD4XXX_Oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33", null ],
+    [ "RM_ZMOD4XXX_RaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gadaee5fde2afbb40e28f40b1de50daf45", null ],
     [ "RM_ZMOD4XXX_TemperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477", null ],
     [ "RM_ZMOD4XXX_DeviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94", null ]
 ];

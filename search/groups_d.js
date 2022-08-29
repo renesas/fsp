@@ -24,6 +24,6 @@ var searchData=
   ['modules',['Modules',['../group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html',1,'']]],
   ['monitoring',['Monitoring',['../group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___m_o_d_u_l_e_s.html',1,'']]],
   ['motor',['Motor',['../group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html',1,'']]],
-  ['mcuboot_20image_20utilities',['MCUboot Image Utilities',['../group___r_m___m_c_u_b_o_o_t___p_o_r_t.html',1,'']]],
+  ['mcuboot_20port_20_28rm_5fmcuboot_5fport_29',['MCUboot Port (rm_mcuboot_port)',['../group___r_m___m_c_u_b_o_o_t___p_o_r_t.html',1,'']]],
   ['mbed_20crypto_20hw_20acceleration_20_28rm_5fpsa_5fcrypto_29',['Mbed Crypto HW Acceleration (rm_psa_crypto)',['../group___r_m___p_s_a___c_r_y_p_t_o.html',1,'']]]
 ];

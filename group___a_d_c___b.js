@@ -71,7 +71,6 @@ var group___a_d_c___b =
     ] ],
     [ "adc_b_extended_cfg_t", "group___a_d_c___b.html#structadc__b__extended__cfg__t", [
       [ "pga_gain", "group___a_d_c___b.html#a924fde5708e3432f563db5bfebbdc459", null ],
-      [ "adc_b_mode", "group___a_d_c___b.html#a9dd9e70f4297aae72b71c85bb044b266", null ],
       [ "scan_group_enable", "group___a_d_c___b.html#ac39ff3caac87bc1c123ab4040f2d9ea0", null ],
       [ "fifo_interrupt_enable_mask", "group___a_d_c___b.html#ae2e46251988ca8c6fbe79fe925cf28a3", null ],
       [ "start_trigger_delay_0", "group___a_d_c___b.html#a8487c1771aa0d66b6c18961562ad552b", null ],
@@ -91,6 +90,10 @@ var group___a_d_c___b =
       [ "limiter_clip_interrupt_enable_mask", "group___a_d_c___b.html#ae712adb6bafb1ac6ab8be92655c36ebe", null ],
       [ "limiter_clip_tables", "group___a_d_c___b.html#a0f8c3ff1764548af5d28fedde318e38b", null ]
     ] ],
+    [ "adc_b_extended_cfg_t.__unnamed__.adc_b_converter_mode", "group___a_d_c___b.html#structadc__b__extended__cfg__t_8____unnamed_____8adc__b__converter__mode", [
+      [ "mode", "group___a_d_c___b.html#a15d61712450a686a7f365adf4fef581f", null ],
+      [ "method", "group___a_d_c___b.html#aea9f6aca279138c58f705c8d4cb4b8ce", null ]
+    ] ],
     [ "adc_b_instance_ctrl_t", "group___a_d_c___b.html#structadc__b__instance__ctrl__t", null ],
     [ "adc_b_clock_source_t", "group___a_d_c___b.html#ga82447f8298334e5abad26eca41ad3925", [
       [ "ADC_B_CLOCK_SOURCE_PCLKC", "group___a_d_c___b.html#gga82447f8298334e5abad26eca41ad3925a6e4de51c6bb86d36ce10840ad3d381d6", null ],
@@ -106,6 +109,16 @@ var group___a_d_c___b =
       [ "ADC_B_CLOCK_DIV_6", "group___a_d_c___b.html#gga05a9bf3c320798b118419298caf3517ea9f7d5bc3f0572b3d1f7d15267c57256d", null ],
       [ "ADC_B_CLOCK_DIV_7", "group___a_d_c___b.html#gga05a9bf3c320798b118419298caf3517ea4fd4ef292c8232e64f8b38e692720b74", null ],
       [ "ADC_B_CLOCK_DIV_8", "group___a_d_c___b.html#gga05a9bf3c320798b118419298caf3517ea72728d61eeb1eeb46db2468b8ae4566f", null ]
+    ] ],
+    [ "adc_b_converter_mode_t", "group___a_d_c___b.html#ga99cbbb12770fa8ffdc806fefc8254904", [
+      [ "ADC_B_CONVERTER_MODE_SINGLE_SCAN", "group___a_d_c___b.html#gga99cbbb12770fa8ffdc806fefc8254904a5f1f450e7f3e006c4a1698739212d5ca", null ],
+      [ "ADC_B_CONVERTER_MODE_CONTINUOUS_SCAN", "group___a_d_c___b.html#gga99cbbb12770fa8ffdc806fefc8254904a45c69e8a8c4c49665a660c73ec4dcc12", null ],
+      [ "ADC_B_CONVERTER_MODE_BACKGROUND_SCAN", "group___a_d_c___b.html#gga99cbbb12770fa8ffdc806fefc8254904ae295465a8016ee01173a47dde9388aec", null ]
+    ] ],
+    [ "adc_b_conversion_method_t", "group___a_d_c___b.html#ga266a796bc37d8e7309480b9376173c58", [
+      [ "ADC_B_CONVERSION_METHOD_SAR", "group___a_d_c___b.html#gga266a796bc37d8e7309480b9376173c58a1ab8e5acc9f17e35768b90b76aeb5dc8", null ],
+      [ "ADC_B_CONVERSION_METHOD_OVERSAMPLE", "group___a_d_c___b.html#gga266a796bc37d8e7309480b9376173c58a2a8008293e96223ef64fbe57056280f3", null ],
+      [ "ADC_B_CONVERSION_METHOD_HYBRID", "group___a_d_c___b.html#gga266a796bc37d8e7309480b9376173c58a8d1262b0ba68a7e7fc1a9bad42a574bb", null ]
     ] ],
     [ "adc_b_resolution_t", "group___a_d_c___b.html#ga05547edc7af118016d19b0e3be0da507", [
       [ "ADC_B_RESOLUTION_16_BIT", "group___a_d_c___b.html#gga05547edc7af118016d19b0e3be0da507a14ff6186d4f85a07b70f8541dd0a04cf", null ],
@@ -291,6 +304,10 @@ var group___a_d_c___b =
       [ "ADC_B_PGA_GAIN_SINGLE_ENDED_8_000", "group___a_d_c___b.html#gga0cf4db0b4a952d778f684106c460b559ad9878a1b35d303c56b3ab59f67ad7567", null ],
       [ "ADC_B_PGA_GAIN_SINGLE_ENDED_10_000", "group___a_d_c___b.html#gga0cf4db0b4a952d778f684106c460b559ab60253d25adadb9e6c1b2db7c3771b31", null ],
       [ "ADC_B_PGA_GAIN_SINGLE_ENDED_13_333", "group___a_d_c___b.html#gga0cf4db0b4a952d778f684106c460b559a7ab2194e96492e19fe41a33c394207dd", null ]
+    ] ],
+    [ "adc_b_digital_filter_selection_t", "group___a_d_c___b.html#ga47f5cca81a64e12edb6b4a6877b28908", [
+      [ "ADC_B_DIGITAL_FILTER_MODE_SINC3", "group___a_d_c___b.html#gga47f5cca81a64e12edb6b4a6877b28908a057b6ca487fa373bb2d76072dbf3e3a6", null ],
+      [ "ADC_B_DIGITAL_FILTER_MODE_PHASE", "group___a_d_c___b.html#gga47f5cca81a64e12edb6b4a6877b28908abb592ce9cfccbf57104303267a7b87b2", null ]
     ] ],
     [ "adc_b_sampling_state_table_id_t", "group___a_d_c___b.html#ga8e1fdcabde406d7f117e79916aa4a3e8", [
       [ "ADC_B_SAMPLING_STATE_TABLE_0", "group___a_d_c___b.html#gga8e1fdcabde406d7f117e79916aa4a3e8a790f3b6885aa44835330fe5ed37ac060", null ],

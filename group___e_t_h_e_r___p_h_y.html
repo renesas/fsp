@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.8.0</span>
+   &#160;<span id="projectnumber">Release v4.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -214,7 +214,7 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
-<td>Select PHY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Select PHY(DEPRECATED)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default</li>
 <li>
@@ -228,7 +228,39 @@ DP83620</li>
 <li>
 ICS1894</li>
 </ul>
-</td><td>Default </td><td>Select PHY chip to use. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
+</td><td>Default </td><td>Config -&gt; Select PHY is deprecated. Enable support for a PHY in the Config section and select it with Module -&gt; PHY LSI type. Set Select PHY to Default to hide this message. </td></tr>
+<tr>
+<td>KSZ8091RNZ Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use KSZ8091RNB Phy LSI or not. </td></tr>
+<tr>
+<td>KSZ8041 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use KSZ8041 Phy LSI or not. </td></tr>
+<tr>
+<td>DP83620 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use DP83620 Phy LSI or not. </td></tr>
+<tr>
+<td>ICS1894 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use ICS1894 Phy LSI or not. </td></tr>
 <tr>
 <td>Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -267,6 +299,22 @@ MII</li>
 RMII</li>
 </ul>
 </td><td>RMII </td><td>Specify whether to use MII or RMII. </td></tr>
+<tr>
+<td>Phy LSI type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Kit Component</li>
+<li>
+DEFAULT</li>
+<li>
+KSZ8091RNB</li>
+<li>
+KSZ8041</li>
+<li>
+DP83620</li>
+<li>
+ICS1894</li>
+</ul>
+</td><td>Kit Component </td><td>Select the Phy LSI target. Selecting 'Kit Component' will automatically choose the correct option when using a Renesas development board. </td></tr>
 <tr>
 <td>MII/RMII Register Access Wait-time</td><td>Specify a value between 0x1 and 0x7FFFFFFF.</td><td>8 </td><td>Specify the bit timing for MII/RMII register accesses during PHY initialization. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
@@ -570,7 +618,7 @@ Capabilities bitmap for local advertising. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
