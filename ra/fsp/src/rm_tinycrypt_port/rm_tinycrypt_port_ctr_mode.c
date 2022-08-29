@@ -27,10 +27,10 @@
 #include <tinycrypt/utils.h>
 #include "hw_sce_aes_private.h"
 #include "hw_sce_private.h"
+#include "hw_sce_ra_private.h"
 #include "rm_tinycrypt_port_cfg.h"
 
-
-#define TC_32BIT_ALIGNED(x) !(x & 0x03)
+#define TC_32BIT_ALIGNED(x)    !(x & 0x03)
 
 int tc_ctr_mode (uint8_t             * out,
                  unsigned int          outlen,
@@ -39,10 +39,13 @@ int tc_ctr_mode (uint8_t             * out,
                  uint8_t             * ctr,
                  const TCAesKeySched_t sched)
 {
-    int       tc_return = TC_CRYPTO_SUCCESS;
-    fsp_err_t err       = FSP_SUCCESS;
-    bool src_unaligned = !TC_32BIT_ALIGNED((uint32_t) &in[0]);
-    bool dst_unaligned = !TC_32BIT_ALIGNED((uint32_t) &out[0]);
+    int       tc_return     = TC_CRYPTO_SUCCESS;
+    fsp_err_t err           = FSP_SUCCESS;
+    bool      src_unaligned = !TC_32BIT_ALIGNED((uint32_t) &in[0]);
+    bool      dst_unaligned = !TC_32BIT_ALIGNED((uint32_t) &out[0]);
+
+    uint32_t indata_cmd      = change_endian_long((uint32_t)SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION);
+    uint32_t indata_key_type = 0;
 
 #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
 
@@ -64,59 +67,69 @@ int tc_ctr_mode (uint8_t             * out,
     }
     else if ((src_unaligned || dst_unaligned) && (inlen >= TC_AES_BLOCK_SIZE))
     {
-        uint8_t * buf_in  = (uint8_t *) in;
-        uint8_t * buf_out = out;
-        uint8_t * p_in  = (uint8_t *) in;
-        uint8_t * p_out = out;
+        uint8_t * buf_in    = (uint8_t *) in;
+        uint8_t * buf_out   = out;
+        uint8_t * p_in      = (uint8_t *) in;
+        uint8_t * p_out     = out;
         uint32_t  num_loops = 1U;
         num_loops = inlen / TC_AES_BLOCK_SIZE;
-        uint8_t   local_in[TC_AES_BLOCK_SIZE];
-        uint8_t   local_out[TC_AES_BLOCK_SIZE];
+        uint8_t local_in[TC_AES_BLOCK_SIZE];
+        uint8_t local_out[TC_AES_BLOCK_SIZE];
 
-        if(src_unaligned)
+        if (src_unaligned)
         {
             _set(local_in, 0, sizeof(local_in));
             p_in = &local_in[0];
         }
 
-        if(dst_unaligned)
+        if (dst_unaligned)
         {
             p_out = &local_out[0];
         }
 
+        err =
+            HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                               &indata_cmd,
+                                               (uint32_t *) &sched->words[0],
+                                               (uint32_t *) &ctr[0]);
+
         for (uint32_t i = 0; i < num_loops; i++)
         {
-            if(src_unaligned)
+            if (src_unaligned)
             {
                 _copy(&local_in[0], sizeof(local_in), &buf_in[0], TC_AES_BLOCK_SIZE);
             }
 
-            if (HW_SCE_AES_128CtrEncrypt((uint32_t *) &sched->words[0], (uint32_t *) &ctr[0], (TC_AES_BLOCK_SIZE / 4U),
-                    (uint32_t *) &p_in[0], (uint32_t *) &p_out[0], (uint32_t *) &ctr[0]))
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) &p_in[0], (uint32_t *) &p_out[0],
+                                                     (TC_AES_BLOCK_SIZE / 4U));
+            }
+
+            if (FSP_SUCCESS != err)
             {
                 tc_return = TC_CRYPTO_FAIL;
             }
             else
             {
-                if(dst_unaligned)
+                if (dst_unaligned)
                 {
                     _copy(&buf_out[0], TC_AES_BLOCK_SIZE, &p_out[0], TC_AES_BLOCK_SIZE);
                     buf_out += TC_AES_BLOCK_SIZE;
                 }
                 else
                 {
-                    p_out  += TC_AES_BLOCK_SIZE;
+                    p_out += TC_AES_BLOCK_SIZE;
                 }
 
-                if(src_unaligned)
+                if (src_unaligned)
                 {
-                    buf_in  += TC_AES_BLOCK_SIZE;
+                    buf_in += TC_AES_BLOCK_SIZE;
                 }
                 else
                 {
-                    p_in  += TC_AES_BLOCK_SIZE;
+                    p_in += TC_AES_BLOCK_SIZE;
                 }
-
             }
 
             if (tc_return == TC_CRYPTO_FAIL)
@@ -125,14 +138,30 @@ int tc_ctr_mode (uint8_t             * out,
             }
         }
 
+        err = HW_SCE_Aes128EncryptDecryptFinalSub();
+
+        if (FSP_SUCCESS != err)
+        {
+            tc_return = TC_CRYPTO_FAIL;
+        }
     }
     else if (inlen >= TC_AES_BLOCK_SIZE)
     {
         uint32_t local_inlen;
         local_inlen = (uint32_t) ((inlen / TC_AES_BLOCK_SIZE) * TC_AES_BLOCK_SIZE);
-        err         =
-            (HW_SCE_AES_128CtrEncrypt((uint32_t *) &sched->words[0], (uint32_t *) &ctr[0], (local_inlen / 4U),
-                                      (uint32_t *) &in[0], (uint32_t *) &out[0], (uint32_t *) &ctr[0]));
+
+        err =
+            HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                               &indata_cmd,
+                                               (uint32_t *) &sched->words[0],
+                                               (uint32_t *) &ctr[0]);
+        if (err == FSP_SUCCESS)
+        {
+            HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) &in[0], (uint32_t *) &out[0], (local_inlen / 4U));
+        }
+
+        err = HW_SCE_Aes128EncryptDecryptFinalSub();
+
         if (FSP_SUCCESS != err)
         {
             tc_return = TC_CRYPTO_FAIL;
@@ -153,17 +182,26 @@ int tc_ctr_mode (uint8_t             * out,
               (inlen % TC_AES_BLOCK_SIZE));
 
         err =
-            (HW_SCE_AES_128CtrEncrypt((uint32_t *) &sched->words[0], (uint32_t *) &ctr[0], (TC_AES_BLOCK_SIZE / 4U),
-                                      (uint32_t *) &local_in[0], (uint32_t *) &local_out[0], (uint32_t *) &ctr[0]));
+            HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                               &indata_cmd,
+                                               (uint32_t *) &sched->words[0],
+                                               (uint32_t *) &ctr[0]);
+        if (err == FSP_SUCCESS)
+        {
+            HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) &local_in[0], (uint32_t *) &local_out[0],
+                                                 (TC_AES_BLOCK_SIZE / 4U));
+        }
+
+        err = HW_SCE_Aes128EncryptDecryptFinalSub();
+
         if (FSP_SUCCESS != err)
         {
             tc_return = TC_CRYPTO_FAIL;
         }
         else
         {
-            _copy(&out[((inlen / TC_AES_BLOCK_SIZE) * TC_AES_BLOCK_SIZE)],
-                              (inlen % TC_AES_BLOCK_SIZE), &local_out[0],
-                              (inlen % TC_AES_BLOCK_SIZE));
+            _copy(&out[((inlen / TC_AES_BLOCK_SIZE) * TC_AES_BLOCK_SIZE)], (inlen % TC_AES_BLOCK_SIZE), &local_out[0],
+                  (inlen % TC_AES_BLOCK_SIZE));
         }
     }
 

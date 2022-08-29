@@ -50,8 +50,18 @@ Private global variables and functions
 
 fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,26 +74,26 @@ fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    if (0x0u != (SCE->REG_1BCH & 0x1fu))
+    if (0x0U != (SCE->REG_1BCH & 0x1fU))
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00002002u;
-    SCE->REG_108H = 0x00000000u;
-    HW_SCE_p_func100(0xcc566a95u, 0xd54b495bu, 0x13b7c5d5u, 0xf9a0c228u);
+    SCE->REG_84H = 0x00002002U;
+    SCE->REG_108H = 0x00000000U;
+    HW_SCE_p_func100(0xcc566a95U, 0xd54b495bU, 0x13b7c5d5U, 0xf9a0c228U);
     HW_SCE_p_func103();
-    SCE->REG_104H = 0x00000052u;
-    SCE->REG_C4H = 0x01000c84u;
+    SCE->REG_104H = 0x00000052U;
+    SCE->REG_C4H = 0x01000c84U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000000u);
-    HW_SCE_p_func100(0xf90a114au, 0x4d146fe5u, 0x5da04d77u, 0xef4683f4u);
-    SCE->REG_04H = 0x00000213u;
+    SCE->REG_100H = change_endian_long(0x00000000U);
+    HW_SCE_p_func100(0xf90a114aU, 0x4d146fe5U, 0x5da04d77U, 0xef4683f4U);
+    SCE->REG_04H = 0x00000213U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_04H_b.B30)
+    while (1U != SCE->REG_04H_b.B30)
     {
         /* waiting */
     }
@@ -91,10 +101,10 @@ fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
     OutData_Text[1] = SCE->REG_100H;
     OutData_Text[2] = SCE->REG_100H;
     OutData_Text[3] = SCE->REG_100H;
-    HW_SCE_p_func102(0x5cf23bfeu, 0x974c37aeu, 0xb6dfffc7u, 0xb05e02eeu);
-    SCE->REG_1BCH = 0x00000040u;
+    HW_SCE_p_func102(0x5cf23bfeU, 0x974c37aeU, 0xb6dfffc7U, 0xb05e02eeU);
+    SCE->REG_1BCH = 0x00000040U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_18H_b.B12)
+    while (0U != SCE->REG_18H_b.B12)
     {
         /* waiting */
     }

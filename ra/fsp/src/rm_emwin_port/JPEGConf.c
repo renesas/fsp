@@ -31,7 +31,7 @@
  #include "r_jpeg.h"
 
 void _JPEGDecodeCallback(jpeg_callback_args_t * p_args);
-void JPEG_X_Init(JPEG_X_CONTEXT * pContext);
+void JPEG_X_Init(void);
 int  JPEG_X_Draw(GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0);
 void JPEG_X_DeInit(void);
 void JPEG_X_SetStayAlive(int32_t OnOff);
@@ -196,9 +196,8 @@ static int32_t _WaitForCallbackTimed (uint32_t TimeOut)
  *
  *       JPEG_X_Init
  */
-void JPEG_X_Init (JPEG_X_CONTEXT * pContext)
+void JPEG_X_Init (void)
 {
-    GUI_USE_PARA(pContext);
  #if EMWIN_CFG_RTOS == 2               // FreeRTOS
     _SemaphoreJPEG = xSemaphoreCreateBinaryStatic(&_SemaphoreJPEG_Memory);
  #endif

@@ -149,14 +149,6 @@ typedef struct st_agt_extended_cfg
     {
         uint8_t agtoab_settings;
 
-        /* DEPRECATED: Anonymous structure. */
-        struct
-        {
-            agt_pin_cfg_t agtoa : 3;   ///< Configure AGTOA/AGTWOA pin
-            uint8_t             : 1;
-            agt_pin_cfg_t agtob : 3;   ///< Configure AGTOB/AGTWOB pin
-        };
-
         struct
         {
             agt_pin_cfg_t agtoa : 3;     ///< Configure AGTOA/AGTWOA pin

@@ -45,7 +45,7 @@
 #define RM_FS1015_MASK_CHECKSUM_0X00FF      (0x00FF)
 
 /* Definitions for Calculation */
-#define RM_FS1015_CALC_DECIMAL_VALUE_100    (100.0)
+#define RM_FS1015_CALC_DECIMAL_VALUE_100    (100.0F)
 
 /***********************************************************************************************************************
  * Typedef definitions

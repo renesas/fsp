@@ -20,7 +20,7 @@
 
 /**
  * @file    iaq_1st_gen.h
- * @author  Ronald Schreiber
+ * @author  Renesas Electronics Corporation
  * @version 2.1.2
  * @brief   This file contains the data structure definitions and
  *          the function definitions for the 1st generation IAQ algorithm.

@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_p_func028_r2(uint32_t ARG1)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,35 +74,35 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    SCE->REG_ECH = 0x38000f5au;
-    SCE->REG_ECH = 0x00030020u;
-    SCE->REG_ECH = 0x0000b7c0u;
-    SCE->REG_ECH = 0x01166403u;
-    SCE->REG_ECH = 0x00000060u;
-    SCE->REG_ECH = 0x0000b7c0u;
-    SCE->REG_ECH = 0x013659ffu;
-    SCE->REG_ECH = 0x00000080u;
-    SCE->REG_C4H = 0x00443a0cu;
+    SCE->REG_ECH = 0x38000f5aU;
+    SCE->REG_ECH = 0x00030020U;
+    SCE->REG_ECH = 0x0000b7c0U;
+    SCE->REG_ECH = 0x01166403U;
+    SCE->REG_ECH = 0x00000060U;
+    SCE->REG_ECH = 0x0000b7c0U;
+    SCE->REG_ECH = 0x013659ffU;
+    SCE->REG_ECH = 0x00000080U;
+    SCE->REG_C4H = 0x00443a0cU;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000000u);
-    SCE->REG_C4H = 0x000c3e1cu;
-    SCE->REG_E0H = 0x810103c0u;
-    SCE->REG_00H = 0x00002807u;
+    SCE->REG_100H = change_endian_long(0x00000000U);
+    SCE->REG_C4H = 0x000c3e1cU;
+    SCE->REG_E0H = 0x810103c0U;
+    SCE->REG_00H = 0x00002807U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_104H = 0x00001762u;
-    SCE->REG_D0H = 0x00000500u;
-    SCE->REG_C4H = 0x02f087bfu;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_104H = 0x00001762U;
+    SCE->REG_D0H = 0x00000500U;
+    SCE->REG_C4H = 0x02f087bfU;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -101,7 +111,7 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+0 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+0 + 3];
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -110,7 +120,7 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+4 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+4 + 3];
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -118,16 +128,16 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+8 + 1];
     SCE->REG_100H = S_FLASH2[ARG1+8 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+8 + 3];
-    SCE->REG_00H = 0x00003233u;
-    SCE->REG_2CH = 0x0000001au;
+    SCE->REG_00H = 0x00003233U;
+    SCE->REG_2CH = 0x0000001aU;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
+    SCE->REG_1CH = 0x00001800U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -136,7 +146,7 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+12 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+12 + 3];
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -145,7 +155,7 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+16 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+16 + 3];
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -153,17 +163,17 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+20 + 1];
     SCE->REG_100H = S_FLASH2[ARG1+20 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+20 + 3];
-    SCE->REG_00H = 0x00003233u;
-    SCE->REG_2CH = 0x0000001bu;
+    SCE->REG_00H = 0x00003233U;
+    SCE->REG_2CH = 0x0000001bU;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_C4H = 0x000007bdu;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_C4H = 0x000007bdU;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -171,14 +181,14 @@ void HW_SCE_p_func028_r2(uint32_t ARG1)
     SCE->REG_100H = S_FLASH2[ARG1+24 + 1];
     SCE->REG_100H = S_FLASH2[ARG1+24 + 2];
     SCE->REG_100H = S_FLASH2[ARG1+24 + 3];
-    SCE->REG_C4H = 0x00800c45u;
-    SCE->REG_00H = 0x00002213u;
+    SCE->REG_C4H = 0x00800c45U;
+    SCE->REG_00H = 0x00002213U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
+    SCE->REG_1CH = 0x00001800U;
 }
 
 /***********************************************************************************************************************

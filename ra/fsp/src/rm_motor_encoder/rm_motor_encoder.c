@@ -1041,21 +1041,20 @@ static void rm_motor_encoder_init_speed_output (motor_speed_output_t * p_output)
  **********************************************************************************************************************/
 void rm_motor_encoder_current_callback (motor_current_callback_args_t * p_args)
 {
-    motor_instance_t                   * p_instance = (motor_instance_t *) p_args->p_context;
-    motor_encoder_instance_ctrl_t      * p_ctrl     = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
-    motor_encoder_extended_cfg_t const * p_extend   = p_ctrl->p_cfg->p_extend;
-    motor_encoder_callback_args_t        temp_args_t;
+    motor_instance_t              * p_instance = (motor_instance_t *) p_args->p_context;
+    motor_encoder_instance_ctrl_t * p_ctrl     = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_callback_args_t           temp_args_t;
 
     switch (p_args->event)
     {
         case MOTOR_CURRENT_EVENT_FORWARD:
         {
             /* Invoke the callback function if it is set. */
-            if (NULL != p_extend->p_callback)
+            if (NULL != p_ctrl->p_cfg->p_callback)
             {
-                temp_args_t.event     = MOTOR_ENCODER_CALLBACK_EVENT_CURRENT_FORWARD;
-                temp_args_t.p_context = p_extend->p_context;
-                (p_extend->p_callback)(&temp_args_t);
+                temp_args_t.event     = MOTOR_CALLBACK_EVENT_CURRENT_FORWARD;
+                temp_args_t.p_context = p_ctrl->p_cfg->p_context;
+                (p_ctrl->p_cfg->p_callback)(&temp_args_t);
             }
 
             break;
@@ -1073,11 +1072,11 @@ void rm_motor_encoder_current_callback (motor_current_callback_args_t * p_args)
         case MOTOR_CURRENT_EVENT_BACKWARD:
         {
             /* Invoke the callback function if it is set. */
-            if (NULL != p_extend->p_callback)
+            if (NULL != p_ctrl->p_cfg->p_callback)
             {
-                temp_args_t.event     = MOTOR_ENCODER_CALLBACK_EVENT_CURRENT_BACKWARD;
-                temp_args_t.p_context = p_extend->p_context;
-                (p_extend->p_callback)(&temp_args_t);
+                temp_args_t.event     = MOTOR_CALLBACK_EVENT_CURRENT_BACKWARD;
+                temp_args_t.p_context = p_ctrl->p_cfg->p_context;
+                (p_ctrl->p_cfg->p_callback)(&temp_args_t);
             }
 
             break;
@@ -1098,10 +1097,9 @@ void rm_motor_encoder_current_callback (motor_current_callback_args_t * p_args)
  **********************************************************************************************************************/
 void rm_motor_encoder_speed_callback (motor_speed_callback_args_t * p_args)
 {
-    motor_instance_t                   * p_instance = (motor_instance_t *) p_args->p_context;
-    motor_encoder_instance_ctrl_t      * p_ctrl     = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
-    motor_encoder_extended_cfg_t const * p_extend   = p_ctrl->p_cfg->p_extend;
-    motor_encoder_callback_args_t        temp_args_t;
+    motor_instance_t              * p_instance = (motor_instance_t *) p_args->p_context;
+    motor_encoder_instance_ctrl_t * p_ctrl     = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_callback_args_t           temp_args_t;
 
     switch (p_args->event)
     {
@@ -1114,11 +1112,11 @@ void rm_motor_encoder_speed_callback (motor_speed_callback_args_t * p_args)
             rm_motor_encoder_copy_current_speed(&(p_ctrl->st_current_output), &(p_ctrl->st_speed_input));
 
             /* Invoke the callback function if it is set. */
-            if (NULL != p_extend->p_callback)
+            if (NULL != p_ctrl->p_cfg->p_callback)
             {
-                temp_args_t.event     = MOTOR_ENCODER_CALLBACK_EVENT_SPEED_FORWARD;
-                temp_args_t.p_context = p_extend->p_context;
-                (p_extend->p_callback)(&temp_args_t);
+                temp_args_t.event     = MOTOR_CALLBACK_EVENT_SPEED_FORWARD;
+                temp_args_t.p_context = p_ctrl->p_cfg->p_context;
+                (p_ctrl->p_cfg->p_callback)(&temp_args_t);
             }
 
             break;
@@ -1127,11 +1125,11 @@ void rm_motor_encoder_speed_callback (motor_speed_callback_args_t * p_args)
         case MOTOR_SPEED_EVENT_BACKWARD:
         {
             /* Invoke the callback function if it is set. */
-            if (NULL != p_extend->p_callback)
+            if (NULL != p_ctrl->p_cfg->p_callback)
             {
-                temp_args_t.event     = MOTOR_ENCODER_CALLBACK_EVENT_SPEED_BACKWARD;
-                temp_args_t.p_context = p_extend->p_context;
-                (p_extend->p_callback)(&temp_args_t);
+                temp_args_t.event     = MOTOR_CALLBACK_EVENT_SPEED_BACKWARD;
+                temp_args_t.p_context = p_ctrl->p_cfg->p_context;
+                (p_ctrl->p_cfg->p_callback)(&temp_args_t);
             }
 
             break;

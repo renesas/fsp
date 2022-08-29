@@ -48,27 +48,8 @@ typedef struct  rm_motor_encoder_statemachine
     uint16_t u2_error_status;                    ///< The error information
 } motor_encoder_statemachine_t;
 
-/** Events that can trigger a callback function */
-typedef enum e_motor_encoder_callback_event
-{
-    MOTOR_ENCODER_CALLBACK_EVENT_SPEED_FORWARD = 1, ///< Event forward speed control
-    MOTOR_ENCODER_CALLBACK_EVENT_SPEED_BACKWARD,    ///< Event backward speed control
-    MOTOR_ENCODER_CALLBACK_EVENT_CURRENT_FORWARD,   ///< Event forward current control
-    MOTOR_ENCODER_CALLBACK_EVENT_CURRENT_BACKWARD,  ///< Event backward current control
-} motor_encoder_callback_event_t;
-
-/** Callback function parameter data */
-typedef struct st_rm_motor_encoder_callback_args
-{
-    void const * p_context;            ///< Placeholder for user data.
-    motor_encoder_callback_event_t event;
-} motor_encoder_callback_args_t;
-
 typedef struct st_motor_encoder_extended_cfg
 {
-    void (* p_callback)(motor_encoder_callback_args_t * p_args);
-    void const * p_context;            ///< Placeholder for user data.
-
     float f_overcurrent_limit;         ///< Over-current limit [A]
     float f_overvoltage_limit;         ///< Over-voltage limit [V]
     float f_overspeed_limit;           ///< Over-speed limit [rad/s]

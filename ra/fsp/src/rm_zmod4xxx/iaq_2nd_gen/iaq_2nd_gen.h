@@ -20,7 +20,7 @@
 
 /**
  * @file    iaq_2nd_gen.h
- * @author  Ronald Schreiber
+ * @author  Renesas Electronics Corporation
  * @version 2.2.0
  * @brief   This file contains the data structure definitions and
  *          the function definitions for the 2nd generation IAQ algorithm.
@@ -39,7 +39,21 @@ extern "C" {
 
  #include <stdint.h>
  #include <math.h>
- #include "../zmod4xxx_types.h"
+ #if 0                                 // For multiple operations
+  #include "zmod4xxx_types.h"
+
+/**
+ * @brief Variables that describe the library version
+ */
+typedef struct
+{
+    uint8_t major;
+    uint8_t minor;
+    uint8_t patch;
+} algorithm_version;
+ #else
+  #include "../zmod4xxx_types.h"
+ #endif
 
 /** \addtogroup RetCodes Return codes of the algorithm functions.
  *  @{
@@ -81,17 +95,26 @@ typedef struct
 } iaq_2nd_gen_results_t;
 
 /**
+ * @brief Algorithm input structure
+ * @param   [in] adc_result Array of 32 bytes with the values from the sensor results table.
+ */
+typedef struct
+{
+    uint8_t * adc_result;              /** Sensor raw values. **/
+} iaq_2nd_gen_inputs_t;
+
+/**
  * @brief   calculates IAQ results from present sample.
  * @param   [in] handle Pointer to algorithm state variable.
  * @param   [in] dev Pointer to the device.
- * @param   [in] sensor_results_table Array of 32 bytes with the values from the sensor results table.
+ * @param   [in] algo_input Structure containing inputs required for algo calculation.
  * @param   [out] results Pointer for storing the algorithm results.
  * @return  error code.
  */
-int8_t calc_iaq_2nd_gen(iaq_2nd_gen_handle_t  * handle,
-                        zmod4xxx_dev_t        * dev,
-                        const uint8_t         * sensor_results_table,
-                        iaq_2nd_gen_results_t * results);
+int8_t calc_iaq_2nd_gen(iaq_2nd_gen_handle_t       * handle,
+                        zmod4xxx_dev_t             * dev,
+                        const iaq_2nd_gen_inputs_t * algo_input,
+                        iaq_2nd_gen_results_t      * results);
 
 /**
  * @brief   Initializes the IAQ algorithm.

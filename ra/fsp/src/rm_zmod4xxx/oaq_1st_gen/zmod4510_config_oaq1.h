@@ -21,8 +21,8 @@
 /**
  * @file    zmod4510_config_oaq1.h
  * @brief   This is the configuration for zmod4510 module - oaq 1st gen library
+ * @author  Renesas Electronics Corporation
  * @version 3.0.0
- * @author Renesas Electronics Corporation
  */
 
 #ifndef _ZMOD4510_CONFIG_OAQ1_H_

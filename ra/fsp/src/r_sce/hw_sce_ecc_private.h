@@ -43,8 +43,6 @@
 #define ECC_256_MESSAGE_DIGEST_LENGTH_WORDS                    (8U)
 #define ECC_256_SIGNATURE_R_LENGTH_WORDS                       (8U)
 #define ECC_256_SIGNATURE_S_LENGTH_WORDS                       (8U)
-#define ECC_256_PRIVATE_KEY_HRK_LENGTH_WORDS                   (13U)
-#define ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS                    (416U)
 
 /* ECC P-384 */
 #define ECC_384_DOMAIN_PARAMETER_WITH_ORDER_LENGTH_WORDS       (48U)
@@ -57,8 +55,9 @@
 #define ECC_384_MESSAGE_DIGEST_LENGTH_WORDS                    (12U)
 #define ECC_384_SIGNATURE_R_LENGTH_WORDS                       (12U)
 #define ECC_384_SIGNATURE_S_LENGTH_WORDS                       (12U)
-#define ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS                   (17U)
-#define ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS                    (544U)
+
+/* SCE based wrapped keys are at most 20/32 bytes larger than corresponding plain private keys */
+#define HW_SCE_ECC_WRAPPED_KEY_ADJUST(x)          ((x) + ((HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE) * 4))
 
 /* Function pointer declarations */
 #if BSP_FEATURE_CRYPTO_HAS_SCE9

@@ -442,7 +442,6 @@ int mbedtls_ecdsa_sign (mbedtls_ecp_group * grp,
     {
         return MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
     }
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
     /* Obtain a common 32-bit aligned buffer. It will be used for all the following items in this order:
      * Private Key (D) of size private_key_size_words
      * Signature (rs) of size curve_bytes * 2
@@ -503,68 +502,6 @@ int mbedtls_ecdsa_sign (mbedtls_ecp_group * grp,
     {
         ret = 0;
     }
-#else
-    /* Obtain a common 32-bit aligned buffer. It will be used for all the following items in this order:
-     * Curve parameters a, b, p, n, Gx, Gy. Each of the 6 fields are of size curve_bytes = PSA_BITS_TO_BYTES( ecp->grp.pbits )
-     * Private Key (D) of size private_key_size_words
-     * Signature (rs) of size curve_bytes * 2
-     * Padded/truncated 32-bit aligned copy of input hash of size curve_bytes */
-    p_common_buff_32 = mbedtls_calloc(((curve_bytes * 9) / 4) + private_key_size_words, sizeof(uint32_t));
-
-    if (NULL == p_common_buff_32)
-    {
-        return MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-
-    uint32_t * p_curve_params_buff_32 = p_common_buff_32;
-    p_private_key_buff_32  = p_curve_params_buff_32 + ((curve_bytes * 6) / 4);
-    p_signature_buff_32    = p_private_key_buff_32 + private_key_size_words;
-
-    /* The hash input (buf) should have a length of at least the curve size:
-     * nist.fips.186-4: " A hash function that provides a lower security strength than
-     * the security strength associated with the bit length of 'n' ordinarily should not be used, since this
-     * would reduce the security strength of the digital signature process to a level no greater than that
-     * provided by the hash function."
-     * However, the SCE HW functions only parse hash of exactly curve_bytes length so
-     * *-Any larger hash data will be truncated.
-     * *-Any smaller data will be 0-padded to the LEFT.
-     *
-     * Even if the hash input is the same size as the curve, we will still do a copy because the user input
-     * is an 8-bit pointer whereas the SCE HW expects a 32-bit pointer and there could possibly be
-     * an alignment issue. */
-    p_buf_8 = (uint8_t *) (p_signature_buff_32 + ((curve_bytes * 2) / 4));
-    uint32_t bytes_to_copy = blen > curve_bytes ? curve_bytes : blen;
-    memcpy(p_buf_8 + (curve_bytes - bytes_to_copy), buf, bytes_to_copy);
-
-    ret = ecp_load_parameters_sce(grp, (uint8_t *) p_curve_params_buff_32);
-    if (ret)
-    {
-    }
-    else if (0 != mbedtls_mpi_write_binary(d, (uint8_t *) p_private_key_buff_32, private_key_size_words * 4))
-    {
-        ret = MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;
-    }
-    else if (FSP_SUCCESS !=
-             p_hw_sce_ecc_generatesign(p_curve_params_buff_32, p_curve_params_buff_32 + ((curve_bytes * 4) / 4),
-                                       p_private_key_buff_32, (uint32_t *) p_buf_8, p_signature_buff_32,
-                                       p_signature_buff_32 + curve_bytes / 4))
-    {
-        ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
-    }
-    /* Import the generated signature into the r and s mpis */
-    else if (0 != mbedtls_mpi_read_binary(r, (uint8_t *) p_signature_buff_32, curve_bytes))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else if (0 != mbedtls_mpi_read_binary(s, (uint8_t *) (p_signature_buff_32 + (curve_bytes / 4)), curve_bytes))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else
-    {
-        ret = 0;
-    }
-#endif
     mbedtls_free(p_common_buff_32);
 
     return ret;
@@ -620,7 +557,6 @@ int mbedtls_ecdsa_verify (mbedtls_ecp_group       * grp,
     {
         return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
     }
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
     /* Obtain a 32-bit aligned block of memory. It will be used for all the following items in this order:
      * Public Key (Q) of size curve_bytes * 2
      * Signature (rs) of size curve_bytes * 2
@@ -683,70 +619,6 @@ int mbedtls_ecdsa_verify (mbedtls_ecp_group       * grp,
             ret = MBEDTLS_ERR_ECP_VERIFY_FAILED;
         }
     }
-#else
-    /* Obtain a 32-bit aligned block of memory. It will be used for all the following items in this order:
-     * Curve parameters a, b, p, n, Gx, Gy. Each of the 6 fields are of size curve_bytes = PSA_BITS_TO_BYTES( ecp->grp.pbits )
-     * Public Key (Q) of size curve_bytes * 2
-     * Signature (rs) of size curve_bytes * 2
-     * Padded/truncated 32-bit aligned copy of input hash of size curve_bytes  */
-    p_common_buff_32 = mbedtls_calloc(((curve_bytes * 11) / 4), sizeof(uint32_t));
-
-    if (NULL == p_common_buff_32)
-    {
-        return MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-
-    uint32_t * p_curve_params_buff_32 = p_common_buff_32;
-    p_public_key_buff_32   = p_curve_params_buff_32 + ((curve_bytes * 6) / 4);
-    p_signature_buff_32    = p_public_key_buff_32 + ((curve_bytes * 2) / 4);
-
-    /* The hash input (buf) should have a length of at least the curve size:
-     * nist.fips.186-4: " A hash function that provides a lower security strength than
-     * the security strength associated with the bit length of 'n' ordinarily should not be used, since this
-     * would reduce the security strength of the digital signature process to a level no greater than that
-     * provided by the hash function."
-     * However, the SCE HW functions only parse hash of exactly curve_bytes length so
-     * *-Any larger hash data will be truncated.
-     * *-Any smaller data will be 0-padded to the LEFT.
-     *
-     * Even if the hash input is the same size as the curve, we will still do a copy because the user input
-     * is an 8-bit pointer whereas the SCE HW expects a 32-bit pointer and there could possibly be
-     * an alignment issue. */
-    p_buf_8 = (uint8_t *) (p_signature_buff_32 + ((curve_bytes * 2) / 4));
-    uint32_t bytes_to_copy = blen > curve_bytes ? curve_bytes : blen;
-    memcpy(p_buf_8 + (curve_bytes - bytes_to_copy), buf, bytes_to_copy);
-
-    ret = ecp_load_parameters_sce(grp, (uint8_t *) p_curve_params_buff_32);
-    if (ret)
-    {
-    }
-    else if (0 != mbedtls_mpi_write_binary(&Q->X, (uint8_t *) p_public_key_buff_32, curve_bytes))
-    {
-        ret = MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;
-    }
-    else if (0 != mbedtls_mpi_write_binary(&Q->Y, (uint8_t *) (p_public_key_buff_32 + (curve_bytes / 4)), curve_bytes))
-    {
-        ret = MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;
-    }
-    else if (0 != mbedtls_mpi_write_binary(r, (uint8_t *) p_signature_buff_32, curve_bytes))
-    {
-        ret = MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;
-    }
-    else if (0 != mbedtls_mpi_write_binary(s, (uint8_t *) (p_signature_buff_32 + (curve_bytes / 4)), curve_bytes))
-    {
-        ret = MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;
-    }
-    else
-    {
-        if (FSP_SUCCESS !=
-            p_hw_sce_ecc_verifysign(p_curve_params_buff_32, p_curve_params_buff_32 + ((curve_bytes * 4) / 4),
-                                    p_public_key_buff_32, (uint32_t *) p_buf_8, p_signature_buff_32,
-                                    p_signature_buff_32 + (curve_bytes / 4)))
-        {
-            ret = MBEDTLS_ERR_ECP_VERIFY_FAILED;
-        }
-    }
-#endif
     mbedtls_free(p_common_buff_32);
 
     return ret;

@@ -18,15 +18,17 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
+
 
 #if defined(MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C)
 
  #include "aes_vendor.h"
+
+/* Auto-generated values depending on which drivers are registered.
+ * ID 0 is reserved for unallocated operations.
+ * ID 1 is reserved for the Mbed TLS software driver. */
+#define PSA_CRYPTO_MBED_TLS_DRIVER_ID (1)
 
 /** Determine standard key size in bits for a vendor type key bit size associated with an elliptic curve.
  *  THis function is invoked during key generation and the user specifies the bits which will be the
@@ -140,7 +142,7 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 
                 if (!ret)
                 {
-                    err = HW_SCE_AES_128CreateEncryptedKey((uint32_t *) output);
+                    err = HW_SCE_GenerateAes128RandomKeyIndexSub((uint32_t *) output);
                 }
 
                 break;
@@ -156,7 +158,7 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 
                 if (!ret)
                 {
-                    err = HW_SCE_AES_192CreateEncryptedKey((uint32_t *) output);
+                    err = HW_SCE_GenerateAes192RandomKeyIndexSub((uint32_t *) output);
                 }
 
                 break;
@@ -171,7 +173,7 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 
                 if (!ret)
                 {
-                    err = HW_SCE_AES_256CreateEncryptedKey((uint32_t *) output);
+                    err = HW_SCE_GenerateAes256RandomKeyIndexSub((uint32_t *) output);
                 }
 
                 break;
@@ -198,7 +200,7 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 }
 
 psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
-                                      psa_key_slot_t *         slot,
+                                      psa_key_slot_t         * slot,
                                       psa_algorithm_t          alg,
                                       mbedtls_operation_t      cipher_operation)
 {
@@ -208,7 +210,7 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
     (void) cipher_operation;
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
  #if defined(MBEDTLS_AES_ALT)
-    int              ret  = 0;
+    int ret = 0;
     (void) alg;
     size_t key_bits = 0;
     const mbedtls_cipher_info_t * cipher_info = NULL;
@@ -226,15 +228,20 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
         return status;
     }
 
+    operation->ctx.mbedtls_ctx.alg = alg;
+
     /* Strip out the vendor flag from the key type since the PSA code does not recognize it*/
-    cipher_info = mbedtls_cipher_info_from_psa(alg, (psa_key_type_t)(slot->attr.type & ~PSA_KEY_TYPE_VENDOR_FLAG), key_bits, NULL);
+    cipher_info = mbedtls_cipher_info_from_psa(alg,
+                                               (psa_key_type_t) (slot->attr.type & ~PSA_KEY_TYPE_VENDOR_FLAG),
+                                               key_bits,
+                                               NULL);
     if (cipher_info == NULL)
     {
         status = PSA_ERROR_NOT_SUPPORTED;
         goto exit;
     }
 
-    ret = mbedtls_cipher_setup(&operation->ctx.cipher, cipher_info);
+    ret = mbedtls_cipher_setup(&operation->ctx.mbedtls_ctx.ctx.cipher, cipher_info);
     if (ret != 0)
     {
         goto exit;
@@ -247,10 +254,10 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
         /* Setup the vendor context flag.
          * Even though vendor_ctx is a void pointer since we only need true/false info
          * we are using the pointer as a bool instead */
-        p_aes_ctx             = (mbedtls_aes_context *) operation->ctx.cipher.cipher_ctx;
+        p_aes_ctx             = (mbedtls_aes_context *) operation->ctx.mbedtls_ctx.ctx.cipher.cipher_ctx;
         p_aes_ctx->vendor_ctx = (bool *) true;
 
-        operation->iv_size = SIZE_AES_BLOCK_BYTES;
+        operation->ctx.mbedtls_ctx.iv_length = SIZE_AES_BLOCK_BYTES;
     }
     else
     {
@@ -265,12 +272,12 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
         uint8_t keys[24];
         memcpy(keys, slot->data.raw.data, 16);
         memcpy(keys + 16, slot->data.raw.data, 8);
-        ret = mbedtls_cipher_setkey(&operation->ctx.cipher, keys, 192, cipher_operation);
+        ret = mbedtls_cipher_setkey(&operation->ctx.mbedtls_ctx.ctx.cipher, keys, 192, cipher_operation);
     }
     else
   #endif
     {
-        ret = mbedtls_cipher_setkey(&operation->ctx.cipher, slot->data.key.data, (int) key_bits, cipher_operation);
+        ret = mbedtls_cipher_setkey(&operation->ctx.mbedtls_ctx.ctx.cipher, slot->key.data, (int) key_bits, cipher_operation);
     }
 
     if (ret != 0)
@@ -283,13 +290,13 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
     {
         case PSA_ALG_CBC_NO_PADDING:
         {
-            ret = mbedtls_cipher_set_padding_mode(&operation->ctx.cipher, MBEDTLS_PADDING_NONE);
+            ret = mbedtls_cipher_set_padding_mode(&operation->ctx.mbedtls_ctx.ctx.cipher, MBEDTLS_PADDING_NONE);
             break;
         }
 
         case PSA_ALG_CBC_PKCS7:
         {
-            ret = mbedtls_cipher_set_padding_mode(&operation->ctx.cipher, MBEDTLS_PADDING_PKCS7);
+            ret = mbedtls_cipher_set_padding_mode(&operation->ctx.mbedtls_ctx.ctx.cipher, MBEDTLS_PADDING_PKCS7);
             break;
         }
 
@@ -307,12 +314,11 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
     }
   #endif                                                                              // MBEDTLS_CIPHER_MODE_WITH_PADDING
 
-    operation->key_set    = 1;
-    operation->block_size = (uint8_t) (PSA_ALG_IS_STREAM_CIPHER(alg) ? 1 :
-                                       PSA_BLOCK_CIPHER_BLOCK_SIZE(slot->attr.type)); // NOLINT(readability-uppercase-literal-suffix)
+    operation->ctx.mbedtls_ctx.block_length = (uint8_t) (PSA_ALG_IS_STREAM_CIPHER(alg) ? 1 :
+                                       PSA_BLOCK_CIPHER_BLOCK_LENGTH(slot->attr.type)); // NOLINT(readability-uppercase-literal-suffix)
     if (alg & PSA_ALG_CIPHER_FROM_BLOCK_FLAG)
     {
-        operation->iv_size = (uint8_t) PSA_BLOCK_CIPHER_BLOCK_SIZE(slot->attr.type);  // NOLINT(readability-uppercase-literal-suffix)
+        operation->ctx.mbedtls_ctx.iv_length = (uint8_t) PSA_BLOCK_CIPHER_BLOCK_LENGTH(slot->attr.type);  // NOLINT(readability-uppercase-literal-suffix)
     }
 
   #if defined(MBEDTLS_CHACHA20_C)
@@ -325,6 +331,7 @@ exit:
     if (status == 0)
     {
         status = mbedtls_to_psa_error(ret);
+        operation->id = PSA_CRYPTO_MBED_TLS_DRIVER_ID;
     }
 
     if (status != 0)

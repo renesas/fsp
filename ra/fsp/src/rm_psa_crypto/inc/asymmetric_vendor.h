@@ -54,7 +54,7 @@ psa_status_t psa_allocate_buffer_to_slot(psa_key_slot_t * slot, size_t buffer_le
      0)
 
 /* Functions used directly from mbedCrypto */
-mbedtls_ecp_group_id mbedtls_ecc_group_of_psa(psa_ecc_family_t curve, size_t byte_length);
+mbedtls_ecp_group_id mbedtls_ecc_group_of_psa(psa_ecc_family_t curve, size_t bits, int bits_is_sloppy);
 psa_status_t         psa_import_ec_public_key(psa_ecc_family_t       curve,
                                               const uint8_t        * data,
                                               size_t                 data_length,
@@ -106,7 +106,7 @@ psa_status_t psa_export_rsa_key(psa_key_type_t        type,
                                 size_t                data_size,
                                 size_t              * data_length);
 psa_status_t psa_import_rsa_key(psa_key_slot_t * slot, const uint8_t * data, size_t data_length);
-psa_status_t psa_read_rsa_exponent(const uint8_t * domain_parameters, size_t domain_parameters_size, int * exponent);
+psa_status_t psa_rsa_read_exponent(const uint8_t * domain_parameters, size_t domain_parameters_size, int * exponent);
 psa_status_t psa_rsa_sign(mbedtls_rsa_context * rsa,
                           psa_algorithm_t       alg,
                           const uint8_t       * hash,

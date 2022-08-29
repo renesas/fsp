@@ -66,7 +66,6 @@ extern const doc_api_t g_doc_on_doc;
  **********************************************************************************************************************/
 fsp_err_t R_DOC_Open(doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_cfg);
 fsp_err_t R_DOC_Close(doc_ctrl_t * const p_api_ctrl);
-fsp_err_t R_DOC_StatusGet(doc_ctrl_t * const p_api_ctrl, doc_status_t * p_status);
 fsp_err_t R_DOC_Read(doc_ctrl_t * const p_api_ctrl, uint32_t * p_result);
 fsp_err_t R_DOC_Write(doc_ctrl_t * const p_api_ctrl, uint32_t data);
 fsp_err_t R_DOC_CallbackSet(doc_ctrl_t * const          p_api_ctrl,

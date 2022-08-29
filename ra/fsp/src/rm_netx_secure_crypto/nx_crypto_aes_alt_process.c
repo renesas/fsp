@@ -57,7 +57,10 @@ UINT sce_nx_crypto_aes_encrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
     uint32_t * p_aligned_output = NULL;
     uint32_t   aligned_input_buffer[RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE)]  = {0};
     uint32_t   aligned_output_buffer[RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE)] = {0};
-    bool       misaligned = false;
+    bool       misaligned      = false;
+    uint32_t   dummy_iv[4]     = {0};
+    uint32_t   indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION);
+    uint32_t   indata_key_type = 0;
 
     if (length != NX_CRYPTO_AES_BLOCK_SIZE)
     {
@@ -84,64 +87,45 @@ UINT sce_nx_crypto_aes_encrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
     {
         case 10:
         {
-            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
+            ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            if (ret == FSP_SUCCESS)
             {
-                ret =
-                    HW_SCE_AES_128EcbEncryptUsingEncryptedKey((uint32_t *) w,
-                                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(
-                                                                  NX_CRYPTO_AES_BLOCK_SIZE),
-                                                              (uint32_t *) p_aligned_input,
-                                                              (uint32_t *) p_aligned_output);
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE));
             }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            else                       /* Key size (words) = NX_CRYPTO_AES_KEY_SIZE_128_BITS */
-            {
-                ret =
-                    HW_SCE_AES_128EcbEncrypt((uint32_t *) w,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE),
-                                             (uint32_t *) p_aligned_input,
-                                             (uint32_t *) p_aligned_output);
-            }
- #endif
+            ret = HW_SCE_Aes128EncryptDecryptFinalSub();
             break;
         }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
         case 12:
         {
-            ret =
-                HW_SCE_AES_192EcbEncryptUsingEncryptedKey((uint32_t *) w,
-                                                          RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(
-                                                              NX_CRYPTO_AES_BLOCK_SIZE),
-                                                          (uint32_t *) p_aligned_input,
-                                                          (uint32_t *) p_aligned_output);
+            ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) w, dummy_iv);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE));
+            }
+
+            ret = HW_SCE_Aes192EncryptDecryptFinalSub();
 
             break;
         }
  #endif
         case 14:
         {
-            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS)
+            ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            if (ret == FSP_SUCCESS)
             {
-                ret =
-                    HW_SCE_AES_256EcbEncryptUsingEncryptedKey((uint32_t *) w,
-                                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(
-                                                                  NX_CRYPTO_AES_BLOCK_SIZE),
-                                                              (uint32_t *) p_aligned_input,
-                                                              (uint32_t *) p_aligned_output);
+                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE));
             }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            else
-            {
-                ret =
-                    HW_SCE_AES_256EcbEncrypt((uint32_t *) w,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE),
-                                             (uint32_t *) p_aligned_input,
-                                             (uint32_t *) p_aligned_output);
-            }
- #endif
+            ret = HW_SCE_Aes256EncryptDecryptFinalSub();
             break;
         }
 
@@ -180,7 +164,10 @@ UINT sce_nx_crypto_aes_decrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
     uint32_t * p_aligned_output = NULL;
     uint32_t   aligned_input_buffer[RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE)]  = {0};
     uint32_t   aligned_output_buffer[RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE)] = {0};
-    bool       misaligned = false;
+    bool       misaligned      = false;
+    uint32_t   dummy_iv[4]     = {0};
+    uint32_t   indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_ECB_DECRYPTION);
+    uint32_t   indata_key_type = 0;
 
     if (length != NX_CRYPTO_AES_BLOCK_SIZE)
     {
@@ -207,63 +194,45 @@ UINT sce_nx_crypto_aes_decrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
     {
         case 10:
         {
-            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
+            ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            if (ret == FSP_SUCCESS)
             {
-                ret =
-                    HW_SCE_AES_128EcbDecryptUsingEncryptedKey((uint32_t *) w,
-                                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(
-                                                                  NX_CRYPTO_AES_BLOCK_SIZE),
-                                                              (uint32_t *) p_aligned_input,
-                                                              (uint32_t *) p_aligned_output);
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE));
             }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            else
-            {
-                ret =
-                    HW_SCE_AES_128EcbDecrypt((uint32_t *) w,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE),
-                                             (uint32_t *) p_aligned_input,
-                                             (uint32_t *) p_aligned_output);
-            }
- #endif
+            ret = HW_SCE_Aes128EncryptDecryptFinalSub();
             break;
         }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
         case 12:
         {
-            ret =
-                HW_SCE_AES_192EcbDecryptUsingEncryptedKey((uint32_t *) w,
-                                                          RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(
-                                                              NX_CRYPTO_AES_BLOCK_SIZE),
-                                                          (uint32_t *) p_aligned_input,
-                                                          (uint32_t *) p_aligned_output);
+            ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) w, dummy_iv);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE));
+            }
+
+            ret = HW_SCE_Aes192EncryptDecryptFinalSub();
+
             break;
         }
  #endif
         case 14:
         {
-            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS)
+            ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            if (ret == FSP_SUCCESS)
             {
-                ret =
-                    HW_SCE_AES_256EcbDecryptUsingEncryptedKey((uint32_t *) w,
-                                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(
-                                                                  NX_CRYPTO_AES_BLOCK_SIZE),
-                                                              (uint32_t *) p_aligned_input,
-                                                              (uint32_t *) p_aligned_output);
+                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE));
             }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            else
-            {
-                ret =
-                    HW_SCE_AES_256EcbDecrypt((uint32_t *) w,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE),
-                                             (uint32_t *) p_aligned_input,
-                                             (uint32_t *) p_aligned_output);
-            }
- #endif
+            ret = HW_SCE_Aes256EncryptDecryptFinalSub();
             break;
         }
 
@@ -311,58 +280,43 @@ UINT sce_nx_crypto_aes_key_set (NX_CRYPTO_AES * aes_ptr, UCHAR * key, UINT key_s
         /* Cannot use fall-through as it would generates warnings. */
         case NX_CRYPTO_AES_KEY_SIZE_128_BITS:
         {
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
             key_length = (USHORT) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS;
             cmd        = SCE_OEM_CMD_AES128;
- #else
-            key_length = (USHORT) NX_CRYPTO_AES_KEY_SIZE_128_BITS;
- #endif
-            aes_ptr->nx_crypto_aes_rounds   = 10;
-            aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
+            aes_ptr->nx_crypto_aes_rounds = 10;
             break;
         }
 
         case SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS:
         {
-            aes_ptr->nx_crypto_aes_rounds   = 10;
-            aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
+            aes_ptr->nx_crypto_aes_rounds = 10;
             break;
         }
 
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
         case NX_CRYPTO_AES_KEY_SIZE_192_BITS:
         {
             key_length = (USHORT) SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS;
             cmd        = SCE_OEM_CMD_AES192;
-            aes_ptr->nx_crypto_aes_rounds   = 12;
-            aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
+            aes_ptr->nx_crypto_aes_rounds = 12;
             break;
         }
 
         case SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS:
         {
-            aes_ptr->nx_crypto_aes_rounds   = 12;
-            aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
+            aes_ptr->nx_crypto_aes_rounds = 12;
             break;
         }
- #endif
+
         case NX_CRYPTO_AES_KEY_SIZE_256_BITS:
         {
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
             key_length = (USHORT) SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS;
             cmd        = SCE_OEM_CMD_AES256;
- #else
-            key_length = (USHORT) NX_CRYPTO_AES_KEY_SIZE_256_BITS;
- #endif
-            aes_ptr->nx_crypto_aes_rounds   = 14;
-            aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
+            aes_ptr->nx_crypto_aes_rounds = 14;
             break;
         }
 
         case SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS:
         {
-            aes_ptr->nx_crypto_aes_rounds   = 14;
-            aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
+            aes_ptr->nx_crypto_aes_rounds = 14;
             break;
         }
 
@@ -375,21 +329,19 @@ UINT sce_nx_crypto_aes_key_set (NX_CRYPTO_AES * aes_ptr, UCHAR * key, UINT key_s
 
     /* Check if we found a valid key */
     FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
-
+    aes_ptr->nx_crypto_aes_key_size = (USHORT) key_length;
     if (cmd == SCE_OEM_CMD_NUM)
     {
         /* Copy the key into the beginning of the expanded key buffer. */
         NX_CRYPTO_MEMCPY(user_key, key, (key_length << 2));
     }
-
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
     else
     {
         ret =
             HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN, cmd, NULL, NULL, key, (uint32_t *) user_key);
     }
+
     FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
- #endif
 
     return NX_CRYPTO_SUCCESS;
 }

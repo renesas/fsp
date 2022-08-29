@@ -137,7 +137,7 @@ BaseType_t xNetworkInterfaceInitialise (void)
                               "CheckLinkStatusTask",
                               configMINIMAL_STACK_SIZE,
                               NULL,
-                              configMAX_PRIORITIES,
+                              configMAX_PRIORITIES - 1,
                               NULL);
     }
 

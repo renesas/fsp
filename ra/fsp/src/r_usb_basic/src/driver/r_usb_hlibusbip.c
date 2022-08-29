@@ -43,16 +43,18 @@
 #if defined(USB_CFG_OTG_USE)
  #if defined(USB_CFG_HCDC_USE)
   #include "r_usb_otg_cdc_cfg.h"
- #endif                                /* (defined(USB_CFG_HCDC_USE) | defined(USB_CFG_PCDC_USE)) */
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
+ #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_otg_hid_cfg.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
 #else                                  /* defined(USB_CFG_OTG_USE) */
  #if defined(USB_CFG_HCDC_USE)
   #include "r_usb_hcdc_cfg.h"
  #endif                                /* defined(USB_CFG_HCDC_USE) */
+ #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_hhid_cfg.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
 #endif                                 /* defined(USB_CFG_OTG_USE) */
-
-#if defined(USB_CFG_HHID_USE)
- #include "r_usb_hhid_cfg.h"
-#endif                                 /* defined(USB_CFG_HHID_USE) */
 
 #if defined(USB_CFG_HPRN_USE)
  #include "r_usb_hprn_cfg.h"
@@ -1746,7 +1748,7 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
 
                         case 3:        /* Hub downport device2 */
                         {
-                            pipe_no = USB_NULL;
+                            pipe_no = USB_CFG_HPRN_BULK_IN2;
                             break;
                         }
 
@@ -1769,7 +1771,7 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
 
                         case 3:        /* Hub downport device2 */
                         {
-                            pipe_no = USB_NULL;
+                            pipe_no = USB_CFG_HPRN_BULK_OUT2;
                             break;
                         }
 
@@ -1887,24 +1889,28 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
         case USB_CFG_HCDC_BULK_OUT:
         {
    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
    #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
             pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
    #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
             break;
         }
 
+   #if (USB_NULL != USB_CFG_HCDC_BULK_IN2)
         case USB_CFG_HCDC_BULK_IN2:
         {
             pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
             break;
         }
+   #endif                              /* (USB_NULL != USB_CFG_HCDC_BULK_IN2) */
 
+   #if (USB_NULL != USB_CFG_HCDC_BULK_OUT2)
         case USB_CFG_HCDC_BULK_OUT2:
         {
             pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
             break;
         }
+   #endif                              /* (USB_NULL != USB_CFG_HCDC_BULK_OUT2) */
   #endif                               /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_HMSC_USE)
@@ -1969,12 +1975,28 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
         case USB_CFG_HPRN_BULK_OUT:
         {
    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
    #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
             pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
    #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
             break;
         }
+
+   #if (USB_NULL != USB_CFG_HPRN_BULK_IN2)
+        case USB_CFG_HPRN_BULK_IN2:
+        {
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
+            break;
+        }
+   #endif                              /* (USB_NULL != USB_CFG_HPRN_BULK_IN2) */
+
+   #if (USB_NULL != USB_CFG_HPRN_BULK_OUT2)
+        case USB_CFG_HPRN_BULK_OUT2:
+        {
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
+            break;
+        }
+   #endif                              /* (USB_NULL != USB_CFG_HPRN_BULK_OUT2) */
   #endif                               /* defined(USB_CFG_HPRN_USE) */
 
         default:

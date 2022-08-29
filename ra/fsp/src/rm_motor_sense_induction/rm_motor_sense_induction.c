@@ -979,9 +979,8 @@ static void rm_motor_sense_induction_angle_speed (motor_sense_induction_instance
         p_ctrl->current.f_speed_radian *=
             (p_ctrl->f_inverse_polepairs * p_extended_cfg->u1_motor_polepairs);
         p_ctrl->current.f_position_radian *= p_ctrl->f_inverse_polepairs;
-        f4_angle_rad =
-            (float) (fmod((p_ctrl->current.f_position_radian * p_extended_cfg->u1_motor_polepairs),
-                          MOTOR_SENSE_INDUCTION_TWOPI));
+        f4_angle_rad = fmodf((p_ctrl->current.f_position_radian * p_extended_cfg->u1_motor_polepairs),
+                             MOTOR_SENSE_INDUCTION_TWOPI);
     }
     else
     {
@@ -1256,8 +1255,8 @@ static void rm_motor_sense_induction_get_data_for_gain_calibration (motor_sense_
             }
 
             p_ctrl->current.f_angle_openloop =
-                (float) (fmod((p_ctrl->current.f_angle_openloop * p_extended_cfg->u1_motor_polepairs),
-                              MOTOR_SENSE_INDUCTION_TWOPI));
+                fmodf((p_ctrl->current.f_angle_openloop * p_extended_cfg->u1_motor_polepairs),
+                      MOTOR_SENSE_INDUCTION_TWOPI);
 
             /* angle calcuration end */
 
@@ -1478,8 +1477,8 @@ static void rm_motor_sense_induction_get_data_phase_calibration (motor_sense_ind
             }
 
             p_ctrl->current.f_angle_openloop =
-                (float) (fmod((p_ctrl->current.f_angle_openloop * p_extended_cfg->u1_motor_polepairs),
-                              MOTOR_SENSE_INDUCTION_TWOPI));
+                fmodf((p_ctrl->current.f_angle_openloop * p_extended_cfg->u1_motor_polepairs),
+                      MOTOR_SENSE_INDUCTION_TWOPI);
 
             /* angle calcuration end */
 

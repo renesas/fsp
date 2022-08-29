@@ -44,11 +44,7 @@
 #ifndef MBEDTLS_CTR_DRBG_ALT_H
  #define MBEDTLS_CTR_DRBG_ALT_H
 #if defined(MBEDTLS_CTR_DRBG_C_ALT)
- #if !defined(MBEDTLS_CONFIG_FILE)
-  #include "mbedtls/config.h"
- #else
-  #include MBEDTLS_CONFIG_FILE
- #endif
+ #include "common.h"
 
  #include "aes_alt.h"
 

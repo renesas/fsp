@@ -20,7 +20,7 @@
 
 /**
  * @file    sulfur_odor.h
- * @author  Ronald Schreiber
+ * @author Renesas Electronics Corporation
  * @version 2.1.2
  * @brief   This file contains the data structure definitions and
  *          the function definitions for the sulfor odor algorithm.
@@ -39,19 +39,35 @@ extern "C" {
 
  #include <stdint.h>
  #include <math.h>
- #include "../zmod4xxx_types.h"
+ #if 0                                 // For multiple operations
+  #include "zmod4xxx_types.h"
 
 /**
- * @brief Return codes of the sulfur odor algorithm functions
+ * @brief Variables that describe the library version
  */
- #define SULFUR_ODOR_OK              (0)   /**< everything okay */
- #define SULFUR_ODOR_WARMUP          (1)   /**< sensor in stabilization */
- #define SULFUR_ODOR_WRONG_DEVICE    (-32) /**< wrong sensor type */
+typedef struct
+{
+    uint8_t major;
+    uint8_t minor;
+    uint8_t patch;
+} algorithm_version;
+ #else
+  #include "../zmod4xxx_types.h"
+ #endif
+
+/**
+ * \defgroup sulfur_odor_ret Return codes of the sulfur odor algorithm functions
+ * @{
+ */
+ #define SULFUR_ODOR_OK               (0)   /**< everything okay */
+ #define SULFUR_ODOR_STABILIZATION    (1)   /**< sensor in stabilization */
+ #define SULFUR_ODOR_WRONG_DEVICE     (-32) /**< wrong sensor type */
+/** @} */
 
 /**
  * @brief Number of MOX and CDA resistances to store
  */
- #define SULFUR_ODOR_N_RMOX          (9)
+ #define SULFUR_ODOR_N_RMOX           (9)
 
 /**
  * @brief Odor classifications.
@@ -85,25 +101,33 @@ typedef struct
 } sulfur_odor_results_t;
 
 /**
+ * @brief Algorithm input structure
+ */
+typedef struct
+{
+    uint8_t *
+        adc_result;                    /**< Pointer to array, with the values from the sensor results table */
+} sulfur_odor_inputs_t;
+
+/**
  * @brief   Initializes the algorithm.
  * @param   [out] handle Pointer to algorithm state variable.
- * @param   [in]  dev Pointer to device.
  * @return  error code.
  */
-int8_t init_sulfur_odor(sulfur_odor_handle_t * handle, zmod4xxx_dev_t * dev);
+int8_t init_sulfur_odor(sulfur_odor_handle_t * handle);
 
 /**
  * @brief   calculates results from present sample.
  * @param   [in] handle Pointer to algorithm state variable.
  * @param   [in] dev Pointer to the device.
- * @param   [in] sensor_results_table pointer to array of 32 bytes with the values from the sensor results table.
+ * @param   [in] algo_input Structure containing inputs required for algo calculation.
  * @param   [out] results Pointer for storing the algorithm results.
  * @return  error code.
  */
-int8_t calc_sulfur_odor(sulfur_odor_handle_t  * handle,
-                        zmod4xxx_dev_t        * dev,
-                        const uint8_t         * sensor_results_table,
-                        sulfur_odor_results_t * results);
+int8_t calc_sulfur_odor(sulfur_odor_handle_t       * handle,
+                        zmod4xxx_dev_t             * dev,
+                        const sulfur_odor_inputs_t * algo_input,
+                        sulfur_odor_results_t      * results);
 
  #ifdef __cplusplus
 }

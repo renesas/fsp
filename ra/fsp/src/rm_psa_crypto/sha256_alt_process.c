@@ -18,17 +18,13 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
 #if defined(MBEDTLS_SHA256_C)
 
  #include "mbedtls/sha256.h"
  #include "mbedtls/platform_util.h"
-
+ #include "mbedtls/error.h"
  #include <string.h>
 
  #if defined(MBEDTLS_PLATFORM_C)
@@ -66,12 +62,18 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
 {
     SHA256_VALIDATE_RET(ctx != NULL);
     SHA256_VALIDATE_RET((const unsigned char *) data != NULL);
+    uint32_t out_data[8] = {0};
 
     if (FSP_SUCCESS !=
-        HW_SCE_SHA256_UpdateHash((const uint32_t *) &data[0], BYTES_TO_WORDS(len), &ctx->state[0]))
+        HW_SCE_Sha224256GenerateMessageDigestSub(&ctx->state[0], (const uint32_t *) &data[0], BYTES_TO_WORDS(len),
+                                                 out_data))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
+
+    memcpy(&ctx->state[0],
+           out_data,
+           HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
 
     return 0;
 }
@@ -89,10 +91,11 @@ int mbedtls_internal_sha256_process (mbedtls_sha256_context * ctx,
 {
     SHA256_VALIDATE_RET(ctx != NULL);
     SHA256_VALIDATE_RET((const unsigned char *) data != NULL);
+    uint32_t out_data[8] = {0};
 
     if (FSP_SUCCESS !=
-        HW_SCE_SHA256_UpdateHash((const uint32_t *) &data[0], BYTES_TO_WORDS(SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES),
-                                 &ctx->state[0]))
+        HW_SCE_Sha224256GenerateMessageDigestSub(&ctx->state[0], (const uint32_t *) &data[0],
+                                                 BYTES_TO_WORDS(SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES), out_data))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }

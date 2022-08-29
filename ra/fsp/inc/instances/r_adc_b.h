@@ -79,6 +79,22 @@ typedef enum e_adc_b_clock_divider
     ADC_B_CLOCK_DIV_8 = 7              ///< ADC Clock Division 1/8
 } adc_b_clock_divider_t;
 
+/** ADC_B Conversion Mode */
+typedef enum e_adc_b_converter_mode
+{
+    ADC_B_CONVERTER_MODE_SINGLE_SCAN     = 0x0, ///< Single scan mode
+    ADC_B_CONVERTER_MODE_CONTINUOUS_SCAN = 0x1, ///< Continuous scan mode
+    ADC_B_CONVERTER_MODE_BACKGROUND_SCAN = 0x2, ///< Background continuous scan mode (Valid for Hybrid mode only)
+} adc_b_converter_mode_t;
+
+/** ADC_B Conversion Method */
+typedef enum e_adc_b_conversion_method
+{
+    ADC_B_CONVERSION_METHOD_SAR        = 0x0, ///< SAR conversion method
+    ADC_B_CONVERSION_METHOD_OVERSAMPLE = 0x1, ///< Oversampling conversion method
+    ADC_B_CONVERSION_METHOD_HYBRID     = 0x2, ///< Hybrid conversion method
+} adc_b_conversion_method_t;
+
 /** ADC_B data resolution definitions */
 typedef enum e_adc_b_resolution
 {
@@ -305,6 +321,13 @@ typedef enum e_adc_b_pga_gain
     ADC_B_PGA_GAIN_SINGLE_ENDED_13_333 = 0x0E01000C, ///< PGA Gain Setting 13.333
 } adc_b_pga_gain_t;
 
+/** ADC Digital Filter Selection */
+typedef enum e_adc_b_digital_filter_selection
+{
+    ADC_B_DIGITAL_FILTER_MODE_SINC3 = 0x1, ///< Digital filter Sinc3 filter (Oversampling Rate = 8)
+    ADC_B_DIGITAL_FILTER_MODE_PHASE = 0x2, ///< Digital filter Minimum phase filter (Group delay < 2)
+} adc_b_digital_filter_selection_t;
+
 /** ADC Sampling State table selection options */
 typedef enum e_adc_b_sampling_state_table_id
 {
@@ -396,7 +419,8 @@ typedef struct st_adc_b_virtual_channel_cfg
         uint32_t channel_control_a;       ///< A/D conversion data operation control a
         struct
         {
-            uint32_t                 : 16;
+            uint32_t digital_filter_id : 3; ///< Digital filter table index selection
+            uint32_t                   : 13;
             uint32_t gain_table_id   : 4; ///< User gain table selection
             uint32_t                 : 4;
             uint32_t offset_table_id : 4; ///< User offset table selection
@@ -538,7 +562,6 @@ typedef struct st_adc_b_extended_cfg
             uint32_t                  : 13;
         } clock_control_bits;
     };
-
     union
     {
         uint32_t sync_operation_control; ///< Synchronous Operation Control register data
@@ -551,7 +574,15 @@ typedef struct st_adc_b_extended_cfg
             uint32_t                    : 14;
         } sync_operation_control_bits;
     };
-    uint32_t adc_b_mode;               ///< ADC_B mode register data
+    union
+    {
+        uint32_t adc_b_mode;                      /// ADC_B converter mode register data
+        struct
+        {
+            adc_b_converter_mode_t    mode   : 2; ///< ADC_B converter mode
+            adc_b_conversion_method_t method : 2; ///< ADC_B converter method
+        } adc_b_converter_mode[2];
+    };
     uint32_t scan_group_enable;        ///< Scan Group enable register data
     union
     {
@@ -563,7 +594,6 @@ typedef struct st_adc_b_extended_cfg
         };
         uint8_t converter_selection[9];
     };
-
     union
     {
         uint16_t fifo_enable_mask;       ///< FIFO enable register data

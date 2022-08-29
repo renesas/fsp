@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_Aes128XtsDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,13 +74,13 @@ void HW_SCE_Aes128XtsDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    HW_SCE_p_func100(0x1f5b9b2au, 0xdc4bb111u, 0xcc7658c6u, 0xe2a8e6e4u);
-    SCE->REG_104H = 0x000000b1u;
-    SCE->REG_B0H = 0x00000020u;
-    SCE->REG_A4H = 0x0000cda6u;
-    SCE->REG_04H = 0x0000c100u;
+    HW_SCE_p_func100(0x1f5b9b2aU, 0xdc4bb111U, 0xcc7658c6U, 0xe2a8e6e4U);
+    SCE->REG_104H = 0x000000b1U;
+    SCE->REG_B0H = 0x00000020U;
+    SCE->REG_A4H = 0x0000cda6U;
+    SCE->REG_04H = 0x0000c100U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -81,7 +91,7 @@ void HW_SCE_Aes128XtsDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
     for (iLoop = 4; iLoop < MAX_CNT; iLoop = iLoop + 4)
     {
         /* WAIT_LOOP */
-        while (1u != SCE->REG_104H_b.B31)
+        while (1U != SCE->REG_104H_b.B31)
         {
             /* waiting */
         }
@@ -90,7 +100,7 @@ void HW_SCE_Aes128XtsDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
         SCE->REG_100H = InData_Text[iLoop + 2];
         SCE->REG_100H = InData_Text[iLoop + 3];
         /* WAIT_LOOP */
-        while (1u != SCE->REG_04H_b.B30)
+        while (1U != SCE->REG_04H_b.B30)
         {
             /* waiting */
         }
@@ -100,7 +110,7 @@ void HW_SCE_Aes128XtsDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
         OutData_Text[iLoop-4 + 3] = SCE->REG_100H;
     }
     /* WAIT_LOOP */
-    while (1u != SCE->REG_04H_b.B30)
+    while (1U != SCE->REG_04H_b.B30)
     {
         /* waiting */
     }
@@ -109,7 +119,7 @@ void HW_SCE_Aes128XtsDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
     OutData_Text[iLoop-4 + 2] = SCE->REG_100H;
     OutData_Text[iLoop-4 + 3] = SCE->REG_100H;
     HW_SCE_p_func206();//DisableINTEGRATE_WRRDYBandINTEGRATE_RDRDYBinthisfunction.
-    HW_SCE_p_func101(0x0bad6ff4u, 0x21a29b22u, 0xb39b0111u, 0x27bbba8cu);
+    HW_SCE_p_func101(0x0bad6ff4U, 0x21a29b22U, 0xb39b0111U, 0x27bbba8cU);
 }
 
 /***********************************************************************************************************************

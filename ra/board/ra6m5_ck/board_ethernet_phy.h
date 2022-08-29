@@ -37,8 +37,10 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BOARD_PHY_TYPE       (4)
-#define BOARD_PHY_REF_CLK    (1)
+#define BOARD_PHY_TYPE                         (4) // DEPRECATED
+#define ETHER_PHY_CFG_TARGET_ICS1894_ENABLE    (1)
+#define ETHER_PHY_LSI_TYPE_KIT_COMPONENT       ETHER_PHY_LSI_TYPE_ICS1894
+#define BOARD_PHY_REF_CLK                      (1)
 
 /***********************************************************************************************************************
  * Typedef definitions

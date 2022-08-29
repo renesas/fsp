@@ -194,6 +194,8 @@ extern "C" {
 
  #define USB_OK                                 (0U)
  #define USB_ERROR                              (0xff)
+ #define USB_ERR_TMOUT                          (0xfe)
+ #define USB_ERR_FIFO_ACCESS                    (0xfd)
  #define USB_QOVR                               (0xd5) /* Submit overlap error */
  #define USB_PAR                                (0xef) /* parameter error */
 
@@ -216,7 +218,19 @@ extern "C" {
 /* USB module definition */
  #define USB_M0                                 (R_USB_FS0)
 
- #define USB_M1                                 (R_USB_HS0)
+ #ifdef  R_USB_HS0
+  #define USB_M1                                (R_USB_HS0)
+ #else                                 /* R_USB_HS0 */
+  #ifndef R_USB_HS0_BASE
+   #if defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA6M4)
+    #define R_USB_HS0_BASE                      (0x40111000)
+   #else                               /* defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA6M4) */
+    #define R_USB_HS0_BASE                      (0x40060000)
+   #endif                              /* defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA6M4) */
+  #endif /* R_USB_HS0_BASE */
+
+  #define USB_M1                                (((R_USB_FS0_Type *) R_USB_HS0_BASE))
+ #endif                                /* R_USB_HS0 */
 
 /* FIFO port register default access size */
  #define USB0_CFIFO_MBW                         (USB_MBW_16)
@@ -409,9 +423,9 @@ extern "C" {
  #define USB_OTHER_SPEED_CONF_DESCRIPTOR        (0x0700U)
  #define USB_INTERFACE_POWER_DESCRIPTOR         (0x0800U)
 
-#define USB_OTG_SELECTOR                       (0xF000U)
-#define B_HNP_ENABLE                           (0x3U)
-#define A_HNP_SUPPORT                          (0x4U)
+ #define USB_OTG_SELECTOR                       (0xF000U)
+ #define B_HNP_ENABLE                           (0x3U)
+ #define A_HNP_SUPPORT                          (0x4U)
 
 /* HUB CLASS REQUEST */
  #define USB_HUB_CLEAR_TT_BUFFER                (0x0800U)
@@ -552,6 +566,7 @@ extern "C" {
  #define USB_CTRL_WRITING                       (18U)
  #define USB_DATA_READING                       (19U)
  #define USB_DATA_WRITING                       (20U)
+ #define USB_DATA_FIFO_ERR                      (21U)
 
 /* Utr member (segment) */
  #define USB_TRAN_CONT                          (0x00U)

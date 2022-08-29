@@ -21,8 +21,8 @@
 /**
  * @file   zmod4410_config_odor.h
  * @brief  This is the configuration for zmod4410 module using the odor algorithm.
- * @version 2.1.2
  * @author Renesas Electronics Corporation
+ * @version 2.1.2
  */
 
 #ifndef _ZMOD4410_CONFIG_ODOR_H

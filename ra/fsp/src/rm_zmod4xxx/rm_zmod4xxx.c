@@ -100,6 +100,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4xxx =
     .sulfurOdorDataCalculate   = RM_ZMOD4XXX_SulfurOdorDataCalculate,
     .oaq1stGenDataCalculate    = RM_ZMOD4XXX_Oaq1stGenDataCalculate,
     .oaq2ndGenDataCalculate    = RM_ZMOD4XXX_Oaq2ndGenDataCalculate,
+    .raqDataCalculate          = RM_ZMOD4XXX_RaqDataCalculate,
     .temperatureAndHumiditySet = RM_ZMOD4XXX_TemperatureAndHumiditySet,
     .deviceErrorCheck          = RM_ZMOD4XXX_DeviceErrorCheck,
 };
@@ -163,9 +164,6 @@ fsp_err_t RM_ZMOD4XXX_Open (rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_c
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_comms_instance);
-    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_device);  // This will be removed in FSP v4.0.0.
-    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_handle);  // This will be removed in FSP v4.0.0.
-    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_results); // This will be removed in FSP v4.0.0.
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
@@ -585,6 +583,40 @@ fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate (rm_zmod4xxx_ctrl_t * const        
 }
 
 /*******************************************************************************************************************//**
+ * @brief  This function should be called when measurement finishes. To check measurement status either polling or
+ * busy/interrupt pin can be used.
+ * Implements @ref rm_zmod4xxx_api_t::raqDataCalculate
+ *
+ * @retval FSP_SUCCESS                            Successfully results are read.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
+ **********************************************************************************************************************/
+fsp_err_t RM_ZMOD4XXX_RaqDataCalculate (rm_zmod4xxx_ctrl_t * const     p_api_ctrl,
+                                        rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                        rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_raw_data);
+    FSP_ASSERT(NULL != p_zmod4xxx_data);
+    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
+
+    /* Calculate RAQ data */
+    err = p_lib->p_api->raqDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * @brief  This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate.
  * Humidity and temperature measurements are needed for ambient compensation.
  * Implements @ref rm_zmod4xxx_api_t::temperatureAndHumiditySet
@@ -693,7 +725,8 @@ void rm_zmod4xxx_comms_i2c_callback (rm_comms_callback_args_t * p_args)
         if ((true == p_ctrl->status.flag) && (RM_ZMOD4XXX_EVENT_SUCCESS == zmod4xxx_callback_args.event))
         {
             if ((RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_CONTINUOUS == p_lib->lib_type) ||
-                (RM_ZMOD4410_LIB_TYPE_ODOR == p_lib->lib_type))
+                (RM_ZMOD4410_LIB_TYPE_ODOR == p_lib->lib_type) ||
+                (RM_ZMOD4450_LIB_TYPE_RAQ == p_lib->lib_type))
             {
                 status = (p_ctrl->status.value & RM_ZMOD4XXX_STATUS_LAST_SEQ_STEP_MASK);
                 if (((p_zmod4xxx_device->meas_conf->s.len / 2) - 1) != status)

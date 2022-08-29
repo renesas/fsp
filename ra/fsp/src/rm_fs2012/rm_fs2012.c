@@ -37,7 +37,7 @@
 #define RM_FS2012_MASK_DATA_UPPER_0X0F      (0x0F)
 
 /* Definitions for Calculation */
-#define RM_FS2012_CALC_DECIMAL_VALUE_100    (100.0)
+#define RM_FS2012_CALC_DECIMAL_VALUE_100    (100.0F)
 #if RM_FS2012_CFG_DEVICE_TYPE
  #define RM_FS2012_CALC_DEVISOR             (10.0F)   // FS2012-xxxx-LQ
 #else

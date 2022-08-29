@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_p_func062(uint32_t ARG1, uint32_t* ARG2)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,13 +74,13 @@ void HW_SCE_p_func062(uint32_t ARG1, uint32_t* ARG2)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    SCE->REG_D0H = 0x40000700u;
-    SCE->REG_C4H = 0x00e087b7u;
-    SCE->REG_04H = 0x00000282u;
+    SCE->REG_D0H = 0x40000700U;
+    SCE->REG_C4H = 0x00e087b7U;
+    SCE->REG_04H = 0x00000282U;
     for(oLoop=ARG1; oLoop<ARG1+32; oLoop=oLoop+4)
     {
         /* WAIT_LOOP */
-        while (1u != SCE->REG_04H_b.B30)
+        while (1U != SCE->REG_04H_b.B30)
         {
             /* waiting */
         }
@@ -80,11 +90,11 @@ void HW_SCE_p_func062(uint32_t ARG1, uint32_t* ARG2)
         ARG2[1+oLoop + 3] = SCE->REG_100H;
     }
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
+    SCE->REG_1CH = 0x00001800U;
 }
 
 /***********************************************************************************************************************

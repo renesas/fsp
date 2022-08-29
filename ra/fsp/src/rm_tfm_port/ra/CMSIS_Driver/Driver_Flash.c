@@ -87,7 +87,7 @@ enum
 static const ARM_FLASH_CAPABILITIES DriverCapabilities =
 {
     .event_ready = EVENT_READY_NOT_AVAILABLE,
-    .data_width  = DATA_WIDTH_16BIT,
+    .data_width  = DATA_WIDTH_8BIT,
     .erase_chip  = CHIP_ERASE_SUPPORTED
 };
 

@@ -18,14 +18,11 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
+#include "mbedtls/error.h"
 #include "mbedtls/entropy.h"
-#include "mbedtls/entropy_poll.h"
+#include "entropy_poll.h"
 
 #include "mbedtls/platform.h"
 
@@ -45,6 +42,7 @@
 int mbedtls_hardware_poll (void * data, unsigned char * output, size_t len, size_t * olen)
 {
     ((void) data);
+
     if (FSP_SUCCESS != RM_PSA_CRYPTO_TRNG_Read(output, len, (uint32_t *) olen))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;

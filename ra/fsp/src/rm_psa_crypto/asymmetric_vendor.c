@@ -17,12 +17,7 @@
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
-
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
 #if defined(MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C)
  #include "asymmetric_vendor.h"
@@ -71,9 +66,12 @@ psa_status_t psa_import_ec_private_key_vendor (psa_ecc_family_t       curve,
 {
     psa_status_t          status = PSA_ERROR_CORRUPTION_DETECTED;
     mbedtls_ecp_keypair * ecp    = NULL;
+    int    explicit_bits         = (data_length != 0);
+    size_t curve_bits;
 
+    curve_bits = PSA_BYTES_TO_BITS(PSA_ECC_BYTES_VENDOR_RAW(data_length));
     mbedtls_ecp_group_id grp_id =
-        mbedtls_ecc_group_of_psa(curve, PSA_ECC_BYTES_VENDOR_RAW(data_length));
+        mbedtls_ecc_group_of_psa(curve, curve_bits, !explicit_bits);
 
     *p_ecp = NULL;
     ecp    = mbedtls_calloc(1, sizeof(mbedtls_ecp_keypair));

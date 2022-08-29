@@ -813,13 +813,6 @@ static void r_rtc_software_reset (void)
  **********************************************************************************************************************/
 static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 {
-    /* Clear START bit in RCR2 */
-    r_rtc_start_bit_update(0U);
-
-    /* Initialize registers. */
-    R_RTC->RCR1 = 0U;
-    R_RTC->RCR2 = 0U;
-
     /* Select the count source (RCKSEL) */
     R_RTC->RCR4 = (uint8_t) p_ctrl->p_cfg->clock_source;
 
@@ -836,6 +829,10 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
 
     /* Set the START bit to 0 */
     r_rtc_start_bit_update(0U);
+
+    /* Initialize registers. */
+    R_RTC->RCR1 = 0U;
+    R_RTC->RCR2 = 0U;
 
     /* Force RTC to 24 hour mode. Set HR24 bit in the RCR2 register */
     R_RTC->RCR2_b.HR24 = 1U;

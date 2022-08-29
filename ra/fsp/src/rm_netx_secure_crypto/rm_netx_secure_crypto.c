@@ -94,8 +94,11 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
                                                       uint32_t * actual_output_length)
 {
     uint32_t wrapped_key[RM_NETX_SECURE_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS] = {0};
-    uint32_t wrapped_key_length = (curve_id == NX_CRYPTO_EC_SECP384R1) ? RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
-        ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS) : RM_NETX_SECURE_CRYPTO_ECC_192_224_256_WRAPPED_KEY_SIZE_BYTES;
+    uint32_t wrapped_key_length = (curve_id == NX_CRYPTO_EC_SECP384R1) ? RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                                                                                          ECC_384_PRIVATE_KEY_LENGTH_WORDS))
+                                  :
+                                  RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                                                   ECC_256_PRIVATE_KEY_LENGTH_WORDS));
     uint32_t  curve_type = SCE_ECC_CURVE_TYPE_NIST;
     uint32_t  cmd        = 0x0;
     fsp_err_t err        = FSP_SUCCESS;
@@ -111,35 +114,46 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
     /* Generate ECC key pair based on the curve type & size */
     if (curve_id == NX_CRYPTO_EC_SECP384R1)
     {
-        formatted_public_key_384_t public_key = {0};
-        err = HW_SCE_ECC_384HrkGenerateKey(&curve_type, NULL, (uint32_t *) wrapped_key, (uint32_t *) &public_key);
+        sce_ecc384_public_key_index_t public_key = {0};
+        uint32_t indata_key_type                 = 0;
+        err =
+            HW_SCE_GenerateEccP384RandomKeyIndexSub(&curve_type, &indata_key_type, (uint32_t *) &public_key.value,
+                                                    (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
+                                                    (uint32_t *) &public_key.plain_value);
 
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.qx, curve_size);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], public_key.qy, curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], &public_key.value.key_q[curve_size], curve_size);
     }
     else if (curve_id == NX_CRYPTO_EC_SECP256R1)
     {
-        formatted_public_key_256_t public_key = {0};
-        err = HW_SCE_ECC_256HrkGenerateKey(&curve_type, &cmd, (uint32_t *) wrapped_key, (uint32_t *) &public_key);
-
+        sce_ecc_public_key_index_t public_key = {0};
+        uint32_t indata_key_type              = 0;
+        err =
+            HW_SCE_GenerateEccRandomKeyIndexSub(&curve_type, &cmd, &indata_key_type, (uint32_t *) &public_key.value,
+                                                (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
+                                                (uint32_t *) &public_key.plain_value);
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.qx, curve_size);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], public_key.qy, curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], &public_key.value.key_q[curve_size], curve_size);
     }
     else if (curve_id == NX_CRYPTO_EC_SECP224R1)
     {
-        formatted_public_key_224_t public_key = {0};
+        sce_ecc_public_key_index_t public_key = {0};
         cmd = RM_NETX_CRYPTO_CHANGE_ULONG_ENDIAN(RM_NETX_SECURE_CRYPTO_ECC_224_CURVE_OPERATION);
-        err = HW_SCE_ECC_256HrkGenerateKey(&curve_type, &cmd, (uint32_t *) wrapped_key, (uint32_t *) &public_key);
+        uint32_t indata_key_type = 0;
+        err =
+            HW_SCE_GenerateEccRandomKeyIndexSub(&curve_type, &cmd, &indata_key_type, (uint32_t *) &public_key.value,
+                                                (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
+                                                (uint32_t *) &public_key.plain_value);
 
         /* This generates the public key as:
-         * 4-bytes key info|| 4-bytes 0s || 28 bytes x-coordinate || 4-bytes 0s || 28 bytes y-coordinate || 20-bytes key info
+         * 4/16-bytes key info|| 4-bytes 0s || 28 bytes x-coordinate || 4-bytes 0s || 28 bytes y-coordinate || 16-bytes key info
          */
 
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.qx, curve_size);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], public_key.qy, curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], &public_key.value.key_q[curve_size], curve_size);
     }
     else
     {

@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_p_func054(uint32_t ARG1, uint32_t ARG2)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -66,8 +76,8 @@ void HW_SCE_p_func054(uint32_t ARG1, uint32_t ARG2)
     (void)MAX_CNT2;
     SCE->REG_14H = change_endian_long(ARG1);
     SCE->REG_14H = change_endian_long(ARG2);
-    SCE->REG_1D0H = 0x00000000u;
-    SCE->REG_1D0H = 0x00000000u;
+    SCE->REG_1D0H = 0x00000000U;
+    SCE->REG_1D0H = 0x00000000U;
 }
 
 /***********************************************************************************************************************

@@ -106,7 +106,6 @@ const ioport_api_t g_ioport_on_ioport =
     .pinCfg               = R_IOPORT_PinCfg,
     .pinEventInputRead    = R_IOPORT_PinEventInputRead,
     .pinEventOutputWrite  = R_IOPORT_PinEventOutputWrite,
-    .pinEthernetModeCfg   = R_IOPORT_EthernetModeCfg,
     .pinRead              = R_IOPORT_PinRead,
     .pinWrite             = R_IOPORT_PinWrite,
     .portDirectionSet     = R_IOPORT_PortDirectionSet,
@@ -669,39 +668,6 @@ fsp_err_t R_IOPORT_PinEventOutputWrite (ioport_ctrl_t * const p_ctrl, bsp_io_por
     }
 
     r_ioport_hw_pin_event_output_data_write(port, set_bits, reset_bits, pin_value);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Configures Ethernet channel PHY mode. Implements @ref ioport_api_t::pinEthernetModeCfg.
- *
- * @retval FSP_SUCCESS              Ethernet PHY mode set
- * @retval FSP_ERR_INVALID_ARGUMENT Channel or mode not valid
- * @retval FSP_ERR_UNSUPPORTED      Ethernet configuration not supported on this device.
- * @retval FSP_ERR_NOT_OPEN         The module has not been opened
- * @retval FSP_ERR_ASSERTION        NULL pointer
- *
- * @note This function is not re-entrant.
- **********************************************************************************************************************/
-fsp_err_t R_IOPORT_EthernetModeCfg (ioport_ctrl_t * const     p_ctrl,
-                                    ioport_ethernet_channel_t channel,
-                                    ioport_ethernet_mode_t    mode)
-{
-    FSP_ERROR_RETURN(1U == BSP_FEATURE_IOPORT_HAS_ETHERNET, FSP_ERR_UNSUPPORTED);
-
-#if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
-    ioport_instance_ctrl_t * p_instance_ctrl = (ioport_instance_ctrl_t *) p_ctrl;
-    FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(channel < IOPORT_ETHERNET_CHANNEL_END, FSP_ERR_INVALID_ARGUMENT);
-    FSP_ERROR_RETURN(mode < IOPORT_ETHERNET_MODE_END, FSP_ERR_INVALID_ARGUMENT);
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(channel);
-#endif
-
-    R_PMISC->PFENET = (uint8_t) mode;
 
     return FSP_SUCCESS;
 }

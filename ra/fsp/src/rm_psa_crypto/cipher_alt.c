@@ -28,9 +28,10 @@
 #if defined(MBEDTLS_CIPHER_C) && defined(MBEDTLS_CIPHER_ALT)
 #include "aes_alt.h"
 #include "mbedtls/cipher.h"
-#include "mbedtls/cipher_internal.h"
+#include "cipher_wrap.h"
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
+#include "mbedtls/constant_time.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -76,28 +77,7 @@
 #define CIPHER_VALIDATE( cond )        \
     MBEDTLS_INTERNAL_VALIDATE( cond )
 
-#if defined(MBEDTLS_GCM_C) || defined(MBEDTLS_CHACHAPOLY_C)
-/* Compare the contents of two buffers in constant time.
- * Returns 0 if the contents are bitwise identical, otherwise returns
- * a non-zero value.
- * This is currently only used by GCM and ChaCha20+Poly1305.
- */
-static int mbedtls_constant_time_memcmp( const void *v1, const void *v2,
-                                         size_t len )
-{
-    const unsigned char *p1 = (const unsigned char*) v1;
-    const unsigned char *p2 = (const unsigned char*) v2;
-    size_t i;
-    unsigned char diff;
-
-    for( diff = 0, i = 0; i < len; i++ )
-        diff |= p1[i] ^ p2[i];
-
-    return( (int)diff );
-}
-#endif /* MBEDTLS_GCM_C || MBEDTLS_CHACHAPOLY_C */
-
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 && defined(MBEDTLS_AES_C) && defined(MBEDTLS_AES_ALT)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5) && defined(MBEDTLS_AES_C) && defined(MBEDTLS_AES_ALT)
 static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
 {
     int ret = 0;
@@ -105,15 +85,15 @@ static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
 
     if (128U == key_bitlen)
     {
-        ret = HW_SCE_Aes128EncryptDecryptFinal();
+        ret = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
     else if (192U == key_bitlen)
     {
-        ret = HW_SCE_Aes192EncryptDecryptFinal();
+        ret = HW_SCE_Aes192EncryptDecryptFinalSub();
     }
     else if (256U == key_bitlen)
     {
-        ret = HW_SCE_Aes256EncryptDecryptFinal();
+        ret = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
     else
     {
@@ -130,7 +110,7 @@ static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
     return( 0 );
 
 }
-#endif /* BSP_FEATURE_CRYPTO_HAS_SCE9 && MBEDTLS_AES_C && MBEDTLS_AES_ALT */
+#endif /* (BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5) && MBEDTLS_AES_C && MBEDTLS_AES_ALT */
 
 static int supported_init = 0;
 
@@ -365,7 +345,7 @@ int mbedtls_cipher_setkey( mbedtls_cipher_context_t *ctx,
             case PSA_ERROR_NOT_SUPPORTED:
                 return( MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE );
             default:
-                return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+                return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
         }
         /* Indicate that we own the key slot and need to
          * destroy it in mbedtls_cipher_free(). */
@@ -452,6 +432,40 @@ int mbedtls_cipher_set_iv( mbedtls_cipher_context_t *ctx,
     }
 #endif
 
+#if defined(MBEDTLS_GCM_C)
+    if( MBEDTLS_MODE_GCM == ctx->cipher_info->mode )
+    {
+        return( mbedtls_gcm_starts( (mbedtls_gcm_context *) ctx->cipher_ctx,
+                                    ctx->operation,
+                                    iv, iv_len ) );
+    }
+#endif
+
+#if defined(MBEDTLS_CCM_C)
+    if( MBEDTLS_MODE_CCM_STAR_NO_TAG == ctx->cipher_info->mode )
+    {
+        int set_lengths_result;
+        int ccm_star_mode;
+
+        set_lengths_result = mbedtls_ccm_set_lengths(
+                                (mbedtls_ccm_context *) ctx->cipher_ctx,
+                                0, 0, 0 );
+        if( set_lengths_result != 0 )
+            return set_lengths_result;
+
+        if( ctx->operation == MBEDTLS_DECRYPT )
+            ccm_star_mode = MBEDTLS_CCM_STAR_DECRYPT;
+        else if( ctx->operation == MBEDTLS_ENCRYPT )
+            ccm_star_mode = MBEDTLS_CCM_STAR_ENCRYPT;
+        else
+            return MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA;
+
+        return( mbedtls_ccm_starts( (mbedtls_ccm_context *) ctx->cipher_ctx,
+                                    ccm_star_mode,
+                                    iv, iv_len ) );
+    }
+#endif
+
     if ( actual_iv_size != 0 )
     {
         memcpy( ctx->iv, iv, actual_iv_size );
@@ -503,8 +517,8 @@ int mbedtls_cipher_update_ad( mbedtls_cipher_context_t *ctx,
 #if defined(MBEDTLS_GCM_C)
     if( MBEDTLS_MODE_GCM == ctx->cipher_info->mode )
     {
-        return( mbedtls_gcm_starts( (mbedtls_gcm_context *) ctx->cipher_ctx, ctx->operation,
-                                    ctx->iv, ctx->iv_size, ad, ad_len ) );
+        return( mbedtls_gcm_update_ad( (mbedtls_gcm_context *) ctx->cipher_ctx,
+                                       ad, ad_len ) );
     }
 #endif
 
@@ -582,9 +596,18 @@ int mbedtls_cipher_update( mbedtls_cipher_context_t *ctx, const unsigned char *i
 #if defined(MBEDTLS_GCM_C)
     if( ctx->cipher_info->mode == MBEDTLS_MODE_GCM )
     {
-        *olen = ilen;
-        return( mbedtls_gcm_update( (mbedtls_gcm_context *) ctx->cipher_ctx, ilen, input,
-                                    output ) );
+        return( mbedtls_gcm_update( (mbedtls_gcm_context *) ctx->cipher_ctx,
+                                    input, ilen,
+                                    output, ilen, olen ) );
+    }
+#endif
+
+#if defined(MBEDTLS_CCM_C)
+    if( ctx->cipher_info->mode == MBEDTLS_MODE_CCM_STAR_NO_TAG )
+    {
+        return( mbedtls_ccm_update( (mbedtls_ccm_context *) ctx->cipher_ctx,
+                                    input, ilen,
+                                    output, ilen, olen ) );
     }
 #endif
 
@@ -1031,6 +1054,7 @@ int mbedtls_cipher_finish( mbedtls_cipher_context_t *ctx,
     if( MBEDTLS_MODE_CFB == ctx->cipher_info->mode ||
         MBEDTLS_MODE_OFB == ctx->cipher_info->mode ||
         MBEDTLS_MODE_GCM == ctx->cipher_info->mode ||
+        MBEDTLS_MODE_CCM_STAR_NO_TAG == ctx->cipher_info->mode ||
         MBEDTLS_MODE_XTS == ctx->cipher_info->mode ||
         MBEDTLS_MODE_STREAM == ctx->cipher_info->mode )
     {
@@ -1064,7 +1088,7 @@ int mbedtls_cipher_finish( mbedtls_cipher_context_t *ctx,
                 if( 0 != ctx->unprocessed_len )
                     return( MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED );
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
                 return sce_aes_cipher_final( ctx );
 #else
                 return( 0 );
@@ -1084,7 +1108,7 @@ int mbedtls_cipher_finish( mbedtls_cipher_context_t *ctx,
             if( NULL == ctx->add_padding && 0 == ctx->unprocessed_len )
             {
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
                 return sce_aes_cipher_final( ctx );
 #else
                 return( 0 );
@@ -1105,7 +1129,7 @@ int mbedtls_cipher_finish( mbedtls_cipher_context_t *ctx,
         /* Set output size for decryption */
         if( MBEDTLS_DECRYPT == ctx->operation )
         {
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
             if( 0 != ( ret = sce_aes_cipher_final( ctx )))
             {
                 return( ret );
@@ -1118,7 +1142,7 @@ int mbedtls_cipher_finish( mbedtls_cipher_context_t *ctx,
         /* Set output size for encryption */
         *olen = mbedtls_cipher_get_block_size( ctx );
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
         return sce_aes_cipher_final( ctx );
 #else
         return( 0 );
@@ -1151,7 +1175,7 @@ int mbedtls_cipher_finish( mbedtls_cipher_context_t *ctx,
             *olen = ctx->unprocessed_len;
         }
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
         return sce_aes_cipher_final( ctx );
 #else
         return( 0 );
@@ -1251,8 +1275,14 @@ int mbedtls_cipher_write_tag( mbedtls_cipher_context_t *ctx,
 
 #if defined(MBEDTLS_GCM_C)
     if( MBEDTLS_MODE_GCM == ctx->cipher_info->mode )
+    {
+        size_t output_length;
+        /* The code here doesn't yet support alternative implementations
+         * that can delay up to a block of output. */
         return( mbedtls_gcm_finish( (mbedtls_gcm_context *) ctx->cipher_ctx,
+                                    NULL, 0, &output_length,
                                     tag, tag_len ) );
+    }
 #endif
 
 #if defined(MBEDTLS_CHACHAPOLY_C)
@@ -1296,24 +1326,36 @@ int mbedtls_cipher_check_tag( mbedtls_cipher_context_t *ctx,
     }
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
 
+    /* Status to return on a non-authenticated algorithm. It would make sense
+     * to return MBEDTLS_ERR_CIPHER_INVALID_CONTEXT or perhaps
+     * MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA, but at the time I write this our
+     * unit tests assume 0. */
+    ret = 0;
+
 #if defined(MBEDTLS_GCM_C)
     if( MBEDTLS_MODE_GCM == ctx->cipher_info->mode )
     {
+        size_t output_length;
+        /* The code here doesn't yet support alternative implementations
+         * that can delay up to a block of output. */
+
         if( tag_len > sizeof( check_tag ) )
             return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );
 
         if( 0 != ( ret = mbedtls_gcm_finish(
                        (mbedtls_gcm_context *) ctx->cipher_ctx,
+                       NULL, 0, &output_length,
                        check_tag, tag_len ) ) )
         {
             return( ret );
         }
 
         /* Check the tag in "constant-time" */
-        if( mbedtls_constant_time_memcmp( tag, check_tag, tag_len ) != 0 )
-            return( MBEDTLS_ERR_CIPHER_AUTH_FAILED );
-
-        return( 0 );
+        if( mbedtls_ct_memcmp( tag, check_tag, tag_len ) != 0 )
+        {
+            ret = MBEDTLS_ERR_CIPHER_AUTH_FAILED;
+            goto exit;
+        }
     }
 #endif /* MBEDTLS_GCM_C */
 
@@ -1332,14 +1374,17 @@ int mbedtls_cipher_check_tag( mbedtls_cipher_context_t *ctx,
         }
 
         /* Check the tag in "constant-time" */
-        if( mbedtls_constant_time_memcmp( tag, check_tag, tag_len ) != 0 )
-            return( MBEDTLS_ERR_CIPHER_AUTH_FAILED );
-
-        return( 0 );
+        if( mbedtls_ct_memcmp( tag, check_tag, tag_len ) != 0 )
+        {
+            ret = MBEDTLS_ERR_CIPHER_AUTH_FAILED;
+            goto exit;
+        }
     }
 #endif /* MBEDTLS_CHACHAPOLY_C */
 
-    return( 0 );
+exit:
+    mbedtls_platform_zeroize( check_tag, tag_len );
+    return( ret );
 }
 #endif /* MBEDTLS_GCM_C || MBEDTLS_CHACHAPOLY_C */
 
@@ -1395,23 +1440,26 @@ int mbedtls_cipher_crypt( mbedtls_cipher_context_t *ctx,
          * are terminated by unsuccessful calls to psa_cipher_update(),
          * and by any call to psa_cipher_finish(). */
         if( status != PSA_SUCCESS )
-            return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+            return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
 
-        status = psa_cipher_set_iv( &cipher_op, iv, iv_len );
-        if( status != PSA_SUCCESS )
-            return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+        if( ctx->cipher_info->mode != MBEDTLS_MODE_ECB )
+        {
+            status = psa_cipher_set_iv( &cipher_op, iv, iv_len );
+            if( status != PSA_SUCCESS )
+                return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
+        }
 
         status = psa_cipher_update( &cipher_op,
                                     input, ilen,
                                     output, ilen, olen );
         if( status != PSA_SUCCESS )
-            return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+            return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
 
         status = psa_cipher_finish( &cipher_op,
                                     output + *olen, ilen - *olen,
                                     &part_len );
         if( status != PSA_SUCCESS )
-            return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+            return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
 
         *olen += part_len;
         return( 0 );
@@ -1439,8 +1487,8 @@ int mbedtls_cipher_crypt( mbedtls_cipher_context_t *ctx,
 
 #if defined(MBEDTLS_CIPHER_MODE_AEAD)
 /*
- * Packet-oriented encryption for AEAD modes: internal function shared by
- * mbedtls_cipher_auth_encrypt() and mbedtls_cipher_auth_encrypt_ext().
+ * Packet-oriented encryption for AEAD modes: internal function used by
+ * mbedtls_cipher_auth_encrypt_ext().
  */
 static int mbedtls_cipher_aead_encrypt( mbedtls_cipher_context_t *ctx,
                          const unsigned char *iv, size_t iv_len,
@@ -1474,7 +1522,7 @@ static int mbedtls_cipher_aead_encrypt( mbedtls_cipher_context_t *ctx,
                                    input, ilen,
                                    output, ilen + tag_len, olen );
         if( status != PSA_SUCCESS )
-            return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+            return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
 
         *olen -= tag_len;
         return( 0 );
@@ -1519,8 +1567,8 @@ static int mbedtls_cipher_aead_encrypt( mbedtls_cipher_context_t *ctx,
 }
 
 /*
- * Packet-oriented encryption for AEAD modes: internal function shared by
- * mbedtls_cipher_auth_encrypt() and mbedtls_cipher_auth_encrypt_ext().
+ * Packet-oriented encryption for AEAD modes: internal function used by
+ * mbedtls_cipher_auth_encrypt_ext().
  */
 static int mbedtls_cipher_aead_decrypt( mbedtls_cipher_context_t *ctx,
                          const unsigned char *iv, size_t iv_len,
@@ -1556,7 +1604,7 @@ static int mbedtls_cipher_aead_decrypt( mbedtls_cipher_context_t *ctx,
         if( status == PSA_ERROR_INVALID_SIGNATURE )
             return( MBEDTLS_ERR_CIPHER_AUTH_FAILED );
         else if( status != PSA_SUCCESS )
-            return( MBEDTLS_ERR_CIPHER_HW_ACCEL_FAILED );
+            return( MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED );
 
         return( 0 );
     }
@@ -1619,54 +1667,6 @@ static int mbedtls_cipher_aead_decrypt( mbedtls_cipher_context_t *ctx,
 
     return( MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE );
 }
-
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-/*
- * Packet-oriented encryption for AEAD modes: public legacy function.
- */
-int mbedtls_cipher_auth_encrypt( mbedtls_cipher_context_t *ctx,
-                         const unsigned char *iv, size_t iv_len,
-                         const unsigned char *ad, size_t ad_len,
-                         const unsigned char *input, size_t ilen,
-                         unsigned char *output, size_t *olen,
-                         unsigned char *tag, size_t tag_len )
-{
-    CIPHER_VALIDATE_RET( ctx != NULL );
-    CIPHER_VALIDATE_RET( iv_len == 0 || iv != NULL );
-    CIPHER_VALIDATE_RET( ad_len == 0 || ad != NULL );
-    CIPHER_VALIDATE_RET( ilen == 0 || input != NULL );
-    CIPHER_VALIDATE_RET( ilen == 0 || output != NULL );
-    CIPHER_VALIDATE_RET( olen != NULL );
-    CIPHER_VALIDATE_RET( tag_len == 0 || tag != NULL );
-
-    return( mbedtls_cipher_aead_encrypt( ctx, iv, iv_len, ad, ad_len,
-                                         input, ilen, output, olen,
-                                         tag, tag_len ) );
-}
-
-/*
- * Packet-oriented decryption for AEAD modes: public legacy function.
- */
-int mbedtls_cipher_auth_decrypt( mbedtls_cipher_context_t *ctx,
-                         const unsigned char *iv, size_t iv_len,
-                         const unsigned char *ad, size_t ad_len,
-                         const unsigned char *input, size_t ilen,
-                         unsigned char *output, size_t *olen,
-                         const unsigned char *tag, size_t tag_len )
-{
-    CIPHER_VALIDATE_RET( ctx != NULL );
-    CIPHER_VALIDATE_RET( iv_len == 0 || iv != NULL );
-    CIPHER_VALIDATE_RET( ad_len == 0 || ad != NULL );
-    CIPHER_VALIDATE_RET( ilen == 0 || input != NULL );
-    CIPHER_VALIDATE_RET( ilen == 0 || output != NULL );
-    CIPHER_VALIDATE_RET( olen != NULL );
-    CIPHER_VALIDATE_RET( tag_len == 0 || tag != NULL );
-
-    return( mbedtls_cipher_aead_decrypt( ctx, iv, iv_len, ad, ad_len,
-                                         input, ilen, output, olen,
-                                         tag, tag_len ) );
-}
-#endif /* !MBEDTLS_DEPRECATED_REMOVED */
 #endif /* MBEDTLS_CIPHER_MODE_AEAD */
 
 #if defined(MBEDTLS_CIPHER_MODE_AEAD) || defined(MBEDTLS_NIST_KW_C)

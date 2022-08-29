@@ -237,7 +237,7 @@ typedef struct sce_aes_wrapped_key
     uint32_t type;                                     ///< key type
 
     /* AES128, AES256 are supported */
-    uint32_t value[SCE_TLS_AES256_KEY_INDEX_WORD_SIZE]; ///< wrapped key value   
+    uint32_t value[SCE_TLS_AES256_KEY_INDEX_WORD_SIZE]; ///< wrapped key value <br> @note The size of the "value" array and the definition name depends on the used SCE. See the header file for detail.
 } sce_aes_wrapped_key_t;
 
 /** HMAC-SHA wrapped key data structure. DO NOT MODIFY. */
@@ -393,7 +393,7 @@ typedef struct sce_tls_p256_ecc_wrapped_key
 typedef struct sce_key_update_key
 {
     uint32_t type;                                          ///< key type
-    uint32_t value[HW_SCE_UPDATE_KEY_RING_INDEX_WORD_SIZE]; ///< wrapped key value   
+    uint32_t value[HW_SCE_UPDATE_KEY_RING_INDEX_WORD_SIZE]; ///< wrapped key value <br> @note The size of the "value" array and the definition name depends on the used SCE. See the header file for detail.
 } sce_key_update_key_t;
 
 /** The work area for AES. DO NOT MODIFY. */

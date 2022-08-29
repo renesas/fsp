@@ -46,7 +46,7 @@
 #define RM_FS3000_MASK_DATA_UPPER_0X0F      (0x0F)
 
 /* Definitions for Calculation */
-#define RM_FS3000_CALC_DECIMAL_VALUE_100    (100.0)
+#define RM_FS3000_CALC_DECIMAL_VALUE_100    (100.0F)
 
 /***********************************************************************************************************************
  * Typedef definitions

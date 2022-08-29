@@ -280,4 +280,26 @@ void PKCS11_PAL_GetObjectValueCleanup (CK_BYTE_PTR pucData, CK_ULONG ulDataSize)
     vPortFree(pucData);
 }
 
+/**
+ * @brief Deletes a file from storage
+ *
+ * @param[in] xHandle       Handle of object to delete.
+ */
+CK_RV PKCS11_PAL_DestroyObject (CK_OBJECT_HANDLE xHandle)
+{
+    CK_RV xReturn = CKR_FUNCTION_FAILED;
+
+    if (xHandle != eInvalidHandle)
+    {
+        volatile int lfs_err = lfs_remove(&RM_STDIO_LITTLEFS_CFG_LFS, (char *) g_object_handle_dictionary[xHandle]);
+
+        if (LFS_ERR_OK == lfs_err)
+        {
+            xReturn = CKR_OK;
+        }
+    }
+
+    return xReturn;
+}
+
 /*-----------------------------------------------------------*/

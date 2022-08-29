@@ -161,9 +161,8 @@ typedef struct st_can_callback_args
         uint32_t mailbox;              ///< Mailbox number of interrupt source.
         uint32_t buffer;               ///< Buffer number of interrupt source.
     };
-    can_frame_t * p_frame;             // DEPRECATED Pointer to the received frame.
-    void const  * p_context;           ///< Context provided to user during callback.
-    can_frame_t   frame;               ///< Received frame data.
+    void const * p_context;            ///< Context provided to user during callback.
+    can_frame_t  frame;                ///< Received frame data.
 } can_callback_args_t;
 
 /** CAN Configuration */

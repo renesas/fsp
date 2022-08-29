@@ -50,8 +50,18 @@ Private global variables and functions
 
 fsp_err_t HW_SCE_FwIntegrityCheck(void)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,27 +74,27 @@ fsp_err_t HW_SCE_FwIntegrityCheck(void)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    if (0x0u != (SCE->REG_1BCH & 0x1fu))
+    if (0x0U != (SCE->REG_1BCH & 0x1fU))
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00002601u;
-    SCE->REG_108H = 0x00000000u;
-    SCE->REG_84H = 0x00010002u;
-    SCE->REG_13CH = 0x00000F01u;
-    SCE->REG_84H = 0x00010003u;
-    SCE->REG_13CH = 0x00000F01u;
-    SCE->REG_ECH = 0x0000b7c0u;
-    SCE->REG_ECH = 0x000001f0u;
-    SCE->REG_ECH = 0x0000b7e0u;
-    SCE->REG_ECH = 0x00000000u;
-    SCE->REG_ECH = 0x00003ffeu;
-    SCE->REG_84H = 0x00010001u;
-    SCE->REG_13CH = 0x00000202u;
-    HW_SCE_p_func102(0x5e152cc3u, 0x70c33839u, 0x6c11afcdu, 0x3a544458u);
-    SCE->REG_1BCH = 0x00000040u;
+    SCE->REG_84H = 0x00002601U;
+    SCE->REG_108H = 0x00000000U;
+    SCE->REG_84H = 0x00010002U;
+    SCE->REG_13CH = 0x00000F01U;
+    SCE->REG_84H = 0x00010003U;
+    SCE->REG_13CH = 0x00000F01U;
+    SCE->REG_ECH = 0x0000b7c0U;
+    SCE->REG_ECH = 0x000001f0U;
+    SCE->REG_ECH = 0x0000b7e0U;
+    SCE->REG_ECH = 0x00000000U;
+    SCE->REG_ECH = 0x00003ffeU;
+    SCE->REG_84H = 0x00010001U;
+    SCE->REG_13CH = 0x00000202U;
+    HW_SCE_p_func102(0x5e152cc3U, 0x70c33839U, 0x6c11afcdU, 0x3a544458U);
+    SCE->REG_1BCH = 0x00000040U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_18H_b.B12)
+    while (0U != SCE->REG_18H_b.B12)
     {
         /* waiting */
     }

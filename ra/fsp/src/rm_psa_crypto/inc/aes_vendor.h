@@ -8,11 +8,7 @@
 #ifndef AES_VENDOR_H
  #define AES_VENDOR_H
 
- #if !defined(MBEDTLS_CONFIG_FILE)
-  #include "mbedtls/config.h"
- #else
-  #include MBEDTLS_CONFIG_FILE
- #endif
+ #include "common.h"
 
  #include <stddef.h>
  #include <stdint.h>
@@ -20,6 +16,8 @@
  #include "vendor.h"
  #include "mbedtls/aes.h"
  #include "hw_sce_aes_private.h"
+ #include "hw_sce_ra_private.h"
+ #include "hw_sce_private.h"
  #ifdef __cplusplus
 extern "C"
 {

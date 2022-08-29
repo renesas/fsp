@@ -35,20 +35,24 @@ enum tfm_security_lifecycle_t tfm_attest_hal_get_security_lifecycle(void)
     return TFM_SLC_SECURED;
 }
 
-const char *
-tfm_attest_hal_get_verification_service(uint32_t *size)
+enum tfm_plat_err_t
+tfm_attest_hal_get_verification_service(uint32_t *size, uint8_t *buf)
 {
     *size = sizeof(verification_service_url) - 1;
 
-    return verification_service_url;
+    memcpy(buf, verification_service_url, sizeof(verification_service_url));
+
+    return TFM_PLAT_ERR_SUCCESS;
 }
 
-const char *
-tfm_attest_hal_get_profile_definition(uint32_t *size)
+enum tfm_plat_err_t
+tfm_attest_hal_get_profile_definition(uint32_t *size, uint8_t *buf)
 {
     *size = sizeof(attestation_profile_definition) - 1;
 
-    return attestation_profile_definition;
+    memcpy(buf, attestation_profile_definition, sizeof(attestation_profile_definition));
+
+    return TFM_PLAT_ERR_SUCCESS;
 }
 
 enum tfm_plat_err_t tfm_plat_get_boot_seed(uint32_t size, uint8_t *buf)

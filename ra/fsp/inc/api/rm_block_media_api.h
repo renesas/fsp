@@ -89,7 +89,6 @@ typedef struct st_rm_block_media_callback_args
 /** User configuration structure, used in open function */
 typedef struct st_rm_block_media_cfg
 {
-    uint32_t block_size;                                          /// DEPRECATED - Block size, must be a power of 2 multiple of sector_size_bytes
     void (* p_callback)(rm_block_media_callback_args_t * p_args); ///< Pointer to callback function
     void const * p_context;                                       ///< User defined context passed into callback function
     void const * p_extend;                                        ///< Extension parameter for hardware specific settings

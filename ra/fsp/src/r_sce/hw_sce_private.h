@@ -32,8 +32,9 @@
  ***********************************************************************************************************************/
 #include "bsp_api.h"
 #include "hw_sce_common.h"
-#if BSP_FEATURE_CRYPTO_HAS_SCE9
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
  #include "r_sce_if.h"
+ #include "hw_sce_ra_private.h"
 #endif
 
 /**********************************************************************************************************************
@@ -53,11 +54,13 @@ typedef enum e_crypto_word_endian
     CRYPTO_WORD_ENDIAN_LITTLE = 1
 } crypto_word_endian_t;
 
-typedef enum e_sce_oem_key_type
-{
-    SCE_OEM_KEY_TYPE_ENCRYPTED = 0,
-    SCE_OEM_KEY_TYPE_PLAIN     = 1
-} sce_oem_key_type_t;
+/*
+ * typedef enum e_sce_oem_key_type
+ * {
+ *  SCE_OEM_KEY_TYPE_ENCRYPTED = 0,
+ *  SCE_OEM_KEY_TYPE_PLAIN     = 1
+ * } sce_oem_key_type_t;
+ */
 
 /**********************************************************************************************************************
  * Function Prototypes
@@ -96,45 +99,6 @@ fsp_err_t HW_SCE_HUK_Load_LCS(void);
 fsp_err_t HW_SCE_p07(uint32_t * OutData_KeyIndex);
 void      HW_SCE_ChangeToLittleEndian(void);
 
-#if !BSP_FEATURE_CRYPTO_HAS_SCE9
-
-/* OEM Command */
-typedef enum e_sce_oem_cmd
-{
-    SCE_OEM_CMD_AES128 = 5,
-    SCE_OEM_CMD_AES192,
-    SCE_OEM_CMD_AES256,
-    SCE_OEM_CMD_AES128_XTS,
-    SCE_OEM_CMD_AES256_XTS,
-    SCE_OEM_CMD_RSA1024_PUBLIC,
-    SCE_OEM_CMD_RSA1024_PRIVATE,
-    SCE_OEM_CMD_RSA2048_PUBLIC,
-    SCE_OEM_CMD_RSA2048_PRIVATE,
-    SCE_OEM_CMD_RSA3072_PUBLIC,
-    SCE_OEM_CMD_RSA3072_PRIVATE,
-    SCE_OEM_CMD_RSA4096_PUBLIC,
-    SCE_OEM_CMD_RSA4096_PRIVATE,
-    SCE_OEM_CMD_ECC_P192_PUBLIC,
-    SCE_OEM_CMD_ECC_P192_PRIVATE,
-    SCE_OEM_CMD_ECC_P224_PUBLIC,
-    SCE_OEM_CMD_ECC_P224_PRIVATE,
-    SCE_OEM_CMD_ECC_P256_PUBLIC,
-    SCE_OEM_CMD_ECC_P256_PRIVATE,
-    SCE_OEM_CMD_ECC_P384_PUBLIC,
-    SCE_OEM_CMD_ECC_P384_PRIVATE,
-    SCE_OEM_CMD_HMAC_SHA224,
-    SCE_OEM_CMD_HMAC_SHA256,
-    SCE_OEM_CMD_ECC_P256R1_PUBLIC,
-    SCE_OEM_CMD_ECC_P256R1_PRIVATE,
-    SCE_OEM_CMD_ECC_P384R1_PUBLIC,
-    SCE_OEM_CMD_ECC_P384R1_PRIVATE,
-    SCE_OEM_CMD_ECC_P512R1_PUBLIC,
-    SCE_OEM_CMD_ECC_P512R1_PRIVATE,
-    SCE_OEM_CMD_ECC_SECP256K1_PUBLIC,
-    SCE_OEM_CMD_ECC_SECP256K1_PRIVATE,
-    SCE_OEM_CMD_NUM
-} sce_oem_cmd_t;
-#endif
 fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate(const sce_oem_key_type_t key_type,
                                             const sce_oem_cmd_t      cmd,
                                             const uint8_t          * encrypted_provisioning_key,

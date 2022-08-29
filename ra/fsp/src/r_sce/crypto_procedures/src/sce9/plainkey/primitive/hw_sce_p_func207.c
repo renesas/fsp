@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_p_func207(void)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,17 +74,17 @@ void HW_SCE_p_func207(void)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    SCE->REG_04H = 0x00000000u;
-    SCE->REG_104H = 0x00000000u;
+    SCE->REG_04H = 0x00000000U;
+    SCE->REG_104H = 0x00000000U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_A8H_b.B6)
+    while (0U != SCE->REG_A8H_b.B6)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x002c0000u;
-    SCE->REG_1CH = 0x002d0000u;
-    SCE->REG_B0H = 0x00000001u;
-    SCE->REG_A4H = 0x00000000u;
+    SCE->REG_1CH = 0x002c0000U;
+    SCE->REG_1CH = 0x002d0000U;
+    SCE->REG_B0H = 0x00000001U;
+    SCE->REG_A4H = 0x00000000U;
 }
 
 /***********************************************************************************************************************

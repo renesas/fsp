@@ -388,7 +388,7 @@ static void bsp_prv_operating_mode_opccr_set(uint8_t operating_mode);
 
 #endif
 
-#if !BSP_CFG_SOFT_RESET_SUPPORTED
+#if !BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 static void bsp_prv_clock_set_hard_reset(void);
 
 #endif
@@ -764,7 +764,7 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr)
 #endif
 }
 
-#if !BSP_CFG_SOFT_RESET_SUPPORTED
+#if !BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
 static void bsp_prv_clock_set_hard_reset (void)
 {
@@ -942,7 +942,7 @@ void bsp_clock_init (void)
     bsp_clock_freq_var_init();
 
 #if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
- #if BSP_CFG_SOFT_RESET_SUPPORTED
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
     /* Update the main oscillator drive, source, and wait states if the main oscillator is stopped.  If the main
      * oscillator is running, the drive, source, and wait states are assumed to be already set appropriately. */
@@ -1022,7 +1022,7 @@ void bsp_clock_init (void)
 #endif
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
- #if BSP_CFG_SOFT_RESET_SUPPORTED
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
     /* Switch to high-speed to prevent any issues with the subsequent clock configurations. */
     bsp_prv_operating_mode_set(BSP_PRV_OPERATING_MODE_HIGH_SPEED);
@@ -1069,7 +1069,7 @@ void bsp_clock_init (void)
  #endif
 #endif
 #if BSP_PRV_MOCO_USED
- #if BSP_CFG_SOFT_RESET_SUPPORTED
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
     /* If the MOCO is not running, start it and wait for it to stabilize using a software delay. */
     if (0U != R_SYSTEM->MOCOCR)
@@ -1082,7 +1082,7 @@ void bsp_clock_init (void)
  #endif
 #endif
 #if BSP_PRV_LOCO_USED
- #if BSP_CFG_SOFT_RESET_SUPPORTED
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
     /* If the LOCO is not running, start it and wait for it to stabilize using a software delay. */
     if (0U != R_SYSTEM->LOCOCR)
@@ -1152,7 +1152,7 @@ void bsp_clock_init (void)
 #endif
 
     /* Set source clock and dividers. */
-#if BSP_CFG_SOFT_RESET_SUPPORTED
+#if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
  #if BSP_TZ_SECURE_BUILD
 
     /* In case of soft reset, make sure callback pointer is NULL initially. */
@@ -1168,7 +1168,7 @@ void bsp_clock_init (void)
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
  #if BSP_PRV_STARTUP_OPERATING_MODE != BSP_PRV_OPERATING_MODE_HIGH_SPEED
   #if BSP_PRV_PLL_SUPPORTED
-   #if BSP_CFG_SOFT_RESET_SUPPORTED
+   #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
     if (BSP_PRV_OPERATING_MODE_LOW_SPEED == BSP_PRV_STARTUP_OPERATING_MODE)
     {
         /* If the MCU has a PLL, ensure PLL is stopped and stable before entering low speed mode. */
@@ -1205,7 +1205,7 @@ void bsp_clock_init (void)
     R_SYSTEM->BCKCR   = BSP_CFG_BCLK_OUTPUT - 1U;
     R_SYSTEM->EBCKOCR = 1U;
  #else
-  #if BSP_CFG_SOFT_RESET_SUPPORTED
+  #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
     R_SYSTEM->EBCKOCR = 0U;
   #endif
  #endif
@@ -1218,7 +1218,7 @@ void bsp_clock_init (void)
 
     /* Configure CLKOUT. */
 #if BSP_CFG_CLKOUT_SOURCE == BSP_CLOCKS_CLOCK_DISABLED
- #if BSP_CFG_SOFT_RESET_SUPPORTED
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
     R_SYSTEM->CKOCR = 0U;
  #endif
 #else

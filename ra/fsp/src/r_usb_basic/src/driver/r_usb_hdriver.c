@@ -79,6 +79,15 @@
   #if defined(USB_CFG_HCDC_USE)
    #include "ux_host_class_cdc_acm.h"
   #endif                               /* defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HHID_USE)
+   #include "ux_host_class_hid.h"
+   #include "ux_host_class_hid_keyboard.h"
+   #include "ux_host_class_hid_mouse.h"
+   #include "ux_host_class_hid_remote_control.h"
+  #endif                               /* defined(USB_CFG_HHID_USE) */
+  #if defined(USB_CFG_HMSC_USE)
+   #include "ux_host_class_storage.h"
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
  #endif                                /* defined(USB_CFG_OTG_USE) */
 #endif                                 /* #if (BSP_CFG_RTOS != 0) */
 

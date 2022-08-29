@@ -40,13 +40,6 @@
 #define BSP_OVERRIDE_ELC_PERIPHERAL_T
 #define BSP_OVERRIDE_ADC_CHANNEL_T
 
-/* Define register overrides required for this MCU. */
-#define BSP_OVERRIDE_REG_HEADER    "../../../fsp/src/bsp/mcu/ra6t2/bsp_override_reg.h"
-#define BSP_OVERRIDE_REG_R_ELC_TYPE
-#define BSP_OVERRIDE_REG_R_PMISC_TYPE
-#define BSP_OVERRIDE_REG_R_AGTW0_TYPE
-#define BSP_OVERRIDE_REG_R_PORT0_TYPE
-
 /* Override definitions. */
 #define ELC_PERIPHERAL_NUM    (30U)
 

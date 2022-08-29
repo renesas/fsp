@@ -161,23 +161,6 @@ typedef struct st_sdadc_channel_cfg
 {
     union
     {
-        /* DEPRECATED: Anonymous structure. */
-        struct
-        {
-            sdadc_channel_stage_2_gain_t stage_2_gain   : 2; ///< Gain of PGA stage 2, must be 1 for single-ended input
-            sdadc_channel_stage_1_gain_t stage_1_gain   : 3; ///< Gain of PGA stage 1, must be 1 for single-ended input
-            sdadc_channel_oversampling_t oversampling   : 3; ///< Oversampling ratio, must be 256 in single-ended input
-            uint32_t                                    : 6;
-            sdadc_channel_polarity_t  polarity          : 1; ///< Polarity, valid for single-ended mode only
-            sdadc_channel_input_t     input             : 1; ///< Single-ended or differential input
-            uint32_t                  coefficient_m     : 5; ///< See ::sdadc_channel_count_formula_t
-            uint32_t                  coefficient_n     : 3; ///< See ::sdadc_channel_count_formula_t
-            sdadc_channel_average_t   average           : 4; ///< Number of samples to average for each conversion result
-            sdadc_channel_inversion_t invert            : 1; ///< Whether to invert negative single-ended input
-            uint32_t                                    : 2;
-            sdadc_channel_count_formula_t count_formula : 1; ///< Linear or exponential formula used for number of conversions
-        };
-
         struct
         {
             sdadc_channel_stage_2_gain_t stage_2_gain   : 2; ///< Gain of PGA stage 2, must be 1 for single-ended input

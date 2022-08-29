@@ -181,8 +181,8 @@ typedef struct st_motor_speed_flux_weakening
 
 typedef enum  e_motor_speed_less_switch
 {
-    MOTOR_SPEED_LESS_SWITCH_DISABLE = 0, ///< Disable soft switching between open-loop mode and normal FOC mode
-    MOTOR_SPEED_LESS_SWITCH_ENABLE  = 1  ///< Enable soft switching between open-loop mode and normal FOC mode
+    MOTOR_SPEED_LESS_SWITCH_DISABLE = 0, ///< Disable soft switching between open-loop mode and normal field oriented control mode
+    MOTOR_SPEED_LESS_SWITCH_ENABLE  = 1  ///< Enable soft switching between open-loop mode and normal field oriented control mode
 } motor_speed_less_switch_t;
 
 /* For Speed Observer */

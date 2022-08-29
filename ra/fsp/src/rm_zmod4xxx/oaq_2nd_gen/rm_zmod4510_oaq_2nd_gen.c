@@ -79,6 +79,9 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_oaq_1st_gen_data_calculate(rm_zmod4xxx_
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_data_calculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                                         rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                                         rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);
+static fsp_err_t rm_zmod4510_oaq_2nd_gen_raq_data_calculate(rm_zmod4xxx_ctrl_t * const     p_api_ctrl,
+                                                            rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                                            rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data);
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_device_error_check(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 
@@ -99,6 +102,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4510_oaq_2nd_gen =
     .sulfurOdorDataCalculate   = rm_zmod4510_oaq_2nd_gen_sulfur_odor_data_calculate,
     .oaq1stGenDataCalculate    = rm_zmod4510_oaq_2nd_gen_oaq_1st_gen_data_calculate,
     .oaq2ndGenDataCalculate    = rm_zmod4510_oaq_2nd_gen_data_calculate,
+    .raqDataCalculate          = rm_zmod4510_oaq_2nd_gen_raq_data_calculate,
     .temperatureAndHumiditySet = rm_zmod4510_oaq_2nd_gen_temperature_and_humidity_set,
     .deviceErrorCheck          = rm_zmod4510_oaq_2nd_gen_device_error_check,
 };
@@ -122,9 +126,8 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_open (rm_zmod4xxx_ctrl_t * const      p
 {
     rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
     int8_t lib_err = 0;
-    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
-    oaq_2nd_gen_handle_t           * p_handle          = (oaq_2nd_gen_handle_t *) p_lib->p_handle;
-    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib    = p_ctrl->p_zmod4xxx_lib;
+    oaq_2nd_gen_handle_t           * p_handle = (oaq_2nd_gen_handle_t *) p_lib->p_handle;
 
     FSP_PARAMETER_NOT_USED(p_cfg);
 
@@ -133,7 +136,7 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_open (rm_zmod4xxx_ctrl_t * const      p
     p_lib->humidity    = RM_ZMOD4510_OAQ_2ND_GEN_DEFAULT_HUMIDITY;
 
     /* Initialize the library */
-    lib_err = init_oaq_2nd_gen(p_handle, p_zmod4xxx_device);
+    lib_err = init_oaq_2nd_gen(p_handle);
     FSP_ERROR_RETURN(0 == lib_err, FSP_ERR_ASSERTION);
 
     return FSP_SUCCESS;
@@ -155,16 +158,15 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t * co
     oaq_2nd_gen_handle_t           * p_handle  = (oaq_2nd_gen_handle_t *) p_lib->p_handle;
     oaq_2nd_gen_results_t          * p_results = (oaq_2nd_gen_results_t *) p_lib->p_results;
     zmod4xxx_dev_t                 * p_device  = (zmod4xxx_dev_t *) p_lib->p_device;
-    uint16_t i;
-    int8_t   lib_err = 0;
+    uint16_t             i;
+    int8_t               lib_err = 0;
+    oaq_2nd_gen_inputs_t algorithm_input;
 
     /* Calculate OAQ 1st Gen. data form ADC data */
-    lib_err = calc_oaq_2nd_gen(p_handle,
-                               p_device,
-                               &p_raw_data->adc_data[0],
-                               p_lib->humidity,
-                               p_lib->temperature,
-                               p_results);
+    algorithm_input.adc_result       = &p_raw_data->adc_data[0];
+    algorithm_input.humidity_pct     = p_lib->humidity;
+    algorithm_input.temperature_degc = p_lib->temperature;
+    lib_err = calc_oaq_2nd_gen(p_handle, p_device, &algorithm_input, p_results);
     FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
 
     /* Set Data */
@@ -331,6 +333,22 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_sulfur_odor_data_calculate (rm_zmod4xxx
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_oaq_1st_gen_data_calculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                                                      rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                                                      rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_raw_data);
+    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief  Unsupported API.
+ *
+ * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
+ **********************************************************************************************************************/
+static fsp_err_t rm_zmod4510_oaq_2nd_gen_raq_data_calculate (rm_zmod4xxx_ctrl_t * const     p_api_ctrl,
+                                                             rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                                             rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data)
 {
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_raw_data);

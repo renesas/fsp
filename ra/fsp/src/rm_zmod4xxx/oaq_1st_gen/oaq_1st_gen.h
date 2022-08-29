@@ -20,7 +20,7 @@
 
 /**
  * @file    oaq_1st_gen.h
- * @author  Ronald Schreiber
+ * @author  Renesas Electronics Corporation
  * @version 3.0.0
  * @brief   This file contains the data structure definitions and
  *          the function definitions for the OAQ 1st Gen base algorithm.

@@ -39,19 +39,21 @@
  #if defined(USB_CFG_PCDC_USE)
   #include "r_usb_otg_cdc_cfg.h"
  #endif                                /* (defined(USB_CFG_HCDC_USE) | defined(USB_CFG_PCDC_USE)) */
+ #if defined(USB_CFG_PHID_USE)
+  #include "r_usb_otg_hid_cfg.h"
+ #endif                                /* (defined(USB_CFG_HCDC_USE) | defined(USB_CFG_PCDC_USE)) */
 #else                                  /* defined(USB_CFG_OTG_USE) */
  #if defined(USB_CFG_PCDC_USE)
   #include "r_usb_pcdc_cfg.h"
  #endif                                /* defined(USB_CFG_PCDC_USE) */
+ #if defined(USB_CFG_PHID_USE)
+  #include "r_usb_phid_cfg.h"
+ #endif                                /* defined(USB_CFG_PHID_USE) */
 #endif                                 /* defined(USB_CFG_OTG_USE) */
 
 #if defined(USB_CFG_PPRN_USE)
  #include "r_usb_pprn_cfg.h"
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
-
-#if defined(USB_CFG_PHID_USE)
- #include "r_usb_phid_cfg.h"
-#endif                                 /* defined(USB_CFG_PHID_USE) */
 
 #if (BSP_CFG_RTOS == 1)
  #if defined(USB_CFG_PAUD_USE)

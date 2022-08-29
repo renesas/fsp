@@ -28,6 +28,7 @@
 
  #include "mbedtls/bignum.h"
  #include "mbedtls/md.h"
+ #include "hw_sce_ra_private.h"
  #include "hw_sce_ecc_private.h"
 
  #ifdef __cplusplus
@@ -39,8 +40,9 @@ extern "C" {
 // Alternate implementation
 //
   #define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits)    ((bits >> 7) & (1U))
-  #define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT    (0U)
-  #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED      (1U)
+  #define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT                         (0U)
+  #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED                           (1U)
+  #define RM_PSA_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS    (32U) /* Corresponding to ECC P-384 curves on SCE7 */
 
   #define PSA_ECC_BYTES_VENDOR_RAW(bit_length)                                                                     \
     ((bit_length) ==                                                                                               \
@@ -120,24 +122,16 @@ typedef struct mbedtls_ecp_group
     void              * vendor_ctx;              /*!< Vendor defined context. */
 } mbedtls_ecp_group;
 
-/**
- * \name SECTION: Module settings
- *
- * The configuration options you can set for this module are in this section.
- * Either change them in config.h, or define them using the compiler command line.
- * \{
- */
-
-  #if !defined(MBEDTLS_ECP_MAX_BITS)
-
-/**
- * The maximum size of the groups, that is, of \c N and \c P.
- */
-   #define MBEDTLS_ECP_MAX_BITS       521 /**< The maximum size of groups, in bits. */
-  #endif
-
-  #define MBEDTLS_ECP_MAX_BYTES       ((MBEDTLS_ECP_MAX_BITS + 7) / 8)
-  #define MBEDTLS_ECP_MAX_PT_LEN      (2 * MBEDTLS_ECP_MAX_BYTES + 1)
+///**
+// * \name SECTION: Module settings
+// *
+// * The configuration options you can set for this module are in this section.
+// * Either change them in config.h, or define them using the compiler command line.
+// * \{
+// */
+//
+//  #define MBEDTLS_ECP_MAX_BYTES       ((MBEDTLS_ECP_MAX_BITS + 7) / 8)
+//  #define MBEDTLS_ECP_MAX_PT_LEN      (2 * MBEDTLS_ECP_MAX_BYTES + 1)
 
   #if !defined(MBEDTLS_ECP_WINDOW_SIZE)
 

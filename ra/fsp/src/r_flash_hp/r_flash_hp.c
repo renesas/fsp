@@ -659,7 +659,7 @@ fsp_err_t R_FLASH_HP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
 
     /* Is this a request to Blank check Code Flash? */
     /* If the address is code flash check if the region is blank. If not blank return error. */
-    if (address < BSP_ROM_SIZE_BYTES)
+    if (address < BSP_FEATURE_FLASH_DATA_FLASH_START)
     {
         /* Blank checking for Code Flash does not require any FCU operations. The specified address area
          * can simply be checked for non 0xFF. */
@@ -1194,6 +1194,12 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
 {
     volatile uint32_t wait_count;
 
+    if (0 == timeout)
+    {
+        /* Disable flash interrupts until command final is written. */
+        R_BSP_IrqDisable(p_ctrl->p_cfg->irq);
+    }
+
     /* Set block start address */
     R_FACI_HP->FSADDR = p_ctrl->dest_end_address;
 
@@ -1244,6 +1250,11 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
 
             timeout--;
         }
+    }
+    else
+    {
+        /* Enable flash interrupts following write sequence. */
+        R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->irq);
     }
 
     return FSP_SUCCESS;

@@ -41,9 +41,8 @@
  #include "FreeRTOS.h"
  #include "semphr.h"
  #include "stream_buffer.h"
- #include "aws_secure_sockets_config.h"
- #include "aws_wifi_config.h"
- #include "iot_wifi.h"
+ #include "rm_wifi_config.h"
+ #include "rm_wifi_api.h"
  #include "rm_wifi_onchip_silex_cfg.h"
 #else                                  // Azure RTOS
  #include "tx_api.h"
@@ -266,9 +265,6 @@ fsp_err_t rm_wifi_onchip_silex_tcp_connect(uint32_t socket_no, uint32_t ipaddr, 
 fsp_err_t rm_wifi_onchip_silex_udp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port, uint32_t type);
 int32_t   rm_wifi_onchip_silex_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
 int32_t   rm_wifi_onchip_silex_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
-int32_t   rm_wifi_onchip_silex_tcp_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length,
-                                        uint32_t timeout_ms);
-int32_t   rm_wifi_onchip_silex_tcp_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
 int32_t   rm_wifi_onchip_silex_tcp_shutdown(uint32_t socket_no, uint32_t shutdown_channels);
 fsp_err_t rm_wifi_onchip_silex_socket_disconnect(uint32_t socket_no);
 fsp_err_t rm_wifi_onchip_silex_disconnect();

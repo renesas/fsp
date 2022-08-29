@@ -32,11 +32,14 @@
  #include "nx_crypto_aes.h"
  #include "nx_crypto_ctr.h"
  #include "hw_sce_aes_private.h"
+ #include "hw_sce_ra_private.h"
  #include "hw_sce_private.h"
 
  #define AES_CTR_KEY_SIZE_128_ROUNDS    10
  #define AES_CTR_KEY_SIZE_192_ROUNDS    12
  #define AES_CTR_KEY_SIZE_256_ROUNDS    14
+ #define AES_BLOCK_SIZE_WORDS           (4U)
+ #define AES_BLOCK_SIZE_BYTES           (AES_BLOCK_SIZE_WORDS * 4U)
 
 /*******************************************************************************************************************//**
  * @addtogroup RM_NETX_SECURE_CRYPTO
@@ -58,123 +61,162 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
                                 UCHAR         * output,
                                 UINT            length)
 {
-    NX_CRYPTO_AES * aes_ptr = (NX_CRYPTO_AES *) crypto_metadata;
+    NX_CRYPTO_AES * aes_ptr          = (NX_CRYPTO_AES *) crypto_metadata;
+    uint32_t      * p_aligned_input  = NULL;
+    uint32_t      * p_aligned_output = NULL;
+    uint8_t       * p_local_input    = input;
+    uint8_t       * p_local_output   = output;
+    uint32_t        aligned_input_buffer[RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE)]  = {0};
+    uint32_t        aligned_output_buffer[RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE)] = {0};
+    uint32_t        num_blocks       = length / NX_CRYPTO_CTR_BLOCK_SIZE;
+    uint32_t        total_length     = RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS((num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE));
+    uint32_t        process_length   = total_length;
+    bool            misaligned       = false;
+    bool            incomplete_block = false;
+    fsp_err_t       status;
+    uint32_t        bytes_remaining = length % NX_CRYPTO_CTR_BLOCK_SIZE;
+    uint32_t        indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION);
+    uint32_t        indata_key_type = 0;
 
-    fsp_err_t (* aes_ctr_method)(const uint32_t *, const uint32_t *, const uint32_t, const uint32_t *, uint32_t *,
-                                 uint32_t *) = NULL;
-
-    /* Select the correct method based on the key type and size. */
-    switch (aes_ptr->nx_crypto_aes_rounds)
-    {
-        case AES_CTR_KEY_SIZE_128_ROUNDS:
-        {
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
-            {
-                aes_ctr_method = HW_SCE_AES_128CtrEncryptUsingEncryptedKey;
-            }
-            else
- #endif
-            {
-                aes_ctr_method = HW_SCE_AES_128CtrEncrypt;
-            }
-
-            break;
-        }
-
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
-        case AES_CTR_KEY_SIZE_192_ROUNDS:
-        {
-            aes_ctr_method = HW_SCE_AES_192CtrEncryptUsingEncryptedKey;
-            break;
-        }
- #endif
-        case AES_CTR_KEY_SIZE_256_ROUNDS:
-        {
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS)
-            {
-                aes_ctr_method = HW_SCE_AES_256CtrEncryptUsingEncryptedKey;
-            }
-            else
- #endif
-            {
-                aes_ctr_method = HW_SCE_AES_256CtrEncrypt;
-            }
-
-            break;
-        }
-
-        default:
-        {
-            return NX_CRYPTO_INVALID_PARAMETER;
-        }
-    }
-
-    uint32_t num_blocks      = length / NX_CRYPTO_CTR_BLOCK_SIZE;
-    uint32_t bytes_remaining = length - num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE;
-
-    fsp_err_t status;
-
+    /* Alignment Check */
     if (RM_NETX_SECURE_CRYPTO_NONALIGNMENT_CHECK(input) || RM_NETX_SECURE_CRYPTO_NONALIGNMENT_CHECK(output))
     {
-        /* If the input or output buffer is unaligned, then the data must be copied into an aligned buffer before
-         * it can be encrypted using hardware acceleration. */
-        uint8_t aligned_input_buffer[NX_CRYPTO_CTR_BLOCK_SIZE]  = {0};
-        uint8_t aligned_output_buffer[NX_CRYPTO_CTR_BLOCK_SIZE] = {0};
+        p_aligned_input  = aligned_input_buffer;
+        p_aligned_output = aligned_output_buffer;
+        process_length   = RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE);
 
-        for (uint32_t i = 0; i < num_blocks; i++)
+        /* Setup the first block */
+        NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, NX_CRYPTO_AES_BLOCK_SIZE);
+        misaligned = true;
+    }
+    else
+    {
+        p_aligned_input  = (uint32_t *) input;
+        p_aligned_output = (uint32_t *) output;
+    }
+
+    /* total_length is a multiple of block size */
+    while ((total_length != 0U) || (0U != bytes_remaining))
+    {
+        /* Select the correct method based on the key type and size. */
+        switch (aes_ptr->nx_crypto_aes_rounds)
         {
-            uint32_t buffer_offset = i * NX_CRYPTO_CTR_BLOCK_SIZE;
+            case AES_CTR_KEY_SIZE_128_ROUNDS:
+            {
+                status = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                                            &indata_cmd,
+                                                            (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                            (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     process_length);
+                status = HW_SCE_Aes128EncryptDecryptFinalSub();
+                break;
+            }
 
-            /* Copy the next block of data into the aligned buffer. */
-            NX_CRYPTO_MEMCPY(aligned_input_buffer, input + buffer_offset, NX_CRYPTO_CTR_BLOCK_SIZE);
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
+            case AES_CTR_KEY_SIZE_192_ROUNDS:
+            {
+                status = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
+                                                            (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                            (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     process_length);
+                status = HW_SCE_Aes192EncryptDecryptFinalSub();
+                break;
+            }
+ #endif
+            case AES_CTR_KEY_SIZE_256_ROUNDS:
+            {
+                status = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
+                                                            &indata_cmd,
+                                                            (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                            (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
+                                                     (uint32_t *) p_aligned_output,
+                                                     process_length);
+                status = HW_SCE_Aes256EncryptDecryptFinalSub();
+                break;
+            }
 
-            /* Encrypt/Decrypt the next block of data. */
-            status = aes_ctr_method((uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                    (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block,
-                                    NX_CRYPTO_CTR_BLOCK_SIZE / sizeof(uint32_t),
-                                    (uint32_t const *) aligned_input_buffer,
-                                    (uint32_t *) aligned_output_buffer,
-                                    (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
-            FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+            default:
+            {
+                return NX_CRYPTO_INVALID_PARAMETER;
+            }
+        }
 
-            /* Copy the encrypted block into the provided output buffer. */
-            NX_CRYPTO_MEMCPY(output + buffer_offset, aligned_output_buffer, NX_CRYPTO_CTR_BLOCK_SIZE);
+        FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+
+        uint8_t * out_iv = (uint8_t *) ctr_metadata->nx_crypto_ctr_counter_block;
+        for (uint32_t i = 0; i < (process_length / sizeof(uint32_t)); i++)
+        {
+            for (uint32_t j = 16; j > 0; j--)
+            {
+                if (++out_iv[j - 1] != 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        if (misaligned)
+        {
+            NX_CRYPTO_MEMCPY(p_local_output, (uint8_t *) p_aligned_output, NX_CRYPTO_AES_BLOCK_SIZE);
+
+            /* Clear out local buffers */
+            NX_CRYPTO_MEMSET((uint8_t *) p_aligned_output, 0, NX_CRYPTO_AES_BLOCK_SIZE);
+            NX_CRYPTO_MEMSET((uint8_t *) p_aligned_input, 0, NX_CRYPTO_AES_BLOCK_SIZE);
+            total_length -= RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE);
+
+            /* Check if all the misaligned AES blocks are consumed. */
+            if (0 != total_length)
+            {
+                p_local_output += NX_CRYPTO_AES_BLOCK_SIZE;
+                p_local_input  += NX_CRYPTO_AES_BLOCK_SIZE;
+
+                /* Setup the next block */
+                NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, NX_CRYPTO_AES_BLOCK_SIZE);
+                continue;
+            }
+        }
+        else
+        {
+            /* Buffers were aligned, all the encryption with AES block multiples was done in a single call.
+             * We still need to check for remaining bytes below. */
+            total_length = 0;
+        }
+
+        /* Check for remaining bytes. */
+        if ((total_length == 0) && (0U != bytes_remaining) && (false == incomplete_block))
+        {
+            /* If there are bytes remaining, then the last block of data was not a full block. */
+            NX_CRYPTO_MEMSET(aligned_input_buffer, 0, sizeof(aligned_input_buffer));
+            NX_CRYPTO_MEMSET(aligned_output_buffer, 0, sizeof(aligned_output_buffer));
+
+            /* Copy the remaining data into an aligned buffer. */
+            NX_CRYPTO_MEMCPY(aligned_input_buffer, input + num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE, bytes_remaining);
+            p_aligned_input  = aligned_input_buffer;
+            p_aligned_output = aligned_output_buffer;
+            process_length   = NX_CRYPTO_CTR_BLOCK_SIZE / sizeof(uint32_t);
+            incomplete_block = true;
+
+            /* We are now only dealing with bytes less than AES blocks. We no longer want to handle misaligned AES blocks if any. */
+            misaligned = false;
+        }
+        else
+        {
+            break;
         }
     }
-    else if (num_blocks > 0)
+
+    if (true == incomplete_block)
     {
-        /* If the input and output buffers are aligned, then the data can be encrypted/decrypted in one call. */
-        status = aes_ctr_method((uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block,
-                                num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE / sizeof(uint32_t),
-                                (uint32_t *) input,
-                                (uint32_t *) output,
-                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
-        FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
-    }
-
-    if (0U != bytes_remaining)
-    {
-        /* If there are bytes remaining, then the last block of data was not a full block. */
-        uint8_t last_input_block[NX_CRYPTO_CTR_BLOCK_SIZE]  = {0};
-        uint8_t last_output_block[NX_CRYPTO_CTR_BLOCK_SIZE] = {0};
-
-        /* Copy the remaining data into an aligned buffer. */
-        NX_CRYPTO_MEMCPY(last_input_block, input + num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE, bytes_remaining);
-
-        /* Encrypt/decrypt the remaining data. */
-        status = aes_ctr_method((uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block,
-                                NX_CRYPTO_CTR_BLOCK_SIZE / sizeof(uint32_t),
-                                (uint32_t const *) last_input_block,
-                                (uint32_t *) last_output_block,
-                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
-        FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
-
         /* Copy the remaining encrypted data into the provided output buffer. */
-        NX_CRYPTO_MEMCPY(output + num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE, last_output_block, bytes_remaining);
+        NX_CRYPTO_MEMCPY(output + num_blocks * NX_CRYPTO_CTR_BLOCK_SIZE, aligned_output_buffer, bytes_remaining);
     }
 
     return NX_CRYPTO_SUCCESS;

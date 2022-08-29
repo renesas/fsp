@@ -18,6 +18,7 @@
  #define __FLASH_LAYOUT_H__
 
  #include "tfm_common_config.h"
+ #include "flash_otp_nv_counters_backend.h"
  #include "bsp_api.h"
  #ifdef BL2_PROJECT
   #include "sysflash/sysflash.h"
@@ -145,6 +146,21 @@ extern "C" {
  #define TFM_NV_COUNTERS_AREA_SIZE               (FLASH_NV_COUNTERS_AREA_SIZE)
  #define TFM_NV_COUNTERS_SECTOR_ADDR             FLASH_NV_COUNTERS_AREA_OFFSET
  #define TFM_NV_COUNTERS_SECTOR_SIZE             FLASH_NV_COUNTERS_AREA_SIZE
+
+/* OTP_definitions */
+#define ROUNDOFF_VALUE(X,Y)                      ((Y) * (((X) + (Y - 1)) / (Y)))
+#define DATA_FLASH_OTP_NV_COUNTERS_AREA_SIZE     (ROUNDOFF_VALUE((sizeof(struct flash_otp_nv_counters_region_t)),\
+                                                  128U))
+#define FLASH_OTP_NV_COUNTERS_AREA_OFFSET        (CFG_DATA_FLASH_OTP_NV_COUNTERS_AREA_OFFSET)
+#define FLASH_OTP_NV_COUNTERS_AREA_SIZE          (DATA_FLASH_OTP_NV_COUNTERS_AREA_SIZE)
+#define FLASH_OTP_NV_COUNTERS_SECTOR_SIZE        (2 * DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
+
+/* OTP / NV counter definitions */
+#define TFM_OTP_NV_COUNTERS_AREA_SIZE            (FLASH_OTP_NV_COUNTERS_AREA_SIZE)
+#define TFM_OTP_NV_COUNTERS_AREA_ADDR            FLASH_OTP_NV_COUNTERS_AREA_OFFSET
+#define TFM_OTP_NV_COUNTERS_SECTOR_SIZE          FLASH_OTP_NV_COUNTERS_SECTOR_SIZE
+#define TFM_OTP_NV_COUNTERS_BACKUP_AREA_ADDR     (TFM_OTP_NV_COUNTERS_AREA_ADDR + \
+                                                 TFM_OTP_NV_COUNTERS_AREA_SIZE)
 
 /* Use eFlash 0 memory to store Code data */
  #define S_ROM_ALIAS_BASE                        (0x00000000)

@@ -77,9 +77,11 @@ TX_TIMER g_usb2_otg_detach_timer;
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 rtos_task_id_t        g_hcd_tsk_hdl;
 static rtos_task_id_t g_mgr_tsk_hdl;
-  #if USB_CFG_HUB == USB_CFG_ENABLE
+  #if (BSP_CFG_RTOS != 1)
+   #if USB_CFG_HUB == USB_CFG_ENABLE
 static rtos_task_id_t g_hub_tsk_hdl;
-  #endif                               /* USB_CFG_HUB == USB_CFG_ENABLE */
+   #endif                              /* USB_CFG_HUB == USB_CFG_ENABLE */
+  #endif                               /* BSP_CFG_RTOS != 1 */
  #endif                                /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 static rtos_task_id_t g_pcd_tsk_hdl;
@@ -180,9 +182,6 @@ rtos_mem_id_t * g_mpl_table[] =
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 static uint8_t g_usb_hcd_stack[HCD_STACK_SIZE];
 static uint8_t g_usb_mgr_stack[MGR_STACK_SIZE];
-   #if USB_CFG_HUB == USB_CFG_ENABLE
-static uint8_t g_usb_hub_stack[HUB_STACK_SIZE];
-   #endif                              /* #if USB_CFG_HUB == USB_CFG_ENABLE */
   #endif                               /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 
   #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -890,25 +889,6 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-
-   #if USB_CFG_HUB == USB_CFG_ENABLE
-        ret = tx_thread_create(&g_hub_tsk_hdl,               /** Pointer to a thread control block.              **/
-                               "HUB_TSK",                    /** Pointer to the name of the thread.              **/
-                               usb_hstd_hub_task,            /** Entry function of USB HCD task                  **/
-                               (uint32_t) NULL,              /** Task's parameter                                **/
-                               (void *) &g_usb_hub_stack[0], /** Starting address of the stack fs memory area.   **/
-                               HUB_STACK_SIZE,               /** Number bytes in the stack memory area.          **/
-                               HUB_TSK_PRI,                  /** Task's priority                                 **/
-                               HUB_TSK_PRI,                  /** Task's priority                                 **/
-                               TX_NO_TIME_SLICE,             /** Time Slice (Yes or No)                          **/
-                               TX_AUTO_START);               /** Auto Start (Yes or No)                          **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
-
-            return err;
-        }
-   #endif                                                    /* USB_CFG_HUB == USB_CFG_ENABLE */
 
         ret = tx_thread_create(&g_mgr_tsk_hdl,               /** Pointer to a thread control block.              **/
                                "MGR_TSK",                    /** Pointer to the name of the thread.              **/
@@ -2034,6 +2014,10 @@ void usb_cstd_pipe0_msg_clear (usb_utr_t * ptr, uint16_t dev_addr)
             break;
         }
     } while (TX_SUCCESS == err);
+
+  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+    tx_semaphore_put(&g_usb_host_usbx_sem[ptr->ip][0]);
+  #endif                               /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
  #endif
 }
 

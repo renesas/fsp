@@ -25,33 +25,27 @@
 #include "bsp_api.h"
 
 /* AES key lengths defined for SCE operations. */
-#define SIZE_AES_128BIT_KEYLEN_BITS             (128)
-#define SIZE_AES_128BIT_KEYLEN_BYTES            ((SIZE_AES_128BIT_KEYLEN_BITS) / 8)
-#define SIZE_AES_128BIT_KEYLEN_WORDS            ((SIZE_AES_128BIT_KEYLEN_BITS) / 32)
+#define SIZE_AES_128BIT_KEYLEN_BITS                      (128)
+#define SIZE_AES_128BIT_KEYLEN_BYTES                     ((SIZE_AES_128BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_128BIT_KEYLEN_WORDS                     ((SIZE_AES_128BIT_KEYLEN_BITS) / 32)
 
-#define SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED     (288)
-#define SIZE_AES_128BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 8)
-#define SIZE_AES_128BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 32)
+#define SIZE_AES_192BIT_KEYLEN_BITS                      (192)
+#define SIZE_AES_192BIT_KEYLEN_BYTES                     ((SIZE_AES_192BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_192BIT_KEYLEN_WORDS                     ((SIZE_AES_192BIT_KEYLEN_BITS) / 32)
 
-#define SIZE_AES_192BIT_KEYLEN_BITS             (192)
-#define SIZE_AES_192BIT_KEYLEN_BYTES            ((SIZE_AES_192BIT_KEYLEN_BITS) / 8)
-#define SIZE_AES_192BIT_KEYLEN_WORDS            ((SIZE_AES_192BIT_KEYLEN_BITS) / 32)
+#define SIZE_AES_256BIT_KEYLEN_BITS                      (256)
+#define SIZE_AES_256BIT_KEYLEN_BYTES                     ((SIZE_AES_256BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_256BIT_KEYLEN_WORDS                     ((SIZE_AES_256BIT_KEYLEN_BITS) / 32)
 
-#define SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED     (448) /* Added 32 bits here to differentiate 192 wrapped key from 256 wrapped key in the psa_crypto stack. */
-#define SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 8)
-#define SIZE_AES_192BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 32)
+#define SIZE_AES_BLOCK_BITS                              (128)
+#define SIZE_AES_BLOCK_BYTES                             (128 / 8)
+#define SIZE_AES_BLOCK_WORDS                             ((SIZE_AES_BLOCK_BITS) / 32)
 
-#define SIZE_AES_256BIT_KEYLEN_BITS             (256)
-#define SIZE_AES_256BIT_KEYLEN_BYTES            ((SIZE_AES_256BIT_KEYLEN_BITS) / 8)
-#define SIZE_AES_256BIT_KEYLEN_WORDS            ((SIZE_AES_256BIT_KEYLEN_BITS) / 32)
-
-#define SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED     (416)
-#define SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 8)
-#define SIZE_AES_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 32)
-
-#define SIZE_AES_BLOCK_BITS                     (128)
-#define SIZE_AES_BLOCK_BYTES                    (128 / 8)
-#define SIZE_AES_BLOCK_WORDS                    ((SIZE_AES_BLOCK_BITS) / 32)
+#define SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION               (0x00000000U)
+#define SCE_AES_IN_DATA_CMD_ECB_DECRYPTION               (0x00000001U)
+#define SCE_AES_IN_DATA_CMD_CBC_ENCRYPTION               (0x00000002U)
+#define SCE_AES_IN_DATA_CMD_CBC_DECRYPTION               (0x00000003U)
+#define SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION    (0x00000004U)
 
 typedef struct st_sce_data
 {
@@ -195,6 +189,7 @@ extern fsp_err_t HW_SCE_AES_256XtsDecrypt(const uint32_t * InData_Key,
                                           uint32_t       * OutData_Text,
                                           uint32_t       * OutData_IV);
 
+extern fsp_err_t HW_SCE_GenerateAes128RandomKeyIndexSub(uint32_t * OutData_KeyIndex);
 extern fsp_err_t HW_SCE_AES_128CreateEncryptedKey(uint32_t * OutData_KeyIndex);
 
 extern fsp_err_t HW_SCE_AES_128EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
@@ -228,6 +223,7 @@ extern fsp_err_t HW_SCE_AES_128CtrEncryptUsingEncryptedKey(const uint32_t * InDa
                                                            uint32_t       * OutData_Text,
                                                            uint32_t       * OutData_IV);
 
+extern fsp_err_t HW_SCE_GenerateAes192RandomKeyIndexSub(uint32_t * OutData_KeyIndex);
 extern fsp_err_t HW_SCE_AES_192CreateEncryptedKey(uint32_t * OutData_KeyIndex);
 
 extern fsp_err_t HW_SCE_AES_192EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
@@ -261,6 +257,7 @@ extern fsp_err_t HW_SCE_AES_192CtrEncryptUsingEncryptedKey(const uint32_t * InDa
                                                            uint32_t       * OutData_Text,
                                                            uint32_t       * OutData_IV);
 
+extern fsp_err_t HW_SCE_GenerateAes256RandomKeyIndexSub(uint32_t * OutData_KeyIndex);
 extern fsp_err_t HW_SCE_AES_256CreateEncryptedKey(uint32_t * OutData_KeyIndex);
 
 extern fsp_err_t HW_SCE_AES_256EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
@@ -331,43 +328,28 @@ fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral(uint32_t * InData_KeyType,
                                                 uint32_t * InData_KeyIndex,
                                                 uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes128EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
-fsp_err_t HW_SCE_Aes128EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes192EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
-fsp_err_t HW_SCE_Aes192EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes256EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
-fsp_err_t HW_SCE_Aes256EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes128CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
-fsp_err_t HW_SCE_Aes128CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes192CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
-fsp_err_t HW_SCE_Aes192CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes256CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
-fsp_err_t HW_SCE_Aes256CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes128CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                       uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes192CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                       uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes256CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
-                                                       uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
 #endif                                 /* HW_SCE_AES_PRIVATE_H */

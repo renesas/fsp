@@ -71,7 +71,7 @@ typedef struct st_motor_driver_modulation
     uint8_t u1_sat_flag;               ///< Saturation flag
 } motor_driver_modulation_t;
 
-typedef struct st_motor_driverextended_cfg
+typedef struct st_motor_driver_extended_cfg
 {
     uint16_t u2_pwm_timer_freq;                         ///< PWM timer frequency [MHz]
     uint16_t u2_pwm_carrier_freq;                       ///< PWM carrier frequency [kHz]

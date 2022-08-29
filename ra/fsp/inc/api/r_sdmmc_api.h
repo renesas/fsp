@@ -139,40 +139,6 @@ typedef union u_sdmmc_response
 {
     uint32_t status;
 
-    /* DEPRECATED: Anonymous structure. */
-    struct
-    {
-        uint32_t                : 3;
-        uint32_t ake_seq_error  : 1;            // Error in the sequence of the authentication process
-        uint32_t                : 1;
-        uint32_t app_cmd        : 1;            // The card will expect ACMD, or an indication that the command has been interpreted as ACMD
-        uint32_t fx_event       : 1;            // Extension Functions may set this bit to get host to deal with events
-        uint32_t switch_error   : 1;            //
-        uint32_t ready_for_data : 1;            // Corresponds to the buffer empty signaling on the bus
-
-        /* The state of the card when receiving the command. If the command execution causes a state change, it will be
-         * visible to the host in the response to the next command. */
-        sdmmc_r1_state_t current_state     : 4;
-        uint32_t         erase_reset       : 1; // An erase sequence was cleared before executing because an out of erase sequence command was received.
-        uint32_t         card_ecc_disabled : 1; // The command has been executed without using the internal ECC.
-        uint32_t         wp_erase_skip     : 1; // Set when only partial address space was erased due to existing write protected blocks or the temporary or permanent write protected card was erased.
-        uint32_t         csd_overwrite     : 1; // The read only section of the CSD does not match the card content or an attempt to reverse the copy or permanent WP bits was made.
-        uint32_t                           : 2;
-        uint32_t error                     : 1; // A general or unknown error occurred during the operation.
-        uint32_t cc_error                  : 1; // Internal card controller error.
-        uint32_t card_ecc_failed           : 1; // Card internal ECC was applied but failed to correct the data.
-        uint32_t illegal_command           : 1; // Command not legal for the card state.
-        uint32_t com_crc_error             : 1; // The CRC check of the previous command failed.
-        uint32_t lock_unlock_failed        : 1; // Set when a sequence or password error has been detected in the lock/unlock command.
-        uint32_t device_is_locked          : 1; // When set, signals that the card is locked by the host.
-        uint32_t wp_violation              : 1; // Set when the host attempts to write to a protected block or to the temporary or permanent write protected card.
-        uint32_t erase_param               : 1; // An invalid selection of write-blocks for erase occurred.
-        uint32_t erase_seq_error           : 1; // An error in the sequence of erase commands occurred.
-        uint32_t block_len_error           : 1; // The transferred block length is not allowed for this card, or the number of transferred bytes does not match the block length.
-        uint32_t address_error             : 1; // A misaligned address which did not match the block length was used in the command.
-        uint32_t out_of_range              : 1; // The command's argument was out of the allowed range for this card.
-    };
-
     /** SDIO Card Status Register. */
     struct
     {

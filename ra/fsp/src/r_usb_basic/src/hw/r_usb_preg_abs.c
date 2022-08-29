@@ -28,6 +28,7 @@
 #include "../driver/inc/r_usb_extern.h"
 #include "inc/r_usb_bitdefine.h"
 #include "inc/r_usb_reg_access.h"
+#include "inc/r_usb_dmac.h"
 
 /******************************************************************************
  * Macro definitions
@@ -782,6 +783,9 @@ void usb_pstd_forced_termination (uint16_t pipe, uint16_t status, usb_utr_t * p_
     {
         /* Changes the FIFO port by the pipe. */
         usb_cstd_chg_curpipe(p_utr, (uint16_t) USB_PIPE0, (uint16_t) USB_D0USE, USB_FALSE);
+
+        /* DMA Transfer request disable */
+        hw_usb_clear_dreqe(p_utr, USB_D0USE);
     }
 
     /* Clear D1FIFO-port */
@@ -790,6 +794,9 @@ void usb_pstd_forced_termination (uint16_t pipe, uint16_t status, usb_utr_t * p_
     {
         /* Changes the FIFO port by the pipe. */
         usb_cstd_chg_curpipe(p_utr, (uint16_t) USB_PIPE0, (uint16_t) USB_D1USE, USB_FALSE);
+
+        /* DMA Transfer request disable */
+        hw_usb_clear_dreqe(p_utr, USB_D1USE);
     }
  #endif                                /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 

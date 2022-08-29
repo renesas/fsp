@@ -61,11 +61,6 @@ fsp_err_t HW_SCE_RSA_2048KeyGenerate(uint32_t   num_tries,
                                      uint32_t * OutData_N,
                                      uint32_t * OutData_DomainParam);
 
-fsp_err_t HW_SCE_HRK_RSA_2048KeyGenerate(uint32_t   num_tries,
-                                         uint32_t * OutData_KeyIndex,
-                                         uint32_t * OutData_N,
-                                         uint32_t * OutData_DomainParam);
-
 fsp_err_t HW_SCE_HRK_RSA_2048PrivateKeyDecrypt(const uint32_t * InData_Text,
                                                const uint32_t * InData_KeyIndex,
                                                const uint32_t * InData_N,

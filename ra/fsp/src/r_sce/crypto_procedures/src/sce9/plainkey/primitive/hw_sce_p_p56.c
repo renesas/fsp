@@ -50,8 +50,18 @@ Private global variables and functions
 
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyIndex, const uint32_t *InData_Text, uint32_t *OutData_Text)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,61 +74,61 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    if (0x0u != (SCE->REG_1BCH & 0x1fu))
+    if (0x0U != (SCE->REG_1BCH & 0x1fU))
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00005601u;
-    SCE->REG_108H = 0x00000000u;
-    SCE->REG_104H = 0x00000068u;
-    SCE->REG_E0H = 0x800100e0u;
+    SCE->REG_84H = 0x00005601U;
+    SCE->REG_108H = 0x00000000U;
+    SCE->REG_104H = 0x00000068U;
+    SCE->REG_E0H = 0x800100e0U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
     SCE->REG_100H = InData_KeyIndex[0];
-    SCE->REG_104H = 0x00000058u;
-    SCE->REG_E0H = 0x800103a0u;
+    SCE->REG_104H = 0x00000058U;
+    SCE->REG_E0H = 0x800103a0U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000056u);
-    HW_SCE_p_func101(0xdc0a590bu, 0x6e3392ffu, 0x97adc5b9u, 0x633171bbu);
+    SCE->REG_100H = change_endian_long(0x00000056U);
+    HW_SCE_p_func101(0xdc0a590bU, 0x6e3392ffU, 0x97adc5b9U, 0x633171bbU);
     HW_SCE_p_func043();
-    SCE->REG_ECH = 0x0000b4e0u;
-    SCE->REG_ECH = 0x0000000cu;
-    SCE->REG_104H = 0x00000058u;
-    SCE->REG_E0H = 0x800103a0u;
+    SCE->REG_ECH = 0x0000b4e0U;
+    SCE->REG_ECH = 0x0000000cU;
+    SCE->REG_104H = 0x00000058U;
+    SCE->REG_E0H = 0x800103a0U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000056u);
-    HW_SCE_p_func101(0xfc2447fau, 0x9cf0143bu, 0x85110c57u, 0x2b7cbdcfu);
+    SCE->REG_100H = change_endian_long(0x00000056U);
+    HW_SCE_p_func101(0xfc2447faU, 0x9cf0143bU, 0x85110c57U, 0x2b7cbdcfU);
     HW_SCE_p_func044();
-    SCE->REG_104H = 0x00000052u;
-    SCE->REG_C4H = 0x00040804u;
+    SCE->REG_104H = 0x00000052U;
+    SCE->REG_C4H = 0x00040804U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000000u);
-    SCE->REG_28H = 0x00000001u;
-    SCE->REG_28H = 0x00bf0001u;
-    SCE->REG_00H = 0x00013203u;
-    SCE->REG_2CH = 0x00000014u;
-    SCE->REG_104H = 0x00008362u;
-    SCE->REG_D0H = 0x40000f00u;
-    SCE->REG_C4H = 0x02e08887u;
+    SCE->REG_100H = change_endian_long(0x00000000U);
+    SCE->REG_28H = 0x00000001U;
+    SCE->REG_28H = 0x00bf0001U;
+    SCE->REG_00H = 0x00013203U;
+    SCE->REG_2CH = 0x00000014U;
+    SCE->REG_104H = 0x00008362U;
+    SCE->REG_D0H = 0x40000f00U;
+    SCE->REG_C4H = 0x02e08887U;
     for(iLoop=0; iLoop<64; iLoop=iLoop+4)
     {
         /* WAIT_LOOP */
-        while (1u != SCE->REG_104H_b.B31)
+        while (1U != SCE->REG_104H_b.B31)
         {
             /* waiting */
         }
@@ -128,15 +138,15 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
         SCE->REG_100H = InData_KeyIndex[iLoop+1 + 3];
     }
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_D0H = 0x40000000u;
-    SCE->REG_C4H = 0x00e08885u;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_D0H = 0x40000000U;
+    SCE->REG_C4H = 0x00e08885U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -144,29 +154,29 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
     SCE->REG_100H = InData_KeyIndex[66];
     SCE->REG_100H = InData_KeyIndex[67];
     SCE->REG_100H = InData_KeyIndex[68];
-    SCE->REG_E0H = 0x80010000u;
-    SCE->REG_00H = 0x00008207u;
+    SCE->REG_E0H = 0x80010000U;
+    SCE->REG_00H = 0x00008207U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_00H = 0x0000020fu;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_00H = 0x0000020fU;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_00H = 0x00013203u;
-    SCE->REG_2CH = 0x00000012u;
-    SCE->REG_D0H = 0x40000f00u;
-    SCE->REG_C4H = 0x00f087b7u;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_00H = 0x00013203U;
+    SCE->REG_2CH = 0x00000012U;
+    SCE->REG_D0H = 0x40000f00U;
+    SCE->REG_C4H = 0x00f087b7U;
     for(iLoop=68; iLoop<132; iLoop=iLoop+4)
     {
         /* WAIT_LOOP */
-        while (1u != SCE->REG_104H_b.B31)
+        while (1U != SCE->REG_104H_b.B31)
         {
             /* waiting */
         }
@@ -176,16 +186,16 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
         SCE->REG_100H = InData_KeyIndex[iLoop+1 + 3];
     }
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_104H = 0x00000362u;
-    SCE->REG_D0H = 0x40000000u;
-    SCE->REG_C4H = 0x000087b5u;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_104H = 0x00000362U;
+    SCE->REG_D0H = 0x40000000U;
+    SCE->REG_C4H = 0x000087b5U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
@@ -193,23 +203,23 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
     SCE->REG_100H = InData_KeyIndex[134];
     SCE->REG_100H = InData_KeyIndex[135];
     SCE->REG_100H = InData_KeyIndex[136];
-    SCE->REG_C4H = 0x00900c45u;
-    SCE->REG_00H = 0x00002213u;
+    SCE->REG_C4H = 0x00900c45U;
+    SCE->REG_00H = 0x00002213U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    HW_SCE_p_func100(0x0493bf32u, 0x4fd6ac99u, 0x18fd6dbdu, 0x235e32ddu);
-    SCE->REG_1CH = 0x00400000u;
-    SCE->REG_1D0H = 0x00000000u;
-    if (1u == (SCE->REG_1CH_b.B22))
+    SCE->REG_1CH = 0x00001800U;
+    HW_SCE_p_func100(0x0493bf32U, 0x4fd6ac99U, 0x18fd6dbdU, 0x235e32ddU);
+    SCE->REG_1CH = 0x00400000U;
+    SCE->REG_1D0H = 0x00000000U;
+    if (1U == (SCE->REG_1CH_b.B22))
     {
-        HW_SCE_p_func102(0xe07e4daau, 0x5778972bu, 0xd2cb35fdu, 0x1c09d955u);
-        SCE->REG_1BCH = 0x00000040u;
+        HW_SCE_p_func102(0xe07e4daaU, 0x5778972bU, 0xd2cb35fdU, 0x1c09d955U);
+        SCE->REG_1BCH = 0x00000040U;
         /* WAIT_LOOP */
-        while (0u != SCE->REG_18H_b.B12)
+        while (0U != SCE->REG_18H_b.B12)
         {
             /* waiting */
         }
@@ -217,11 +227,11 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
     }
     else
     {
-        HW_SCE_p_func100(0x30b546ddu, 0x1c282749u, 0xd166b5dfu, 0x5f659d4bu);
-        SCE->REG_2CH = 0x00000010u;
-        SCE->REG_104H = 0x00003f67u;
+        HW_SCE_p_func100(0x30b546ddU, 0x1c282749U, 0xd166b5dfU, 0x5f659d4bU);
+        SCE->REG_2CH = 0x00000010U;
+        SCE->REG_104H = 0x00003f67U;
         /* WAIT_LOOP */
-        while (1u != SCE->REG_104H_b.B31)
+        while (1U != SCE->REG_104H_b.B31)
         {
             /* waiting */
         }
@@ -289,27 +299,27 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
         SCE->REG_100H = InData_Text[61];
         SCE->REG_100H = InData_Text[62];
         SCE->REG_100H = InData_Text[63];
-        SCE->REG_18H = 0x00000004u;
-        SCE->REG_38H = 0x00000338u;
-        SCE->REG_E0H = 0x81010000u;
-        SCE->REG_00H = 0x00003807u;
+        SCE->REG_18H = 0x00000004U;
+        SCE->REG_38H = 0x00000338U;
+        SCE->REG_E0H = 0x81010000U;
+        SCE->REG_00H = 0x00003807U;
         /* WAIT_LOOP */
-        while (0u != SCE->REG_00H_b.B25)
+        while (0U != SCE->REG_00H_b.B25)
         {
             /* waiting */
         }
-        SCE->REG_1CH = 0x00001800u;
+        SCE->REG_1CH = 0x00001800U;
         /* WAIT_LOOP */
-        while (0u != SCE->REG_18H_b.B10)
+        while (0U != SCE->REG_18H_b.B10)
         {
             /* waiting */
         }
-        SCE->REG_18H = 0x00000000u;
-        HW_SCE_p_func100(0x305b97ceu, 0x263481e9u, 0x9ae65b13u, 0xb79bccfeu);
-        SCE->REG_2CH = 0x00000020u;
-        SCE->REG_04H = 0x00000303u;
+        SCE->REG_18H = 0x00000000U;
+        HW_SCE_p_func100(0x305b97ceU, 0x263481e9U, 0x9ae65b13U, 0xb79bccfeU);
+        SCE->REG_2CH = 0x00000020U;
+        SCE->REG_04H = 0x00000303U;
         /* WAIT_LOOP */
-        while (1u != SCE->REG_04H_b.B30)
+        while (1U != SCE->REG_04H_b.B30)
         {
             /* waiting */
         }
@@ -377,10 +387,10 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyInde
         OutData_Text[61] = SCE->REG_100H;
         OutData_Text[62] = SCE->REG_100H;
         OutData_Text[63] = SCE->REG_100H;
-        HW_SCE_p_func102(0xa498754bu, 0x729577e0u, 0x423a9c49u, 0xbf249dabu);
-        SCE->REG_1BCH = 0x00000040u;
+        HW_SCE_p_func102(0xa498754bU, 0x729577e0U, 0x423a9c49U, 0xbf249dabU);
+        SCE->REG_1BCH = 0x00000040U;
         /* WAIT_LOOP */
-        while (0u != SCE->REG_18H_b.B12)
+        while (0U != SCE->REG_18H_b.B12)
         {
             /* waiting */
         }

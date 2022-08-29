@@ -73,6 +73,7 @@
 #define RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING          (21U)            // The max data prefix string is "+SQNSRECV: 1,1500\r\n"
 #define RM_CELLULAR_RYZ_DATA_PREFIX_STRING_CHANGELINE_LENGTH        (2U)             // The length of the change line "\r\n".
 #define RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socket_id)    ((uint16_t) socket_id + 1) // Socket ID on modem starts at index 1
+#define RM_CELLULAR_RYZ_CRSM_HPLMN_RAT_LENGTH                       (9U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -124,6 +125,21 @@ static CellularPktStatus_t socketRecvDataPrefix(void     * pCallbackContext,
                                                 uint32_t   lineLength,
                                                 char    ** ppDataStart,
                                                 uint32_t * pDataLength);
+static bool                _checkCrsmMemoryStatus(const char * pToken);
+static bool                _checkCrsmReadStatus(const char * pToken);
+static bool                _parseHplmn(char * pToken, void * pData);
+static CellularPktStatus_t _Cellular_RecvFuncGetHplmn(CellularContext_t                 * pContext,
+                                                      const CellularATCommandResponse_t * pAtResp,
+                                                      void                              * pData,
+                                                      uint16_t                            dataLen);
+static CellularPktStatus_t _Cellular_RecvFuncGetIccid(CellularContext_t                 * pContext,
+                                                      const CellularATCommandResponse_t * pAtResp,
+                                                      void                              * pData,
+                                                      uint16_t                            dataLen);
+static CellularPktStatus_t _Cellular_RecvFuncGetImsi(CellularContext_t                 * pContext,
+                                                     const CellularATCommandResponse_t * pAtResp,
+                                                     void                              * pData,
+                                                     uint16_t                            dataLen);
 
 /***********************************************************************************************************************
  * Global Variables
@@ -186,6 +202,79 @@ CellularError_t Cellular_GetSimCardStatus (CellularHandle_t cellularHandle, Cell
             {
                 pSimCardStatus->simCardState = CELLULAR_SIM_CARD_UNKNOWN;
             }
+        }
+    }
+
+    return cellularStatus;
+}
+
+/* Implementation of Cellular_GetSimCardInfo */
+CellularError_t Cellular_GetSimCardInfo (CellularHandle_t cellularHandle, CellularSimCardInfo_t * pSimCardInfo)
+{
+    CellularContext_t * pContext       = (CellularContext_t *) cellularHandle;
+    CellularError_t     cellularStatus = CELLULAR_SUCCESS;
+    CellularPktStatus_t pktStatus      = CELLULAR_PKT_STATUS_OK;
+    CellularAtReq_t     atReqGetIccid  = {0};
+    CellularAtReq_t     atReqGetImsi   = {0};
+    CellularAtReq_t     atReqGetHplmn  = {0};
+
+    atReqGetIccid.pAtCmd       = "AT+SQNCCID?";
+    atReqGetIccid.atCmdType    = CELLULAR_AT_WITH_PREFIX;
+    atReqGetIccid.pAtRspPrefix = "+SQNCCID";
+    atReqGetIccid.respCallback = _Cellular_RecvFuncGetIccid;
+    atReqGetIccid.pData        = pSimCardInfo->iccid;
+    atReqGetIccid.dataLen      = CELLULAR_ICCID_MAX_SIZE + 1U;
+
+    atReqGetImsi.pAtCmd       = "AT+CIMI";
+    atReqGetImsi.atCmdType    = CELLULAR_AT_WO_PREFIX;
+    atReqGetImsi.pAtRspPrefix = NULL;
+    atReqGetImsi.respCallback = _Cellular_RecvFuncGetImsi;
+    atReqGetImsi.pData        = pSimCardInfo->imsi;
+    atReqGetImsi.dataLen      = CELLULAR_IMSI_MAX_SIZE + 1U;
+
+    atReqGetHplmn.pAtCmd       = "AT+CRSM=176,28514,0,0,0"; /* READ BINARY commmand. HPLMN Selector with Access Technology( 6F62 ). */
+    atReqGetHplmn.atCmdType    = CELLULAR_AT_WITH_PREFIX;
+    atReqGetHplmn.pAtRspPrefix = "+CRSM";
+    atReqGetHplmn.respCallback = _Cellular_RecvFuncGetHplmn;
+    atReqGetHplmn.pData        = &pSimCardInfo->plmn;
+    atReqGetHplmn.dataLen      = (uint16_t) sizeof(CellularPlmnInfo_t);
+
+    /* pContext is checked in _Cellular_CheckLibraryStatus function. */
+    cellularStatus = _Cellular_CheckLibraryStatus(pContext);
+
+    if (cellularStatus != CELLULAR_SUCCESS)
+    {
+        LogError(("_Cellular_CheckLibraryStatus failed"));
+    }
+    else if (pSimCardInfo == NULL)
+    {
+        LogError(("Cellular_GetSimCardInfo : Bad parameter"));
+        cellularStatus = CELLULAR_BAD_PARAMETER;
+    }
+    else
+    {
+        (void) memset(pSimCardInfo, 0, sizeof(CellularSimCardInfo_t));
+        pktStatus = _Cellular_AtcmdRequestWithCallback(pContext, atReqGetImsi);
+
+        if (pktStatus == CELLULAR_PKT_STATUS_OK)
+        {
+            pktStatus = _Cellular_AtcmdRequestWithCallback(pContext, atReqGetHplmn);
+        }
+
+        if (pktStatus == CELLULAR_PKT_STATUS_OK)
+        {
+            pktStatus = _Cellular_AtcmdRequestWithCallback(pContext, atReqGetIccid);
+        }
+
+        if (pktStatus != CELLULAR_PKT_STATUS_OK)
+        {
+            cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
+        }
+        else
+        {
+            LogDebug(("SimInfo updated: IMSI:%s, Hplmn:%s%s, ICCID:%s",
+                      pSimCardInfo->imsi, pSimCardInfo->plmn.mcc, pSimCardInfo->plmn.mnc,
+                      pSimCardInfo->iccid));
         }
     }
 
@@ -2053,6 +2142,320 @@ static CellularPktStatus_t socketRecvDataPrefix (void     * pCallbackContext,
         }
 
         *ppDataStart = pDataStart;
+    }
+
+    return pktStatus;
+}
+
+static bool _checkCrsmMemoryStatus (const char * pToken)
+{
+    bool memoryStatus = true;
+
+    if (pToken == NULL)
+    {
+        LogError(("Input Parameter NULL"));
+        memoryStatus = false;
+    }
+
+    if (memoryStatus == true)
+    {
+        /* Checking the value sw2 in AT command response for memory problem during CRSM read.
+         * Refer 3GPP Spec TS 51.011 Section 9.4. */
+        if (strcmp(pToken, "64") == 0) /* '40' memory problem. */
+        {
+            LogError(("_checkCrsmMemoryStatus: Error in Processing HPLMN: CRSM Memory Error"));
+            memoryStatus = false;
+        }
+    }
+
+    return memoryStatus;
+}
+
+/*-----------------------------------------------------------*/
+
+static bool _checkCrsmReadStatus (const char * pToken)
+{
+    bool readStatus = true;
+
+    if (pToken == NULL)
+    {
+        LogError(("Input Parameter NULL"));
+        readStatus = false;
+    }
+
+    if (readStatus == true)
+    {
+        /* Checking the parameter sw1 in AT command response for successful CRSM read.
+         * Refer 3GPP Spec TS 51.011 Section 9.4. */
+        if ((strcmp(pToken, "144") != 0) && /* '90' normal ending of the command. */
+            (strcmp(pToken, "145") != 0) && /* '91' normal ending of the command, with extra information. */
+            (strcmp(pToken, "146") != 0))   /* '92' command successful but after using an internal update retry routine 'X' times. */
+        {
+            LogError(("_checkCrsmReadStatus: Error in Processing HPLMN: CRSM Read Error"));
+            readStatus = false;
+        }
+    }
+
+    return readStatus;
+}
+
+/*-----------------------------------------------------------*/
+
+static bool _parseHplmn (char * pToken, void * pData)
+{
+    bool                 parseStatus = true;
+    CellularPlmnInfo_t * plmn        = (CellularPlmnInfo_t *) pData;
+
+    if (pToken == NULL)
+    {
+        LogError(("_parseHplmn: pToken is NULL or pData is NULL"));
+        parseStatus = false;
+    }
+    else if (strlen(pToken) < (RM_CELLULAR_RYZ_CRSM_HPLMN_RAT_LENGTH))
+    {
+        LogError(("_parseHplmn: Error in processing HPLMN invalid token %s", pToken));
+        parseStatus = false;
+    }
+    else
+    {
+        /* Returning only the very first HPLMN present in EFHPLMNwACT in SIM.
+         * EF-HPLMNwACT can contain a maximum of 10 HPLMN entries in decreasing order of priority.
+         * In this implementation, returning the very first HPLMN is the PLMN priority list. */
+
+        /* Refer TS 51.011 Section 10.3.37 for encoding. */
+        plmn->mcc[0] = pToken[1];
+        plmn->mcc[1] = pToken[0];
+        plmn->mcc[2] = pToken[3];
+        plmn->mnc[0] = pToken[5];
+        plmn->mnc[1] = pToken[4];
+
+        if (pToken[2] != 'F')
+        {
+            plmn->mnc[2] = pToken[2];
+            plmn->mnc[3] = '\0';
+        }
+        else
+        {
+            plmn->mnc[2] = '\0';
+        }
+    }
+
+    return parseStatus;
+}
+
+/*-----------------------------------------------------------*/
+
+static CellularPktStatus_t _Cellular_RecvFuncGetHplmn (CellularContext_t                 * pContext,
+                                                       const CellularATCommandResponse_t * pAtResp,
+                                                       void                              * pData,
+                                                       uint16_t                            dataLen)
+{
+    bool                parseStatus   = true;
+    CellularPktStatus_t pktStatus     = CELLULAR_PKT_STATUS_OK;
+    CellularATError_t   atCoreStatus  = CELLULAR_AT_SUCCESS;
+    char              * pCrsmResponse = NULL;
+    char              * pToken        = NULL;
+
+    if (pContext == NULL)
+    {
+        LogError(("GetHplmn: pContext is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_INVALID_HANDLE;
+    }
+    else if ((pAtResp == NULL) || (pAtResp->pItm == NULL) || (pAtResp->pItm->pLine == NULL))
+    {
+        LogError(("GetHplmn: Response is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else if ((pData == NULL) || (dataLen != sizeof(CellularPlmnInfo_t)))
+    {
+        LogError(("GetHplmn: pData is invalid or dataLen is wrong"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else
+    {
+        pCrsmResponse = pAtResp->pItm->pLine;
+        atCoreStatus  = Cellular_ATRemoveAllWhiteSpaces(pCrsmResponse);
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Removing the CRSM prefix in AT Response. */
+            atCoreStatus = Cellular_ATRemovePrefix(&pCrsmResponse);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Removing All quotes in the AT Response. */
+            atCoreStatus = Cellular_ATRemoveAllDoubleQuote(pCrsmResponse);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Getting the next token separated by comma in At Response. */
+            atCoreStatus = Cellular_ATGetNextTok(&pCrsmResponse, &pToken);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            parseStatus = _checkCrsmReadStatus(pToken);
+
+            if (parseStatus == false)
+            {
+                atCoreStatus = CELLULAR_AT_ERROR;
+            }
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            atCoreStatus = Cellular_ATGetNextTok(&pCrsmResponse, &pToken);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            parseStatus = _checkCrsmMemoryStatus(pToken);
+
+            if (parseStatus == false)
+            {
+                atCoreStatus = CELLULAR_AT_ERROR;
+            }
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            atCoreStatus = Cellular_ATGetNextTok(&pCrsmResponse, &pToken);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            parseStatus = _parseHplmn(pToken, pData);
+
+            if (parseStatus == false)
+            {
+                atCoreStatus = CELLULAR_AT_ERROR;
+            }
+        }
+
+        pktStatus = _Cellular_TranslateAtCoreStatus(atCoreStatus);
+    }
+
+    return pktStatus;
+}
+
+/*-----------------------------------------------------------*/
+
+static CellularPktStatus_t _Cellular_RecvFuncGetIccid (CellularContext_t                 * pContext,
+                                                       const CellularATCommandResponse_t * pAtResp,
+                                                       void                              * pData,
+                                                       uint16_t                            dataLen)
+{
+    CellularPktStatus_t pktStatus    = CELLULAR_PKT_STATUS_OK;
+    CellularATError_t   atCoreStatus = CELLULAR_AT_SUCCESS;
+    char              * pRespLine    = NULL;
+    char              * pToken       = NULL;
+
+    if (pContext == NULL)
+    {
+        LogError(("getIccid: pContext is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_INVALID_HANDLE;
+    }
+    else if ((pAtResp == NULL) || (pAtResp->pItm == NULL) ||
+             (pAtResp->pItm->pLine == NULL))
+    {
+        LogError(("getIccid: Response is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else if ((pData == NULL) || (dataLen != (CELLULAR_ICCID_MAX_SIZE + 1U)))
+    {
+        LogError(("getIccid: pData is invalid or dataLen is wrong"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else
+    {
+        pRespLine    = pAtResp->pItm->pLine;
+        atCoreStatus = Cellular_ATRemoveAllWhiteSpaces(pRespLine);
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Removing QCCID Prefix in AT Response. */
+            atCoreStatus = Cellular_ATRemovePrefix(&pRespLine);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Removing All quotes in the AT Response. */
+            atCoreStatus = Cellular_ATRemoveAllDoubleQuote(pRespLine);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Getting the next token separated by comma in At Response. */
+            atCoreStatus = Cellular_ATGetNextTok(&pRespLine, &pToken);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Storing the ICCID value in the AT Response. */
+            if (strlen(pToken) < ((size_t) CELLULAR_ICCID_MAX_SIZE + 1U))
+            {
+                (void) strncpy(pData, pToken, dataLen);
+            }
+            else
+            {
+                atCoreStatus = CELLULAR_AT_BAD_PARAMETER;
+            }
+        }
+
+        pktStatus = _Cellular_TranslateAtCoreStatus(atCoreStatus);
+    }
+
+    return pktStatus;
+}
+
+/*-----------------------------------------------------------*/
+
+static CellularPktStatus_t _Cellular_RecvFuncGetImsi (CellularContext_t                 * pContext,
+                                                      const CellularATCommandResponse_t * pAtResp,
+                                                      void                              * pData,
+                                                      uint16_t                            dataLen)
+{
+    CellularPktStatus_t pktStatus    = CELLULAR_PKT_STATUS_OK;
+    CellularATError_t   atCoreStatus = CELLULAR_AT_SUCCESS;
+    char              * pRespLine    = NULL;
+
+    if (pContext == NULL)
+    {
+        LogError(("getImsi: pContext is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_INVALID_HANDLE;
+    }
+    else if ((pAtResp == NULL) || (pAtResp->pItm == NULL) || (pAtResp->pItm->pLine == NULL))
+    {
+        LogError(("getImsi: Response is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else if ((pData == NULL) || (dataLen != (CELLULAR_IMSI_MAX_SIZE + 1U)))
+    {
+        LogError(("getImsi: pData is invalid or dataLen is wrong"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else
+    {
+        pRespLine = pAtResp->pItm->pLine;
+
+        /* Removing all the Spaces in the AT Response. */
+        atCoreStatus = Cellular_ATRemoveAllWhiteSpaces(pRespLine);
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            if (strlen(pRespLine) < (CELLULAR_IMSI_MAX_SIZE + 1U))
+            {
+                (void) strncpy((char *) pData, pRespLine, dataLen);
+            }
+            else
+            {
+                atCoreStatus = CELLULAR_AT_ERROR;
+            }
+        }
+
+        pktStatus = _Cellular_TranslateAtCoreStatus(atCoreStatus);
     }
 
     return pktStatus;

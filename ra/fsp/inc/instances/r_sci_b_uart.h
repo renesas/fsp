@@ -141,23 +141,6 @@ typedef struct st_sci_b_baud_setting_t
     {
         uint32_t baudrate_bits;
 
-        /* DEPRECATED: Anonymous structure. */
-        struct
-        {
-            uint32_t       : 3;
-            uint32_t       : 1;
-            uint32_t bgdm  : 1;        ///< Baud Rate Generator Double-Speed Mode Select
-            uint32_t abcs  : 1;        ///< Asynchronous Mode Base Clock Select
-            uint32_t abcse : 1;        ///< Asynchronous Mode Extended Base Clock Select 1
-            uint32_t       : 1;
-            uint32_t brr   : 8;        ///< Bit Rate Register setting
-            uint32_t brme  : 1;        ///< Bit Rate Modulation Enable
-            uint32_t       : 3;
-            uint32_t cks   : 2;        ///< CKS  value to get divisor (CKS = N)
-            uint32_t       : 2;
-            uint32_t mddr  : 8;        ///< Modulation Duty Register setting
-        };
-
         struct
         {
             uint32_t       : 3;

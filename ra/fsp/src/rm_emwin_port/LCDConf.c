@@ -165,7 +165,7 @@ void            LCDCONF_DisableDave2D(void);
 void            LCDCONF_EnableDave2D(void);
 
  #if EMWIN_JPEG_USE_HW
-extern void JPEG_X_Init(JPEG_X_CONTEXT * pContext);
+extern void JPEG_X_Init(void);
 void        LCDCONF_DrawJPEG(int32_t      LayerIndex,
                              int32_t      x,
                              int32_t      y,
@@ -253,7 +253,7 @@ static void _GraphicsHWInit (void)
     // Initialize JPEG Codec
     //
  #if EMWIN_JPEG_USE_HW
-    JPEG_X_Init(NULL);
+    JPEG_X_Init();
  #endif
 #endif
 

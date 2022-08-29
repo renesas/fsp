@@ -487,19 +487,6 @@ uint8_t r_dflash_write(uint32_t addr, uint8_t * buff, uint16_t len);
 
 /*** ble secure data functions end ***/
 
-/*** platform control functions start ***/
-
-void    r_ble_rf_control_error(uint32_t err_no);
-uint8_t r_ble_rf_power_save_mode(void);
-
-#if (BSP_CFG_RTOS == 1) || (BSP_CFG_RTOS == 2)
-void r_ble_wake_up_task(void * EventGroupHandle);
-void r_ble_wake_up_task_from_isr(void * EventGroupHandle);
-
-#endif
-
-/*** platform control functions end ***/
-
 /*** ble timer functions start ***/
 static void ble_abs_timer_update_remaining_time_ms(ble_abs_instance_ctrl_t * const p_instance_ctrl, bool expired);
 
@@ -3676,66 +3663,6 @@ static void ble_abs_vendor_specific_callback (uint16_t               event_type,
     }
 }                                      /* End of function ble_abs_vendor_specific_callback() */
 
-/*** platform control functions added start ***/
-
-void r_ble_rf_control_error (uint32_t err_no)
-{
-    FSP_PARAMETER_NOT_USED(err_no);
-}
-
-uint8_t r_ble_rf_power_save_mode (void)
-{
-    uint8_t ret = BLE_ABS_CFG_RF_DEEP_SLEEP_EN;
-
-    return ret;
-}
-
-#if (BSP_CFG_RTOS == 1)
-void r_ble_wake_up_task (void * EventGroupHandle)
-{
-    if (NULL != EventGroupHandle)
-    {
-        tx_semaphore_put((TX_SEMAPHORE *) EventGroupHandle);
-    }
-}
-
-void r_ble_wake_up_task_from_isr (void * EventGroupHandle)
-{
-    if (NULL != EventGroupHandle)
-    {
-        tx_semaphore_put((TX_SEMAPHORE *) EventGroupHandle);
-    }
-}
-
-#elif (BSP_CFG_RTOS == 2)
-void r_ble_wake_up_task (void * EventGroupHandle)
-{
-    EventGroupHandle_t event_group_handle = (EventGroupHandle_t) EventGroupHandle;
-
-    if (event_group_handle != NULL)
-    {
-        xEventGroupSetBits(event_group_handle, (EventBits_t) BLE_EVENT_PATTERN);
-        portYIELD();
-    }
-}
-
-void r_ble_wake_up_task_from_isr (void * EventGroupHandle)
-{
-    BaseType_t xHigherPriorityTaskWoken;
-    xHigherPriorityTaskWoken = pdFALSE;
-    EventGroupHandle_t event_group_handle = (EventGroupHandle_t) EventGroupHandle;
-
-    if (event_group_handle != NULL)
-    {
-        xEventGroupSetBitsFromISR(event_group_handle, (EventBits_t) BLE_EVENT_PATTERN, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-    }
-}
-
-#endif
-
-/*** platform control functions end ***/
-
 #if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
 
 /*******************************************************************************************************************//**
@@ -3992,7 +3919,8 @@ static fsp_err_t ble_abs_secure_data_update_bond_num (flash_instance_t const * p
             break;
         }
 
-        default:                       /* BLE_SECD_UPD_BN_DEL & BLE_SECD_UPD_BN_ALL_DEL */
+        case BLE_SECD_UPD_BN_DEL:
+        case BLE_SECD_UPD_BN_ALL_DEL:
         {
             if (BLE_ABS_CFG_NUMBER_BONDING >= bond_num)
             {
@@ -4011,7 +3939,7 @@ static fsp_err_t ble_abs_secure_data_update_bond_num (flash_instance_t const * p
 
                 if (BLE_ABS_SECURE_DATA_UPDATE_BOND_NUMBER_FF != bond_num)
                 {
-                    bond_order = p_sec_data[BLE_ABS_SECURE_DATA_ADDR_REM_START +
+                    bond_order = p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET +
                                             (uint32_t) entry * BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE +
                                             BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE];
                     ble_abs_secure_data_update_bond_order(p_instance, entry, p_sec_data, bond_order);
@@ -4020,6 +3948,12 @@ static fsp_err_t ble_abs_secure_data_update_bond_num (flash_instance_t const * p
                 retval = FSP_SUCCESS;
             }
 
+            break;
+        }
+
+        default:
+        {
+            /* Invalid operation selected. */
             break;
         }
     }

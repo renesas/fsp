@@ -18,11 +18,7 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
 /**
  * \brief Function level alternative implementation.
@@ -58,6 +54,7 @@
  #include "mbedtls/ecp.h"
  #include "mbedtls/threading.h"
  #include "mbedtls/platform_util.h"
+ #include "mbedtls/error.h"
 
  #include <string.h>
 
@@ -79,88 +76,75 @@
    #define mbedtls_free      free
   #endif
 
-  #include "mbedtls/ecp_internal.h"
   #include "psa/crypto.h"
   #include "hw_sce_private.h"
   #include "hw_sce_ecc_private.h"
+  #include "hw_sce_ra_private.h"
 
-static const hw_sce_ecc_generatekey_t g_ecp_keygen_lookup[][2] =
+fsp_err_t HW_SCE_ECC_256WrappedScalarMultiplication (const uint32_t * InData_CurveType,
+                                                     const uint32_t * InData_Cmd,
+                                                     const uint32_t * InData_KeyIndex,
+                                                     const uint32_t * InData_P,
+                                                     uint32_t       * OutData_R)
+{
+    return HW_SCE_Ecc256ScalarMultiplicationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_P, OutData_R);
+}
+
+  #if BSP_FEATURE_CRYPTO_HAS_SCE7_MISSING_PROCS
+fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t * InData_CurveType,
+                                               const uint32_t * InData_KeyIndex,
+                                               const uint32_t * InData_PubKey,
+                                               uint32_t       * OutData_R);
+
+fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub (const uint32_t * InData_CurveType,
+                                                const uint32_t * InData_KeyIndex,
+                                                const uint32_t * InData_PubKey,
+                                                uint32_t       * OutData_R)
+{
+    FSP_PARAMETER_NOT_USED(InData_CurveType);
+    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
+    FSP_PARAMETER_NOT_USED(InData_PubKey);
+    FSP_PARAMETER_NOT_USED(OutData_R);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+  #endif
+fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication (const uint32_t * InData_CurveType,
+                                                     const uint32_t * InData_Cmd,
+                                                     const uint32_t * InData_KeyIndex,
+                                                     const uint32_t * InData_P,
+                                                     uint32_t       * OutData_R)
+{
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+
+    return HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType, InData_KeyIndex, InData_P, OutData_R);
+}
+
+static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_lookup[][2] =
 {
   #if defined(MBEDTLS_ECP_DP_SECP256R1_ENABLED) || defined(MBEDTLS_ECP_DP_SECP256K1_ENABLED) || \
     defined(MBEDTLS_ECP_DP_BP256R1_ENABLED)
    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
-        HW_SCE_ECC_256GenerateKey,
+        HW_SCE_ECC_256WrappedScalarMultiplication,
    #endif
    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
-        HW_SCE_ECC_256HrkGenerateKey,
+        HW_SCE_ECC_256WrappedScalarMultiplication,
    #endif
   #endif
   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
-        HW_SCE_ECC_384GenerateKey,
+        HW_SCE_ECC_384WrappedScalarMultiplication,
    #endif
    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
-        HW_SCE_ECC_384HrkGenerateKey,
+        HW_SCE_ECC_384WrappedScalarMultiplication,
    #endif
   #endif
 };
-
-  #if !BSP_FEATURE_CRYPTO_HAS_SCE9
-static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_lookup[][2] =
-{
-   #if defined(MBEDTLS_ECP_DP_SECP256R1_ENABLED) || defined(MBEDTLS_ECP_DP_SECP256K1_ENABLED) || \
-    defined(MBEDTLS_ECP_DP_BP256R1_ENABLED)
-    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
-        HW_SCE_ECC_256ScalarMultiplication,
-    #endif
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
-        HW_SCE_ECC_256HrkScalarMultiplication,
-    #endif
-   #endif
-   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
-    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
-        HW_SCE_ECC_384ScalarMultiplication,
-    #endif
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
-        HW_SCE_ECC_384HrkScalarMultiplication,
-    #endif
-   #endif
-};
-  #else
-
-static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_lookup[][2] =
-{
-   #if defined(MBEDTLS_ECP_DP_SECP256R1_ENABLED) || defined(MBEDTLS_ECP_DP_SECP256K1_ENABLED) || \
-    defined(MBEDTLS_ECP_DP_BP256R1_ENABLED)
-    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
-        HW_SCE_ECC_256WrappedScalarMultiplication,
-    #endif
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
-        HW_SCE_ECC_256WrappedScalarMultiplication,
-    #endif
-   #endif
-   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
-    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
-        HW_SCE_ECC_384WrappedScalarMultiplication,
-    #endif
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
-    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
-        HW_SCE_ECC_384WrappedScalarMultiplication,
-    #endif
-   #endif
-};
-  #endif
 
 /*
  * Generate a private key
@@ -185,7 +169,9 @@ uint32_t ecp_load_key_size (bool wrapped_mode_ctx, const mbedtls_ecp_group * grp
         if (wrapped_mode_ctx == true)
         {
             /* Store size of wrapped private key */
-            key_size_words = ECC_256_PRIVATE_KEY_HRK_LENGTH_WORDS;
+            key_size_words =
+                R_SCE_BYTES_TO_WORDS(HW_SCE_ECC_WRAPPED_KEY_ADJUST(R_SCE_WORDS_TO_BYTES(
+                                                                       ECC_256_PRIVATE_KEY_LENGTH_WORDS)));
         }
         else
         {
@@ -200,7 +186,10 @@ uint32_t ecp_load_key_size (bool wrapped_mode_ctx, const mbedtls_ecp_group * grp
         if (wrapped_mode_ctx == true)
         {
             /* Store size of wrapped private key */
-            key_size_words = ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS;
+            key_size_words =
+                R_SCE_BYTES_TO_WORDS(HW_SCE_ECC_WRAPPED_KEY_ADJUST(R_SCE_WORDS_TO_BYTES(
+                                                                       ECC_384_PRIVATE_KEY_LENGTH_WORDS)));
+            ;
         }
         else
         {
@@ -229,11 +218,11 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     ECP_VALIDATE_RET(grp != NULL);
     ECP_VALIDATE_RET(d != NULL);
 
-    uint32_t               * p_public_key_buff_32;
-    uint32_t               * p_private_key_buff_32;
-    uint32_t               * p_common_buff_32;
-    uint32_t                 private_key_size_words   = 0;
-    hw_sce_ecc_generatekey_t p_hw_sce_ecc_generatekey = NULL;
+    uint32_t * p_private_key_buff_32;
+    uint32_t * p_common_buff_32;
+    uint32_t   private_key_size_words = 0;
+    uint32_t   wrapped_key[RM_PSA_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS] = {0};
+    uint32_t   indata_key_type = 0;
 
     /* Fail cleanly on curves that HW doesn't support */
     if ((!ecp_can_do_sce(grp->id)) || (grp->N.p == NULL))
@@ -248,14 +237,6 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
   #endif
 
-    p_hw_sce_ecc_generatekey =
-        g_ecp_keygen_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
-
-    if (NULL == p_hw_sce_ecc_generatekey)
-    {
-        return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-    }
-
     private_key_size_words = ecp_load_key_size((bool) grp->vendor_ctx, grp);
     if (0 == private_key_size_words)
     {
@@ -263,7 +244,6 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
 
     size_t curve_bytes = PSA_BITS_TO_BYTES(grp->pbits);
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
 
     /* Obtain a common 32-bit aligned buffer. It will be used for all the following items in this order:
      * Private Key (D) of size private_key_size_words
@@ -277,74 +257,65 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
 
     p_private_key_buff_32 = p_common_buff_32;
-    p_public_key_buff_32  = p_private_key_buff_32 + private_key_size_words;
 
     uint32_t curve_type;
     uint32_t cmd;
     ret = ecp_load_curve_attributes_sce(grp, &curve_type, &cmd, NULL);
-    if (ret)
+    if (ret == 0)
     {
-    }
-    /* Public key generated within p_public_key_buff_32 is unused.
-     * The caller, if needed, generates the public key using scalar multiply
-     * */
-    else if (FSP_SUCCESS !=
-             p_hw_sce_ecc_generatekey(&curve_type, &cmd, p_private_key_buff_32, p_public_key_buff_32))
-    {
-        ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
-    }
-    else if (0 !=
-             mbedtls_mpi_read_binary(d, (uint8_t *) p_private_key_buff_32, private_key_size_words * 4))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else
-    {
-        ret = 0;
+        if (ECC_256_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
+        {
+            sce_ecc_public_key_index_t public_key = {0};
+            if (FSP_SUCCESS !=
+                HW_SCE_GenerateEccRandomKeyIndexSub(&curve_type, &cmd, &indata_key_type, (uint32_t *) &public_key.value,
+                                                    (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
+                                                    (uint32_t *) &public_key.plain_value))
+            {
+                ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+            }
+            else
+            {
+                memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
+            }
+        }
+        else if (ECC_384_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
+        {
+            sce_ecc384_public_key_index_t public_key = {0};
+            if (FSP_SUCCESS !=
+                HW_SCE_GenerateEccP384RandomKeyIndexSub(&curve_type, &indata_key_type, (uint32_t *) &public_key.value,
+                                                        (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
+                                                        (uint32_t *) &public_key.plain_value))
+            {
+                ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+            }
+            else
+            {
+                memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
+            }
+        }
+        else
+        {
+            ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+        }
+
+        /* Public key generated within p_public_key_buff_32 is unused.
+         * The caller, if needed, generates the public key using scalar multiply
+         * */
+        if (0 == ret)
+        {
+            if (FSP_SUCCESS !=
+                mbedtls_mpi_read_binary(d, (uint8_t *) p_private_key_buff_32, private_key_size_words * 4))
+            {
+                ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
+            }
+        }
+        else
+        {
+        }
     }
 
     /* Clear out the allocated buffer */
     memset(p_common_buff_32, 0, (ECC_PUBLIC_KEY_SIZE_BYTES(curve_bytes) + (private_key_size_words * 4)));
-  #else
-
-    /* Obtain a common 32-bit aligned buffer. It will be used for all the following items in this order:
-     * Curve parameters a, b, p, n, Gx, Gy. Each of the 6 fields are of size curve_bytes = PSA_BITS_TO_BYTES( ecp->grp.pbits )
-     * Private Key (D) of size private_key_size_words
-     * Public Key (Q) of size curve_bytes * 2 */
-    p_common_buff_32 = mbedtls_calloc(((curve_bytes * 8) / 4) + private_key_size_words, sizeof(uint32_t));
-
-    if (NULL == p_common_buff_32)
-    {
-        return MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-
-    uint32_t * p_curve_params_buff_32 = p_common_buff_32;
-    p_private_key_buff_32 = p_curve_params_buff_32 + ((curve_bytes * 6) / 4);
-    p_public_key_buff_32  = p_private_key_buff_32 + private_key_size_words;
-
-    ret = ecp_load_parameters_sce(grp, (uint8_t *) p_curve_params_buff_32);
-    if (ret)
-    {
-    }
-    else if (FSP_SUCCESS !=
-             p_hw_sce_ecc_generatekey(p_curve_params_buff_32, p_curve_params_buff_32 + ((curve_bytes * 4) / 4),
-                                      p_private_key_buff_32, p_public_key_buff_32))
-    {
-        ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
-    }
-    else if (0 !=
-             mbedtls_mpi_read_binary(d, (uint8_t *) p_private_key_buff_32, private_key_size_words * 4))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else
-    {
-        ret = 0;
-    }
-
-    /* Clear out the allocated buffer */
-    memset(p_common_buff_32, 0, ((curve_bytes * 8) + (private_key_size_words * 4)));
-  #endif
     mbedtls_free(p_common_buff_32);
 
     return ret;
@@ -393,8 +364,6 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     }
 
     size_t curve_bytes = PSA_BITS_TO_BYTES(grp->pbits);
-
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
 
     /* Scalar multiply only accepts wrapped scalars. */
     uint32_t m_size_wrapped_words = ecp_load_key_size((bool) true, grp);
@@ -486,81 +455,6 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     {
         ret = 0;
     }
-
-  #else
-    uint32_t integer_size_words = ecp_load_key_size((bool) grp->vendor_ctx, grp);
-    if (0 == integer_size_words)
-    {
-        return MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
-    }
-
-    /* Obtain a common 32-bit aligned buffer. It will be used for all the following items in this order:
-     * Curve parameters a, b, p, n, Gx, Gy. Each of the 6 fields are of size curve_bytes = PSA_BITS_TO_BYTES( ecp->grp.pbits )
-     * Multiplication point (P) of size curve_bytes * 2 in format (Px|Py)
-     * Multiplication result (R) of size curve_bytes * 2 in format (Rx|Ry)
-     * Input scalar (m) of size integer_size_words */
-    p_common_buff_32 = mbedtls_calloc(((curve_bytes * 10) / 4) + integer_size_words, sizeof(uint32_t));
-
-    if (NULL == p_common_buff_32)
-    {
-        return MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-
-    uint32_t * p_curve_params_buff_32 = p_common_buff_32;
-    p_point_buff_P_32        = p_curve_params_buff_32 + ((curve_bytes * 6) / 4);
-    p_point_result_buff_R_32 = p_point_buff_P_32 + ((curve_bytes * 2) / 4);
-    p_integer_buff_m_32      = p_point_result_buff_R_32 + ((curve_bytes * 2) / 4);
-
-    ret = ecp_load_parameters_sce(grp, (uint8_t *) p_curve_params_buff_32);
-    if (ret)
-    {
-    }
-    /* Write the integer to be multiplied into the buffer in reverse */
-    else if (0 !=
-             mbedtls_mpi_write_binary(m, (uint8_t *) p_integer_buff_m_32, integer_size_words * 4))
-    {
-        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-    /* Write Px into the buffer in reverse */
-    else if (0 !=
-             mbedtls_mpi_write_binary(&P->X, (uint8_t *) p_point_buff_P_32, curve_bytes))
-    {
-        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-    /* Write Py into the buffer in reverse */
-    else if (0 !=
-             mbedtls_mpi_write_binary(&P->Y, (uint8_t *) (p_point_buff_P_32 + ((curve_bytes) / 4)), curve_bytes))
-    {
-        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
-    }
-    else
-    {
-        err =
-            p_hw_sce_ecc_scalarmultiplication(p_curve_params_buff_32,
-                                              p_integer_buff_m_32,
-                                              p_point_buff_P_32,
-                                              p_point_result_buff_R_32);
-        if (FSP_SUCCESS != err)
-        {
-            ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
-        }
-        else if (0 !=
-                 mbedtls_mpi_read_binary(&R->X, (uint8_t *) p_point_result_buff_R_32, curve_bytes))
-        {
-            ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-        }
-        else if (0 !=
-                 mbedtls_mpi_read_binary(&R->Y, (uint8_t *) (p_point_result_buff_R_32 + ((curve_bytes) / 4)),
-                                         curve_bytes))
-        {
-            ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-        }
-        else
-        {
-            ret = 0;
-        }
-    }
-  #endif
 
     /*
      * For Affine format, copy the input Z value to the output.

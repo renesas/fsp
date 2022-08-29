@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_SoftwareResetSub(void)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,10 +74,10 @@ void HW_SCE_SoftwareResetSub(void)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    SCE->REG_138H = 0x00000000u;
-    SCE->REG_1D0H = 0x00000000u;
-    SCE->REG_1D0H = 0x00000000u;
-    SCE->REG_1D0H = 0x00000000u;
+    SCE->REG_138H = 0x00000000U;
+    SCE->REG_1D0H = 0x00000000U;
+    SCE->REG_1D0H = 0x00000000U;
+    SCE->REG_1D0H = 0x00000000U;
 }
 
 /***********************************************************************************************************************

@@ -77,7 +77,7 @@ bool Platform_CreateDetachedThread(void ( * threadRoutine)(void *),
                                    size_t   stackSize);
 
 #define PLATFORM_THREAD_DEFAULT_STACK_SIZE    (2048U)
-#define PLATFORM_THREAD_DEFAULT_PRIORITY      (5U)
+#define PLATFORM_THREAD_DEFAULT_PRIORITY      (configMAX_PRIORITIES - 1)
 
 /*-----------------------------------------------------------*/
 

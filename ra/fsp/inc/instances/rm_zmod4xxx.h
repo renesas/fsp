@@ -33,7 +33,6 @@
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
 #elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 #else
- #include "rm_zmod4xxx_lib_cfg.h"      // This will be removed in FSP v4.0.0.
  #include "rm_zmod4xxx_cfg.h"
 #endif
 
@@ -50,26 +49,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Definitions of Buffer Size */
-#define RM_ZMOD4XXX_MAX_I2C_BUF_SIZE        (64) // Maximum I2C buffer size
-
-/* Definitions of delay time. These will be removed in FSP v4.0.0. */
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 1)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (0)
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 2)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (5475) // See Table 3 in the ZMOD4410 Programming Manual.
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 3)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (1990) // See Table 4 in the ZMOD4410 Programming Manual.
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 4)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (0)
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 5)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (1990) // See Table 6 in the ZMOD4410 Programming Manual.
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 6)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (0)
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 7)
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (1990) // See Table 4 in the ZMOD4510 Programming Manual.
-#else
- #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (0)
-#endif
+#define RM_ZMOD4XXX_MAX_I2C_BUF_SIZE    (64) // Maximum I2C buffer size
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -86,6 +66,7 @@ typedef enum e_rm_zmod4xxx_lib_type
     RM_ZMOD4410_LIB_TYPE_SULFUR_ODOR,
     RM_ZMOD4510_LIB_TYPE_OAQ_1ST_GEN,
     RM_ZMOD4510_LIB_TYPE_OAQ_2ND_GEN,
+    RM_ZMOD4450_LIB_TYPE_RAQ,
 } rm_zmod4xxx_lib_type_t;
 
 /** ZMOD4XXX initialization process block */
@@ -179,6 +160,9 @@ fsp_err_t RM_ZMOD4XXX_Oaq1stGenDataCalculate(rm_zmod4xxx_ctrl_t * const         
 fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                              rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);
+fsp_err_t RM_ZMOD4XXX_RaqDataCalculate(rm_zmod4xxx_ctrl_t * const     p_api_ctrl,
+                                       rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                       rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data);
 fsp_err_t RM_ZMOD4XXX_Close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)

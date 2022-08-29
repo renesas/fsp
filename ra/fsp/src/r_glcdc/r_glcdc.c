@@ -292,7 +292,7 @@ static volatile bool g_clut_data_latched[2] = {true, true};
 /* Look-up table for r_glcdc_tcon_set */
 static uint32_t volatile * g_tcon_lut[] =
 {
-    &(R_GLCDC->TCON.STVA2), &(R_GLCDC->TCON.STVB2), &(R_GLCDC->TCON.STHA2), &(R_GLCDC->TCON.STHB2)
+    &(R_GLCDC->TCON.STVA2), &(R_GLCDC->TCON.STVB2), &(R_GLCDC->TCON.STHA2), &(R_GLCDC->TCON.STHB2),
 };
 
 /* Look-up table for converting display_in_format_t to glcdc_input_interface_format_t */
@@ -1237,16 +1237,22 @@ static void r_glcdc_tcon_set (glcdc_tcon_pin_t           tcon,
                               glcdc_tcon_signal_select_t signal,
                               display_signal_polarity_t  polarity)
 {
-    uint32_t invert = 0;
-
     /* Set signal polarity */
     if (DISPLAY_SIGNAL_POLARITY_LOACTIVE == polarity)
     {
-        invert = GLCDC_PRV_TCON_STXX2_INV_SET;
+        /* Set INV bit depending on register */
+        if (GLCDC_TCON_SIGNAL_SELECT_DE != signal)
+        {
+            *g_tcon_lut[signal] |= GLCDC_PRV_TCON_STXX2_INV_SET;
+        }
+        else
+        {
+            R_GLCDC->TCON.DE = 1;
+        }
     }
 
-    /* Write to register */
-    *g_tcon_lut[tcon] = signal | invert;
+    /* Set TCON signal */
+    *g_tcon_lut[tcon] |= signal;
 }
 
 /*******************************************************************************************************************//**

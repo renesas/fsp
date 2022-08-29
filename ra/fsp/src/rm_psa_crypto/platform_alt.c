@@ -18,21 +18,22 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
 #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
  #include "mbedtls/platform.h"
+ #include "mbedtls/error.h"
  #include "hw_sce_private.h"
 
  #if defined(CONFIG_MEDTLS_USE_AFR_MEMORY) && defined(MBEDTLS_PLATFORM_MEMORY) && \
     !(defined(MBEDTLS_PLATFORM_CALLOC_MACRO) && defined(MBEDTLS_PLATFORM_FREE_MACRO))
-extern void * pvCalloc(size_t xNumElements, size_t xSize);
-extern void   vPortFree(void * pv);
+extern void * mbedtls_platform_calloc(size_t nmemb, size_t size);
+extern void   mbedtls_platform_free(void * ptr);
 
+ #endif
+
+ #ifdef MBEDTLS_THREADING_ALT
+  #include "threading_alt.h"
  #endif
 
 /*******************************************************************************************************************//**
@@ -58,7 +59,14 @@ int mbedtls_platform_setup (mbedtls_platform_context * ctx)
 
  #if defined(CONFIG_MEDTLS_USE_AFR_MEMORY) && defined(MBEDTLS_PLATFORM_MEMORY) && \
     !(defined(MBEDTLS_PLATFORM_CALLOC_MACRO) && defined(MBEDTLS_PLATFORM_FREE_MACRO))
-    mbedtls_platform_set_calloc_free(pvCalloc, vPortFree);
+    mbedtls_platform_set_calloc_free(mbedtls_platform_calloc, mbedtls_platform_free);
+ #endif
+
+ #ifdef MBEDTLS_THREADING_ALT
+    mbedtls_threading_set_alt(mbedtls_platform_mutex_init,
+                              mbedtls_platform_mutex_free,
+                              mbedtls_platform_mutex_lock,
+                              mbedtls_platform_mutex_unlock);
  #endif
 
     iret = HW_SCE_McuSpecificInit();

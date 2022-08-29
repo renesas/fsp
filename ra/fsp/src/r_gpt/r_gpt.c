@@ -1232,7 +1232,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
      * register, PCLK divisor register, and counter register. */
     R_BSP_MODULE_START(FSP_IP_GPT, p_cfg->channel);
 
-#if GPT_CFG_OUTPUT_SUPPORT_ENABLE
+#if GPT_CFG_OUTPUT_SUPPORT_ENABLE && BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK
     if (0U != (BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask))
     {
         /* Enter a critical section in order to ensure that multiple GPT channels don't access the common

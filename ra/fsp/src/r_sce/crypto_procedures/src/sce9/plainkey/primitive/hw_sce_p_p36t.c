@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_Aes256GcmDecryptUpdateTransitionSub(void)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,24 +74,24 @@ void HW_SCE_Aes256GcmDecryptUpdateTransitionSub(void)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    SCE->REG_C4H = 0x00040805u;
-    SCE->REG_E0H = 0x81040080u;
-    SCE->REG_00H = 0x00002813u;
+    SCE->REG_C4H = 0x00040805U;
+    SCE->REG_E0H = 0x81040080U;
+    SCE->REG_00H = 0x00002813U;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B25)
+    while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
-    SCE->REG_1CH = 0x00001800u;
-    SCE->REG_104H = 0x00000052u;
-    SCE->REG_D0H = 0x00000020u;
-    SCE->REG_C4H = 0x00008734u;
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_104H = 0x00000052U;
+    SCE->REG_D0H = 0x00000020U;
+    SCE->REG_C4H = 0x00008734U;
     /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
+    while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000000u);
+    SCE->REG_100H = change_endian_long(0x00000000U);
 }
 
 /***********************************************************************************************************************

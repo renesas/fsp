@@ -42,6 +42,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+/* BLE_ABS_EVENT_NOTIFY_XXX_POS is DEPRECATED. Use BLE_EVENT_NOTIFY_XXX_POS macro defined in r_ble_api.h */
 #define BLE_ABS_EVENT_NOTIFY_CONNECTION_START_POS     (0)
 #define BLE_ABS_EVENT_NOTIFY_ADVERTISING_POS          (1)
 #define BLE_ABS_EVENT_NOTIFY_SCANNING_POS             (2)
@@ -52,19 +53,6 @@ FSP_HEADER
 #define BLE_ABS_EVENT_NOTIFY_INITIATING_CLOSE_POS     (7)
 #define BLE_ABS_EVENT_NOTIFY_DEEP_SLEEP_START_POS     (8)
 #define BLE_ABS_EVENT_NOTIFY_DEEP_SLEEP_WAKEUP_POS    (9)
-
-#define BLE_EVENT_NOTIFY_ENABLE_VAL                   (                                                       \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_CONNECTION_START & 0x1U) << BLE_ABS_EVENT_NOTIFY_CONNECTION_START_POS) |   \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_CONNECTION_CLOSE & 0x1U) << BLE_ABS_EVENT_NOTIFY_CONNECTION_CLOSE_POS) |   \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_ADVERTISING_START & 0x1U) << BLE_ABS_EVENT_NOTIFY_ADVERTISING_POS) |       \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_ADVERTISING_CLOSE & 0x1U) << BLE_ABS_EVENT_NOTIFY_ADVERTISING_CLOSE_POS) | \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_SCANNING_START & 0x1U) << BLE_ABS_EVENT_NOTIFY_SCANNING_POS) |             \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_SCANNING_CLOSE & 0x1U) << BLE_ABS_EVENT_NOTIFY_SCANNING_CLOSE_POS) |       \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_INITIATING_START & 0x1U) << BLE_ABS_EVENT_NOTIFY_INITIATING_START_POS) |   \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_INITIATING_CLOSE & 0x1U) << BLE_ABS_EVENT_NOTIFY_INITIATING_CLOSE_POS) |   \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_DEEP_SLEEP_START & 0x1U) << BLE_ABS_EVENT_NOTIFY_DEEP_SLEEP_START_POS) |   \
-        ((BLE_ABS_CFG_EVENT_NOTIFY_DEEP_SLEEP_WAKEUP & 0x1U) << BLE_ABS_EVENT_NOTIFY_DEEP_SLEEP_WAKEUP_POS) | \
-        (0x0))
 
 /** The timer type. */
 typedef enum
@@ -160,61 +148,6 @@ typedef struct st_ble_abs_instance_ctrl
 
     ble_abs_cfg_t const * p_cfg;       ///< Pointer to the BLE ABS configuration block.
 } ble_abs_instance_ctrl_t;
-
-/******************************************************************************************************************//**
- * @typedef ble_mcu_clock_change_cb_t
- * @brief   ble_mcu_clock_change_cb_t is the callback function type to use CLKOUT_RF as the MCU main clock source.
- * @param none
- * @return none
- **********************************************************************************************************************/
-typedef void (* ble_mcu_clock_change_cb_t)(void);
-
-/******************************************************************************************************************//**
- * @typedef ble_rf_notify_cb_t
- * @brief   ble_rf_notify_cb_t is the RF event notify callback function type.
- * @param[in] uint32_t     The infomation of RF event notification.
- * @return none
- **********************************************************************************************************************/
-typedef void (* ble_rf_notify_cb_t)(uint32_t);
-
-/******************************************************************************************************************//**
- *  @struct st_ble_rf_notify_t
- *  @brief  This structure is RF event notify management.
- **********************************************************************************************************************/
-typedef struct
-{
-    /**
-     *  @brief Set enable/disable of each RF event notification
-     *  @details
-     *      Bit0  Notify Connection event start(0:Disable/1:Enable)\n
-     *      Bit1  Notify Advertising event start(0:Disable/1:Enable)\n
-     *      Bit2  Notify Scanning event start(0:Disable/1:Enable)\n
-     *      Bit3  Notify Initiating event start(0:Disable/1:Enable)\n
-     *      Bit4  Notify Connection event close(0:Disable/1:Enable)\n
-     *      Bit5  Notify Advertising event close(0:Disable/1:Enable)\n
-     *      Bit6  Notify Scanning event close(0:Disable/1:Enable)\n
-     *      Bit7  Notify Initiating event close(0:Disable/1:Enable)\n
-     *      Bit8  Notify RF_DEEP_SLEEP event start(0:Disable/1:Enable)\n
-     *      Bit9  Notify RF_DEEP_SLEEP event close(0:Disable/1:Enable)\n
-     *      Other Bit: Reserved for future use.\n
-     */
-    uint32_t enable;
-
-    /**
-     *  @brief Set callback function pointer for RF event start
-     */
-    ble_rf_notify_cb_t start_cb;
-
-    /**
-     *  @brief Set callback function pointer for RF event close
-     */
-    ble_rf_notify_cb_t close_cb;
-
-    /**
-     *  @brief Set callback function pointer for RF_DEEP_SLEEP
-     */
-    ble_rf_notify_cb_t dsleep_cb;
-} st_ble_rf_notify_t;
 
 /* prototype */
 void r_ble_rf_notify_event_start(uint32_t param);

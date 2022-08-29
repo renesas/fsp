@@ -107,11 +107,11 @@ typedef enum e_sci_uart_rx_fifo_trigger
 } sci_uart_rx_fifo_trigger_t;
 
 /** Asynchronous Start Bit Edge Detection configuration. */
-typedef enum e_sci_uart_start_bit_detect
+typedef enum e_sci_uart_start_bit_t
 {
     SCI_UART_START_BIT_LOW_LEVEL    = 0x0, ///< Detect low level on RXDn pin as start bit
     SCI_UART_START_BIT_FALLING_EDGE = 0x1, ///< Detect falling level on RXDn pin as start bit
-} sci_uart_start_bit_detect_t;
+} sci_uart_start_bit_t;
 
 /** Noise cancellation configuration. */
 typedef enum e_sci_uart_noise_cancellation
@@ -141,18 +141,6 @@ typedef struct st_baud_setting_t
     {
         uint8_t semr_baudrate_bits;
 
-        /* DEPRECATED: Anonymous structure. */
-        struct
-        {
-            uint8_t       : 2;
-            uint8_t brme  : 1;         ///< Bit Rate Modulation Enable
-            uint8_t abcse : 1;         ///< Asynchronous Mode Extended Base Clock Select 1
-            uint8_t abcs  : 1;         ///< Asynchronous Mode Base Clock Select
-            uint8_t       : 1;
-            uint8_t bgdm  : 1;         ///< Baud Rate Generator Double-Speed Mode Select
-            uint8_t       : 1;
-        };
-
         struct
         {
             uint8_t       : 2;
@@ -181,7 +169,7 @@ typedef struct st_sci_uart_rs485_setting
 typedef struct st_sci_uart_extended_cfg
 {
     sci_clk_src_t                 clock;            ///< The source clock for the baud-rate generator. If internal optionally output baud rate on SCK
-    sci_uart_start_bit_detect_t   rx_edge_start;    ///< Start reception on falling edge
+    sci_uart_start_bit_t          rx_edge_start;    ///< Start reception on falling edge
     sci_uart_noise_cancellation_t noise_cancel;     ///< Noise cancellation setting
     baud_setting_t              * p_baud_setting;   ///< Register settings for a desired baud rate.
     sci_uart_rx_fifo_trigger_t    rx_fifo_trigger;  ///< Receive FIFO trigger level, unused if channel has no FIFO or if DTC is used.

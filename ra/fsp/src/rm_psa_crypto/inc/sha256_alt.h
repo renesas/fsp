@@ -18,23 +18,19 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 #ifndef MBEDTLS_SHA256_ALT_H
-#define MBEDTLS_SHA256_ALT_H
+ #define MBEDTLS_SHA256_ALT_H
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+ #include "common.h"
 
-#include <stddef.h>
-#include <stdint.h>
+ #include <stddef.h>
+ #include <stdint.h>
 
-
-#ifdef __cplusplus
+ #ifdef __cplusplus
 extern "C" {
-#endif
+ #endif
 
-#define SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES  64U
+ #define SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES    64U
+
 /**
  * \brief          The SHA-256 context structure.
  *
@@ -52,7 +48,8 @@ typedef struct mbedtls_sha256_context
 } mbedtls_sha256_context;
 
 int mbedtls_internal_sha256_process_ext(mbedtls_sha256_context * ctx,
-                                     const unsigned char data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES], uint32_t len);
+                                        const unsigned char      data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES],
+                                        uint32_t                 len);
 
  #ifdef __cplusplus
 }

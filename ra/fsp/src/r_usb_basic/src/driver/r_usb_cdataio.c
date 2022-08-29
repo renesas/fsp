@@ -58,14 +58,17 @@
  #include "r_usb_pmsc_api.h"
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
 
-#if defined(USB_CFG_PHID_USE)
+#if defined(USB_CFG_PHID_USE) && !defined(USB_CFG_OTG_USE)
  #include "r_usb_phid_api.h"
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
-#if defined(USB_CFG_HHID_USE)
- #include "r_usb_hhid_cfg.h"
-#endif                                 /* defined(USB_CFG_HHID_USE) */
-
+#if defined(USB_CFG_HHID_USE) && defined(USB_CFG_OTG_USE)
+ #include "r_usb_otg_hid_cfg.h"
+#else
+ #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_hhid_cfg.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+#endif                                 /* defined(USB_CFG_HHID_USE) && defined(USB_CFG_OTG_USE) */
 #if (BSP_CFG_RTOS != 1)
  #if defined(USB_CFG_HMSC_USE)
   #include "r_usb_hmsc.h"

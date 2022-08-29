@@ -245,14 +245,6 @@ CellularError_t Cellular_GetServiceStatus (CellularHandle_t cellularHandle, Cell
 }
 
 /*******************************************************************************************************************//**
- * Cellular_GetSimCardInfo wrapper, implemented by Cellular Common
- **********************************************************************************************************************/
-CellularError_t Cellular_GetSimCardInfo (CellularHandle_t cellularHandle, CellularSimCardInfo_t * pSimCardInfo)
-{
-    return Cellular_CommonGetSimCardInfo(cellularHandle, pSimCardInfo);
-}
-
-/*******************************************************************************************************************//**
  * Cellular_GetPsmSettings wrapper, implemented by Cellular Common
  **********************************************************************************************************************/
 CellularError_t Cellular_GetPsmSettings (CellularHandle_t cellularHandle, CellularPsmSettings_t * pPsmSettings)

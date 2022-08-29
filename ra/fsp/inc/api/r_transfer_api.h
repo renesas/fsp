@@ -185,37 +185,6 @@ typedef struct st_transfer_info
 {
     union
     {
-        /* DEPRECATED: Anonymous structure. */
-        struct
-        {
-            uint32_t : 16;
-            uint32_t : 2;
-
-            /** Select what happens to destination pointer after each transfer. */
-            transfer_addr_mode_t dest_addr_mode : 2;
-
-            /** Select to repeat source or destination area, unused in @ref TRANSFER_MODE_NORMAL. */
-            transfer_repeat_area_t repeat_area : 1;
-
-            /** Select if interrupts should occur after each individual transfer or after the completion of all planned
-             *  transfers. */
-            transfer_irq_t irq : 1;
-
-            /** Select when the chain transfer ends. */
-            transfer_chain_mode_t chain_mode : 2;
-
-            uint32_t : 2;
-
-            /** Select what happens to source pointer after each transfer. */
-            transfer_addr_mode_t src_addr_mode : 2;
-
-            /** Select number of bytes to transfer at once. @see transfer_info_t::length. */
-            transfer_size_t size : 2;
-
-            /** Select mode from @ref transfer_mode_t. */
-            transfer_mode_t mode : 2;
-        };
-
         struct
         {
             uint32_t : 16;

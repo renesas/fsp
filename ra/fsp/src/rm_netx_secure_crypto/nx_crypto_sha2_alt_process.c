@@ -97,7 +97,8 @@ UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr,
 {
     ULONG     current_bytes;
     ULONG     needed_fill_bytes;
-    fsp_err_t ret = FSP_ERR_ASSERTION;
+    fsp_err_t ret         = FSP_ERR_ASSERTION;
+    uint32_t  out_data[8] = {0};
 
     /* Determine if the context is non-null.  */
     if (context == NX_CRYPTO_NULL)
@@ -141,9 +142,11 @@ UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr,
         NX_CRYPTO_MEMCPY((void *) &(context->nx_sha256_buffer[current_bytes]), (void *) input_ptr, needed_fill_bytes); /* Use case of memcpy is verified. */
 
         /* Process the 64-byte (512 bit) buffer.  */
-        ret = HW_SCE_SHA256_UpdateHash((uint32_t *) context->nx_sha256_buffer,
-                                       16,
-                                       (uint32_t *) context->nx_sha256_states);
+        ret = HW_SCE_Sha224256GenerateMessageDigestSub((uint32_t *) context->nx_sha256_states,
+                                                       (uint32_t *) context->nx_sha256_buffer,
+                                                       16,
+                                                       out_data);
+        NX_CRYPTO_MEMCPY((uint32_t *) context->nx_sha256_states, out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
         FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
 
         /* Adjust the pointers and length accordingly.  */
@@ -158,9 +161,11 @@ UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr,
     {
         /* Process any and all whole blocks of input.  */
         uint32_t aligned_words = ((input_length >> 6) << 4);
-        ret =
-            HW_SCE_SHA256_UpdateHash((const uint32_t *) input_ptr, aligned_words,
-                                     (uint32_t *) (context->nx_sha256_states));
+        ret = HW_SCE_Sha224256GenerateMessageDigestSub((uint32_t *) context->nx_sha256_states,
+                                                       (const uint32_t *) input_ptr,
+                                                       aligned_words,
+                                                       out_data);
+        NX_CRYPTO_MEMCPY((uint32_t *) context->nx_sha256_states, out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
         FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
 
         input_length -= aligned_words << 2;

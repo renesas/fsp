@@ -26,6 +26,9 @@
 #else
  #include "nx_crypto_port.h"
 #endif
+#if (0U == NETX_SECURE_CRYPTO_SOFTWARE_ONLY)
+ #include "hw_sce_private.h"
+#endif
 #include "nx_crypto.h"
 #include "nx_crypto_aes.h"
 #include "nx_crypto_ecdsa.h"
@@ -55,9 +58,7 @@ FSP_HEADER
 #define RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(x)     ((x) << 2U)
 #define RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(x)     (((x) + 3U) >> 2U)
 
-#define RM_NETX_SECURE_CRYPTO_KEY_INFO_SUFFIX_BYTES                                (16U)
-#define RM_NETX_SECURE_CRYPTO_KEY_INFO_PREFIX_BYTES                                (4U)
-#define RM_NETX_SECURE_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS               (29U) /* Corresponding to ECC P-384 curves */
+#define RM_NETX_SECURE_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS               (32U) /* Corresponding to ECC P-384 curves on SCE7 */
 #define RM_NETX_SECURE_CRYPTO_ECC_192_224_256_WRAPPED_KEY_SIZE_BYTES               (13U * 4U)
 #define RM_NETX_SECURE_CRYPTO_P384_CURVE_SIZE_BYTES                                (384U >> 3U)
 #define RM_NETX_SECURE_CRYPTO_P256_CURVE_SIZE_BYTES                                (256U >> 3U)
@@ -69,44 +70,25 @@ FSP_HEADER
 #define RM_NETX_SECURE_CRYPTO_LARGEST_SUPPORTED_SIGNATURE_COORDINATE_SIZE_WORDS    ( \
         RM_NETX_SECURE_CRYPTO_LARGEST_SUPPORTED_SIGNATURE_SIZE_WORDS / 2)
 
+#if (0U == NETX_SECURE_CRYPTO_SOFTWARE_ONLY)
+
 /* Standard ECC public key is 1 + 2 x 'curve size'
- * SCE9 based public key is 2 x 'curve size' + 20 bytes, requireing an addjustment of  -1 + 20
+ * SCE9 or SCE7 based public key is 2 x 'curve size' + (20 or 32) bytes, requireing an addjustment of  -1 + (20 or 32)
  */
-#define RM_NETX_SECURE_CRYPTO_FORMATTED_ECC_PUBLIC_KEY_ADJUST                      (19U)
+ #define RM_NETX_SECURE_CRYPTO_FORMATTED_ECC_PUBLIC_KEY_ADJUST                     (((                                          \
+                                                                                         HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE) \
+                                                                                     * 4) - 1U)
 
-/* SCE based wrapped keys are 20 bytes larger than corresponding plain private keys */
-#define RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(x)    ((x) + 20U)
+/* SCE based wrapped keys are at most 20/32 bytes larger than corresponding plain private keys */
+ #define RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(x)    ((x) + ((HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE) * 4))
 
-#define RM_NETX_SECURE_CRYPTO_NONALIGNMENT_CHECK(x)        ((((uint32_t) (x) & 3U) != 0) ? true : false)
+#endif
+
+#define RM_NETX_SECURE_CRYPTO_NONALIGNMENT_CHECK(x)         ((((uint32_t) (x) & 3U) != 0) ? true : false)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
-typedef struct st_formatted_public_key_224
-{
-    uint8_t key_info_prefix[RM_NETX_SECURE_CRYPTO_KEY_INFO_PREFIX_BYTES];
-    uint8_t zero_padding_qx[4U];
-    uint8_t qx[RM_NETX_SECURE_CRYPTO_P224_CURVE_SIZE_BYTES];
-    uint8_t zero_padding_qy[4U];
-    uint8_t qy[RM_NETX_SECURE_CRYPTO_P224_CURVE_SIZE_BYTES];
-    uint8_t key_info_suffix[RM_NETX_SECURE_CRYPTO_KEY_INFO_SUFFIX_BYTES];
-} formatted_public_key_224_t;
-
-typedef struct st_formatted_public_key_256
-{
-    uint8_t key_info_prefix[RM_NETX_SECURE_CRYPTO_KEY_INFO_PREFIX_BYTES];
-    uint8_t qx[RM_NETX_SECURE_CRYPTO_P256_CURVE_SIZE_BYTES];
-    uint8_t qy[RM_NETX_SECURE_CRYPTO_P256_CURVE_SIZE_BYTES];
-    uint8_t key_info_suffix[RM_NETX_SECURE_CRYPTO_KEY_INFO_SUFFIX_BYTES];
-} formatted_public_key_256_t;
-
-typedef struct st_formatted_public_key_384
-{
-    uint8_t key_info_prefix[RM_NETX_SECURE_CRYPTO_KEY_INFO_PREFIX_BYTES];
-    uint8_t qx[RM_NETX_SECURE_CRYPTO_P384_CURVE_SIZE_BYTES];
-    uint8_t qy[RM_NETX_SECURE_CRYPTO_P384_CURVE_SIZE_BYTES];
-    uint8_t key_info_suffix[RM_NETX_SECURE_CRYPTO_KEY_INFO_SUFFIX_BYTES];
-} formatted_public_key_384_t;
 
 /* SCE initialization */
 uint32_t rm_netx_secure_crypto_sce_init(void);

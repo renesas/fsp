@@ -988,7 +988,6 @@ void canfd_error_isr (void)
     }
 
     /* Set remaining arguments and call callback */
-    args.p_frame = NULL;
     r_canfd_call_callback(p_callback_ctrl, &args);
 
     /* Clear IRQ */
@@ -1018,9 +1017,8 @@ void canfd_rx_fifo_isr (void)
     if (fifo < CANFD_PRV_RX_FIFO_MAX)
     {
         /* Set static arguments */
-        args.p_frame = &args.frame;
-        args.event   = CAN_EVENT_RX_COMPLETE;
-        args.buffer  = fifo + CANFD_PRV_RXMB_MAX;
+        args.event  = CAN_EVENT_RX_COMPLETE;
+        args.buffer = fifo + CANFD_PRV_RXMB_MAX;
 
         /* Read from the FIFO until it is empty */
         while (!(R_CANFD->CFDFESTS & (1U << fifo)))
@@ -1069,7 +1067,6 @@ void canfd_channel_tx_isr (void)
     can_callback_args_t args;
     args.channel   = channel;
     args.p_context = p_ctrl->p_context;
-    args.p_frame   = NULL;
 
     /* Check the byte of CFDGTINTSTS0 that corresponds to the interrupting channel */
     uint32_t cfdgtintsts = *((uint8_t *) (&R_CANFD->CFDGTINTSTS0) + channel);

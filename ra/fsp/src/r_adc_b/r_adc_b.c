@@ -55,6 +55,9 @@
 #define R_ADC_B_ADPGACR_GAIN_OFFSET_1_CAL_Msk    (0x200UL)
 #define R_ADC_B_ADPGACR_SAMPLE_HOLD_1_CAL_Msk    (0x400UL)
 
+#define ADC_B_DIGITAL_FILTER_SELECTION           ((ADC_B_DIGITAL_FILTER_MODE_SINC3 << R_ADC_B0_ADDFSR0_DFSEL1_Pos) | \
+                                                  (ADC_B_DIGITAL_FILTER_MODE_PHASE << R_ADC_B0_ADDFSR0_DFSEL2_Pos));
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -178,7 +181,14 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     R_ADC_B->ADCLKENR = 0x01;
     FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADCLKSR, 0x01);
 
-    /* Set ADC unit scan modes */
+    /* Set ADC unit scan modes
+     *  - ADC Converter Background Continuous Mode only valid for Hybrid mode */
+#if ADC_B_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_extend->adc_b_converter_mode[0].mode != ADC_B_CONVERTER_MODE_BACKGROUND_SCAN ||
+               p_extend->adc_b_converter_mode[0].method == ADC_B_CONVERSION_METHOD_HYBRID);
+    FSP_ASSERT(p_extend->adc_b_converter_mode[1].mode != ADC_B_CONVERTER_MODE_BACKGROUND_SCAN ||
+               p_extend->adc_b_converter_mode[1].method == ADC_B_CONVERSION_METHOD_HYBRID);
+#endif
     R_ADC_B->ADMDR = p_extend->adc_b_mode;
 
     /* Disable Group Scan Priority */
@@ -190,6 +200,11 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     R_ADC_B->ADSHCR1  = (p_extend->sample_and_hold_enable_mask & ADC_B_SAMPLE_AND_HOLD_MASK_UNIT_456) >> 4;
     R_ADC_B->ADSHSTR0 = p_extend->sample_and_hold_config_012;
     R_ADC_B->ADSHSTR1 = p_extend->sample_and_hold_config_456;
+
+    /* Configure Digital filters - DFSEL1 is Sync3 and DFSEL2 is 'Phase', for both ADC 0 and 1. These settings are
+     * configured once and groups are updated to use the desired filter. */
+    R_ADC_B->ADDFSR0 = ADC_B_DIGITAL_FILTER_SELECTION;
+    R_ADC_B->ADDFSR1 = ADC_B_DIGITAL_FILTER_SELECTION;
 
     adc_b_open_pga(p_extend);
 
@@ -586,7 +601,6 @@ fsp_err_t R_ADC_B_ScanStart (adc_ctrl_t * p_ctrl)
  * @retval FSP_ERR_INVALID_ARGUMENT    An invalid group has been provided.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  * @retval FSP_ERR_NOT_INITIALIZED     Unit not initialized.
- * @retval FSP_ERR_IN_USE              Another scan is still in progress (software trigger).
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_mask)
 {
@@ -600,7 +614,6 @@ fsp_err_t R_ADC_B_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_ma
     adc_group_mask_t configured_groups =
         (adc_group_mask_t) (p_instance_ctrl->cached_adtrgenr | p_instance_ctrl->cached_adsystr);
     FSP_ERROR_RETURN(0 != (configured_groups & group_mask), FSP_ERR_INVALID_ARGUMENT);
-    FSP_ERROR_RETURN(0 == (group_mask & R_ADC_B->ADGRSR), FSP_ERR_IN_USE);
 #endif
 
     R_ADC_B->ADTRGENR |= (group_mask & p_instance_ctrl->cached_adtrgenr);

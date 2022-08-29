@@ -59,6 +59,16 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** Phy LSI */
+typedef enum e_ether_phy_lsi_type
+{
+    ETHER_PHY_LSI_TYPE_DEFAULT    = 0, ///< Select default configuration. This type dose not change Phy LSI default setting by strapping option.
+    ETHER_PHY_LSI_TYPE_KSZ8091RNB = 1, ///< Select configuration for KSZ8091RNB.
+    ETHER_PHY_LSI_TYPE_KSZ8041    = 2, ///< Select configuration for KSZ8041.
+    ETHER_PHY_LSI_TYPE_DP83620    = 3, ///< Select configuration for DP83620.
+    ETHER_PHY_LSI_TYPE_ICS1894    = 4, ///< Select configuration for ICS1894.
+} ether_phy_lsi_type_t;
+
 /** Flow control functionality  */
 typedef enum e_ether_phy_flow_control
 {
@@ -97,6 +107,8 @@ typedef struct st_ether_phy_cfg
 
     uint32_t phy_reset_wait_time;          ///< Wait time for PHY-LSI reboot
     int32_t  mii_bit_access_wait_time;     ///< Wait time for MII/RMII access
+
+    ether_phy_lsi_type_t phy_lsi_type;     ///< Phy LSI type
 
     ether_phy_flow_control_t flow_control; ///< Flow control functionally enable or disable
     ether_phy_mii_type_t     mii_type;     ///< Interface type is MII or RMII

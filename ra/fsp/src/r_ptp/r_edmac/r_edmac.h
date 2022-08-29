@@ -61,13 +61,6 @@ typedef struct __PACKED
     {
         uint32_t raw;
 
-        /* DEPRECATED: Anonymous structure. */
-        struct
-        {
-            uint32_t        : 31U;
-            uint32_t active : 1U;
-        };
-
         struct
         {
             uint32_t        : 31U;

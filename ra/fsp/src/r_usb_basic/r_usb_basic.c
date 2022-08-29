@@ -51,6 +51,9 @@
   #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_printer.h"
  #endif                                /* defined(USB_CFG_HPRN_USE) */
 
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+  #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h"
+ #endif /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if (BSP_CFG_RTOS != 0)
@@ -77,7 +80,7 @@
  #endif                                /* defined(USB_CFG_HMSC_USE) */
 #endif /* #if (BSP_CFG_RTOS != 1) */
 
-#if defined(USB_CFG_PHID_USE)
+#if defined(USB_CFG_PHID_USE) && !defined(USB_CFG_OTG_USE)
  #include "r_usb_phid_api.h"
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
@@ -118,6 +121,7 @@
 #define USB_VALUE_50     (50)
 #define USB_VALUE_100    (100)
 #define USB_VALUE_7FH    (0x7F)
+#define USB_VALUE_80H    (0x80)
 #define USB_VALUE_FFH    (0xFF)
 
 #define USB_OTG_IRQ      (0x7)
@@ -667,6 +671,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
  #endif /*  USB_CFG_TYPEC == USB_CFG_DISABLE */
 
  #if (BSP_CFG_RTOS == 1)
+  #if !defined(USB_CFG_OTG_USE)
+            ux_host_stack_class_register(_ux_system_host_class_hub_name, ux_host_class_hub_entry);
+  #endif                               /* !defined(USB_CFG_OTG_USE) */
+
   #if defined(USB_CFG_HCDC_USE)
             ux_host_stack_class_register(_ux_system_host_class_cdc_acm_name, ux_host_class_cdc_acm_entry);
             if (USB_SPEED_HS == p_cfg->usb_speed)
@@ -1083,7 +1091,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
     fsp_err_t             ret_code;
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
  #if (BSP_CFG_RTOS == 1)
-    usb_utr_t utr;
+    usb_utr_t ux_utr;
  #endif                                /* (BSP_CFG_RTOS == 1) */
 
  #if (BSP_CFG_RTOS != 0)
@@ -1161,19 +1169,19 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
     if (USB_MODE_PERI == g_usb_usbmode[p_ctrl->module_number])
     {
   #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-        utr.ip     = p_ctrl->module_number;
-        is_connect = usb_pstd_chk_configured(&utr);
+        ux_utr.ip  = p_ctrl->module_number;
+        is_connect = usb_pstd_chk_configured(&ux_utr);
 
-        usb_pstd_detach_process(&utr);
+        usb_pstd_detach_process(&ux_utr);
   #endif                               /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
     else
     {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-        utr.ip  = p_ctrl->module_number;
-        utr.ipp = usb_hstd_get_usb_ip_adr((uint16_t) p_ctrl->module_number); /* Get the USB IP base address. */
+        ux_utr.ip  = p_ctrl->module_number;
+        ux_utr.ipp = usb_hstd_get_usb_ip_adr((uint16_t) p_ctrl->module_number); /* Get the USB IP base address. */
 
-        usb_hstd_detach_process(&utr);
+        usb_hstd_detach_process(&ux_utr);
         usb_cpu_delay_xms(USB_VALUE_50);
   #endif /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
     }
@@ -1238,6 +1246,10 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
    #if defined(USB_CFG_HHID_USE)
             ux_host_stack_class_unregister(ux_host_class_hid_entry);
    #endif                              /* #if defined(USB_CFG_HHID_USE) */
+
+   #if !defined(USB_CFG_OTG_USE)
+            ux_host_stack_class_unregister(ux_host_class_hub_entry);
+   #endif /* !defined(USB_CFG_OTG_USE) */
   #endif                               /* #if (BSP_CFG_RTOS == 1) */
  #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
         }
@@ -1303,9 +1315,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
 }
 
 /**************************************************************************//**
- * @brief Bulk/interrupt data transfer and control data transfer
- *
- * 1. Bulk/interrupt data transfer
+ * @brief Bulk/Interrupt data transfer
  *
  *   Requests USB data read (bulk/interrupt transfer).
  *   The read data is stored in the area specified by argument (p_buf).
@@ -1315,20 +1325,19 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
  *   check the return value (USB_STATUS_READ_COMPLETE) of the R_USB_GetEvent function, and then
  *   refer to the member (size) of the usb_crtl_t structure.
  *
- * 2. Control data transfer
- *
- *   The R_USB_Read function is used to receive data in the data stage and the
- *   R_USB_Write function is used to send data to the USB host.
- *
  * @retval FSP_SUCCESS           Successfully completed (Data read request completed).
  * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
  * @retval FSP_ERR_USB_BUSY      Data receive request already in process for
  *                               USB device with same device address.
  * @retval FSP_ERR_ASSERTION     Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER Parameter error.
- * @note Do not call this API in the following function.
- * @note (1). Interrupt function.
- * @note (2). Callback function ( for RTOS ).
+ * @note 1. Do not call this API in the following function.
+ * @note  (1). Interrupt function.
+ * @note  (2). Callback function ( for RTOS ).
+ * @note 2. Allocate the following the storage area when using DMA transfer and specify the start address of the allocated storage area to the 2nd argument(p_buf).
+ * @note  (1). When using High-speed and enabling continuous transfer mode, allocate the storage area with a size that is a multiple of 2048.
+ * @note  (2). When using High-speed and disabling continuous transfer mode, allocate the storage area with a size that is a multiple of 512.
+ * @note  (3). When using Full-speed, allocate the storage area with a size that is a multiple of 64.
  ******************************************************************************/
 fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t destination)
 {
@@ -1414,9 +1423,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
 }
 
 /**************************************************************************//**
- * @brief Bulk/Interrupt data transfer and control data transfer
- *
- * 1. Bulk/Interrupt data transfer
+ * @brief Bulk/Interrupt data transfer
  *
  *   Requests USB data write (bulk/interrupt transfer).
  *   Stores write data in area specified by argument (p_buf).
@@ -1425,22 +1432,17 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
  *   of the R_USB_GetEvent function.
  *   For sending a zero-length packet, please refer the following Note.
  *
- * 2. Control data transfer
- *
- *   The R_USB_Read function is used to receive data in the data stage and
- *   the R_USB_Write function is used to send data to the USB host.
- *
  * @retval FSP_SUCCESS           Successfully completed. (Data write request completed)
  * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
  * @retval FSP_ERR_USB_BUSY      Data write request already in process for
  *                               USB device with same device address.
  * @retval FSP_ERR_ASSERTION     Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER Parameter error.
- * @note 1.The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically.
+ * @note 1. The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically.
  * @note   When sending a ZLP, the user sets USB_NULL in the third argument (size) of R_USB_Write function as follow.
  * @note   e.g)
  * @note   R_USB_Write (&g_basic0_ctrl, &g_buf, USB_NULL);
- * @note 2.Do not call this API in the following function.
+ * @note 2. Do not call this API in the following function.
  * @note   (1). Interrupt function.
  * @note   (2). Callback function ( for RTOS ).
  ******************************************************************************/
@@ -2194,7 +2196,7 @@ fsp_err_t R_USB_InfoGet (usb_ctrl_t * const p_api_ctrl, usb_info_t * p_info, uin
 }
 
 /**************************************************************************//**
- * @brief Requests a data read (bulk/interrupt transfer) via the pipe specified in the argument.
+ * @brief Requests a data read (Bulk/Interrupt transfer) via the pipe specified in the argument.
  *
  * The read data is stored in the area specified in the argument (p_buf).
  * After the data read is completed, confirm the operation with the R_USB_GetEvent function
@@ -2208,9 +2210,13 @@ fsp_err_t R_USB_InfoGet (usb_ctrl_t * const p_api_ctrl, usb_info_t * p_info, uin
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER    Parameter error.
- * @note Do not call this API in the following function.
+ * @note 1. Do not call this API in the following function.
  * @note (1). Interrupt function.
  * @note (2). Callback function ( for RTOS ).
+ * @note 2. Allocate the following the storage area when using DMA transfer and specify the start address of the allocated storage area to the 2nd argument(p_buf).
+ * @note (1). When using High-speed and enabling continuous transfer mode, allocate the storage area with a size that is a multiple of 2048.
+ * @note (2). When using High-speed and disabling continuous transfer mode, allocate the storage area with a size that is a multiple of 512.
+ * @note (3). When using Full-speed, allocate the storage area with a size that is a multiple of 64.
  ******************************************************************************/
 fsp_err_t R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t pipe_number)
 {
@@ -2370,7 +2376,7 @@ fsp_err_t R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32
 }
 
 /**************************************************************************//**
- * @brief Requests a data write (bulk/interrupt transfer).
+ * @brief Requests a data write (Bulk/Interrupt transfer).
  *
  * The write data is stored in the area specified in the argument (p_buf).
  * After data write is completed, confirm the operation with the return value
@@ -2382,11 +2388,11 @@ fsp_err_t R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER    Parameter error.
- * @note 1.The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically.
+ * @note 1. The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically.
  * @note   When sending a ZLP, the user sets USB_NULL in the third argument (size) of R_USB_PipeWrite function as follow.
  * @note   e.g)
  * @note   R_USB_PipeWrite (&g_basic0_ctrl, &g_buf, USB_NULL, pipe_number);
- * @note 2.Do not call this API in the following function.
+ * @note 2. Do not call this API in the following function.
  * @note   (1). Interrupt function.
  * @note   (2). Callback function ( for RTOS ).
  ******************************************************************************/
@@ -3248,6 +3254,11 @@ fsp_err_t R_USB_ModuleNumberGet (usb_ctrl_t * const p_api_ctrl, uint8_t * module
  * @brief This API gets the class type.
  *
  * @retval FSP_SUCCESS              Successful completion.
+ * @note In Bare-Metal, In the Bare-Metal version, please specify the variable specified by the 1st argument of
+ *       the R_USB_EventGet function to the 1st argument of this API.
+ * @note In the FreeRTOS, please specify one of the following to the 1st argument of this API.
+ * @note 1. The 1st argument of the callback function specified in Conguration.
+ * @note 2. The start address of the area where the structure area of the 1st argument was copied.
  ******************************************************************************/
 fsp_err_t R_USB_ClassTypeGet (usb_ctrl_t * const p_api_ctrl, usb_class_t * class_type)
 {
@@ -3262,6 +3273,11 @@ fsp_err_t R_USB_ClassTypeGet (usb_ctrl_t * const p_api_ctrl, usb_class_t * class
  * @brief This API gets the device address.
  *
  * @retval FSP_SUCCESS              Successful completion.
+ * @note In Bare-Metal, In the Bare-Metal version, please specify the variable specified by the 1st argument of
+ *       the R_USB_EventGet function to the 1st argument of this API.
+ * @note In the FreeRTOS, please specify one of the following to the 1st argument of this API.
+ * @note 1. The 1st argument of the callback function specified in Conguration.
+ * @note 2. The start address of the area where the structure area of the 1st argument was copied.
  ******************************************************************************/
 fsp_err_t R_USB_DeviceAddressGet (usb_ctrl_t * const p_api_ctrl, uint8_t * device_address)
 {
@@ -3276,6 +3292,11 @@ fsp_err_t R_USB_DeviceAddressGet (usb_ctrl_t * const p_api_ctrl, uint8_t * devic
  * @brief This API gets the pipe number.
  *
  * @retval FSP_SUCCESS              Successful completion.
+ * @note In Bare-Metal, In the Bare-Metal version, please specify the variable specified by the 1st argument of
+ *       the R_USB_EventGet function to the 1st argument of this API.
+ * @note In the FreeRTOS, please specify one of the following to the 1st argument of this API.
+ * @note 1. The 1st argument of the callback function specified in Conguration.
+ * @note 2. The start address of the area where the structure area of the 1st argument was copied.
  ******************************************************************************/
 fsp_err_t R_USB_PipeNumberGet (usb_ctrl_t * const p_api_ctrl, uint8_t * pipe_number)
 {
@@ -3290,20 +3311,124 @@ fsp_err_t R_USB_PipeNumberGet (usb_ctrl_t * const p_api_ctrl, uint8_t * pipe_num
  * @brief This API gets the state of the device.
  *
  * @retval FSP_SUCCESS              Successful completion.
+ * @note In Bare-Metal, In the Bare-Metal version, please specify the variable specified by the 1st argument of
+ *       the R_USB_EventGet function to the 1st argument of this API.
+ * @note In the FreeRTOS, please specify one of the following to the 1st argument of this API.
+ * @note 1. The 1st argument of the callback function specified in Conguration.
+ * @note 2. The start address of the area where the structure area of the 1st argument was copied.
  ******************************************************************************/
 fsp_err_t R_USB_DeviceStateGet (usb_ctrl_t * const p_api_ctrl, uint16_t * state)
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    *state = p_ctrl->status;
+    if (USB_MODE_HOST == g_usb_usbmode[p_ctrl->module_number])
+    {
+#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+        switch (g_usb_hstd_device_info[p_ctrl->module_number][p_ctrl->device_address][1])
+        {
+            case USB_POWERED:          /* Power state  */
+            {
+                *state = USB_STATUS_POWERED;
+                break;
+            }
+
+            case USB_DEFAULT:          /* Default state  */
+            {
+                *state = USB_STATUS_DEFAULT;
+                break;
+            }
+
+            case USB_ADDRESS:          /* Address state  */
+            {
+                *state = USB_STATUS_ADDRESS;
+                break;
+            }
+
+            case USB_CONFIGURED:       /* Configured state  */
+            {
+                *state = USB_STATUS_CONFIGURED;
+                break;
+            }
+
+            case USB_SUSPENDED:        /* Suspend state */
+            {
+                *state = USB_STATUS_SUSPEND;
+                break;
+            }
+
+            case USB_DETACHED:         /* Disconnect(VBUSon) state */
+            {
+                *state = USB_STATUS_DETACH;
+                break;
+            }
+
+            default:                   /* Error */
+            {
+                *state = USB_NULL;
+                break;
+            }
+        }
+#endif                                 /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+    }
+    else
+    {
+#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+        uint16_t status;
+
+        status = hw_usb_read_intsts(p_ctrl->module_number);
+        switch ((uint16_t) (status & USB_DVSQ))
+        {
+            case USB_DS_POWR:          /* Power state  */
+            {
+                *state = USB_STATUS_DETACH;
+                break;
+            }
+
+            case USB_DS_DFLT:          /* Default state  */
+            {
+                *state = USB_STATUS_DEFAULT;
+                break;
+            }
+
+            case USB_DS_ADDS:          /* Address state  */
+            {
+                *state = USB_STATUS_ADDRESS;
+                break;
+            }
+
+            case USB_DS_CNFG:          /* Configured state  */
+            {
+                *state = USB_STATUS_CONFIGURED;
+                break;
+            }
+
+            case USB_DS_SPD_POWR:      /* Power suspend state */
+            case USB_DS_SPD_DFLT:      /* Default suspend state */
+            case USB_DS_SPD_ADDR:      /* Address suspend state */
+            case USB_DS_SPD_CNFG:      /* Configured Suspend state */
+            {
+                *state = USB_STATUS_SUSPEND;
+                break;
+            }
+
+            default:                   /* Error */
+                *state = USB_NULL;
+        }
+#endif /* ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
+    }
 
     return FSP_SUCCESS;
 }
 
 /**************************************************************************//**
- * @brief This API gets the data size.
+ * @brief This API gets the read data size.
  *
  * @retval FSP_SUCCESS              Successful completion.
+ * @note In Bare-Metal, In the Bare-Metal version, please specify the variable specified by the 1st argument of
+ *       the R_USB_EventGet function to the 1st argument of this API.
+ * @note In the FreeRTOS, please specify one of the following to the 1st argument of this API.
+ * @note 1. The 1st argument of the callback function specified in Conguration.
+ * @note 2. The start address of the area where the structure area of the 1st argument was copied.
  ******************************************************************************/
 fsp_err_t R_USB_DataSizeGet (usb_ctrl_t * const p_api_ctrl, uint32_t * data_size)
 {
@@ -3315,9 +3440,14 @@ fsp_err_t R_USB_DataSizeGet (usb_ctrl_t * const p_api_ctrl, uint32_t * data_size
 }
 
 /**************************************************************************//**
- * @brief This API gets the setup type.
+ * @brief This API gets the setup information.
  *
  * @retval FSP_SUCCESS              Successful completion.
+ * @note In Bare-Metal, In the Bare-Metal version, please specify the variable specified by the 1st argument of
+ *       the R_USB_EventGet function to the 1st argument of this API.
+ * @note In the FreeRTOS, please specify one of the following to the 1st argument of this API.
+ * @note 1. The 1st argument of the callback function specified in Conguration.
+ * @note 2. The start address of the area where the structure area of the 1st argument was copied.
  ******************************************************************************/
 fsp_err_t R_USB_SetupGet (usb_ctrl_t * const p_api_ctrl, usb_setup_t * setup)
 {

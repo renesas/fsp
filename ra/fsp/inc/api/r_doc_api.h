@@ -57,16 +57,6 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** DOC status */
-typedef struct e_doc_status
-{
-    union
-    {
-        uint16_t result;               ///< Result of a 16-bit operation.
-        uint32_t result_32;            ///< Result of a 32-bit operation.
-    };
-} doc_status_t;
-
 /** Event that can trigger a callback function. */
 typedef enum e_doc_event
 {
@@ -147,15 +137,6 @@ typedef struct st_doc_api
      * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      */
     fsp_err_t (* close)(doc_ctrl_t * const p_ctrl);
-
-    /** DEPRECATED - Gets the result of addition/subtraction operations and stores it in the provided pointer p_status.
-     * @par Implemented as
-     * - @ref R_DOC_StatusGet()
-     * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
-     * @param[out]  p_data      Provides the 16 bit result of the addition/subtraction operation
-     *                          at the user defined location.
-     */
-    fsp_err_t (* statusGet)(doc_ctrl_t * const p_ctrl, doc_status_t * p_status);
 
     /** Gets the result of addition/subtraction operations and stores it in the provided pointer p_result.
      * @par Implemented as

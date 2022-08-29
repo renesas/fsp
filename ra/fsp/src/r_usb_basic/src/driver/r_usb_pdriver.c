@@ -38,6 +38,15 @@
   #if defined(USB_CFG_HCDC_USE)
    #include "ux_host_class_cdc_acm.h"
   #endif                               /* defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HHID_USE)
+   #include "ux_host_class_hid.h"
+   #include "ux_host_class_hid_keyboard.h"
+   #include "ux_host_class_hid_mouse.h"
+   #include "ux_host_class_hid_remote_control.h"
+  #endif                               /* defined(USB_CFG_HHID_USE) */
+  #if defined(USB_CFG_HMSC_USE)
+   #include "ux_host_class_storage.h"
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
  #endif                                /* defined(USB_CFG_OTG_USE) */
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
@@ -109,6 +118,7 @@ volatile uint8_t g_usb_is_otg_attach_interrupt[USB_NUM_USBIP];
 
  #if (BSP_CFG_RTOS == 1)
 extern bool         g_usb_peri_usbx_is_detach[USB_MAX_PIPE_NO + 1];
+extern bool         g_usb_peri_usbx_is_fifo_error[USB_MAX_PIPE_NO + 1];
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
 extern UINT usb_host_usbx_initialize(UX_HCD * hcd);
 
@@ -1529,7 +1539,7 @@ void usb_pstd_fifo_to_buf (uint16_t pipe, uint16_t useport, usb_utr_t * p_utr)
         {
             /* FIFO access error */
             USB_PRINTF0("### FIFO access error \n");
-            usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_ERR, p_utr);
+            usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_FIFO_ERR, p_utr);
             break;
         }
 
@@ -1600,7 +1610,7 @@ void usb_pstd_buf_to_fifo (uint16_t pipe, uint16_t useport, usb_utr_t * p_utr)
         {
             /* FIFO access error */
             USB_PRINTF0("### FIFO access error \n");
-            usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_ERR, p_utr);
+            usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_FIFO_ERR, p_utr);
             break;
         }
 
@@ -1687,7 +1697,8 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
 
     *p_tran_data = *ptr;
    #if (BSP_CFG_RTOS == 1)
-    p_tran_data->cur_task_hdl = tx_thread_identify();
+    p_tran_data->cur_task_hdl              = tx_thread_identify();
+    g_usb_peri_usbx_is_fifo_error[pipenum] = USB_NO;
    #elif (BSP_CFG_RTOS == 2)           /* (BSP_CFG_RTOS == 1) */
     p_tran_data->cur_task_hdl = xTaskGetCurrentTaskHandle();
    #endif                              /* (BSP_CFG_RTOS == 1) */
@@ -1706,7 +1717,32 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
    #if (BSP_CFG_RTOS == 1)
     if (0 != pipenum)
     {
+    #if defined(USB_CFG_PPRN_USE)
+        UINT tx_err;
+        tx_err = tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], p_tran_data->timeout);
+        if (TX_SUCCESS != tx_err)
+        {
+            p_tran_data->is_timeout = USB_YES;
+            err = usb_pstd_transfer_end(p_tran_data, pipenum);
+            if (USB_OK != err)
+            {
+                USB_REL_BLK(1, p_tran_data);
+            }
+
+            err = USB_ERR_TMOUT;
+        }
+        else
+        {
+            if (USB_YES == g_usb_peri_usbx_is_fifo_error[pipenum])
+            {
+                g_usb_peri_usbx_is_fifo_error[pipenum] = USB_NO;
+                err = USB_ERR_FIFO_ACCESS;
+            }
+        }
+
+    #else                              /* defined(USB_CFG_PPRN_USE) */
         tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], TX_WAIT_FOREVER);
+    #endif  /* defined(USB_CFG_PPRN_USE) */
     }
    #endif                              /* #if (BSP_CFG_RTOS == 1) */
   #endif                               /* (BSP_CFG_RTOS == 0) */
@@ -1803,6 +1839,7 @@ void usb_pstd_change_device_state (uint16_t state, uint16_t keyword, usb_cb_t co
   #else                                /* BSP_CFG_RTOS == 0 */
             utr.msghead = (usb_mh_t) USB_NULL;
             utr.msginfo = USB_MSG_PCD_REMOTEWAKEUP;
+            utr.ip      = p_utr->ip;
 
             /* Send message */
             err = (uint16_t) USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) &utr);

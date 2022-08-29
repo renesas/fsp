@@ -249,6 +249,8 @@ void vPortValidateInterruptPriority(void);
 /* portNOP() is not required by this port. */
  #define portNOP()
 
+ #define portMEMORY_BARRIER()    __asm volatile ("" ::: "memory")
+
  #if defined(__GNUC__) || defined(__ARMCC_VERSION)
   #define portINLINE          __inline
  #elif defined(__ICCARM__)

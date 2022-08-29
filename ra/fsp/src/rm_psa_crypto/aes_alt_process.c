@@ -18,11 +18,7 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
 #if defined(MBEDTLS_AES_C)
 
@@ -31,6 +27,7 @@
  #include "mbedtls/aes.h"
  #include "mbedtls/platform.h"
  #include "mbedtls/platform_util.h"
+ #include "mbedtls/error.h"
  #if defined(MBEDTLS_PADLOCK_C)
   #include "mbedtls/padlock.h"
  #endif
@@ -39,6 +36,7 @@
  #endif
  #include "hw_sce_aes_private.h"
  #include "hw_sce_private.h"
+ #include "hw_sce_ra_private.h"
 
 /*
  * 32-bit integer manipulation macros (little endian)
@@ -85,7 +83,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
     int                   ret            = 0;
     unsigned int          local_keybits  = 0;
     const unsigned char * p_internal_key = key;
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
 
     /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
     uint8_t encrypted_aes_key[SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED] = {0};
@@ -94,7 +92,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
     {
         case SIZE_AES_128BIT_KEYLEN_BITS:
         {
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
             local_keybits = SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 10;
             if (false == (bool) ctx->vendor_ctx)
@@ -125,7 +123,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
 
         case SIZE_AES_192BIT_KEYLEN_BITS:
         {
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
             local_keybits = SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 12;
             if (false == (bool) ctx->vendor_ctx)
@@ -156,7 +154,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
 
         case SIZE_AES_256BIT_KEYLEN_BITS:
         {
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5
             local_keybits = SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 14;
             if (false == (bool) ctx->vendor_ctx)
@@ -239,73 +237,53 @@ int mbedtls_aes_setkey_dec (mbedtls_aes_context * ctx, const unsigned char * key
  * NOTE: The return code from this function is not checked by the mbedCrypto implementation,
  * so a failure here wont show up in the calling layer.
  */
-
 int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char input[16], unsigned char output[16])
 {
     (void) output;
-    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
-    int       ret = 0;
+    fsp_err_t err             = FSP_ERR_CRYPTO_UNKNOWN;
+    int       ret             = 0;
+    uint32_t  dummy_iv[4]     = {0};
+    uint32_t  indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION);
+    uint32_t  indata_key_type = 0;
+
+    FSP_PARAMETER_NOT_USED(dummy_iv);
+    FSP_PARAMETER_NOT_USED(indata_cmd);
+    FSP_PARAMETER_NOT_USED(input);
+    FSP_PARAMETER_NOT_USED(indata_key_type);
 
     if (ctx->nr == 10)
     {
-        if (true == (bool) ctx->vendor_ctx)
+        err =
+            HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, dummy_iv);
+        if (err == FSP_SUCCESS)
         {
-  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_128EcbEncryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0]);
-  #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-  #endif                               /* (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT))) */
+            HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
         }
-        else
-        {
-            err =
-                HW_SCE_AES_128EcbEncrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0]);
-        }
+
+        err = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
 
   #if BSP_FEATURE_CRYPTO_HAS_SCE9
     else if (ctx->nr == 12)
     {
-        if (true == (bool) ctx->vendor_ctx)
+        err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, dummy_iv);
+        if (err == FSP_SUCCESS)
         {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_192EcbEncryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
+            HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
         }
-        else
-        {
-            err =
-                HW_SCE_AES_192EcbEncrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0]);
-        }
+
+        err = HW_SCE_Aes192EncryptDecryptFinalSub();
     }
   #endif
     else if (ctx->nr == 14)
     {
-        if (true == (bool) ctx->vendor_ctx)
+        err = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, dummy_iv);
+        if (err == FSP_SUCCESS)
         {
-  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_256EcbEncryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0]);
-  #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-  #endif
+            HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
         }
-        else
-        {
-            err =
-                HW_SCE_AES_256EcbEncrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0]);
-        }
+
+        err = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
     else
     {
@@ -319,8 +297,6 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
 
     return ret;
 }
-
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
 
 int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
                                       unsigned int          length,
@@ -329,14 +305,16 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
                                       unsigned char       * output)
 {
     (void) output;
-    fsp_err_t err = FSP_SUCCESS;
-    int       ret = 0;
+    fsp_err_t err             = FSP_SUCCESS;
+    int       ret             = 0;
+    uint32_t  indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_CBC_ENCRYPTION);
+    uint32_t  indata_key_type = 0;
 
     if (ctx->nr == 10)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes128CbcEncryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -345,13 +323,13 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes128EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else if (ctx->nr == 12)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes192CbcEncryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -360,13 +338,13 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes192EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else if (ctx->nr == 14)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes256CbcEncryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -375,7 +353,7 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes256EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else
     {
@@ -390,80 +368,6 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
     return ret;
 }
 
-  #else
-
-int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
-                                      unsigned int          length,
-                                      unsigned char       * iv,
-                                      const unsigned char * input,
-                                      unsigned char       * output)
-{
-    (void) output;
-    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
-    int       ret = 0;
-
-    if (ctx->nr == 10)
-    {
-        if (true == (bool) ctx->vendor_ctx)
-        {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_128CbcEncryptUsingEncryptedKey(ctx->buf,
-                                                          (uint32_t *) &iv[0],
-                                                          (length / 4U),
-                                                          (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0],
-                                                          (uint32_t *) &iv[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif                              /* (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT))) */
-        }
-        else
-        {
-            err =
-                HW_SCE_AES_128CbcEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
-        }
-    }
-    else if (ctx->nr == 14)
-    {
-        if (true == (bool) ctx->vendor_ctx)
-        {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_256CbcEncryptUsingEncryptedKey(ctx->buf,
-                                                          (uint32_t *) &iv[0],
-                                                          (length / 4U),
-                                                          (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0],
-                                                          (uint32_t *) &iv[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
-        }
-        else
-        {
-            err =
-                HW_SCE_AES_256CbcEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
-        }
-    }
-    else
-    {
-        return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-    }
-
-    if (FSP_SUCCESS != err)
-    {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    }
-
-    return ret;
-}
-
-  #endif                               /* BSP_FEATURE_CRYPTO_HAS_SCE9 */
  #endif                                /* !MBEDTLS_AES_ENCRYPT_ALT */
 
 /*
@@ -475,69 +379,50 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
 
 int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char input[16], unsigned char output[16])
 {
-    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
-    int       ret = 0;
+    fsp_err_t err             = FSP_ERR_CRYPTO_UNKNOWN;
+    int       ret             = 0;
+    uint32_t  dummy_iv[4]     = {0};
+    uint32_t  indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_ECB_DECRYPTION);
+    uint32_t  indata_key_type = 0;
+
+    FSP_PARAMETER_NOT_USED(dummy_iv);
+    FSP_PARAMETER_NOT_USED(indata_cmd);
+    FSP_PARAMETER_NOT_USED(input);
+    FSP_PARAMETER_NOT_USED(output);
+    FSP_PARAMETER_NOT_USED(indata_key_type);
 
     if (ctx->nr == 10)
     {
-        if (true == (bool) ctx->vendor_ctx)
+        err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, dummy_iv);
+        if (err == FSP_SUCCESS)
         {
-  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_128EcbDecryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0]);
-  #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-  #endif
+            HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
         }
-        else
-        {
-            err =
-                HW_SCE_AES_128EcbDecrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0]);
-        }
+
+        err = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
 
   #if BSP_FEATURE_CRYPTO_HAS_SCE9
     else if (ctx->nr == 12)
     {
-        if (true == (bool) ctx->vendor_ctx)
+        err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, dummy_iv);
+        if (err == FSP_SUCCESS)
         {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_192EcbDecryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
+            HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
         }
-        else
-        {
-            err =
-                HW_SCE_AES_192EcbDecrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0]);
-        }
+
+        err = HW_SCE_Aes192EncryptDecryptFinalSub();
     }
   #endif
     else if (ctx->nr == 14)
     {
-        if (true == (bool) ctx->vendor_ctx)
+        err = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, dummy_iv);
+        if (err == FSP_SUCCESS)
         {
-  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_256EcbDecryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0]);
-  #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-  #endif
+            HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
         }
-        else
-        {
-            err =
-                HW_SCE_AES_256EcbDecrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0]);
-        }
+
+        err = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
     else
     {
@@ -551,8 +436,6 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
 
     return ret;
 }
-
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
 
 int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
                                       unsigned int          length,
@@ -560,14 +443,16 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
                                       const unsigned char * input,
                                       unsigned char       * output)
 {
-    fsp_err_t err = FSP_SUCCESS;
-    int       ret = 0;
+    fsp_err_t err             = FSP_SUCCESS;
+    int       ret             = 0;
+    uint32_t  indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_CBC_DECRYPTION);
+    uint32_t  indata_key_type = 0;
 
     if (ctx->nr == 10)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes128CbcDecryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -576,13 +461,13 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes128EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else if (ctx->nr == 12)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes192CbcDecryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -591,13 +476,13 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes192EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else if (ctx->nr == 14)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes256CbcDecryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -606,7 +491,7 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes256EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else
     {
@@ -621,98 +506,26 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
     return ret;
 }
 
-  #else
-
-int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
-                                      unsigned int          length,
-                                      unsigned char       * iv,
-                                      const unsigned char * input,
-                                      unsigned char       * output)
-{
-    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
-    int       ret = 0;
-
-    if (ctx->nr == 10)
-    {
-        if (true == (bool) ctx->vendor_ctx)
-        {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_128CbcDecryptUsingEncryptedKey(ctx->buf,
-                                                          (uint32_t *) &iv[0],
-                                                          (length / 4U),
-                                                          (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0],
-                                                          (uint32_t *) &iv[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
-        }
-        else
-        {
-            err =
-                HW_SCE_AES_128CbcDecrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
-        }
-    }
-    else if (ctx->nr == 14)
-    {
-        if (true == (bool) ctx->vendor_ctx)
-        {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_256CbcDecryptUsingEncryptedKey(ctx->buf,
-                                                          (uint32_t *) &iv[0],
-                                                          (length / 4U),
-                                                          (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0],
-                                                          (uint32_t *) &iv[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
-        }
-        else
-        {
-            err =
-                HW_SCE_AES_256CbcDecrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
-        }
-    }
-    else
-    {
-        ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-    }
-
-    if ((FSP_SUCCESS != err) && (0 == ret))
-    {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    }
-
-    return ret;
-}
-
-  #endif                               /* BSP_FEATURE_CRYPTO_HAS_SCE9 */
  #endif                                /* !MBEDTLS_AES_DECRYPT_ALT */
 
  #if defined(MBEDTLS_AES_DECRYPT_ALT) || defined(MBEDTLS_AES_ENCRYPT_ALT)
 
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
 int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
                                               unsigned int          length,
                                               unsigned char       * iv,
                                               const unsigned char * input,
                                               unsigned char       * output)
 {
-    fsp_err_t err = FSP_SUCCESS;
-    int       ret = 0;
+    fsp_err_t err             = FSP_SUCCESS;
+    int       ret             = 0;
+    uint32_t  indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION);
+    uint32_t  indata_key_type = 0;
 
     if (ctx->nr == 10)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes128CtrEncryptDecryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -721,13 +534,13 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes128EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else if (ctx->nr == 12)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes192CtrEncryptDecryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -736,13 +549,13 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes192EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else if (ctx->nr == 14)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes256CtrEncryptDecryptInitSubGeneral(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -751,7 +564,7 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
             ctx->state = SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE;
         }
 
-        HW_SCE_Aes256EncryptDecryptUpdate((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
+        HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
     else
     {
@@ -773,15 +586,15 @@ int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
 
     if (10 == key_rounds)
     {
-        ret = HW_SCE_Aes128EncryptDecryptFinal();
+        ret = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
     else if (12 == key_rounds)
     {
-        ret = HW_SCE_Aes192EncryptDecryptFinal();
+        ret = HW_SCE_Aes192EncryptDecryptFinalSub();
     }
     else if (14 == key_rounds)
     {
-        ret = HW_SCE_Aes256EncryptDecryptFinal();
+        ret = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
     else
     {
@@ -800,85 +613,6 @@ int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
     return 0;
 }
 
-  #else
-int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
-                                              unsigned int          length,
-                                              unsigned char       * iv,
-                                              const unsigned char * input,
-                                              unsigned char       * output)
-{
-    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
-    int       ret = 0;
-
-    if (ctx->nr == 10)
-    {
-        if (true == (bool) ctx->vendor_ctx)
-        {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_128CtrEncryptUsingEncryptedKey(ctx->buf,
-                                                          (uint32_t *) &iv[0],
-                                                          (length / 4U),
-                                                          (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0],
-                                                          (uint32_t *) &iv[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
-        }
-        else
-        {
-            err =
-                HW_SCE_AES_128CtrEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
-        }
-    }
-    else if (ctx->nr == 14)
-    {
-        if (true == (bool) ctx->vendor_ctx)
-        {
-   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
-            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
-            err =
-                HW_SCE_AES_256CtrEncryptUsingEncryptedKey(ctx->buf,
-                                                          (uint32_t *) &iv[0],
-                                                          (length / 4U),
-                                                          (uint32_t *) &input[0],
-                                                          (uint32_t *) &output[0],
-                                                          (uint32_t *) &iv[0]);
-   #else
-            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
-        }
-        else
-        {
-            err =
-                HW_SCE_AES_256CtrEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
-                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
-        }
-    }
-    else
-    {
-        ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-    }
-
-    if ((FSP_SUCCESS != err) && (0 == ret))
-    {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    }
-
-    return ret;
-}
-
-int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
-{
-    FSP_PARAMETER_NOT_USED(ctx);
-
-    return 0;
-}
-
-  #endif
  #endif                                /* !MBEDTLS_AES_DECRYPT_ALT */
 
 #endif                                 /* MBEDTLS_AES_C */

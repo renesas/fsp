@@ -177,22 +177,6 @@ typedef enum e_ioport_peripheral
     IOPORT_PERIPHERAL_PGAOUT1 = (0x1EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 } ioport_peripheral_t;
 
-/* DEPRECATED Superset of Ethernet channels. */
-typedef enum e_ioport_eth_ch
-{
-    IOPORT_ETHERNET_CHANNEL_0 = 0x10,  ///< Used to select Ethernet channel 0
-    IOPORT_ETHERNET_CHANNEL_1 = 0x20,  ///< Used to select Ethernet channel 1
-    IOPORT_ETHERNET_CHANNEL_END        ///< Marks end of enum - used by parameter checking
-} ioport_ethernet_channel_t;
-
-/* DEPRECATED Superset of Ethernet PHY modes. */
-typedef enum e_ioport_eth_mode
-{
-    IOPORT_ETHERNET_MODE_RMII = 0x00,  ///< Ethernet PHY mode set to MII
-    IOPORT_ETHERNET_MODE_MII  = 0x10,  ///< Ethernet PHY mode set to RMII
-    IOPORT_ETHERNET_MODE_END           ///< Marks end of enum - used by parameter checking
-} ioport_ethernet_mode_t;
-
 /** Options to configure pin functions  */
 typedef enum e_ioport_cfg_options
 {
@@ -293,15 +277,6 @@ typedef struct st_ioport_api
      * @param[in]  pin_value            Level to be written to pin output event.
      */
     fsp_err_t (* pinEventOutputWrite)(ioport_ctrl_t * const p_ctrl, bsp_io_port_pin_t pin, bsp_io_level_t pin_value);
-
-    /* DEPRECATED Configure the PHY mode of the Ethernet channels.
-     * @par Implemented as
-     * - @ref R_IOPORT_EthernetModeCfg()
-     * @param[in]  channel              Channel configuration will be set for.
-     * @param[in]  mode                 PHY mode to set the channel to.
-     */
-    fsp_err_t (* pinEthernetModeCfg)(ioport_ctrl_t * const p_ctrl, ioport_ethernet_channel_t channel,
-                                     ioport_ethernet_mode_t mode);
 
     /** Read level of a pin.
      * @par Implemented as

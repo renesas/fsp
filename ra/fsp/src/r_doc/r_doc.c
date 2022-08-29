@@ -62,7 +62,6 @@ const doc_api_t g_doc_on_doc =
 {
     .open        = R_DOC_Open,
     .close       = R_DOC_Close,
-    .statusGet   = R_DOC_StatusGet,
     .read        = R_DOC_Read,
     .write       = R_DOC_Write,
     .callbackSet = R_DOC_CallbackSet,
@@ -177,37 +176,6 @@ fsp_err_t R_DOC_Close (doc_ctrl_t * const p_api_ctrl)
 
     /* Mark driver as closed.  */
     p_ctrl->open = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * DEPRECATED - Returns the result of addition/subtraction.
- *
- * @retval FSP_SUCCESS          Status successfully read.
- * @retval FSP_ERR_NOT_OPEN     Driver not open.
- * @retval FSP_ERR_ASSERTION    One or more pointers point to NULL.
- *
- **********************************************************************************************************************/
-fsp_err_t R_DOC_StatusGet (doc_ctrl_t * const p_api_ctrl, doc_status_t * const p_status)
-{
-    doc_instance_ctrl_t * p_ctrl = (doc_instance_ctrl_t *) p_api_ctrl;
-
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-
-    /* Validate the parameters and check if the module is intialized */
-#if DOC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_ctrl);
-    FSP_ASSERT(NULL != p_status);
-    FSP_ERROR_RETURN(DOC_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
-
-    /* Read the result of addition or subtraction operation from the register and store in the user supplied location */
-#if BSP_FEATURE_DOC_VERSION == 1
-    p_status->result = R_DOC->DODSR;
-#else
-    p_status->result_32 = R_DOC_B->DODSR0;
-#endif
 
     return FSP_SUCCESS;
 }

@@ -26,7 +26,7 @@
 #include "bsp_api.h"
 #include "r_ether_phy.h"
 
-#if (ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8041)
+#if (ETHER_PHY_CFG_TARGET_KSZ8041_ENABLE)
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -46,9 +46,9 @@
 /***********************************************************************************************************************
  * Exported global function
  ***********************************************************************************************************************/
-void ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
-bool ether_phy_targets_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
-                                                       uint32_t                    line_speed_duplex);
+void ether_phy_target_ksz8041_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+bool ether_phy_target_ksz8041_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                              uint32_t                    line_speed_duplex);
 extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
 extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
@@ -67,7 +67,7 @@ extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uin
  *                    Ethernet channel number
  * Return Value : none
  ***********************************************************************************************************************/
-void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
+void ether_phy_target_ksz8041_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
 {
     uint32_t reg;
 
@@ -91,8 +91,8 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
  *                    Line speed duplex of link partner PHY-LSI
  * Return Value : bool
  ***********************************************************************************************************************/
-bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instance_ctrl_t * p_instance_ctrl,
-                                                        uint32_t                    line_speed_duplex)
+bool ether_phy_target_ksz8041_is_support_link_partner_ability (ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                               uint32_t                    line_speed_duplex)
 {
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
     FSP_PARAMETER_NOT_USED(line_speed_duplex);
@@ -101,4 +101,4 @@ bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instance_ctrl_
     return true;
 }                                      /* End of function ether_phy_targets_is_support_link_partner_ability() */
 
-#endif /* ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8041 */
+#endif /* ETHER_PHY_CFG_TARGET_KSZ8041_ENABLE */

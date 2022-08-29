@@ -74,8 +74,7 @@ static void usb_hstd_resu_cont(usb_utr_t * ptr, uint16_t devaddr);
 
  #endif                                /* (BSP_CFG_RTOS == 0) */
 
-static uint16_t usb_hstd_chk_device_class(usb_utr_t * ptr, usb_hcdreg_t * driver);
-static void     usb_hstd_enumeration_err(uint16_t Rnum);
+static void usb_hstd_enumeration_err(uint16_t Rnum);
 
  #if (BSP_CFG_RTOS != 0)
 static uint16_t usb_hstd_cmd_submit(usb_utr_t * ptr);
@@ -88,6 +87,11 @@ static uint16_t usb_hstd_cmd_submit(usb_utr_t * ptr, usb_cb_t complete);
 static uint16_t usb_hstd_chk_remote(usb_utr_t * ptr);
 
 static void usb_hstd_mgr_rel_mpl(usb_utr_t * ptr, uint16_t n);
+
+/******************************************************************************
+ * Exported global functions (to be accessed by other files)
+ ******************************************************************************/
+uint16_t usb_hstd_chk_device_class(usb_utr_t * ptr, usb_hcdreg_t * driver);
 
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -212,6 +216,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
     /* Manager Mode Change */
     switch (p_usb_shstd_mgr_msg[ptr->ip]->result)
     {
+        case USB_DATA_STALL:
         case USB_CTRL_END:
         {
             enume_mode = USB_DEVICEENUMERATION;
@@ -404,7 +409,10 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                 }
             }
 
-            g_usb_hstd_enum_seq[ptr->ip]++;
+            if (USB_COMPLETEPIPESET != enume_mode)
+            {
+                g_usb_hstd_enum_seq[ptr->ip]++;
+            }
 
             /* Device Enumeration */
             if (USB_DEVICEENUMERATION == enume_mode)
@@ -447,8 +455,21 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                         {
                             if (usbx_status == UX_NO_CLASS_MATCH)
                             {
+  #if defined(USB_CFG_OTG_USE)
+                                UX_HCD * p_hcd;
+                                p_hcd = UX_DEVICE_HCD_GET(g_p_usbx_device[ptr->ip]);
+                                p_hcd->ux_hcd_otg_capabilities |= UX_HCD_OTG_CAPABLE;
+  #endif                               /* defined (USB_CFG_OTG_USE) */
+
                                 usbx_status = _ux_host_stack_class_interface_scan(g_p_usbx_device[ptr->ip]);
                             }
+                        }
+
+                        if (USB_IFCLS_HUB ==
+                            g_p_usbx_device[ptr->ip]->ux_device_first_configuration->ux_configuration_first_interface->
+                            ux_interface_descriptor.bInterfaceClass)
+                        {
+                            g_usb_hstd_enum_seq[ptr->ip]++;
                         }
 
                         break;
@@ -456,7 +477,13 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
 
                     case 9:
                     {
-                        (*g_usb_hstd_enumaration_process[7])(ptr, g_usb_hstd_device_addr[ptr->ip], BOOT_PROTCOL);
+                        if (USB_IFCLS_HID ==
+                            g_p_usbx_device[ptr->ip]->ux_device_first_configuration->ux_configuration_first_interface->
+                            ux_interface_descriptor.bInterfaceClass)
+                        {
+                            (*g_usb_hstd_enumaration_process[7])(ptr, g_usb_hstd_device_addr[ptr->ip], BOOT_PROTCOL);
+                        }
+
                         break;
                     }
 
@@ -490,13 +517,6 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
         case USB_DATA_OVR:
         {
             USB_PRINTF0("### Enumeration is stopped(receive data over)\n");
-            usb_hstd_enumeration_err(g_usb_hstd_enum_seq[ptr->ip]);
-            break;
-        }
-
-        case USB_DATA_STALL:
-        {
-            USB_PRINTF0("### Enumeration is stopped(SETUP or DATA-STALL)\n");
             usb_hstd_enumeration_err(g_usb_hstd_enum_seq[ptr->ip]);
             break;
         }
@@ -823,7 +843,10 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                 }
             }
 
-            g_usb_hstd_enum_seq[ptr->ip]++;
+            if (USB_COMPLETEPIPESET != enume_mode)
+            {
+                g_usb_hstd_enum_seq[ptr->ip]++;
+            }
 
             /* Device Enumeration */
             if (USB_DEVICEENUMERATION == enume_mode)
@@ -1007,7 +1030,7 @@ static void usb_hstd_enumeration_err (uint16_t Rnum)
  *               : usb_hcdreg_t *driver     : Class driver
  * Return          : uint16_t                 : USB_OK / USB_ERROR
  ******************************************************************************/
-static uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
+uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
 {
     uint8_t  * descriptor_table;
     uint16_t   total_length1;
@@ -2774,7 +2797,7 @@ void usb_hstd_mgr_task (void * stacd)
                         for (md = 0; md < g_usb_hstd_device_num[ptr->ip]; md++)
                         {
                             driver = &g_usb_hstd_device_drv[ptr->ip][md];
-                            if (USB_DEVICEADDR == driver->devaddr)
+                            if ((USB_DEVICEADDR == driver->devaddr) || (USB_CONFIGURED == driver->devstate))
                             {
  #else                                 /* !defined(USB_CFG_OTG_USE) */
                         driver = &g_usb_hstd_device_drv[ptr->ip][0];

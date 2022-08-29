@@ -69,6 +69,35 @@ typedef enum e_ether_link_establish_status
     ETHER_LINK_ESTABLISH_STATUS_UP   = 1, ///< Link establish status is up
 } ether_link_establish_status_t;
 
+/** EDMAC descriptor as defined in the hardware manual.
+ * Structure must be packed at 1 byte.
+ */
+typedef struct st_ether_instance_descriptor
+{
+    volatile uint32_t status;
+#if ((defined(__GNUC__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || (defined(__ARMCC_VERSION) && \
+    !defined(__ARM_BIG_ENDIAN)) || (defined(__ICCARM__) && (__LITTLE_ENDIAN__)))
+
+    /* Little endian */
+    volatile uint16_t size;
+    volatile uint16_t buffer_size;
+#else
+
+    /* Big endian */
+    volatile uint16_t buffer_size;
+    volatile uint16_t size;
+#endif
+    uint8_t * p_buffer;
+    struct st_ether_instance_descriptor * p_next;
+} ether_instance_descriptor_t;
+
+/** ETHER extension configures the buffer descriptor for ETHER. */
+typedef struct st_ether_extended_cfg
+{
+    ether_instance_descriptor_t * p_rx_descriptors; ///< Receive descriptor buffer pool
+    ether_instance_descriptor_t * p_tx_descriptors; ///< Transmit descriptor buffer pool
+} ether_extended_cfg_t;
+
 /** ETHER control block. DO NOT INITIALIZE.  Initialization occurs when @ref ether_api_t::open is called. */
 typedef struct st_ether_instance_ctrl
 {

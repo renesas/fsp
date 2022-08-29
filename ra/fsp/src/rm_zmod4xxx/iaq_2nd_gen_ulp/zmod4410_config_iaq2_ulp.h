@@ -21,18 +21,22 @@
 /**
  * @file zmod4410_config_iaq2_ulp.h
  * @brief This is the configuration for zmod4410 module - iaq_2nd_gen_ulp library
- * @version x.y.z
- * @author Oezguen Guenyeli
+ * @author Renesas Electronics Corporation
+ * @version 1.0.0
  */
 
 #ifndef _ZMOD4410_CONFIG_IAQ_2ND_GEN_ULP_H
 #define _ZMOD4410_CONFIG_IAQ_2ND_GEN_ULP_H
 
 #include <stdio.h>
-#include "../zmod4xxx_types.h"
+#if 0                                  // For multiple operations
+ #include "zmod4xxx_types.h"
+#else
+ #include "../zmod4xxx_types.h"
+#endif
 
 #define INIT                                          0
-#define MEASURE                                       1
+#define MEASUREMENT                                   1
 
 #define ZMOD4410_PID                                  0x2310
 #define ZMOD4410_I2C_ADDR                             0x32
@@ -52,7 +56,7 @@
 #define ZMOD4410_IAQ2_ULP_SAMPLE_TIME                 (90000U)
 
 // clang-format off
-uint8_t data_set_4410i[] =
+static uint8_t data_set_4410i[] =
 {
 // REMOVE                       heater
     0x00, 0x50,
@@ -64,7 +68,7 @@ uint8_t data_set_4410i[] =
     0x00, 0x00,0x80,  0x40
 };
 
-uint8_t data_set_4410_iaq_2nd_gen_ulp[] =
+static uint8_t data_set_4410_iaq_2nd_gen_ulp[] =
 {
 // REMOVE                              heater
     0x00, 0x50, 0xFF, 0x38,
@@ -104,7 +108,7 @@ zmod4xxx_conf g_zmod4410_iaq_2nd_gen_ulp_sensor_type[] =
     .r     = {.addr = 0x97,  .len             = 4},
     },
 
-    [MEASURE] =
+    [MEASUREMENT] =
     {
     .start         = 0x80,
     .h             = {.addr = ZMOD4410_H_ADDR, .len          = 16, .data_buf  = &data_set_4410_iaq_2nd_gen_ulp[0] },

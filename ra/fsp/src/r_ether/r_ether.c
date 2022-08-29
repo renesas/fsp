@@ -255,7 +255,7 @@ static const ether_pause_resolution_t pause_resolution[ETHER_PAUSE_TABLE_ENTRIES
  *                                                  instance. Call close() then open() to reconfigure.
  * @retval  FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION   Initialization of PHY-LSI failed.
  * @retval  FSP_ERR_INVALID_CHANNEL                 Invalid channel number is given.
- * @retval  FSP_ERR_INVALID_POINTER                 Pointer to MAC address is NULL.
+ * @retval  FSP_ERR_INVALID_POINTER                 Pointer to extend config structure or MAC address is NULL.
  * @retval  FSP_ERR_INVALID_ARGUMENT                Interrupt is not enabled.
  * @retval  FSP_ERR_ETHER_PHY_ERROR_LINK            Initialization of PHY-LSI failed.
  ***********************************************************************************************************************/
@@ -263,6 +263,7 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
 {
     fsp_err_t               err             = FSP_SUCCESS;
     ether_instance_ctrl_t * p_instance_ctrl = (ether_instance_ctrl_t *) p_ctrl;
+    ether_extended_cfg_t  * p_ether_extended_cfg;
     R_ETHERC0_Type        * p_reg_etherc;
     R_ETHERC_EDMAC_Type   * p_reg_edmac;
 
@@ -274,6 +275,7 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
     err = ether_open_param_check(p_instance_ctrl, p_cfg); /** check arguments */
     ETHER_ERROR_RETURN((FSP_SUCCESS == err), err);
 #endif
+    p_ether_extended_cfg = (ether_extended_cfg_t *) p_cfg->p_extend;
 
     /** Make sure this channel exists. */
     p_instance_ctrl->p_reg_etherc = ((R_ETHERC0_Type *) (R_ETHERC0_BASE + (ETHER_ETHERC_REG_SIZE * p_cfg->channel)));
@@ -293,11 +295,11 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
     p_instance_ctrl->previous_link_status  = ETHER_PREVIOUS_LINK_STATUS_DOWN;
 
     /* Initialize the transmit and receive descriptor */
-    memset(p_instance_ctrl->p_ether_cfg->p_rx_descriptors,
+    memset(p_ether_extended_cfg->p_rx_descriptors,
            0x00,
            sizeof(ether_instance_descriptor_t) *
            p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
-    memset(p_instance_ctrl->p_ether_cfg->p_tx_descriptors,
+    memset(p_ether_extended_cfg->p_tx_descriptors,
            0x00,
            sizeof(ether_instance_descriptor_t) *
            p_instance_ctrl->p_ether_cfg->num_tx_descriptors);
@@ -576,11 +578,13 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
     ether_callback_args_t                 callback_arg;
     ether_cfg_t const                   * p_ether_cfg;
     volatile ether_previous_link_status_t previous_link_status;
+    ether_extended_cfg_t                * p_ether_extended_cfg;
 
 #if (ETHER_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
     ETHER_ERROR_RETURN(ETHER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
+    p_ether_extended_cfg = (ether_extended_cfg_t *) p_instance_ctrl->p_ether_cfg->p_extend;
 
     /* When the magic packet is detected. */
     if (ETHER_MAGIC_PACKET_DETECTED == p_instance_ctrl->magic_packet)
@@ -663,10 +667,10 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
             p_instance_ctrl->link_change = ETHER_LINK_CHANGE_LINK_DOWN;
 
             /* Initialize the transmit and receive descriptor */
-            memset(p_instance_ctrl->p_ether_cfg->p_rx_descriptors,
+            memset(p_ether_extended_cfg->p_rx_descriptors,
                    0x00,
                    sizeof(ether_instance_descriptor_t) * p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
-            memset(p_instance_ctrl->p_ether_cfg->p_tx_descriptors,
+            memset(p_ether_extended_cfg->p_tx_descriptors,
                    0x00,
                    sizeof(ether_instance_descriptor_t) * p_instance_ctrl->p_ether_cfg->num_tx_descriptors);
 
@@ -715,10 +719,10 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
         p_instance_ctrl->link_change = ETHER_LINK_CHANGE_NO_CHANGE;
 
         /* Initialize the transmit and receive descriptor */
-        memset(p_instance_ctrl->p_ether_cfg->p_rx_descriptors,
+        memset(p_ether_extended_cfg->p_rx_descriptors,
                0x00,
                sizeof(ether_instance_descriptor_t) * p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
-        memset(p_instance_ctrl->p_ether_cfg->p_tx_descriptors,
+        memset(p_ether_extended_cfg->p_tx_descriptors,
                0x00,
                sizeof(ether_instance_descriptor_t) * p_instance_ctrl->p_ether_cfg->num_tx_descriptors);
 
@@ -1110,6 +1114,7 @@ fsp_err_t R_ETHER_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uin
 fsp_err_t R_ETHER_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffer_address)
 {
     ether_instance_ctrl_t       * p_instance_ctrl = (ether_instance_ctrl_t *) p_ctrl;
+    ether_extended_cfg_t        * p_ether_extended_cfg;
     R_ETHERC_EDMAC_Type         * p_reg_edmac;
     ether_instance_descriptor_t * p_descriptor;
     uint8_t ** p_sent_buffer_address = (uint8_t **) p_buffer_address;
@@ -1120,6 +1125,7 @@ fsp_err_t R_ETHER_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffe
     ETHER_ERROR_RETURN(ETHER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     ETHER_ERROR_RETURN(NULL != p_buffer_address, FSP_ERR_INVALID_POINTER);
 #endif
+    p_ether_extended_cfg = (ether_extended_cfg_t *) p_instance_ctrl->p_ether_cfg->p_extend;
 
     p_reg_edmac = (R_ETHERC_EDMAC_Type *) p_instance_ctrl->p_reg_edmac;
 
@@ -1129,7 +1135,7 @@ fsp_err_t R_ETHER_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffe
     if (NULL != p_descriptor)
     {
         uint32_t num_tx_descriptors = p_instance_ctrl->p_ether_cfg->num_tx_descriptors;
-        ether_instance_descriptor_t * p_tx_descriptors = p_instance_ctrl->p_ether_cfg->p_tx_descriptors;
+        ether_instance_descriptor_t * p_tx_descriptors = p_ether_extended_cfg->p_tx_descriptors;
 
         p_descriptor = (ether_instance_descriptor_t *) ((uint8_t *) p_descriptor - sizeof(ether_instance_descriptor_t));
 
@@ -1182,6 +1188,7 @@ static fsp_err_t ether_open_param_check (ether_instance_ctrl_t const * const p_i
     FSP_ASSERT(p_instance_ctrl);
     ETHER_ERROR_RETURN((NULL != p_cfg), FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN((NULL != p_cfg->p_mac_address), FSP_ERR_INVALID_POINTER);
+    ETHER_ERROR_RETURN((NULL != p_cfg->p_extend), FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN((BSP_FEATURE_ETHER_MAX_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
     ETHER_ERROR_RETURN((0 <= p_cfg->irq), FSP_ERR_INVALID_ARGUMENT);
     ETHER_ERROR_RETURN((p_cfg->padding <= ETHER_PADDING_3BYTE), FSP_ERR_INVALID_ARGUMENT);
@@ -1232,15 +1239,16 @@ static void ether_reset_mac (R_ETHERC_EDMAC_Type * const p_reg)
 static void ether_init_descriptors (ether_instance_ctrl_t * const p_instance_ctrl)
 {
     ether_instance_descriptor_t * p_descriptor = NULL;
-    uint32_t i;
+    uint32_t               i;
+    ether_extended_cfg_t * p_ether_extended_cfg = (ether_extended_cfg_t *) p_instance_ctrl->p_ether_cfg->p_extend;
 
     /* Initialize the receive descriptors */
     for (i = 0; i < p_instance_ctrl->p_ether_cfg->num_rx_descriptors; i++)
     {
-        p_descriptor              = &p_instance_ctrl->p_ether_cfg->p_rx_descriptors[i];
+        p_descriptor              = &p_ether_extended_cfg->p_rx_descriptors[i];
         p_descriptor->buffer_size = (uint16_t) p_instance_ctrl->p_ether_cfg->ether_buffer_size;
         p_descriptor->size        = 0;
-        p_descriptor->p_next      = &p_instance_ctrl->p_ether_cfg->p_rx_descriptors[(i + 1)];
+        p_descriptor->p_next      = &p_ether_extended_cfg->p_rx_descriptors[(i + 1)];
 
         if (NULL != p_instance_ctrl->p_ether_cfg->pp_ether_buffers)
         {
@@ -1257,22 +1265,22 @@ static void ether_init_descriptors (ether_instance_ctrl_t * const p_instance_ctr
     {
         /* The last descriptor points back to the start */
         p_descriptor->status |= ETHER_RD0_RDLE;
-        p_descriptor->p_next  = &p_instance_ctrl->p_ether_cfg->p_rx_descriptors[0];
+        p_descriptor->p_next  = &p_ether_extended_cfg->p_rx_descriptors[0];
 
         /* Initialize application receive descriptor pointer */
-        p_instance_ctrl->p_rx_descriptor = &p_instance_ctrl->p_ether_cfg->p_rx_descriptors[0];
+        p_instance_ctrl->p_rx_descriptor = &p_ether_extended_cfg->p_rx_descriptors[0];
     }
 
     /* Initialize the transmit descriptors */
     for (i = 0; i < p_instance_ctrl->p_ether_cfg->num_tx_descriptors; i++)
     {
-        p_descriptor              = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[i];
+        p_descriptor              = &p_ether_extended_cfg->p_tx_descriptors[i];
         p_descriptor->buffer_size = 1; /* Set a value equal to or greater than 1. (reference to UMH)
                                         * When transmitting data, the value of size is set to the function argument
                                         * R_ETHER_Write. */
         p_descriptor->size        = 0; /* Reserved : The write value should be 0. (reference to UMH) */
         p_descriptor->status      = 0;
-        p_descriptor->p_next      = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[(i + 1)];
+        p_descriptor->p_next      = &p_ether_extended_cfg->p_tx_descriptors[(i + 1)];
 
         if ((ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_ether_cfg->zerocopy) &&
             (NULL != p_instance_ctrl->p_ether_cfg->pp_ether_buffers))
@@ -1290,10 +1298,10 @@ static void ether_init_descriptors (ether_instance_ctrl_t * const p_instance_ctr
     {
         /* The last descriptor points back to the start */
         p_descriptor->status |= ETHER_TD0_TDLE;
-        p_descriptor->p_next  = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[0];
+        p_descriptor->p_next  = &p_ether_extended_cfg->p_tx_descriptors[0];
 
         /* Initialize application transmit descriptor pointer */
-        p_instance_ctrl->p_tx_descriptor = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[0];
+        p_instance_ctrl->p_tx_descriptor = &p_ether_extended_cfg->p_tx_descriptors[0];
     }
 }                                      /* End of function ether_init_descriptors() */
 

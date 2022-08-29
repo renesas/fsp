@@ -20,7 +20,7 @@
 
 /**
  * @file    odor.h
- * @author  Renesas
+ * @author Renesas Electronics Corporation
  * @version 2.1.2
  * @brief   This file contains the definitions for data structure and the odor
  *          algorithm function.
@@ -59,6 +59,9 @@ typedef struct
                                         * stabilization. */
 } odor_params;
 
+ #ifndef CONTROL_SIGNAL_STATE          // Add to avoid build errors due to multiple definitions (Odor and RAQ)
+  #define CONTROL_SIGNAL_STATE
+
 /**
  * @brief Control signal states.
  */
@@ -67,6 +70,7 @@ typedef enum
     OFF = 0,
     ON  = 1,
 } control_signal_state_t;
+ #endif
 
 /**
  * @brief odor results.

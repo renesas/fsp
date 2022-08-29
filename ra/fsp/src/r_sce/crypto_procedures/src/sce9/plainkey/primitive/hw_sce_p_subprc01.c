@@ -50,8 +50,18 @@ Private global variables and functions
 
 void HW_SCE_SelfCheck1SubSub(void)
 {
-    uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
-    uint32_t dummy = 0u;
+    uint32_t iLoop    = 0U;
+    uint32_t iLoop1   = 0U;
+    uint32_t iLoop2   = 0U;
+    int32_t  jLoop    = 0U;
+    uint32_t kLoop    = 0U;
+    uint32_t oLoop    = 0U;
+    uint32_t oLoop1   = 0U;
+    uint32_t oLoop2   = 0U;
+    uint32_t dummy    = 0U;
+    uint32_t KEY_ADR  = 0U;
+    uint32_t OFS_ADR  = 0U;
+    uint32_t MAX_CNT2 = 0U;
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -64,148 +74,148 @@ void HW_SCE_SelfCheck1SubSub(void)
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
-    SCE->REG_138H = 0xf597806Au;
-    SCE->REG_10CH = 0x00010001u;
-    SCE->REG_10H = 0x01234567u;
-    SCE->REG_7CH = 0x00000001u;
-    SCE->REG_78H = 0x00008007u;
-    SCE->REG_134H = 0x76543210u;
-    HW_SCE_p_func054(change_endian_long(0x00003008u), change_endian_long(0x00003018u));
+    SCE->REG_138H = 0xf597806AU;
+    SCE->REG_10CH = 0x00010001U;
+    SCE->REG_10H = 0x01234567U;
+    SCE->REG_7CH = 0x00000001U;
+    SCE->REG_78H = 0x00008007U;
+    SCE->REG_134H = 0x76543210U;
+    HW_SCE_p_func054(change_endian_long(0x00003008U), change_endian_long(0x00003018U));
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B31)
+    while (0U != SCE->REG_00H_b.B31)
     {
         /* waiting */
     }
-    HW_SCE_p_func050(change_endian_long(0x00010001u));
+    HW_SCE_p_func050(change_endian_long(0x00010001U));
     /* WAIT_LOOP */
-    while (0u != SCE->REG_64H_b.B11)
+    while (0U != SCE->REG_64H_b.B11)
     {
         /* waiting */
     }
-    SCE->REG_64H = 0x00000008u;
-    SCE->REG_68H = 0x00000417u;
-    SCE->REG_6CH = 0xabcdef01u;
-    HW_SCE_p_func054(change_endian_long(0x10003008u), change_endian_long(0x10003018u));
+    SCE->REG_64H = 0x00000008U;
+    SCE->REG_68H = 0x00000417U;
+    SCE->REG_6CH = 0xabcdef01U;
+    HW_SCE_p_func054(change_endian_long(0x10003008U), change_endian_long(0x10003018U));
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B31)
+    while (0U != SCE->REG_00H_b.B31)
     {
         /* waiting */
     }
-    HW_SCE_p_func050(change_endian_long(0x00000001u));
-    SCE->REG_28H = 0x00000001u;
-    SCE->REG_3CH = 0x00010173u;
-    SCE->REG_4CH = 0x23456789u;
-    SCE->REG_80H = 0x00000001u;
-    SCE->REG_8CH = 0x000080BBu;
-    SCE->REG_94H = 0xabcdef01u;
-    SCE->REG_7CH = 0x00000001u;
-    SCE->REG_78H = 0x0000011fu;
+    HW_SCE_p_func050(change_endian_long(0x00000001U));
+    SCE->REG_28H = 0x00000001U;
+    SCE->REG_3CH = 0x00010173U;
+    SCE->REG_4CH = 0x23456789U;
+    SCE->REG_80H = 0x00000001U;
+    SCE->REG_8CH = 0x000080BBU;
+    SCE->REG_94H = 0xabcdef01U;
+    SCE->REG_7CH = 0x00000001U;
+    SCE->REG_78H = 0x0000011fU;
     /* WAIT_LOOP */
-    while (0u != SCE->REG_64H_b.B11)
+    while (0U != SCE->REG_64H_b.B11)
     {
         /* waiting */
     }
-    SCE->REG_64H = 0x00000008u;
-    SCE->REG_68H = 0x00000017u;
-    HW_SCE_p_func054(change_endian_long(0x72f01007u), change_endian_long(0x72f01017u));
+    SCE->REG_64H = 0x00000008U;
+    SCE->REG_68H = 0x00000017U;
+    HW_SCE_p_func054(change_endian_long(0x72f01007U), change_endian_long(0x72f01017U));
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B31)
+    while (0U != SCE->REG_00H_b.B31)
     {
         /* waiting */
     }
     for(iLoop = 0; iLoop < 6; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func050(change_endian_long(0x00000001u));
-        HW_SCE_p_func054(change_endian_long(0x72f03007u), change_endian_long(0x72f03017u));
+        HW_SCE_p_func050(change_endian_long(0x00000001U));
+        HW_SCE_p_func054(change_endian_long(0x72f03007U), change_endian_long(0x72f03017U));
         /* WAIT_LOOP */
-        while (0u != SCE->REG_00H_b.B31)
+        while (0U != SCE->REG_00H_b.B31)
         {
             /* waiting */
         }
     }
     for(iLoop = 0; iLoop < 6; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func050(change_endian_long(0x00000001u));
-        SCE->REG_28H = 0x00000001u;
-        SCE->REG_80H = 0x00000001u;
-        SCE->REG_7CH = 0x00000001u;
+        HW_SCE_p_func050(change_endian_long(0x00000001U));
+        SCE->REG_28H = 0x00000001U;
+        SCE->REG_80H = 0x00000001U;
+        SCE->REG_7CH = 0x00000001U;
         /* WAIT_LOOP */
-        while (0u != SCE->REG_64H_b.B11)
+        while (0U != SCE->REG_64H_b.B11)
         {
             /* waiting */
         }
-        SCE->REG_64H = 0x00000008u;
-        HW_SCE_p_func054(change_endian_long(0x72f03007u), change_endian_long(0x72f03017u));
+        SCE->REG_64H = 0x00000008U;
+        HW_SCE_p_func054(change_endian_long(0x72f03007U), change_endian_long(0x72f03017U));
         /* WAIT_LOOP */
-        while (0u != SCE->REG_00H_b.B31)
+        while (0U != SCE->REG_00H_b.B31)
         {
             /* waiting */
         }
     }
     for(iLoop = 0; iLoop < 3; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func050(change_endian_long(0x00000001u));
-        SCE->REG_28H = 0x00000001u;
-        SCE->REG_3CH = 0x00010173u;
-        SCE->REG_80H = 0x00000001u;
-        SCE->REG_B0H = 0x40000010u;
-        SCE->REG_D0H = 0x40000010u;
-        SCE->REG_A4H = 0x00008000u;
-        SCE->REG_C4H = 0x00008000u;
-        SCE->REG_8CH = 0x0000888Bu;
-        SCE->REG_7CH = 0x00000001u;
-        SCE->REG_78H = 0x00000007u;
+        HW_SCE_p_func050(change_endian_long(0x00000001U));
+        SCE->REG_28H = 0x00000001U;
+        SCE->REG_3CH = 0x00010173U;
+        SCE->REG_80H = 0x00000001U;
+        SCE->REG_B0H = 0x40000010U;
+        SCE->REG_D0H = 0x40000010U;
+        SCE->REG_A4H = 0x00008000U;
+        SCE->REG_C4H = 0x00008000U;
+        SCE->REG_8CH = 0x0000888BU;
+        SCE->REG_7CH = 0x00000001U;
+        SCE->REG_78H = 0x00000007U;
         /* WAIT_LOOP */
-        while (0u != SCE->REG_64H_b.B11)
+        while (0U != SCE->REG_64H_b.B11)
         {
             /* waiting */
         }
-        SCE->REG_64H = 0x00000008u;
-        SCE->REG_68H = 0x00000017u;
-        HW_SCE_p_func054(change_endian_long(0x7af03007u), change_endian_long(0x7af03017u));
+        SCE->REG_64H = 0x00000008U;
+        SCE->REG_68H = 0x00000017U;
+        HW_SCE_p_func054(change_endian_long(0x7af03007U), change_endian_long(0x7af03017U));
         /* WAIT_LOOP */
-        while (0u != SCE->REG_00H_b.B31)
+        while (0U != SCE->REG_00H_b.B31)
         {
             /* waiting */
         }
     }
     HW_SCE_p_func051();
-    SCE->REG_28H = 0x00000001u;
-    SCE->REG_3CH = 0x00810173u;
-    HW_SCE_p_func054(change_endian_long(0x00003008u), change_endian_long(0x00003018u));
+    SCE->REG_28H = 0x00000001U;
+    SCE->REG_3CH = 0x00810173U;
+    HW_SCE_p_func054(change_endian_long(0x00003008U), change_endian_long(0x00003018U));
     /* WAIT_LOOP */
-    while (0u != SCE->REG_00H_b.B31)
+    while (0U != SCE->REG_00H_b.B31)
     {
         /* waiting */
     }
     for(iLoop = 0; iLoop < 6; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func052(change_endian_long(0x00810173u));
+        HW_SCE_p_func052(change_endian_long(0x00810173U));
     }
     for(iLoop = 0; iLoop < 3; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func052(change_endian_long(0x0080197fu));
+        HW_SCE_p_func052(change_endian_long(0x0080197fU));
     }
     for(iLoop = 0; iLoop < 3; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func052(change_endian_long(0x00fe017bu));
+        HW_SCE_p_func052(change_endian_long(0x00fe017bU));
     }
     for(iLoop = 0; iLoop < 3; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func052(change_endian_long(0x00af091Fu));
+        HW_SCE_p_func052(change_endian_long(0x00af091FU));
     }
-    HW_SCE_p_func053(change_endian_long(0x000380BBu));
+    HW_SCE_p_func053(change_endian_long(0x000380BBU));
     for(iLoop = 0; iLoop < 6; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func053(change_endian_long(0x000380BBu));
+        HW_SCE_p_func053(change_endian_long(0x000380BBU));
     }
     for(iLoop = 0; iLoop < 3; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func053(change_endian_long(0x000191BBu));
+        HW_SCE_p_func053(change_endian_long(0x000191BBU));
     }
     for(iLoop = 0; iLoop < 3; iLoop = iLoop + 1)
     {
-        HW_SCE_p_func053(change_endian_long(0x000185B7u));
+        HW_SCE_p_func053(change_endian_long(0x000185B7U));
     }
 }
 

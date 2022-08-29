@@ -127,10 +127,31 @@
  ***********************************************************************************************************************/
 uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
 void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
-void     ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl) __attribute__((weak));
-bool     ether_phy_targets_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
-                                                           uint32_t                    line_speed_duplex) __attribute__((
-                                                                                                                                                                                       weak));
+
+#if (ETHER_PHY_CFG_TARGET_KSZ8091RNB_ENABLE)
+extern void ether_phy_target_ksz8091rnb_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern bool ether_phy_target_ksz8091rnb_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                                        uint32_t                    line_speed_duplex);
+
+#endif
+#if (ETHER_PHY_CFG_TARGET_KSZ8041_ENABLE)
+extern void ether_phy_target_ksz8041_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern bool ether_phy_target_ksz8041_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                                     uint32_t                    line_speed_duplex);
+
+#endif
+#if (ETHER_PHY_CFG_TARGET_DP83620_ENABLE)
+extern void ether_phy_target_dp83620_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern bool ether_phy_target_dp83620_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                                     uint32_t                    line_speed_duplex);
+
+#endif
+#if (ETHER_PHY_CFG_TARGET_ICS1894_ENABLE)
+extern void ether_phy_target_ics1894_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern bool ether_phy_target_ics1894_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                                     uint32_t                    line_speed_duplex);
+
+#endif
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -143,6 +164,9 @@ static void ether_phy_trans_zto0(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_trans_1to0(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_mii_write1(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_mii_write0(ether_phy_instance_ctrl_t * p_instance_ctrl);
+static void ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+static bool ether_phy_targets_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                              uint32_t                    line_speed_duplex);
 
 /** ETHER_PHY HAL API mapping for Ethernet PHY Controller interface */
 /*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
@@ -817,9 +841,52 @@ static void ether_phy_mii_write0 (ether_phy_instance_ctrl_t * p_instance_ctrl)
  *                    Ethernet control block
  * Return Value : none
  ***********************************************************************************************************************/
-void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
+static void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
 {
-    (void) p_instance_ctrl;
+    switch (p_instance_ctrl->p_ether_phy_cfg->phy_lsi_type)
+    {
+        /* Use KSZ8091RNB */
+#if (ETHER_PHY_CFG_TARGET_KSZ8091RNB_ENABLE)
+        case ETHER_PHY_LSI_TYPE_KSZ8091RNB:
+        {
+            ether_phy_target_ksz8091rnb_initialize(p_instance_ctrl);
+            break;
+        }
+#endif
+
+        /* Use KSZ8041 */
+#if (ETHER_PHY_CFG_TARGET_KSZ8041_ENABLE)
+        case ETHER_PHY_LSI_TYPE_KSZ8041:
+        {
+            ether_phy_target_ksz8041_initialize(p_instance_ctrl);
+            break;
+        }
+#endif
+
+        /* Use DP83620 */
+#if (ETHER_PHY_CFG_TARGET_DP83620_ENABLE)
+        case ETHER_PHY_LSI_TYPE_DP83620:
+        {
+            ether_phy_target_dp83620_initialize(p_instance_ctrl);
+            break;
+        }
+#endif
+
+        /* Use ICS1894 */
+#if (ETHER_PHY_CFG_TARGET_ICS1894_ENABLE)
+        case ETHER_PHY_LSI_TYPE_ICS1894:
+        {
+            ether_phy_target_ics1894_initialize(p_instance_ctrl);
+            break;
+        }
+#endif
+
+        /* If module is configured for default LSI */
+        default:
+        {
+            break;
+        }
+    }
 }                                      /* End of function ether_phy_targets_initialize() */
 
 /***********************************************************************************************************************
@@ -831,12 +898,56 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
  *                    Line speed duplex of link partner PHY-LSI
  * Return Value : bool
  ***********************************************************************************************************************/
-bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instance_ctrl_t * p_instance_ctrl,
-                                                        uint32_t                    line_speed_duplex)
+static bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                               uint32_t                    line_speed_duplex)
 {
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    bool result = false;
     FSP_PARAMETER_NOT_USED(line_speed_duplex);
+    switch (p_instance_ctrl->p_ether_phy_cfg->phy_lsi_type)
+    {
+        /* Use KSZ8091RNB */
+#if (ETHER_PHY_CFG_TARGET_KSZ8091RNB_ENABLE)
+        case ETHER_PHY_LSI_TYPE_KSZ8091RNB:
+        {
+            result = ether_phy_target_ksz8091rnb_is_support_link_partner_ability(p_instance_ctrl, line_speed_duplex);
+            break;
+        }
+#endif
 
-    /* This PHY-LSI supports half and full duplex mode. */
-    return true;
+        /* Use KSZ8041 */
+#if (ETHER_PHY_CFG_TARGET_KSZ8041_ENABLE)
+        case ETHER_PHY_LSI_TYPE_KSZ8041:
+        {
+            result = ether_phy_target_ksz8041_is_support_link_partner_ability(p_instance_ctrl, line_speed_duplex);
+            break;
+        }
+#endif
+
+        /* Use DP83620 */
+#if (ETHER_PHY_CFG_TARGET_DP83620_ENABLE)
+        case ETHER_PHY_LSI_TYPE_DP83620:
+        {
+            result = ether_phy_target_dp83620_is_support_link_partner_ability(p_instance_ctrl, line_speed_duplex);
+            break;
+        }
+#endif
+
+        /* Use ICS1894 */
+#if (ETHER_PHY_CFG_TARGET_ICS1894_ENABLE)
+        case ETHER_PHY_LSI_TYPE_ICS1894:
+        {
+            result = ether_phy_target_ics1894_is_support_link_partner_ability(p_instance_ctrl, line_speed_duplex);
+            break;
+        }
+#endif
+
+        /* If module is configured for default LSI, always return true */
+        default:
+        {
+            result = true;
+            break;
+        }
+    }
+
+    return result;
 }                                      /* End of function ether_phy_targets_is_support_link_partner_ability() */

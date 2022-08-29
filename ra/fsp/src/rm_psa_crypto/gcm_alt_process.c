@@ -18,11 +18,7 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+#include "common.h"
 
 #if defined(MBEDTLS_GCM_C)
 
@@ -60,16 +56,31 @@
 
   #define SCE9_AES_GCM_KEY_TYPE_GENERAL    (0)
 
-/* AES-ECB Encryption HW call table based on key size. This is used for generating the hash subkey */
-static const hw_sce_aes_ecb_encrypt_using_encrypted_key g_sce_aes_ecb_encrypt[] =
+fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral(uint32_t * InData_KeyType,
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV)
 {
-    [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_128BIT_KEYLEN_BITS)] =
-        HW_SCE_AES_128EcbEncryptUsingEncryptedKey,
-    [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_192BIT_KEYLEN_BITS)] =
-        HW_SCE_AES_192EcbEncryptUsingEncryptedKey,
-    [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_256BIT_KEYLEN_BITS)] =
-        HW_SCE_AES_256EcbEncryptUsingEncryptedKey,
-};
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+
+    return HW_SCE_Aes192GcmEncryptInitSub(InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral(uint32_t * InData_KeyType,
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+
+    return HW_SCE_Aes192GcmDecryptInitSub(InData_KeyIndex, InData_IV);
+}
 
 /* Prepare GCM IV for encryption/decryption
  * Ref: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf
@@ -93,6 +104,10 @@ static fsp_err_t prepare_gcm_iv (uint8_t  * ivec,
     uint32_t  ivec_bit_len[4]    = {0};
     uint32_t  ivec_tmp[4]        = {0};
     fsp_err_t ret                = FSP_SUCCESS;
+    uint32_t  dummy_iv[4]        = {0};
+    uint32_t  indata_cmd         = change_endian_long(SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION);
+    uint32_t  indata_key_type    = 0;
+    fsp_err_t err                = FSP_SUCCESS;
 
     /* when iv_len is 12 (96 bit), aad 0x00000001 padding */
     if (12U == ivec_len)
@@ -105,9 +120,50 @@ static fsp_err_t prepare_gcm_iv (uint8_t  * ivec,
     else
     {
         /* Encrypt 4 words (128 bit) zeros with the AES key. The generated cipher is the hash subkey used by GHASH HW API. */
-        ret =
-            g_sce_aes_ecb_encrypt[key_index_word_size](key_index, BYTES_TO_WORDS(MBEDTLS_MAX_BLOCK_LENGTH), zero,
-                                                       hash_subkey);
+        if (key_index_word_size == 0U)
+        {
+            err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, key_index, dummy_iv);
+
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &zero[0],
+                                                     (uint32_t *) &hash_subkey[0],
+                                                     BYTES_TO_WORDS(MBEDTLS_MAX_BLOCK_LENGTH));
+            }
+
+            ret = HW_SCE_Aes128EncryptDecryptFinalSub();
+        }
+        else if (key_index_word_size == 1U)
+        {
+            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, key_index, dummy_iv);
+
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &zero[0],
+                                                     (uint32_t *) &hash_subkey[0],
+                                                     BYTES_TO_WORDS(MBEDTLS_MAX_BLOCK_LENGTH));
+            }
+
+            ret = HW_SCE_Aes192EncryptDecryptFinalSub();
+        }
+        else if (key_index_word_size == 2U)
+        {
+            err = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, key_index, dummy_iv);
+
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &zero[0],
+                                                     (uint32_t *) &hash_subkey[0],
+                                                     BYTES_TO_WORDS(MBEDTLS_MAX_BLOCK_LENGTH));
+            }
+
+            ret = HW_SCE_Aes256EncryptDecryptFinalSub();
+        }
+        else
+        {
+            ret = FSP_ERR_UNSUPPORTED;
+        }
+
         if (FSP_SUCCESS == ret)
         {
             if (MBEDTLS_MAX_BLOCK_LENGTH <= ivec_len)
@@ -167,13 +223,13 @@ static const hw_sce_aes_gcm_crypt_init_t g_sce_aes_gcm_crypt_init[][2U] =
     [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_128BIT_KEYLEN_BITS)][MBEDTLS_GCM_DECRYPT] =
         HW_SCE_Aes128GcmDecryptInitSub,
     [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_192BIT_KEYLEN_BITS)][MBEDTLS_GCM_ENCRYPT] =
-        HW_SCE_Aes192GcmEncryptInitSub,
+        HW_SCE_Aes192GcmEncryptInitSubGeneral,
     [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_192BIT_KEYLEN_BITS)][MBEDTLS_GCM_DECRYPT] =
-        HW_SCE_Aes192GcmDecryptInitSub,
+        HW_SCE_Aes192GcmDecryptInitSubGeneral,
     [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_256BIT_KEYLEN_BITS)][MBEDTLS_GCM_ENCRYPT] =
-        HW_SCE_Aes256GcmEncryptInitSubGeneral,
+        HW_SCE_Aes256GcmEncryptInitSub,
     [RM_PSA_CRYPTO_AES_LOOKUP_INDEX(SIZE_AES_256BIT_KEYLEN_BITS)][MBEDTLS_GCM_DECRYPT] =
-        HW_SCE_Aes256GcmDecryptInitSubGeneral,
+        HW_SCE_Aes256GcmDecryptInitSub,
 };
 
 /* AES-GCM Encryption/Decryption Update AAD HW call table based on key size */

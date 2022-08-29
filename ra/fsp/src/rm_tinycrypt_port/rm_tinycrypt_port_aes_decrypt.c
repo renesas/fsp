@@ -26,6 +26,7 @@
 #include <tinycrypt/utils.h>
 #include <tinycrypt/constants.h>
 #include "hw_sce_aes_private.h"
+#include "hw_sce_ra_private.h"
 #include "rm_tinycrypt_port_cfg.h"
 
 int tc_aes128_set_decrypt_key (TCAesKeySched_t s, const uint8_t * k)
@@ -41,6 +42,9 @@ int tc_aes_decrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
     uint32_t * p_out;
     uint32_t   local_out[TC_AES_BLOCK_SIZE / 4U];
     uint32_t   local_in[TC_AES_BLOCK_SIZE / 4U];
+    uint32_t   dummy_iv[4]     = {0};
+    uint32_t   indata_cmd      = change_endian_long((uint32_t)SCE_AES_IN_DATA_CMD_ECB_DECRYPTION);
+    uint32_t   indata_key_type = 0;
 
 #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
     if ((out == (uint8_t *) 0) || (in == (const uint8_t *) 0) || (s == (TCAesKeySched_t) 0))
@@ -73,8 +77,14 @@ int tc_aes_decrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
             p_out = (uint32_t *) out;
         }
 
-        err =
-            HW_SCE_AES_128EcbDecrypt((uint32_t *) &s->words[0], TC_AES_BLOCK_SIZE / 4U, p_in, p_out);
+        err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &s->words[0], dummy_iv);
+        if (err == FSP_SUCCESS)
+        {
+            HW_SCE_Aes128EncryptDecryptUpdateSub(p_in, p_out, TC_AES_BLOCK_SIZE / 4U);
+        }
+
+        err = HW_SCE_Aes128EncryptDecryptFinalSub();
+
         if (FSP_SUCCESS == err)
         {
             tc_return = TC_CRYPTO_SUCCESS;

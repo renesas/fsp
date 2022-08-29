@@ -15,6 +15,7 @@
 #include "region_defs.h"
 #include "utilities.h"
 #include "tfm_hal_platform.h"
+#include "tfm_common_config.h"
 
 /* Get address of memory regions to configure MPU */
 extern const struct memory_region_limits memory_regions;
@@ -33,11 +34,11 @@ enum tfm_plat_err_t tfm_spm_hal_init_isolation_hw(void)
     return TFM_PLAT_ERR_SUCCESS;
 }
 
+#ifndef TFM_PSA_API
 enum tfm_plat_err_t tfm_spm_hal_configure_default_isolation(
-                  uint32_t partition_idx,
+                  bool privileged,
                   const struct platform_data_t *platform_data)
 {
-    bool privileged = tfm_is_partition_privileged(partition_idx);
 #if defined(CONFIG_TFM_ENABLE_MEMORY_PROTECT) && (TFM_LVL != 1)
     struct mpu_armv8m_region_cfg_t region_cfg;
 #endif
@@ -73,6 +74,7 @@ enum tfm_plat_err_t tfm_spm_hal_configure_default_isolation(
 
     return TFM_PLAT_ERR_SUCCESS;
 }
+#endif /* TFM_PSA_API */
 
 uint32_t tfm_spm_hal_get_ns_VTOR(void)
 {
@@ -89,11 +91,9 @@ uint32_t tfm_spm_hal_get_ns_entry_point(void)
     return *((uint32_t *)(memory_regions.non_secure_code_start+ 4));
 }
 
-enum tfm_plat_err_t tfm_spm_hal_set_secure_irq_priority(IRQn_Type irq_line,
-                                                        uint32_t priority)
+enum tfm_plat_err_t tfm_spm_hal_set_secure_irq_priority(IRQn_Type irq_line)
 {
-    uint32_t quantized_priority = priority >> (8U - __NVIC_PRIO_BITS);
-    NVIC_SetPriority(irq_line, quantized_priority);
+    NVIC_SetPriority(irq_line, DEFAULT_IRQ_PRIORITY);
     return TFM_PLAT_ERR_SUCCESS;
 }
 

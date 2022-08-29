@@ -303,7 +303,14 @@ static StaticSemaphore_t g_uart_tei_mutexes[2];
 static wifi_onchip_silex_instance_ctrl_t g_rm_wifi_onchip_silex_instance;
 
 static rm_wifi_onchip_silex_baud_setting_t g_baud_setting_115200 =
-{.brme = 0, .abcse = 0, .abcs = 0, .bgdm = 0, .brr = 0, .mddr = 0, };
+{
+    .semr_baudrate_bits_b.brme  = 0,
+    .semr_baudrate_bits_b.abcse = 0,
+    .semr_baudrate_bits_b.abcs  = 0,
+    .semr_baudrate_bits_b.bgdm  = 0,
+    .brr  = 0,
+    .mddr = 0,
+};
 
 /***********************************************************************************************************************
  * Private Function Definitions
@@ -2221,23 +2228,6 @@ int32_t rm_wifi_onchip_silex_send (uint32_t socket_no, const uint8_t * p_data, u
     return (int32_t) sent_count;
 }
 
-/***********************************************************************************************************************
- *  DEPRECATED - Send data over TCP to a server.
- *
- * @param[in]  socket_no        Socket ID number.
- * @param[in]  p_data            Pointer to data to send.
- * @param[in]  length           Length of data to send.
- * @param[in]  timeout_ms       Timeout to wait for transmit end event
- *
- * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
- * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
- * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
- **********************************************************************************************************************/
-int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
-{
-    return rm_wifi_onchip_silex_send(socket_no, p_data, length, timeout_ms);
-}
-
 /*******************************************************************************************************************//**
  *  Receive data over TCP from a server.
  *
@@ -2349,11 +2339,11 @@ int32_t rm_wifi_onchip_silex_recv (uint32_t socket_no, uint8_t * p_data, uint32_
                     ret = (int32_t) recvcnt;
                     break;
                 }
-            }                                  /* For */
+            }                          /* For */
         }
         else
         {
-            ret = 0; // timeout occurred
+            ret = 0;                   // timeout occurred
         }
 
         /* Reset the trigger level for socket stream buffer */
@@ -2425,24 +2415,6 @@ int32_t rm_wifi_onchip_silex_recv (uint32_t socket_no, uint8_t * p_data, uint32_
 
     return FSP_ERR_UNSUPPORTED;
 #endif
-}
-
-/***********************************************************************************************************************
- *  DEPRECATED - Receive data over TCP from a server.
- *
- * @param[in]  socket_no        Socket ID number.
- * @param[out]  p_data            Pointer to data received from socket.
- * @param[in]  length           Length of data array used for receive.
- * @param[in]  timeout_ms       Timeout to wait for data to be received from socket.
- *
- * @retval FSP_SUCCESS              Function completed successfully.
- * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
- * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
- * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
- **********************************************************************************************************************/
-int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
-{
-    return rm_wifi_onchip_silex_recv(socket_no, p_data, length, timeout_ms);
 }
 
 /*******************************************************************************************************************//**

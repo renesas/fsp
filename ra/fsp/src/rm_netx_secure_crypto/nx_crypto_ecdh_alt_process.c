@@ -72,9 +72,11 @@ UINT sce_nx_crypto_ecdh_key_pair_import (NX_CRYPTO_ECDH * ecdh_ptr,
     uint32_t   curve_size_bytes        = ((curve->nx_crypto_ec_bits + 7) >> 3);
     uint32_t   plain_private_key_len   = curve_size_bytes;
     uint32_t   wrapped_key_len         =
-        (NX_CRYPTO_EC_SECP384R1 == curve->nx_crypto_ec_id) ? RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(
-            plain_private_key_len) : RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(
-            (ECC_256_PRIVATE_KEY_LENGTH_BITS >> 3U));
+        (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP384R1) ? RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                                                                              ECC_384_PRIVATE_KEY_LENGTH_WORDS))
+        :
+        RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                         ECC_256_PRIVATE_KEY_LENGTH_WORDS));
     uint32_t key_len = plain_private_key_len;
 
     /* public key length check is updated as the user may enter plain public key directly
@@ -86,7 +88,7 @@ UINT sce_nx_crypto_ecdh_key_pair_import (NX_CRYPTO_ECDH * ecdh_ptr,
         (local_public_key_len != (public_key_len - RM_NETX_SECURE_CRYPTO_FORMATTED_ECC_PUBLIC_KEY_ADJUST)))
     {
 
-        /* The key length passed neither matches the standard ECC public key nor the SCE9 formatted key length */
+        /* The key length passed neither matches the standard ECC public key nor the SCE9/7 formatted key length */
         return NX_CRYPTO_SIZE_ERROR;
     }
 
@@ -196,15 +198,22 @@ UINT sce_nx_crypto_ecdh_setup (NX_CRYPTO_ECDH * ecdh_ptr,
                                ULONG          * actual_local_public_key_len,
                                NX_CRYPTO_EC   * curve)
 {
-    uint32_t key[1U + RM_NETX_SECURE_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS +
-                 (RM_NETX_SECURE_CRYPTO_ECC_384_WRAPPED_KEY_SIZE_BYTES / 4U)] = {0};
-    uint32_t key_length = 1U + (RM_NETX_SECURE_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS * 4U) +
-                          RM_NETX_SECURE_CRYPTO_ECC_384_WRAPPED_KEY_SIZE_BYTES;
     uint32_t ret_key_len        = 0;
     uint32_t curve_size         = ((curve->nx_crypto_ec_bits + 7) >> 3);
     uint32_t wrapped_key_length =
-        (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP384R1) ? RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
-            ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS) : RM_NETX_SECURE_CRYPTO_ECC_192_224_256_WRAPPED_KEY_SIZE_BYTES;
+        (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP384R1) ? RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                                                                              ECC_384_PRIVATE_KEY_LENGTH_WORDS))
+        :
+        RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                         ECC_256_PRIVATE_KEY_LENGTH_WORDS));
+    uint32_t key_length =
+        RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE) +
+        HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE + RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+            HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE) + wrapped_key_length;
+    uint32_t key[(RM_NETX_SECURE_CRYPTO_ECC_WRAPPED_KEY_ADJUST(RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(
+                                                                   ECC_384_PRIVATE_KEY_LENGTH_WORDS)) / 4U) +
+                 HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE + 1U +
+                 (HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE / 4U) + HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE] = {0};
     uint32_t status =
         rm_netx_secure_crypto_ecc_key_pair_generate(curve->nx_crypto_ec_id,
                                                     curve_size,
@@ -242,25 +251,27 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
     uint32_t       cmd        = 0x0;
     fsp_err_t      err        = FSP_SUCCESS;
 
-    uint32_t pub_key[RM_NETX_SECURE_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS] = {0};
+    uint32_t pub_key[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE + (HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE / 4U) +
+                     HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE] = {0};
     NX_CRYPTO_MEMCPY(pub_key, &remote_public_key[1], ((((curve->nx_crypto_ec_bits + 7) >> 3) << 1)));
 
     /* Generate ECC key pair based on the curve type & size */
     if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP384R1)
     {
-        err = HW_SCE_ECC_384WrappedScalarMultiplication(&curve_type,
-                                                        NULL,
-                                                        (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
-                                                        pub_key,
-                                                        (uint32_t *) share_secret_key_ptr);
+ #if 0
+        err = HW_SCE_Ecc384ScalarMultiplicationSub(&curve_type,
+                                                   (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                   pub_key,
+                                                   (uint32_t *) share_secret_key_ptr);
+ #endif
     }
     else if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP256R1)
     {
-        err = HW_SCE_ECC_256WrappedScalarMultiplication(&curve_type,
-                                                        &cmd,
-                                                        (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
-                                                        pub_key,
-                                                        (uint32_t *) share_secret_key_ptr);
+        err = HW_SCE_Ecc256ScalarMultiplicationSub(&curve_type,
+                                                   &cmd,
+                                                   (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                   pub_key,
+                                                   (uint32_t *) share_secret_key_ptr);
     }
     else if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP224R1)
     {
@@ -277,11 +288,11 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
                &pub_key[RM_NETX_SECURE_CRYPTO_ECC_224_COORDINATE_SIZE_BYTES / 4U],
                RM_NETX_SECURE_CRYPTO_ECC_224_COORDINATE_SIZE_BYTES);
 
-        err = HW_SCE_ECC_256WrappedScalarMultiplication(&curve_type,
-                                                        &cmd,
-                                                        (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
-                                                        (uint32_t *) padded_plain_public_key,
-                                                        (uint32_t *) share_secret_key_ptr);
+        err = HW_SCE_Ecc256ScalarMultiplicationSub(&curve_type,
+                                                   &cmd,
+                                                   (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                   (uint32_t *) padded_plain_public_key,
+                                                   (uint32_t *) share_secret_key_ptr);
     }
     else
     {
