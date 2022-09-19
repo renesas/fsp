@@ -1895,7 +1895,7 @@ static fsp_err_t flash_hp_df_erase (flash_hp_instance_ctrl_t * p_ctrl, uint32_t 
     }
     else
     {
-        wait_count = p_ctrl->timeout_write_df;
+        wait_count = p_ctrl->timeout_erase_df_block;
     }
 
     /* Set Erasure Priority Mode*/
