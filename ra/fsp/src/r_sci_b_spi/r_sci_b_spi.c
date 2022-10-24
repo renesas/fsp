@@ -443,7 +443,11 @@ fsp_err_t R_SCI_B_SPI_CalculateBitrate (uint32_t                  bitrate,
     }
     else
     {
+#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
         peripheral_clock = R_FSP_SciSpiClockHzGet();
+#elif BSP_FEATURE_BSP_HAS_SCI_CLOCK
+        peripheral_clock = R_FSP_SciClockHzGet();
+#endif
     }
 
 #if SCI_B_SPI_CFG_PARAM_CHECKING_ENABLE

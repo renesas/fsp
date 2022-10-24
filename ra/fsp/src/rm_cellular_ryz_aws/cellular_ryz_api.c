@@ -32,6 +32,7 @@
 #include "cellular_common_api.h"
 #include "cellular_common.h"
 #include "cellular_at_core.h"
+#include "cellular_common_internal.h"
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -83,6 +84,15 @@ typedef struct _socketDataRecv
     uint32_t * pDataLen;
     uint8_t  * pData;
 } _socketDataRecv_t;
+
+typedef struct cellularOperatorInfo
+{
+    CellularPlmnInfo_t                plmnInfo;            /* Device registered PLMN info (MCC and MNC).  */
+    CellularRat_t                     rat;                 /* Device registered Radio Access Technology (Cat-M, Cat-NB, GPRS etc).  */
+    CellularNetworkRegistrationMode_t networkRegMode;      /* Network Registered mode of the device (Manual, Auto etc).   */
+    CellularOperatorNameFormat_t      operatorNameFormat;  /* Format of registered network operator name. */
+    char operatorName[CELLULAR_NETWORK_NAME_MAX_SIZE + 1]; /* Registered network operator name. */
+} cellularOperatorInfo_t;
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -140,6 +150,14 @@ static CellularPktStatus_t _Cellular_RecvFuncGetImsi(CellularContext_t          
                                                      const CellularATCommandResponse_t * pAtResp,
                                                      void                              * pData,
                                                      uint16_t                            dataLen);
+static CellularPktStatus_t _Cellular_RecvFuncGetNetworkReg(CellularContext_t                 * pContext,
+                                                           const CellularATCommandResponse_t * pAtResp,
+                                                           void                              * pData,
+                                                           uint16_t                            dataLen);
+static CellularPktStatus_t _Cellular_RecvFuncUpdateMccMnc(CellularContext_t                 * pContext,
+                                                          const CellularATCommandResponse_t * pAtResp,
+                                                          void                              * pData,
+                                                          uint16_t                            dataLen);
 
 /***********************************************************************************************************************
  * Global Variables
@@ -479,7 +497,7 @@ CellularError_t Cellular_DeactivatePdn (CellularHandle_t cellularHandle, uint8_t
     if (cellularStatus == CELLULAR_SUCCESS)
     {
         /* Get current network operator settings. */
-        cellularStatus = Cellular_CommonGetServiceStatus(cellularHandle, &serviceStatus);
+        cellularStatus = Cellular_GetServiceStatus(cellularHandle, &serviceStatus);
 
         if (cellularStatus == CELLULAR_SUCCESS)
         {
@@ -1056,6 +1074,374 @@ CellularError_t Cellular_SocketClose (CellularHandle_t cellularHandle, CellularS
     }
 
     return cellularStatus;
+}
+
+/* Implementation of Cellular_GetServiceStatus */
+CellularError_t Cellular_GetServiceStatus (CellularHandle_t cellularHandle, CellularServiceStatus_t * pServiceStatus)
+{
+    CellularContext_t    * pContext       = (CellularContext_t *) cellularHandle;
+    CellularError_t        cellularStatus = CELLULAR_SUCCESS;
+    cellularOperatorInfo_t operatorInfo;
+
+    (void) memset(&operatorInfo, 0, sizeof(cellularOperatorInfo_t));
+
+    /* pContext is checked in _Cellular_CheckLibraryStatus function. */
+    cellularStatus = _Cellular_CheckLibraryStatus(pContext);
+
+    if (cellularStatus != CELLULAR_SUCCESS)
+    {
+        LogError(("_Cellular_CheckLibraryStatus failed"));
+    }
+    else if (pServiceStatus == NULL)
+    {
+        LogError(("Cellular_GetServiceStatus : Bad parameter"));
+        cellularStatus = CELLULAR_BAD_PARAMETER;
+    }
+    else
+    {
+        const cellularAtData_t * pLibAtData     = NULL;
+        CellularPktStatus_t      pktStatus      = CELLULAR_PKT_STATUS_OK;
+        CellularAtReq_t          atReqGetResult = {0};
+
+        atReqGetResult.pAtCmd       = "AT+CEREG?";
+        atReqGetResult.atCmdType    = CELLULAR_AT_MULTI_WITH_PREFIX;
+        atReqGetResult.pAtRspPrefix = "+CEREG";
+        atReqGetResult.respCallback = _Cellular_RecvFuncGetNetworkReg;
+        atReqGetResult.pData        = NULL;
+        atReqGetResult.dataLen      = 0;
+
+        pktStatus      = _Cellular_AtcmdRequestWithCallback(pContext, atReqGetResult);
+        cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
+
+        /* Get the service status from lib AT data. */
+        if (cellularStatus == CELLULAR_SUCCESS)
+        {
+            pLibAtData = &pContext->libAtData;
+            _Cellular_LockAtDataMutex(pContext);
+            pServiceStatus->rat = pLibAtData->rat;
+            pServiceStatus->csRegistrationStatus = pLibAtData->csRegStatus;
+            pServiceStatus->psRegistrationStatus = pLibAtData->psRegStatus;
+            pServiceStatus->csRejectionCause     = pLibAtData->csRejCause;
+            pServiceStatus->csRejectionType      = pLibAtData->csRejectType;
+            pServiceStatus->psRejectionCause     = pLibAtData->psRejCause;
+            pServiceStatus->psRejectionType      = pLibAtData->psRejectType;
+            _Cellular_UnlockAtDataMutex(pContext);
+        }
+
+        CellularAtReq_t atReqGetMccMnc = {0};
+
+        atReqGetMccMnc.pAtCmd       = "AT+COPS?";
+        atReqGetMccMnc.atCmdType    = CELLULAR_AT_WITH_PREFIX;
+        atReqGetMccMnc.pAtRspPrefix = "+COPS";
+        atReqGetMccMnc.respCallback = _Cellular_RecvFuncUpdateMccMnc;
+        atReqGetMccMnc.pData        = &operatorInfo;
+        atReqGetMccMnc.dataLen      = (uint16_t) sizeof(cellularOperatorInfo_t);
+
+        pktStatus      = _Cellular_AtcmdRequestWithCallback(pContext, atReqGetMccMnc);
+        cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
+
+        /* Service status data from operator info. */
+        pServiceStatus->networkRegistrationMode = operatorInfo.networkRegMode;
+        pServiceStatus->plmnInfo                = operatorInfo.plmnInfo;
+        (void) strncpy(pServiceStatus->operatorName, operatorInfo.operatorName, sizeof(operatorInfo.operatorName));
+        pServiceStatus->operatorNameFormat = operatorInfo.operatorNameFormat;
+
+        LogDebug(("SrvStatus: rat %d cs %d, ps %d, mode %d, csRejType %d,",
+                  pServiceStatus->rat,
+                  pServiceStatus->csRegistrationStatus,
+                  pServiceStatus->psRegistrationStatus,
+                  pServiceStatus->networkRegistrationMode,
+                  pServiceStatus->csRejectionType));
+
+        LogDebug(("csRej %d, psRejType %d, psRej %d, plmn %s%s",
+                  pServiceStatus->csRejectionCause,
+                  pServiceStatus->psRejectionType,
+                  pServiceStatus->psRejectionCause,
+                  pServiceStatus->plmnInfo.mcc,
+                  pServiceStatus->plmnInfo.mnc));
+    }
+
+    return cellularStatus;
+}
+
+/*******************************************************************************************************************//**
+ * Callback to process AT+CEREG response.
+ *
+ * @param[in] pContext  Pointer to cellular context.
+ * @param[in] pAtResp   Pointer to AT command response.
+ * @param[in] pData     Pointer to where to store parsed data.
+ * @param[in] dataLen   Length of where to store parsed data.
+ *
+ * @retval  CELLULAR_PKT_STATUS_OK          Response processing succeeded
+ * @retval  CELLULAR_PKT_STATUS_FAILURE     Parsing failure
+ * @retval  CELLULAR_PKT_STATUS_BAD_PARAM   Bad parameter passed to callback
+ **********************************************************************************************************************/
+static CellularPktStatus_t _Cellular_RecvFuncGetNetworkReg (CellularContext_t                 * pContext,
+                                                            const CellularATCommandResponse_t * pAtResp,
+                                                            void                              * pData,
+                                                            uint16_t                            dataLen)
+{
+    char              * pPregLine    = NULL;
+    CellularPktStatus_t pktStatus    = CELLULAR_PKT_STATUS_OK;
+    CellularATError_t   atCoreStatus = CELLULAR_AT_SUCCESS;
+
+    FSP_PARAMETER_NOT_USED(pData);
+    FSP_PARAMETER_NOT_USED(dataLen);
+
+    if (pContext == NULL)
+    {
+        pktStatus = CELLULAR_PKT_STATUS_INVALID_HANDLE;
+    }
+    else if ((pAtResp == NULL) || (pAtResp->pItm == NULL) || (pAtResp->pItm->pLine == NULL))
+    {
+        LogError(("_Cellular_RecvFuncGetNetworkReg: response is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_BAD_PARAM;
+    }
+    else
+    {
+        pPregLine    = pAtResp->pItm->pLine;
+        atCoreStatus = Cellular_ATRemoveLeadingWhiteSpaces(&pPregLine);
+        pktStatus    = _Cellular_TranslateAtCoreStatus(atCoreStatus);
+
+        if (pktStatus == CELLULAR_PKT_STATUS_OK)
+        {
+            /* Assumption is that the data is null terminated so we don't need the dataLen. */
+            _Cellular_LockAtDataMutex(pContext);
+            pktStatus = _Cellular_ParseRegStatus(pContext, pPregLine, false, CELLULAR_REG_TYPE_CEREG);
+            pContext->libAtData.csRegStatus = pContext->libAtData.psRegStatus;
+            _Cellular_UnlockAtDataMutex(pContext);
+        }
+
+        LogDebug(("atcmd network register status pktStatus:%d", pktStatus));
+    }
+
+    return pktStatus;
+}
+
+/*******************************************************************************************************************//**
+ * Callback to process AT+COPS response.
+ *
+ * @param[in] pContext  Pointer to cellular context.
+ * @param[in] pAtResp   Pointer to AT command response.
+ * @param[in] pData     Pointer to where to store parsed data.
+ * @param[in] dataLen   Length of where to store parsed data.
+ *
+ * @retval  CELLULAR_PKT_STATUS_OK          Response processing succeeded
+ * @retval  CELLULAR_PKT_STATUS_FAILURE     Parsing failure
+ * @retval  CELLULAR_PKT_STATUS_BAD_PARAM   Bad parameter passed to callback
+ **********************************************************************************************************************/
+static CellularPktStatus_t _Cellular_RecvFuncUpdateMccMnc (CellularContext_t                 * pContext,
+                                                           const CellularATCommandResponse_t * pAtResp,
+                                                           void                              * pData,
+                                                           uint16_t                            dataLen)
+{
+    char                   * pCopsResponse = NULL;
+    CellularPktStatus_t      pktStatus     = CELLULAR_PKT_STATUS_OK;
+    CellularATError_t        atCoreStatus  = CELLULAR_AT_SUCCESS;
+    cellularOperatorInfo_t * pOperatorInfo = NULL;
+
+    if (pContext == NULL)
+    {
+        pktStatus = CELLULAR_PKT_STATUS_FAILURE;
+    }
+    else if ((pAtResp == NULL) || (pAtResp->pItm == NULL) || (pAtResp->pItm->pLine == NULL))
+    {
+        LogError(("UpdateMccMnc: Response is invalid"));
+        pktStatus = CELLULAR_PKT_STATUS_FAILURE;
+    }
+    else if ((pData == NULL) || (dataLen != sizeof(cellularOperatorInfo_t)))
+    {
+        LogError(("UpdateMccMnc: pData is invalid or dataLen is wrong"));
+        pktStatus = CELLULAR_PKT_STATUS_FAILURE;
+    }
+    else
+    {
+        pCopsResponse = pAtResp->pItm->pLine;
+        pOperatorInfo = (cellularOperatorInfo_t *) pData;
+
+        /* Remove COPS Prefix. */
+        atCoreStatus = Cellular_ATRemovePrefix(&pCopsResponse);
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Removing all the Quotes from the COPS response. */
+            atCoreStatus = Cellular_ATRemoveAllDoubleQuote(pCopsResponse);
+        }
+
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            /* Removing all Space from the COPS response. */
+            atCoreStatus = Cellular_ATRemoveAllWhiteSpaces(pCopsResponse);
+        }
+
+        /* parse all the data from cops. */
+        if (atCoreStatus == CELLULAR_AT_SUCCESS)
+        {
+            char * pToken            = NULL;
+            char * pTempCopsResponse = pCopsResponse;
+            bool   parseStatus       = true;
+
+            /* Getting next token from COPS response. */
+            atCoreStatus = Cellular_ATGetNextTok(&pTempCopsResponse, &pToken);
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                int32_t var = 0;
+
+                atCoreStatus = Cellular_ATStrtoi(pToken, 10, &var);
+
+                if (atCoreStatus == CELLULAR_AT_SUCCESS)
+                {
+                    if ((var >= 0) && (var < (int32_t) REGISTRATION_MODE_MAX))
+                    {
+                        /* Variable "var" is ensured that it is valid and within
+                         * a valid range. Hence, assigning the value of the variable to
+                         * networkRegMode with a enum cast. */
+
+                        /* coverity[misra_c_2012_rule_10_5_violation] */
+                        pOperatorInfo->networkRegMode = (CellularNetworkRegistrationMode_t) var;
+                    }
+                    else
+                    {
+                        LogError(("_parseCopsRegMode: Error in processing Network Registration mode. Token %s",
+                                  pToken));
+                        parseStatus = false;
+                    }
+                }
+
+                if (parseStatus == false)
+                {
+                    atCoreStatus = CELLULAR_AT_ERROR;
+                }
+            }
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                atCoreStatus = Cellular_ATGetNextTok(&pTempCopsResponse, &pToken);
+            }
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                int32_t var = 0;
+
+                atCoreStatus = Cellular_ATStrtoi(pToken, 10, &var);
+
+                if (atCoreStatus == CELLULAR_AT_SUCCESS)
+                {
+                    if ((var >= 0) &&
+                        (var < (int32_t) OPERATOR_NAME_FORMAT_MAX))
+                    {
+                        /* Variable "var" is ensured that it is valid and within
+                         * a valid range. Hence, assigning the value of the variable to
+                         * operatorNameFormat with a enum cast. */
+
+                        /* coverity[misra_c_2012_rule_10_5_violation] */
+                        pOperatorInfo->operatorNameFormat = (CellularOperatorNameFormat_t) var;
+                    }
+                    else
+                    {
+                        LogError((
+                                     "_parseCopsNetworkNameFormat: Error in processing Network Registration mode. Token %s",
+                                     pToken));
+                        parseStatus = false;
+                    }
+                }
+
+                if (parseStatus == false)
+                {
+                    atCoreStatus = CELLULAR_AT_ERROR;
+                }
+            }
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                atCoreStatus = Cellular_ATGetNextTok(&pTempCopsResponse, &pToken);
+            }
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                uint32_t mccMncLen = 0U;
+
+                if ((pOperatorInfo->operatorNameFormat == OPERATOR_NAME_FORMAT_LONG) ||
+                    (pOperatorInfo->operatorNameFormat == OPERATOR_NAME_FORMAT_SHORT))
+                {
+                    (void) strncpy(pOperatorInfo->operatorName, pToken, CELLULAR_NETWORK_NAME_MAX_SIZE);
+                }
+                else if (pOperatorInfo->operatorNameFormat == OPERATOR_NAME_FORMAT_NUMERIC)
+                {
+                    mccMncLen = (uint32_t) strlen(pToken);
+
+                    if ((mccMncLen == (CELLULAR_MCC_MAX_SIZE + CELLULAR_MNC_MAX_SIZE)) ||
+                        (mccMncLen == (CELLULAR_MCC_MAX_SIZE + CELLULAR_MNC_MAX_SIZE - 1U)))
+                    {
+                        (void) strncpy(pOperatorInfo->plmnInfo.mcc, pToken, CELLULAR_MCC_MAX_SIZE);
+                        pOperatorInfo->plmnInfo.mcc[CELLULAR_MCC_MAX_SIZE] = '\0';
+                        (void) strncpy(pOperatorInfo->plmnInfo.mnc, &pToken[CELLULAR_MCC_MAX_SIZE],
+                                       (uint32_t) (mccMncLen - CELLULAR_MCC_MAX_SIZE + 1U));
+                        pOperatorInfo->plmnInfo.mnc[CELLULAR_MNC_MAX_SIZE] = '\0';
+                    }
+                    else
+                    {
+                        LogError(("_parseCopsNetworkName: Error in processing Network MCC MNC: Length not Valid"));
+                        parseStatus = false;
+                    }
+                }
+                else
+                {
+                    LogError(("Error in processing Operator Name: Format Unknown"));
+                    parseStatus = false;
+                }
+
+                if (parseStatus == false)
+                {
+                    atCoreStatus = CELLULAR_AT_ERROR;
+                }
+            }
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                atCoreStatus = Cellular_ATGetNextTok(&pTempCopsResponse, &pToken);
+            }
+
+            if (atCoreStatus == CELLULAR_AT_SUCCESS)
+            {
+                int32_t var = 0;
+
+                atCoreStatus = Cellular_ATStrtoi(pToken, 10, &var);
+
+                if (atCoreStatus == CELLULAR_AT_SUCCESS)
+                {
+                    if ((var < (int32_t) CELLULAR_RAT_MAX) && (var >= 0))
+                    {
+                        /* Variable "var" is ensured that it is valid and within
+                         * a valid range. Hence, assigning the value of the variable to
+                         * rat with a enum cast. */
+
+                        /* coverity[misra_c_2012_rule_10_5_violation] */
+                        pOperatorInfo->rat = (CellularRat_t) var;
+                    }
+                    else
+                    {
+                        LogError(("_parseCopsNetworkName: Error in processing RAT. Token %s", pToken));
+                        parseStatus = false;
+                    }
+                }
+
+                if (parseStatus == false)
+                {
+                    atCoreStatus = CELLULAR_AT_ERROR;
+                }
+            }
+        }
+
+        if (atCoreStatus == CELLULAR_AT_ERROR)
+        {
+            LogError(("ERROR: COPS %s", pCopsResponse));
+            pktStatus = _Cellular_TranslateAtCoreStatus(atCoreStatus);
+        }
+    }
+
+    return pktStatus;
 }
 
 /*******************************************************************************************************************//**

@@ -278,7 +278,7 @@ typedef struct st_ble_abs_legacy_advertising_parameter
      *    |:--------------------------|:--------------- |
      *    | BLE_GAP_ADV_CH_37(0x01)   | Use 37 CH.      |
      *    | BLE_GAP_ADV_CH_38(0x02)   | Use 38 CH.      |
-     *    | BLE_GAP_ADV_CH_39(0x04)   | Use 38 CH.      |
+     *    | BLE_GAP_ADV_CH_39(0x04)   | Use 39 CH.      |
      *    | BLE_GAP_ADV_CH_ALL(0x07)  | Use 37 - 39 CH. |
      */
     uint8_t advertising_channel_map;
@@ -372,7 +372,7 @@ typedef struct st_ble_abs_extend_advertising_parameter
      *    |:--------------------------|:--------------- |
      *    | BLE_GAP_ADV_CH_37(0x01)   | Use 37 CH.      |
      *    | BLE_GAP_ADV_CH_38(0x02)   | Use 38 CH.      |
-     *    | BLE_GAP_ADV_CH_39(0x04)   | Use 38 CH.      |
+     *    | BLE_GAP_ADV_CH_39(0x04)   | Use 39 CH.      |
      *    | BLE_GAP_ADV_CH_ALL(0x07)  | Use 37 - 39 CH. |
      */
     uint8_t advertising_channel_map;
@@ -469,7 +469,7 @@ typedef struct st_ble_abs_non_connectable_advertising_parameter
      *    |:--------------------------|:--------------- |
      *    | BLE_GAP_ADV_CH_37(0x01)   | Use 37 CH.      |
      *    | BLE_GAP_ADV_CH_38(0x02)   | Use 38 CH.      |
-     *    | BLE_GAP_ADV_CH_39(0x04)   | Use 38 CH.      |
+     *    | BLE_GAP_ADV_CH_39(0x04)   | Use 39 CH.      |
      *    | BLE_GAP_ADV_CH_ALL(0x07)  | Use 37 - 39 CH. |
      */
     uint8_t advertising_channel_map;

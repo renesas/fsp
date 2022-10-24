@@ -1273,7 +1273,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
      * RA6M3 manual R01UH0886EJ0100) and other registers required by the driver. */
 
     /* Dividers for GPT are half the enum value. */
-    uint32_t gtcr_tpcs = p_cfg->source_div;
+    uint32_t gtcr_tpcs = p_cfg->source_div >> BSP_FEATURE_GPT_TPCS_SHIFT;
     uint32_t gtcr      = gtcr_tpcs << R_GPT0_GTCR_TPCS_Pos;
 
     /* Store period register setting. The actual period and is one cycle longer than the register value for saw waves
@@ -1615,8 +1615,9 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
 static uint32_t gpt_clock_frequency_get (gpt_instance_ctrl_t * const p_instance_ctrl)
 {
     /* Look up PCLKD frequency and divide it by GPT PCLKD divider. */
-    timer_source_div_t pclk_divisor = (timer_source_div_t) (p_instance_ctrl->p_reg->GTCR_b.TPCS);
-    uint32_t           pclk_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD);
+    timer_source_div_t pclk_divisor =
+        (timer_source_div_t) (p_instance_ctrl->p_reg->GTCR_b.TPCS << BSP_FEATURE_GPT_TPCS_SHIFT);
+    uint32_t pclk_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD);
 
     return pclk_freq_hz >> pclk_divisor;
 }

@@ -1898,7 +1898,6 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *In
     S_HEAP[iLoop + 1] = SCE->REG_100H;
     S_HEAP[iLoop + 2] = SCE->REG_100H;
     S_HEAP[iLoop + 3] = SCE->REG_100H;
-    HW_SCE_p_func100(0x34fa079fU, 0x31773c42U, 0xb11338adU, 0x91df1e11U);
     SCE->REG_28H = 0x009f0001U;
     SCE->REG_24H = 0x0000b8d0U;
     /* WAIT_LOOP */
@@ -1920,290 +1919,317 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *In
     {
         /* waiting */
     }
-    HW_SCE_p_func103();
-    SCE->REG_104H = 0x00000052U;
-    SCE->REG_C4H = 0x01000c84U;
+    SCE->REG_104H = 0x00000068U;
+    SCE->REG_E0H = 0x800103e0U;
     /* WAIT_LOOP */
     while (1U != SCE->REG_104H_b.B31)
     {
         /* waiting */
     }
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_E0H = 0x80010000U;
-    SCE->REG_00H = 0x00008207U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
+    SCE->REG_100H = InData_KeyType[0];
+    SCE->REG_ECH = 0x38000fffU;
+    SCE->REG_E0H = 0x00000080U;
+    SCE->REG_1CH = 0x00260000U;
+    HW_SCE_p_func100(0xf87eee7cU, 0x9e5e9ba6U, 0xd674c5d9U, 0xb96e11d5U);
+    SCE->REG_1CH = 0x00400000U;
+    SCE->REG_1D0H = 0x00000000U;
+    if (1U == (SCE->REG_1CH_b.B22))
     {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_00H = 0x0000020fU;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_ECH = 0x000034e0U;
-    SCE->REG_104H = 0x00000058U;
-    SCE->REG_E0H = 0x800103a0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x0000002bU);
-    HW_SCE_p_func101(0x04fca964U, 0x90725814U, 0x17b38229U, 0xc9c8f0b5U);
-    HW_SCE_p_func043();
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x0000000cU;
-    SCE->REG_104H = 0x00000058U;
-    SCE->REG_E0H = 0x800103a0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x0000002bU);
-    HW_SCE_p_func101(0xea8d2962U, 0x23b0c731U, 0x02063f7bU, 0x360e6545U);
-    HW_SCE_p_func044();
-    HW_SCE_p_func100(0xfb3eaadcU, 0x1b4c926bU, 0x41d898b5U, 0x5d237607U);
-    SCE->REG_E0H = 0x81010000U;
-    SCE->REG_04H = 0x00000606U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_04H_b.B30)
-    {
-        /* waiting */
-    }
-    OutData_PubKeyIndex[0] = SCE->REG_100H;
-    HW_SCE_p_func100(0x15b39e7dU, 0xbc172d9fU, 0x0dbd45d3U, 0x9d30cd21U);
-    SCE->REG_104H = 0x00000052U;
-    SCE->REG_C4H = 0x00040804U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_00H = 0x00012303U;
-    SCE->REG_2CH = 0x00000024U;
-    SCE->REG_D0H = 0x40000f00U;
-    SCE->REG_C4H = 0x02e08887U;
-    SCE->REG_04H = 0x00000202U;
-    for(iLoop=0; iLoop<64; iLoop=iLoop+4)
-    {
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_04H_b.B30)
-        {
-            /* waiting */
-        }
-        OutData_PubKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
-        OutData_PubKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
-        OutData_PubKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
-        OutData_PubKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
-    }
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0xea7a2df8U, 0x6d487225U, 0x96637959U, 0xd7948d95U);
-    SCE->REG_D0H = 0x40000000U;
-    SCE->REG_C4H = 0x00e08884U;
-    SCE->REG_E0H = 0x810101c0U;
-    SCE->REG_00H = 0x00002807U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_04H = 0x00000212U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_04H_b.B30)
-    {
-        /* waiting */
-    }
-    OutData_PubKeyIndex[65] = SCE->REG_100H;
-    OutData_PubKeyIndex[66] = SCE->REG_100H;
-    OutData_PubKeyIndex[67] = SCE->REG_100H;
-    OutData_PubKeyIndex[68] = SCE->REG_100H;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_C8H_b.B6)
-    {
-        /* waiting */
-    }
-    HW_SCE_p_func100(0xf17df3bdU, 0xa237d4c4U, 0x31891948U, 0x398bde44U);
-    SCE->REG_18H = 0x00000004U;
-    SCE->REG_24H = 0x00004404U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_18H_b.B10)
-    {
-        /* waiting */
-    }
-    SCE->REG_24H = 0x00004804U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_18H_b.B10)
-    {
-        /* waiting */
-    }
-    SCE->REG_18H = 0x00000000U;
-    SCE->REG_00H = 0x00012303U;
-    SCE->REG_2CH = 0x00000022U;
-    SCE->REG_D0H = 0x40000f00U;
-    SCE->REG_C4H = 0x00e087b7U;
-    SCE->REG_04H = 0x00000202U;
-    for(iLoop=68; iLoop<132; iLoop=iLoop+4)
-    {
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_04H_b.B30)
-        {
-            /* waiting */
-        }
-        OutData_PubKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
-        OutData_PubKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
-        OutData_PubKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
-        OutData_PubKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
-    }
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0x77aecc1aU, 0xc4e61c3cU, 0x32de60c5U, 0xc40e7285U);
-    SCE->REG_104H = 0x00000352U;
-    SCE->REG_D0H = 0x40000000U;
-    SCE->REG_C4H = 0x000089c5U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_100H = change_endian_long(0x00000010U);
-    SCE->REG_04H = 0x00000212U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_04H_b.B30)
-    {
-        /* waiting */
-    }
-    OutData_PubKeyIndex[133] = SCE->REG_100H;
-    OutData_PubKeyIndex[134] = SCE->REG_100H;
-    OutData_PubKeyIndex[135] = SCE->REG_100H;
-    OutData_PubKeyIndex[136] = SCE->REG_100H;
-    HW_SCE_p_func100(0xb77e9d11U, 0x739cdbb4U, 0xb03798c4U, 0x99c1079bU);
-    HW_SCE_p_func103();
-    SCE->REG_104H = 0x00000052U;
-    SCE->REG_C4H = 0x01000c84U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_E0H = 0x80010000U;
-    SCE->REG_00H = 0x00008207U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_00H = 0x0000020fU;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    SCE->REG_ECH = 0x000034e0U;
-    SCE->REG_104H = 0x00000058U;
-    SCE->REG_E0H = 0x800103a0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x000000fdU);
-    HW_SCE_p_func101(0x394f8441U, 0xfba13dc3U, 0x22815382U, 0xff49cec6U);
-    HW_SCE_p_func043();
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x0000000dU;
-    SCE->REG_104H = 0x00000058U;
-    SCE->REG_E0H = 0x800103a0U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x000000fdU);
-    HW_SCE_p_func101(0x66692d56U, 0x5e6c77caU, 0xed7b634fU, 0x905615c9U);
-    HW_SCE_p_func044();
-    HW_SCE_p_func100(0x35fa4854U, 0xcef1ec09U, 0xab49a001U, 0x599a6c24U);
-    SCE->REG_E0H = 0x81010000U;
-    SCE->REG_04H = 0x00000606U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_04H_b.B30)
-    {
-        /* waiting */
-    }
-    OutData_PrivKeyIndex[0] = SCE->REG_100H;
-    HW_SCE_p_func100(0x06f73d5fU, 0x532f17d5U, 0x54dc5af0U, 0x6eee362dU);
-    SCE->REG_00H = 0x00012303U;
-    SCE->REG_2CH = 0x00000024U;
-    SCE->REG_D0H = 0x40000f00U;
-    SCE->REG_C4H = 0x02e087b7U;
-    SCE->REG_04H = 0x00000202U;
-    for(iLoop=0; iLoop<64; iLoop=iLoop+4)
-    {
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_04H_b.B30)
-        {
-            /* waiting */
-        }
-        OutData_PrivKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
-        OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
-        OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
-        OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
-    }
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0xbecdb75cU, 0xbca8b94eU, 0x0b91504cU, 0xc1f7fc25U);
-    SCE->REG_00H = 0x00012103U;
-    SCE->REG_104H = 0x00000031U;
-    SCE->REG_B0H = 0x00000f00U;
-    SCE->REG_A4H = 0x42f097bfU;
-    SCE->REG_D0H = 0x40000f00U;
-    SCE->REG_C4H = 0x00e087b7U;
-    SCE->REG_04H = 0x00000202U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_HEAP[68];
-    SCE->REG_100H = S_HEAP[69];
-    SCE->REG_100H = S_HEAP[70];
-    SCE->REG_100H = S_HEAP[71];
-    for (iLoop = 64; iLoop < 124 ; iLoop=iLoop+4)
-    {
+        HW_SCE_p_func100(0xd6c84d13U, 0xcdd54a0aU, 0xf1a3df40U, 0x96ab1f3eU);
+        HW_SCE_p_func103();
+        SCE->REG_104H = 0x00000052U;
+        SCE->REG_C4H = 0x01000c84U;
         /* WAIT_LOOP */
         while (1U != SCE->REG_104H_b.B31)
         {
             /* waiting */
         }
-        SCE->REG_100H = S_HEAP[iLoop+8 + 0];
-        SCE->REG_100H = S_HEAP[iLoop+8 + 1];
-        SCE->REG_100H = S_HEAP[iLoop+8 + 2];
-        SCE->REG_100H = S_HEAP[iLoop+8 + 3];
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_E0H = 0x80010000U;
+        SCE->REG_00H = 0x00008207U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_00H = 0x0000020fU;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_ECH = 0x000034e0U;
+        SCE->REG_104H = 0x00000058U;
+        SCE->REG_E0H = 0x800103a0U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x0000002bU);
+        HW_SCE_p_func101(0x18f639afU, 0x6e25c8b7U, 0x6bd5d373U, 0x20c980dfU);
+        HW_SCE_p_func043();
+        SCE->REG_ECH = 0x0000b4e0U;
+        SCE->REG_ECH = 0x0000000cU;
+        SCE->REG_104H = 0x00000058U;
+        SCE->REG_E0H = 0x800103a0U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x0000002bU);
+        HW_SCE_p_func101(0xea8d2962U, 0x23b0c731U, 0x02063f7bU, 0x360e6545U);
+        HW_SCE_p_func044();
+        HW_SCE_p_func100(0xfb3eaadcU, 0x1b4c926bU, 0x41d898b5U, 0x5d237607U);
+        SCE->REG_E0H = 0x81010000U;
+        SCE->REG_04H = 0x00000606U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PubKeyIndex[0] = SCE->REG_100H;
+        HW_SCE_p_func100(0x15b39e7dU, 0xbc172d9fU, 0x0dbd45d3U, 0x9d30cd21U);
+        SCE->REG_104H = 0x00000052U;
+        SCE->REG_C4H = 0x00040804U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_00H = 0x00012303U;
+        SCE->REG_2CH = 0x00000024U;
+        SCE->REG_D0H = 0x40000f00U;
+        SCE->REG_C4H = 0x02e08887U;
+        SCE->REG_04H = 0x00000202U;
+        for(iLoop=0; iLoop<64; iLoop=iLoop+4)
+        {
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_04H_b.B30)
+            {
+                /* waiting */
+            }
+            OutData_PubKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
+            OutData_PubKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
+            OutData_PubKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
+            OutData_PubKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
+        }
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        HW_SCE_p_func100(0xea7a2df8U, 0x6d487225U, 0x96637959U, 0xd7948d95U);
+        SCE->REG_D0H = 0x40000000U;
+        SCE->REG_C4H = 0x00e08884U;
+        SCE->REG_E0H = 0x810101c0U;
+        SCE->REG_00H = 0x00002807U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_04H = 0x00000212U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PubKeyIndex[65] = SCE->REG_100H;
+        OutData_PubKeyIndex[66] = SCE->REG_100H;
+        OutData_PubKeyIndex[67] = SCE->REG_100H;
+        OutData_PubKeyIndex[68] = SCE->REG_100H;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_C8H_b.B6)
+        {
+            /* waiting */
+        }
+        HW_SCE_p_func100(0xf17df3bdU, 0xa237d4c4U, 0x31891948U, 0x398bde44U);
+        SCE->REG_18H = 0x00000004U;
+        SCE->REG_24H = 0x00004404U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_18H_b.B10)
+        {
+            /* waiting */
+        }
+        SCE->REG_24H = 0x00004804U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_18H_b.B10)
+        {
+            /* waiting */
+        }
+        SCE->REG_18H = 0x00000000U;
+        SCE->REG_00H = 0x00012303U;
+        SCE->REG_2CH = 0x00000022U;
+        SCE->REG_D0H = 0x40000f00U;
+        SCE->REG_C4H = 0x00e087b7U;
+        SCE->REG_04H = 0x00000202U;
+        for(iLoop=68; iLoop<132; iLoop=iLoop+4)
+        {
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_04H_b.B30)
+            {
+                /* waiting */
+            }
+            OutData_PubKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
+            OutData_PubKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
+            OutData_PubKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
+            OutData_PubKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
+        }
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        HW_SCE_p_func100(0x77aecc1aU, 0xc4e61c3cU, 0x32de60c5U, 0xc40e7285U);
+        SCE->REG_104H = 0x00000352U;
+        SCE->REG_D0H = 0x40000000U;
+        SCE->REG_C4H = 0x000089c5U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_100H = change_endian_long(0x00000010U);
+        SCE->REG_04H = 0x00000212U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PubKeyIndex[133] = SCE->REG_100H;
+        OutData_PubKeyIndex[134] = SCE->REG_100H;
+        OutData_PubKeyIndex[135] = SCE->REG_100H;
+        OutData_PubKeyIndex[136] = SCE->REG_100H;
+        HW_SCE_p_func100(0xb77e9d11U, 0x739cdbb4U, 0xb03798c4U, 0x99c1079bU);
+        HW_SCE_p_func103();
+        SCE->REG_104H = 0x00000052U;
+        SCE->REG_C4H = 0x01000c84U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_E0H = 0x80010000U;
+        SCE->REG_00H = 0x00008207U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_00H = 0x0000020fU;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_ECH = 0x000034e0U;
+        SCE->REG_104H = 0x00000058U;
+        SCE->REG_E0H = 0x800103a0U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x000000fdU);
+        HW_SCE_p_func101(0x394f8441U, 0xfba13dc3U, 0x22815382U, 0xff49cec6U);
+        HW_SCE_p_func043();
+        SCE->REG_ECH = 0x0000b4e0U;
+        SCE->REG_ECH = 0x0000000dU;
+        SCE->REG_104H = 0x00000058U;
+        SCE->REG_E0H = 0x800103a0U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x000000fdU);
+        HW_SCE_p_func101(0x66692d56U, 0x5e6c77caU, 0xed7b634fU, 0x905615c9U);
+        HW_SCE_p_func044();
+        HW_SCE_p_func100(0x35fa4854U, 0xcef1ec09U, 0xab49a001U, 0x599a6c24U);
+        SCE->REG_E0H = 0x81010000U;
+        SCE->REG_04H = 0x00000606U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PrivKeyIndex[0] = SCE->REG_100H;
+        HW_SCE_p_func100(0x06f73d5fU, 0x532f17d5U, 0x54dc5af0U, 0x6eee362dU);
+        SCE->REG_00H = 0x00012303U;
+        SCE->REG_2CH = 0x00000024U;
+        SCE->REG_D0H = 0x40000f00U;
+        SCE->REG_C4H = 0x02e087b7U;
+        SCE->REG_04H = 0x00000202U;
+        for(iLoop=0; iLoop<64; iLoop=iLoop+4)
+        {
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_04H_b.B30)
+            {
+                /* waiting */
+            }
+            OutData_PrivKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
+        }
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        HW_SCE_p_func100(0xbecdb75cU, 0xbca8b94eU, 0x0b91504cU, 0xc1f7fc25U);
+        SCE->REG_00H = 0x00012103U;
+        SCE->REG_104H = 0x00000031U;
+        SCE->REG_B0H = 0x00000f00U;
+        SCE->REG_A4H = 0x42f097bfU;
+        SCE->REG_D0H = 0x40000f00U;
+        SCE->REG_C4H = 0x00e087b7U;
+        SCE->REG_04H = 0x00000202U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = S_HEAP[68];
+        SCE->REG_100H = S_HEAP[69];
+        SCE->REG_100H = S_HEAP[70];
+        SCE->REG_100H = S_HEAP[71];
+        for (iLoop = 64; iLoop < 124 ; iLoop=iLoop+4)
+        {
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_104H_b.B31)
+            {
+                /* waiting */
+            }
+            SCE->REG_100H = S_HEAP[iLoop+8 + 0];
+            SCE->REG_100H = S_HEAP[iLoop+8 + 1];
+            SCE->REG_100H = S_HEAP[iLoop+8 + 2];
+            SCE->REG_100H = S_HEAP[iLoop+8 + 3];
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_04H_b.B30)
+            {
+                /* waiting */
+            }
+            OutData_PrivKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
+        }
         /* WAIT_LOOP */
         while (1U != SCE->REG_04H_b.B30)
         {
@@ -2213,94 +2239,284 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *In
         OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
         OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
         OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
-    }
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_04H_b.B30)
-    {
-        /* waiting */
-    }
-    OutData_PrivKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
-    OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
-    OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
-    OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
-    SCE->REG_104H = 0x00000000U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_C8H_b.B6)
-    {
-        /* waiting */
-    }
-    SCE->REG_A4H = 0x400017bdU;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_HEAP[132];
-    SCE->REG_100H = S_HEAP[133];
-    SCE->REG_100H = S_HEAP[134];
-    SCE->REG_100H = S_HEAP[135];
-    SCE->REG_A4H = 0x00800c45U;
-    SCE->REG_00H = 0x00001113U;
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
-    {
-        /* waiting */
-    }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0x9ac4e83aU, 0xf48e1713U, 0xe59c8f74U, 0xb22f3529U);
-    SCE->REG_00H = 0x00012303U;
-    SCE->REG_2CH = 0x00000022U;
-    SCE->REG_D0H = 0x40000f00U;
-    SCE->REG_C4H = 0x00e087b7U;
-    SCE->REG_04H = 0x00000202U;
-    for(iLoop=128; iLoop<192; iLoop=iLoop+4)
-    {
+        SCE->REG_104H = 0x00000000U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_C8H_b.B6)
+        {
+            /* waiting */
+        }
+        SCE->REG_A4H = 0x400017bdU;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = S_HEAP[132];
+        SCE->REG_100H = S_HEAP[133];
+        SCE->REG_100H = S_HEAP[134];
+        SCE->REG_100H = S_HEAP[135];
+        SCE->REG_A4H = 0x00800c45U;
+        SCE->REG_00H = 0x00001113U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        HW_SCE_p_func100(0x9ac4e83aU, 0xf48e1713U, 0xe59c8f74U, 0xb22f3529U);
+        SCE->REG_00H = 0x00012303U;
+        SCE->REG_2CH = 0x00000022U;
+        SCE->REG_D0H = 0x40000f00U;
+        SCE->REG_C4H = 0x00e087b7U;
+        SCE->REG_04H = 0x00000202U;
+        for(iLoop=128; iLoop<192; iLoop=iLoop+4)
+        {
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_04H_b.B30)
+            {
+                /* waiting */
+            }
+            OutData_PrivKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
+            OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
+        }
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        HW_SCE_p_func100(0x36d14ec8U, 0xb8c807a7U, 0x74d82cfdU, 0x7a62a60bU);
+        SCE->REG_104H = 0x00000352U;
+        SCE->REG_D0H = 0x40000000U;
+        SCE->REG_C4H = 0x000089c5U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_100H = change_endian_long(0x00000030U);
+        SCE->REG_04H = 0x00000212U;
         /* WAIT_LOOP */
         while (1U != SCE->REG_04H_b.B30)
         {
             /* waiting */
         }
-        OutData_PrivKeyIndex[iLoop+1 + 0] = SCE->REG_100H;
-        OutData_PrivKeyIndex[iLoop+1 + 1] = SCE->REG_100H;
-        OutData_PrivKeyIndex[iLoop+1 + 2] = SCE->REG_100H;
-        OutData_PrivKeyIndex[iLoop+1 + 3] = SCE->REG_100H;
+        OutData_PrivKeyIndex[193] = SCE->REG_100H;
+        OutData_PrivKeyIndex[194] = SCE->REG_100H;
+        OutData_PrivKeyIndex[195] = SCE->REG_100H;
+        OutData_PrivKeyIndex[196] = SCE->REG_100H;
+        HW_SCE_p_func101(0x5e0bdd5bU, 0x98aa40d7U, 0x7420083fU, 0x1fbf92daU);
     }
-    /* WAIT_LOOP */
-    while (0U != SCE->REG_00H_b.B25)
+    else
     {
-        /* waiting */
+        HW_SCE_p_func100(0x44a10193U, 0x9b7f8205U, 0x4ed43b28U, 0xde684559U);
+        SCE->REG_2CH = 0x00000024U;
+        SCE->REG_04H = 0x00000302U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PubKey[0] = SCE->REG_100H;
+        OutData_PubKey[1] = SCE->REG_100H;
+        OutData_PubKey[2] = SCE->REG_100H;
+        OutData_PubKey[3] = SCE->REG_100H;
+        OutData_PubKey[4] = SCE->REG_100H;
+        OutData_PubKey[5] = SCE->REG_100H;
+        OutData_PubKey[6] = SCE->REG_100H;
+        OutData_PubKey[7] = SCE->REG_100H;
+        OutData_PubKey[8] = SCE->REG_100H;
+        OutData_PubKey[9] = SCE->REG_100H;
+        OutData_PubKey[10] = SCE->REG_100H;
+        OutData_PubKey[11] = SCE->REG_100H;
+        OutData_PubKey[12] = SCE->REG_100H;
+        OutData_PubKey[13] = SCE->REG_100H;
+        OutData_PubKey[14] = SCE->REG_100H;
+        OutData_PubKey[15] = SCE->REG_100H;
+        OutData_PubKey[16] = SCE->REG_100H;
+        OutData_PubKey[17] = SCE->REG_100H;
+        OutData_PubKey[18] = SCE->REG_100H;
+        OutData_PubKey[19] = SCE->REG_100H;
+        OutData_PubKey[20] = SCE->REG_100H;
+        OutData_PubKey[21] = SCE->REG_100H;
+        OutData_PubKey[22] = SCE->REG_100H;
+        OutData_PubKey[23] = SCE->REG_100H;
+        OutData_PubKey[24] = SCE->REG_100H;
+        OutData_PubKey[25] = SCE->REG_100H;
+        OutData_PubKey[26] = SCE->REG_100H;
+        OutData_PubKey[27] = SCE->REG_100H;
+        OutData_PubKey[28] = SCE->REG_100H;
+        OutData_PubKey[29] = SCE->REG_100H;
+        OutData_PubKey[30] = SCE->REG_100H;
+        OutData_PubKey[31] = SCE->REG_100H;
+        OutData_PubKey[32] = SCE->REG_100H;
+        OutData_PubKey[33] = SCE->REG_100H;
+        OutData_PubKey[34] = SCE->REG_100H;
+        OutData_PubKey[35] = SCE->REG_100H;
+        OutData_PubKey[36] = SCE->REG_100H;
+        OutData_PubKey[37] = SCE->REG_100H;
+        OutData_PubKey[38] = SCE->REG_100H;
+        OutData_PubKey[39] = SCE->REG_100H;
+        OutData_PubKey[40] = SCE->REG_100H;
+        OutData_PubKey[41] = SCE->REG_100H;
+        OutData_PubKey[42] = SCE->REG_100H;
+        OutData_PubKey[43] = SCE->REG_100H;
+        OutData_PubKey[44] = SCE->REG_100H;
+        OutData_PubKey[45] = SCE->REG_100H;
+        OutData_PubKey[46] = SCE->REG_100H;
+        OutData_PubKey[47] = SCE->REG_100H;
+        OutData_PubKey[48] = SCE->REG_100H;
+        OutData_PubKey[49] = SCE->REG_100H;
+        OutData_PubKey[50] = SCE->REG_100H;
+        OutData_PubKey[51] = SCE->REG_100H;
+        OutData_PubKey[52] = SCE->REG_100H;
+        OutData_PubKey[53] = SCE->REG_100H;
+        OutData_PubKey[54] = SCE->REG_100H;
+        OutData_PubKey[55] = SCE->REG_100H;
+        OutData_PubKey[56] = SCE->REG_100H;
+        OutData_PubKey[57] = SCE->REG_100H;
+        OutData_PubKey[58] = SCE->REG_100H;
+        OutData_PubKey[59] = SCE->REG_100H;
+        OutData_PubKey[60] = SCE->REG_100H;
+        OutData_PubKey[61] = SCE->REG_100H;
+        OutData_PubKey[62] = SCE->REG_100H;
+        OutData_PubKey[63] = SCE->REG_100H;
+        HW_SCE_p_func100(0xbfc6d200U, 0x18e2c977U, 0xd859db6cU, 0x5abd8659U);
+        SCE->REG_E0H = 0x810101c0U;
+        SCE->REG_04H = 0x00000606U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PubKey[64] = SCE->REG_100H;
+        HW_SCE_p_func100(0xea5f5baaU, 0xfd08e672U, 0xe7b9ba08U, 0x2d526356U);
+        SCE->REG_104H = 0x00003f61U;
+        SCE->REG_B0H = 0x00000f00U;
+        SCE->REG_A4H = 0x42f097bfU;
+        SCE->REG_00H = 0x00013103U;
+        SCE->REG_2CH = 0x00000010U;
+        for (iLoop = 68; iLoop < 132 ; iLoop=iLoop+4)
+        {
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_104H_b.B31)
+            {
+                /* waiting */
+            }
+            SCE->REG_100H = S_HEAP[iLoop + 0];
+            SCE->REG_100H = S_HEAP[iLoop + 1];
+            SCE->REG_100H = S_HEAP[iLoop + 2];
+            SCE->REG_100H = S_HEAP[iLoop + 3];
+        }
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_A4H = 0x400017bdU;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = S_HEAP[132];
+        SCE->REG_100H = S_HEAP[133];
+        SCE->REG_100H = S_HEAP[134];
+        SCE->REG_100H = S_HEAP[135];
+        SCE->REG_A4H = 0x00800c45U;
+        SCE->REG_00H = 0x00001113U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_2CH = 0x00000020U;
+        SCE->REG_04H = 0x00000302U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_04H_b.B30)
+        {
+            /* waiting */
+        }
+        OutData_PrivKey[0] = SCE->REG_100H;
+        OutData_PrivKey[1] = SCE->REG_100H;
+        OutData_PrivKey[2] = SCE->REG_100H;
+        OutData_PrivKey[3] = SCE->REG_100H;
+        OutData_PrivKey[4] = SCE->REG_100H;
+        OutData_PrivKey[5] = SCE->REG_100H;
+        OutData_PrivKey[6] = SCE->REG_100H;
+        OutData_PrivKey[7] = SCE->REG_100H;
+        OutData_PrivKey[8] = SCE->REG_100H;
+        OutData_PrivKey[9] = SCE->REG_100H;
+        OutData_PrivKey[10] = SCE->REG_100H;
+        OutData_PrivKey[11] = SCE->REG_100H;
+        OutData_PrivKey[12] = SCE->REG_100H;
+        OutData_PrivKey[13] = SCE->REG_100H;
+        OutData_PrivKey[14] = SCE->REG_100H;
+        OutData_PrivKey[15] = SCE->REG_100H;
+        OutData_PrivKey[16] = SCE->REG_100H;
+        OutData_PrivKey[17] = SCE->REG_100H;
+        OutData_PrivKey[18] = SCE->REG_100H;
+        OutData_PrivKey[19] = SCE->REG_100H;
+        OutData_PrivKey[20] = SCE->REG_100H;
+        OutData_PrivKey[21] = SCE->REG_100H;
+        OutData_PrivKey[22] = SCE->REG_100H;
+        OutData_PrivKey[23] = SCE->REG_100H;
+        OutData_PrivKey[24] = SCE->REG_100H;
+        OutData_PrivKey[25] = SCE->REG_100H;
+        OutData_PrivKey[26] = SCE->REG_100H;
+        OutData_PrivKey[27] = SCE->REG_100H;
+        OutData_PrivKey[28] = SCE->REG_100H;
+        OutData_PrivKey[29] = SCE->REG_100H;
+        OutData_PrivKey[30] = SCE->REG_100H;
+        OutData_PrivKey[31] = SCE->REG_100H;
+        OutData_PrivKey[32] = SCE->REG_100H;
+        OutData_PrivKey[33] = SCE->REG_100H;
+        OutData_PrivKey[34] = SCE->REG_100H;
+        OutData_PrivKey[35] = SCE->REG_100H;
+        OutData_PrivKey[36] = SCE->REG_100H;
+        OutData_PrivKey[37] = SCE->REG_100H;
+        OutData_PrivKey[38] = SCE->REG_100H;
+        OutData_PrivKey[39] = SCE->REG_100H;
+        OutData_PrivKey[40] = SCE->REG_100H;
+        OutData_PrivKey[41] = SCE->REG_100H;
+        OutData_PrivKey[42] = SCE->REG_100H;
+        OutData_PrivKey[43] = SCE->REG_100H;
+        OutData_PrivKey[44] = SCE->REG_100H;
+        OutData_PrivKey[45] = SCE->REG_100H;
+        OutData_PrivKey[46] = SCE->REG_100H;
+        OutData_PrivKey[47] = SCE->REG_100H;
+        OutData_PrivKey[48] = SCE->REG_100H;
+        OutData_PrivKey[49] = SCE->REG_100H;
+        OutData_PrivKey[50] = SCE->REG_100H;
+        OutData_PrivKey[51] = SCE->REG_100H;
+        OutData_PrivKey[52] = SCE->REG_100H;
+        OutData_PrivKey[53] = SCE->REG_100H;
+        OutData_PrivKey[54] = SCE->REG_100H;
+        OutData_PrivKey[55] = SCE->REG_100H;
+        OutData_PrivKey[56] = SCE->REG_100H;
+        OutData_PrivKey[57] = SCE->REG_100H;
+        OutData_PrivKey[58] = SCE->REG_100H;
+        OutData_PrivKey[59] = SCE->REG_100H;
+        OutData_PrivKey[60] = SCE->REG_100H;
+        OutData_PrivKey[61] = SCE->REG_100H;
+        OutData_PrivKey[62] = SCE->REG_100H;
+        OutData_PrivKey[63] = SCE->REG_100H;
+        HW_SCE_p_func101(0xd097e80dU, 0x8c2ccf6eU, 0x232872d5U, 0xe1cd1cb8U);
     }
-    SCE->REG_1CH = 0x00001800U;
-    HW_SCE_p_func100(0x36d14ec8U, 0xb8c807a7U, 0x74d82cfdU, 0x7a62a60bU);
-    SCE->REG_104H = 0x00000352U;
-    SCE->REG_D0H = 0x40000000U;
-    SCE->REG_C4H = 0x000089c5U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_100H = change_endian_long(0x00000000U);
-    SCE->REG_100H = change_endian_long(0x00000030U);
-    SCE->REG_04H = 0x00000212U;
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_04H_b.B30)
-    {
-        /* waiting */
-    }
-    OutData_PrivKeyIndex[193] = SCE->REG_100H;
-    OutData_PrivKeyIndex[194] = SCE->REG_100H;
-    OutData_PrivKeyIndex[195] = SCE->REG_100H;
-    OutData_PrivKeyIndex[196] = SCE->REG_100H;
-    HW_SCE_p_func102(0x772f0564U, 0x25d380e3U, 0x92a87dc9U, 0x37b7f321U);
+    HW_SCE_p_func102(0x38178303U, 0x237b9524U, 0xe9505df9U, 0x646a3b4aU);
     SCE->REG_1BCH = 0x00000040U;
     /* WAIT_LOOP */
     while (0U != SCE->REG_18H_b.B12)
@@ -2311,5 +2527,5 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *In
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p2b_r2.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p2b_r3.prc
 ***********************************************************************************************************************/

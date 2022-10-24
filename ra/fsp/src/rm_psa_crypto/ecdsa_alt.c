@@ -41,7 +41,7 @@
  #else
   #include <stdlib.h>
   #define mbedtls_calloc    calloc
-  #define mbedtls_free      free
+  #define mbedtls_free       free
  #endif
 
 #include "mbedtls/platform_util.h"
@@ -50,10 +50,10 @@
 #include "hw_sce_private.h"
 
 /* Parameter validation macros based on platform_util.h */
- #define ECDSA_VALIDATE_RET(cond) \
-    MBEDTLS_INTERNAL_VALIDATE_RET(cond, MBEDTLS_ERR_ECP_BAD_INPUT_DATA)
- #define ECDSA_VALIDATE(cond) \
-    MBEDTLS_INTERNAL_VALIDATE(cond)
+#define ECDSA_VALIDATE_RET( cond )    \
+    MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_ECP_BAD_INPUT_DATA )
+#define ECDSA_VALIDATE( cond )        \
+    MBEDTLS_INTERNAL_VALIDATE( cond )
 
 uint32_t ecp_load_key_size(bool wrapped_mode_ctx, mbedtls_ecp_group * grp);
 

@@ -384,7 +384,11 @@ fsp_err_t R_SPI_B_CalculateBitrate (uint32_t bitrate, spi_b_clock_source_t clock
     }
     else
     {
+#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
         desired_divider = R_FSP_SciSpiClockHzGet();
+#elif BSP_FEATURE_BSP_HAS_SPI_CLOCK
+        desired_divider = R_FSP_SpiClockHzGet();
+#endif
     }
 
     desired_divider = (desired_divider + bitrate - 1) / bitrate;

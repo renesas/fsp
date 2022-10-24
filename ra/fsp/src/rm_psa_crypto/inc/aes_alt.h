@@ -47,6 +47,9 @@ typedef struct mbedtls_aes_context
 } mbedtls_aes_context;
  #endif
  #if defined(MBEDTLS_AES_ALT)
+
+  #define MBEDTLS_32BIT_ALIGNED(x)    !(x & 0x03)
+  #define MBEDTLS_AES_CTR_BLOCK_SIZE    16
   #if defined(MBEDTLS_CIPHER_MODE_XTS)
 
 /**

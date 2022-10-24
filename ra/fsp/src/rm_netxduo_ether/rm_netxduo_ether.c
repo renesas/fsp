@@ -47,7 +47,13 @@
 
 #define NX_ETHERNET_MIN_TRANSMIT_SIZE     60U
 
-#define NX_ETHERNET_POLLING_INTERVAL      (10U)
+#ifndef NX_ETHERNET_POLLING_INTERVAL
+ #define NX_ETHERNET_POLLING_INTERVAL     (10U)
+#endif
+
+#ifndef NX_ETHERNET_POLLING_TIMEOUT
+ #define NX_ETHERNET_POLLING_TIMEOUT      (100U)
+#endif
 
 /* Transmit Complete. */
 #define ETHER_ISR_EE_TC_MASK              (1U << 21U)
@@ -121,19 +127,21 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
             }
 
             /* Set the return status to be invalid if the link is not enabled. */
-            driver_req_ptr->nx_ip_driver_status = NX_INVALID_INTERFACE;
+            driver_req_ptr->nx_ip_driver_status = NX_NOT_ENABLED;
+            p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_link_up = NX_FALSE;
 
             /* Create ether tx semaphore in order to synchronize ether task with transmit complete interrupts. */
             if (TX_SUCCESS !=
                 tx_semaphore_create(&p_netxduo_ether_instance->p_ctrl->ether_tx_semaphore, "ether_tx_semaphore",
                                     p_ether_instance->p_cfg->num_tx_descriptors))
             {
-                rm_netxduo_ether_cleanup(p_netxduo_ether_instance);
+                FSP_LOG_PRINT("Failed to create ether_tx_semaphore.");
             }
             /* Open the r_ether driver. */
             else if (FSP_SUCCESS != p_ether_instance->p_api->open(p_ether_instance->p_ctrl, p_ether_instance->p_cfg))
             {
-                rm_netxduo_ether_cleanup(p_netxduo_ether_instance);
+                FSP_LOG_PRINT("Failed to open Ethernet driver.");
+                tx_semaphore_delete(&p_netxduo_ether_instance->p_ctrl->ether_tx_semaphore);
             }
             /* Create a timer to poll for completion of auto negotiation. */
             else if (TX_SUCCESS !=
@@ -142,15 +150,12 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
                                      NX_ETHERNET_POLLING_INTERVAL,
                                      NX_ETHERNET_POLLING_INTERVAL, TX_AUTO_ACTIVATE))
             {
-                rm_netxduo_ether_cleanup(p_netxduo_ether_instance);
+                FSP_LOG_PRINT("Failed to create \"nx ether driver timer\".");
+                tx_semaphore_delete(&p_netxduo_ether_instance->p_ctrl->ether_tx_semaphore);
+                p_ether_instance->p_api->close(p_ether_instance->p_ctrl);
             }
             else
             {
-                /* Wait for the link to be enabled. */
-                while (FSP_SUCCESS != p_ether_instance->p_api->linkProcess(p_ether_instance->p_ctrl))
-                {
-                }
-
                 driver_req_ptr->nx_ip_driver_status = NX_SUCCESS;
             }
 
@@ -329,7 +334,11 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
         case NX_LINK_DEFERRED_PROCESSING:
         {
             /* linkProcess will call the Ethernet callback from the ip task when the link changes. */
-            p_ether_instance->p_api->linkProcess(p_ether_instance->p_ctrl);
+            if (0U != ((ether_instance_ctrl_t *) p_ether_instance->p_ctrl)->open)
+            {
+                p_ether_instance->p_api->linkProcess(p_ether_instance->p_ctrl);
+            }
+
             break;
         }
 
@@ -343,7 +352,28 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
 
         case NX_LINK_SET_PHYSICAL_ADDRESS:
         {
-            driver_req_ptr->nx_ip_driver_status = NX_NOT_SUPPORTED;
+            if (p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_link_up)
+            {
+                /* The MAC address cannot be changed while the link is up. */
+                FSP_LOG_PRINT("Failed to update the MAC address because the link is up.");
+                driver_req_ptr->nx_ip_driver_status = NX_NOT_SUPPORTED;
+            }
+            else
+            {
+                uint8_t * p_mac_address = p_ether_instance->p_cfg->p_mac_address;
+
+                uint32_t physical_msw = driver_req_ptr->nx_ip_driver_physical_address_msw;
+                uint32_t physical_lsw = driver_req_ptr->nx_ip_driver_physical_address_lsw;
+
+                /* Update the MAC address in the r_ether configuration. */
+                p_mac_address[0] = (uint8_t) (physical_msw >> 8U) & UINT8_MAX;
+                p_mac_address[1] = (uint8_t) (physical_msw >> 0U) & UINT8_MAX;
+                p_mac_address[2] = (uint8_t) (physical_lsw >> 24U) & UINT8_MAX;
+                p_mac_address[3] = (uint8_t) (physical_lsw >> 16U) & UINT8_MAX;
+                p_mac_address[4] = (uint8_t) (physical_lsw >> 8U) & UINT8_MAX;
+                p_mac_address[5] = (uint8_t) (physical_lsw >> 0U) & UINT8_MAX;
+            }
+
             break;
         }
 
@@ -363,6 +393,43 @@ static void rm_netxduo_ether_cleanup (rm_netxduo_ether_instance_t * p_netxduo_et
     p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_link_up = NX_FALSE;
 
     ether_instance_t const * p_ether_instance = p_netxduo_ether_instance->p_cfg->p_ether_instance;
+
+    CHAR         * semaphore_name;
+    ULONG          semaphore_current_value;
+    TX_THREAD    * semaphore_first_suspended;
+    ULONG          semaphore_suspended_count;
+    TX_SEMAPHORE * semaphore_next_semaphore;
+    uint32_t       timeout_count = NX_ETHERNET_POLLING_TIMEOUT;
+
+    /* Wait for all transmit packets to be sent before closing the Ethernet driver.
+     * If the ETHERC peripheral is reset while packets are being transmitted, then
+     * invalid data may be observed on the TXD lines.
+     *
+     * See section 31.2.1 "EDMAC Mode Register (EDMR)" in the RA6M3 manual R01UH0886EJ0110.
+     */
+    while (1)
+    {
+        _txe_semaphore_info_get(&p_netxduo_ether_instance->p_ctrl->ether_tx_semaphore,
+                                &semaphore_name,
+                                &semaphore_current_value,
+                                &semaphore_first_suspended,
+                                &semaphore_suspended_count,
+                                &semaphore_next_semaphore);
+
+        if ((semaphore_current_value < p_ether_instance->p_cfg->num_tx_descriptors) && --timeout_count)
+        {
+            tx_thread_sleep(NX_ETHERNET_POLLING_INTERVAL);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (0 == timeout_count)
+    {
+        FSP_LOG_PRINT("Failed to transmit remaining packets.");
+    }
 
     /* Close the ether driver. */
     p_ether_instance->p_api->close(p_ether_instance->p_ctrl);

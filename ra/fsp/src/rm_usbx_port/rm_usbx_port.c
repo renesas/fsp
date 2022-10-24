@@ -39,8 +39,13 @@
   #define USB_MAX_CONNECT_DEVICE_NUM    3
  #endif                                /* defined(USB_CFG_HMSC_USE) */
 
- #if defined(USB_CFG_PMSC_USE)
+ #if defined(USB_CFG_PMSC_USE) && !defined(USB_CFG_OTG_USE)
   #include "r_usb_pmsc_cfg.h"
+ #elif defined(USB_CFG_PMSC_USE) && defined(USB_CFG_OTG_USE)
+  #include "r_usb_otg_msc_cfg.h"
+ #endif
+
+ #if defined(USB_CFG_PMSC_USE)
   #include "ux_device_class_storage.h"
   #include "rm_block_media_api.h"
  #endif                                /* defined(USB_CFG_PMSC_USE) */
@@ -1448,7 +1453,9 @@ static void usb_host_usbx_init (usb_utr_t * p_utr, uint16_t data1, uint16_t data
 void usb_host_usbx_registration (usb_utr_t * p_utr)
 {
     usb_hcdreg_t driver;
-    uint8_t      i;
+  #if !defined(USB_CFG_OTG_USE)
+    uint8_t i;
+  #endif                               /* !defined(USB_CFG_OTG_USE) */
 
     /* Driver registration */
   #if defined(USB_CFG_HCDC_USE)
@@ -1524,16 +1531,14 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
 void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 {
   #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HPRN_USE)
-    uint16_t  speed;
-    uint16_t  length;
-    uint16_t  offset;
-    uint16_t  usb_class;
-    uint8_t * p_config;
-    uint16_t  dev_addr;
-   #if !defined(USB_CFG_HMSC_USE)
+    uint16_t             speed;
+    uint16_t             length;
+    uint16_t             offset;
+    uint16_t             usb_class;
+    uint8_t            * p_config;
+    uint16_t             dev_addr;
     uint8_t              pipe_no;
     usb_pipe_table_reg_t ep_tbl;
-   #endif                              /* #if !defined(USB_CFG_HMSC_USE) */
 
    #if defined(USB_CFG_HHID_USE)
     uint8_t num_set_pipe   = 0;
@@ -1545,7 +1550,6 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 
    #if defined(USB_CFG_HMSC_USE)
     uint32_t i;
-    uint8_t  transfer_type;
     i = (dev_addr == 1 ? 0 : dev_addr - 2);
    #endif
 
@@ -1567,8 +1571,7 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
    #endif
 
    #if defined(USB_CFG_HMSC_USE)
-    usb_class     = USB_CLASS_INTERNAL_HMSC;
-    transfer_type = USB_EP_BULK;
+    usb_class = USB_CLASS_INTERNAL_HMSC;
    #endif
 
    #if defined(USB_CFG_HPRN_USE)
@@ -1583,9 +1586,6 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
             if (USB_IFCLS_HUB == *(p_config + offset + 5))
             {
                 usb_class = USB_HUB;
-   #if defined(USB_CFG_HMSC_USE)
-                transfer_type = USB_EP_INT;
-   #endif
             }
         }
 
@@ -1594,7 +1594,7 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
    #if defined(USB_CFG_HMSC_USE)
             if (USB_EP_IN == (*(p_config + offset + USB_EP_B_ENDPOINTADDRESS) & USB_EP_DIRMASK))
             {
-                if (transfer_type == (*(p_config + offset + USB_EP_B_ATTRIBUTES) & USB_EP_TRNSMASK))
+                if (USB_EP_BULK == (*(p_config + offset + USB_EP_B_ATTRIBUTES) & USB_EP_TRNSMASK))
                 {
                     g_usb_hmsc_in_pipe[p_utr->ip][i] = usb_hstd_make_pipe_reg_info(p_utr->ip,
                                                                                    dev_addr,
@@ -1605,6 +1605,29 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
                                                                                        USB_PIPE_DIR_IN]);
 
                     g_usb_hmsc_in_pipectr[p_utr->ip][i] = 0;
+                }
+                else
+                {
+                    if (USB_HUB == usb_class)
+                    {
+                        pipe_no = usb_hstd_make_pipe_reg_info(p_utr->ip,
+                                                              dev_addr,
+                                                              usb_class,
+                                                              speed,
+                                                              (p_config + offset),
+                                                              &ep_tbl);
+                        if (USB_NULL != pipe_no)
+                        {
+                            usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
+                        }
+                        else
+                        {
+                            while (1)
+                            {
+                                ;
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -2177,6 +2200,12 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
     }
 
   #else                                /* defined(USB_CFG_OTG_USE) */
+   #if defined(USB_CFG_HMSC_USE)
+    if (USB_PIPE1 == pipe)
+    {
+        tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
+    }
+   #endif                              /* defined(USB_CFG_HMSC_USE) */
     _ux_utility_semaphore_put(&transfer_request->ux_transfer_request_semaphore);
   #endif  /* defined(USB_CFG_OTG_USE) */
 }                                      /* End of function usb_hstd_transfer_complete_cb() */
@@ -2370,66 +2399,74 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                                                        (uint8_t) ((((endpoint->ux_endpoint_descriptor.bEndpointAddress &
                                                                      USB_ENDPOINT_DIRECTION) >> 7) ?
                                                                    USB_PIPE_DIR_IN : USB_PIPE_DIR_OUT)));
-
+  #if defined(USB_CFG_HMSC_USE)
+                    if (USB_IFCLS_MAS == endpoint->ux_endpoint_interface->ux_interface_descriptor.bInterfaceClass)
+                    {
+                        tx_semaphore_get(&g_usb_host_usbx_sem[module_number][pipe_number], TX_WAIT_FOREVER);
+                    }
+  #endif
                     g_usb_host_usbx_req_nml_msg[module_number][pipe_number].read_req_len = size;        /* Request Data Size */
                     g_usb_host_usbx_req_nml_msg[module_number][pipe_number].keyword      = pipe_number; /* Pipe Number */
                     g_usb_host_usbx_req_nml_msg[module_number][pipe_number].p_tranadr    =
                         transfer_request->ux_transfer_request_data_pointer;                             /* Data address */
 
   #if defined(USB_CFG_HMSC_USE)
-                    dev_addr = endpoint->ux_endpoint_device->ux_device_address;
-                    i        = (dev_addr == 1 ? 0 : dev_addr - 2);
-
-                    g_usb_host_usbx_req_nml_msg[module_number][pipe_number].ip  = module_number;
-                    g_usb_host_usbx_req_nml_msg[module_number][pipe_number].ipp =
-                        usb_hstd_get_usb_ip_adr(module_number);
-
-                    if (endpoint->ux_endpoint_descriptor.bEndpointAddress & USB_ENDPOINT_DIRECTION)
+                    if (USB_IFCLS_MAS == endpoint->ux_endpoint_interface->ux_interface_descriptor.bInterfaceClass)
                     {
-                        /* IN */
+                        dev_addr = endpoint->ux_endpoint_device->ux_device_address;
+                        i        = (dev_addr == 1 ? 0 : dev_addr - 2);
+
+                        g_usb_host_usbx_req_nml_msg[module_number][pipe_number].ip  = module_number;
+                        g_usb_host_usbx_req_nml_msg[module_number][pipe_number].ipp =
+                            usb_hstd_get_usb_ip_adr(module_number);
+
+                        if (endpoint->ux_endpoint_descriptor.bEndpointAddress & USB_ENDPOINT_DIRECTION)
+                        {
+                            /* IN */
    #if (USB_CFG_DMA == USB_CFG_ENABLE)
-                        is_in_transfer = USB_YES;
+                            is_in_transfer = USB_YES;
    #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 
-                        usb_hstd_set_pipe_info(module_number,
-                                               g_usb_hmsc_in_pipe[module_number][i],
-                                               &g_usb_hmsc_pipe_table[i][USB_PIPE_DIR_IN]);
-                        usb_hstd_set_pipe_reg(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
-                                              g_usb_hmsc_in_pipe[module_number][i]);
+                            usb_hstd_set_pipe_info(module_number,
+                                                   g_usb_hmsc_in_pipe[module_number][i],
+                                                   &g_usb_hmsc_pipe_table[i][USB_PIPE_DIR_IN]);
+                            usb_hstd_set_pipe_reg(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
+                                                  g_usb_hmsc_in_pipe[module_number][i]);
 
-                        if (USB_SQMON == (USB_SQMON & g_usb_hmsc_in_pipectr[module_number][i]))
-                        {
-                            hw_usb_set_sqset(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
-                                             g_usb_hmsc_in_pipe[module_number][i]);
+                            if (USB_SQMON == (USB_SQMON & g_usb_hmsc_in_pipectr[module_number][i]))
+                            {
+                                hw_usb_set_sqset(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
+                                                 g_usb_hmsc_in_pipe[module_number][i]);
+                            }
+                            else
+                            {
+                                hw_usb_set_sqclr(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
+                                                 g_usb_hmsc_in_pipe[module_number][i]);
+                            }
                         }
                         else
                         {
-                            hw_usb_set_sqclr(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
-                                             g_usb_hmsc_in_pipe[module_number][i]);
-                        }
-                    }
-                    else
-                    {
-                        /* OUT */
+                            /* OUT */
    #if (USB_CFG_DMA == USB_CFG_ENABLE)
-                        is_in_transfer = USB_NO;
+                            is_in_transfer = USB_NO;
    #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 
-                        usb_hstd_set_pipe_info(module_number,
-                                               g_usb_hmsc_out_pipe[module_number][i],
-                                               &g_usb_hmsc_pipe_table[i][USB_PIPE_DIR_OUT]);
-                        usb_hstd_set_pipe_reg(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
-                                              g_usb_hmsc_out_pipe[module_number][i]);
+                            usb_hstd_set_pipe_info(module_number,
+                                                   g_usb_hmsc_out_pipe[module_number][i],
+                                                   &g_usb_hmsc_pipe_table[i][USB_PIPE_DIR_OUT]);
+                            usb_hstd_set_pipe_reg(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
+                                                  g_usb_hmsc_out_pipe[module_number][i]);
 
-                        if (USB_SQMON == (USB_SQMON & g_usb_hmsc_out_pipectr[module_number][i]))
-                        {
-                            hw_usb_set_sqset(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
-                                             g_usb_hmsc_out_pipe[module_number][i]);
-                        }
-                        else
-                        {
-                            hw_usb_set_sqclr(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
-                                             g_usb_hmsc_out_pipe[module_number][i]);
+                            if (USB_SQMON == (USB_SQMON & g_usb_hmsc_out_pipectr[module_number][i]))
+                            {
+                                hw_usb_set_sqset(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
+                                                 g_usb_hmsc_out_pipe[module_number][i]);
+                            }
+                            else
+                            {
+                                hw_usb_set_sqclr(&g_usb_host_usbx_req_nml_msg[module_number][pipe_number],
+                                                 g_usb_hmsc_out_pipe[module_number][i]);
+                            }
                         }
                     }
   #endif

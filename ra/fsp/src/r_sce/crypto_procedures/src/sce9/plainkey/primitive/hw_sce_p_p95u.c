@@ -122,5 +122,5 @@ void HW_SCE_Aes128CcmEncryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p95u.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p95u_r1.prc
 ***********************************************************************************************************************/

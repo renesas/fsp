@@ -1003,6 +1003,7 @@ int mbedtls_aes_crypt_ecb( mbedtls_aes_context *ctx,
                            unsigned char output[16] )
 {
     AES_VALIDATE_RET( ctx != NULL );
+    AES_VALIDATE_RET( ctx->rk != NULL );
     AES_VALIDATE_RET( input != NULL );
     AES_VALIDATE_RET( output != NULL );
     AES_VALIDATE_RET( mode == MBEDTLS_AES_ENCRYPT ||
@@ -1080,7 +1081,7 @@ typedef unsigned char mbedtls_be128[16];
  *
  * This function multiplies a field element by x in the polynomial field
  * representation. It uses 64-bit word operations to gain speed but compensates
- * for machine endianess and hence works correctly on both big and little
+ * for machine endianness and hence works correctly on both big and little
  * endian machines.
  */
 static void mbedtls_gf128mul_x_ble( unsigned char r[16],
@@ -1180,7 +1181,7 @@ int mbedtls_aes_crypt_xts( mbedtls_aes_xts_context *ctx,
         unsigned char *prev_output = output - 16;
 
         /* Copy ciphertext bytes from the previous block to our output for each
-         * byte of cyphertext we won't steal. At the same time, copy the
+         * byte of ciphertext we won't steal. At the same time, copy the
          * remainder of the input for this final round (since the loop bounds
          * are the same). */
         for( i = 0; i < leftover; i++ )
@@ -1372,8 +1373,6 @@ exit:
 /*
  * AES-CTR buffer encryption/decryption
  */
-#define MBEDTLS_32BIT_ALIGNED(x) !(x & 0x03)
-#define MBEDTLS_AES_CTR_BLOCK_SIZE 16
 int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
                        size_t length,
                        size_t *nc_off,

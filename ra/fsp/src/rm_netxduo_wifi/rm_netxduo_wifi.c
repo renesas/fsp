@@ -268,15 +268,18 @@ VOID rm_netxduo_wifi (NX_IP_DRIVER * driver_req_ptr)
             break;
         }
 
+        case NX_LINK_SET_PHYSICAL_ADDRESS:
+        {
+            driver_req_ptr->nx_ip_driver_status = NX_NOT_SUPPORTED;
+            break;
+        }
+
         default:
 
             /* Invalid driver request.  */
 
             /* Return the unhandled command status.  */
             driver_req_ptr->nx_ip_driver_status = NX_UNHANDLED_COMMAND;
-
-            /* Default to successful return.  */
-            driver_req_ptr->nx_ip_driver_status = NX_DRIVER_ERROR;
     }
 }
 

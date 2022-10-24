@@ -308,5 +308,5 @@ fsp_err_t HW_SCE_Aes256GcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36f.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36f_r1.prc
 ***********************************************************************************************************************/

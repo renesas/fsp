@@ -130,5 +130,5 @@ void HW_SCE_Aes256GcmDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_T
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36u.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36u_r1.prc
 ***********************************************************************************************************************/

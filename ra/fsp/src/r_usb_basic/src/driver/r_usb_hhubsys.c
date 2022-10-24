@@ -1482,9 +1482,9 @@ static uint16_t usb_hhub_port_attach (uint16_t hubaddr, uint16_t portnum, usb_cl
     uint16_t    hpphub, hubport, buffer;
     usb_er_t    err;
     usb_utr_t * ptr;
-   #if ((!defined(BSP_MCU_GROUP_RA6M3)) && (!defined(BSP_MCU_GROUP_RA6M5)))
+   #if (!defined(USB_HIGH_SPEED_MODULE))
     usb_instance_ctrl_t ctrl;
-   #endif                              /* ((!defined(BSP_MCU_GROUP_RA6M3)) && (!defined(BSP_MCU_GROUP_RA6M5))) */
+   #endif                              /* (!defined(USB_HIGH_SPEED_MODULE)) */
 
     ptr     = (usb_utr_t *) mess;
     hubaddr = g_usb_shhub_hub_addr[ptr->ip];
@@ -1534,15 +1534,15 @@ static uint16_t usb_hhub_port_attach (uint16_t hubaddr, uint16_t portnum, usb_cl
 
                     case 0x02:
                     {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                         g_usb_hstd_device_speed[ptr->ip] = USB_LSCONNECT;
-   #else                                                              /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                                                              /* defined (USB_HIGH_SPEED_MODULE) */
                         g_usb_hstd_device_speed[ptr->ip] = USB_NOCONNECT;
 
                         ctrl.device_address = 0;                      /* USB Device address */
                         ctrl.module_number  = (uint8_t) ptr->ip;      /* Module number setting */
                         usb_set_event(USB_STATUS_NOT_SUPPORT, &ctrl); /* Set Event()  */
-   #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif /* defined (USB_HIGH_SPEED_MODULE) */
                         USB_PRINTF0(" Low-Speed Device\n");
                         break;
                     }

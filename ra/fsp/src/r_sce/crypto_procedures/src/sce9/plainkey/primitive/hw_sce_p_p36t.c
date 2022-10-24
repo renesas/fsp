@@ -95,5 +95,5 @@ void HW_SCE_Aes256GcmDecryptUpdateTransitionSub(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36t.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36t_r1.prc
 ***********************************************************************************************************************/

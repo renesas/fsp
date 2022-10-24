@@ -1261,37 +1261,6 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
   #endif                               /* !defined (USB_CFG_OTG_USE)*/
     {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-        ret = tx_thread_terminate(&g_hcd_tsk_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
-
-            return err;
-        }
-
-        ret = tx_thread_delete(&g_hcd_tsk_hdl); /** Pointer to a thread control block.  **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
-
-            return err;
-        }
-
-        ret = tx_thread_terminate(&g_mgr_tsk_hdl);
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
-
-            return err;
-        }
-
-        ret = tx_thread_delete(&g_mgr_tsk_hdl); /** Task handler for use later      **/
-        if (TX_SUCCESS != ret)
-        {
-            err = UsbRtos_Err_Init_Tsk;
-
-            return err;
-        }
 
         /** Delete mailbox for each task. **/
         /** USB HCD task **/
@@ -1393,6 +1362,38 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
             return err;
         }
    #endif                              /* defined(USB_CFG_HPRN_USE) */
+
+        ret = tx_thread_terminate(&g_hcd_tsk_hdl);
+        if (TX_SUCCESS != ret)
+        {
+            err = UsbRtos_Err_Init_Tsk;
+
+            return err;
+        }
+
+        ret = tx_thread_delete(&g_hcd_tsk_hdl); /** Pointer to a thread control block.  **/
+        if (TX_SUCCESS != ret)
+        {
+            err = UsbRtos_Err_Init_Tsk;
+
+            return err;
+        }
+
+        ret = tx_thread_terminate(&g_mgr_tsk_hdl);
+        if (TX_SUCCESS != ret)
+        {
+            err = UsbRtos_Err_Init_Tsk;
+
+            return err;
+        }
+
+        ret = tx_thread_delete(&g_mgr_tsk_hdl); /** Task handler for use later      **/
+        if (TX_SUCCESS != ret)
+        {
+            err = UsbRtos_Err_Init_Tsk;
+
+            return err;
+        }
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
     }
 

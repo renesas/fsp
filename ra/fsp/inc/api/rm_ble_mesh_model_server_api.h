@@ -35,12 +35,12 @@ FSP_HEADER
 /*******************************************************************************************************************//**
  * @ingroup   RENESAS_INTERFACES
  * @defgroup  RM_BLE_MESH_MODEL_SERVER_API BLE Mesh Model Server Interface
- * @brief     Interface for Bluetooth Low Energy Mesh Model Model Server functions.
+ * @brief     Interface for Bluetooth Low Energy Mesh Model Server functions.
  *
  * @section   RM_BLE_MESH_MODEL_SERVER_API_Summary Summary
- * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Server (BLE MESH MODEL SERVER) middleware provides Bluetooth Low Energy Mesh Model Model Server functionality.
+ * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Server (BLE MESH MODEL SERVER) middleware provides Bluetooth Low Energy Mesh Model Server functionality.
  *
- * The Bluetooth Low Energy Mesh Model Model Server interface can be implemented by:
+ * The Bluetooth Low Energy Mesh Model Server interface can be implemented by:
  * - @ref RM_MESH_CONFIG_SRV
  * - @ref RM_MESH_GENERIC_BATTERY_SRV
  * - @ref RM_MESH_GENERIC_DTT_SRV

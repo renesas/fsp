@@ -454,15 +454,15 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
                              FSP_ERR_USB_PARAMETER)
  #endif /*  #if (BSP_CFG_RTOS == 1) */
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_IP0 == p_ctrl->module_number)
             {
                 FSP_ERROR_RETURN(USB_SPEED_HS != p_cfg->usb_speed, FSP_ERR_USB_PARAMETER)
             }
 
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
             FSP_ERROR_RETURN(USB_SPEED_HS != p_cfg->usb_speed, FSP_ERR_USB_PARAMETER)
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
             break;
         }
 
@@ -478,12 +478,12 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             return FSP_ERR_ASSERTION;
  #else                                 /* defined(BSP_MCU_GROUP_RA2A1) */
             FSP_ERROR_RETURN(USB_MODE_HOST == p_cfg->usb_mode, FSP_ERR_USB_PARAMETER)
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
             FSP_ERROR_RETURN(!((USB_SPEED_HS == p_cfg->usb_speed) && (USB_IP1 != p_ctrl->module_number)),
                              FSP_ERR_USB_PARAMETER)
-  #else                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #else                                /* defined (USB_HIGH_SPEED_MODULE) */
             FSP_ERROR_RETURN(USB_SPEED_HS != p_cfg->usb_speed, FSP_ERR_USB_PARAMETER)
-  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif /* defined (USB_HIGH_SPEED_MODULE) */
  #endif /* defined(BSP_MCU_GROUP_RA2A1) */
             break;
         }
@@ -636,13 +636,13 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 
             g_usb_hstd_hs_enable[utr.ip] = USB_HS_DISABLE;
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_SPEED_HS == p_cfg->usb_speed)
             {
                 g_usb_hstd_hs_enable[utr.ip] = USB_HS_ENABLE;
                 hw_usb_set_hse(&utr);
             }
- #endif                                  /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                  /* defined (USB_HIGH_SPEED_MODULE) */
             /* Setting USB relation register  */
             hw_usb_hmodule_init(utr.ip); /* MCU */
 
@@ -781,20 +781,20 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             /* Setting MCU(USB interrupt init) register */
             usb_cpu_usbint_init(p_ctrl->module_number, p_cfg);
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_SPEED_HS == p_cfg->usb_speed)
             {
                 usb_utr_t hse_utr;
                 hse_utr.ip = p_ctrl->module_number;
                 hw_usb_set_hse(&hse_utr);
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
 
             /* Setting USB relation register  */
             hw_usb_pmodule_init(p_ctrl->module_number);
 
  #if (BSP_CFG_RTOS == 1)
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_IP1 == p_ctrl->module_number)
             {
                 usb_peri_usbx_initialize(R_USB_HS0_BASE);
@@ -806,13 +806,13 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 
   #else
             usb_peri_usbx_initialize(R_USB_FS0_BASE);
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
             if (USB_ATTACH == usb_pstd_chk_vbsts(p_ctrl->module_number))
             {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
                 hw_usb_set_cnen(p_ctrl->module_number);
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
                 usb_cpu_delay_xms((uint16_t) 10);
                 hw_usb_pset_dprpu(p_ctrl->module_number);
             }
@@ -926,6 +926,8 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
     uint16_t              is_connect = USB_FALSE;
     uint8_t               class_code = USB_IFCLS_CDC;
     usb_utr_t             utr;
+    UINT        old_threshold;
+    TX_THREAD * now_thread;
 
  #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
@@ -963,6 +965,12 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
         case USB_CLASS_INTERNAL_PVND:
         {
             class_code = (uint8_t) USB_IFCLS_VEN;
+            break;
+        }
+
+        case USB_CLASS_INTERNAL_PPRN:
+        {
+            class_code = (uint8_t) USB_IFCLS_PRN;
             break;
         }
 
@@ -1066,8 +1074,16 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
 
  #if defined(USB_CFG_PMSC_USE)
         ret_code = usb_peri_usbx_media_close();
- #endif                                /* defined(USB_CFG_PMSC_USE) */
+ #endif                                                             /* defined(USB_CFG_PMSC_USE) */
+
+        /* Settings to prevent preemption. */
+        now_thread = tx_thread_identify();
+        tx_thread_preemption_change(now_thread, 0, &old_threshold); /* Disable dispatch to the other task */
+
         usb_rtos_delete(p_ctrl->module_number);
+
+        /* Remove settings that prevent preemption. */
+        tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispach to the other task */
 
         /* Be sure set 0 to g_usb_usbmode variable after calling usb_rtos_delete function. */
         g_usb_usbmode[p_ctrl->module_number] = 0;
@@ -1286,15 +1302,43 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
   #endif                               /* (BSP_CFG_RTOS == 1) */
  #endif                                /* defined(USB_CFG_PMSC_USE) */
  #if (BSP_CFG_RTOS != 0)
+  #if (BSP_CFG_RTOS == 1)
+        UINT        old_threshold;
+        TX_THREAD * now_thread;
+  #endif                               /* (BSP_CFG_RTOS == 1) */
   #if (USB_NUM_USBIP == 2)
         usb_mode = g_usb_usbmode[0];
         if (usb_mode != g_usb_usbmode[1])
         {
+   #if (BSP_CFG_RTOS == 1)
+
+            /* Settings to prevent preemption. */
+            now_thread = tx_thread_identify();
+            tx_thread_preemption_change(now_thread, 0, &old_threshold); /* Disable dispatch to the other task */
+
             usb_rtos_delete(p_ctrl->module_number);
+
+            /* Remove settings that prevent preemption. */
+            tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispath ti the other task */
+   #else                                                                            /* (BSP_CFG_RTOS == 1) */
+            usb_rtos_delete(p_ctrl->module_number);
+   #endif  /* (BSP_CFG_RTOS == 1) */
         }
 
   #else                                /* (USB_NUM_USBIP == 2) */
+   #if (BSP_CFG_RTOS == 1)
+
+        /* Settings to prevent preemption. */
+        now_thread = tx_thread_identify();
+        tx_thread_preemption_change(now_thread, 0, &old_threshold); /* Disable dispatch to the other task */
+
         usb_rtos_delete(p_ctrl->module_number);
+
+        /* Remove settings that prevent preemption. */
+        tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispath ti the other task */
+   #else                                                                        /* (BSP_CFG_RTOS == 1) */
+        usb_rtos_delete(p_ctrl->module_number);
+   #endif  /* (BSP_CFG_RTOS == 1) */
   #endif  /* (USB_NUM_USBIP == 2) */
  #endif  /* (BSP_CFG_RTOS != 0) */
 

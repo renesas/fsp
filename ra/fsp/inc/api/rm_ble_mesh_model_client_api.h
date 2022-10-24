@@ -35,7 +35,7 @@ FSP_HEADER
 /*******************************************************************************************************************//**
  * @ingroup   RENESAS_INTERFACES
  * @defgroup  RM_BLE_MESH_MODEL_CLIENT_API BLE Mesh Model Client Interface
- * @brief     Interface for Bluetooth Low Energy Mesh Model Model Client functions.
+ * @brief     Interface for Bluetooth Low Energy Mesh Model Client functions.
  *
  * @section   RM_BLE_MESH_MODEL_CLIENT_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Client (BLE MESH MODEL CLIENT) middleware provides Bluetooth Low Energy Mesh Model Client functionality.

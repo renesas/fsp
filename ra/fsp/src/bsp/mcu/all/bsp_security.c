@@ -56,7 +56,6 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
 
  #if   defined(__IAR_SYSTEMS_ICC__) && BSP_TZ_SECURE_BUILD
   #pragma section=".tz_flash_nsc_start"
-  #pragma section=".tz_flash_ns_start"
   #pragma section=".tz_ram_nsc_start"
   #pragma section=".tz_ram_ns_start"
   #pragma section=".tz_data_flash_ns_start"
@@ -70,7 +69,6 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
 
 /* &__tz_<REGION>_N is the start address of the non-secure region. */
 BSP_DONT_REMOVE void const * const __tz_FLASH_C BSP_ALIGN_VARIABLE(1024) @".tz_flash_nsc_start" = 0;
-BSP_DONT_REMOVE void const * const __tz_FLASH_N BSP_ALIGN_VARIABLE(32768) @".tz_flash_ns_start" = 0;
 BSP_DONT_REMOVE void * __tz_RAM_C               BSP_ALIGN_VARIABLE(1024) @".tz_ram_nsc_start";
 BSP_DONT_REMOVE void * __tz_RAM_N               BSP_ALIGN_VARIABLE(8192) @".tz_ram_ns_start";
 BSP_DONT_REMOVE void * __tz_DATA_FLASH_N        BSP_ALIGN_VARIABLE(1024) @".tz_data_flash_ns_start";
@@ -86,8 +84,21 @@ BSP_DONT_REMOVE void * __tz_OSPI_DEVICE_0_N @".tz_ospi_device_0_ns_start";
 BSP_DONT_REMOVE void * __tz_OSPI_DEVICE_1_N @".tz_ospi_device_1_ns_start";
   #endif
 
+extern void const * const              __tz_FLASH_N;
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = (uint32_t *) &__tz_FLASH_N;
  #elif defined(__ARMCC_VERSION)
+  #if BSP_FEATURE_BSP_HAS_ITCM
+extern const uint32_t Image$$__tz_ITCM_N$$Base;
+extern const uint32_t Image$$__tz_ITCM_S$$Base;
+  #endif
+  #if BSP_FEATURE_BSP_HAS_DTCM
+extern const uint32_t Image$$__tz_DTCM_N$$Base;
+extern const uint32_t Image$$__tz_DTCM_S$$Base;
+  #endif
+  #if BSP_FEATURE_BSP_HAS_STBRAMSABAR
+extern const uint32_t Image$$__tz_STANDBY_SRAM_N$$Base;
+extern const uint32_t Image$$__tz_STANDBY_SRAM_S$$Base;
+  #endif
 extern const uint32_t Image$$__tz_FLASH_N$$Base;
 extern const uint32_t Image$$__tz_FLASH_C$$Base;
 extern const uint32_t Image$$__tz_FLASH_S$$Base;
@@ -111,6 +122,18 @@ extern const uint32_t Image$$__tz_OPTION_SETTING_S_S$$Base;
 extern const uint32_t Image$$__tz_ID_CODE_N$$Base;
 extern const uint32_t Image$$__tz_ID_CODE_S$$Base;
 
+  #if BSP_FEATURE_BSP_HAS_ITCM
+   #define __tz_ITCM_N               Image$$__tz_ITCM_N$$Base
+   #define __tz_ITCM_S               Image$$__tz_ITCM_S$$Base
+  #endif
+  #if BSP_FEATURE_BSP_HAS_DTCM
+   #define __tz_DTCM_N               Image$$__tz_DTCM_N$$Base
+   #define __tz_DTCM_S               Image$$__tz_DTCM_S$$Base
+  #endif
+  #if BSP_FEATURE_BSP_HAS_STBRAMSABAR
+   #define __tz_STANDBY_SRAM_N       Image$$__tz_STANDBY_SRAM_N$$Base
+   #define __tz_STANDBY_SRAM_S       Image$$__tz_STANDBY_SRAM_S$$Base
+  #endif
   #define __tz_FLASH_N               Image$$__tz_FLASH_N$$Base
   #define __tz_FLASH_C               Image$$__tz_FLASH_C$$Base
   #define __tz_FLASH_S               Image$$__tz_FLASH_S$$Base
@@ -136,6 +159,18 @@ extern const uint32_t Image$$__tz_ID_CODE_S$$Base;
 
 /* Assign region addresses to pointers so that AC6 includes symbols that can be used to determine the
  * start addresses of Secure, Non-secure and Non-secure Callable regions. */
+  #if BSP_FEATURE_BSP_HAS_ITCM
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_itcm = &__tz_ITCM_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_itcm    = &__tz_ITCM_S;
+  #endif
+  #if BSP_FEATURE_BSP_HAS_DTCM
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_dtcm = &__tz_DTCM_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_dtcm    = &__tz_DTCM_S;
+  #endif
+  #if BSP_FEATURE_BSP_HAS_STBRAMSABAR
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_standby_sram = &__tz_STANDBY_SRAM_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_standby_sram    = &__tz_STANDBY_SRAM_S;
+  #endif
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash          = &__tz_FLASH_N;
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_flash = &__tz_FLASH_C;
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_flash             = &__tz_FLASH_S;
@@ -250,8 +285,11 @@ void R_BSP_SecurityInit (void)
     /* Disable PRCR for SARs. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
 
+  #if BSP_FEATURE_BSP_HAS_TZFSAR
+
     /* Set TrustZone filter to Secure. */
     R_TZF->TZFSAR = ~R_TZF_TZFSAR_TZFSA0_Msk;
+  #endif
 
     /* Set TrustZone filter exception response. */
     R_TZF->TZFPT  = BSP_PRV_TZ_REG_KEY + 1U;
@@ -279,11 +317,21 @@ void R_BSP_SecurityInit (void)
   #endif
     R_CPSCU->ICUSARA = BSP_TZ_CFG_ICUSARA;     /* External IRQ Security Attribution. */
     R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;     /* NMI Security Attribution. */
+  #ifdef BSP_TZ_CFG_ICUSARC
     R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;     /* DMAC Channel Security Attribution. */
+  #endif
+  #ifdef BSP_TZ_CFG_DMASARA
+    R_CPSCU->DMASARA = BSP_TZ_CFG_DMASARA;     /* DMAC Channel Security Attribution. */
+  #endif
+  #ifdef BSP_TZ_CFG_ICUSARD
     R_CPSCU->ICUSARD = BSP_TZ_CFG_ICUSARD;     /* SELSR0 Security Attribution. */
+  #endif
     R_CPSCU->ICUSARE = BSP_TZ_CFG_ICUSARE;     /* WUPEN0 Security Attribution. */
   #ifdef BSP_TZ_CFG_ICUSARF
     R_CPSCU->ICUSARF = BSP_TZ_CFG_ICUSARF;     /* WUPEN1 Security Attribution. */
+  #endif
+  #ifdef BSP_TZ_CFG_TEVTRCR
+    R_CPSCU->TEVTRCR = BSP_TZ_CFG_TEVTRCR;     /* Trusted Event Route Enable. */
   #endif
     R_FCACHE->FSAR     = BSP_TZ_CFG_FSAR;      /* FLWT and FCKMHZ Security Attribution. */
     R_CPSCU->SRAMSAR   = BSP_TZ_CFG_SRAMSAR;   /* SRAM Security Attribution. */
@@ -292,7 +340,9 @@ void R_BSP_SecurityInit (void)
     R_CPSCU->BUSSARA   = BSP_TZ_CFG_BUSSARA;   /* Security Attribution Register A for the BUS Control Registers. */
     R_CPSCU->BUSSARB   = BSP_TZ_CFG_BUSSARB;   /* Security Attribution Register B for the BUS Control Registers. */
 
-  #if BSP_TZ_CFG_ICUSARC != UINT32_MAX
+  #if (defined(BSP_TZ_CFG_ICUSARC) && (BSP_TZ_CFG_ICUSARC != UINT32_MAX)) || \
+    (defined(BSP_TZ_CFG_DMASARA) && (BSP_TZ_CFG_DMASARA != UINT32_MAX))
+
     R_BSP_MODULE_START(FSP_IP_DMAC, 0);
 
     /* If any DMAC channels are required by secure program, disable nonsecure write access to DMAST

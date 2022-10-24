@@ -48,6 +48,9 @@
 
 #if defined(USB_CFG_PPRN_USE)
  #include "r_usb_pprn_api.h"
+ #if (BSP_CFG_RTOS != 1)
+  #include "r_usb_pprn_cfg.h"
+ #endif                                /* (BSP_CFG_RTOS != 1) */
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
 
 #if defined(USB_CFG_HPRN_USE)
@@ -244,7 +247,15 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     USB_NULL, USB_NULL,                              /* USB_PAUD (6) */
 
     /* PPRN */
+#if defined(USB_CFG_PPRN_USE)
+ #if (BSP_CFG_RTOS != 1)
+    usb_pprn_read_complete, usb_pprn_write_complete, /* USB_PPRN (7) */
+ #else  /* BSP_CFG_RTOS != 1 */
     USB_NULL, USB_NULL,                              /* USB_PPRN (7) */
+ #endif /* BSP_CFG_RTOS != 1 */
+#else                                                /* defined(USB_CFG_PPRN_USE) */
+    USB_NULL, USB_NULL,                              /* USB_PPRN (7) */
+#endif /* defined(USB_CFG_PPRN_USE) */
 
     /* PVND */
     USB_NULL, USB_NULL,                              /* USB_PVND (8) */

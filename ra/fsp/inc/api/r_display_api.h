@@ -376,13 +376,13 @@ typedef struct st_display_api
     fsp_err_t (* layerChange)(display_ctrl_t const * const p_ctrl, display_runtime_cfg_t const * const p_cfg,
                               display_frame_layer_t frame);
 
-/** Change layer framebuffer pointer.
- * @par Implemented as
- * - @ref R_GLCDC_BufferChange()
- * @param[in]   p_ctrl       Pointer to display interface control block.
- * @param[in]   framebuffer  Pointer to desired framebuffer.
- * @param[in]   frame        Number of graphic frames.
- */
+    /** Change layer framebuffer pointer.
+     * @par Implemented as
+     * - @ref R_GLCDC_BufferChange()
+     * @param[in]   p_ctrl       Pointer to display interface control block.
+     * @param[in]   framebuffer  Pointer to desired framebuffer.
+     * @param[in]   frame        Number of graphic frames.
+     */
     fsp_err_t (* bufferChange)(display_ctrl_t const * const p_ctrl, uint8_t * const framebuffer,
                                display_frame_layer_t frame);
 

@@ -48,12 +48,12 @@ void usb_hstd_vbus_control (usb_utr_t * ptr, uint16_t command)
     {
         hw_usb_set_vbout(ptr);
  #if USB_CFG_BC == USB_CFG_ENABLE
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
         if (USB_IP1 == ptr->ip)
         {
             usb_hstd_bc_func[g_usb_hstd_bc[ptr->ip].state][USB_BC_EVENT_VB](ptr);
         }
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
  #endif                                /* USB_CFG_BC == USB_CFG_ENABLE */
     }
     else
@@ -128,12 +128,12 @@ void usb_hstd_attach (usb_utr_t * ptr, uint16_t result)
     /* USB Mng API */
     usb_hstd_notif_ator_detach(ptr, result);
  #if USB_CFG_BC == USB_CFG_ENABLE
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
     if (USB_IP1 == ptr->ip)
     {
         usb_hstd_bc_func[g_usb_hstd_bc[ptr->ip].state][USB_BC_EVENT_AT](ptr);
     }
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
  #endif                                /* USB_CFG_BC == USB_CFG_ENABLE */
 }
 
@@ -151,20 +151,19 @@ void usb_hstd_attach (usb_utr_t * ptr, uint16_t result)
  ******************************************************************************/
 void usb_hstd_detach (usb_utr_t * ptr)
 {
-#if !defined (USB_CFG_OTG_USE)
- #if USB_CFG_BC == USB_CFG_ENABLE
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if !defined(USB_CFG_OTG_USE)
+  #if USB_CFG_BC == USB_CFG_ENABLE
+   #if defined(USB_HIGH_SPEED_MODULE)
     if (USB_IP1 == ptr->ip)
     {
         usb_hstd_bc_func[g_usb_hstd_bc[ptr->ip].state][USB_BC_EVENT_DT](ptr);
     }
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
- #endif                                /* USB_CFG_BC == USB_CFG_ENABLE */
+   #endif                              /* defined(USB_HIGH_SPEED_MODULE) */
+  #endif                               /* USB_CFG_BC == USB_CFG_ENABLE */
 
     /* DVSTCTR clear */
     hw_usb_clear_dvstctr(ptr, (uint16_t) (USB_RWUPE | USB_USBRST | USB_RESUME | USB_UACT));
-
-#endif /* !defined (USB_CFG_OTG_USE) */
+ #endif /* !defined (USB_CFG_OTG_USE) */
     /* ATTCH interrupt enable */
     usb_hstd_attch_enable(ptr);
 

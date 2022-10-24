@@ -54,6 +54,9 @@ FSP_HEADER
 /** Provisioning key NetKey size */
 #define RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE    16
 
+/** Provisioning ECDH Key size */
+#define RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE      32
+
 /** Provisioning OOB value size */
 #define RM_BLE_MESH_PROVISION_OOB_VALUE_SIZE     16
 
@@ -593,6 +596,15 @@ typedef struct st_rm_ble_mesh_provision_api
      */
     fsp_err_t (* setOobAuthInfo)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const p_auth_info,
                                  uint8_t size);
+
+    /** Utility API to generate ECDH Public Key to be used for Provisioning
+     * @par Implemented as
+     * - @ref RM_BLE_MESH_PROVISION_GenerateEcdhKey()
+     *
+     * @param [in]  p_ctrl       Pointer to control structure.
+     * @param [out] p_public_key Pointer to public key. Size of public key is @ref RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE.
+     */
+    fsp_err_t (* generateEcdhKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const p_public_key);
 } rm_ble_mesh_provision_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

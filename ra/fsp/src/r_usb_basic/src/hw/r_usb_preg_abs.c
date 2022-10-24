@@ -414,10 +414,10 @@ void usb_pstd_test_mode (usb_utr_t * p_utr)
         /* Continue */
         case USB_TEST_PACKET:
         {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             hw_usb_set_utst(p_utr, 0);
             hw_usb_set_utst(p_utr, (uint16_t) (g_usb_pstd_test_mode_select >> 8));
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
             break;
         }
 
@@ -497,12 +497,12 @@ void usb_pstd_set_stall_pipe0 (usb_utr_t * p_utr)
 uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * write_p, usb_utr_t * p_utr)
 {
     uint16_t even;
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     uint16_t odd;
     uint16_t hs_flag = 1;
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     uint16_t hs_flag = 0;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
  #if defined(BSP_MCU_GROUP_RA2A1)
 
@@ -556,7 +556,7 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
         }
     }
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     else
     {
         /* WAIT_LOOP */
@@ -600,7 +600,7 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
         /* Return FIFO access width */
         hw_usb_set_mbw(p_utr, pipemode, USB_MBW_32);
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
     return write_p;
 }
 
@@ -623,12 +623,12 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
  #if USB_CFG_ENDIAN == USB_CFG_BIG
     uint16_t i;
  #endif
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     uint16_t odd;
     uint16_t hs_flag = 1;
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     uint16_t hs_flag = 0;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
  #if defined(BSP_MCU_GROUP_RA2A1)
 
@@ -681,7 +681,7 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
         }
     }
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     else
     {
         /* WAIT_LOOP */
@@ -730,7 +730,7 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
   #endif                               /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
         }
     }
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
     return read_p;
 }

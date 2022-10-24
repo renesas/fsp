@@ -47,7 +47,7 @@ typedef struct st_rm_ble_mesh_access_instance_ctrl
 {
     uint32_t open;                                      // Indicates whether the open() API has been successfully called.
     rm_ble_mesh_access_node_id_t        node_id;        // Node ID
-    rm_ble_mesh_access_element_handle_t element_handle; // Element handle
+    rm_ble_mesh_access_element_handle_t element_handle; // DEPRECATED Element handle
     rm_ble_mesh_access_cfg_t const    * p_cfg;          // Pointer to initial configurations.
     void const * p_context;                             // Placeholder for user data.
 } rm_ble_mesh_access_instance_ctrl_t;

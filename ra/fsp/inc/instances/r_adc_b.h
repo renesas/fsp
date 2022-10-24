@@ -95,14 +95,14 @@ typedef enum e_adc_b_conversion_method
     ADC_B_CONVERSION_METHOD_HYBRID     = 0x2, ///< Hybrid conversion method
 } adc_b_conversion_method_t;
 
-/** ADC_B data resolution definitions */
-typedef enum e_adc_b_resolution
+/** ADC_B data data format definitions */
+typedef enum e_adc_b_data_format
 {
-    ADC_B_RESOLUTION_16_BIT = 0,       ///< 16 bit adc_b resolution
-    ADC_B_RESOLUTION_14_BIT = 1,       ///< 14 bit adc_b resolution
-    ADC_B_RESOLUTION_12_BIT = 2,       ///< 12 bit adc_b resolution
-    ADC_B_RESOLUTION_10_BIT = 3,       ///< 10 bit adc_b resolution
-} adc_b_resolution_t;
+    ADC_B_DATA_FORMAT_16_BIT = 0,       ///< 16 bit adc_b data format
+    ADC_B_DATA_FORMAT_14_BIT = 1,       ///< 14 bit adc_b data format
+    ADC_B_DATA_FORMAT_12_BIT = 2,       ///< 12 bit adc_b data format
+    ADC_B_DATA_FORMAT_10_BIT = 3,       ///< 10 bit adc_b data format
+} adc_b_data_format_t;
 
 /** ADC channels */
 typedef enum e_adc_b_virtual_channel
@@ -449,7 +449,7 @@ typedef struct st_adc_b_virtual_channel_cfg
         {
             uint32_t limiter_clip_table_id : 4; ///< Limiter clip table selection
             uint32_t                       : 12;
-            uint32_t channel_resolution    : 2; ///< A/D conversion data format selection
+            uint32_t channel_data_format   : 2; ///< A/D conversion data format selection
             uint32_t                       : 2;
             uint32_t data_sign_selection   : 1; ///< A/D conversion data sign selection (set to zero when self-diagnosis channel is selected)
             uint32_t                       : 11;
@@ -532,14 +532,14 @@ typedef struct st_adc_b_isr_cfg
 } adc_b_isr_cfg_t;
 
 /** ADC extended configuration data */
-typedef struct st_adc_b_extended_cfg
+typedef __PACKED_STRUCT st_adc_b_extended_cfg
 {
     /* Data used to calculate register settings */
     adc_b_pga_gain_t pga_gain[4];       ///< PGA Gain selection
     union
     {
         uint8_t pga_debug_monitor_mask; // PGA monitor mode mask bits
-        struct
+        __PACKED_STRUCT
         {
             /* For debug only! Prolonged use of PGA Monitor function may deteriorate PGA characteristics. See user manual for more information.*/
             uint8_t unit_0 : 1;         // PGA monitor mode unit 0 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
@@ -554,7 +554,7 @@ typedef struct st_adc_b_extended_cfg
     union
     {
         uint32_t clock_control_data;       ///< Clock control register data
-        struct
+        __PACKED_STRUCT
         {
             uint32_t source_selection : 2; ///< ADC_B clock source selection
             uint32_t                  : 14;
@@ -565,28 +565,29 @@ typedef struct st_adc_b_extended_cfg
     union
     {
         uint32_t sync_operation_control; ///< Synchronous Operation Control register data
-        struct
+        __PACKED_STRUCT
         {
             uint32_t period_cycle       : 10;
             uint32_t                    : 5;
             uint32_t adc_0_disable_sync : 1;
             uint32_t adc_1_disable_sync : 1;
-            uint32_t                    : 14;
+            uint32_t                    : 15;
         } sync_operation_control_bits;
     };
     union
     {
         uint32_t adc_b_mode;                      /// ADC_B converter mode register data
-        struct
+        __PACKED_STRUCT
         {
             adc_b_converter_mode_t    mode   : 2; ///< ADC_B converter mode
             adc_b_conversion_method_t method : 2; ///< ADC_B converter method
+            uint8_t                          : 4;
         } adc_b_converter_mode[2];
     };
     uint32_t scan_group_enable;        ///< Scan Group enable register data
     union
     {
-        struct
+        __PACKED_STRUCT
         {
             uint32_t converter_selection_0; ///< Converter Selection register data for groups 0,1,2,3
             uint32_t converter_selection_1; ///< Converter Selection register data for groups 4,5,6,7
@@ -597,7 +598,7 @@ typedef struct st_adc_b_extended_cfg
     union
     {
         uint16_t fifo_enable_mask;       ///< FIFO enable register data
-        struct
+        __PACKED_STRUCT
         {
             uint16_t fifo_0 : 1;         ///< FIFO enable for group 0
             uint16_t fifo_1 : 1;         ///< FIFO enable for group 1
@@ -608,12 +609,13 @@ typedef struct st_adc_b_extended_cfg
             uint16_t fifo_6 : 1;         ///< FIFO enable for group 6
             uint16_t fifo_7 : 1;         ///< FIFO enable for group 7
             uint16_t fifo_8 : 1;         ///< FIFO enable for group 8
+            uint32_t        : 7;
         } fifo_enable_mask_bits;
     };
     uint16_t fifo_interrupt_enable_mask; ///< FIFO interrupt enable register data
     union
     {
-        struct
+        __PACKED_STRUCT
         {
             uint32_t fifo_interrupt_level0;              ///< FIFO data threshold interrupt level register data for Group 0 and 1
             uint32_t fifo_interrupt_level1;              ///< FIFO data threshold interrupt level register data for Group 2 and 3

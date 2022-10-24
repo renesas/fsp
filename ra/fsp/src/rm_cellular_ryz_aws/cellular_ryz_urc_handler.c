@@ -48,7 +48,6 @@ static void cellular_ryz_urc_process_socket_shutdown(CellularContext_t * pContex
 
 /* Remapping these common functions because function pointer in CellularAtParseTokenMap_t doesn't match */
 static void cellular_ryz_urc_process_cereg(CellularContext_t * pContext, char * pInputLine);
-static void cellular_ryz_urc_process_creg(CellularContext_t * pContext, char * pInputLine);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -79,7 +78,6 @@ static void cellular_ryz_urc_process_creg(CellularContext_t * pContext, char * p
 CellularAtParseTokenMap_t cellular_urc_handler_table[] =
 {
     {"CEREG",    cellular_ryz_urc_process_cereg          },
-    {"CREG",     cellular_ryz_urc_process_creg           },
     {"SHUTDOWN", cellular_ryz_urc_process_shutdown       }, // Power down completed, safe to turn cut power supply
     {"SQNSH",    cellular_ryz_urc_process_socket_shutdown}, // Socket closed
     {"SQNSRING", cellular_ryz_urc_process_sqnsring       }, // Socket notification (receive)
@@ -213,9 +211,4 @@ static void cellular_ryz_urc_process_shutdown (CellularContext_t * pContext, cha
 static void cellular_ryz_urc_process_cereg (CellularContext_t * pContext, char * pInputLine)
 {
     Cellular_CommonUrcProcessCereg(pContext, pInputLine);
-}
-
-static void cellular_ryz_urc_process_creg (CellularContext_t * pContext, char * pInputLine)
-{
-    Cellular_CommonUrcProcessCreg(pContext, pInputLine);
 }

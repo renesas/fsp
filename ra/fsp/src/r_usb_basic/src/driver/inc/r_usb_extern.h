@@ -246,10 +246,10 @@ void     usb_pstd_change_device_state(uint16_t state, uint16_t keyword, usb_cb_t
 void     usb_pstd_driver_registration(usb_pcdreg_t * registinfo);
 void     usb_pstd_driver_release(void);
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
 uint16_t usb_pstd_get_pipe_buf_value(uint16_t pipe_no);
 
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined(USB_HIGH_SPEED_MODULE) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
@@ -277,10 +277,10 @@ uint8_t usb_hstd_make_pipe_reg_info(uint16_t               ip_no,
                                     uint8_t              * descriptor,
                                     usb_pipe_table_reg_t * pipe_table_work);
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
 uint16_t usb_hstd_get_pipe_buf_value(uint16_t pipe_no);
 
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined(USB_HIGH_SPEED_MODULE) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
@@ -676,6 +676,12 @@ extern void usb_pcdc_read_complete(usb_utr_t * mess, uint16_t data1, uint16_t da
 extern void usb_pcdc_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
 
 #endif                                 /* defined(USB_CFG_PCDC_USE) */
+
+#if defined(USB_CFG_PPRN_USE)
+extern void usb_pprn_read_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
+extern void usb_pprn_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
+
+#endif                                 /* defined(USB_CFG_PPRN_USE) */
 
 #if defined(USB_CFG_PHID_USE)
 extern void usb_phid_read_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);

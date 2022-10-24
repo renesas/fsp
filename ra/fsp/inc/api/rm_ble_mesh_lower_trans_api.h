@@ -112,7 +112,7 @@ typedef struct st_rm_ble_mesh_lower_trans_callback_args
     rm_ble_mesh_network_subnet_handle_t subnet_handle; ///< Subnet handle
     uint8_t trans_mic_size;                            ///< TransMIC size
     rm_ble_mesh_lower_trans_lpn_handle_t lpn_handle;   ///< LPM Size
-    uint8_t              packet_type;                  ///< packet type TODO should be change enum?
+    uint8_t              packet_type;                  ///< packet type
     rm_ble_mesh_buffer_t event_data;                   ///< Event data
     void const         * p_context;                    ///< Context provided to user during callback.
 } rm_ble_mesh_lower_trans_callback_args_t;

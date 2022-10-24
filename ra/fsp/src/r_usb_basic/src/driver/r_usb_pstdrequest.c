@@ -1548,8 +1548,6 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
         {
             /* Do nothing about alternate setting */
             usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
-
-            return;
         }
 
  #else                                 /* defined(USB_CFG_PPRN_USE) */
@@ -1720,9 +1718,8 @@ static void usb_peri_class_reqeust_usbx_get_data (usb_setup_t * p_req, usb_utr_t
     }
 
     g_usb_pstd_std_request = USB_YES;
-    usb_pstd_ctrl_write(transfer_request->ux_slave_transfer_request_requested_length,
-                        transfer_request->ux_slave_transfer_request_data_pointer,
-                        &tran_data);
+
+    usb_pstd_ctrl_write(p_req->request_length, transfer_request->ux_slave_transfer_request_data_pointer, &tran_data);
 }                                      /* End of function usb_peri_class_reqeust_usbx_get_data */
 
  #endif /* #if (BSP_CFG_RTOS == 1) */

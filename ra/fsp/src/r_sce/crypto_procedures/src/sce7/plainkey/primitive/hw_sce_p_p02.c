@@ -318,10 +318,10 @@ fsp_err_t HW_SCE_SelfCheck2Sub(void)
         {
             /* waiting */
         }
-        S_RAM[16] = change_endian_long(SCE->REG_100H);
-        S_RAM[17] = change_endian_long(SCE->REG_100H);
-        S_RAM[18] = change_endian_long(SCE->REG_100H);
-        S_RAM[19] = change_endian_long(SCE->REG_100H);
+        S_RAM[16] = SCE->REG_100H;
+        S_RAM[17] = SCE->REG_100H;
+        S_RAM[18] = SCE->REG_100H;
+        S_RAM[19] = SCE->REG_100H;
         SCE->REG_13CH = 0x00000202U;
         HW_SCE_p_func102(0x43b1974fU, 0xed75d788U, 0xbbd964aaU, 0x880152adU);
         SCE->REG_1BCH = 0x00000040U;

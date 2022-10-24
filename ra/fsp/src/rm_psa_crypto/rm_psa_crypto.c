@@ -147,4 +147,14 @@ void mbedtls_param_failed (const char * failure_condition, const char * file, in
 
  #endif
 
+ #if defined(MBEDTLS_PLATFORM_SETBUF_MACRO)
+
+void dummy_setbuf (void * stream, char * buf)
+{
+    ((void) stream);
+    ((void) buf);
+}
+
+ #endif                                /* MBEDTLS_PLATFORM_SETBUF_MACRO */
+
 #endif                                 /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */

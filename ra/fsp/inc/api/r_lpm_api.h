@@ -185,6 +185,7 @@ typedef enum e_lpm_standby_wake_source
     LPM_STANDBY_WAKE_SOURCE_AGT3UD  = 0x100000000ULL, ///< AGT3 underflow interrupt
     LPM_STANDBY_WAKE_SOURCE_AGT3CA  = 0x200000000ULL, ///< AGT3 compare match A interrupt
     LPM_STANDBY_WAKE_SOURCE_AGT3CB  = 0x400000000ULL, ///< AGT3 compare match B interrupt
+    LPM_STANDBY_WAKE_SOURCE_I3C0    = 0x80000000000ULL ///< I3C0 address match interrupt
 } lpm_standby_wake_source_t;
 
 typedef uint64_t lpm_standby_wake_source_bits_t;

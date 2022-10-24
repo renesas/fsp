@@ -96,6 +96,8 @@ fsp_err_t RM_BLE_MESH_PROVISION_SetOobPublicKey(rm_ble_mesh_provision_ctrl_t * c
 fsp_err_t RM_BLE_MESH_PROVISION_SetOobAuthInfo(rm_ble_mesh_provision_ctrl_t * const p_ctrl,
                                                uint8_t const * const                p_auth_info,
                                                uint8_t                              size);
+fsp_err_t RM_BLE_MESH_PROVISION_GenerateEcdhKey(rm_ble_mesh_provision_ctrl_t * const p_ctrl,
+                                                uint8_t * const                      p_public_key);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

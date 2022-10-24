@@ -404,8 +404,12 @@ fsp_err_t R_DMAC_Close (transfer_ctrl_t * const p_api_ctrl)
     dmac_extended_cfg_t * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
     /* Disable DMAC transfers on this channel. */
+#if !BSP_FEATURE_DMAC_HAS_DELSR
     R_ICU->DELSR[p_extend->channel] = ELC_EVENT_NONE;
-    p_ctrl->p_reg->DMCNT            = 0;
+#else
+    R_DMA->DELSR[p_extend->channel] = ELC_EVENT_NONE;
+#endif
+    p_ctrl->p_reg->DMCNT = 0;
 
     if (NULL != p_extend->p_callback)
     {
@@ -459,11 +463,20 @@ static void r_dmac_prv_disable (dmac_instance_ctrl_t * p_ctrl)
 
     /* Disable the transfers. Reference Figure 17.12  "Register setting procedure" in the RA6M3 Hardware manual
      * R01UH0886EJ0100. */
+#if !BSP_FEATURE_DMAC_HAS_DELSR
     R_ICU->DELSR[p_extend->channel] = ELC_EVENT_NONE;
-    p_ctrl->p_reg->DMCNT            = 0;
+#else
+    R_DMA->DELSR[p_extend->channel] = ELC_EVENT_NONE;
+#endif
+
+    p_ctrl->p_reg->DMCNT = 0;
 
     /* Configure the activation source. */
+#if !BSP_FEATURE_DMAC_HAS_DELSR
     R_ICU->DELSR[p_extend->channel] = p_extend->activation_source;
+#else
+    R_DMA->DELSR[p_extend->channel] = p_extend->activation_source;
+#endif
 
     /* Disable software start. */
     p_ctrl->p_reg->DMREQ = 0;

@@ -24,6 +24,9 @@
  * @brief Interface for PDC functions.
  *
  * @section PDC_API_SUMMARY Summary
+ *
+ * DEPRECATED - PDC API will be replaced with CAPTURE API in the next major release
+ *
  * The PDC interface provides the functionality for capturing an image from an image sensor/camera.
  * When a capture is complete a transfer complete interrupt is triggered.
  *
@@ -138,7 +141,8 @@ typedef struct st_pdc_cfg
  */
 typedef void pdc_ctrl_t;
 
-/** PDC functions implemented at the HAL layer will follow this API. */
+/** PDC functions implemented at the HAL layer will follow this API.
+ * DEPRECATED - PDC API will be replaced with CAPTURE API in the next major release */
 typedef struct st_pdc_api
 {
     /** Initial configuration.

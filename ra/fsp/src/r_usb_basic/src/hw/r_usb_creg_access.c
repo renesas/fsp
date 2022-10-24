@@ -99,7 +99,7 @@ void hw_usb_write_syscfg (usb_utr_t * ptr, uint16_t data)
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(USB_HIGH_SPEED_MODULE)
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
@@ -214,7 +214,7 @@ void hw_usb_clear_hse (usb_utr_t * ptr)
 /******************************************************************************
  * End of function hw_usb_clear_hse
  ******************************************************************************/
-#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
 
 /******************************************************************************
  * Function Name   : hw_usb_set_dcfm
@@ -373,7 +373,7 @@ void hw_usb_clear_usbe (usb_utr_t * ptr)
  * End of function hw_usb_clear_usbe
  ******************************************************************************/
 
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(USB_HIGH_SPEED_MODULE)
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
 /******************************************************************************
@@ -461,7 +461,7 @@ void hw_usb_clear_bcctrl (usb_utr_t * ptr, uint16_t data)
 /******************************************************************************
  * End of function hw_usb_clear_bcctrl
  ******************************************************************************/
-#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
 
 /******************************************************************************
  * Function Name   : hw_usb_read_syssts
@@ -673,7 +673,7 @@ void hw_usb_clear_vbout (usb_utr_t * ptr)
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(USB_HIGH_SPEED_MODULE)
 
 /******************************************************************************
  * Function Name   : hw_usb_set_utst
@@ -708,9 +708,9 @@ void hw_usb_set_utst (usb_utr_t * ptr, uint16_t data)
 /******************************************************************************
  * End of function hw_usb_set_utst
  ******************************************************************************/
-#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
 
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(USB_HIGH_SPEED_MODULE)
 
 /******************************************************************************
  * Function Name   : hw_usb_read_fifo32
@@ -865,7 +865,7 @@ void hw_usb_write_fifo32 (usb_utr_t * ptr, uint16_t pipemode, uint32_t data)
 /******************************************************************************
  * End of function hw_usb_write_fifo32
  ******************************************************************************/
-#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
 
 /******************************************************************************
  * Function Name   : hw_usb_read_fifo16
@@ -947,61 +947,61 @@ uint16_t hw_usb_read_fifo16 (usb_utr_t * ptr, uint16_t pipemode)
   #if USB_CFG_ENDIAN == USB_CFG_LITTLE
                 case USB_CUSE:
                 {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                     data = ptr->ipp1->CFIFOH;
-   #else                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                               /* defined (USB_HIGH_SPEED_MODULE) */
                     data = (uint16_t) ptr->ipp1->CFIFO;
-   #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif /* defined (USB_HIGH_SPEED_MODULE) */
                     break;
                 }
 
                 case USB_D0USE:
                 {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                     data = ptr->ipp1->D0FIFOH;
-   #else                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                               /* defined (USB_HIGH_SPEED_MODULE) */
                     data = (uint16_t) ptr->ipp1->D0FIFO;
-   #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif /* defined (USB_HIGH_SPEED_MODULE) */
                     break;
                 }
 
                 case USB_D1USE:
                 {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                     data = ptr->ipp1->D1FIFOH;
-   #else                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                               /* defined (USB_HIGH_SPEED_MODULE) */
                     data = (uint16_t) ptr->ipp1->D1FIFO;
-   #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif /* defined (USB_HIGH_SPEED_MODULE) */
                     break;
                 }
   #else                                /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
                 case USB_CUSE:
                 {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                     data = ptr->ipp1->CFIFOL;
-   #else                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                               /* defined (USB_HIGH_SPEED_MODULE) */
                     data = (uint16_t) ptr->ipp1->CFIFO;
-   #endif                              /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif                              /* defined (USB_HIGH_SPEED_MODULE) */
                     break;
                 }
 
                 case USB_D0USE:
                 {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                     data = ptr->ipp1->D0FIFOL;
-   #else                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                               /* defined (USB_HIGH_SPEED_MODULE) */
                     data = (uint16_t) ptr->ipp1->D0FIFO;
-   #endif                              /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif                              /* defined (USB_HIGH_SPEED_MODULE) */
                     break;
                 }
 
                 case USB_D1USE:
                 {
-   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+   #if defined(USB_HIGH_SPEED_MODULE)
                     data = ptr->ipp1->D1FIFOL;
-   #else                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #else                               /* defined (USB_HIGH_SPEED_MODULE) */
                     data = (uint16_t) ptr->ipp1->D1FIFO;
-   #endif                              /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+   #endif                              /* defined (USB_HIGH_SPEED_MODULE) */
                     break;
                 }
   #endif  /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
@@ -2857,7 +2857,7 @@ void hw_usb_write_pipecfg (usb_utr_t * ptr, uint16_t data)
  * End of function hw_usb_write_pipecfg
  ******************************************************************************/
 
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(USB_HIGH_SPEED_MODULE)
 
 /******************************************************************************
  * Function Name   : hw_usb_write_pipebuf
@@ -2937,7 +2937,7 @@ uint16_t hw_usb_read_pipebuf (usb_utr_t * ptr)
  * End of function hw_usb_read_pipebuf
  ******************************************************************************/
 
-#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
 
 /******************************************************************************
  * Function Name   : hw_usb_read_pipemaxp
@@ -3685,7 +3685,7 @@ uint16_t hw_usb_read_bcctrl (usb_utr_t * ptr)
     uint16_t rtn_val = 0;
 
     FSP_PARAMETER_NOT_USED(*ptr);
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     if (g_usb_usbmode[ptr->ip] == USB_MODE_PERI)
     {
   #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -3704,7 +3704,7 @@ uint16_t hw_usb_read_bcctrl (usb_utr_t * ptr)
         }
   #endif                               /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
 
     return rtn_val;
 } /* End of function hw_usb_read_bcctrl() */
@@ -3727,9 +3727,9 @@ void hw_usb_set_vdmsrce (usb_utr_t * ptr)
 {
     if (USB_IP1 == ptr->ip)
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
         ptr->ipp1->BCCTRL = (uint16_t) (ptr->ipp1->BCCTRL | (USB_VDMSRCE));
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -3747,9 +3747,9 @@ void hw_usb_clear_vdmsrce (usb_utr_t * ptr)
 {
     if (USB_IP1 == ptr->ip)
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
         ptr->ipp1->BCCTRL = (uint16_t) (ptr->ipp1->BCCTRL & (~USB_VDMSRCE));
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -3767,9 +3767,9 @@ void hw_usb_set_idpsinke (usb_utr_t * ptr)
 {
     if (USB_IP1 == ptr->ip)
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
         ptr->ipp1->BCCTRL = (uint16_t) (ptr->ipp1->BCCTRL | (USB_IDPSINKE));
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -3787,7 +3787,7 @@ void hw_usb_clear_idpsinke (usb_utr_t * ptr)
 {
     if (USB_IP1 == ptr->ip)
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
         ptr->ipp1->BCCTRL = (uint16_t) (ptr->ipp1->BCCTRL & (~USB_IDPSINKE));
   #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
@@ -3812,9 +3812,9 @@ void hw_usb_set_suspendm (uint8_t usb_ip)
 {
     if (USB_CFG_IP1 == usb_ip)
     {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
         USB_M1->LPSTS = (uint16_t) (USB_M1->LPSTS | (USB_SUSPENDM));
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -3832,9 +3832,9 @@ void hw_usb_clear_suspm (uint8_t usb_ip)
 {
     if (USB_CFG_IP1 == usb_ip)
     {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
         USB_M1->LPSTS = (uint16_t) (USB_M1->LPSTS & (~USB_SUSPENDM));
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
     }
 }
 

@@ -1150,7 +1150,6 @@ static void sci_b_i2c_reconfigure_interrupts_for_transfer (sci_b_i2c_instance_ct
         }
 
         /* Set the interrupt source to RXI/TXI */
-        p_ctrl->p_reg->ICR |= R_SCI_B0_ICR_IICACKT_Msk;
         p_ctrl->p_reg->CCR0 =
             (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_RE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_TIE_Msk);
 

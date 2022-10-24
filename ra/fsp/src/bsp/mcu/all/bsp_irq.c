@@ -74,7 +74,12 @@ void bsp_irq_cfg (void)
  #if !BSP_TZ_SECURE_BUILD
 
     /* Set the DMAC channels to secure access. */
+  #ifdef BSP_TZ_CFG_ICUSARC
     R_CPSCU->ICUSARC = ~R_CPSCU_ICUSARC_SADMACn_Msk;
+  #endif
+  #ifdef BSP_TZ_CFG_DMASARA
+    R_CPSCU->DMASARA = ~R_CPSCU_DMASARA_DMASARAn_Msk;
+  #endif
  #endif
 
     /* Place all vectors in non-secure state unless they are used in the secure project. */

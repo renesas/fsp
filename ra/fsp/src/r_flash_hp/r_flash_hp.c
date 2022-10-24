@@ -101,8 +101,12 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 
 /**  Configuration set Command offset*/
 #define FLASH_HP_FCU_CONFIG_SET_ID_BYTE               (0x0000A150U)
-#if !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2) || \
-    defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA4E1) || defined(BSP_MCU_GROUP_RA6E1) ||   \
+#if (BSP_CFG_MCU_PART_SERIES == 8)
+ #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0300A110U)
+ #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0300A130U)
+ #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE            (0x1300A190U)
+#elif !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2) || \
+    defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA4E1) || defined(BSP_MCU_GROUP_RA6E1) ||     \
     defined(BSP_MCU_GROUP_RA6T2))
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0000A160U)
 #else
@@ -125,8 +129,6 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #define FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT           (8U)
 
 #define FLASH_HP_FSUACR_KEY                           (0x6600U)
-
-#define FLASH_HP_SAS_KEY                              (0x6600U)
 
 /** Register masks */
 #define FLASH_HP_FPESTAT_NON_LOCK_BIT_PGM_ERROR       (0x0002U) // Bits indicating Non Lock Bit related Programming error.
@@ -557,8 +559,12 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
         uint32_t region0_blocks = 0;
  #endif
 
+ #if BSP_FEATURE_FLASH_CODE_FLASH_START != 0
+        FSP_ERROR_RETURN(BSP_FEATURE_FLASH_CODE_FLASH_START <= address, FSP_ERR_INVALID_ADDRESS);
+ #endif
+
         /* Configure the current parameters based on if the operation is for code flash or data flash. */
-        if ((address & FLASH_HP_PRV_BANK1_MASK) < BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE)
+        if (((address) & FLASH_HP_PRV_BANK1_MASK) < BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE)
         {
             start_address = address & ~(BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE - 1);
 
@@ -582,11 +588,13 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
   #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
         uint32_t rom_end =
             (FLASH_HP_PRV_DUALSEL_BANKMD_MASK ==
-             (*flash_hp_dualsel & FLASH_HP_PRV_DUALSEL_BANKMD_MASK)) ? BSP_ROM_SIZE_BYTES : BSP_ROM_SIZE_BYTES / 2;
+             (*flash_hp_dualsel & FLASH_HP_PRV_DUALSEL_BANKMD_MASK)) ? BSP_ROM_SIZE_BYTES : (BSP_ROM_SIZE_BYTES &
+                                                                                             ~UINT16_MAX) / 2;
 
         FSP_ERROR_RETURN((start_address & FLASH_HP_PRV_BANK1_MASK) + num_bytes <= rom_end, FSP_ERR_INVALID_BLOCKS);
   #else
-        FSP_ERROR_RETURN(start_address + num_bytes <= BSP_ROM_SIZE_BYTES, FSP_ERR_INVALID_BLOCKS);
+        FSP_ERROR_RETURN(start_address + num_bytes <= (BSP_FEATURE_FLASH_CODE_FLASH_START + BSP_ROM_SIZE_BYTES),
+                         FSP_ERR_INVALID_BLOCKS);
   #endif
  #endif
 
@@ -1487,15 +1495,23 @@ static fsp_err_t r_flash_hp_write_bc_parameter_checking (flash_hp_instance_ctrl_
  #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
     if (flash_address < BSP_FEATURE_FLASH_DATA_FLASH_START)
     {
+  #if BSP_FEATURE_FLASH_CODE_FLASH_START != 0
+        FSP_ERROR_RETURN(BSP_FEATURE_FLASH_CODE_FLASH_START <= flash_address, FSP_ERR_INVALID_ADDRESS);
+  #endif
         uint32_t rom_end = BSP_ROM_SIZE_BYTES;
   #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
         if (0 == (FLASH_HP_PRV_DUALSEL_BANKMD_MASK & *flash_hp_dualsel))
         {
-            flash_address = flash_address % BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START;
-            rom_end       = BSP_ROM_SIZE_BYTES / 2;
+            flash_address &= ~BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START;
+            rom_end        = BSP_ROM_SIZE_BYTES / 2;
         }
   #endif
 
+  #if BSP_FEATURE_FLASH_CODE_FLASH_START != 0
+        flash_address &= ~BSP_FEATURE_FLASH_CODE_FLASH_START;
+  #endif
+
+        FSP_ERROR_RETURN(flash_address <= rom_end, FSP_ERR_INVALID_ADDRESS);
         FSP_ERROR_RETURN(flash_address + num_bytes <= rom_end, FSP_ERR_INVALID_SIZE);
         write_size = BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE;
     }
@@ -1670,7 +1686,7 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
 {
     p_ctrl->current_operation = FLASH_OPERATION_NON_BGO;
 
-    /*Allow Access to the Flash registers*/
+    /* Allow Access to the Flash registers*/
     R_SYSTEM->FWEPROR = 0x01U;
 
     uint32_t flash_clock_freq_hz  = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK);

@@ -162,8 +162,10 @@ static void ether_phy_reg_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint
 static void ether_phy_reg_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t data);
 static void ether_phy_trans_zto0(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_trans_1to0(ether_phy_instance_ctrl_t * p_instance_ctrl);
+static void ether_phy_trans_idle(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_mii_write1(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_mii_write0(ether_phy_instance_ctrl_t * p_instance_ctrl);
+static void ether_phy_mii_writez(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static bool ether_phy_targets_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
                                                               uint32_t                    line_speed_duplex);
@@ -498,7 +500,7 @@ uint32_t ether_phy_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t r
     ether_phy_reg_set(p_instance_ctrl, reg_addr, ETHER_PHY_MII_READ);
     ether_phy_trans_zto0(p_instance_ctrl);
     ether_phy_reg_read(p_instance_ctrl, &data);
-    ether_phy_trans_zto0(p_instance_ctrl);
+    ether_phy_trans_idle(p_instance_ctrl);
 
     return data;
 }                                      /* End of function ether_phy_read() */
@@ -524,7 +526,7 @@ void ether_phy_write (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_
     ether_phy_reg_set(p_instance_ctrl, reg_addr, ETHER_PHY_MII_WRITE);
     ether_phy_trans_1to0(p_instance_ctrl);
     ether_phy_reg_write(p_instance_ctrl, data);
-    ether_phy_trans_zto0(p_instance_ctrl);
+    ether_phy_trans_idle(p_instance_ctrl);
 }                                      /* End of function ether_phy_write() */
 
 /***********************************************************************************************************************
@@ -636,14 +638,13 @@ static void ether_phy_reg_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uin
             (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_LOW);
         }
 
+        reg_data  = (reg_data << 1);
+        reg_data |= (uint32_t) (((*petherc_pir) & ETHER_PHY_PIR_MDI_MASK) >> 3); /* MDI read  */
+
         for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
         {
             (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_HIGH);
         }
-
-        reg_data = (reg_data << 1);
-
-        reg_data |= (uint32_t) (((*petherc_pir) & ETHER_PHY_PIR_MDI_MASK) >> 3); /* MDI read  */
 
         for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
         {
@@ -705,35 +706,11 @@ static void ether_phy_reg_write (ether_phy_instance_ctrl_t * p_instance_ctrl, ui
  ***********************************************************************************************************************/
 static void ether_phy_trans_zto0 (ether_phy_instance_ctrl_t * p_instance_ctrl)
 {
-    int32_t j;
+    /* Release the bus by writing z. */
+    ether_phy_mii_writez(p_instance_ctrl);
 
-    volatile uint32_t * petherc_pir;
-
-    petherc_pir = p_instance_ctrl->p_reg_pir;
-
-    /*
-     * The processing of TA (turnaround) about reading of the frame format of MII Management Interface which is
-     * provided by "Table 22-12" of "22.2.4.5" of "IEEE 802.3-2008_section2".
-     */
-    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
-    {
-        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_LOW);
-    }
-
-    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
-    {
-        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_HIGH);
-    }
-
-    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
-    {
-        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_HIGH);
-    }
-
-    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
-    {
-        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_LOW);
-    }
+    /* The PHY will drive the bus to 0. */
+    ether_phy_mii_writez(p_instance_ctrl);
 }                                      /* End of function ether_phy_trans_zto0() */
 
 /***********************************************************************************************************************
@@ -753,6 +730,28 @@ static void ether_phy_trans_1to0 (ether_phy_instance_ctrl_t * p_instance_ctrl)
     ether_phy_mii_write1(p_instance_ctrl);
     ether_phy_mii_write0(p_instance_ctrl);
 }                                      /* End of function ether_phy_trans_1to0() */
+
+/***********************************************************************************************************************
+ * Function Name: ether_phy_trans_idle
+ * Description  : Switches data bus to IDLE state to prepare for the next transfer.
+ * Arguments    : ether_channel -
+ *                    Ethernet channel number
+ * Return Value : none
+ ***********************************************************************************************************************/
+static void ether_phy_trans_idle (ether_phy_instance_ctrl_t * p_instance_ctrl)
+{
+    volatile uint32_t * petherc_pir;
+
+    petherc_pir = p_instance_ctrl->p_reg_pir;
+
+    int64_t count = (int64_t) p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time * 4;
+
+    /* Release the bus for one MDC period. */
+    for (int64_t j = count; j > 0; j--)
+    {
+        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_LOW);
+    }
+}
 
 /***********************************************************************************************************************
  * Function Name: ether_phy_mii_write1
@@ -833,6 +832,47 @@ static void ether_phy_mii_write0 (ether_phy_instance_ctrl_t * p_instance_ctrl)
         (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_WRITE | ETHER_PHY_PIR_MDC_LOW);
     }
 }                                      /* End of function ether_phy_mii_write0() */
+
+/***********************************************************************************************************************
+ * Function Name: ether_phy_mii_writez
+ * Description  : Outputs z to the MII interface
+ * Arguments    : ether_channel -
+ *                    Ethernet channel number
+ * Return Value : none
+ ***********************************************************************************************************************/
+static void ether_phy_mii_writez (ether_phy_instance_ctrl_t * p_instance_ctrl)
+{
+    int32_t j;
+
+    volatile uint32_t * petherc_pir;
+
+    petherc_pir = p_instance_ctrl->p_reg_pir;
+
+    /*
+     * The processing of one bit about frame format of MII Management Interface which is
+     * provided by "Table 22-12" of "22.2.4.5" of "IEEE 802.3-2008_section2".
+     * The data that z is output.
+     */
+    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
+    {
+        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_LOW);
+    }
+
+    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
+    {
+        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_HIGH);
+    }
+
+    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
+    {
+        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_HIGH);
+    }
+
+    for (j = p_instance_ctrl->p_ether_phy_cfg->mii_bit_access_wait_time; j > 0; j--)
+    {
+        (*petherc_pir) = (ETHER_PHY_PIR_MDO_LOW | ETHER_PHY_PIR_MMD_READ | ETHER_PHY_PIR_MDC_LOW);
+    }
+}
 
 /***********************************************************************************************************************
  * Function Name: ether_phy_targets_initialize

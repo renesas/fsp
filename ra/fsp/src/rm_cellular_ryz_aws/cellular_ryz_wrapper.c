@@ -237,14 +237,6 @@ CellularError_t Cellular_GetNetworkTime (CellularHandle_t cellularHandle, Cellul
 }
 
 /*******************************************************************************************************************//**
- * Cellular_GetServiceStatus wrapper, implemented by Cellular Common
- **********************************************************************************************************************/
-CellularError_t Cellular_GetServiceStatus (CellularHandle_t cellularHandle, CellularServiceStatus_t * pServiceStatus)
-{
-    return Cellular_CommonGetServiceStatus(cellularHandle, pServiceStatus);
-}
-
-/*******************************************************************************************************************//**
  * Cellular_GetPsmSettings wrapper, implemented by Cellular Common
  **********************************************************************************************************************/
 CellularError_t Cellular_GetPsmSettings (CellularHandle_t cellularHandle, CellularPsmSettings_t * pPsmSettings)

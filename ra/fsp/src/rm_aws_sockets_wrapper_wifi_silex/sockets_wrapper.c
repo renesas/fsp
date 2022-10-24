@@ -351,7 +351,7 @@ int32_t Sockets_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength)
                                       xBufferLength,
                                       pWiFiSocketContext->receiveTimeout);
 
-        if (recvLength > 0)
+        if (recvLength >= 0)
         {
             retRecvLength = recvLength;
         }

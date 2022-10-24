@@ -321,14 +321,14 @@ void hw_usb_hset_enb_sacke (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_hset_enb_pddetinte (usb_utr_t * ptr)
 {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     if (USB_IP1 == ptr->ip)
     {
         ptr->ipp1->INTENB1 |= USB_PDDETINTE;
     }
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     (void) *ptr;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif /* defined (USB_HIGH_SPEED_MODULE) */
 }
 
 /******************************************************************************
@@ -458,14 +458,14 @@ void hw_usb_hclear_sts_sack (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_hclear_sts_pddetint (usb_utr_t * ptr)
 {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     if (USB_IP1 == ptr->ip)
     {
         ptr->ipp1->INTSTS1 = (uint16_t) ((~USB_PDDETINT) & INTSTS1_MASK);
     }
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     (void) *ptr;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif /* defined (USB_HIGH_SPEED_MODULE) */
 }
 
 /******************************************************************************
@@ -675,14 +675,14 @@ void hw_usb_hset_usbspd (usb_utr_t * ptr, uint16_t devsel, uint16_t data)
  ******************************************************************************/
 void hw_usb_hset_dcpmode (usb_utr_t * ptr)
 {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     if (USB_IP1 == ptr->ip)
     {
         ptr->ipp1->BCCTRL |= USB_DCPMODE;
     }
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     (void) *ptr;
- #endif/* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif/* defined (USB_HIGH_SPEED_MODULE) */
 }
 
 /******************************************************************************
@@ -759,9 +759,9 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
             /* none */
         }
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
         USB_M0->PHYSLEW = 0x5;
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
 
         USB_M0->SYSCFG |= USB_DCFM;
 
@@ -839,7 +839,7 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
  #if USB_NUM_USBIP == 2
     else
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
    #if USB_CFG_CLKSEL == USB_CFG_24MHZ
         USB_M1->PHYSET &= (uint16_t) ~USB_HSEB;
    #endif                              /* USB_CFG_CLKSEL == USB_CFG_24MHZ */
@@ -891,7 +891,7 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
 
         USB_M1->BUSWAIT = (USB_CFG_BUSWAIT | USB_VALUE_0F00H);
         usb_cpu_delay_1us((uint16_t) 1); /* wait 1usec */
-  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
         USB_M1->SOFCFG |= USB_INTL;
 
@@ -939,9 +939,9 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
 
             case USB_SE0:              /* USB device no connected */
             {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
                 USB_M1->INTENB1 = USB_ATTCH;
-  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif /* defined (USB_HIGH_SPEED_MODULE) */
                 break;
             }
 
@@ -961,9 +961,9 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
         USB_M1->INTSTS1 = (~USB_OVRCRE & INTSTS1_MASK);
 
         USB_M1->INTENB0 = (USB_BEMPE | USB_NRDYE | USB_BRDYE);
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
         USB_M1->INTENB1 = (USB_OVRCRE | USB_ATTCH);
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined (USB_HIGH_SPEED_MODULE) */
     }
  #endif                                /* USB_NUM_USBIP == 2 */
 

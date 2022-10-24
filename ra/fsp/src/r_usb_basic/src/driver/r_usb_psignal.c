@@ -157,9 +157,9 @@ void usb_pstd_detach_process (usb_utr_t * p_utr)
 {
     uint16_t i;
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     hw_usb_clear_cnen(p_utr);
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
     /* Pull-up disable */
     hw_usb_pclear_dprpu(p_utr->ip);
 

@@ -30,33 +30,31 @@
  **********************************************************************************************************************/
 
 /* Clock control register addresses */
-#define LPM_CLOCK_HOCOCR                     ((uint8_t *) 0x4001E036U)
-#define LPM_CLOCK_MOCOCR                     ((uint8_t *) 0x4001E038U)
-#define LPM_CLOCK_LOCOCR                     ((uint8_t *) 0x4001E490U)
-#define LPM_CLOCK_MOSCCR                     ((uint8_t *) 0x4001E032U)
-#define LPM_CLOCK_SOSCCR                     ((uint8_t *) 0x4001E480U)
-#define LPM_CLOCK_PLLCR                      ((uint8_t *) 0x4001E02AU)
-#define LPM_CLOCK_HOCO                       0 // The high speed on chip oscillator.
-#define LPM_CLOCK_MOCO                       1 // The middle speed on chip oscillator.
-#define LPM_CLOCK_LOCO                       2 // The low speed on chip oscillator.
-#define LPM_CLOCK_MAIN_OSC                   3 // The main oscillator.
-#define LPM_CLOCK_SUBCLOCK                   4 // The subclock oscillator.
-#define LPM_CLOCK_PLL                        5 // The PLL oscillator.
+#define LPM_CLOCK_HOCOCR              ((uint8_t *) 0x4001E036U)
+#define LPM_CLOCK_MOCOCR              ((uint8_t *) 0x4001E038U)
+#define LPM_CLOCK_LOCOCR              ((uint8_t *) 0x4001E490U)
+#define LPM_CLOCK_MOSCCR              ((uint8_t *) 0x4001E032U)
+#define LPM_CLOCK_SOSCCR              ((uint8_t *) 0x4001E480U)
+#define LPM_CLOCK_PLLCR               ((uint8_t *) 0x4001E02AU)
+#define LPM_CLOCK_HOCO                0 // The high speed on chip oscillator.
+#define LPM_CLOCK_MOCO                1 // The middle speed on chip oscillator.
+#define LPM_CLOCK_LOCO                2 // The low speed on chip oscillator.
+#define LPM_CLOCK_MAIN_OSC            3 // The main oscillator.
+#define LPM_CLOCK_SUBCLOCK            4 // The subclock oscillator.
+#define LPM_CLOCK_PLL                 5 // The PLL oscillator.
 
 /* From user's manual and discussions with hardware group,
  * using the maximum is safe for all MCUs, will be updated and restored in LPM when entering
  * low power mode on RA6 MCUs (lowPowerModeEnter())
  */
 
-#define LPM_SW_STANDBY_HOCOWTCR_HSTS         (0x6U)
-#define LPM_SW_STANDBY_HOCOWTCR_SCI0_HSTS    (0x2U)
-#define LPM_SW_STANDBY_STCONR                (0x0U)
-#define LPM_SW_STANDBY_WAKE_STCONR           (0x3U)
+#define LPM_SW_STANDBY_STCONR         (0x0U)
+#define LPM_SW_STANDBY_WAKE_STCONR    (0x3U)
 
-#define LPM_SNZREQCR1_OFFSET                 (32ULL)
-#define LPM_WUPEN1_OFFSET                    (32ULL)
+#define LPM_SNZREQCR1_OFFSET          (32ULL)
+#define LPM_WUPEN1_OFFSET             (32ULL)
 
-#define LPM_OPEN                             (0x524c504d)
+#define LPM_OPEN                      (0x524c504d)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -560,7 +558,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     uint32_t saved_opccr        = 0U;
     uint32_t saved_sopccr       = 0U;
     uint32_t saved_ostdcr_ostde = 0U;
- #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+ #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
     uint32_t saved_hocowtcr = 0U;
     uint32_t new_hocowtcr   = 0U;
  #endif
@@ -603,7 +601,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         saved_opccr  = R_SYSTEM->OPCCR_b.OPCM;
         saved_sopccr = R_SYSTEM->SOPCCR_b.SOPCM;
 
- #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+ #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
 
         /* Save HOCOWTCR_b.HSTS */
         saved_hocowtcr = R_SYSTEM->HOCOWTCR_b.HSTS;
@@ -618,12 +616,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             {
                 /* Verify clock settings. */
                 FSP_ERROR_RETURN(FSP_SUCCESS == r_lpm_check_clocks(clock_source), FSP_ERR_INVALID_MODE);
- #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
-                new_hocowtcr = LPM_SW_STANDBY_HOCOWTCR_SCI0_HSTS;
+ #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
+                new_hocowtcr = BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE;
             }
             else
             {
-                new_hocowtcr = LPM_SW_STANDBY_HOCOWTCR_HSTS;
+                new_hocowtcr = BSP_FEATURE_CGC_HOCOWTCR_VALUE;
  #endif
             }
 
@@ -635,7 +633,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             /* Set STCONR based on the current system clock. */
             if (LPM_CLOCK_HOCO == clock_source)
             {
-  #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+  #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
 
                 /* Set HOCOWTCR_b.HSTS when using HOCO as the system clock */
                 R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (new_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
@@ -732,7 +730,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         R_SYSTEM->OPCCR          = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
         R_SYSTEM->SOPCCR         = saved_sopccr & R_SYSTEM_SOPCCR_SOPCM_Msk;
         R_SYSTEM->OSTDCR_b.OSTDE = 0x1U & saved_ostdcr_ostde;
-  #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+  #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
         R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (saved_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
   #endif
 

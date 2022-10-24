@@ -31,7 +31,7 @@
 #include "../hw/inc/r_usb_bitdefine.h"
 #include "../hw/inc/r_usb_reg_access.h"
 
-#if defined(USB_CFG_PMSC_USE)
+#if defined(USB_CFG_PMSC_USE) && !defined(USB_CFG_OTG_USE)
  #include "r_usb_pmsc_cfg.h"
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
 
@@ -42,6 +42,9 @@
  #if defined(USB_CFG_PHID_USE)
   #include "r_usb_otg_hid_cfg.h"
  #endif                                /* (defined(USB_CFG_HCDC_USE) | defined(USB_CFG_PCDC_USE)) */
+ #if defined(USB_CFG_PMSC_USE)
+  #include "r_usb_otg_msc_cfg.h"
+ #endif
 #else                                  /* defined(USB_CFG_OTG_USE) */
  #if defined(USB_CFG_PCDC_USE)
   #include "r_usb_pcdc_cfg.h"
@@ -1071,9 +1074,9 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
     uint8_t  pipe_no;
     uint16_t pipe_cfg;
     uint16_t pipe_maxp;
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
     uint16_t pipe_buf;
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
 
     /* Check Endpoint descriptor */
     if (USB_DT_ENDPOINT != descriptor[USB_DEV_B_DESCRIPTOR_TYPE])
@@ -1101,12 +1104,12 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
                 pipe_cfg = (uint16_t) (USB_TYPFIELD_BULK | USB_CFG_DBLB | USB_SHTNAKFIELD | USB_DIR_P_OUT);
             }
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_CFG_IP1 == p_utr->ip)
             {
                 pipe_cfg |= (uint16_t) (USB_CFG_CNTMD);
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
             break;
         }
 
@@ -1146,12 +1149,12 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
                 pipe_cfg = (uint16_t) (USB_TYPFIELD_ISO | USB_CFG_DBLB | USB_SHTNAKFIELD | USB_DIR_P_OUT);
             }
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_CFG_IP1 == p_utr->ip)
             {
                 pipe_cfg |= (uint16_t) (USB_CFG_CNTMD);
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
             break;
         }
 
@@ -1180,7 +1183,7 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_cfg  = pipe_cfg;
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_maxp = pipe_maxp;
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_peri = USB_NULL;
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
         if (USB_CFG_IP1 == p_utr->ip)
         {
             pipe_buf = usb_pstd_get_pipe_buf_value(pipe_no);
@@ -1190,7 +1193,7 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
         {
             (void) pipe_buf;
         }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
     }
     else
     {
@@ -1220,12 +1223,12 @@ void usb_pstd_clr_pipe_table (uint8_t usb_ip)
             /* Clear use block */
             g_usb_pipe_table[usb_ip][pipe_no].use_flag = USB_FALSE;
             g_usb_pipe_table[usb_ip][pipe_no].pipe_cfg = USB_NULL;
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
             if (USB_CFG_IP1 == usb_ip)
             {
                 g_usb_pipe_table[usb_ip][pipe_no].pipe_buf = USB_NULL;
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
             g_usb_pipe_table[usb_ip][pipe_no].pipe_maxp = USB_NULL;
             g_usb_pipe_table[usb_ip][pipe_no].pipe_peri = USB_NULL;
         }
@@ -1559,7 +1562,7 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
     return pipe_no;
 }
 
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(USB_HIGH_SPEED_MODULE)
 
 /******************************************************************************
  * Function Name   : usb_pstd_get_pipe_buf_value
@@ -1695,7 +1698,7 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
     return pipe_buf;
 }                                      /* End of function usb_pstd_get_pipe_buf_value() */
 
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 

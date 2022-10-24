@@ -64,6 +64,15 @@ extern "C"
   #endif
  #endif                                /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */
 
+/*
+ * The MBEDTLS_PLATFORM_SETBUF_MACRO was introduced in mbedTLS 3.2.1 to prevent stdio read/write functions from buffering stream data to reduce the likelihood of key leakage by setting the buffer argument in setbuf() to NULL.
+ * The dummy_setbuf function below was created to prevent build errors; since FSP uses LittleFS by default (where the usage of a buffer is mandatory) this function does not perform any action. Setting the cache since in LittleFS to the minimum supported by the Data Flash (4) can minimize but not remove the likelihood of key data leakage.
+ * The dummy function can be replaced by defining a different value for MBEDTLS_PLATFORM_SETBUF_MACRO value in the FSP configurator.
+ */
+#if defined(MBEDTLS_PLATFORM_SETBUF_MACRO)
+void dummy_setbuf( void *stream, char *buf );
+#endif /* MBEDTLS_PLATFORM_SETBUF_MACRO */
+
 /*******************************************************************************************************************/ /**
  * @} (end addtogroup PSA_CRYPTO)
  **********************************************************************************************************************/

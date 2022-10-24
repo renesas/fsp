@@ -72,6 +72,8 @@
 #define mbedtls_free   free
 #endif
 
+#include "hw_sce_ra_private.h"
+
 #define CIPHER_VALIDATE_RET( cond )    \
     MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA )
 #define CIPHER_VALIDATE( cond )        \
@@ -256,6 +258,7 @@ int mbedtls_cipher_setup( mbedtls_cipher_context_t *ctx,
 }
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
+#if !defined(MBEDTLS_DEPRECATED_REMOVED)
 int mbedtls_cipher_setup_psa( mbedtls_cipher_context_t *ctx,
                               const mbedtls_cipher_info_t *cipher_info,
                               size_t taglen )
@@ -285,6 +288,7 @@ int mbedtls_cipher_setup_psa( mbedtls_cipher_context_t *ctx,
     ctx->psa_enabled = 1;
     return( 0 );
 }
+#endif /* MBEDTLS_DEPRECATED_REMOVED */
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
 
 int mbedtls_cipher_setkey( mbedtls_cipher_context_t *ctx,
@@ -423,6 +427,12 @@ int mbedtls_cipher_set_iv( mbedtls_cipher_context_t *ctx,
 #if defined(MBEDTLS_CHACHA20_C)
     if ( ctx->cipher_info->type == MBEDTLS_CIPHER_CHACHA20 )
     {
+        /* Even though the actual_iv_size is overwritten with a correct value
+         * of 12 from the cipher info, return an error to indicate that
+         * the input iv_len is wrong. */
+        if( iv_len != 12 )
+            return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );
+
         if ( 0 != mbedtls_chacha20_starts( (mbedtls_chacha20_context*)ctx->cipher_ctx,
                                            iv,
                                            0U ) ) /* Initial counter value */
@@ -430,6 +440,11 @@ int mbedtls_cipher_set_iv( mbedtls_cipher_context_t *ctx,
             return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );
         }
     }
+#if defined(MBEDTLS_CHACHAPOLY_C)
+    if ( ctx->cipher_info->type == MBEDTLS_CIPHER_CHACHA20_POLY1305 &&
+         iv_len != 12 )
+        return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );
+#endif    
 #endif
 
 #if defined(MBEDTLS_GCM_C)

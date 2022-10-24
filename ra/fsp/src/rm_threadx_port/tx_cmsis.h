@@ -1,4 +1,5 @@
 /**************************************************************************/
+
 /*                                                                        */
 /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
 /*                                                                        */
@@ -8,7 +9,6 @@
 /*       and in the root directory of this software.                      */
 /*                                                                        */
 /**************************************************************************/
-
 
 /**************************************************************************/
 /**************************************************************************/
@@ -53,6 +53,13 @@
  #define __FPU_PRESENT             1   /*!< FPU present or not                                                    */
  #define __DSP_PRESENT             1   /*!< DSP present or not                                                    */
  #include "core_cm33.h"
+#elif __ARM_ARCH_8_1M_MAIN__
+ #define __MPU_PRESENT             1   /*!< MPU present or not                                                    */
+ #define __NVIC_PRIO_BITS          4   /*!< Number of Bits used for Priority Levels                               */
+ #define __Vendor_SysTickConfig    0   /*!< Set to 1 if different SysTick Config is used                          */
+ #define __FPU_PRESENT             1   /*!< FPU present or not                                                    */
+ #define __DSP_PRESENT             1   /*!< DSP present or not                                                    */
+ #include "core_cm85.h"
 #else
  #error Unsupported Architecture
 #endif

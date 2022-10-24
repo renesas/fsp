@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InData_TextLen, uint32_t *InData_MAC, uint32_t *InData_MACLength, uint32_t *OutData_Text)
+fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InData_MAC, uint32_t *OutData_Text)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -90,14 +90,6 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
     }
     else
     {
-        SCE->REG_104H = 0x00000068U;
-        SCE->REG_E0H = 0x80010140U;
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_104H_b.B31)
-        {
-            /* waiting */
-        }
-        SCE->REG_100H = InData_MACLength[0];
         SCE->REG_ECH = 0x38008940U;
         SCE->REG_ECH = 0x00000000U;
         SCE->REG_E0H = 0x00000080U;
@@ -107,12 +99,12 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
         SCE->REG_ECH = 0x34202beaU;
         SCE->REG_E0H = 0x00000080U;
         SCE->REG_1CH = 0x00260000U;
-        HW_SCE_p_func100(0x4b30af9cU, 0x00e6d366U, 0x3f556c28U, 0x6921cbe7U);
+        HW_SCE_p_func100(0x2068ea33U, 0x35fe694fU, 0x1fffea4fU, 0xb17cb918U);
         SCE->REG_1CH = 0x00400000U;
         SCE->REG_1D0H = 0x00000000U;
         if (1U == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func102(0x244b3723U, 0x6289e7c3U, 0x70bcef3eU, 0xadab16b8U);
+            HW_SCE_p_func102(0xf3e4e3d7U, 0x7db5da18U, 0xc8e7a740U, 0x69d1ed6cU);
             SCE->REG_1BCH = 0x00000040U;
             /* WAIT_LOOP */
             while (0U != SCE->REG_18H_b.B12)
@@ -123,21 +115,14 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
         }
         else
         {
-            SCE->REG_104H = 0x00000068U;
-            SCE->REG_E0H = 0x80010000U;
-            /* WAIT_LOOP */
-            while (1U != SCE->REG_104H_b.B31)
-            {
-                /* waiting */
-            }
-            SCE->REG_100H = InData_TextLen[0];
+            SCE->REG_ECH = 0x00003409U;
             SCE->REG_ECH = 0x00008c00U;
             SCE->REG_ECH = 0x0000000fU;
             SCE->REG_ECH = 0x38008800U;
             SCE->REG_ECH = 0x00000000U;
             SCE->REG_E0H = 0x00000080U;
             SCE->REG_1CH = 0x00A60000U;
-            HW_SCE_p_func100(0x57ba30d3U, 0xb4a20ffbU, 0x524455f6U, 0x51864c0bU);
+            HW_SCE_p_func100(0x73584992U, 0xc573a5d6U, 0x6ea546bbU, 0xcfe69407U);
             SCE->REG_1CH = 0x00400000U;
             SCE->REG_1D0H = 0x00000000U;
             if (1U == (SCE->REG_1CH_b.B22))
@@ -174,7 +159,7 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
                     SCE->REG_ECH = 0x12003c3fU;
                     SCE->REG_ECH = 0x00002fe0U;
                 }
-                HW_SCE_p_func100(0xff6bcd24U, 0xccea5981U, 0x25a23be6U, 0x30ea4398U);
+                HW_SCE_p_func100(0xbc0c311eU, 0xea2c3892U, 0x0a8e613aU, 0x74bd2866U);
                 SCE->REG_ECH = 0x0000b420U;
                 SCE->REG_ECH = 0x00000080U;
                 SCE->REG_E0H = 0x81840001U;
@@ -212,11 +197,11 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
                     /* waiting */
                 }
                 SCE->REG_1CH = 0x00001800U;
-                HW_SCE_p_func101(0x83b4fb12U, 0xd4bd83dfU, 0xb02262a6U, 0x3b226c3fU);
+                HW_SCE_p_func101(0x31cd2a46U, 0x4dee405dU, 0x5cf87637U, 0x7a6f8ce2U);
             }
             else
             {
-                HW_SCE_p_func101(0x6d97421aU, 0x5f0f11c6U, 0xa6a28818U, 0x7eec6ce3U);
+                HW_SCE_p_func101(0x22cf8d83U, 0x541651fcU, 0xac958888U, 0x82de838cU);
             }
             SCE->REG_104H = 0x00000051U;
             SCE->REG_A4H = 0x00000cc4U;
@@ -278,12 +263,12 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
             }
             SCE->REG_1CH = 0x00001800U;
             SCE->REG_A4H = 0x00000000U;
-            HW_SCE_p_func100(0x2ec91e0cU, 0x029318e5U, 0x3e6a1b6fU, 0xec4debb6U);
+            HW_SCE_p_func100(0x2ea4caa9U, 0xfbd261e2U, 0xcb769774U, 0x0dc25313U);
             SCE->REG_1CH = 0x00400000U;
             SCE->REG_1D0H = 0x00000000U;
             if (1U == (SCE->REG_1CH_b.B22))
             {
-                HW_SCE_p_func102(0x938a13abU, 0x03a235feU, 0xfcc53764U, 0xa819ed6fU);
+                HW_SCE_p_func102(0x66790dccU, 0xe55eefe5U, 0xb927a6bdU, 0xc192c729U);
                 SCE->REG_1BCH = 0x00000040U;
                 /* WAIT_LOOP */
                 while (0U != SCE->REG_18H_b.B12)
@@ -294,7 +279,7 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
             }
             else
             {
-                HW_SCE_p_func102(0x37ca3bdbU, 0x3a9bf024U, 0x635e7718U, 0x23aaa7e0U);
+                HW_SCE_p_func102(0xf1b693deU, 0x4e469de9U, 0x7d25b62aU, 0xfd63f049U);
                 SCE->REG_1BCH = 0x00000040U;
                 /* WAIT_LOOP */
                 while (0U != SCE->REG_18H_b.B12)
@@ -308,5 +293,5 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p98f.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p98f_r2.prc
 ***********************************************************************************************************************/

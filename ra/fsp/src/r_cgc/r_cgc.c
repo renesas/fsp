@@ -41,8 +41,21 @@
 
 #define CGC_PRV_OSTDCR_OSC_STOP_ENABLE           (0x81U)
 
+#if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+/* PLLMULNF in PLLCCR is 2 bits wide. */
+ #define CGC_PRV_PLLCCR_PLLMULNF_MASK            (0x3U)
+
+/* PLLMULNF in PLLCCR starts at bit 6. */
+ #define CGC_PRV_PLLCCR_PLLMULNF_BIT             (6U)
+
+/* PLLMUL in PLLCCR is 8 bits wide. */
+ #define CGC_PRV_PLLCCR_PLLMUL_MASK              (0xFFU)
+#else
+
 /* PLLMUL in PLLCCR is 6 bits wide. */
-#define CGC_PRV_PLLCCR_PLLMUL_MASK               (0x3FU)
+ #define CGC_PRV_PLLCCR_PLLMUL_MASK              (0x3FU)
+#endif
 
 /* PLLMUL in PLLCCR starts at bit 8. */
 #define CGC_PRV_PLLCCR_PLLMUL_BIT                (8U)
@@ -59,6 +72,18 @@
 /* CKODIV in CKOCR starts at bit 4. */
 #define CGC_PRV_CKOCR_CKODIV_BIT                 (4)
 
+/* PLODIVx in PLLCCR2 are 4 bits wide. */
+#define CGC_PRV_PLLCCR2_PLODIVX_MASK             (0xFU)
+
+/* PLODIVP in PLLCCR2 starts at bit 0. */
+#define CGC_PRV_PLLCCR2_PLODIVP_BIT              (0U)
+
+/* PLODIVP in PLLCCR2 starts at bit 4. */
+#define CGC_PRV_PLLCCR2_PLODIVQ_BIT              (4U)
+
+/* PLODIVP in PLLCCR2 starts at bit 8. */
+#define CGC_PRV_PLLCCR2_PLODIVR_BIT              (8U)
+
 #if BSP_PRV_PLL_SUPPORTED
  #if BSP_PRV_PLL2_SUPPORTED
   #define CGC_PRV_NUM_CLOCKS                     ((uint8_t) CGC_CLOCK_PLL2 + 1U)
@@ -72,13 +97,13 @@
 /* Mask used to isolate dividers for ICLK and FCLK. */
 #define CGC_PRV_SCKDIVCR_ICLK_FCLK_MASK          (0x77000000U)
 
-#define CGC_PRV_HOCOCR                           ((uint8_t *) 0x4001E036U)
-#define CGC_PRV_MOCOCR                           ((uint8_t *) 0x4001E038U)
-#define CGC_PRV_LOCOCR                           ((uint8_t *) 0x4001E490U)
-#define CGC_PRV_MOSCCR                           ((uint8_t *) 0x4001E032U)
-#define CGC_PRV_SOSCCR                           ((uint8_t *) 0x4001E480U)
-#define CGC_PRV_PLLCR                            ((uint8_t *) 0x4001E02AU)
-#define CGC_PRV_PLL2CR                           ((uint8_t *) 0x4001E04AU)
+#define CGC_PRV_HOCOCR                           ((uint8_t *) &R_SYSTEM->HOCOCR)
+#define CGC_PRV_MOCOCR                           ((uint8_t *) &R_SYSTEM->MOCOCR)
+#define CGC_PRV_LOCOCR                           ((uint8_t *) &R_SYSTEM->LOCOCR)
+#define CGC_PRV_MOSCCR                           ((uint8_t *) &R_SYSTEM->MOSCCR)
+#define CGC_PRV_SOSCCR                           ((uint8_t *) &R_SYSTEM->SOSCCR)
+#define CGC_PRV_PLLCR                            ((uint8_t *) &R_SYSTEM->PLLCR)
+#define CGC_PRV_PLL2CR                           ((uint8_t *) &R_SYSTEM->PLL2CR)
 
 /* The closest supported power mode to use when exiting low speed or low voltage mode. */
 #if BSP_FEATURE_CGC_MIDDLE_SPEED_MAX_FREQ_HZ > 0U
@@ -94,13 +119,27 @@
 #endif
 
 /* Specifications for PLL on MCUs with PLLCCR. */
-#define CGC_PRV_PLLCCR_PLL_MIN_HZ                (120000000U)
+#if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #define CGC_PRV_PLLCCR_PLL_MIN_HZ               (40000000U)
+#else
+ #define CGC_PRV_PLLCCR_PLL_MIN_HZ               (120000000U)
+#endif
 
 /* Specifications for PLL on MCUs with PLLCCR2. */
 #define CGC_PRV_PLLCCR2_PLL_MIN_HZ               (24000000U)
 #define CGC_PRV_PLLCCR2_PLL_MULTIPLIED_MAX_HZ    (128000000U)
 #define CGC_PRV_PLLCCR2_PLL_SRC_MIN_HZ           (4000000U)
 #define CGC_PRV_PLLCCR2_PLL_SRC_MAX_HZ           (12500000U)
+
+/* Scaling factor for calculating the multiplier for PLLCCR type 3. */
+#define CGC_PRV_PLL_MUL_FACTOR                   (6U)
+
+/* Scaling factor for PLLMUL values; using scaling of 6. */
+#define CGC_PRV_PLL_MUL_COEFF                    (6U)
+#define CGC_PRV_PLL_MUL_NF_COEFF                 (2U)
+
+/* Mask of the uppermost bit of all dividers in SCKDIVCR that are valid when oscillation stop detection is enabled. */
+#define CGC_PRV_SCKDIVCR_UPPER_BIT               (BSP_PRV_SCKDIVCR_MASK & 0x44444444U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -119,6 +158,14 @@ typedef enum e_cgc_prv_change
     CGC_PRV_CHANGE_LPM     = 0,
     CGC_PRV_CHANGE_LPM_CGC = 1,
 } cgc_prv_change_t;
+
+/* Private enumeration for PLL output selection. */
+typedef enum e_cgc_prv_pllout
+{
+    CGC_PRV_PLLOUT_P = 0,              ///< Primary clock output for single output PLLs or P clock output for multi-output PLL.
+    CGC_PRV_PLLOUT_Q = 1,              ///< Q clock output for multi-output PLL.
+    CGC_PRV_PLLOUT_R = 2,              ///< R clock output for multi-output PLL.
+} cgc_prv_pllout_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
 typedef void (BSP_CMSE_NONSECURE_CALL * cgc_prv_ns_callback)(cgc_callback_args_t * p_args);
@@ -139,7 +186,12 @@ static void                  r_cgc_post_change(cgc_prv_change_t change);
 static void                  r_cgc_pre_change(cgc_prv_change_t change);
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
+
+ #if BSP_FEATURE_CGC_HAS_SOPCCR
 static bool r_cgc_subosc_mode_possible(uint32_t sckdivcr);
+
+ #endif
+
 static void r_cgc_operating_mode_reduce(uint32_t sckdivcr);
 
 #endif
@@ -169,12 +221,15 @@ static inline cgc_clock_t r_cgc_pll2_clocksource_get(void);
 
  #endif
 
-static fsp_err_t r_cgc_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg, uint32_t * const p_pll_hz);
+static fsp_err_t r_cgc_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg,
+                                        cgc_prv_pllout_t            pll_out,
+                                        uint32_t * const            p_pll_hz);
 static void      r_cgc_pll_cfg(uint32_t pll_hz, uint32_t pllccr);
 static fsp_err_t r_cgc_pllccr_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg,
+                                               cgc_clock_t                 pll,
+                                               cgc_prv_pllout_t            pll_out,
                                                uint32_t * const            p_pll_hz,
-                                               uint32_t * const            p_pllccr,
-                                               cgc_clock_t                 pll);
+                                               uint32_t * const            p_pllccr);
 
 #endif
 
@@ -219,10 +274,6 @@ static const uint8_t g_cgc_software_wait_us[CGC_PRV_NUM_CLOCKS] =
     [CGC_CLOCK_PLL2] = 0U,             // PLL2 has a stabilization wait flag
 #endif
 };
-
-/* Create a mask of the uppermost bits of all valid clock dividers in SCKDIVCR. */
-static const uint32_t g_sckdivcr_upper_bits =
-    ((uint32_t) ((BSP_PRV_SCKDIVCR_MASK & (BSP_PRV_SCKDIVCR_MASK << 1)) & ((uint64_t) BSP_PRV_SCKDIVCR_MASK << 2)));
 
 /***********************************************************************************************************************
  * Global Variables
@@ -338,6 +389,10 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     FSP_ASSERT(NULL != p_clock_cfg);
 
+ #if 0 == BSP_FEATURE_CGC_EXECUTE_FROM_LOCO
+    FSP_ASSERT(CGC_CLOCK_LOCO != p_clock_cfg->system_clock);
+ #endif
+
     /* Check dividers. */
     err = r_cgc_check_config_dividers(&p_clock_cfg->divider_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -396,8 +451,19 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     uint32_t pllccr = 0U;
     if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll_state)
     {
-        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, &pll_hz, &pllccr, CGC_CLOCK_PLL);
+ #if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, CGC_CLOCK_PLL, CGC_PRV_PLLOUT_P, &pll_hz, &pllccr);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, CGC_CLOCK_PLL, CGC_PRV_PLLOUT_Q, &pll_hz, &pllccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, CGC_CLOCK_PLL, CGC_PRV_PLLOUT_R, &pll_hz, &pllccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #else
+        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, CGC_CLOCK_PLL, CGC_PRV_PLLOUT_P, &pll_hz, &pllccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
     }
 
  #if CGC_CFG_PARAM_CHECKING_ENABLE
@@ -420,8 +486,23 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     uint32_t pll2ccr = 0U;
     if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll2_state)
     {
-        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll2_cfg, &pll2_hz, &pll2ccr, CGC_CLOCK_PLL2);
+ #if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+        err =
+            r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll2_cfg, CGC_CLOCK_PLL2, CGC_PRV_PLLOUT_P, &pll2_hz, &pll2ccr);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        err =
+            r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll2_cfg, CGC_CLOCK_PLL2, CGC_PRV_PLLOUT_Q, &pll2_hz, &pll2ccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        err =
+            r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll2_cfg, CGC_CLOCK_PLL2, CGC_PRV_PLLOUT_R, &pll2_hz, &pll2ccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #else
+        err =
+            r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll2_cfg, CGC_CLOCK_PLL2, CGC_PRV_PLLOUT_P, &pll2_hz, &pll2ccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
     }
 
  #if CGC_CFG_PARAM_CHECKING_ENABLE
@@ -482,6 +563,16 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         /* Configure PLL and store PLL frequency in BSP. */
         r_cgc_pll_cfg(pll_hz, pllccr);
 
+ #if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+        /* Configure the output clock dividers. */
+        uint32_t outdiv =
+            (((p_clock_cfg->pll_cfg.out_div_p - 1U) & CGC_PRV_PLLCCR2_PLODIVX_MASK) << CGC_PRV_PLLCCR2_PLODIVP_BIT) |
+            (((p_clock_cfg->pll_cfg.out_div_q - 1U) & CGC_PRV_PLLCCR2_PLODIVX_MASK) << CGC_PRV_PLLCCR2_PLODIVQ_BIT) |
+            (((p_clock_cfg->pll_cfg.out_div_r - 1U) & CGC_PRV_PLLCCR2_PLODIVX_MASK) << CGC_PRV_PLLCCR2_PLODIVR_BIT);
+        R_SYSTEM->PLLCCR2 = (uint16_t) outdiv;
+ #endif
+
         if (CGC_CLOCK_CHANGE_START == options[p_clock_cfg->pll_cfg.source_clock])
         {
             /* Need to start PLL source clock and let it stabilize before starting PLL. */
@@ -505,6 +596,16 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     {
         /* Configure PLL2 and store frequency in BSP. */
         R_SYSTEM->PLL2CCR = (uint16_t) pll2ccr;
+
+ #if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+        /* Configure the output clock dividers. */
+        uint32_t outdiv =
+            (((p_clock_cfg->pll2_cfg.out_div_p - 1) & CGC_PRV_PLLCCR2_PLODIVX_MASK) << CGC_PRV_PLLCCR2_PLODIVP_BIT) |
+            (((p_clock_cfg->pll2_cfg.out_div_q - 1) & CGC_PRV_PLLCCR2_PLODIVX_MASK) << CGC_PRV_PLLCCR2_PLODIVQ_BIT) |
+            (((p_clock_cfg->pll2_cfg.out_div_r - 1) & CGC_PRV_PLLCCR2_PLODIVX_MASK) << CGC_PRV_PLLCCR2_PLODIVR_BIT);
+        R_SYSTEM->PLL2CCR2 = (uint16_t) outdiv;
+ #endif
 
         if (CGC_CLOCK_CHANGE_START == options[p_clock_cfg->pll_cfg.source_clock])
         {
@@ -574,13 +675,17 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     /* Set which clock to use for system clock and dividers for all system clocks. */
     cgc_divider_cfg_t clock_cfg;
     clock_cfg.sckdivcr_w = p_clock_cfg->divider_cfg.sckdivcr_w;
-
+#if BSP_FEATURE_CGC_HAS_CPUCLK
+    clock_cfg.sckdivcr2 = p_clock_cfg->divider_cfg.sckdivcr2;
+#else
+    clock_cfg.sckdivcr2 = 0;
+#endif
 #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
     /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
     clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
 #endif
-    bsp_prv_clock_set(requested_system_clock, clock_cfg.sckdivcr_w);
+    bsp_prv_clock_set(requested_system_clock, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
 
     /* If the system clock has changed, stop previous system clock if requested. */
     if (requested_system_clock != current_system_clock)
@@ -677,8 +782,19 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
  #endif
         )
     {
-        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, &pll_hz, &pllccr, clock_source);
+ #if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, clock_source, CGC_PRV_PLLOUT_P, &pll_hz, &pllccr);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, clock_source, CGC_PRV_PLLOUT_Q, &pll_hz, &pllccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, clock_source, CGC_PRV_PLLOUT_R, &pll_hz, &pllccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #else
+        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, clock_source, CGC_PRV_PLLOUT_P, &pll_hz, &pllccr);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
     }
 
     /* Make sure the oscillator is stable. */
@@ -847,6 +963,10 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     FSP_ASSERT(NULL != p_divider_cfg);
 
+ #if 0 == BSP_FEATURE_CGC_EXECUTE_FROM_LOCO
+    FSP_ASSERT(CGC_CLOCK_LOCO != clock_source);
+ #endif
+
     /* Check divider constraints. */
     err = r_cgc_check_config_dividers(p_divider_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -863,12 +983,19 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
 
     cgc_divider_cfg_t clock_cfg;
     clock_cfg.sckdivcr_w = p_divider_cfg->sckdivcr_w;
+#if BSP_FEATURE_CGC_HAS_CPUCLK
+    clock_cfg.sckdivcr2 = p_divider_cfg->sckdivcr2;
+#else
+    clock_cfg.sckdivcr2 = 0;
+#endif
+
 #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
     /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
     clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
 #endif
-    bsp_prv_clock_set(clock_source, clock_cfg.sckdivcr_w);
+
+    bsp_prv_clock_set(clock_source, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
 
     /* Apply the optimal operating power mode and restore the cache to it's previous state. */
     r_cgc_post_change(CGC_PRV_CHANGE_LPM_CGC);
@@ -908,6 +1035,10 @@ fsp_err_t R_CGC_SystemClockGet (cgc_ctrl_t * const        p_ctrl,
     if (NULL != p_divider_cfg)
     {
         p_divider_cfg->sckdivcr_w = R_SYSTEM->SCKDIVCR;
+
+#if BSP_FEATURE_CGC_HAS_CPUCLK
+        p_divider_cfg->sckdivcr2 = R_SYSTEM->SCKDIVCR2;
+#endif
     }
 
     return FSP_SUCCESS;
@@ -1110,7 +1241,7 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
         cgc_clock_t current_clock = (cgc_clock_t) R_SYSTEM->SCKSCR;
 
  #if BSP_PRV_PLL_SUPPORTED
-  #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+  #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
 
         /* Oscillation stop status cannot be cleared if PLL is the current source clock and main oscillator is the
          * source of the PLL. */
@@ -1301,7 +1432,7 @@ static void r_cgc_post_change (cgc_prv_change_t change)
 #endif
 }
 
-#if !BSP_CFG_USE_LOW_VOLTAGE_MODE
+#if !BSP_CFG_USE_LOW_VOLTAGE_MODE && BSP_FEATURE_CGC_HAS_SOPCCR
 
 /*******************************************************************************************************************//**
  * Verifies if Subosc speed mode is possible
@@ -1376,7 +1507,7 @@ static bool r_cgc_low_speed_or_voltage_mode_possible (uint32_t sckdivcr, uint8_t
          * the bitfield set. */
         test = sckdivcr | (sckdivcr << 1);
 #endif
-        if ((g_sckdivcr_upper_bits & test) != g_sckdivcr_upper_bits)
+        if ((CGC_PRV_SCKDIVCR_UPPER_BIT & test) != CGC_PRV_SCKDIVCR_UPPER_BIT)
         {
             return false;
         }
@@ -1406,15 +1537,20 @@ static void r_cgc_operating_mode_reduce (uint32_t sckdivcr)
 {
     uint8_t ostdcr = R_SYSTEM->OSTDCR;
 
+ #if BSP_FEATURE_CGC_HAS_SOPCCR
+
     /* Switch to subosc-speed mode if possible. */
     if (r_cgc_subosc_mode_possible(sckdivcr))
     {
         /* Switch to sub oscillator mode */
         bsp_prv_operating_mode_set(BSP_PRV_OPERATING_MODE_SUBOSC_SPEED);
     }
+    else
+ #endif
+
     /* Switch to low-speed mode if possible. */
-    else if (r_cgc_low_speed_or_voltage_mode_possible(sckdivcr, ostdcr) &&
-             (SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ))
+    if (r_cgc_low_speed_or_voltage_mode_possible(sckdivcr, ostdcr) &&
+        (SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ))
     {
         /* Switch to low speed mode */
         bsp_prv_operating_mode_set(BSP_PRV_OPERATING_MODE_LOW_SPEED);
@@ -1509,6 +1645,14 @@ static void r_cgc_clock_change (cgc_clock_t clock, cgc_clock_change_t state)
 
     /* Wait setting to be reflected in hardware registers. */
     FSP_HARDWARE_REGISTER_WAIT(*gp_cgc_clock_stp_registers[clock], state);
+
+#if BSP_FEATURE_BSP_HAS_SYRACCR
+    if (CGC_CLOCK_LOCO == clock)
+    {
+        /* MREF_INTERNAL_003 */
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SYRACCR, 0);
+    }
+#endif
 }
 
 #if CGC_CFG_PARAM_CHECKING_ENABLE
@@ -1560,6 +1704,12 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
 
     /* ICLK frequency must be >= BCLK, so ICLK divider must be <= BCLK. */
     FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.bclk_div);
+ #endif
+
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
+
+    /* CPUCLK divider must be less than or equal to ICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk_div <= p_divider_cfg->sckdivcr_b.iclk_div);
  #endif
 
     return FSP_SUCCESS;
@@ -1614,6 +1764,20 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
         }
     }
    #endif
+  #elif 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+    /* Ensure PLL configuration is supported on this MCU (MREF_INTERNAL_004). */
+
+    /* PLLCCR clock source can only be main oscillator or HOCO. */
+    FSP_ASSERT((CGC_CLOCK_MAIN_OSC == p_pll_cfg->source_clock) || (CGC_CLOCK_HOCO == p_pll_cfg->source_clock));
+
+    /* Divider of 4 is not supported for PLLCCR. */
+    FSP_ASSERT(CGC_PLL_DIV_4 != p_pll_cfg->divider);
+
+    /* PLLCCR multiplier must be between 26.00 and 180.50.
+     * 180.50 is larger than 180.66 in the integer representation of the enum. */
+    FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_26_0);
+    FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_180_5);
   #else
 
     /* Ensure PLL configuration is supported on this MCU (see Section 8.2.3 "PLL Clock Control Register 2 (PLLCCR2)" in
@@ -1653,17 +1817,22 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
  * Calculates the new PLL frequency.
  *
  * @param[in]  p_pll_cfg               PLL configuration
+ * @param[in]  pll_out                 PLL output clock
  * @param[out] p_pll_hz                Pointer to store PLL frequency in Hz
  *
  * @retval FSP_SUCCESS                 Requested PLL configuration meets hardware manual requirements.
  * @retval FSP_ERR_ASSERTION           Requested PLL configuration violates hardware manual constraints.
  **********************************************************************************************************************/
-static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg, uint32_t * const p_pll_hz)
+static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
+                                         cgc_prv_pllout_t            pll_out,
+                                         uint32_t * const            p_pll_hz)
 {
     /* Calculate the PLL frequency and set PLLCCR. The PLL frequency is required to update SystemCoreClock after
      * switching to PLL. */
     uint32_t pll_src_freq_hz = BSP_CFG_XTAL_HZ;
  #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    FSP_PARAMETER_NOT_USED(pll_out);
+
     if (CGC_CLOCK_HOCO == p_pll_cfg->source_clock)
     {
         pll_src_freq_hz = BSP_HOCO_HZ;
@@ -1685,7 +1854,70 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg, 
     FSP_ASSERT(pll_hz >= CGC_PRV_PLLCCR_PLL_MIN_HZ);
     FSP_ASSERT(pll_hz <= BSP_FEATURE_CGC_PLLCCR_MAX_HZ);
   #endif
+ #elif 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    if (CGC_CLOCK_HOCO == p_pll_cfg->source_clock)
+    {
+        pll_src_freq_hz = BSP_HOCO_HZ;
+    }
+
+    /* The multiplier can have a fractional component of either 1/3, 2/3, or 1/2. All of
+     * these fractions have a common multiple of 6, so scale the multiplier by that value. */
+    uint32_t multiplier = ((p_pll_cfg->multiplier >> BSP_PRV_CLOCKS_PLL_MUL_INT_SHIFT) + 1) * CGC_PRV_PLL_MUL_COEFF;
+    uint8_t  fractional = (uint8_t) (p_pll_cfg->multiplier & BSP_PRV_CLOCKS_PLL_MUL_FRAC_MASK);
+
+    /* Convert the MULNF value to use a common multiple of 6. */
+    if (fractional < 3U)
+    {
+        /* Values for 1/3 and 2/3 are 1 and 2 respectivly therefore it only needs a coefficient of 2 applied. */
+        fractional *= CGC_PRV_PLL_MUL_NF_COEFF;
+    }
+    else
+    {
+        /* Do nothing: the value of 1/2 is 3 so it will work without a coeficient being applied (3/6 = 1/2). */
+    }
+
+    /* Add the fractional value into the scaled integer multiplier. */
+    multiplier += fractional;
+
+    /* The highest value for PLLMUL + 1 is 180, the highest fraction for PLLMULNF is 0.66, and the maximum PLL source
+     * clock is 48 MHz. The VCO frequency can be calculated to be more than 32-bits.
+     */
+    uint64_t clock_freq_multiplied = ((uint64_t) pll_src_freq_hz * (uint64_t) multiplier) / CGC_PRV_PLL_MUL_FACTOR;
+    uint32_t divider               = p_pll_cfg->divider + 1U;
+
+    uint64_t vco_hz = clock_freq_multiplied / divider;
+
+  #if CGC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(vco_hz <= BSP_FEATURE_CGC_PLLCCR_VCO_MAX_HZ);
+  #endif
+
+    uint32_t pll_hz = 0;
+    if (CGC_PRV_PLLOUT_P == pll_out)
+    {
+        pll_hz = (uint32_t) (vco_hz / p_pll_cfg->out_div_p);
+    }
+    else if (CGC_PRV_PLLOUT_Q == pll_out)
+    {
+        pll_hz = (uint32_t) (vco_hz / p_pll_cfg->out_div_q);
+    }
+    else if (CGC_PRV_PLLOUT_R == pll_out)
+    {
+        pll_hz = (uint32_t) (vco_hz / p_pll_cfg->out_div_r);
+    }
+    else
+    {
+        /* Do nothing */
+    }
+
+  #if CGC_CFG_PARAM_CHECKING_ENABLE
+
+    /* The PLL output frequency must be between 40 MHz and 480 MHz for this PLL type. */
+    FSP_ASSERT(pll_hz >= CGC_PRV_PLLCCR_PLL_MIN_HZ);
+    FSP_ASSERT(pll_hz <= BSP_FEATURE_CGC_PLLCCR_MAX_HZ);
+  #endif
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    FSP_PARAMETER_NOT_USED(pll_out);
+
     uint32_t multiplier            = (p_pll_cfg->multiplier + 1U) >> 1;
     uint32_t clock_freq_multiplied = pll_src_freq_hz * multiplier;
     uint32_t divider_shift         = p_pll_cfg->divider;
@@ -1744,6 +1976,21 @@ static uint32_t r_cgc_pllccr_calculate (cgc_pll_cfg_t const * const p_pll_cfg)
                                 (uint32_t) (plsrcsel << CGC_PRV_PLLCCR_PLSRCSEL_BIT)) | plidiv);
 
     return register_value;
+ #elif 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    uint16_t plsrcsel = 0U;
+    if (CGC_CLOCK_HOCO == p_pll_cfg->source_clock)
+    {
+        plsrcsel = 1U;
+    }
+
+    uint16_t pllmul         = (uint16_t) (p_pll_cfg->multiplier >> BSP_PRV_CLOCKS_PLL_MUL_INT_SHIFT);
+    uint16_t pllmulnf       = (uint16_t) (p_pll_cfg->multiplier & BSP_PRV_CLOCKS_PLL_MUL_FRAC_MASK);
+    uint16_t plidiv         = (uint16_t) p_pll_cfg->divider;
+    uint32_t register_value = ((((pllmul & CGC_PRV_PLLCCR_PLLMUL_MASK) << CGC_PRV_PLLCCR_PLLMUL_BIT) |
+                                ((pllmulnf & CGC_PRV_PLLCCR_PLLMULNF_MASK) << CGC_PRV_PLLCCR_PLLMULNF_BIT) |
+                                (uint32_t) (plsrcsel << CGC_PRV_PLLCCR_PLSRCSEL_BIT)) | plidiv);
+
+    return register_value;
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
     uint8_t pllmul = (uint8_t) p_pll_cfg->multiplier >> 1;
     uint8_t plodiv = (uint8_t) p_pll_cfg->divider;
@@ -1772,7 +2019,7 @@ static inline cgc_clock_t r_cgc_pll_clocksource_get (void)
 {
     /*  PLL source selection only available on PLLCCR */
     cgc_clock_t pll_src = CGC_CLOCK_MAIN_OSC;
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
 
     /* Get the PLL clock source */
     if (R_SYSTEM->PLLCCR_b.PLSRCSEL == 1U)
@@ -1805,19 +2052,21 @@ static inline cgc_clock_t r_cgc_pll2_clocksource_get (void)
 /*******************************************************************************************************************//**
  * Calculate requested PLL frequency and PLLCCR value.
  *
- * @param[in]   p_pll_cfg               Pointer to clock system configuration
- * @param[out]  p_pll_hz                Pointer to store calculated PLL frequency
- * @param[out]  p_pllccr                Pointer to store calculated PLLCCR value
- * @param[out]  pll                     PLL to be configured (if PLL2 is supported)
+ * @param[in]   p_pll_cfg               Pointer to clock system configuration.
+ * @param[in]   pll                     PLL to be configured (if PLL2 is supported).
+ * @param[in]   pll_out                 PLL output clock selection (P, Q, or R).
+ * @param[out]  p_pll_hz                Pointer to store calculated PLL output frequency.
+ * @param[out]  p_pllccr                Pointer to store calculated PLLCCR value.
  *
  * @retval FSP_SUCCESS                  No errors detected in PLL configuration.
  * @retval FSP_ERR_ASSERTION            Invalid input argument.
  * @retval FSP_ERR_CLOCK_ACTIVE         PLL configuration cannot be changed while PLL is running.
  **********************************************************************************************************************/
 static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
+                                                cgc_clock_t                 pll,
+                                                cgc_prv_pllout_t            pll_out,
                                                 uint32_t * const            p_pll_hz,
-                                                uint32_t * const            p_pllccr,
-                                                cgc_clock_t                 pll)
+                                                uint32_t * const            p_pllccr)
 {
  #if !BSP_PRV_PLL2_SUPPORTED
     FSP_PARAMETER_NOT_USED(pll);
@@ -1826,7 +2075,7 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pl
     /* Calculate the PLLCCR register. */
     uint32_t pllccr = r_cgc_pllccr_calculate(p_pll_cfg);
 
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
     volatile uint16_t * p_pllccr_reg;
  #else
     volatile uint8_t * p_pllccr_reg;
@@ -1836,7 +2085,7 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pl
     if (CGC_CLOCK_PLL == pll)
  #endif
     {
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
         p_pllccr_reg = &(R_SYSTEM->PLLCCR);
  #else
         p_pllccr_reg = &(R_SYSTEM->PLLCCR2);
@@ -1857,7 +2106,7 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pl
 
     /* Calculate the new PLL frequency. Parameter checking is performed during this calculation if parameter
      * checking is enabled, but the calculation is required even if parameter checking is not enabled. */
-    fsp_err_t err = r_cgc_pll_hz_calculate(p_pll_cfg, p_pll_hz);
+    fsp_err_t err = r_cgc_pll_hz_calculate(p_pll_cfg, pll_out, p_pll_hz);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     *p_pllccr = pllccr;
@@ -1877,7 +2126,7 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pl
  **********************************************************************************************************************/
 static void r_cgc_pll_cfg (uint32_t pll_hz, uint32_t pllccr)
 {
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
     R_SYSTEM->PLLCCR = (uint16_t) pllccr;
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
     R_SYSTEM->PLLCCR2 = (uint8_t) pllccr;

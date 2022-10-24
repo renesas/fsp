@@ -171,11 +171,11 @@ fsp_err_t HW_SCE_Aes256CcmEncryptFinalSub(uint32_t *InData_TextLen, uint32_t *In
                 /* waiting */
             }
             OutData_Text[3] = SCE->REG_100H;
-            HW_SCE_p_func101(0xab3b29f0U, 0xfd1b71eaU, 0x48e3e211U, 0x33b0e4ebU);
+            HW_SCE_p_func101(0x9db528ceU, 0x43161566U, 0x4014aaf4U, 0x3f878197U);
         }
         else
         {
-            HW_SCE_p_func101(0x87094cd1U, 0x89f8b1bdU, 0x47902d77U, 0xf78739d8U);
+            HW_SCE_p_func101(0x024348c1U, 0x767c9441U, 0x1c8f4731U, 0xbf875d7aU);
         }
         SCE->REG_104H = 0x00000051U;
         SCE->REG_A4H = 0x01000c84U;
@@ -185,7 +185,7 @@ fsp_err_t HW_SCE_Aes256CcmEncryptFinalSub(uint32_t *InData_TextLen, uint32_t *In
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x00000000U);
-        HW_SCE_p_func100(0x0e35a83aU, 0x8480598aU, 0xeaa9c94fU, 0x9506d643U);
+        HW_SCE_p_func100(0x08309318U, 0x2cb56d5aU, 0x89548d5cU, 0xd0097ef1U);
         SCE->REG_B0H = 0x40000000U;
         SCE->REG_A4H = 0x000089c5U;
         SCE->REG_00H = 0x00001113U;
@@ -205,7 +205,7 @@ fsp_err_t HW_SCE_Aes256CcmEncryptFinalSub(uint32_t *InData_TextLen, uint32_t *In
         OutData_MAC[1] = SCE->REG_100H;
         OutData_MAC[2] = SCE->REG_100H;
         OutData_MAC[3] = SCE->REG_100H;
-        HW_SCE_p_func102(0x5ba6336fU, 0x0e80895dU, 0x03a65f8dU, 0xf84805baU);
+        HW_SCE_p_func102(0xa6743017U, 0x3577430dU, 0x87776077U, 0x45ded6e7U);
         SCE->REG_1BCH = 0x00000040U;
         /* WAIT_LOOP */
         while (0U != SCE->REG_18H_b.B12)
@@ -217,5 +217,5 @@ fsp_err_t HW_SCE_Aes256CcmEncryptFinalSub(uint32_t *InData_TextLen, uint32_t *In
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pa1f.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pa1f_r1.prc
 ***********************************************************************************************************************/

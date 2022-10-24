@@ -54,11 +54,11 @@ typedef TMO     usb_tm_t;
 typedef VP      usb_mh_t;
 typedef VP_INT  usb_vp_int_t;
 
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(USB_HIGH_SPEED_MODULE)
 typedef volatile R_USB_HS0_Type * usb_regadr1_t; // @@
-#else /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#else /* defined(USB_HIGH_SPEED_MODULE) */
 typedef volatile R_USB_FS0_Type * usb_regadr1_t;
-#endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif /* defined(USB_HIGH_SPEED_MODULE) */
 
 typedef volatile R_USB_FS0_Type * usb_regadr_t;
 

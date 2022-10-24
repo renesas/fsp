@@ -1510,6 +1510,7 @@ typedef struct st_rm_ble_mesh_access_cfg
 
     rm_ble_mesh_access_element_descriptor_t  * p_element_descriptor;        ///< Element description format
     rm_ble_mesh_upper_trans_instance_t const * p_mesh_upper_trans_instance; ///< Instance structure of upper trans
+    rm_ble_mesh_access_element_handle_t        element_number;              ///< Element number
 
     void const * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                  ///< Placeholder for user extension.

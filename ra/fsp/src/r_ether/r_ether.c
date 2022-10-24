@@ -147,6 +147,11 @@
 /***********************************************************************************************************************
  * Typedef definitions
  ***********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * ether_prv_ns_callback)(ether_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile ether_prv_ns_callback)(ether_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Exported global functions (to be accessed by other files)
@@ -186,6 +191,7 @@ static fsp_err_t ether_do_link(ether_instance_ctrl_t * const p_instance_ctrl, co
 static fsp_err_t ether_link_status_check(ether_instance_ctrl_t const * const p_instance_ctrl);
 static uint8_t   ether_check_magic_packet_detection_bit(ether_instance_ctrl_t const * const p_instance_ctrl);
 static void      ether_configure_padding(ether_instance_ctrl_t * const p_instance_ctrl);
+static void      ether_call_callback(ether_instance_ctrl_t * p_instance_ctrl, ether_callback_args_t * p_callback_args);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -216,6 +222,7 @@ const ether_api_t g_ether_on_ether =
     .linkProcess     = R_ETHER_LinkProcess,
     .wakeOnLANEnable = R_ETHER_WakeOnLANEnable,
     .txStatusGet     = R_ETHER_TxStatusGet,
+    .callbackSet     = R_ETHER_CallbackSet,
 };
 
 /*
@@ -306,6 +313,11 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
 
     /* Initialize the Ethernet buffer */
     ether_init_buffers(p_instance_ctrl);
+
+    /* Set callback and context pointers, if configured */
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
     R_BSP_MODULE_START(FSP_IP_ETHER, p_instance_ctrl->p_ether_cfg->channel);
 
@@ -591,11 +603,15 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
     {
         p_instance_ctrl->magic_packet = ETHER_MAGIC_PACKET_NOT_DETECTED;
 
-        if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+        /* If a callback is provided, then call it with callback argument. */
+        if (NULL != p_instance_ctrl->p_callback)
         {
-            callback_arg.channel = p_instance_ctrl->p_ether_cfg->channel;
-            callback_arg.event   = ETHER_EVENT_WAKEON_LAN;
-            (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+            callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+            callback_arg.event       = ETHER_EVENT_WAKEON_LAN;
+            callback_arg.status_ecsr = 0;
+            callback_arg.status_eesr = 0;
+            callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
+            ether_call_callback(p_instance_ctrl, &callback_arg);
         }
 
         /*
@@ -690,11 +706,15 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
 
             if (FSP_SUCCESS == err)
             {
-                if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+                /* If a callback is provided, then call it with callback argument. */
+                if (NULL != p_instance_ctrl->p_callback)
                 {
-                    callback_arg.channel = p_instance_ctrl->p_ether_cfg->channel;
-                    callback_arg.event   = ETHER_EVENT_LINK_ON;
-                    (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+                    callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+                    callback_arg.event       = ETHER_EVENT_LINK_ON;
+                    callback_arg.status_ecsr = 0;
+                    callback_arg.status_eesr = 0;
+                    callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
+                    ether_call_callback(p_instance_ctrl, &callback_arg);
                 }
             }
             else
@@ -742,12 +762,15 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
 
         if (FSP_SUCCESS == err)
         {
-            if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+            /* If a callback is provided, then call it with callback argument. */
+            if (NULL != p_instance_ctrl->p_callback)
             {
-                callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
-                callback_arg.event     = ETHER_EVENT_LINK_ON;
-                callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
-                (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+                callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+                callback_arg.event       = ETHER_EVENT_LINK_ON;
+                callback_arg.status_ecsr = 0;
+                callback_arg.status_eesr = 0;
+                callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
+                ether_call_callback(p_instance_ctrl, &callback_arg);
             }
         }
         else
@@ -781,12 +804,15 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
 
             p_instance_ctrl->link_establish_status = ETHER_LINK_ESTABLISH_STATUS_DOWN;
 
-            if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+            /* If a callback is provided, then call it with callback argument. */
+            if (NULL != p_instance_ctrl->p_callback)
             {
-                callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
-                callback_arg.event     = ETHER_EVENT_LINK_OFF;
-                callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
-                (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+                callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+                callback_arg.event       = ETHER_EVENT_LINK_OFF;
+                callback_arg.status_ecsr = 0;
+                callback_arg.status_eesr = 0;
+                callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
+                ether_call_callback(p_instance_ctrl, &callback_arg);
             }
         }
         else
@@ -803,12 +829,15 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
 
         p_instance_ctrl->link_establish_status = ETHER_LINK_ESTABLISH_STATUS_DOWN;
 
-        if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+        /* If a callback is provided, then call it with callback argument. */
+        if (NULL != p_instance_ctrl->p_callback)
         {
-            callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
-            callback_arg.event     = ETHER_EVENT_LINK_OFF;
-            callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
-            (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+            callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+            callback_arg.event       = ETHER_EVENT_LINK_OFF;
+            callback_arg.status_ecsr = 0;
+            callback_arg.status_eesr = 0;
+            callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
+            ether_call_callback(p_instance_ctrl, &callback_arg);
         }
 #endif
     }
@@ -1158,6 +1187,56 @@ fsp_err_t R_ETHER_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffe
 
     return err;
 }                                      /* End of function R_ETHER_VersionGet() */
+
+/*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref ether_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_ETHER_CallbackSet (ether_ctrl_t * const          p_api_ctrl,
+                               void (                      * p_callback)(ether_callback_args_t *),
+                               void const * const            p_context,
+                               ether_callback_args_t * const p_callback_memory)
+{
+    ether_instance_ctrl_t * p_ctrl = (ether_instance_ctrl_t *) p_api_ctrl;
+
+#if ETHER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(ETHER_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if ETHER_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    ether_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                        CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(ether_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup ETHER)
@@ -1811,6 +1890,64 @@ static fsp_err_t ether_link_status_check (ether_instance_ctrl_t const * const p_
     return err;
 }                                      /* End of function ether_link_status_check() */
 
+/*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_instance_ctrl      Pointer to ether instance control block
+ * @param[in]     p_callback_args      Pointer to callback args
+ **********************************************************************************************************************/
+static void ether_call_callback (ether_instance_ctrl_t * p_instance_ctrl, ether_callback_args_t * p_callback_args)
+{
+    ether_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    ether_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->event       = p_callback_args->event;
+    p_args->status_ecsr = p_callback_args->status_ecsr;
+    p_args->status_eesr = p_callback_args->status_eesr;
+    p_args->channel     = p_instance_ctrl->p_ether_cfg->channel;
+    p_args->p_context   = p_instance_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (!cmse_is_nsfptr(p_instance_ctrl->p_callback))
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_instance_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        ether_prv_ns_callback p_callback = (ether_prv_ns_callback) (p_instance_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_instance_ctrl->p_callback(p_args);
+#endif
+
+    if (NULL != p_instance_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_instance_ctrl->p_callback_memory = args;
+    }
+}
+
 /***********************************************************************************************************************
  * Function Name: ether_eint_isr
  * Description  : Interrupt handler for Ethernet receive and transmit interrupts.
@@ -1876,15 +2013,15 @@ void ether_eint_isr (void)
      */
     p_reg_edmac->EESR = status_eesr;      /* Clear EDMAC status bits */
 
-    /* Callback : Interrupt handler */
-    if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+    /* If a callback is provided, then call it with callback argument. */
+    if (NULL != p_instance_ctrl->p_callback)
     {
         callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
         callback_arg.event       = ETHER_EVENT_INTERRUPT;
         callback_arg.status_ecsr = status_ecsr;
         callback_arg.status_eesr = status_eesr;
         callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
-        (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+        ether_call_callback(p_instance_ctrl, &callback_arg);
     }
 
     /* Clear pending interrupt flag to make sure it doesn't fire again

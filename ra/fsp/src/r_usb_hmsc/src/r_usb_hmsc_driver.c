@@ -2546,7 +2546,7 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
     uint16_t            que_cnt;
     usb_instance_ctrl_t ctrl;
     uint16_t            ipno_devaddr;
-    usb_cfg_t         * p_cfg = NULL;
+    usb_cfg_t         * p_cfg = USB_NULL;
     (void) data2;
 
     if (ptr->ip)
@@ -2603,13 +2603,17 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
 
     ctrl.module_number  = ptr->ip;            /* Module number setting */
     ctrl.device_address = (uint8_t) addr;
-    ctrl.p_context      = (void *) p_cfg->p_context;
-    usb_set_event(USB_STATUS_DETACH, &ctrl);  /* Set Event()  */
+    if (USB_NULL != p_cfg)
+    {
+        ctrl.p_context = (void *) p_cfg->p_context;
+    }
+
+    usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
  #else  /* BSP_CFG_RTOS == 0 */
     usb_instance_ctrl_t ctrl;
     uint16_t            side;
     uint16_t            ipno_devaddr;
-    usb_cfg_t         * p_cfg = NULL;
+    usb_cfg_t         * p_cfg = USB_NULL;
     (void) data2;
 
     if (ptr->ip)
@@ -2639,10 +2643,12 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
 
     ctrl.module_number  = ptr->ip;            /* Module number setting */
     ctrl.device_address = (uint8_t) addr;
-    ctrl.p_context      = (void *) p_cfg->p_context;
-    ctrl.p_transfer_rx  = p_cfg->p_transfer_rx;
-    ctrl.p_transfer_rx  = p_cfg->p_transfer_tx;
-
+    if (USB_NULL != p_cfg)
+    {
+        ctrl.p_context     = (void *) p_cfg->p_context;
+        ctrl.p_transfer_rx = p_cfg->p_transfer_rx;
+        ctrl.p_transfer_rx = p_cfg->p_transfer_tx;
+    }
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
  #endif /* BSP_CFG_RTOS == 0 */
 }
@@ -2662,7 +2668,7 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
 void usb_hmsc_drive_complete (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
-    usb_cfg_t         * p_cfg = NULL;
+    usb_cfg_t         * p_cfg = USB_NULL;
     (void) data2;
 
     if (ptr->ip)
@@ -2696,11 +2702,14 @@ void usb_hmsc_drive_complete (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
         g_drive_search_que_cnt--;
     }
     g_drive_search_lock = USB_FALSE;
- #endif                                          /* BSP_CFG_RTOS == 0 */
+ #endif                                /* BSP_CFG_RTOS == 0 */
 
-    ctrl.module_number  = ptr->ip;               /* Module number setting */
+    ctrl.module_number  = ptr->ip;     /* Module number setting */
     ctrl.device_address = (uint8_t) addr;
-    ctrl.p_context      = (void *) p_cfg->p_context;
+    if (USB_NULL != p_cfg)
+    {
+        ctrl.p_context = (void *) p_cfg->p_context;
+    }
 
     usb_set_event(USB_STATUS_CONFIGURED, &ctrl); /* Set Event()  */
 } /* End of function usb_hmsc_drive_complete() */

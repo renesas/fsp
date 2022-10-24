@@ -160,10 +160,6 @@ CellularError_t Cellular_ModuleEnableUrc (CellularContext_t * pContext)
     at_req_no_result.pAtCmd = "AT+COPS=3,2";
     _Cellular_AtcmdRequestWithCallback(pContext, at_req_no_result);
 
-    /* Enable CREG URC with format +CREG: <stat>[,[<lac>],[<ci>],[<AcT>]] */
-    at_req_no_result.pAtCmd = "AT+CREG=2";
-    _Cellular_AtcmdRequestWithCallback(pContext, at_req_no_result);
-
     /* Enable CEREG URC with format +CEREG: <stat>[,[<tac>],[<ci>],[<AcT>]] */
     at_req_no_result.pAtCmd = "AT+CEREG=2";
     _Cellular_AtcmdRequestWithCallback(pContext, at_req_no_result);

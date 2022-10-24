@@ -82,8 +82,6 @@ typedef struct st_rm_ble_mesh_model_health_callback_args
  * Health Server Self Test Function.
  */
 
-/* TODO: Add context of the Health Server, so that associated current/registered fault can be updated */
-
 typedef void (* rm_ble_mesh_health_server_self_test_function)(uint8_t test_id, uint16_t company_id);
 
 /**

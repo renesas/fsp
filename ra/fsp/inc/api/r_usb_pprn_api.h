@@ -46,13 +46,20 @@ FSP_HEADER
 /******************************************************************************
  * Macro definitions
  ******************************************************************************/
+#define USB_PPRN_GET_DEVICE_ID              (0x0000U) ///< Get Device ID
+#define USB_PRPN_GET_PORT_STATUS            (0x0100U) ///< Get Port Status
+#define USB_PPRN_SOFT_RESET                 (0x0200U) ///< Soft Reset
+
+#define USB_PPRN_PORT_STATUS_PAPER_EMPTY    (1U << 5) ///< 1: Paper Empty, 0: Paper Not Empty
+#define USB_PPRN_PORT STATUS_SELECT         (1U << 4) ///< 1: Selected, 0: Not Selected
+#define USB_PPRN_PORT_STATUS_NOT_ERROR      (1U << 3) ///< 1: No Error, 0; Error
 
 /*******************************************************************************
  * Typedef definitions
  *******************************************************************************/
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
-    FSP_FOOTER
+FSP_FOOTER
 
 #endif                                 /* R_USB_PPRN_API_H */
 

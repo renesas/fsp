@@ -92,5 +92,5 @@ void HW_SCE_Aes256GcmDecryptUpdateAADSub(uint32_t *InData_DataA, uint32_t MAX_CN
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36a.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p36a_r1.prc
 ***********************************************************************************************************************/

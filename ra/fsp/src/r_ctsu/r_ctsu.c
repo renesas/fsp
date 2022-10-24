@@ -922,9 +922,30 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
     if (CTSU_MODE_DIAGNOSIS_SCAN == p_instance_ctrl->md)
     {
-        p_instance_ctrl->p_diag_info = &g_ctsu_diag_info;
-        g_ctsu_diag_info.state       = CTSU_DIAG_INIT;
-        g_ctsu_diag_info.dac_init    = 0;
+        /* Initialize diagnosis information */
+        p_instance_ctrl->p_diag_info    = &g_ctsu_diag_info;
+        g_ctsu_diag_info.state          = CTSU_DIAG_INIT;
+        g_ctsu_diag_info.ctsuwr.ctsussc = 0;
+        g_ctsu_diag_info.ctsuwr.ctsuso0 = 0;
+        g_ctsu_diag_info.ctsuwr.ctsuso1 = 0;
+        g_ctsu_diag_info.loop_count     = 0;
+        g_ctsu_diag_info.scanbuf.sen    = 0;
+        g_ctsu_diag_info.scanbuf.ref    = 0;
+        g_ctsu_diag_info.correct_data   = 0;
+        g_ctsu_diag_info.icomp          = 0;
+        g_ctsu_diag_info.cco_high       = 0;
+        g_ctsu_diag_info.cco_low        = 0;
+        g_ctsu_diag_info.sscg           = 0;
+        g_ctsu_diag_info.dac_cnt[0]     = 0;
+        g_ctsu_diag_info.dac_cnt[1]     = 0;
+        g_ctsu_diag_info.dac_cnt[2]     = 0;
+        g_ctsu_diag_info.dac_cnt[3]     = 0;
+        g_ctsu_diag_info.dac_cnt[4]     = 0;
+        g_ctsu_diag_info.dac_cnt[5]     = 0;
+        g_ctsu_diag_info.so0_4uc_val    = 0;
+        g_ctsu_diag_info.dac_init       = 0;
+        g_ctsu_diag_info.tuning         = CTSU_TUNING_INCOMPLETE;
+        g_ctsu_diag_info.tuning_diff    = 0;
     }
  #endif
 #endif

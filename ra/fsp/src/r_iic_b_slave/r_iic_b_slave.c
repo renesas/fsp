@@ -146,7 +146,7 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->eri_irq >= (IRQn_Type) 0);
 
-    FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_IIC_B_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     FSP_ERROR_RETURN(IIC_B_SLAVE_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
     FSP_ERROR_RETURN(p_cfg->eri_ipl <= p_cfg->ipl, FSP_ERR_INVALID_ARGUMENT);
@@ -154,11 +154,11 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_SLAVE_RATE_FASTPLUS == p_cfg->rate)
     {
-        FSP_ASSERT((BSP_FEATURE_IIC_FAST_MODE_PLUS & (1U << p_cfg->channel)));
+        FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS & (1U << p_cfg->channel)));
     }
 #endif
 
-#if (BSP_FEATURE_IIC_VALID_CHANNEL_MASK > 1U)
+#if (BSP_FEATURE_IIC_B_VALID_CHANNEL_MASK > 1U)
     p_ctrl->p_reg =
         (R_I3C0_Type *) ((uint32_t) R_I3C0 + (p_cfg->channel * ((uint32_t) R_I3C1 - (uint32_t) R_I3C0)));
 #else
@@ -171,7 +171,11 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
+#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+    R_BSP_MODULE_START(FSP_IP_I3C, p_cfg->channel);
+#else
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
+#endif
 
     /* Open the hardware in slave mode. Performs IIC initialization as described in hardware manual (see Section 27.3.2.1
      * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050). */
@@ -330,7 +334,11 @@ fsp_err_t R_IIC_B_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
     /* Waiting for reset completion RSTCTL.RI2CRST = 0;  RSTCTL.INTLRST is already 0. */
     FSP_HARDWARE_REGISTER_WAIT(0U, p_ctrl->p_reg->RSTCTL);
 
+#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+    R_BSP_MODULE_STOP(FSP_IP_I3C, p_ctrl->p_cfg->channel);
+#else
     R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -484,14 +492,20 @@ static void iic_b_slave_callback_request (iic_b_slave_instance_ctrl_t * const p_
  *********************************************************************************************************************/
 static void iic_b_open_hw_slave (iic_b_slave_instance_ctrl_t * const p_ctrl)
 {
+#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK || 1 == BSP_FEATURE_BSP_HAS_IIC_CLOCK)
+
+    /* Enable I3CCLK. (Not a part of init sequence in the HW manual, but RA8 must enable it to reset the module ) */
+    p_ctrl->p_reg->CECTL = (uint32_t) R_I3C0_CECTL_CLKE_Msk;
+#endif
+
     /* Clear BCTL.BUSE to 0: SCL, SDA pins not driven */
-    p_ctrl->p_reg->BCTL = 0;
+    p_ctrl->p_reg->BCTL_b.BUSE = 0;
 
     /* Set RSTCTL.RI2CRST to 1: Reset all registers and internal state; RSTCTL.INTLRST is already 0.*/
     p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_RI3CRST_Msk;
 
     /* Waiting for reset completion RSTCTL.RI2CRST = 0;  RSTCTL.INTLRST is already 0. */
-    FSP_HARDWARE_REGISTER_WAIT(0U, p_ctrl->p_reg->RSTCTL);
+    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL_b.RI3CRST, 0U);
 
     /* Set Slave address in SDATBAS0 and set SVCTL */
     p_ctrl->p_reg->SDATBAS0 = (uint32_t) (p_ctrl->p_cfg->slave) |
@@ -576,13 +590,7 @@ static void iic_b_open_hw_slave (iic_b_slave_instance_ctrl_t * const p_ctrl)
     p_ctrl->p_reg->NTIE = IIC_B_SLAVE_PRV_NTIE_INIT_MASK;
 
     /* Set BCTL.BUSE to 1: SCL, SDA pins in active state */
-    p_ctrl->p_reg->BCTL = R_I3C0_BCTL_BUSE_Msk;
-
-#if (1U == BSP_FEATURE_BSP_HAS_IIC_CLOCK)
-
-    /* Enable IICCLK. (Not a part of init sequence in the HW manual) */
-    p_ctrl->p_reg->CECTL = R_I3C0_CECTL_CLKE_Msk;
-#endif
+    p_ctrl->p_reg->BCTL = (uint32_t) R_I3C0_BCTL_BUSE_Msk;
 }
 
 /*******************************************************************************************************************//**

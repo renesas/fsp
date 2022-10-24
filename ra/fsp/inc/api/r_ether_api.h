@@ -243,6 +243,20 @@ typedef struct st_ether_api
      * @param[out]  p_buffer_address   Pointer to the address of the most recently sent buffer.
      */
     fsp_err_t (* txStatusGet)(ether_ctrl_t * const p_api_ctrl, void * const p_buffer_address);
+
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_ETHER_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the ETHER control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(ether_ctrl_t * const p_api_ctrl, void (* p_callback)(ether_callback_args_t *),
+                              void const * const p_context, ether_callback_args_t * const p_callback_memory);
 } ether_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

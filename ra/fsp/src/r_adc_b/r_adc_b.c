@@ -400,7 +400,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
             if (sync_operation_enabled)
             {
                 /* Set so that the sum of the sampling times of the analog channels and successive approximation time of ADCm (m = 0, 1) is an integral multiple of the Synchronous Operation Period */
-                uint16_t sst = ((uint16_t *) p_extend->sampling_state_tables)[virtual_channel_id];
+                uint16_t sst = p_extend->sampling_state_table[virtual_channel_id];
                 FSP_ERROR_RETURN((sst + cst) % adsycyc == 0, FSP_ERR_INVALID_STATE);
 
                 /*============================================================================================================
@@ -689,7 +689,7 @@ fsp_err_t R_ADC_B_StatusGet (adc_ctrl_t * p_ctrl, adc_status_t * p_status)
  * Reads conversion results from a single channel or sensor.
  *
  * @retval FSP_SUCCESS                 Data read into provided p_data.
- * @retval FSP_ERR_INVALID_DATA        Accuracy of data cannot be guaranteed.
+ * @retval FSP_ERR_INVALID_DATA        Accuracy of data cannot be guaranteed. ADC requires calibration or SAR timing settings are irregular.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  * @retval FSP_ERR_NOT_INITIALIZED     Unit not initialized.
@@ -734,7 +734,7 @@ fsp_err_t R_ADC_B_Read (adc_ctrl_t * p_ctrl, adc_channel_t const channel_id, uin
  * Reads conversion results from a single channel or sensor register into a 32-bit result.
  *
  * @retval FSP_SUCCESS               Data read into provided p_data.
- * @retval FSP_ERR_INVALID_DATA      Accuracy of data cannot be guaranteed.
+ * @retval FSP_ERR_INVALID_DATA      Accuracy of data cannot be guaranteed. ADC requires calibration or SAR timing settings are irregular.
  * @retval FSP_ERR_ASSERTION         An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN          Unit is not open.
  * @retval FSP_ERR_NOT_INITIALIZED   Unit not initialized.

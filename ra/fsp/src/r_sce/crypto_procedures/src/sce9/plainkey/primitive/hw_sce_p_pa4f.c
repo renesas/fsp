@@ -214,11 +214,11 @@ fsp_err_t HW_SCE_Aes256CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
                     /* waiting */
                 }
                 SCE->REG_1CH = 0x00001800U;
-                HW_SCE_p_func101(0xb2c1c419U, 0x2daab86dU, 0xb3644f3eU, 0x7dcb2c5bU);
+                HW_SCE_p_func101(0xce3ca2efU, 0x00dca552U, 0xf00addadU, 0x663336a2U);
             }
             else
             {
-                HW_SCE_p_func101(0x18194dc3U, 0x55159f50U, 0x743daa12U, 0x7361ff72U);
+                HW_SCE_p_func101(0x22d19c6dU, 0xd99bd025U, 0x0c4adab8U, 0x6d1b9a12U);
             }
             SCE->REG_104H = 0x00000051U;
             SCE->REG_A4H = 0x00000cc4U;
@@ -281,12 +281,12 @@ fsp_err_t HW_SCE_Aes256CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
             }
             SCE->REG_1CH = 0x00001800U;
             SCE->REG_A4H = 0x00000000U;
-            HW_SCE_p_func100(0x26a02e05U, 0x2e0d7c97U, 0x5a42f7e8U, 0xc9307893U);
+            HW_SCE_p_func100(0x235204faU, 0xad071674U, 0xb3f8bbf8U, 0x2d30b4c2U);
             SCE->REG_1CH = 0x00400000U;
             SCE->REG_1D0H = 0x00000000U;
             if (1U == (SCE->REG_1CH_b.B22))
             {
-                HW_SCE_p_func102(0x439cff70U, 0x32634fd1U, 0x3f0a3267U, 0xe61861f1U);
+                HW_SCE_p_func102(0xbffe685dU, 0xcbcc5e7dU, 0x522ea743U, 0x0d3d1bc3U);
                 SCE->REG_1BCH = 0x00000040U;
                 /* WAIT_LOOP */
                 while (0U != SCE->REG_18H_b.B12)
@@ -297,7 +297,7 @@ fsp_err_t HW_SCE_Aes256CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
             }
             else
             {
-                HW_SCE_p_func102(0xa19bacb9U, 0x31b73ae7U, 0x93a90fb2U, 0x617899fcU);
+                HW_SCE_p_func102(0x3baf747fU, 0x701ef143U, 0xc69f0243U, 0x7171a199U);
                 SCE->REG_1BCH = 0x00000040U;
                 /* WAIT_LOOP */
                 while (0U != SCE->REG_18H_b.B12)
@@ -311,5 +311,5 @@ fsp_err_t HW_SCE_Aes256CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InDat
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pa4f.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pa4f_r1.prc
 ***********************************************************************************************************************/

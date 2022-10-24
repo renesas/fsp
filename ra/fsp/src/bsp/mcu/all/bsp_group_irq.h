@@ -38,6 +38,8 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+#ifndef BSP_OVERRIDE_GROUP_IRQ_T
+
 /** Which interrupts can have callbacks registered. */
 typedef enum e_bsp_grp_irq
 {
@@ -56,6 +58,8 @@ typedef enum e_bsp_grp_irq
     BSP_GRP_IRQ_TRUSTZONE       = 13,  ///< MPU Stack Error
     BSP_GRP_IRQ_CACHE_PARITY    = 15,  ///< MPU Stack Error
 } bsp_grp_irq_t;
+
+#endif
 
 /* Callback type. */
 typedef void (* bsp_grp_irq_cb_t)(bsp_grp_irq_t irq);

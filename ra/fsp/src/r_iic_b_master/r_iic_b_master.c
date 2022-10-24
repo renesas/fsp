@@ -203,19 +203,19 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     FSP_ASSERT(p_cfg->eri_irq >= (IRQn_Type) 0);
     FSP_ERROR_RETURN(IIC_B_MASTER_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
-    FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_IIC_B_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_MASTER_RATE_FASTPLUS == p_cfg->rate)
     {
-        FSP_ASSERT((BSP_FEATURE_IIC_FAST_MODE_PLUS & (1U << p_cfg->channel)));
+        FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS & (1U << p_cfg->channel)));
     }
 #endif
 #if IIC_B_MASTER_CFG_DTC_ENABLE
     fsp_err_t err = FSP_SUCCESS;
 #endif
 
-#if (BSP_FEATURE_IIC_VALID_CHANNEL_MASK > 1U)
+#if (BSP_FEATURE_IIC_B_VALID_CHANNEL_MASK > 1U)
     p_ctrl->p_reg =
         (R_I3C0_Type *) ((uint32_t) R_I3C0 + (p_cfg->channel * ((uint32_t) R_I3C1 - (uint32_t) R_I3C0)));
 #else
@@ -230,7 +230,11 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
+#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+    R_BSP_MODULE_START(FSP_IP_I3C, p_cfg->channel);
+#else
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
+#endif
 
     /* Open the hardware in master mode. Performs IIC initialization as described in hardware manual (see Section 27.3.2.1
      * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050). */
@@ -512,7 +516,11 @@ fsp_err_t R_IIC_B_MASTER_Close (i2c_master_ctrl_t * const p_api_ctrl)
     R_BSP_IrqDisable(p_ctrl->p_cfg->tei_irq);
     R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
+#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+    R_BSP_MODULE_STOP(FSP_IP_I3C, p_ctrl->p_cfg->channel);
+#else
     R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -723,6 +731,12 @@ static void iic_b_master_abort_seq_master (iic_b_master_instance_ctrl_t * const 
 static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_ctrl,
                                          i2c_master_cfg_t const * const       p_cfg)
 {
+#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+
+    /* Enable I3CCLK. (Not a part of init sequence in the HW manual, but RA8 must enable it to reset the module ) */
+    p_ctrl->p_reg->CECTL = (uint32_t) R_I3C0_CECTL_CLKE_Msk;
+#endif
+
     /* Clear BCTL.BUSE to 0: SCL, SDA pins not driven */
     p_ctrl->p_reg->BCTL = 0;
 
@@ -730,7 +744,7 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
     p_ctrl->p_reg->RSTCTL = (uint32_t) (R_I3C0_RSTCTL_RI3CRST_Msk);
 
     /* Waiting for reset completion RSTCTL.RI2CRST = 0;  RSTCTL.INTLRST is already 0. */
-    FSP_HARDWARE_REGISTER_WAIT(0U, p_ctrl->p_reg->RSTCTL);
+    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL_b.RI3CRST, 0U);
 
     /* In case of RA2E2, PRTS.PRTMD = 1 and BFCFG.FIFOE = 0 after the above reset.
      * Refer 25.2.2 'PRTS : Protocol Selection Register' and
@@ -808,11 +822,6 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
 
     /* Set BCTL.BUSE to 1: SCL, SDA pins in active state */
     p_ctrl->p_reg->BCTL = (uint32_t) R_I3C0_BCTL_BUSE_Msk;
-#if (1U == BSP_FEATURE_BSP_HAS_IIC_CLOCK)
-
-    /* Enable IICCLK. (Not a part of init sequence in the HW manual) */
-    p_ctrl->p_reg->CECTL = (uint32_t) R_I3C0_CECTL_CLKE_Msk;
-#endif
 
     /* Set FRECYC based on IIC reference clock.
      * (Not a part of init sequence in the HW manual)
@@ -826,11 +835,12 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
      * 2. tBUF (Fast Mode) = 3 × tIICcyc + 300 ns
      * 3. tBUF (Fast Plus Mode) = 3 × tIICcyc + 120 ns
      */
-    uint32_t mode_const =
+    uint32_t extra_ns =
         (I2C_MASTER_RATE_FASTPLUS ==
          p_ctrl->p_cfg->rate) ? IIC_B_MASTER_BFRECDT_FASTPLUS_DELAY_CONST : IIC_B_MASTER_BFRECDT_DELAY_CONST;
-    p_ctrl->p_reg->BFRECDT = (uint32_t) BSP_FEATURE_IIC_BUS_FREE_TIME_MULTIPLIER + IIC_B_MASTER_ROUNDING_OFF_COMP +
-                             (uint32_t) ((mode_const * p_extend->iic_clock_freq) / IIC_B_MASTER_BILLION);
+    uint32_t iic_clock_ns = (uint32_t) IIC_B_MASTER_BILLION / p_extend->iic_clock_freq;
+    p_ctrl->p_reg->BFRECDT = (uint32_t) (BSP_FEATURE_IIC_BUS_FREE_TIME_MULTIPLIER + IIC_B_MASTER_ROUNDING_OFF_COMP +
+                                         extra_ns / iic_clock_ns);
 }
 
 /*******************************************************************************************************************//**

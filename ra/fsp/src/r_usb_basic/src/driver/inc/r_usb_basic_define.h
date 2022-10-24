@@ -36,11 +36,14 @@
 extern "C" {
  #endif
 
- #define R_USB_HmscTask           usb_hmsc_task
+ #define R_USB_HmscTask    usb_hmsc_task
 
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
+ #if defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) || (BSP_CFG_MCU_PART_SERIES == 8)
+  #define USB_HIGH_SPEED_MODULE
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) */
 
 /* Version Number of API. */
  #define USB_VERSION_MAJOR        (1)

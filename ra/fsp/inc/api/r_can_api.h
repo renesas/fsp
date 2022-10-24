@@ -68,18 +68,19 @@ FSP_HEADER
 /** CAN event codes */
 typedef enum e_can_event
 {
-    CAN_EVENT_ERR_WARNING          = 2,    ///< Error Warning event.
-    CAN_EVENT_ERR_PASSIVE          = 4,    ///< Error Passive event.
-    CAN_EVENT_ERR_BUS_OFF          = 8,    ///< Bus Off event.
-    CAN_EVENT_BUS_RECOVERY         = 16,   ///< Bus Off Recovery event.
-    CAN_EVENT_MAILBOX_MESSAGE_LOST = 32,   ///< Mailbox has been overrun.
-    CAN_EVENT_ERR_BUS_LOCK         = 128,  ///< Bus lock detected (32 consecutive dominant bits).
-    CAN_EVENT_ERR_CHANNEL          = 256,  ///< Channel error has occurred.
-    CAN_EVENT_TX_ABORTED           = 512,  ///< Transmit abort event.
-    CAN_EVENT_RX_COMPLETE          = 1024, ///< Receive complete event.
-    CAN_EVENT_TX_COMPLETE          = 2048, ///< Transmit complete event.
-    CAN_EVENT_ERR_GLOBAL           = 4096, ///< Global error has occurred.
-    CAN_EVENT_TX_FIFO_EMPTY        = 8192, ///< Transmit FIFO is empty.
+    CAN_EVENT_ERR_WARNING          = 0x0002, ///< Error Warning event.
+    CAN_EVENT_ERR_PASSIVE          = 0x0004, ///< Error Passive event.
+    CAN_EVENT_ERR_BUS_OFF          = 0x0008, ///< Bus Off event.
+    CAN_EVENT_BUS_RECOVERY         = 0x0010, ///< Bus Off Recovery event.
+    CAN_EVENT_MAILBOX_MESSAGE_LOST = 0x0020, ///< Mailbox has been overrun.
+    CAN_EVENT_ERR_BUS_LOCK         = 0x0080, ///< Bus lock detected (32 consecutive dominant bits).
+    CAN_EVENT_ERR_CHANNEL          = 0x0100, ///< Channel error has occurred.
+    CAN_EVENT_TX_ABORTED           = 0x0200, ///< Transmit abort event.
+    CAN_EVENT_RX_COMPLETE          = 0x0400, ///< Receive complete event.
+    CAN_EVENT_TX_COMPLETE          = 0x0800, ///< Transmit complete event.
+    CAN_EVENT_ERR_GLOBAL           = 0x1000, ///< Global error has occurred.
+    CAN_EVENT_TX_FIFO_EMPTY        = 0x2000, ///< Transmit FIFO is empty.
+    CAN_EVENT_FIFO_MESSAGE_LOST    = 0x4000, ///< Receive FIFO overrun.
 } can_event_t;
 
 /** CAN Operation modes */

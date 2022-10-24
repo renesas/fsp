@@ -78,3 +78,22 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     /* Set SP and branch to PC. */
     start_app(app_pc, app_sp);
 }
+
+#if defined(__ARMCC_VERSION)           /* AC6 compiler */
+
+ #if defined MCUBOOT_SIGN_EC256 && !defined MCUBOOT_USE_MBED_TLS
+
+/* This function is only used by MCUboot for RSA keys with mbedtls.
+ * When it's not used, this function should be compiled out, but AC6 has a known issue where unused functions are not compiled out
+ * so this function is created as a placeholder to get rid of the linker error. */
+int mbedtls_mpi_read_binary (void * X, const unsigned char * buf, size_t buflen)
+{
+    FSP_PARAMETER_NOT_USED(X);
+    FSP_PARAMETER_NOT_USED(buf);
+    FSP_PARAMETER_NOT_USED(buflen);
+
+    return 0;
+}
+
+ #endif
+#endif

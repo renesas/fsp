@@ -200,7 +200,7 @@ typedef struct st_rm_ble_mesh_upper_trans_friendship_info
     /** Low Power Node Counter */
     uint16_t lpn_counter;
 
-    /** Friend Counter - TODO: Should be a global index? */
+    /** Friend Counter */
     uint16_t friend_counter;
 } rm_ble_mesh_upper_trans_friendship_info_t;
 

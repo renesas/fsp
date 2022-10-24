@@ -236,6 +236,13 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR4_b.ROPSEL, 0U);
 #endif
 
+    /* On a cold-start, force the RTC to be in the stopped state. Some devices power up with the RTC started. */
+    /* Checks to see if the PORF bit is set. PORF can be cleared by software if application code handles a POR. */
+    if (R_SYSTEM->RSTSR0 == 1)
+    {
+        r_rtc_start_bit_update(0U);
+    }
+
 #if RTC_CFG_OPEN_SET_CLOCK_SOURCE
 
     /* Set the clock source for RTC.

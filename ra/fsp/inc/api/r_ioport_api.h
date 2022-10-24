@@ -16,8 +16,7 @@
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
-
+ **********************************************************************************************************************/ 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_INTERFACES
  * @defgroup IOPORT_API I/O Port Interface
@@ -119,6 +118,9 @@ typedef enum e_ioport_peripheral
     /** Pin will function as an SCI DEn peripheral pin */
     IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8 = (0x0EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as a CEU peripheral pin */
+    IOPORT_PERIPHERAL_CEU = (0x0FUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+    
     /** Pin will function as a CAN peripheral pin */
     IOPORT_PERIPHERAL_CAN = (0x10UL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
@@ -175,6 +177,12 @@ typedef enum e_ioport_peripheral
 
     /** Pin will function as a PGAOUT peripheral pin */
     IOPORT_PERIPHERAL_PGAOUT1 = (0x1EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
+    /** Pin will function as a MIPI peripheral pin */
+    IOPORT_PERIPHERAL_MIPI = (0x1FUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
+    /** Pin will function as a ULPT peripheral pin */
+    IOPORT_PERIPHERAL_ULPT = (0x1EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 } ioport_peripheral_t;
 
 /** Options to configure pin functions  */

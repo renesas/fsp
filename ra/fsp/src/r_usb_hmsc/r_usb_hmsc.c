@@ -270,7 +270,7 @@ fsp_err_t R_USB_HMSC_StorageReadSector (uint16_t        drive_number,
     uint32_t    trans_byte;
     usb_utr_t   ptr;
     uint16_t    err_code;
-    usb_cfg_t * p_cfg = NULL;
+    usb_cfg_t * p_cfg = USB_NULL;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(buff)
@@ -302,8 +302,11 @@ fsp_err_t R_USB_HMSC_StorageReadSector (uint16_t        drive_number,
 #endif                                 /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
-    ptr.p_transfer_rx = p_cfg->p_transfer_rx;
-    ptr.p_transfer_tx = p_cfg->p_transfer_tx;
+    if (USB_NULL != p_cfg)
+    {
+        ptr.p_transfer_rx = p_cfg->p_transfer_rx;
+        ptr.p_transfer_tx = p_cfg->p_transfer_tx;
+    }
 
     g_usb_hmsc_strg_process[ptr.ip] = USB_MSG_HMSC_STRG_RW_END;
     err_code = usb_hmsc_read10(&ptr, drive_number, buff, sector_number, sector_count, trans_byte);
@@ -345,7 +348,7 @@ fsp_err_t R_USB_HMSC_StorageWriteSector (uint16_t              drive_number,
     uint32_t    trans_byte;
     usb_utr_t   ptr;
     uint16_t    err_code;
-    usb_cfg_t * p_cfg = NULL;
+    usb_cfg_t * p_cfg = USB_NULL;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(buff)
@@ -377,8 +380,11 @@ fsp_err_t R_USB_HMSC_StorageWriteSector (uint16_t              drive_number,
 #endif                                 /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
-    ptr.p_transfer_rx = p_cfg->p_transfer_rx;
-    ptr.p_transfer_tx = p_cfg->p_transfer_tx;
+    if (USB_NULL != p_cfg)
+    {
+        ptr.p_transfer_rx = p_cfg->p_transfer_rx;
+        ptr.p_transfer_tx = p_cfg->p_transfer_tx;
+    }
 
     g_usb_hmsc_strg_process[ptr.ip] = USB_MSG_HMSC_STRG_RW_END;
     err_code = usb_hmsc_write10(&ptr, drive_number, buff, sector_number, sector_count, trans_byte);
