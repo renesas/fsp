@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -179,7 +179,7 @@ Functions</h2></td></tr>
 <p>Hardware acceleration for the mbedCrypto implementation of the ARM PSA Crypto API. </p>
 <h1><a class="anchor" id="rm-psa-crypto-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd><b>The PSA Crypto module does not provide any interfaces to the user. This release uses the mbedTLS version 3.1.0 which conforms to the PSA Crypto API 1.0 specification. Consult the ARM documentation at <a href="https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface">https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface</a> for further information.</b> FSP 3.0 onward adopts a change by ARM where mbedCrypto has been integrated back to MbedTLS and the term mbedCrypto has been deprecated. The mbedCrypto term in FSP now refers to the crypto portion of the MbedTLS module.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd><b>The PSA Crypto module does not provide any interfaces to the user. This release uses the mbedTLS version 3.2.1 which conforms to the PSA Crypto API 1.0 specification. Consult the ARM documentation at <a href="https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface">https://armmbed.github.io/mbed-crypto/psa/#application-programming-interface</a> for further information.</b> FSP 3.0 onward adopts a change by ARM where mbedCrypto has been integrated back to MbedTLS and the term mbedCrypto has been deprecated. The mbedCrypto term in FSP now refers to the crypto portion of the MbedTLS module.</dd></dl>
 <h2>HW Overview</h2>
 <table class="doxtable">
 <tr>
@@ -275,6 +275,14 @@ The following build time configurations are defined in arm/mbedtls/config.h:<br 
 <td>Hardware Acceleration &gt; TRNG</td><td>Enabled</td><td>Enabled </td><td>Defines MBEDTLS_ENTROPY_HARDWARE_ALT. </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; Secure Crypto Engine Initialization</td><td>Enabled</td><td>Enabled </td><td>MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT </td></tr>
+<tr>
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_SETBUF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_SETBUF_ALT </td></tr>
 <tr>
 <td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_EXIT_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -464,6 +472,16 @@ Undefine</li>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_STD_FREE value</td><td>Manual Entry</td><td>free </td><td>MBEDTLS_PLATFORM_STD_FREE value </td></tr>
 <tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_SETBUF</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_SETBUF </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_SETBUF value</td><td>Manual Entry</td><td>setbuf </td><td>MBEDTLS_PLATFORM_STD_SETBUF value </td></tr>
+<tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -593,6 +611,16 @@ Undefine</li>
 </td><td>Undefine </td><td>MBEDTLS_PLATFORM_EXIT_MACRO </td></tr>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_EXIT_MACRO value</td><td>Manual Entry</td><td>exit </td><td>MBEDTLS_PLATFORM_EXIT_MACRO value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_SETBUF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Define </td><td>MBEDTLS_PLATFORM_SETBUF_MACRO </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_SETBUF_MACRO value</td><td>Manual Entry</td><td>dummy_setbuf </td><td>MBEDTLS_PLATFORM_SETBUF_MACRO value </td></tr>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_TIME_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -2089,6 +2117,8 @@ Memory Usage</h2>
 <ul>
 <li>Only little endian mode is supported.</li>
 </ul>
+<h3>Stdio Buffering</h3>
+<p>The MBEDTLS_PLATFORM_SETBUF_MACRO was introduced in mbedTLS 3.2.1 to prevent stdio read/write functions from buffering stream data to reduce the likelihood of key leakage by setting the buffer argument in setbuf() to NULL. FSP uses a dummy_setbuf() function in rm_psa_crypto.c to prevent build errors; since FSP uses LittleFS by default (where the usage of a buffer is mandatory) this function does not perform any action. Setting the cache since in LittleFS to the minimum supported by the Data Flash (4) can minimize but not remove the likelihood of key data leakage. The dummy function can be replaced with a user-defined function by defining a different value for MBEDTLS_PLATFORM_SETBUF_MACRO_value in the FSP configurator.</p>
 <h2>SCE9 Usage</h2>
 <p>The SCE9 is used in Compatibility Mode for mbedCrypto acceleration. The crypto capabilities in this mode on the SCE9 are different which results in the below usage limitations with mbedCrypto:</p>
 <ul>
@@ -2243,7 +2273,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

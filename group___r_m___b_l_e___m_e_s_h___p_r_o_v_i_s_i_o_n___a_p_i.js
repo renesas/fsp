@@ -60,7 +60,8 @@ var group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i =
       [ "setLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#acff7e6a30f446c1e13e8e0071d63aa78", null ],
       [ "generateRandomizedNumber", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a2ca92c9371e11b73ccc44fffdf64aae7", null ],
       [ "setOobPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a1161f3e2c459ffaf6ad139a9cce876b5", null ],
-      [ "setOobAuthInfo", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a5d4095fbfe6f3fb4bb2c61b0d04b5ac1", null ]
+      [ "setOobAuthInfo", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a5d4095fbfe6f3fb4bb2c61b0d04b5ac1", null ],
+      [ "generateEcdhKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ac99db91abb29fd3d5a426e6c9445c1a5", null ]
     ] ],
     [ "rm_ble_mesh_provision_instance_t", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__instance__t", [
       [ "p_ctrl", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a226824f2bc10a368a762bfae33e88d35", null ],
@@ -68,6 +69,7 @@ var group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i =
       [ "p_api", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a3c4c8ced40851873356d1170dc48be96", null ]
     ] ],
     [ "RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac396f194696ac755d13c903e9b615480", null ],
+    [ "RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga6a3e6c9042e731e8cabadb58c3b13c70", null ],
     [ "RM_BLE_MESH_PROVISION_OOB_VALUE_SIZE", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gaad1c5a67636f6cb6e42324d461480358", null ],
     [ "RM_BLE_MESH_PROVISION_URI_HASH_SIZE", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga9c8b156ecabe4f07ef93da1e9de4d6d4", null ],
     [ "RM_BLE_MESH_PROVISION_HANDLE_INVALID", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac385bf26a908aa836a543d4de5ce3f58", null ],

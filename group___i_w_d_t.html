@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -192,11 +192,15 @@ Overview</h1>
 Features</h2>
 <p>The IWDT HAL module has the following key features:</p><ul>
 <li>When the IWDT underflows or is refreshed outside of the permitted refresh window, one of the following events can occur:<ul>
-<li>Resetting of the device</li>
+<li>Resetting of the device<a class="anchor" id="um_wdt_configuration_for_reset_control"></a></li>
 <li>Generation of an NMI<a class="anchor" id="um_wdt_nmi_callback_support"></a></li>
 </ul>
 </li>
-<li>The IWDT begins counting at reset.<a class="anchor" id="um_wdt_auto_start_mode_support"></a></li>
+<li>The WDT supports following modes:<sup>1</sup><ul>
+<li>In auto start mode, the WDT begins counting at reset.<a class="anchor" id="um_wdt_auto_start_mode_support"></a></li>
+<li>In register start mode, the WDT can be started from the application<sup>1</sup>.<a class="anchor" id="um_wdt_register_start_mode"></a> </li>
+</ul>
+</li>
 </ul>
 <h2><a class="anchor" id="r-iwdt-selecting-a-watchdog"></a>
 Selecting a Watchdog</h2>
@@ -205,13 +209,27 @@ Selecting a Watchdog</h2>
 <tr>
 <th></th><th>WDT </th><th>IWDT  </th></tr>
 <tr>
-<td>Start Mode</td><td>The WDT can be started from the application (register start mode) or configured by hardware to start automatically (auto start mode). </td><td>The IWDT can only be configured by hardware to start automatically. </td></tr>
+<td>Start Mode</td><td>The WDT can be started from the application (register start mode) or configured by hardware to start automatically (auto start mode). </td><td>On most of MCUs, the IWDT can only be configured by hardware to start automatically<sup>1</sup>. </td></tr>
 <tr>
 <td>Clock Source</td><td>The WDT runs off a peripheral clock.</td><td>The IWDT has its own clock source which improves safety. </td></tr>
 </table>
+<dl class="section note"><dt>Note</dt><dd>1. Refer to the MCU hardware user's manual or datasheet to determine if IWDT supports register start mode.</dd></dl>
 <h1><a class="anchor" id="r-iwdt-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_wdt_nmi_callback_required"></a> <h2>Build Time Configurations for r_iwdt</h2>
+<p>When using register start mode, configure the watchdog timer on the Stacks tab.</p>
+<dl class="section note"><dt>Note</dt><dd>When using auto start mode, configurations on the <b>Stacks</b> tab are ignored. Configure the watchdog using the OFS settings on the BSP tab. These settings include the following:<ul>
+<li>Start Mode</li>
+<li>Timeout Period</li>
+<li>Dedicated Clock Frequency Divisor</li>
+<li>Window End Position</li>
+<li>Window Start Position</li>
+<li>Reset Interrupt Request Select</li>
+<li>Stop Control</li>
+</ul>
+</dd>
+<dd>
+Review the OFS0 properties window to see additional details.</dd></dl>
+<p><a class="anchor" id="um_wdt_nmi_callback_required"></a><a class="anchor" id="um_wdt_configuration_for_refresh_window_start_position"></a><a class="anchor" id="um_wdt_configuration_for_refresh_window_end_position"></a><a class="anchor" id="um_wdt_configuration_for_wdt_clock_division"></a><a class="anchor" id="um_wdt_configuration_for_wdt_timeout_period"></a> <h2>Build Time Configurations for r_iwdt</h2>
 The following build time configurations are defined in fsp_cfg/r_iwdt_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
@@ -226,6 +244,8 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>Register Start NMI Support</td><td>MCU Specific Options</td><td></td><td>If enabled, code for NMI support in register start mode is included in the build. </td></tr>
 </table>
  <h2>Configurations for Monitoring &gt; Independent Watchdog (r_iwdt)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Independent Watchdog (r_iwdt). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -235,21 +255,21 @@ This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; In
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_wdt0 </td><td>Module name. </td></tr>
 <tr>
+<td>Timeout</td><td>MCU Specific Options</td><td></td><td>Select the independent watchdog timeout in cycles. </td></tr>
+<tr>
+<td>Clock Division Ratio</td><td>MCU Specific Options</td><td></td><td>Select the independent watchdog clock divisor. </td></tr>
+<tr>
+<td>Window Start Position</td><td>MCU Specific Options</td><td></td><td>Select the allowed independent watchdog refresh start point. </td></tr>
+<tr>
+<td>Window End Position</td><td>MCU Specific Options</td><td></td><td>Select the allowed independent watchdog refresh end point. </td></tr>
+<tr>
+<td>Reset Control</td><td>MCU Specific Options</td><td></td><td>Select what happens when the independent watchdog timer expires. </td></tr>
+<tr>
+<td>Stop Control</td><td>MCU Specific Options</td><td></td><td>Select the independent watchdog state in low power mode. </td></tr>
+<tr>
 <td>NMI callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided here. If this callback function is provided, it is called from the interrupt service routine (ISR) when the watchdog triggers. </td></tr>
 </table>
 </p>
-<dl class="section note"><dt>Note</dt><dd>The IWDT has additional configurable settings in the OFS0 register in the <b>BSP</b> tab properties window. These settings include the following:<ul>
-<li>Start Mode</li>
-<li>Timeout Period</li>
-<li>Dedicated Clock Frequency Divisor</li>
-<li>Window End Position</li>
-<li>Window Start Position</li>
-<li>Reset Interrupt Request Select</li>
-<li>Stop Control</li>
-</ul>
-</dd>
-<dd>
-Review the OFS0 properties window to see additional details.</dd></dl>
 <h2><a class="anchor" id="r-iwdt-clock-configuration"></a>
 Clock Configuration</h2>
 <p>The IWDT clock is based on the IWDTCLK frequency. You can set the IWDTCLK frequency divider using the <b>BSP</b> tab of the RA Configuration editor.</p>
@@ -261,6 +281,7 @@ Usage Notes</h1>
 <h2><a class="anchor" id="r-iwdt-nmi-interrupt"></a>
 NMI Interrupt</h2>
 <p>The independent watchdog timer uses the NMI, which is enabled by default. No special configuration is required. When the NMI is triggered, the callback function registered during open is called.</p>
+<dl class="section note"><dt>Note</dt><dd>When using the IWDT in software start mode with NMI and the timer underflows, the IWDT status must be reset by calling <a class="el" href="group___i_w_d_t.html#gaca4ac4abef1b4d4b3dd2982bc1b19278">R_IWDT_StatusClear</a> before restarting the timer via <a class="el" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>.</dd></dl>
 <h2>Period Calculation</h2>
 <p>The IWDT operates from IWDTCLK. With a IWDTCLK of 15000 Hz, the maximum time from the last refresh to device reset or NMI generation will be just below 35 seconds as detailed below.</p>
 <p>IWDTCLK = 15000 Hz<br />
@@ -415,16 +436,18 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read the IWDT status flags. When the IWDT is configured to output a reset on underflow or refresh error reading the status and error flags can be read after reset to establish if the IWDT caused the reset. Reading the status and error flags in NMI output mode indicates whether the IWDT generated the NMI interrupt.</p>
+<p>Read the IWDT status flags.</p>
 <p>Indicates both status and error conditions.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d">R_IWDT_StatusGet</a>(&amp;g_iwdt0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>IWDT status successfully read. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The driver has not been opened. Perform <a class="el" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open()</a> first. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is only valid if the IWDT generates an NMI when an error occurs.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>When the IWDT is configured to output a reset on underflow or refresh error reading the status and error flags serves no purpose as they will always indicate that no underflow has occurred and there is no refresh error. Reading the status and error flags is only valid when interrupt request output is enabled. </dd></dl>
 
 </div>
 </div>
@@ -459,9 +482,11 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
     <tr><td class="paramname">FSP_SUCCESS</td><td>IWDT flag(s) successfully cleared. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The driver has not been opened. Perform <a class="el" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open()</a> first. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is only valid if the IWDT generates an NMI when an error occurs.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>When the IWDT is configured to output a reset on underflow or refresh error reading the status and error flags serves no purpose as they will always indicate that no underflow has occurred and there is no refresh error. Reading the status and error flags is only valid when interrupt request output is enabled. </dd></dl>
 
 </div>
 </div>
@@ -595,7 +620,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@ var searchData=
   ['cgc_5fclock_5ft',['cgc_clock_t',['../group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6',1,'r_cgc_api.h']]],
   ['cgc_5fevent_5ft',['cgc_event_t',['../group___c_g_c___a_p_i.html#gadcb54f13e507fc97c6a86fa6f587ecb6',1,'r_cgc_api.h']]],
   ['cgc_5fpll_5fdiv_5ft',['cgc_pll_div_t',['../group___c_g_c___a_p_i.html#gaba4cdc2e548dc20fb3800c3d1adcc315',1,'r_cgc_api.h']]],
-  ['cgc_5fpll_5fmul_5ft',['cgc_pll_mul_t',['../group___c_g_c___a_p_i.html#gac42ad637386383ab22a111e33b4d3892',1,'r_cgc_api.h']]],
+  ['cgc_5fpll_5fout_5fdiv_5ft',['cgc_pll_out_div_t',['../group___c_g_c___a_p_i.html#ga2e1a2208bb6a8c30053b9034596f73d6',1,'r_cgc_api.h']]],
   ['cgc_5fsys_5fclock_5fdiv_5ft',['cgc_sys_clock_div_t',['../group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d',1,'r_cgc_api.h']]],
   ['cgc_5fusb_5fclock_5fdiv_5ft',['cgc_usb_clock_div_t',['../group___c_g_c___a_p_i.html#ga7499fcdfd9aafe4ca695e26e2d69175d',1,'r_cgc_api.h']]],
   ['comparator_5ffilter_5ft',['comparator_filter_t',['../group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ga2fc490a4593fa61033c7aedc7895bbc8',1,'r_comparator_api.h']]],

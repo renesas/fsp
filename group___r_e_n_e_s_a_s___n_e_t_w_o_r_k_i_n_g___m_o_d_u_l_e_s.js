@@ -4,6 +4,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "AWS HTTPS", "group___a_w_s___h_t_t_p_s.html", null ],
     [ "AWS MQTT", "group___a_w_s___m_q_t_t.html", null ],
     [ "AWS PKCS11 PAL on LittleFS (rm_aws_pkcs11_pal_littlefs)", "group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html", null ],
+    [ "Azure Embedded Wireless Framework RYZ Port (rm_azure_ewf_ryz)", "group___r_m___a_z_u_r_e___e_w_f___r_y_z.html", null ],
     [ "BLE Abstraction (rm_ble_abs)", "group___b_l_e___a_b_s.html", "group___b_l_e___a_b_s" ],
     [ "BLE Driver (r_ble_balance)", "group___b_l_e___b_a_l_a_n_c_e.html", null ],
     [ "BLE Driver (r_ble_compact)", "group___b_l_e___c_o_m_p_a_c_t.html", null ],

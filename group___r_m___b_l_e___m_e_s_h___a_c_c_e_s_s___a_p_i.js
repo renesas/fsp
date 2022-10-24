@@ -101,6 +101,7 @@ var group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i =
       [ "channel", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a211f7c51a39d3dba41ecf1c47686432b", null ],
       [ "p_element_descriptor", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a324f9e779e29c86c2f0727a0fb68858b", null ],
       [ "p_mesh_upper_trans_instance", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#af0da9721a0096ac159fffb3a95ad433e", null ],
+      [ "element_number", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a9ffb1e0dbff2ffddb0e72ab008b4fdbf", null ],
       [ "p_context", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#aa4825b84ae1de8327c74161bc0e1c7d0", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a8f1b657f84c4a5012c1373ebd85043d8", null ]
     ] ],

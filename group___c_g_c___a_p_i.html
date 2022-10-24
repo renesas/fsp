@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -182,8 +182,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structcgc__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcgc__pll__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#structcgc__pll__cfg__t">cgc_pll_cfg_t</a></td></tr>
 <tr class="separator:structcgc__pll__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:unioncgc__divider__cfg__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a></td></tr>
-<tr class="separator:unioncgc__divider__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcgc__divider__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a></td></tr>
+<tr class="separator:structcgc__divider__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcgc__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#structcgc__cfg__t">cgc_cfg_t</a></td></tr>
 <tr class="separator:structcgc__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcgc__clocks__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#structcgc__clocks__cfg__t">cgc_clocks_cfg_t</a></td></tr>
@@ -206,8 +206,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga4dcbe960cf591207eef834969b83f8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaba4cdc2e548dc20fb3800c3d1adcc315"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#gaba4cdc2e548dc20fb3800c3d1adcc315">cgc_pll_div_t</a> </td></tr>
 <tr class="separator:gaba4cdc2e548dc20fb3800c3d1adcc315"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac42ad637386383ab22a111e33b4d3892"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#gac42ad637386383ab22a111e33b4d3892">cgc_pll_mul_t</a> </td></tr>
-<tr class="separator:gac42ad637386383ab22a111e33b4d3892"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e1a2208bb6a8c30053b9034596f73d6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga2e1a2208bb6a8c30053b9034596f73d6">cgc_pll_out_div_t</a> </td></tr>
+<tr class="separator:ga2e1a2208bb6a8c30053b9034596f73d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga78ac772149fadd3ec1fb21dc674e2b8d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d">cgc_sys_clock_div_t</a> </td></tr>
 <tr class="separator:ga78ac772149fadd3ec1fb21dc674e2b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7499fcdfd9aafe4ca695e26e2d69175d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga7499fcdfd9aafe4ca695e26e2d69175d">cgc_usb_clock_div_t</a> </td></tr>
@@ -273,43 +273,46 @@ divider</td>
 <td class="fielddoc">
 PLL divider. </td></tr>
 <tr><td class="fieldtype">
-<a id="a5c8a65a3f88aa763363962e0bb183473"></a><a class="el" href="group___c_g_c___a_p_i.html#gac42ad637386383ab22a111e33b4d3892">cgc_pll_mul_t</a></td>
+<a id="a5c8a65a3f88aa763363962e0bb183473"></a>cgc_pll_mul_t</td>
 <td class="fieldname">
 multiplier</td>
 <td class="fielddoc">
 PLL multiplier. </td></tr>
+<tr><td class="fieldtype">
+<a id="a91cb9852c5a1fd6516b402d5b16a1da2"></a><a class="el" href="group___c_g_c___a_p_i.html#ga2e1a2208bb6a8c30053b9034596f73d6">cgc_pll_out_div_t</a></td>
+<td class="fieldname">
+out_div_p</td>
+<td class="fielddoc">
+PLL divisor for output clock P. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1b9674cec7c597408382398583005ceb"></a><a class="el" href="group___c_g_c___a_p_i.html#ga2e1a2208bb6a8c30053b9034596f73d6">cgc_pll_out_div_t</a></td>
+<td class="fieldname">
+out_div_q</td>
+<td class="fielddoc">
+PLL divisor for output clock Q. </td></tr>
+<tr><td class="fieldtype">
+<a id="a97d2800fcc1ea6299076d21563fa7f0f"></a><a class="el" href="group___c_g_c___a_p_i.html#ga2e1a2208bb6a8c30053b9034596f73d6">cgc_pll_out_div_t</a></td>
+<td class="fieldname">
+out_div_r</td>
+<td class="fielddoc">
+PLL divisor for output clock R. </td></tr>
 </table>
 
 </div>
 </div>
-<a name="unioncgc__divider__cfg__t" id="unioncgc__divider__cfg__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#unioncgc__divider__cfg__t">&#9670;&nbsp;</a></span>cgc_divider_cfg_t</h2>
+<a name="structcgc__divider__cfg__t" id="structcgc__divider__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcgc__divider__cfg__t">&#9670;&nbsp;</a></span>cgc_divider_cfg_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">union cgc_divider_cfg_t</td>
+          <td class="memname">struct cgc_divider_cfg_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Clock configuration structure - Used as an input parameter to the <a class="el" href="group___c_g_c___a_p_i.html#ac55d09984ea2ed00e0b9f67b21ca9953">cgc_api_t::systemClockSet</a> and <a class="el" href="group___c_g_c___a_p_i.html#aab4d84b9a18f5ff223fa9d5dbdf2104c">cgc_api_t::systemClockGet</a> functions. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a9977468cef6d404e354b8abd400252fd"></a>uint32_t</td>
-<td class="fieldname">
-sckdivcr_w</td>
-<td class="fielddoc">
-(@ 0x4001E020) System clock Division control register </td></tr>
-<tr><td class="fieldtype">
-<a id="a884190932dd18819bb6addeedb8ae308"></a>struct <a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t_8sckdivcr__b">cgc_divider_cfg_t</a></td>
-<td class="fieldname">
-sckdivcr_b</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
+</div>
 </div>
 </div>
 <a name="structcgc__cfg__t" id="structcgc__cfg__t"></a>
@@ -360,7 +363,7 @@ pll2_cfg</td>
 <td class="fielddoc">
 PLL2 configuration structure. </td></tr>
 <tr><td class="fieldtype">
-<a id="a160f655d324ea23224112f5f030a95aa"></a><a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a></td>
+<a id="a160f655d324ea23224112f5f030a95aa"></a><a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a></td>
 <td class="fieldname">
 divider_cfg</td>
 <td class="fielddoc">
@@ -429,9 +432,9 @@ State of PLL2. </td></tr>
 <tr class="separator:aa99ddd59f6c23576e78a0887f9403047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac039e340cd6d3e96a6d3c4a514ca8e18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ac039e340cd6d3e96a6d3c4a514ca8e18">clockCheck</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> clock_source)</td></tr>
 <tr class="separator:ac039e340cd6d3e96a6d3c4a514ca8e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac55d09984ea2ed00e0b9f67b21ca9953"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ac55d09984ea2ed00e0b9f67b21ca9953">systemClockSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> clock_source, <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a> const *const p_divider_cfg)</td></tr>
+<tr class="memitem:ac55d09984ea2ed00e0b9f67b21ca9953"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ac55d09984ea2ed00e0b9f67b21ca9953">systemClockSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> clock_source, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a> const *const p_divider_cfg)</td></tr>
 <tr class="separator:ac55d09984ea2ed00e0b9f67b21ca9953"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab4d84b9a18f5ff223fa9d5dbdf2104c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#aab4d84b9a18f5ff223fa9d5dbdf2104c">systemClockGet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> *const p_clock_source, <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a> *const p_divider_cfg)</td></tr>
+<tr class="memitem:aab4d84b9a18f5ff223fa9d5dbdf2104c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#aab4d84b9a18f5ff223fa9d5dbdf2104c">systemClockGet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> *const p_clock_source, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a> *const p_divider_cfg)</td></tr>
 <tr class="separator:aab4d84b9a18f5ff223fa9d5dbdf2104c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5a6467d7f29870c48a7f4e0cc16f3fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ac5a6467d7f29870c48a7f4e0cc16f3fa">oscStopDetectEnable</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ac5a6467d7f29870c48a7f4e0cc16f3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -578,7 +581,7 @@ State of PLL2. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::systemClockSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> clock_source, <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a> const *const p_divider_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::systemClockSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> clock_source, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a> const *const p_divider_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -604,7 +607,7 @@ State of PLL2. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::systemClockGet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> *const p_clock_source, <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a> *const p_divider_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::systemClockGet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6">cgc_clock_t</a> *const p_clock_source, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a> *const p_divider_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -882,106 +885,34 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
-<a id="gac42ad637386383ab22a111e33b4d3892"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac42ad637386383ab22a111e33b4d3892">&#9670;&nbsp;</a></span>cgc_pll_mul_t</h2>
+<a id="ga2e1a2208bb6a8c30053b9034596f73d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2e1a2208bb6a8c30053b9034596f73d6">&#9670;&nbsp;</a></span>cgc_pll_out_div_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___c_g_c___a_p_i.html#gac42ad637386383ab22a111e33b4d3892">cgc_pll_mul_t</a></td>
+          <td class="memname">enum <a class="el" href="group___c_g_c___a_p_i.html#ga2e1a2208bb6a8c30053b9034596f73d6">cgc_pll_out_div_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>PLL multiplier values </p>
+<p>PLL clock output divisor. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a55ec35a66a047e94fdfdb1ac641ec751"></a>CGC_PLL_MUL_8_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 8.0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6a6efbc87b2ec66edae384b2cd7326aa3d"></a>CGC_PLL_OUT_DIV_2&#160;</td><td class="fielddoc"><p>PLL output clock divided by 2. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a2ad7b484baec0e3e3be144401688325c"></a>CGC_PLL_MUL_9_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 9.0. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6a8efe6ac998f2e17a082b2ab264287530"></a>CGC_PLL_OUT_DIV_3&#160;</td><td class="fielddoc"><p>PLL output clock divided by 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a237dbe3badb5c12b6fb78869092dbcef"></a>CGC_PLL_MUL_10_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 10.0. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6a3e6ec0743938b25b759c3e4737bcff77"></a>CGC_PLL_OUT_DIV_4&#160;</td><td class="fielddoc"><p>PLL output clock divided by 4. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a3608bb7196e182c287a09906ab961d0d"></a>CGC_PLL_MUL_10_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 10.5. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6ad3a6e39857d0da94a8327792fe80db7d"></a>CGC_PLL_OUT_DIV_5&#160;</td><td class="fielddoc"><p>PLL output clock divided by 5. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a6853f207298b2dbe0e2bf951e372ff1b"></a>CGC_PLL_MUL_11_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 11.0. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6af7dcf6f34e89757c52ce711de34f6c9d"></a>CGC_PLL_OUT_DIV_6&#160;</td><td class="fielddoc"><p>PLL output clock divided by 6. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a3c1196163d0db437c4ece56883686a4f"></a>CGC_PLL_MUL_11_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 11.5. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6ae5699b0d549e49dad3eff04cfcf9591a"></a>CGC_PLL_OUT_DIV_8&#160;</td><td class="fielddoc"><p>PLL output clock divided by 8. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a15a8921d86cfbd62827a51171fdcac9b"></a>CGC_PLL_MUL_12_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 12.0. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6a91157f2e952b13361a9ab38315871127"></a>CGC_PLL_OUT_DIV_9&#160;</td><td class="fielddoc"><p>PLL output clock divided by 9. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a1d59891b14b066bcd8a3b88b17b1290b"></a>CGC_PLL_MUL_12_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 12.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ae6ed03e4b147fa8fb63719e7befcfe71"></a>CGC_PLL_MUL_13_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 13.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a311c70e5b48557a189a3b49be195f2e1"></a>CGC_PLL_MUL_13_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 13.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a94c0b96111f1726eed75f8be72d936f8"></a>CGC_PLL_MUL_14_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 14.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a2dad54100030072176d73dcec8ca5bcf"></a>CGC_PLL_MUL_14_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 14.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892abf7962284eecf964b5aab8d24e62f250"></a>CGC_PLL_MUL_15_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 15.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a092b56ae5a5d314c49014f16a330bc9b"></a>CGC_PLL_MUL_15_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 15.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a8217a28a833338bb818a8d5c514681d0"></a>CGC_PLL_MUL_16_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 16.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892aae11c6e2cb0ce42a8d390e50a2d75fa3"></a>CGC_PLL_MUL_16_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 16.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ab4f30cc76cc724d212be25ca0733edc1"></a>CGC_PLL_MUL_17_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 17.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892acb54eab9123463099d0bb3ef0f25e569"></a>CGC_PLL_MUL_17_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 17.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a78c4c8926514c279f70d7ae8cfd32dda"></a>CGC_PLL_MUL_18_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 18.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a1c0780359f5d41a90985d3972d91aa02"></a>CGC_PLL_MUL_18_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 18.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a78863a07326493ff5db0761aa998d013"></a>CGC_PLL_MUL_19_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 19.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ae910171e668efc9ca69f7fbdea86c33e"></a>CGC_PLL_MUL_19_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 19.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a0089dead05f651feee4227b942e00311"></a>CGC_PLL_MUL_20_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 20.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ab024c6e04cb2aee9a0cfe77f97c4852b"></a>CGC_PLL_MUL_20_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 20.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a222951e0268259b04d0691141ec6bfd1"></a>CGC_PLL_MUL_21_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 21.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892aa8bc650477c6be173cb2866c8401194e"></a>CGC_PLL_MUL_21_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 21.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a807e47b6876119e2f22ce47d4f080877"></a>CGC_PLL_MUL_22_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 22.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892afc3103a34223f5d0841051f57beee29c"></a>CGC_PLL_MUL_22_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 22.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a236c9194999c112dafc119ed70920cb4"></a>CGC_PLL_MUL_23_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 23.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a4cd70f20460cdfbe59a0cd96240a1b53"></a>CGC_PLL_MUL_23_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 23.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a0923027426292f0e369c9281bc4d02fc"></a>CGC_PLL_MUL_24_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 24.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ae6009086f6dd85473dd21d96376f6f9c"></a>CGC_PLL_MUL_24_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 24.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a1e05154b98366721f0ed44837c6e956b"></a>CGC_PLL_MUL_25_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 25.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a035c27f37cff8dcd53f909fc35a3d1f1"></a>CGC_PLL_MUL_25_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 25.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ac011461b3f505df97fdb3fffc43bc30b"></a>CGC_PLL_MUL_26_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 26.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a23e4e3d946618f2d67e3e38c24690208"></a>CGC_PLL_MUL_26_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 26.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a0d39d8704e5b75ae6be1c316a1f24fab"></a>CGC_PLL_MUL_27_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 27.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ab671d886099221bdbccc47ea30d4d5d5"></a>CGC_PLL_MUL_27_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 27.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a0efac5820f0cb56c532a5141e4b6a8e0"></a>CGC_PLL_MUL_28_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 28.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892ad416bfcc6fdf8166e750dde7a4faa2fd"></a>CGC_PLL_MUL_28_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 28.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a6368deb4a056bf114c57a0c3890123e4"></a>CGC_PLL_MUL_29_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 29.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892af03f160072e85b4afa1a63f1b2226591"></a>CGC_PLL_MUL_29_5&#160;</td><td class="fielddoc"><p>PLL multiplier of 29.5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a25e9d94ffeed885c048354338e359c64"></a>CGC_PLL_MUL_30_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 30.0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac42ad637386383ab22a111e33b4d3892a694ae8fff17ed8e8e5f7ab0d902724e0"></a>CGC_PLL_MUL_31_0&#160;</td><td class="fielddoc"><p>PLL multiplier of 31.0. </p>
+<tr><td class="fieldname"><a id="gga2e1a2208bb6a8c30053b9034596f73d6a0b89923ee4892080c7c804c79f625055"></a>CGC_PLL_OUT_DIV_16&#160;</td><td class="fielddoc"><p>PLL output clock divided by 16. </p>
 </td></tr>
 </table>
 
@@ -1070,7 +1001,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

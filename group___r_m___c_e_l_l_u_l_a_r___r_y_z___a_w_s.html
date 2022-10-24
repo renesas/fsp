@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -168,6 +168,17 @@ Overview</h1>
 <p>See AWS documentation for how the Cellular API works: <a href="https://www.freertos.org/Documentation/api-ref/cellular/index.html">https://www.freertos.org/Documentation/api-ref/cellular/index.html</a></p>
 <h2><a class="anchor" id="rm-cellular-ryz-aws-features"></a>
 Features</h2>
+<p>The following RYZ modems are supported by this port:</p>
+<ul>
+<li>RYZ014A (<a href="https://www.renesas.com/us/en/products/interface-connectivity/wireless-communications/cellular-iot-modules/ryz014a-lte-cat-m1-cellular-iot-module">https://www.renesas.com/us/en/products/interface-connectivity/wireless-communications/cellular-iot-modules/ryz014a-lte-cat-m1-cellular-iot-module</a>)</li>
+<li>RYZ024A</li>
+</ul>
+<p>Please see the data sheets for hardware configuration for modems. Some notable differences between the two are:</p>
+<ul>
+<li>RYZ014A default baud is 921600. RYZ024A default baud is 115200.</li>
+<li>RYZ014A reset pin has to be toggled high to reset the modem. RYZ024A is the opposite and has to be toggled low.</li>
+<li>RYZ024A doesn't support AT+CREG. AT+CEREG should be used instead.</li>
+</ul>
 <p>All APIs are supported by the RYZ port with the exception of the following RAT APIs:</p>
 <ul>
 <li>Cellular_SetRatPriority</li>
@@ -175,7 +186,7 @@ Features</h2>
 </ul>
 <p>The following URCs are supported by the RYZ port:</p>
 <ul>
-<li>CEREG/CREG (Cellular_RegisterUrcNetworkRegistrationEventCallback)</li>
+<li>CEREG (Cellular_RegisterUrcNetworkRegistrationEventCallback)</li>
 <li>SYSSTART (Cellular_RegisterModemEventCallback)</li>
 <li>SHUTDOWN (Cellular_RegisterModemEventCallback)</li>
 <li>SQNSRING (Cellular_SocketRegisterDataReadyCallback)</li>
@@ -184,6 +195,7 @@ Features</h2>
 <h2><a class="anchor" id="rm-cellular-ryz-aws-limitations"></a>
 Limitations</h2>
 <ul>
+<li>RYZ024A doesn't support AT+CREG. API implementations don't use AT+CREG and use AT+CEREG instead.</li>
 <li>This module does not handle the RYZ reset pin. The user should manually configure this pin in order to reset the module.</li>
 <li>The RYZ can only be used in buffer reception mode, not transparent mode. When calling Cellular_SocketConnect only CELLULAR_ACCESSMODE_BUFFER is supported.</li>
 <li>The AWS Cellular APIs don't currently allow the local port to be set for UDP. It can be set by modifying the localPort field in CellularSocketHandle_t after calling Cellular_CreateSocket but before calling Cellular_SocketConnect.</li>
@@ -347,7 +359,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

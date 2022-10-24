@@ -19,6 +19,7 @@ var searchData=
   ['usb_20phid_20interface',['USB PHID Interface',['../group___u_s_b___p_h_i_d___a_p_i.html',1,'']]],
   ['usb_20pmsc_20_28r_5fusb_5fpmsc_29',['USB PMSC (r_usb_pmsc)',['../group___u_s_b___p_m_s_c.html',1,'']]],
   ['usb_20pmsc_20interface',['USB PMSC Interface',['../group___u_s_b___p_m_s_c___a_p_i.html',1,'']]],
+  ['usb_20pprn_20_28r_5fusb_5fpprn_29',['USB PPRN (r_usb_pprn)',['../group___u_s_b___p_p_r_n.html',1,'']]],
   ['usb_20pprn_20interface',['USB PPRN Interface',['../group___u_s_b___p_p_r_n___a_p_i.html',1,'']]],
   ['usb_20peripheral_20vendor_20class_20_28r_5fusb_5fpvnd_29',['USB Peripheral Vendor class (r_usb_pvnd)',['../group___u_s_b___p_v_n_d.html',1,'']]]
 ];

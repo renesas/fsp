@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -158,10 +158,13 @@ $(document).ready(function(){initNavTree('group___u_s_b___p_p_r_n___a_p_i.html',
     <div id="searchResults"></div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">USB PPRN Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Interface for USB PPRN functions. </p>
 <h1><a class="anchor" id="USB_PPRN_API_Summary"></a>
 Summary</h1>
@@ -169,13 +172,41 @@ Summary</h1>
 <p>The USB PPRN interface can be implemented by:</p><ul>
 <li><a class="el" href="group___u_s_b_x.html">Azure RTOS USBX Port (rm_usbx_port)</a> </li>
 </ul>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5dba2ce56548c44ea7216640145a446c"><td class="memItemLeft" align="right" valign="top"><a id="ga5dba2ce56548c44ea7216640145a446c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_p_r_n___a_p_i.html#ga5dba2ce56548c44ea7216640145a446c">USB_PPRN_GET_DEVICE_ID</a></td></tr>
+<tr class="memdesc:ga5dba2ce56548c44ea7216640145a446c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Device ID. <br /></td></tr>
+<tr class="separator:ga5dba2ce56548c44ea7216640145a446c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa419ed0924afcbda63ce1140f1360407"><td class="memItemLeft" align="right" valign="top"><a id="gaa419ed0924afcbda63ce1140f1360407"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_p_r_n___a_p_i.html#gaa419ed0924afcbda63ce1140f1360407">USB_PRPN_GET_PORT_STATUS</a></td></tr>
+<tr class="memdesc:gaa419ed0924afcbda63ce1140f1360407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Port Status. <br /></td></tr>
+<tr class="separator:gaa419ed0924afcbda63ce1140f1360407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ba1fba72e2aadffa767059da0af4c77"><td class="memItemLeft" align="right" valign="top"><a id="ga3ba1fba72e2aadffa767059da0af4c77"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_p_r_n___a_p_i.html#ga3ba1fba72e2aadffa767059da0af4c77">USB_PPRN_SOFT_RESET</a></td></tr>
+<tr class="memdesc:ga3ba1fba72e2aadffa767059da0af4c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Soft Reset. <br /></td></tr>
+<tr class="separator:ga3ba1fba72e2aadffa767059da0af4c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a6e921492c43780e2331f07f70d2ec8"><td class="memItemLeft" align="right" valign="top"><a id="ga0a6e921492c43780e2331f07f70d2ec8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_p_r_n___a_p_i.html#ga0a6e921492c43780e2331f07f70d2ec8">USB_PPRN_PORT_STATUS_PAPER_EMPTY</a></td></tr>
+<tr class="memdesc:ga0a6e921492c43780e2331f07f70d2ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">1: Paper Empty, 0: Paper Not Empty <br /></td></tr>
+<tr class="separator:ga0a6e921492c43780e2331f07f70d2ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8579b5a7e87d00000838a9afb873dec0"><td class="memItemLeft" align="right" valign="top"><a id="ga8579b5a7e87d00000838a9afb873dec0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_p_r_n___a_p_i.html#ga8579b5a7e87d00000838a9afb873dec0">USB_PPRN_PORT</a></td></tr>
+<tr class="memdesc:ga8579b5a7e87d00000838a9afb873dec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">1: Selected, 0: Not Selected <br /></td></tr>
+<tr class="separator:ga8579b5a7e87d00000838a9afb873dec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbab8800ed3956b770d20712aa19658b"><td class="memItemLeft" align="right" valign="top"><a id="gadbab8800ed3956b770d20712aa19658b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_p_r_n___a_p_i.html#gadbab8800ed3956b770d20712aa19658b">USB_PPRN_PORT_STATUS_NOT_ERROR</a></td></tr>
+<tr class="memdesc:gadbab8800ed3956b770d20712aa19658b"><td class="mdescLeft">&#160;</td><td class="mdescRight">1: No Error, 0; Error <br /></td></tr>
+<tr class="separator:gadbab8800ed3956b770d20712aa19658b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

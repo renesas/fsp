@@ -28,6 +28,7 @@ var searchData=
   ['sce_5frsa3072_5fpublic_5fwrapped_5fkey_5ft',['sce_rsa3072_public_wrapped_key_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa3072__public__wrapped__key__t',1,'']]],
   ['sce_5frsa4096_5fpublic_5fwrapped_5fkey_5ft',['sce_rsa4096_public_wrapped_key_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa4096__public__wrapped__key__t',1,'']]],
   ['sce_5fsha_5fmd5_5fhandle_5ft',['sce_sha_md5_handle_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__sha__md5__handle__t',1,'']]],
+  ['sce_5ftype',['SCE_Type',['../struct_s_c_e___type.html',1,'']]],
   ['sci_5fb_5fbaud_5fsetting_5ft',['sci_b_baud_setting_t',['../group___s_c_i___b___u_a_r_t.html#structsci__b__baud__setting__t',1,'']]],
   ['sci_5fb_5fi2c_5fclock_5fsettings_5ft',['sci_b_i2c_clock_settings_t',['../group___s_c_i___b___i2_c.html#structsci__b__i2c__clock__settings__t',1,'']]],
   ['sci_5fb_5fi2c_5fextended_5fcfg_5ft',['sci_b_i2c_extended_cfg_t',['../group___s_c_i___b___i2_c.html#structsci__b__i2c__extended__cfg__t',1,'']]],

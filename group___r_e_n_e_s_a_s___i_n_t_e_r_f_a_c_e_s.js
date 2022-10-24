@@ -83,7 +83,7 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "USB PCDC Interface", "group___u_s_b___p_c_d_c___a_p_i.html", "group___u_s_b___p_c_d_c___a_p_i" ],
     [ "USB PHID Interface", "group___u_s_b___p_h_i_d___a_p_i.html", null ],
     [ "USB PMSC Interface", "group___u_s_b___p_m_s_c___a_p_i.html", "group___u_s_b___p_m_s_c___a_p_i" ],
-    [ "USB PPRN Interface", "group___u_s_b___p_p_r_n___a_p_i.html", null ],
+    [ "USB PPRN Interface", "group___u_s_b___p_p_r_n___a_p_i.html", "group___u_s_b___p_p_r_n___a_p_i" ],
     [ "Virtual EEPROM Interface", "group___r_m___v_e_e___a_p_i.html", "group___r_m___v_e_e___a_p_i" ],
     [ "WDT Interface", "group___w_d_t___a_p_i.html", "group___w_d_t___a_p_i" ],
     [ "WiFi Interface", "group___w_i_f_i___a_p_i.html", "group___w_i_f_i___a_p_i" ],

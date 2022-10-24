@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -192,6 +192,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga842afc519426cab5364a4733f2b36a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2bd755daa6d80c90a706449555f1e2f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga2bd755daa6d80c90a706449555f1e2f6">RM_BLE_MESH_PROVISION_SetOobAuthInfo</a> (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const p_auth_info, uint8_t size)</td></tr>
 <tr class="separator:ga2bd755daa6d80c90a706449555f1e2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70c3806932d5d47936a39d25d9667230"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga70c3806932d5d47936a39d25d9667230">RM_BLE_MESH_PROVISION_GenerateEcdhKey</a> (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t *const p_public_key)</td></tr>
+<tr class="separator:ga70c3806932d5d47936a39d25d9667230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="rm_ble_mesh_provision-overview"></a>
@@ -793,13 +795,52 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
+<a id="ga70c3806932d5d47936a39d25d9667230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70c3806932d5d47936a39d25d9667230">&#9670;&nbsp;</a></span>RM_BLE_MESH_PROVISION_GenerateEcdhKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_BLE_MESH_PROVISION_GenerateEcdhKey </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_public_key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility API to generate ECDH public key to be used for provisioning.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ac99db91abb29fd3d5a426e6c9445c1a5">rm_ble_mesh_provision_api_t::generateEcdhKey</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Generate ECDH Public Key for Provisioning. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga70c3806932d5d47936a39d25d9667230">RM_BLE_MESH_PROVISION_GenerateEcdhKey</a>(&amp;g_ble_mesh_provision0_ctrl, &amp;public_key);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>The parameter p_public_key is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

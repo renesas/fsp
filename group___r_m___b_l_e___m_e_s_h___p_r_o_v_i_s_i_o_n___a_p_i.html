@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,6 +203,8 @@ Data Structures</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:gac396f194696ac755d13c903e9b615480"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac396f194696ac755d13c903e9b615480">RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE</a></td></tr>
 <tr class="separator:gac396f194696ac755d13c903e9b615480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a3e6c9042e731e8cabadb58c3b13c70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga6a3e6c9042e731e8cabadb58c3b13c70">RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE</a></td></tr>
+<tr class="separator:ga6a3e6c9042e731e8cabadb58c3b13c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaad1c5a67636f6cb6e42324d461480358"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gaad1c5a67636f6cb6e42324d461480358">RM_BLE_MESH_PROVISION_OOB_VALUE_SIZE</a></td></tr>
 <tr class="separator:gaad1c5a67636f6cb6e42324d461480358"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9c8b156ecabe4f07ef93da1e9de4d6d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga9c8b156ecabe4f07ef93da1e9de4d6d4">RM_BLE_MESH_PROVISION_URI_HASH_SIZE</a></td></tr>
@@ -653,6 +655,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a1161f3e2c459ffaf6ad139a9cce876b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d4095fbfe6f3fb4bb2c61b0d04b5ac1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a5d4095fbfe6f3fb4bb2c61b0d04b5ac1">setOobAuthInfo</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const p_auth_info, uint8_t size)</td></tr>
 <tr class="separator:a5d4095fbfe6f3fb4bb2c61b0d04b5ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac99db91abb29fd3d5a426e6c9445c1a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ac99db91abb29fd3d5a426e6c9445c1a5">generateEcdhKey</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t *const p_public_key)</td></tr>
+<tr class="separator:ac99db91abb29fd3d5a426e6c9445c1a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="af2b8fb246fc2e54dcacf5abf4a68c917"></a>
@@ -965,6 +969,31 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="ac99db91abb29fd3d5a426e6c9445c1a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac99db91abb29fd3d5a426e6c9445c1a5">&#9670;&nbsp;</a></span>generateEcdhKey</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_provision_api_t::generateEcdhKey) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t *const p_public_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility API to generate ECDH Public Key to be used for Provisioning </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga70c3806932d5d47936a39d25d9667230">RM_BLE_MESH_PROVISION_GenerateEcdhKey()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_public_key</td><td>Pointer to public key. Size of public key is <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga6a3e6c9042e731e8cabadb58c3b13c70">RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -1019,6 +1048,21 @@ Pointer to the API structure for this instance. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Provisioning array size requirements Provisioning key NetKey size </p>
+
+</div>
+</div>
+<a id="ga6a3e6c9042e731e8cabadb58c3b13c70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6a3e6c9042e731e8cabadb58c3b13c70">&#9670;&nbsp;</a></span>RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provisioning ECDH Key size </p>
 
 </div>
 </div>
@@ -1546,7 +1590,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

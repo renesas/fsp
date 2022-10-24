@@ -30,20 +30,6 @@ var group___b_s_p___m_c_u =
     [ "BSP_STACK_ALIGNMENT", "group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992", null ],
     [ "R_BSP_MODULE_START", "group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000", null ],
     [ "R_BSP_MODULE_STOP", "group___b_s_p___m_c_u.html#ga2edfa2301d2ada75a9418be0e146e2bb", null ],
-    [ "bsp_warm_start_event_t", "group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4", [
-      [ "BSP_WARM_START_RESET", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2", null ],
-      [ "BSP_WARM_START_POST_CLOCK", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a0ac1a271ef413302af1558941563f3e7", null ],
-      [ "BSP_WARM_START_POST_C", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811", null ]
-    ] ],
-    [ "fsp_priv_source_clock_t", "group___b_s_p___m_c_u.html#gaf256033060ec55ab7b466ae3205f5bcf", [
-      [ "FSP_PRIV_CLOCK_HOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa719f5a59af1723f4fcda97556574afdb", null ],
-      [ "FSP_PRIV_CLOCK_MOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa1939ee441779e60854d7e71ea545ecb2", null ],
-      [ "FSP_PRIV_CLOCK_LOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfab9a2f9beb13a5be4a160272674b04c62", null ],
-      [ "FSP_PRIV_CLOCK_MAIN_OSC", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfae715b64327dbff054f07227d777ffdfd", null ],
-      [ "FSP_PRIV_CLOCK_SUBCLOCK", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa73b2edfae619ea9d82a83373106f605a", null ],
-      [ "FSP_PRIV_CLOCK_PLL", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa69a5605fb0bad6890a2058b511810756", null ],
-      [ "FSP_PRIV_CLOCK_PLL2", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfac2aa168bf9f9bf0477f8800ee8efa622", null ]
-    ] ],
     [ "bsp_grp_irq_t", "group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2", [
       [ "BSP_GRP_IRQ_IWDT_ERROR", "group___b_s_p___m_c_u.html#gga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d", null ],
       [ "BSP_GRP_IRQ_WDT_ERROR", "group___b_s_p___m_c_u.html#gga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282", null ],
@@ -60,16 +46,30 @@ var group___b_s_p___m_c_u =
       [ "BSP_GRP_IRQ_TRUSTZONE", "group___b_s_p___m_c_u.html#gga72e70676360e6a4d753a8d235e6b93a2ace309a082976d961a018cf8a90001694", null ],
       [ "BSP_GRP_IRQ_CACHE_PARITY", "group___b_s_p___m_c_u.html#gga72e70676360e6a4d753a8d235e6b93a2abd05693e6764333ec5010ef6f102277d", null ]
     ] ],
-    [ "bsp_delay_units_t", "group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b", [
-      [ "BSP_DELAY_UNITS_SECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d", null ],
-      [ "BSP_DELAY_UNITS_MILLISECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913", null ],
-      [ "BSP_DELAY_UNITS_MICROSECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae", null ]
+    [ "bsp_warm_start_event_t", "group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4", [
+      [ "BSP_WARM_START_RESET", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2", null ],
+      [ "BSP_WARM_START_POST_CLOCK", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a0ac1a271ef413302af1558941563f3e7", null ],
+      [ "BSP_WARM_START_POST_C", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811", null ]
+    ] ],
+    [ "fsp_priv_source_clock_t", "group___b_s_p___m_c_u.html#gaf256033060ec55ab7b466ae3205f5bcf", [
+      [ "FSP_PRIV_CLOCK_HOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa719f5a59af1723f4fcda97556574afdb", null ],
+      [ "FSP_PRIV_CLOCK_MOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa1939ee441779e60854d7e71ea545ecb2", null ],
+      [ "FSP_PRIV_CLOCK_LOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfab9a2f9beb13a5be4a160272674b04c62", null ],
+      [ "FSP_PRIV_CLOCK_MAIN_OSC", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfae715b64327dbff054f07227d777ffdfd", null ],
+      [ "FSP_PRIV_CLOCK_SUBCLOCK", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa73b2edfae619ea9d82a83373106f605a", null ],
+      [ "FSP_PRIV_CLOCK_PLL", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa69a5605fb0bad6890a2058b511810756", null ],
+      [ "FSP_PRIV_CLOCK_PLL2", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfac2aa168bf9f9bf0477f8800ee8efa622", null ]
     ] ],
     [ "bsp_reg_protect_t", "group___b_s_p___m_c_u.html#ga8f69caf459fd80173db15fdee8bc6fa3", [
       [ "BSP_REG_PROTECT_CGC", "group___b_s_p___m_c_u.html#gga8f69caf459fd80173db15fdee8bc6fa3a331f34f99c7a66ca791edd7271144b3c", null ],
       [ "BSP_REG_PROTECT_OM_LPC_BATT", "group___b_s_p___m_c_u.html#gga8f69caf459fd80173db15fdee8bc6fa3adfe89bf34b6c640adc136d06eab2be66", null ],
       [ "BSP_REG_PROTECT_LVD", "group___b_s_p___m_c_u.html#gga8f69caf459fd80173db15fdee8bc6fa3aa0d59a00dd2ad61700675b0516ae7a7a", null ],
       [ "BSP_REG_PROTECT_SAR", "group___b_s_p___m_c_u.html#gga8f69caf459fd80173db15fdee8bc6fa3aeb5f9f0105bb14618e461c354622b94a", null ]
+    ] ],
+    [ "bsp_delay_units_t", "group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b", [
+      [ "BSP_DELAY_UNITS_SECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d", null ],
+      [ "BSP_DELAY_UNITS_MILLISECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913", null ],
+      [ "BSP_DELAY_UNITS_MICROSECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae", null ]
     ] ],
     [ "fsp_ip_t", "group___b_s_p___m_c_u.html#ga7880302f0edd7cc4290c037809975950", [
       [ "FSP_IP_CFLASH", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ab6171dfd7e837282ac48e13822ed4b49", null ],
@@ -310,14 +310,16 @@ var group___b_s_p___m_c_u =
     [ "NMI_Handler", "group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc", null ],
     [ "SystemInit", "group___b_s_p___m_c_u.html#ga93f514700ccf00d08dbdcff7f1224eb2", null ],
     [ "R_BSP_WarmStart", "group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7", null ],
-    [ "R_BSP_RegisterProtectEnable", "group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752", null ],
-    [ "R_BSP_RegisterProtectDisable", "group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3", null ],
+    [ "R_BSP_GroupIrqWrite", "group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba", null ],
     [ "R_BSP_SourceClockHzGet", "group___b_s_p___m_c_u.html#ga7467da77df89bb6594dcd0dd09f1d017", null ],
     [ "R_FSP_CurrentIrqGet", "group___b_s_p___m_c_u.html#ga50cae0c65c54074c32d30eb4108d9a09", null ],
     [ "R_FSP_SystemClockHzGet", "group___b_s_p___m_c_u.html#gaac289335b731d0bdb5cb8e6d243898ef", null ],
+    [ "R_FSP_ClockDividerGet", "group___b_s_p___m_c_u.html#ga921a7eb6745b92439064ea3a90fe5201", null ],
     [ "R_BSP_UniqueIdGet", "group___b_s_p___m_c_u.html#gad20937316e0d5052a5c15f465a88a79e", null ],
     [ "R_BSP_FlashCacheDisable", "group___b_s_p___m_c_u.html#ga8b674f239296d8685865ff4c7b5104c5", null ],
     [ "R_BSP_FlashCacheEnable", "group___b_s_p___m_c_u.html#ga4a93d5890f795fc7bbb2d85040a73bfe", null ],
+    [ "R_BSP_RegisterProtectEnable", "group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752", null ],
+    [ "R_BSP_RegisterProtectDisable", "group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3", null ],
     [ "R_BSP_SoftwareDelay", "group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b", null ],
     [ "__sinf", "group___b_s_p___m_c_u.html#ga73859f9b8df6981b869024d0b9a86bdb", null ],
     [ "__cosf", "group___b_s_p___m_c_u.html#ga64ff048b8398edee6c87652cce7553fd", null ],
@@ -325,6 +327,5 @@ var group___b_s_p___m_c_u =
     [ "__atan2f", "group___b_s_p___m_c_u.html#ga47132d9b15462b6fa520d6612e49a7c2", null ],
     [ "__hypotf", "group___b_s_p___m_c_u.html#gacfd4a6d1bfb10481a6bf97427b88b665", null ],
     [ "__atan2hypotf", "group___b_s_p___m_c_u.html#ga24bdcc94ec3b4abfc959e3e375f99b37", null ],
-    [ "R_BSP_GroupIrqWrite", "group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba", null ],
     [ "BSP_SECTION_EARLY_INIT", "group___b_s_p___m_c_u.html#ga4244c3a2d457987d4a9ab21738c8c617", null ]
 ];

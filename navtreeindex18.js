@@ -1,12 +1,5 @@
 var NAVTREEINDEX18 =
 {
-"group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__cfg__t":[5,2,42,1],
-"group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__instance__t":[5,2,42,3],
-"group___i2_s___a_p_i.html":[5,2,43],
-"group___i2_s___a_p_i.html#a01814a3a3c6522886e31f35ee3f1fcad":[5,2,43,2,13],
-"group___i2_s___a_p_i.html#a0268adf9536947ac5cd8ac2795416a18":[5,2,43,3,5],
-"group___i2_s___a_p_i.html#a035583e3102b475a20517aca81920cd7":[5,2,43,0,1],
-"group___i2_s___a_p_i.html#a049697580959c027b67cf167cd8e4cb8":[5,2,43,2,9],
 "group___i2_s___a_p_i.html#a0a1419864bb686824d61f65c63b496d5":[5,2,43,2,8],
 "group___i2_s___a_p_i.html#a0d7c0e261d76c9a01651e68551460787":[5,2,43,2,3],
 "group___i2_s___a_p_i.html#a0e0f9e4893c775c1317b19c01fb59cd0":[5,2,43,2,15],
@@ -249,5 +242,12 @@ var NAVTREEINDEX18 =
 "group___i3_c___a_p_i.html#gga81ac58196d67e74a0a3702c3e760ede7a6aec7546d7484201fa4442c4b37b3d8c":[5,2,44,15,2],
 "group___i3_c___a_p_i.html#gga81ac58196d67e74a0a3702c3e760ede7ae53f3f0966395df095e951839052c6ca":[5,2,44,15,1],
 "group___i3_c___a_p_i.html#gga890e3f0ba27c4a963dc5901bfbed439ca55632ac0c5b5d0e704a0b7c6b405beba":[5,2,44,12,0],
-"group___i3_c___a_p_i.html#gga890e3f0ba27c4a963dc5901bfbed439caf0202c7dc1948d7191c5005fc9d38b47":[5,2,44,12,1]
+"group___i3_c___a_p_i.html#gga890e3f0ba27c4a963dc5901bfbed439caf0202c7dc1948d7191c5005fc9d38b47":[5,2,44,12,1],
+"group___i3_c___a_p_i.html#ggaa7585dee427a1d95926f88dd55ecf305a68c12b56610277eac342a9aa5b5fcb1b":[5,2,44,13,0],
+"group___i3_c___a_p_i.html#ggaa7585dee427a1d95926f88dd55ecf305a6b32868175ba9fb454f459441be611be":[5,2,44,13,1],
+"group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca178a51755c49a2a63cf7b376b2578f2a":[5,2,44,11,6],
+"group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca2e5a0467001efaba19b6c2de17d182be":[5,2,44,11,7],
+"group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca2f461eca70d64741f14d4b92445608d3":[5,2,44,11,11],
+"group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca401943802babdddf23fdc32573c220d2":[5,2,44,11,3],
+"group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca49e2d860a954f25bfee5d3f6755d3b54":[5,2,44,11,4]
 };

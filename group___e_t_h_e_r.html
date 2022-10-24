@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -195,6 +195,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaad54ccf1420a5c32afe90762eebde112"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8993d43da08dc2f328d67be680fa85e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga8993d43da08dc2f328d67be680fa85e0">R_ETHER_TxStatusGet</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer_address)</td></tr>
 <tr class="separator:ga8993d43da08dc2f328d67be680fa85e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa25a6f9ce0103ffee3ccbe545073d1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gafa25a6f9ce0103ffee3ccbe545073d1e">R_ETHER_CallbackSet</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gafa25a6f9ce0103ffee3ccbe545073d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the Ethernet peripheral on RA MCUs. This module implements the <a class="el" href="group___e_t_h_e_r___a_p_i.html">Ethernet Interface</a>. </p>
@@ -249,7 +251,7 @@ Used</li>
 </td><td>Unused </td><td>Use LINKSTA signal for detect link status changes 0 = unused (use PHY-LSI status register) 1 = use (use LINKSTA signal) </td></tr>
 </table>
  <h2>Configurations for Networking &gt; Ethernet (r_ether)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Ethernet (r_ether).<br />
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Ethernet (r_ether). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -490,68 +492,48 @@ Transmit descriptor buffer pool. </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>ETHER control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___a_p_i.html#ae75458ac2a31861195b73120676d670c">ether_api_t::open</a> is called. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a5a47551251fa2ce32c2eb47789bfc1ec"></a>uint32_t</td>
-<td class="fieldname">
-open</td>
-<td class="fielddoc">
-Used to determine if the channel is configured. </td></tr>
-<tr><td class="fieldtype">
-<a id="abe2e7e26edeea76c44da7a17cec958d0"></a><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a> const  *</td>
-<td class="fieldname">
-p_ether_cfg</td>
-<td class="fielddoc">
-Pointer to initial configurations. </td></tr>
-<tr><td class="fieldtype">
-<a id="a5f9f64bc5b34fd3a8c679511a3432b06"></a><a class="el" href="group___e_t_h_e_r.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *</td>
-<td class="fieldname">
-p_rx_descriptor</td>
-<td class="fielddoc">
-Pointer to the currently referenced transmit descriptor. </td></tr>
-<tr><td class="fieldtype">
-<a id="a2a90ddc68dffa65649d6693d100c59b1"></a><a class="el" href="group___e_t_h_e_r.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *</td>
-<td class="fieldname">
-p_tx_descriptor</td>
-<td class="fielddoc">
-Pointer to the currently referenced receive descriptor. </td></tr>
-<tr><td class="fieldtype">
-<a id="a88583eae336381d4fb07fb83449b0856"></a>void *</td>
-<td class="fieldname">
-p_reg_etherc</td>
-<td class="fielddoc">
-Base register of ethernet controller for this channel. </td></tr>
-<tr><td class="fieldtype">
-<a id="a8cb5a35a2882e21dd17808bc62ab7cf7"></a>void *</td>
-<td class="fieldname">
-p_reg_edmac</td>
-<td class="fielddoc">
-Base register of EDMA controller for this channel. </td></tr>
-<tr><td class="fieldtype">
-<a id="ad207a1be57e5eb9ceb79ff5344efb6a7"></a><a class="el" href="group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621">ether_previous_link_status_t</a></td>
-<td class="fieldname">
-previous_link_status</td>
-<td class="fielddoc">
-Previous link status. </td></tr>
-<tr><td class="fieldtype">
-<a id="a65bb4564fbf4e0a16fa2fe84762192db"></a><a class="el" href="group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2">ether_link_change_t</a></td>
-<td class="fieldname">
-link_change</td>
-<td class="fielddoc">
-status of link change </td></tr>
-<tr><td class="fieldtype">
-<a id="a1f919131083d021455a2e75b0d1d2f4e"></a><a class="el" href="group___e_t_h_e_r.html#gac38559e233d4678a9b24d2ee16aa9d7b">ether_magic_packet_t</a></td>
-<td class="fieldname">
-magic_packet</td>
-<td class="fielddoc">
-status of magic packet detection </td></tr>
-<tr><td class="fieldtype">
-<a id="a72f0205de3ce7f074088034cbdbc6f06"></a><a class="el" href="group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784">ether_link_establish_status_t</a></td>
-<td class="fieldname">
-link_establish_status</td>
-<td class="fielddoc">
-Current Link status. </td></tr>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a5a47551251fa2ce32c2eb47789bfc1ec"><td class="memItemLeft" align="right" valign="top"><a id="a5a47551251fa2ce32c2eb47789bfc1ec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a5a47551251fa2ce32c2eb47789bfc1ec">open</a></td></tr>
+<tr class="memdesc:a5a47551251fa2ce32c2eb47789bfc1ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:a5a47551251fa2ce32c2eb47789bfc1ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2e7e26edeea76c44da7a17cec958d0"><td class="memItemLeft" align="right" valign="top"><a id="abe2e7e26edeea76c44da7a17cec958d0"></a>
+<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#abe2e7e26edeea76c44da7a17cec958d0">p_ether_cfg</a></td></tr>
+<tr class="memdesc:abe2e7e26edeea76c44da7a17cec958d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:abe2e7e26edeea76c44da7a17cec958d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f9f64bc5b34fd3a8c679511a3432b06"><td class="memItemLeft" align="right" valign="top"><a id="a5f9f64bc5b34fd3a8c679511a3432b06"></a>
+<a class="el" href="group___e_t_h_e_r.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a5f9f64bc5b34fd3a8c679511a3432b06">p_rx_descriptor</a></td></tr>
+<tr class="memdesc:a5f9f64bc5b34fd3a8c679511a3432b06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the currently referenced transmit descriptor. <br /></td></tr>
+<tr class="separator:a5f9f64bc5b34fd3a8c679511a3432b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a90ddc68dffa65649d6693d100c59b1"><td class="memItemLeft" align="right" valign="top"><a id="a2a90ddc68dffa65649d6693d100c59b1"></a>
+<a class="el" href="group___e_t_h_e_r.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a2a90ddc68dffa65649d6693d100c59b1">p_tx_descriptor</a></td></tr>
+<tr class="memdesc:a2a90ddc68dffa65649d6693d100c59b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the currently referenced receive descriptor. <br /></td></tr>
+<tr class="separator:a2a90ddc68dffa65649d6693d100c59b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88583eae336381d4fb07fb83449b0856"><td class="memItemLeft" align="right" valign="top"><a id="a88583eae336381d4fb07fb83449b0856"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a88583eae336381d4fb07fb83449b0856">p_reg_etherc</a></td></tr>
+<tr class="memdesc:a88583eae336381d4fb07fb83449b0856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base register of ethernet controller for this channel. <br /></td></tr>
+<tr class="separator:a88583eae336381d4fb07fb83449b0856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb5a35a2882e21dd17808bc62ab7cf7"><td class="memItemLeft" align="right" valign="top"><a id="a8cb5a35a2882e21dd17808bc62ab7cf7"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a8cb5a35a2882e21dd17808bc62ab7cf7">p_reg_edmac</a></td></tr>
+<tr class="memdesc:a8cb5a35a2882e21dd17808bc62ab7cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base register of EDMA controller for this channel. <br /></td></tr>
+<tr class="separator:a8cb5a35a2882e21dd17808bc62ab7cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad207a1be57e5eb9ceb79ff5344efb6a7"><td class="memItemLeft" align="right" valign="top"><a id="ad207a1be57e5eb9ceb79ff5344efb6a7"></a>
+<a class="el" href="group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621">ether_previous_link_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ad207a1be57e5eb9ceb79ff5344efb6a7">previous_link_status</a></td></tr>
+<tr class="memdesc:ad207a1be57e5eb9ceb79ff5344efb6a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Previous link status. <br /></td></tr>
+<tr class="separator:ad207a1be57e5eb9ceb79ff5344efb6a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65bb4564fbf4e0a16fa2fe84762192db"><td class="memItemLeft" align="right" valign="top"><a id="a65bb4564fbf4e0a16fa2fe84762192db"></a>
+<a class="el" href="group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2">ether_link_change_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a65bb4564fbf4e0a16fa2fe84762192db">link_change</a></td></tr>
+<tr class="memdesc:a65bb4564fbf4e0a16fa2fe84762192db"><td class="mdescLeft">&#160;</td><td class="mdescRight">status of link change <br /></td></tr>
+<tr class="separator:a65bb4564fbf4e0a16fa2fe84762192db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f919131083d021455a2e75b0d1d2f4e"><td class="memItemLeft" align="right" valign="top"><a id="a1f919131083d021455a2e75b0d1d2f4e"></a>
+<a class="el" href="group___e_t_h_e_r.html#gac38559e233d4678a9b24d2ee16aa9d7b">ether_magic_packet_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a1f919131083d021455a2e75b0d1d2f4e">magic_packet</a></td></tr>
+<tr class="memdesc:a1f919131083d021455a2e75b0d1d2f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">status of magic packet detection <br /></td></tr>
+<tr class="separator:a1f919131083d021455a2e75b0d1d2f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f0205de3ce7f074088034cbdbc6f06"><td class="memItemLeft" align="right" valign="top"><a id="a72f0205de3ce7f074088034cbdbc6f06"></a>
+<a class="el" href="group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784">ether_link_establish_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#a72f0205de3ce7f074088034cbdbc6f06">link_establish_status</a></td></tr>
+<tr class="memdesc:a72f0205de3ce7f074088034cbdbc6f06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current Link status. <br /></td></tr>
+<tr class="separator:a72f0205de3ce7f074088034cbdbc6f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -984,13 +966,63 @@ Current Link status. </td></tr>
 
 </div>
 </div>
+<a id="gafa25a6f9ce0103ffee3ccbe545073d1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa25a6f9ce0103ffee3ccbe545073d1e">&#9670;&nbsp;</a></span>R_ETHER_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHER_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#adf0c97c99905ea98b0225d2525008f4e">ether_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

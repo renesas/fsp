@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -195,7 +195,7 @@ Functions</h2></td></tr>
 <tr class="separator:gac66329da68b419ff8b460db713f7b10a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the Secure Key Injection (SCE7) on RA MCUs. </p>
+<p>Driver for the Secure Key Injection on RA MCUs. </p>
 <h1><a class="anchor" id="r-sce-key-injection-overview"></a>
 Overview</h1>
 <p>This module provides SCE functions in PSA Crypto.</p>
@@ -204,7 +204,13 @@ Overview</h1>
 <tr>
 <th>Crypto Peripheral version </th><th>Devices  </th></tr>
 <tr>
+<td>SCE9 </td><td>RA6M5, RA6M4, RA4M3, RA4M2 </td></tr>
+<tr>
 <td>SCE7 </td><td>RA6M3, RA6M2, RA6M1, RA6T1 </td></tr>
+<tr>
+<td>SCE5 </td><td>RA4W1, RA4M1 </td></tr>
+<tr>
+<td>SCE5B </td><td>RA6T2 </td></tr>
 </table>
 <h2><a class="anchor" id="r-sce-key-injection-features"></a>
 Features</h2>
@@ -212,7 +218,17 @@ Features</h2>
 <li>Key Support<ul>
 <li>AES 128/256bit<a class="anchor" id="um_sce_key_injection_aes"></a></li>
 <li>RSA 2048bit<a class="anchor" id="um_sce_key_injection_rsa"></a></li>
-<li>ECC SECP256bit<a class="anchor" id="um_sce_key_injection_ecc"></a> </li>
+<li>ECC NIST P-256<a class="anchor" id="um_sce_key_injection_ecc"></a> <table class="doxtable">
+<tr>
+<th>Key Support </th><th>SCE9 </th><th>SCE7 </th><th>SCE5 </th><th>SCE5B  </th></tr>
+<tr>
+<td>AES </td><td>Support(Import Only) </td><td>Support </td><td>Support </td><td>Support(Import Only) </td></tr>
+<tr>
+<td>RSA </td><td>No support </td><td>Support </td><td>No support </td><td>No support </td></tr>
+<tr>
+<td>ECC </td><td>No support </td><td>Support </td><td>No support </td><td>No support </td></tr>
+</table>
+</li>
 </ul>
 </li>
 </ul>
@@ -227,7 +243,19 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-sce-key-injection-usage_notes"></a>
 Usage Notes</h1>
 <h2>Module activation</h2>
-<p>SCE Key Injection for PSA Crypto Module is off by default. To use it, please On the Stacks tab, add New &gt; Security &gt; MbedTLS or MbedTLS (Crypto Only), Add Requires SCE Driver &gt; New &gt; SCE7, Add Key Injection for RSA Crypto (Optional) &gt; New &gt; Key Injection for RSA Crypto for PSA Crypto Module after adding MbedTLS. For information on how to install and update secure keys, refer to the Application Note R11AN0496.</p>
+<p>SCE Key Injection for PSA Crypto Module is off by default. To use it, please On the Stacks tab, add New &gt; Security &gt; MbedTLS or MbedTLS (Crypto Only), Add Requires SCE Driver &gt; New &gt; (*1), Add Key Injection for RSA Crypto (Optional) &gt; New &gt; Key Injection for RSA Crypto for PSA Crypto Module after adding MbedTLS. For information on how to import and update secure keys, refer to the Application Note R11AN0496.<br />
+(*1) </p><table class="doxtable">
+<tr>
+<th>Crypto Peripheral version </th><th>String displayed in the Stacks tab  </th></tr>
+<tr>
+<td>SCE9 </td><td>SCE Compatibility Mode </td></tr>
+<tr>
+<td>SCE7 </td><td>SCE7 </td></tr>
+<tr>
+<td>SCE5 </td><td>SCE5 </td></tr>
+<tr>
+<td>SCE5B </td><td>SCE5B </td></tr>
+</table>
 <h2>Hardware Initialization</h2>
 <p>Please refer to Hardware Initialization in <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html">Mbed Crypto HW Acceleration (rm_psa_crypto)</a>.</p>
 <h2 class="groupheader">Function Documentation</h2>
@@ -288,6 +316,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -357,6 +386,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -419,6 +449,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -481,6 +512,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -543,6 +575,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -612,6 +645,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -681,6 +715,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -743,6 +778,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -805,6 +841,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -874,6 +911,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -943,6 +981,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1005,6 +1044,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1067,6 +1107,7 @@ Usage Notes</h1>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1085,7 +1126,7 @@ Usage Notes</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

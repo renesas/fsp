@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -317,7 +317,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 </ul>
 </li>
-<li class="level1"><a href="#RASC-MDK-IAR-user-guide">RA SC User Guide for MDK and IAR</a><ul><li class="level2"><a href="#RASC">What is RA SC?</a></li>
+<li class="level1"><a href="#RASC-MDK-IAR-user-guide">RASC User Guide for MDK and IAR</a><ul><li class="level2"><a href="#RASC">What is RASC?</a></li>
 <li class="level2"><a href="#using-ra-smart-configurator-with-keil-mdk">Using RA Smart Configurator with Keil MDK</a><ul><li class="level3"><a href="#RASC-MDK-prerequisites">Prerequisites</a></li>
 <li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-create-project">Create new RA project</a></li>
 <li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-modify-project">Modify existing RA project</a></li>
@@ -1822,8 +1822,8 @@ Debugger support</h2>
 </table>
 <h2><a class="anchor" id="third-party-ides"></a>
 Third-Party IDEs</h2>
-<p>Third-party IDEs such as IAR Systems EWARM and Keil MDK (uVision) are supported by the RA Smart Configurator (RA SC).</p>
-<p>In general, RA SC offers the same configurator functionality as e<sup>2</sup> studio documented above. Project generators are available to initialise workspaces in the target IDEs as well as setting up debug configurations and so forth. However, there are some limitations that need to be noted especially with regards to IDAU TZ partition register programming. See the specific RA SC documentation for usage details.</p>
+<p>Third-party IDEs such as IAR Systems EWARM and Keil MDK (uVision) are supported by the RA Smart Configurator (RASC).</p>
+<p>In general, RASC offers the same configurator functionality as e<sup>2</sup> studio documented above. Project generators are available to initialise workspaces in the target IDEs as well as setting up debug configurations and so forth. However, there are some limitations that need to be noted especially with regards to IDAU TZ partition register programming. See the specific RASC documentation for usage details.</p>
 <h2><a class="anchor" id="renesas-flash-programmer-rfp"></a>
 Renesas Flash Programmer (RFP)</h2>
 <p>Updated versions of Renesas Flash Programmer (RFP) are available to support setting of partitions, DLM state and Authentication keys.</p>
@@ -1874,10 +1874,10 @@ Configurator Icon Glossary</h3>
 <div class="caption">
 Configurator Icons</div></div>
  <h1><a class="anchor" id="RASC-MDK-IAR-user-guide"></a>
-RA SC User Guide for MDK and IAR</h1>
+RASC User Guide for MDK and IAR</h1>
 <h2><a class="anchor" id="RASC"></a>
-What is RA SC?</h2>
-<p>The Renesas RA Smart Configurator (RA SC) is a desktop application designed to configure device hardware such as clock set up and pin assignment as well as initialization of FSP software components for a Renesas RA microcontroller project when using a 3rd-party IDE and toolchain.</p>
+What is RASC?</h2>
+<p>The Renesas RA Smart Configurator (RASC) is a desktop application designed to configure device hardware such as clock set up and pin assignment as well as initialization of FSP software components for a Renesas RA microcontroller project when using a 3rd-party IDE and toolchain.</p>
 <p>The RA Smart Configurator can currently be used with</p><ol type="1">
 <li>Keil MDK and the Arm compiler toolchain.</li>
 <li>IAR EWARM with IAR toolchain for Arm</li>
@@ -1892,18 +1892,18 @@ Prerequisites</h3>
 <li>Import the RA device pack. Download the RA device pack archive file (ex: MDK_Device_Packs_2.x.x.zip) from the <a href="https://github.com/renesas/fsp/releases">FSP GitHub release page</a>. Extract the archive file to locate the RA device pack. To import the RA device pack, launch the PackInstaller.exe from <code>&lt;keil_mdk_install_dir&gt;\UV4</code>. Select the menu item <b>File &gt; Import...</b> and browse to the extracted .pack file.</li>
 <li>Verify that the latest updates for RA devices are included in Keil MDK. To verify, select the menu "Packs" in Pack Installer and verify that the menu item <b>Check for Updates on Launch</b> is selected. If not, select <b>Check for Updates on Launch</b> and relaunch Pack Installer.</li>
 <li>For flashing and debugging, the latest Segger J-Link DLL is installed into Keil MDK.</li>
-<li>Install RA SC and FSP using the Platform Installer from the GitHub release page.</li>
+<li>Install RASC and FSP using the Platform Installer from the GitHub release page.</li>
 </ul>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-create-project"></a>
 Create new RA project</h3>
-<p>The following steps are required to create an RA project using Keil MDK, RA SC and FSP:</p>
+<p>The following steps are required to create an RA project using Keil MDK, RASC and FSP:</p>
 <ol type="1">
 <li>Start the RA Smart Configurator.</li>
 <li><p class="startli">Enter a project folder and project name.</p>
 <div class="image">
 <img src="image009.png" alt="image009.png"/>
 <div class="caption">
-RA SC project settings</div></div>
+RASC project settings</div></div>
 </li>
 <li><p class="startli">Select the target device and IDE.</p>
 <div class="image">
@@ -1922,9 +1922,9 @@ uVision project workspace with imported project data</div></div>
 </ol>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-modify-project"></a>
 Modify existing RA project</h3>
-<p>Once an initial project has been generated and configured, it is also possible to make changes using RA SC as follows.</p>
+<p>Once an initial project has been generated and configured, it is also possible to make changes using RASC as follows.</p>
 <dl class="section note"><dt>Note</dt><dd>This setup only needs to be done once per project.</dd></dl>
-<p>Set up the following links to RA SC:</p>
+<p>Set up the following links to RASC:</p>
 <ol type="1">
 <li>In Keil MDK uVision, select <b>Tools &gt; Customize Tools Menu...</b>.</li>
 <li>Select the <b>new</b> icon and fill in the fields as follows for each tool:<ol type="a">
@@ -1955,14 +1955,14 @@ Build and Debug RA project</h3>
 <img src="uVision-target-options.png" alt="uVision-target-options.png"/>
 <div class="caption">
 Options for Target</div></div>
-<p> RA SC will set up the uVision project to debug the selected device using J-Link or J-Link OB debugger by default.</p>
+<p> RASC will set up the uVision project to debug the selected device using J-Link or J-Link OB debugger by default.</p>
 <p>A Debug session can be started or stopped by selecting the menu item <b>Debug &gt; Start/Stop Debug Session</b> or keyboard shortcut CTRL+F5. When debugging for the first time, J-Link firmware update may be needed if requested by the tool.</p>
 <p>Refer to the documentation from Keil to get more information on the debug features in uVision. Note that not all features supported by uVision debugger are implemented in the J-Link interface. Consult SEGGER J-Link documentation for more information.</p>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-notes-restrictions"></a>
 Notes and Restrictions</h3>
 <ol type="1">
 <li><b>When debugging a TrustZone based project, the Secure project image MUST be downloaded before the Non Secure project.</b></li>
-<li><p class="startli">For TrustZone enabled devices, the user will need to manually set up the memory partitions using the "Renesas Device Partition Manager" from inside RA SC before downloading.</p>
+<li><p class="startli">For TrustZone enabled devices, the user will need to manually set up the memory partitions using the "Renesas Device Partition Manager" from inside RASC before downloading.</p>
 <div class="image">
 <img src="image007.png" alt="image007.png"/>
 <div class="caption">
@@ -1973,24 +1973,24 @@ Renesas Device partition Manager</div></div>
 </ol>
 <h2><a class="anchor" id="using-ra-smart-configurator-with-ewarm"></a>
 Using RA Smart Configurator with IAR EWARM</h2>
-<p>IAR Systems Embedded Workbench for Arm (EWARM) includes support for Renesas RA devices. These can be set up as bare metal designs within EWARM. However, most RA developers will want to integrate RA FSP drivers and middleware into their designs. RA SC will facilitate this.</p>
-<p>RA SC generates a "Project Connection" file that can be loaded directly into EWARM to update project files.</p>
+<p>IAR Systems Embedded Workbench for Arm (EWARM) includes support for Renesas RA devices. These can be set up as bare metal designs within EWARM. However, most RA developers will want to integrate RA FSP drivers and middleware into their designs. RASC will facilitate this.</p>
+<p>RASC generates a "Project Connection" file that can be loaded directly into EWARM to update project files.</p>
 <h3><a class="anchor" id="RASC-EWARM-prerequisites"></a>
 Prerequisites</h3>
 <ul>
 <li>IAR EWARM installed and licensed. Pleae refer to the Release notes for the version to be installed.</li>
-<li>RA SC and FSP Installed</li>
+<li>RASC and FSP Installed</li>
 </ul>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-ewarm-create-project"></a>
 Create new RA project</h3>
-<p>The following steps are required to create an RA project using IAR EWARM, RA SC and FSP:</p>
+<p>The following steps are required to create an RA project using IAR EWARM, RASC and FSP:</p>
 <ol type="1">
 <li>Start the RA Smart Configurator.</li>
 <li><p class="startli">Enter a project folder and project name.</p>
 <div class="image">
 <img src="image014.png" alt="image014.png"/>
 <div class="caption">
-RA SC project settings</div></div>
+RASC project settings</div></div>
 </li>
 <li><p class="startli">Select the target device and IDE.</p>
 <div class="image">
@@ -2001,16 +2001,16 @@ Target device and IDE selection</div></div>
 <li>The rest of the project generator and FSP configuration operates the same as e2 studio. Refer to the previous sections for details.</li>
 <li>On completion of the FSP configuration, press <b>Generate Project Content</b>.</li>
 <li>A new IAR EWARM project file will be generated in the project path. Double click this file to open IAR EWARM and continue development as usual.</li>
-<li>To Use RA SC with EWARM, RA SC needs to configured as a tool in EWARM by selecting the menu item <b>Tools &gt; Configure Tools...</b>. Select <b>New</b> to create a new tool in the dialog shown and add the following information:<ul>
+<li>To Use RASC with EWARM, RASC needs to configured as a tool in EWARM by selecting the menu item <b>Tools &gt; Configure Tools...</b>. Select <b>New</b> to create a new tool in the dialog shown and add the following information:<ul>
 <li>Menu Text: <b>RA Smart Configurator</b><ol type="a">
-<li>Command: Select <b>Browse...</b> and navigate to <code>rasc.exe</code> in the installed RA SC</li>
+<li>Command: Select <b>Browse...</b> and navigate to <code>rasc.exe</code> in the installed RASC</li>
 <li>Argument: <code>-compiler IAR configuration.xml</code></li>
 <li>Initial Directory: <code>$PROJ_DIR$</code></li>
 <li>Tool Available: Always</li>
 </ol>
 </li>
 <li>Menu Text: <b>Device Partition Manager</b><ol type="a">
-<li>Command: Select <b>Browse...</b> and navigate to <code>rasc.exe</code> in the installed RA SC</li>
+<li>Command: Select <b>Browse...</b> and navigate to <code>rasc.exe</code> in the installed RASC</li>
 <li>Argument: -<code>application com.renesas.cdt.ddsc.dpm.ui.dpmapplication configuration.xml "$TARGET_PATH$"</code></li>
 <li>Initial Directory: <code>$PROJ_DIR$</code></li>
 <li>Tool Available: Always</li>
@@ -2018,7 +2018,7 @@ Target device and IDE selection</div></div>
 </li>
 </ul>
 </li>
-<li>RA SC can now be re-launched from EWARM using the menu item <b>Tools &gt; RA Smart Configurator</b>.</li>
+<li>RASC can now be re-launched from EWARM using the menu item <b>Tools &gt; RA Smart Configurator</b>.</li>
 <li>A Project connection needs to be set up in EWARM to build the project. Select <b>Project &gt; Add Project Connection</b> in EWARM and select <b>IAR Project Connection</b>. Navigate to the project folder and select <code>buildinfo.ipcf</code> and click <b>Open</b>. The project can now build in EWARM.</li>
 </ol>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-ewarm-notes-restrictions"></a>
@@ -2038,7 +2038,7 @@ Notes and Restrictions</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

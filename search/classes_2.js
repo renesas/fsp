@@ -30,7 +30,7 @@ var searchData=
   ['cgc_5fcallback_5fargs_5ft',['cgc_callback_args_t',['../group___c_g_c___a_p_i.html#structcgc__callback__args__t',1,'']]],
   ['cgc_5fcfg_5ft',['cgc_cfg_t',['../group___c_g_c___a_p_i.html#structcgc__cfg__t',1,'']]],
   ['cgc_5fclocks_5fcfg_5ft',['cgc_clocks_cfg_t',['../group___c_g_c___a_p_i.html#structcgc__clocks__cfg__t',1,'']]],
-  ['cgc_5fdivider_5fcfg_5ft',['cgc_divider_cfg_t',['../group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t',1,'']]],
+  ['cgc_5fdivider_5fcfg_5ft',['cgc_divider_cfg_t',['../group___c_g_c___a_p_i.html#structcgc__divider__cfg__t',1,'']]],
   ['cgc_5finstance_5fctrl_5ft',['cgc_instance_ctrl_t',['../group___c_g_c.html#structcgc__instance__ctrl__t',1,'']]],
   ['cgc_5finstance_5ft',['cgc_instance_t',['../group___c_g_c___a_p_i.html#structcgc__instance__t',1,'']]],
   ['cgc_5fpll_5fcfg_5ft',['cgc_pll_cfg_t',['../group___c_g_c___a_p_i.html#structcgc__pll__cfg__t',1,'']]],

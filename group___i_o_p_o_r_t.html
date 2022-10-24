@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -247,21 +247,13 @@ This module can be added to the Stacks tab via New Stack &gt; System &gt; I/O Po
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_ioport </td><td>Module name. </td></tr>
 <tr>
-<td>Port 1 ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORT1 </td></tr>
+<td>1st Port ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger the 1st port </td></tr>
 <tr>
-<td>Port 2 ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORT2 </td></tr>
+<td>2nd Port ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger the 2nd port </td></tr>
 <tr>
-<td>Port 3 ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORT3 </td></tr>
+<td>3rd Port ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger the 3rd port </td></tr>
 <tr>
-<td>Port 4 ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORT4 </td></tr>
-<tr>
-<td>Port B ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTB </td></tr>
-<tr>
-<td>Port C ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTC </td></tr>
-<tr>
-<td>Port D ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTD </td></tr>
-<tr>
-<td>Port E ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTE </td></tr>
+<td>4th Port ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger the 4th port </td></tr>
 <tr>
 <td>Pin Configuration Name</td><td>Name must be a valid C symbol</td><td>g_bsp_pin_cfg </td><td>Name for pin configuration structure </td></tr>
 </table>
@@ -274,9 +266,21 @@ Pin Configuration</h2>
 <p>The IOPORT module is used for configuring pins.</p>
 <h1>Usage Notes</h1>
 <h2>Port Group Function for ELC</h2>
-<p>Depending on pin configuration, the IOPORT module can perform automatic reads and writes on ports 1-4 on receipt of an ELC event.</p>
+<p>Depending on pin configuration, the IOPORT module can perform automatic reads and writes on 4 ports (RA2 series support 2 ports only, see the table of ELC triggers below) on receipt of an ELC event.</p>
+<table class="doxtable">
+<tr>
+<th align="left">ELC triggers</th><th align="left">RA6T2 </th><th align="left">RA2XX </th><th align="left">All others  </th></tr>
+<tr>
+<td align="left">1st Port </td><td align="left">Port B </td><td align="left">Port 1 </td><td align="left">Port 1 </td></tr>
+<tr>
+<td align="left">2nd Port </td><td align="left">Port C </td><td align="left">Port 2 </td><td align="left">Port 2 </td></tr>
+<tr>
+<td align="left">3rd Port </td><td align="left">Port D </td><td align="left">NA </td><td align="left">Port 3 </td></tr>
+<tr>
+<td align="left">4th Port </td><td align="left">Port E </td><td align="left">NA </td><td align="left">Port 4 </td></tr>
+</table>
 <p>When an event is received by a port, the state of the input pins on the port is saved in a hardware register. Simultaneously, the state of output pins on the port is set or cleared based on settings configured by the user. The functions <a class="el" href="group___i_o_p_o_r_t.html#ga01fe1fa97720d982173bf110032fa21f">R_IOPORT_PinEventInputRead</a> and <a class="el" href="group___i_o_p_o_r_t.html#gac6797f0cf13907487f66f99e3ed937b2">R_IOPORT_PortEventInputRead</a> allow reading the last event input state of a pin or port, and event-triggered pin output can be configured through <a class="el" href="group___i_o_p_o_r_t.html#gaa561f3c4df61925e4c24b420b78a5583">R_IOPORT_PinEventOutputWrite</a> and <a class="el" href="group___i_o_p_o_r_t.html#ga8d3f8c4c90241587fee076b6fb0623ff">R_IOPORT_PortEventOutputWrite</a>.</p>
-<p>In addition, each pin on ports 1-4 can be configured to trigger an ELC event on rising, falling or both edges. This event can be used to activate other modules when the pin changes state.</p>
+<p>In addition, each pin on these ports can be configured to trigger an ELC event on rising, falling or both edges. This event can be used to activate other modules when the pin changes state.</p>
 <dl class="section note"><dt>Note</dt><dd>The number of ELC-aware ports vary across MCUs. Refer to the Hardware User's Manual for your device for more details.</dd></dl>
 <h1><a class="anchor" id="r-ioport-examples"></a>
 Examples</h1>
@@ -1395,7 +1399,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

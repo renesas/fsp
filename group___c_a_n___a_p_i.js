@@ -67,7 +67,8 @@ var group___c_a_n___a_p_i =
       [ "CAN_EVENT_RX_COMPLETE", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbaa0bc5e15cee037a1d102b517ef63e161", null ],
       [ "CAN_EVENT_TX_COMPLETE", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbac169b4940b7cb76562efd7439fc76949", null ],
       [ "CAN_EVENT_ERR_GLOBAL", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333", null ],
-      [ "CAN_EVENT_TX_FIFO_EMPTY", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba838c3a494516ccd0326bc1dad93e35d8", null ]
+      [ "CAN_EVENT_TX_FIFO_EMPTY", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba838c3a494516ccd0326bc1dad93e35d8", null ],
+      [ "CAN_EVENT_FIFO_MESSAGE_LOST", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba4b9bfbf96c82d53ce3dd47e9a3237359", null ]
     ] ],
     [ "can_operation_mode_t", "group___c_a_n___a_p_i.html#gac29bd7d00b06d7457ae786471c296ba7", [
       [ "CAN_OPERATION_MODE_NORMAL", "group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72", null ],

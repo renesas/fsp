@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.0.0</span>
+   &#160;<span id="projectnumber">Release v4.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -202,15 +202,17 @@ Select USB Device Class</div></div>
 <div class="caption">
 FileX on USBX Stack</div></div>
  <h2>Using OTG.</h2>
-<p>The following describes how to configure USBX using CDC as an example.</p>
+<p>The following describes how to configure USBX OTG.</p>
 <ul>
-<li>Select [New Stack]-&gt;[Connectivity]-&gt;[Azure RTOS USBX OTG CDC]</li>
+<li>When using CDC / HID class<ul>
+<li>[New Stack]-&gt;[Connectivity]-&gt;[Azure RTOS USBX OTG CDC] or [Azure RTOS USBX OTG HID])</li>
 </ul>
-<div class="image">
-<img src="rm_usbx_otg_cdc.png" alt="rm_usbx_otg_cdc.png"/>
-<div class="caption">
-Select USB Device Class for OTG</div></div>
-<ul>
+</li>
+<li>When using MSC class<ul>
+<li>[New Stack]-&gt;[Storage]-&gt;[Azure RTOS FileX on USBX])</li>
+<li>[New]-&gt;[Azure RTOS USBX OTG MSC]</li>
+</ul>
+</li>
 <li><p class="startli">Select [New Stack]-&gt;[Input] -&gt; [External IRQ(r_icu)]</p>
 <p class="startli">Be sure to select "r_icu" in OTG. The "r_icu" is used to detect the attaching of A cable.</p>
 </li>
@@ -288,7 +290,7 @@ IRQ Pin Setting</div></div>
 <li>Please ignore the suspend or resume event occurs when attaching or detaching the USB cable.</li>
 <li>The following are notes on using the ux_host_class_cdc_acm_read function or the ux_device_class_cdc_acm_read function<ul>
 <li>Please specify a multiple of MaxPacketSize to the 3rd argument(requested_length) since if the value of the 3rd argument is not multiple of MaxPacketSize, all data sent by USB Host or USB Peripheral may not be received correctly.</li>
-<li>Please specify start address of thr area allocated a size larger than 3rd argument(requested_length) to the 2nd argument(data_pointer or buffer).</li>
+<li>Please specify start address of the area allocated a size larger than 3rd argument(requested_length) to the 2nd argument(data_pointer or buffer).</li>
 </ul>
 </li>
 <li>There is no stack for the Hub; please select the stack for USB Host even when using the Hub.</li>
@@ -392,7 +394,7 @@ Specify value of Thread priority</div></div>
 </li>
 <li>When using USBX HHID, please use Wired device.</li>
 <li>This module does not support the MCU(RA4M1 and RA2A1) since the RAM size is small.</li>
-<li>Please specify the correct framework size to the 2nd argument(device_framework_length_high_speed) and the 4th argument(device_framework_length_full_speed) in "ux_device_stack_initialize" function. If uncorrect size is specified, USB driver does not work properly.</li>
+<li>Please specify the correct framework size to the 2nd argument(device_framework_length_high_speed) and the 4th argument(device_framework_length_full_speed) in "ux_device_stack_initialize" function. If incorrect size is specified, USB driver does not work properly.</li>
 <li>The following is the limitation when using OTG.<ul>
 <li>The user can not use High-speed module(USB_IP1).</li>
 <li>The DMA transfer is not supported.</li>
@@ -472,7 +474,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.0.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
