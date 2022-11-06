@@ -229,6 +229,9 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
     p_ctrl->p_cfg        = p_cfg;
     p_ctrl->p_flash      = ((rm_vee_flash_cfg_t *) p_ctrl->p_cfg->p_extend)->p_flash;
     p_ctrl->segment_size = p_cfg->total_size / p_cfg->num_segments;
+    /* Segment header shall be initialized in case of possible segment refresh at start-up */
+    p_ctrl->seg_hdr.pad         = 0;
+    p_ctrl->seg_hdr.valid_code  = RM_VEE_FLASH_VALID_CODE;
 
     /* Open flash */
     err = p_ctrl->p_flash->p_api->open(p_ctrl->p_flash->p_ctrl, p_ctrl->p_flash->p_cfg);
@@ -284,8 +287,6 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
     else
     {
         p_ctrl->seg_hdr.refresh_cnt = ((rm_vee_seg_hdr_t *) p_ctrl->active_seg_addr)->refresh_cnt;
-        p_ctrl->seg_hdr.pad         = 0;
-        p_ctrl->seg_hdr.valid_code  = RM_VEE_FLASH_VALID_CODE;
 
         p_ctrl->rec_hdr.length = 0;
         p_ctrl->rec_hdr.offset = 0;
