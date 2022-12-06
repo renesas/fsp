@@ -257,7 +257,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
             R_CANFD->CFDRFCC[i] = p_global_cfg->rx_fifo_config[i];
         }
 
-        R_BSP_IrqCfgEnable(VECTOR_NUMBER_CAN_RXF, p_global_cfg->rx_fifo_ipl, NULL);
+        R_BSP_IrqCfgEnable(p_cfg->rx_irq, p_global_cfg->rx_fifo_ipl, NULL);
 
         /* Set global error interrupts */
         R_CANFD->CFDGCTR = p_global_cfg->global_interrupts;
@@ -266,7 +266,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
     if (CANFD_CFG_GLOBAL_ERROR_CH == channel)
     {
         /* Configure global error interrupt */
-        R_BSP_IrqCfgEnable(VECTOR_NUMBER_CAN_GLERR, p_global_cfg->global_err_ipl, NULL);
+        R_BSP_IrqCfgEnable(p_cfg->error_irq, p_global_cfg->global_err_ipl, NULL);
     }
 
     /* Track ctrl struct */
