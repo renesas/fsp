@@ -65,7 +65,9 @@ For a list of software modules packaged with FSP, see [Supported Software](SUPPO
 - FSP versions of 4.0.0 and later require a minimum e² studio version of 2022-07.
 - FSP versions of 4.1.0 and later require a minimum e² studio version of 2022-10.
 
-If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, FSP_Packs_\<version\>.zip, and an installer version, FSP_Packs_\<version\>.exe.
+If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, FSP_Packs_\<version\>.zip (for linux or Windows), and an installer version, FSP_Packs_\<version\>.exe (for Windows only).
+
+For linux, extract the contents of the zip version into the e2 studio installation directory (typically ~/.local/share/renasas/e2_studio/)
 
 #### For new users that are using FSP with e² studio
 
