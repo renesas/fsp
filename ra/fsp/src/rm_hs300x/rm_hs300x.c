@@ -279,7 +279,7 @@ fsp_err_t RM_HS300X_DataCalculate (rm_hs300x_ctrl_t * const     p_api_ctrl,
     tmp_u16 = (uint16_t)((tmp_u16 | (uint16_t) (p_raw_data->temperature[1] & RM_HS300X_MASK_TEMPERATURE_LOWER_0XFC)) >> 2);
     tmp = ((tmp_u16 * RM_HS300X_CALC_TEMP_C_VALUE_165 * 100) / RM_HS300X_CALC_STATIC_VALUE) - (RM_HS300X_CALC_TEMP_C_VALUE_40 * 100);
     p_hs300x_data->temperature.integer_part = (int16_t)(tmp / 100);
-    p_hs300x_data->temperature.decimal_part = (int16_t)(tmp & 100);
+    p_hs300x_data->temperature.decimal_part = (int16_t)(tmp % 100);
 #endif
 
     return FSP_SUCCESS;
