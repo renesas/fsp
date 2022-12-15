@@ -1,0 +1,864 @@
+{% macro deref_id(id_prefix,name) %}${{ '{' + id_prefix + '.driver.' + id_name() + '.' + name + '}' }}{% endmacro %}
+{% macro id_name() %}{%- if 'r_canfd' == module_variant %}canfd{%- else %}canfdlite{%- endif %}{% endmacro %}
+{% macro rx_fifo_properties(id_prefix, index) %}
+        <!-- RX FIFO {{ index }} -->
+        <property default="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.enable.{%- if index == 0 %}enabled{%- else %}disabled{%- endif %}" display="Reception|FIFOs|FIFO {{ index }}|Enable" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.enable" description="Enable or disable RX FIFO {{ index }}.">
+            <option display="Enabled" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.enable.enabled" value="(1)"/>
+            <option display="Disabled" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.enable.disabled" value="(0)"/>
+        </property>
+        <property default="" display="Reception|FIFOs|FIFO {{ index }}|Interrupt Mode" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.int_mode" description="Set the interrupt mode for RX FIFO {{ index }}. Threshold mode will only fire an interrupt each time an incoming message crosses the threshold value set below.">
+            <select enum="enum.driver.canfd.fifo.int_mode"/>
+        </property>
+        <property default="" display="Reception|FIFOs|FIFO {{ index }}|Interrupt Threshold" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.int_threshold" description="Set the interrupt threshold value for RX FIFO {{ index }}. This setting is only applicable when the Interrupt Mode is set to 'At Threshold Value'.">
+            <select enum="enum.driver.canfd.fifo.int_threshold"/>
+        </property>
+        <property default="" display="Reception|FIFOs|FIFO {{ index }}|Payload Size" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.payload" description="Select the message payload size for RX FIFO {{ index }}.">
+            <select enum="enum.driver.canfd.fifo.payload"/>
+        </property>
+        <property default="" display="Reception|FIFOs|FIFO {{ index }}|Depth" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ index }}.depth" description="Select the number of stages for RX FIFO {{ index }}.">
+            <select enum="enum.driver.canfd.fifo.depth"/>
+        </property>
+{% endmacro %}
+{% macro global_config(id_prefix, num_fifos) %}
+        <property default="" id="{{ id_prefix }}.driver.{{ id_name() }}.buffer_ram_used" description="Indicates the total RAM used for receive buffers. This shared pool includes RX Message Buffers and RX FIFOs.">
+            <export><![CDATA[eval('' +
+            'var payload_nominal = [8, 12, 16, 20, 24, 32, 48, 64];' +
+            'var fifo_nominal = [0, 4, 8, 16, 32, 48, 64, 128];' +
+            'var rxmb_nominal = [8, 12, 16, 20, 24, 32, 48, 64];' +
+            '((rxmb_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size{{ '}' }}] + 12) * ${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.number{{ '}' }}) + ' +
+                {% for fifo_number in range(num_fifos - 1) %}'((payload_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.payload{{ '}' }}] + 12) * fifo_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.depth{{ '}' }}] * ${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.enable{{ '}' }}) + ' +
+                {% endfor %}'((payload_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ num_fifos - 1}}.payload{{ '}' }}] + 12) * fifo_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ num_fifos - 1}}.depth{{ '}' }}] * ${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ num_fifos - 1 }}.enable{{ '}' }})' +
+            '')]]></export>
+        </property>
+        <property bitmapPrefix="R_CANFD_CFDGCTR_" default="0U" display="Global Error Interrupt|Sources" id="{{ id_prefix }}.driver.{{ id_name() }}.global_err.sources" description="Select which errors should trigger an interrupt.">
+            <option display="DLC Check" id="{{ id_prefix }}.driver.{{ id_name() }}.global_err.sources.dlc_check" value="DEIE_Msk"/>
+            <option display="Message Lost" id="{{ id_prefix }}.driver.{{ id_name() }}.global_err.sources.message_lost" value="MEIE_Msk"/>
+            <option display="FD Payload Overflow" id="{{ id_prefix }}.driver.{{ id_name() }}.global_err.sources.overflow" value="CMPOFIE_Msk"/>
+            <!-- <option display="TX Queue Message Lost" id="{{ id_prefix }}.driver.{{ id_name() }}.global_err.sources.txq_message_lost" value="QMEIE_Msk"/> -->
+        </property>
+        <property default="{{ id_prefix }}.driver.{{ id_name() }}.tx_priority.buffer" display="Transmission Priority" id="{{ id_prefix }}.driver.{{ id_name() }}.tx_priority" description="Select how messages should be prioritized for transmission. In either case, lower numbers indicate higher priority.">
+            <option display="Message ID" id="{{ id_prefix }}.driver.{{ id_name() }}.tx_priority.id" value="(0)"/>
+            <option display="Buffer Number" id="{{ id_prefix }}.driver.{{ id_name() }}.tx_priority.buffer" value="(R_CANFD_CFDGCFG_TPRI_Msk)"/>
+        </property>
+        <property default="{{ id_prefix }}.driver.{{ id_name() }}.dlc_check.disabled" display="DLC Check" id="{{ id_prefix }}.driver.{{ id_name() }}.dlc_check" description="When enabled received messages will be rejected if their DLC field is less than the value configured in the associated AFL rule. If 'Enabled w/truncate' is selected and a message passes the DLC check the DLC field is set to the value in the associated AFL rule and any excess data is discarded.">
+            <!-- These property IDs are incorrect but cannot be changed for backwards compatibility -->
+            <option display="Disabled" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.0.enable.disabled" value="(0)"/>
+            <option display="Enabled" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.0.enable.enabled" value="(R_CANFD_CFDGCFG_DCE_Msk)"/>
+            <option display="Enabled w/truncate" id="{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.0.enable.replace" value="(R_CANFD_CFDGCFG_DCE_Msk | R_CANFD_CFDGCFG_DRE_Msk)"/>
+        </property>
+        <property default="{{ id_prefix }}.driver.{{ id_name() }}.fd.overflow.reject" display="Flexible Data (FD)|Payload Overflow" id="{{ id_prefix }}.driver.{{ id_name() }}.fd.overflow" description="Configure whether received messages larger than the destination buffer should be truncated or rejected.">
+            <option display="Reject" id="{{ id_prefix }}.driver.{{ id_name() }}.fd.overflow.reject" value="(0)"/>
+            <option display="Truncate" id="{{ id_prefix }}.driver.{{ id_name() }}.fd.overflow.truncate" value="(R_CANFD_CFDGCFG_CMPOC_Msk)"/>
+        </property>
+        <property default="0" display="Reception|Message Buffers|Number of Buffers" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.number" description="Number of message buffers available for reception.\n\nAs there is no interrupt for message buffer reception it is recommended to use RX FIFOs instead. Set this value to 0 to disable RX Message Buffers.">
+            <constraint display="RX Message Buffer number must be an integer between 0 and 32.">testInteger("${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.number{{ '}' }}")  &amp;&amp; (("${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.number{{ '}' }}" &gt;= 0) &amp;&amp; ("${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.number{{ '}' }}" &lt;= 32))</constraint>
+        </property>
+        <property default="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.8" display="Reception|Message Buffers|Payload Size" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size" description="Payload size for all RX Message Buffers.">
+            <option display="8 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.8" value="(0)"/>
+            <option display="12 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.12" value="(1)"/>
+            <option display="16 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.16" value="(2)"/>
+            <option display="20 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.20" value="(3)"/>
+            <option display="24 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.24" value="(4)"/>
+            <option display="32 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.32" value="(5)"/>
+            <option display="48 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.48" value="(6)"/>
+            <option display="64 bytes" id="{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size.64" value="(7)"/>
+        </property>
+{% for index in range(num_fifos) %}{{ rx_fifo_properties(id_prefix,index) }}{% endfor %}
+{% endmacro %}
+{% macro global_config_constraints(id_prefix, num_fifos) %}
+        <constraint display="Allocated buffer memory overflow. Reduce the number of message buffers, FIFO stages or message depth.">
+               (((parseInt("{{deref_id(id_prefix,'rxmb.size')}}".substring("{{id_prefix}}.driver.{{id_name()}}.rxmb.size.".length)) + 12) * parseInt("{{deref_id(id_prefix,'rxmb.number')}}")) +{% for fifo_number in range(num_fifos - 1) %}
+                ((parseInt("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.payload')}}".substring("enum.driver.canfd.fifo.payload.".length)) + 12) * parseInt("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.depth')}}".substring("enum.driver.canfd.fifo.depth.".length)) * ("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.enable')}}" == "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.enable.enabled" ? 1 : 0)) +{% endfor %}
+                ((parseInt("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.payload')}}".substring("enum.driver.canfd.fifo.payload.".length)) + 12) * parseInt("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.depth')}}".substring("enum.driver.canfd.fifo.depth.".length)) * ("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.enable')}}" == "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{ num_fifos - 1 }}.enable.enabled" ? 1 : 0))) &lt;= ${config.bsp.fsp.mcu.canfd.buffer_ram}
+        </constraint>
+        <constraint display="The maximum configurable payload on this MCU is 8 bytes.">
+            ("${interface.mcu.feature_set.b}" &gt; "0") ||
+            (("{{deref_id(id_prefix,'rxmb.size')}}" === "{{id_prefix}}.driver.{{ id_name() }}.rxmb.size.8") &amp;&amp;{% for fifo_number in range(num_fifos - 1) %}
+             ("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.payload')}}" === "enum.driver.canfd.fifo.payload.8") &amp;&amp;{% endfor %}
+             ("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.payload')}}" === "enum.driver.canfd.fifo.payload.8"))
+        </constraint>
+        <constraint display="A Receive FIFO interrupt is enabled but the priority is set to Disabled.">
+            !(("${config.driver.{{ id_name() }}.rxfifo.ipl}" === "_disabled") &amp;&amp;
+              ({% for fifo_number in range(num_fifos - 1) %}
+               (("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.int_mode')}}" != "enum.driver.canfd.fifo.int_mode.disabled") &amp;&amp; ("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.enable')}}" === "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{fifo_number}}.enable.enabled")) ||{% endfor %}
+               (("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.int_mode')}}" != "enum.driver.canfd.fifo.int_mode.disabled") &amp;&amp; ("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.enable')}}" === "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{(num_fifos-1)}}.enable.enabled"))))
+        </constraint>
+        <constraint display="The FD Payload Overflow function is not available on MCUs without Flexible Data support.">
+            ("${interface.mcu.feature_set.b}" &gt; "0") ||
+            (("{{deref_id(id_prefix,'fd.overflow')}}" === "{{id_prefix}}.driver.{{ id_name() }}.fd.overflow.reject") &amp;&amp;
+             (!testOption("{{deref_id(id_prefix,'global_err.sources')}}", "{{id_prefix}}.driver.{{ id_name() }}.global_err.sources.overflow")))
+        </constraint>
+{% endmacro %}
+<?xml version="1.0" ?>
+<!--
+IMPORTANT NOTE:
+Do not modify this file directly.
+
+This file was generated using: ra/fsp/src/r_canfd/.util/canfd_gen.py
+-->
+<raModuleDescription>
+    <config id="config.driver.{{ id_name() }}" path="fsp_cfg/r_canfd_cfg.h" version="0">
+        <property default="config.driver.{{ id_name() }}.param_checking_enable.bsp" display="Parameter Checking" id="config.driver.{{ id_name() }}.param_checking_enable" description="If selected code for parameter checking is included in the build.">
+            <option display="Default (BSP)" id="config.driver.{{ id_name() }}.param_checking_enable.bsp" value="(BSP_CFG_PARAM_CHECKING_ENABLE)"/>
+            <option display="Enabled" id="config.driver.{{ id_name() }}.param_checking_enable.enabled" value="(1)"/>
+            <option display="Disabled" id="config.driver.{{ id_name() }}.param_checking_enable.disabled" value="(0)"/>
+        </property>
+        <property default="config.driver.canfd.global_err.cb_channel.0" display="Global Error Interrupt|Callback Channel" id="config.driver.{{ id_name() }}.global_err.cb_channel" description="Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first.">
+            <select enum="enum.driver.canfd.global_err.cb_channel"/>
+        </property>
+        <property default="" display="Global Error Interrupt|Priority" id="config.driver.{{ id_name() }}.global_err.ipl" description="This interrupt is fired for each of the error sources selected below.">
+            <select enum="enum.mcu.nvic.priorities.mandatory"/>
+        </property>
+        <property default="" display="Reception|FIFOs|Interrupt Priority" id="config.driver.{{ id_name() }}.rxfifo.ipl" description="This priority level will apply to all FIFO interrupts globally.">
+            <select enum="enum.mcu.nvic.priorities.mandatory"/>
+        </property>
+        <property default="config.driver.{{ id_name() }}.fd.standard.iso" display="Flexible Data (FD)|FD Frame Format" id="config.driver.{{ id_name() }}.fd.standard" description="Select whether to use the FD frame standard provided by ISO or Bosch.">
+            <select enum="enum.driver.canfd.standard"/>
+        </property>
+        <property default="config.driver.{{ id_name() }}.fd.protocol_exception.iso" display="Flexible Data (FD)|Protocol Exceptions" id="config.driver.{{ id_name() }}.fd.protocol_exception" description="Select whether to enter the protocol exception handling state when a RES bit is sampled recessive as defined in ISO 11898-1.">
+            <option display="Enabled (ISO 11898-1)" id="config.driver.{{ id_name() }}.fd.protocol_exception.iso" value="(0)"/>
+            <option display="Disabled" id="config.driver.{{ id_name() }}.fd.protocol_exception.disabled" value="(R_CANFD_CFDGFDCFG_RPED_Msk)"/>
+        </property>
+{%- if 'r_canfd' == module_variant %}{{ global_config('config',8) }}{%- endif %}
+        <property default="{%-if 'r_canfd' == module_variant %}32{%- else %}16{%- endif %}" display="Reception|Acceptance Filtering|Channel 0 Rule Count" id="config.driver.{{ id_name() }}.afl.ch0_num" description="Number of acceptance filter list rules dedicated to Channel 0.">
+            <constraint display="The number of AFL rules must be an integer between 0 and 128.">testInteger("${config.driver.{{ id_name() }}.afl.ch0_num}")  &amp;&amp; (("${config.driver.{{ id_name() }}.afl.ch0_num}" &gt;= 0) &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch0_num}" &lt;= 128))</constraint>
+        </property>
+        <property default="{%-if 'r_canfd' == module_variant %}0{%- else %}16{%- endif %}" display="Reception|Acceptance Filtering|Channel 1 Rule Count" id="config.driver.{{ id_name() }}.afl.ch1_num" description="Number of acceptance filter list rules dedicated to Channel 1.">
+            <constraint display="The number of AFL rules must be an integer between 0 and 128.">testInteger("${config.driver.{{ id_name() }}.afl.ch1_num}")  &amp;&amp; (("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt;= 0) &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch1_num}" &lt;= 128))</constraint>
+        </property>
+        <content>
+            #ifdef __cplusplus
+            extern "C" {
+            #endif
+
+            #define CANFD_CFG_PARAM_CHECKING_ENABLE   (${config.driver.{{ id_name() }}.param_checking_enable})
+
+            #define CANFD_CFG_AFL_CH0_RULE_NUM   (${config.driver.{{ id_name() }}.afl.ch0_num})
+            #define CANFD_CFG_AFL_CH1_RULE_NUM   (${config.driver.{{ id_name() }}.afl.ch1_num})
+
+            #define CANFD_CFG_GLOBAL_ERROR_CH    (${config.driver.{{ id_name() }}.global_err.cb_channel})
+
+            #define CANFD_CFG_FD_STANDARD           (${config.driver.{{ id_name() }}.fd.standard})
+            #define CANFD_CFG_FD_PROTOCOL_EXCEPTION (${config.driver.{{ id_name() }}.fd.protocol_exception})
+            #define CANFD_CFG_GLOBAL_ERR_IPL        (${config.driver.{{ id_name() }}.global_err.ipl})
+            #define CANFD_CFG_RX_FIFO_IPL           (${config.driver.{{ id_name() }}.rxfifo.ipl})
+
+{%- if 'r_canfd' ==  module_variant %}
+            #define CANFD_CFG_GLOBAL_ERR_SOURCES    (${config.driver.{{ id_name() }}.global_err.sources} 0x3)
+            #define CANFD_CFG_TX_PRIORITY           (${config.driver.{{ id_name() }}.tx_priority})
+            #define CANFD_CFG_DLC_CHECK             (${config.driver.{{ id_name() }}.dlc_check})
+            #define CANFD_CFG_FD_OVERFLOW           (${config.driver.{{ id_name() }}.fd.overflow})
+            #define CANFD_CFG_RXMB_NUMBER           (${config.driver.{{ id_name() }}.rxmb.number})
+            #define CANFD_CFG_RXMB_SIZE             (${config.driver.{{ id_name() }}.rxmb.size})
+
+    {%- for index in range(8) %}
+            #define CANFD_CFG_RXFIFO{{ index }}_INT_THRESHOLD (${config.driver.{{ id_name() }}.rxfifo.{{ index }}.int_threshold})
+            #define CANFD_CFG_RXFIFO{{ index }}_DEPTH         (${config.driver.{{ id_name() }}.rxfifo.{{ index }}.depth})
+            #define CANFD_CFG_RXFIFO{{ index }}_PAYLOAD       (${config.driver.{{ id_name() }}.rxfifo.{{ index }}.payload})
+            #define CANFD_CFG_RXFIFO{{ index }}_INT_MODE      (${config.driver.{{ id_name() }}.rxfifo.{{ index }}.int_mode})
+            #define CANFD_CFG_RXFIFO{{ index }}_ENABLE        (${config.driver.{{ id_name() }}.rxfifo.{{ index }}.enable}){{ '\r\n' }}
+    {%- endfor %}
+{%- endif %}
+
+            #ifdef __cplusplus
+            }
+            #endif
+        </content>
+    </config>
+    <module config="config.driver.{{ id_name() }}" display="Connectivity|${module.driver.{{ id_name() }}.name} CAN FD{%- if 'r_canfdlite' == module_variant %} Lite{%- endif %} ({{ module_variant }})" id="module.driver.canfd_on_{{ id_name() }}" version="1" url="group___c_a_n_f_d.html">
+        <constraint display="Requires CAN callback to be an application function name (not NULL).">
+          "${module.driver.{{ id_name() }}.p_callback}" != "NULL"
+        </constraint>
+{%- if 'r_canfd' ==  module_variant %}
+{{ global_config_constraints('config', 8) }}
+        <constraint display="Only RX FIFOs 0 and 1 are available on this MCU.">
+            ("${config.bsp.fsp.mcu.canfd.rx_fifos}" === "8") ||
+            ({% for fifo_number in range(2, 8 - 1) %}("${config.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.enable}" == "config.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.enable.disabled") &amp;&amp;
+             {% endfor %}("${config.driver.{{ id_name() }}.rxfifo.{{ 8 - 1 }}.enable}" == "config.driver.{{ id_name() }}.rxfifo.{{ 8 - 1 }}.enable.disabled"))
+        </constraint>
+{%- else %}
+{{ global_config_constraints('module', 2) }}
+{%- endif %}
+        <constraint display="Only one driver instance is allowed per CANFD channel">
+            "${interface.driver.{{ id_name() }}.${module.driver.{{ id_name() }}.channel}}" === "1"
+        </constraint>
+        <constraint display="Driver instances must have unique names">
+            "${interface.driver.{{ id_name() }}.${module.driver.{{ id_name() }}.name}}" === "1"
+        </constraint>
+        <constraint display="Requires CANFD peripheral">
+            "${interface.mcu.canfd.external}" === "1"
+        </constraint>
+        <constraint display="Requires CANFD to be enabled on the Clocks tab.">
+             testExists("${board.clock.peripheral.canfd}") &amp;&amp; (${board.clock.peripheral.canfd} &gt; 0)
+        </constraint>
+        <constraint display="Only Channel 0 is available on this MCU.">
+            ("${config.bsp.fsp.mcu.canfd.num_channels}" === "2") || !(("${module.driver.{{ id_name() }}.channel}" &gt; 0) || ("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt; 0) || ("${config.driver.{{ id_name() }}.global_err.cb_channel}" &gt; 0))
+        </constraint>
+        <constraint display="The total number of configured rules across all channels cannot exceed 128 on RA6M5 or 32 on all other MCUs.">
+            ((${config.driver.{{ id_name() }}.afl.ch0_num} + ${config.driver.{{ id_name() }}.afl.ch1_num}) &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules}) || ${config.bsp.fsp.mcu.canfd.afl_rules_independent} == 1
+        </constraint>
+        <constraint display="The total number of configured rules for each channel cannot exceed 16 on this MCU.">
+            (${config.driver.{{ id_name() }}.afl.ch0_num} &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules} &amp;&amp; ${config.driver.{{ id_name() }}.afl.ch1_num} &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules}) || ${config.bsp.fsp.mcu.canfd.afl_rules_independent} == 0
+        </constraint>
+        <constraint display="The number of AFL rules for the configured channel is 0.">
+            (("${module.driver.{{ id_name() }}.channel}" === "0") &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch0_num}" &gt; "0")) || (("${module.driver.{{ id_name() }}.channel}" === "1") &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt; "0"))
+        </constraint>
+        <constraint display="Maximum data rate is 5MHz on RA6T2 or 8MHz on all other MCUs.">
+            "${module.driver.{{ id_name() }}.bitrate.automatic.data_rate}" &lt;= (${config.bsp.fsp.mcu.canfd.max_data_rate_hz} * 1000000)
+        </constraint>
+        <constraint display="Nominal Time Segment 1 must be greater than Time Segment 2.">
+            (("${module.driver.{{ id_name() }}.bitrate.manual.use_manual}" === "module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled") || (Number("${module.driver.{{ id_name() }}.manual.nominal.time_segment_1}") &gt; Number("${module.driver.{{ id_name() }}.manual.nominal.time_segment_2}")))
+        </constraint>
+        <constraint display="Nominal Time Segment 2 must be greater than or equal to Sync Jump Width.">
+            (("${module.driver.{{ id_name() }}.bitrate.manual.use_manual}" === "module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled") || (Number("${module.driver.{{ id_name() }}.manual.nominal.time_segment_2}") &gt;= Number("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}")))
+        </constraint>
+        <constraint display="Nominal Time Segment 1 + Time Segment 2 must be 7 or greater.">
+            (("${module.driver.{{ id_name() }}.bitrate.manual.use_manual}" === "module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled") || ((Number("${module.driver.{{ id_name() }}.manual.nominal.time_segment_1}") + Number("${module.driver.{{ id_name() }}.manual.nominal.time_segment_2}")) &gt;= 7))
+        </constraint>
+        <constraint display="Data Time Segment 1 must be greater than or equal to Time Segment 2.">
+            (("${module.driver.{{ id_name() }}.bitrate.manual.use_manual}" === "module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled") || (Number("${module.driver.{{ id_name() }}.manual.data.time_segment_1}") &gt;= Number("${module.driver.{{ id_name() }}.manual.data.time_segment_2}")))
+        </constraint>
+        <constraint display="Data Time Segment 2 must be greater than or equal to Sync Jump Width.">
+            (("${module.driver.{{ id_name() }}.bitrate.manual.use_manual}" === "module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled") || (Number("${module.driver.{{ id_name() }}.manual.data.time_segment_2}") &gt;= Number("${module.driver.{{ id_name() }}.manual.data.sync_jump_width}")))
+        </constraint>
+        <constraint display="Nominal Prescaler must be greater than or equal to Data Prescaler.">
+            (("${module.driver.{{ id_name() }}.bitrate.manual.use_manual}" === "module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled") || (Number("${module.driver.{{ id_name() }}.manual.nominal.prescaler}") &gt;= Number("${module.driver.{{ id_name() }}.manual.data.prescaler}")))
+        </constraint>
+        <requires id="module.driver.canfd_on_{{ id_name() }}.requires.{{ id_name() }}" interface="interface.mcu.canfd.external" visible="false" display="Requires CANFD peripheral" />
+
+        <requires id="module.driver.canfd_on_{{ id_name() }}.requires.{{ id_name() }}.driver" interface="interface.mcu.{{ id_name() }}.driver" visible="false" display="Requires CANFD{%- if 'r_canfdlite' == module_variant %} Lite{%- endif %} peripheral driver" />
+        <provides interface="interface.driver.canfd" />
+        <provides interface="interface.driver.canfd_on_{{ id_name() }}" />
+        <provides interface="interface.driver.{{ id_name() }}.${module.driver.{{ id_name() }}.name}" />
+        <provides interface="interface.driver.{{ id_name() }}.${module.driver.{{ id_name() }}.channel}" />
+
+        <!-- Name and Channel -->
+        <provides interface="interface.peripheral.canfd${module.driver.{{ id_name() }}.channel}" />
+        <property default="g_canfd${_instance}" display="General|Name" id="module.driver.{{ id_name() }}.name" description="Module name.">
+            <constraint display="Name must be a valid C symbol">testSymbol("${module.driver.{{ id_name() }}.name}")</constraint>
+        </property>
+        <property default="0" display="General|Channel" id="module.driver.{{ id_name() }}.channel" description="Specify the CAN channel to use.">
+            <constraint display="Channel should be 0 or 1">testInteger("${module.driver.{{ id_name() }}.channel}")  &amp;&amp; (("${module.driver.{{ id_name() }}.channel}" &gt;= 0) &amp;&amp; ("${module.driver.{{ id_name() }}.channel}" &lt; 2))</constraint>
+        </property>
+
+        <!-- Automatic Bitrate -->
+        <property default="500000" display="Bitrate|Automatic|Nominal Rate (bps)" id="module.driver.{{ id_name() }}.bitrate.automatic.nominal_rate" description="Specify nominal bitrate in bits per second.">
+            <constraint display="Must be a valid integer with a maximum of 1MHz.">testInteger("${module.driver.{{ id_name() }}.bitrate.automatic.nominal_rate}") &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.nominal_rate}" &gt; 0) &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.nominal_rate}" &lt;= 1000000)</constraint>
+        </property>
+        <property default="2000000" display="Bitrate|Automatic|FD Data Rate (bps)" id="module.driver.{{ id_name() }}.bitrate.automatic.data_rate" description="Specify data bitrate in bits per second. This value is not used when sending messages without the FD and BRS bits enabled and should be left at the default setting if only Classical CAN will be used.">
+            <constraint display="Must be a valid integer with a minimum of 1MHz.">testInteger("${module.driver.{{ id_name() }}.bitrate.automatic.data_rate}") &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.data_rate}" &gt;= 1000000)</constraint>
+        </property>
+        <property default="75" display="Bitrate|Automatic|Sample Point (%)" id="module.driver.{{ id_name() }}.bitrate.automatic.sample_point" description="Specify desired sample point.">
+            <constraint display="Must be a valid integer between 60 and 99.">testInteger("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}") &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}" &gt; 60) &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}" &lt;= 99)</constraint>
+        </property>
+        <property default="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation.enabled" display="Bitrate|Delay Compensation" id="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation" description="When enabled the CANFD module will automatically compensate for any transceiver or bus delay between transmitted and received bits. When manually supplying bit timing values with delay compensation enabled be sure the data prescaler is 2 or smaller for correct operation.">
+            <option display="Enable" id="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation.enabled" value="(1)"/>
+            <option display="Disable" id="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation.disabled" value="(0)"/>
+        </property>
+
+        <!-- Manual Bitrate (default settings are for 1Mbit/5Mbit @ 40MHz)-->
+        <property default="1" display="Bitrate|Manual|Nominal|Prescaler (divisor)" id="module.driver.{{ id_name() }}.manual.nominal.prescaler" description="Specify clock divisor for nominal bitrate.">
+            <constraint display="Value must be a non-negative integer between 1 and 1024.">testInteger("${module.driver.{{ id_name() }}.manual.nominal.prescaler}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.nominal.prescaler}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.nominal.prescaler}" &lt;= 1024))</constraint>
+        </property>
+        <property default="29" display="Bitrate|Manual|Nominal|Time Segment 1 (Tq)" id="module.driver.{{ id_name() }}.manual.nominal.time_segment_1" description="Select the Time Segment 1 value. Check module usage notes for how to calculate this value.">
+            <constraint display="Value must be a non-negative integer between 2 and 256.">testInteger("${module.driver.{{ id_name() }}.manual.nominal.time_segment_1}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.nominal.time_segment_1}" &gt;= 2) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.nominal.time_segment_1}" &lt;= 256))</constraint>
+        </property>
+        <property default="10" display="Bitrate|Manual|Nominal|Time Segment 2 (Tq)" id="module.driver.{{ id_name() }}.manual.nominal.time_segment_2" description="Select the Time Segment 2 value. Check module usage notes for how to calculate this value.">
+            <constraint display="Value must be a non-negative integer between 2 and 128.">testInteger("${module.driver.{{ id_name() }}.manual.nominal.time_segment_2}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.nominal.time_segment_2}" &gt;= 2) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.nominal.time_segment_2}" &lt;= 128))</constraint>
+        </property>
+        <property default="4" display="Bitrate|Manual|Nominal|Sync Jump Width (Tq)" id="module.driver.{{ id_name() }}.manual.nominal.sync_jump_width" description="Select the Synchronization Jump Width value. Check module usage notes for how to calculate this value.">
+            <constraint display="Value must be a non-negative integer between 1 and 128.">testInteger("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}" &lt;= 128))</constraint>
+        </property>
+        <property default="1" display="Bitrate|Manual|Data|Prescaler (divisor)" id="module.driver.{{ id_name() }}.manual.data.prescaler" description="Specify clock divisor for data bitrate.">
+            <constraint display="Value must be a non-negative integer between 1 and 1024.">testInteger("${module.driver.{{ id_name() }}.manual.data.prescaler}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.prescaler}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.prescaler}" &lt;= 1024))</constraint>
+        </property>
+        <property default="5" display="Bitrate|Manual|Data|Time Segment 1 (Tq)" id="module.driver.{{ id_name() }}.manual.data.time_segment_1" description="Select the Time Segment 1 value. Check module usage notes for how to calculate this value.">
+            <constraint display="Value must be a non-negative integer between 2 and 32.">testInteger("${module.driver.{{ id_name() }}.manual.data.time_segment_1}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.time_segment_1}" &gt;= 2) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.time_segment_1}" &lt;= 32))</constraint>
+        </property>
+        <property default="2" display="Bitrate|Manual|Data|Time Segment 2 (Tq)" id="module.driver.{{ id_name() }}.manual.data.time_segment_2" description="Select the Time Segment 2 value. Check module usage notes for how to calculate this value.">
+            <constraint display="Value must be a non-negative integer between 2 and 16.">testInteger("${module.driver.{{ id_name() }}.manual.data.time_segment_2}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.time_segment_2}" &gt;= 2) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.time_segment_2}" &lt;= 16))</constraint>
+        </property>
+        <property default="1" display="Bitrate|Manual|Data|Sync Jump Width (Tq)" id="module.driver.{{ id_name() }}.manual.data.sync_jump_width" description="Select the Synchronization Jump Width value. Check module usage notes for how to calculate this value.">
+            <constraint display="Value must be a non-negative integer between 1 and 16.">testInteger("${module.driver.{{ id_name() }}.manual.data.sync_jump_width}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.sync_jump_width}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.sync_jump_width}" &lt;= 16))</constraint>
+        </property>
+        <property default="module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled" display="Bitrate|Manual|Use manual settings" id="module.driver.{{ id_name() }}.bitrate.manual.use_manual" description="Select whether or not to override automatic baudrate generation and instead use the values specified here.">
+            <option display="Yes" id="module.driver.{{ id_name() }}.bitrate.manual.use_manual.enabled" value="(1)"/>
+            <option display="No" id="module.driver.{{ id_name() }}.bitrate.manual.use_manual.disabled" value="(0)"/>
+        </property>
+
+        <!-- Bitrate Calculation -->
+        <property default="0" id="module.driver.{{ id_name() }}.bitrate.generated_data">
+            <export><![CDATA[eval('' +
+'/* "struct" to hold bit settings */' +
+'function BitSettings(prescaler, tseg1, tseg2, sjw, bitrate, ratio)' +
+'{' +
+'    this.prescaler = prescaler;' +
+'    this.tseg1 = tseg1;' +
+'    this.tseg2 = tseg2;' +
+'    this.sjw = sjw;' +
+'    this.bitrate = bitrate;' +
+'    this.ratio = ratio;' +
+'}' +
+'' +
+'/* Function to deep copy bit settings without access to Object.assign */' +
+'function BitSettingsCopy(dest, src)' +
+'{' +
+'    dest.prescaler = src.prescaler;' +
+'    dest.tseg1 = src.tseg1;' +
+'    dest.tseg2 = src.tseg2;' +
+'    dest.sjw = src.sjw;' +
+'    dest.bitrate = src.bitrate;' +
+'    dest.ratio = src.ratio;' +
+'}' +
+'' +
+'var data_best = new BitSettings(0, 0, 0, 0, 0, 0);' +
+'var nominal_best = new BitSettings(0, 0, 0, 0, 0, 0);' +
+'' +
+'var clock = ${board.clock.peripheral.canfd};' +
+'var manual_mode = ${module.driver.{{ id_name() }}.bitrate.manual.use_manual};' +
+'if(manual_mode)' +
+'{' +
+'    /* Manual bitrate inputs */' +
+'    nominal_best.prescaler = ${module.driver.{{ id_name() }}.manual.nominal.prescaler};' +
+'    nominal_best.tseg1 = ${module.driver.{{ id_name() }}.manual.nominal.time_segment_1};' +
+'    nominal_best.tseg2 = ${module.driver.{{ id_name() }}.manual.nominal.time_segment_2};' +
+'    nominal_best.sjw = ${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width};' +
+'    nominal_best.bitrate = clock / nominal_best.prescaler / (nominal_best.tseg1 + nominal_best.tseg2 + 1);' +
+'    nominal_best.ratio = (nominal_best.tseg1 + 1) / (nominal_best.tseg1 + nominal_best.tseg2 + 1);' +
+'    data_best.prescaler = ${module.driver.{{ id_name() }}.manual.data.prescaler};' +
+'    data_best.tseg1 = ${module.driver.{{ id_name() }}.manual.data.time_segment_1};' +
+'    data_best.tseg2 = ${module.driver.{{ id_name() }}.manual.data.time_segment_2};' +
+'    data_best.sjw = ${module.driver.{{ id_name() }}.manual.data.sync_jump_width};' +
+'    data_best.bitrate = clock / data_best.prescaler / (data_best.tseg1 + data_best.tseg2 + 1);' +
+'    data_best.ratio = (data_best.tseg1 + 1) / (data_best.tseg1 + data_best.tseg2 + 1);' +
+'}' +
+'else' +
+'{' +
+'    /* Automatic bitrate inputs */' +
+'    var nominal_rate_requested = ${module.driver.{{ id_name() }}.bitrate.automatic.nominal_rate};' +
+'    var data_rate_requested = ${module.driver.{{ id_name() }}.bitrate.automatic.data_rate};' +
+'    var req_ratio = ${module.driver.{{ id_name() }}.bitrate.automatic.sample_point};' +
+'    var delay_compensation = ${module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation};' +
+'    ' +
+'    var data = new BitSettings(0, 0, 0, 0, 0, 0);' +
+'    var nominal = new BitSettings(0, 0, 0, 0, 0, 0);' +
+'    ' +
+'    /* Loop over all available prescalers */' +
+'    for(prescaler = 1; prescaler <= 1024; prescaler++)' +
+'    {' +
+'        /* Calculate bit clock */' +
+'        bit_clock = clock / prescaler;' +
+'        ' +
+'        /* Stop searching if the bit clock is too slow to meet time quantum requirements */' +
+'        if(bit_clock < (8 * nominal_rate_requested))' +
+'        {' +
+'            break;' +
+'        }' +
+'        ' +
+'        /* Calculate nominal bitrate parameters */' +
+'        nominal.prescaler = prescaler;' +
+'        nominal_tq = Math.round(bit_clock / nominal_rate_requested);' +
+'        nominal.tseg1 = Math.round(nominal_tq * (req_ratio / 100.0)) - 1;' +
+'        nominal.tseg2 = nominal_tq - (nominal.tseg1 + 1);' +
+'' +
+'        /* Adjust time segments if segment 2 is too small */' +
+'        if(nominal.tseg2 < 2)' +
+'        {' +
+'            nominal.tseg1 -= 2 - nominal.tseg2;' +
+'            nominal.tseg2 += 2 - nominal.tseg2;' +
+'        }' +
+'        ' +
+'        if((nominal.tseg1 > 256) || (nominal.tseg2 > 128))' +
+'        {' +
+'            /* Skip out-of-range time segment values */' +
+'            nominal_better = false;' +
+'            nominal_delta = 1;' +
+'        }' +
+'        else' +
+'        {' +
+'            /* Calculate remaining parameters and auxiliary info */' +
+'            nominal.sjw = (nominal.tseg2 >= 10) ? 4 : 1;' +
+'            nominal.bitrate = bit_clock / nominal_tq;' +
+'            nominal.ratio = (nominal.tseg1 + 1) / (nominal.tseg1 + nominal.tseg2 + 1);' +
+'            nominal_delta = Math.abs(nominal.bitrate - nominal_rate_requested);' +
+'            nominal_better = nominal_delta < Math.abs(nominal_best.bitrate - nominal_rate_requested);' +
+'        }' +
+'        ' +
+'        /* Calculate data bitrate parameters */' +
+'        data.prescaler = prescaler;' +
+'        data_tq = Math.round(bit_clock / data_rate_requested);' +
+'        data.tseg1 = Math.round(data_tq * (req_ratio / 100.0)) - 1;' +
+'        data.tseg2 = data_tq - (data.tseg1 + 1);' +
+'            ' +
+'        /* Adjust time segments if segment 2 is too small */' +
+'        if(data.tseg2 < 2)' +
+'        {' +
+'            data.tseg1 -= 2 - data.tseg2;' +
+'            data.tseg2 += 2 - data.tseg2;' +
+'        }' +
+'        ' +
+'        if((data.tseg1 > 32) || (data.tseg2 > 16) || (bit_clock < (5 * data_rate_requested)) || (prescaler > 256))' +
+'        {' +
+'            /* Skip out-of-range values */' +
+'            data_better = false;' +
+'            data_delta = 1;' +
+'        }' +
+'        else' +
+'        {' +
+'            /* Calculate remaining parameters and auxiliary info */' +
+'            data.sjw = (data.tseg2 >= 10) ? 4 : 1;' +
+'            data.bitrate = bit_clock / data_tq;' +
+'            data.ratio = (data.tseg1 + 1) / (data.tseg1 + data.tseg2 + 1);' +
+'            data_delta = Math.abs(data.bitrate - data_rate_requested);' +
+'            data_better = data_delta < Math.abs(data_best.bitrate - data_rate_requested);' +
+'            ' +
+'            /* If a higher prescaler results in a better data bitrate then update nominal as well to ensure data prescaler <= nominal */' +
+'            nominal_better = nominal_better | data_better;' +
+'        }' +
+'        ' +
+'        if(data_better)' +
+'        {' +
+'            /* When delay compensation is on only update data rate parameters when prescaler is <= 2 */' +
+'            if(!(delay_compensation && (prescaler > 2)))' +
+'            {' +
+'                BitSettingsCopy(data_best, data);' +
+'            }' +
+'        }' +
+'        ' +
+'        if(nominal_better)' +
+'        {' +
+'        	  BitSettingsCopy(nominal_best, nominal);' +
+'        }' +
+'        ' +
+'        /* Check to see if all required bitrates are exact */' +
+'        if((0 == nominal_delta) && (0 == data_delta))' +
+'        {' +
+'            break;' +
+'        }' +
+'    }' +
+'}' +
+'' +
+'bit_timing_cfg = "" +' +
+'    "can_bit_timing_cfg_t ${module.driver.{{ id_name() }}.name}_bit_timing_cfg =\\n" +' +
+'    "{\\n" +' +
+'    "    /* Actual bitrate: " + nominal_best.bitrate.toFixed(0) + " Hz. Actual sample point: "+ nominal_best.ratio.toFixed(2) * 100 +" %. */\\n" + ' +
+'    "    .baud_rate_prescaler = " + nominal_best.prescaler.toString() + ",\\n" +' +
+'    "    .time_segment_1 = " + nominal_best.tseg1.toString() + ",\\n" +' +
+'    "    .time_segment_2 = " + nominal_best.tseg2.toString() + ",\\n" +' +
+'    "    .synchronization_jump_width = " + nominal_best.sjw.toString() + "\\n" +' +
+'    "};\\n" +' +
+'    "\\n" +' +
+'    "#if BSP_FEATURE_CANFD_FD_SUPPORT\\n" +' +
+'    "can_bit_timing_cfg_t ${module.driver.{{ id_name() }}.name}_data_timing_cfg =\\n" +' +
+'    "{\\n" +' +
+'    "    /* Actual bitrate: " + data_best.bitrate.toFixed(0) + " Hz. Actual sample point: "+ data_best.ratio.toFixed(2) * 100 +" %. */\\n" + ' +
+'    "    .baud_rate_prescaler = " + data_best.prescaler.toString() + ",\\n" +' +
+'    "    .time_segment_1 = " + data_best.tseg1.toString() + ",\\n" +' +
+'    "    .time_segment_2 = " + data_best.tseg2.toString() + ",\\n" +' +
+'    "    .synchronization_jump_width = " + data_best.sjw.toString() + "\\n" +' +
+'    "};\\n" +' +
+'    "#endif\\n";' +
+'' +
+'bit_timing_cfg' +
+'')
+]]>            </export>
+        </property>
+
+        <!-- Callback -->
+        <property default="canfd${_instance}_callback" display="Interrupts|Callback" id="module.driver.{{ id_name() }}.p_callback" description="A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time any interrupt occurs.">
+            <constraint display="Name must be a valid C symbol">testSymbol("${module.driver.{{ id_name() }}.p_callback}")</constraint>
+        </property>
+
+        <!-- Channel Interrupts -->
+        <property bitmapPrefix="" default="0ULL" display="Transmit Interrupts" id="module.driver.{{ id_name() }}.txmb.int" description="Select which TX Message Buffers should trigger an interrupt when transmission is complete.">
+            <select enum="enum.driver.canfd.txmb_mask"/>
+        </property>
+        <property bitmapPrefix="R_CANFD_CFDC_CTR_" default="0U" display="Channel Error Interrupts" id="module.driver.{{ id_name() }}.ch_err.int" description="Select which channel error interrupt sources to enable.">
+            <!-- <option display="Bus Error" id="module.driver.{{ id_name() }}.ch_err.int.bus" value="BEIE_Msk"/> -->
+            <option display="Error Warning" id="module.driver.{{ id_name() }}.ch_err.int.err_warning" value="EWIE_Msk"/>
+            <option display="Error Passive" id="module.driver.{{ id_name() }}.ch_err.int.err_passive" value="EPIE_Msk"/>
+            <option display="Bus-Off Entry" id="module.driver.{{ id_name() }}.ch_err.int.bus_off_entry" value="BOEIE_Msk"/>
+            <option display="Bus-Off Recovery" id="module.driver.{{ id_name() }}.ch_err.int.bus_off_recovery" value="BORIE_Msk"/>
+            <option display="Overload" id="module.driver.{{ id_name() }}.ch_err.int.overload" value="OLIE_Msk"/>
+            <!-- <option display="Bus Lock" id="module.driver.{{ id_name() }}.ch_err.int.bus_lock" value="BLIE_Msk"/> -->
+            <!-- <option display="Arbitration Loss" id="module.driver.{{ id_name() }}.ch_err.int.arbitration_loss" value="ALIE_Msk"/> -->
+            <!-- <option display="Transmission Aborted" id="module.driver.{{ id_name() }}.ch_err.int.tx_abort" value="TAIE_Msk"/> -->
+        </property>
+        <property default="" display="Interrupts|Channel Interrupt Priority Level" id="module.driver.{{ id_name() }}.ipl" description="Channel Error/Transmit interrupt priority.">
+            <select enum="enum.mcu.nvic.priorities.mandatory"/>
+            <interrupt event="event.can${module.driver.{{ id_name() }}.channel}.cherr" isr="canfd_error_isr"/>
+            <interrupt event="event.can${module.driver.{{ id_name() }}.channel}.tx" isr="canfd_channel_tx_isr"/>
+            <interrupt event="event.can.glerr" isr="canfd_error_isr"/>
+            <interrupt event="event.can.rxf" isr="canfd_rx_fifo_isr"/>
+        </property>
+
+        <!-- AFL -->
+        <property default="p_canfd${_instance}_afl" display="Filter List Array" id="module.driver.{{ id_name() }}.afl_array" description="Acceptance Filter List (AFL) rule array symbol name.">
+            <constraint display="Name must be a valid C symbol">testSymbol("${module.driver.{{ id_name() }}.afl_array}")</constraint>
+        </property>
+
+{%- if 'r_canfdlite' == module_variant %}{{ global_config('module',2) }}{%- endif %}
+
+        <peripheral name="CANFD${module.driver.{{ id_name() }}.channel}" component="canfd${module.driver.{{ id_name() }}.channel}" />
+        <symbol id="symbol.driver.{{ id_name() }}.name" value="${module.driver.{{ id_name() }}.name}"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.open" value="${module.driver.{{ id_name() }}.name}_open_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.open" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Open"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.close" value="${module.driver.{{ id_name() }}.name}_close_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.close" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Close"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.write" value="${module.driver.{{ id_name() }}.name}_write_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.write" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Write"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.read" value="${module.driver.{{ id_name() }}.name}_read_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.read" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Read"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.mode_transition" value="${module.driver.{{ id_name() }}.name}_mode_transition_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.mode_transition" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_ModeTransition"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.info_get" value="${module.driver.{{ id_name() }}.name}_info_get_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.info_get" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_InfoGet"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.callback_set" value="${module.driver.{{ id_name() }}.name}_callback_set_guard"/>
+        <symbol id="symbol.driver.{{ id_name() }}.guard.macro.callback_set" value="FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_CallbackSet"/>
+        <symbol id="symbol.driver.{{ id_name() }}.nsc_api" value="${module.driver.{{ id_name() }}.name}_nsc_api"/>
+        <symbol id="symbol.driver.{{ id_name() }}.bit_timing_cfg" value="${module.driver.{{ id_name() }}.name}_bit_timing_cfg"/>
+        <symbol id="symbol.driver.{{ id_name() }}.cfg" value="${module.driver.{{ id_name() }}.name}_cfg"/>
+        <symbol id="symbol.driver.{{ id_name() }}.cfg_extend" value="${module.driver.{{ id_name() }}.name}_cfg_extend"/>
+        <symbol id="symbol.driver.{{ id_name() }}.ctrl" value="${module.driver.{{ id_name() }}.name}_ctrl"/>
+        <symbol id="symbol.driver.{{ id_name() }}.data_timing_cfg" value="${module.driver.{{ id_name() }}.name}_data_timing_cfg"/>
+        <symbol id="symbol.driver.{{ id_name() }}.extended_cfg" value="${module.driver.{{ id_name() }}.name}_extended_cfg"/>
+
+        <header>
+/** CANFD on CANFD Instance. */
+extern const can_instance_t ${module.driver.{{ id_name() }}.name};
+/** Access the CANFD instance using these structures when calling API functions directly (::p_api is not used). */
+extern canfd_instance_ctrl_t ${module.driver.{{ id_name() }}.name}_ctrl;
+extern const can_cfg_t ${module.driver.{{ id_name() }}.name}_cfg;
+extern const canfd_extended_cfg_t ${module.driver.{{ id_name() }}.name}_cfg_extend;
+
+#ifndef ${module.driver.{{ id_name() }}.p_callback}
+void ${module.driver.{{ id_name() }}.p_callback}(can_callback_args_t * p_args);
+#endif
+
+/* Global configuration (referenced by all instances) */
+extern canfd_global_cfg_t g_canfd_global_cfg;
+        </header>
+        <includes>#include &quot;r_canfd.h&quot;
+#include &quot;r_can_api.h&quot;</includes>
+
+        <declarations>
+/* Nominal and Data bit timing configuration */
+
+${module.driver.{{ id_name() }}.bitrate.generated_data}
+
+extern const canfd_afl_entry_t ${module.driver.{{ id_name() }}.afl_array}[CANFD_CFG_AFL_CH${module.driver.{{ id_name() }}.channel}_RULE_NUM];
+
+{%- if 'r_canfd' ==  module_variant %}
+#ifndef CANFD_PRV_GLOBAL_CFG
+#define CANFD_PRV_GLOBAL_CFG
+
+/* Buffer RAM used: ${config.driver.{{ id_name() }}.buffer_ram_used} bytes */
+canfd_global_cfg_t g_canfd_global_cfg =
+{
+    .global_interrupts = CANFD_CFG_GLOBAL_ERR_SOURCES,
+    .global_config     = (CANFD_CFG_TX_PRIORITY | CANFD_CFG_DLC_CHECK | (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC ? R_CANFD_CFDGCFG_DCS_Msk : 0U) | CANFD_CFG_FD_OVERFLOW),
+    .rx_mb_config      = (CANFD_CFG_RXMB_NUMBER | (CANFD_CFG_RXMB_SIZE &lt;&lt; R_CANFD_CFDRMNB_RMPLS_Pos)),
+    .global_err_ipl = CANFD_CFG_GLOBAL_ERR_IPL,
+    .rx_fifo_ipl    = CANFD_CFG_RX_FIFO_IPL,
+    .rx_fifo_config    =
+    {
+        ((CANFD_CFG_RXFIFO0_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO0_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO0_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO0_INT_MODE) | (CANFD_CFG_RXFIFO0_ENABLE)),
+        ((CANFD_CFG_RXFIFO1_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO1_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO1_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO1_INT_MODE) | (CANFD_CFG_RXFIFO1_ENABLE)),
+#if !BSP_FEATURE_CANFD_LITE
+        ((CANFD_CFG_RXFIFO2_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO2_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO2_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO2_INT_MODE) | (CANFD_CFG_RXFIFO2_ENABLE)),
+        ((CANFD_CFG_RXFIFO3_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO3_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO3_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO3_INT_MODE) | (CANFD_CFG_RXFIFO3_ENABLE)),
+        ((CANFD_CFG_RXFIFO4_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO4_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO4_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO4_INT_MODE) | (CANFD_CFG_RXFIFO4_ENABLE)),
+        ((CANFD_CFG_RXFIFO5_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO5_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO5_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO5_INT_MODE) | (CANFD_CFG_RXFIFO5_ENABLE)),
+        ((CANFD_CFG_RXFIFO6_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO6_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO6_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO6_INT_MODE) | (CANFD_CFG_RXFIFO6_ENABLE)),
+        ((CANFD_CFG_RXFIFO7_INT_THRESHOLD &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (CANFD_CFG_RXFIFO7_DEPTH &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (CANFD_CFG_RXFIFO7_PAYLOAD &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (CANFD_CFG_RXFIFO7_INT_MODE) | (CANFD_CFG_RXFIFO7_ENABLE)),
+#endif
+    },
+};
+#endif
+{%- else %}
+
+/* Buffer RAM used: ${module.driver.{{ id_name() }}.buffer_ram_used} bytes */
+canfd_global_cfg_t ${module.driver.{{ id_name() }}.name}_global_cfg =
+{
+    .global_interrupts = (${module.driver.{{ id_name() }}.global_err.sources} 0x3),
+    .global_config = (${module.driver.{{ id_name() }}.tx_priority} | ${module.driver.{{ id_name() }}.dlc_check} | (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC ? R_CANFD_CFDGCFG_DCS_Msk : 0U) | ${module.driver.{{ id_name() }}.fd.overflow}),
+    .rx_mb_config = (${module.driver.{{ id_name() }}.rxmb.number} | (${module.driver.{{ id_name() }}.rxmb.size} &lt;&lt; R_CANFD_CFDRMNB_RMPLS_Pos)),
+    .global_err_ipl = CANFD_CFG_GLOBAL_ERR_IPL,
+    .rx_fifo_ipl = CANFD_CFG_RX_FIFO_IPL,
+    .rx_fifo_config    =
+    {
+        (${module.driver.{{ id_name() }}.rxfifo.0.int_threshold} &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (${module.driver.{{ id_name() }}.rxfifo.0.depth} &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (${module.driver.{{ id_name() }}.rxfifo.0.payload} &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (${module.driver.{{ id_name() }}.rxfifo.0.int_mode}) | (${module.driver.{{ id_name() }}.rxfifo.0.enable}),
+        (${module.driver.{{ id_name() }}.rxfifo.1.int_threshold} &lt;&lt; R_CANFD_CFDRFCC_RFIGCV_Pos) | (${module.driver.{{ id_name() }}.rxfifo.1.depth} &lt;&lt; R_CANFD_CFDRFCC_RFDC_Pos) | (${module.driver.{{ id_name() }}.rxfifo.1.payload} &lt;&lt; R_CANFD_CFDRFCC_RFPLS_Pos) | (${module.driver.{{ id_name() }}.rxfifo.1.int_mode}) | (${module.driver.{{ id_name() }}.rxfifo.1.enable})
+    }
+};
+{%- endif %}
+
+canfd_extended_cfg_t ${module.driver.{{ id_name() }}.name}_extended_cfg =
+{
+    .p_afl              = ${module.driver.{{ id_name() }}.afl_array},
+    .txmb_txi_enable    = (${module.driver.{{ id_name() }}.txmb.int} 0ULL),
+    .error_interrupts   = (${module.driver.{{ id_name() }}.ch_err.int} 0U),
+#if BSP_FEATURE_CANFD_FD_SUPPORT
+    .p_data_timing      = &amp;${module.driver.{{ id_name() }}.name}_data_timing_cfg,
+#else
+    .p_data_timing      = NULL,
+#endif
+    .delay_compensation = ${module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation},
+
+{%- if 'r_canfd' ==  module_variant %}
+    .p_global_cfg       = &amp;g_canfd_global_cfg,
+{%- else %}
+    .p_global_cfg       = &amp;${module.driver.{{ id_name() }}.name}_global_cfg,
+{%- endif %}
+};
+
+canfd_instance_ctrl_t ${module.driver.{{ id_name() }}.name}_ctrl;
+const can_cfg_t ${module.driver.{{ id_name() }}.name}_cfg =
+{
+    .channel                = ${module.driver.{{ id_name() }}.channel},
+    .p_bit_timing           = &amp;${module.driver.{{ id_name() }}.name}_bit_timing_cfg,
+    .p_callback             = ${module.driver.{{ id_name() }}.p_callback},
+    .p_extend               = &amp;${module.driver.{{ id_name() }}.name}_extended_cfg,
+    .p_context              = NULL,
+    .ipl                    = ${module.driver.{{ id_name() }}.ipl},
+#if defined(VECTOR_NUMBER_CAN${module.driver.{{ id_name() }}.channel}_TX)
+    .tx_irq             = VECTOR_NUMBER_CAN${module.driver.{{ id_name() }}.channel}_TX,
+#else
+    .tx_irq             = FSP_INVALID_VECTOR,
+#endif
+#if defined(VECTOR_NUMBER_CAN${module.driver.{{ id_name() }}.channel}_CHERR)
+    .error_irq             = VECTOR_NUMBER_CAN${module.driver.{{ id_name() }}.channel}_CHERR,
+#else
+    .error_irq             = FSP_INVALID_VECTOR,
+#endif
+};
+/* Instance structure to use this module. */
+const can_instance_t ${module.driver.{{ id_name() }}.name} =
+{
+    .p_ctrl        = &amp;${module.driver.{{ id_name() }}.name}_ctrl,
+    .p_cfg         = &amp;${module.driver.{{ id_name() }}.name}_cfg,
+    .p_api         = &amp;g_canfd_on_canfd
+};
+
+        </declarations>
+        <guard>
+            <header>
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_open_guard(can_ctrl_t *const p_api_ctrl, can_cfg_t const *const p_cfg);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_close_guard(can_ctrl_t *const p_api_ctrl);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_write_guard(can_ctrl_t *const p_api_ctrl, uint32_t buffer, can_frame_t *const p_frame);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_read_guard(can_ctrl_t *const p_api_ctrl, uint32_t buffer, can_frame_t *const p_frame);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_mode_transition_guard(can_ctrl_t *const p_api_ctrl, can_operation_mode_t operation_mode, can_test_mode_t test_mode);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_info_get_guard(can_ctrl_t *const p_api_ctrl, can_info_t *const p_info);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_callback_set_guard(can_ctrl_t *const p_api_ctrl, void(*p_callback)(can_callback_args_t *), void const *const p_context, can_callback_args_t *const p_callback_memory);
+
+            </header>
+            <template name="${module.driver.{{ id_name() }}.name}_guard.c">
+                <![CDATA[
+                    #include "guard.h"
+
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_open_guard (can_ctrl_t *const p_api_ctrl, can_cfg_t const *const p_cfg)
+{
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_cfg);
+
+    return R_CANFD_Open(&${module.driver.{{ id_name() }}.name}_ctrl, &${module.driver.{{ id_name() }}.name}_cfg);
+}
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_close_guard (can_ctrl_t *const p_api_ctrl)
+{
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return R_CANFD_Close(&${module.driver.{{ id_name() }}.name}_ctrl);
+}
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_write_guard (can_ctrl_t *const p_api_ctrl, uint32_t buffer, can_frame_t *const p_frame)
+{
+    /* Verify all pointers are in non-secure memory. */
+    can_frame_t *const p_frame_checked = cmse_check_pointed_object(p_frame, CMSE_AU_NONSECURE);
+    FSP_ASSERT(p_frame_checked != NULL);
+
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return R_CANFD_Write(&${module.driver.{{ id_name() }}.name}_ctrl, buffer, p_frame_checked);
+}
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_read_guard (can_ctrl_t *const p_api_ctrl, uint32_t buffer, can_frame_t *const p_frame)
+{
+    /* Verify all pointers are in non-secure memory. */
+    can_frame_t *const p_frame_checked = cmse_check_pointed_object(p_frame, CMSE_AU_NONSECURE);
+    FSP_ASSERT(p_frame_checked != NULL);
+
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return R_CANFD_Read(&${module.driver.{{ id_name() }}.name}_ctrl, buffer, p_frame_checked);
+}
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_mode_transition_guard (can_ctrl_t *const p_api_ctrl, can_operation_mode_t operation_mode, can_test_mode_t test_mode)
+{
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return R_CANFD_ModeTransition(&${module.driver.{{ id_name() }}.name}_ctrl, operation_mode, test_mode);
+}
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_info_get_guard (can_ctrl_t *const p_api_ctrl, can_info_t *const p_info)
+{
+    /* Verify all pointers are in non-secure memory. */
+    can_info_t *const p_info_checked = cmse_check_address_range((void *) p_info, sizeof(can_info_t), CMSE_AU_NONSECURE);
+    FSP_ASSERT(p_info_checked != NULL);
+
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return R_CANFD_InfoGet(&${module.driver.{{ id_name() }}.name}_ctrl, p_info_checked);
+}
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_callback_set_guard (can_ctrl_t *const p_api_ctrl, void(*p_callback)(can_callback_args_t *), void const *const p_context, can_callback_args_t *const p_callback_memory)
+{
+    /* Verify all pointers are in non-secure memory. */
+    void(*p_callback_checked)(can_callback_args_t *) = (void(*)(can_callback_args_t *)) cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE);
+    FSP_ASSERT(p_callback_checked != NULL);
+    can_callback_args_t *const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory, CMSE_AU_NONSECURE);
+    FSP_ASSERT(p_callback_memory_checked != NULL);
+
+    /* TODO: add your own security checks here */
+
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_context);
+
+    return R_CANFD_CallbackSet(&${module.driver.{{ id_name() }}.name}_ctrl, p_callback_checked, p_context, p_callback_memory_checked);
+}
+
+                ]]>
+            </template>
+        </guard>
+        <nsc>
+            <header>
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Open() ${module.driver.{{ id_name() }}.name}_open_guard(FSP_SECURE_ARGUMENT, FSP_SECURE_ARGUMENT)
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Close() ${module.driver.{{ id_name() }}.name}_close_guard(FSP_SECURE_ARGUMENT)
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Write(buffer, p_frame) ${module.driver.{{ id_name() }}.name}_write_guard(FSP_SECURE_ARGUMENT, buffer, p_frame)
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_Read(buffer, p_frame) ${module.driver.{{ id_name() }}.name}_read_guard(FSP_SECURE_ARGUMENT, buffer, p_frame)
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_ModeTransition(operation_mode, test_mode) ${module.driver.{{ id_name() }}.name}_mode_transition_guard(FSP_SECURE_ARGUMENT, operation_mode, test_mode)
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_InfoGet(p_info) ${module.driver.{{ id_name() }}.name}_info_get_guard(FSP_SECURE_ARGUMENT, p_info)
+
+#define FSP_GUARD_${module.driver.{{ id_name() }}.name}_R_CANFD_CallbackSet(p_callback, p_context, p_callback_memory) ${module.driver.{{ id_name() }}.name}_callback_set_guard(FSP_SECURE_ARGUMENT, p_callback, p_context, p_callback_memory)
+
+
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_open_guard(can_ctrl_t *const p_api_ctrl, can_cfg_t const *const p_cfg);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_close_guard(can_ctrl_t *const p_api_ctrl);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_write_guard(can_ctrl_t *const p_api_ctrl, uint32_t buffer, can_frame_t *const p_frame);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_read_guard(can_ctrl_t *const p_api_ctrl, uint32_t buffer, can_frame_t *const p_frame);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_mode_transition_guard(can_ctrl_t *const p_api_ctrl, can_operation_mode_t operation_mode, can_test_mode_t test_mode);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_info_get_guard(can_ctrl_t *const p_api_ctrl, can_info_t *const p_info);
+
+BSP_CMSE_NONSECURE_ENTRY fsp_err_t ${module.driver.{{ id_name() }}.name}_callback_set_guard(can_ctrl_t *const p_api_ctrl, void(*p_callback)(can_callback_args_t *), void const *const p_context, can_callback_args_t *const p_callback_memory);
+
+
+extern const can_instance_t ${module.driver.{{ id_name() }}.name};
+            </header>
+            <declarations>
+                <![CDATA[
+static const can_api_t ${module.driver.{{ id_name() }}.name}_nsc_api =
+{
+    .open = ${module.driver.{{ id_name() }}.name}_open_guard,
+    .close = ${module.driver.{{ id_name() }}.name}_close_guard,
+    .write = ${module.driver.{{ id_name() }}.name}_write_guard,
+    .read = ${module.driver.{{ id_name() }}.name}_read_guard,
+    .modeTransition = ${module.driver.{{ id_name() }}.name}_mode_transition_guard,
+    .infoGet = ${module.driver.{{ id_name() }}.name}_info_get_guard,
+    .callbackSet = ${module.driver.{{ id_name() }}.name}_callback_set_guard,
+};
+const can_instance_t ${module.driver.{{ id_name() }}.name} =
+{
+    .p_api = &${module.driver.{{ id_name() }}.name}_nsc_api,
+    .p_ctrl = FSP_SECURE_ARGUMENT,
+    .p_cfg = FSP_SECURE_ARGUMENT,
+};
+                ]]>
+            </declarations>
+        </nsc>
+        <api configurable="true">
+            <file>ra/fsp/inc/instances/r_canfd.h</file>
+            <file>ra/fsp/inc/api/r_can_api.h</file>
+        </api>
+    </module>
+    <developerSupport>
+        <template category="none" display="Acceptance Filter List (AFL) Array" id="module.driver.canfd_on_canfd.afl_base" version="1">
+            <platform id="fsp" max="" min="1.1.0"/>
+            <moduleRef id="module.driver.canfd_on_canfd"/>
+            <content>/* CANFD Channel ${channel:raProperty(module.driver.{{ id_name() }}.channel)} Acceptance Filter List (AFL) rule array */
+const canfd_afl_entry_t ${afl_name:raProperty(module.driver.{{ id_name() }}.afl_array)}[CANFD_CFG_AFL_CH${channel}_RULE_NUM] =
+{
+    /* TODO: Add AFL Entries here (see Developer Assistance -> [thread] -> ${module_name:raProperty(module.driver.{{ id_name() }}.name)} -> AFL Entry) */
+
+};</content>
+        </template>
+        <template category="none" display="AFL Entry" id="module.driver.canfd_on_canfd.afl_full" version="1">
+            <platform id="fsp" max="" min="1.1.0"/>
+            <moduleRef id="module.driver.canfd_on_canfd"/>
+            <content>
+    {
+        /* TODO: Edit the settings below to filter for specific messages. */
+
+        .id =
+        {
+            /* Specify the ID, ID type and frame type to accept. */
+            .id         = 0x00000000,
+            .frame_type = CAN_FRAME_TYPE_DATA,
+            .id_mode    = CAN_ID_MODE_EXTENDED
+        },
+
+        .mask =
+        {
+            /* These values mask which ID/mode bits to compare when filtering messages. */
+            .mask_id         = 0x1FFFFFFF,
+            .mask_frame_type = 1,
+            .mask_id_mode    = 1
+        },
+
+        .destination =
+        {
+            /* If DLC checking is enabled any messages shorter than the below setting will be rejected. */
+            .minimum_dlc = CANFD_MINIMUM_DLC_0,
+
+            /* Optionally specify a Receive Message Buffer (RX MB) to store accepted frames. RX MBs do not have an
+             * interrupt or overwrite protection and must be checked with R_CANFD_InfoGet and R_CANFD_Read. */
+            .rx_buffer   = CANFD_RX_MB_NONE,
+
+            /* Specify which FIFO(s) to send filtered messages to. Multiple FIFOs can be OR'd together. */
+            .fifo_select_flags = CANFD_RX_FIFO_0
+        }
+    },</content>
+        </template>
+    </developerSupport>
+</raModuleDescription>

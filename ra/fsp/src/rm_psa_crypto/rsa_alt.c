@@ -451,41 +451,28 @@ int mbedtls_rsa_export_crt( const mbedtls_rsa_context *ctx,
   #else
     /* CRT deduction is not applicable to MCU generated wrapped keys
     so we will add in some dummy values to get past the non-zero check in the import code */
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
-    if (true == (bool) ctx->vendor_ctx)
+
+    uint8_t dummy_val[4] ={0xFF, 0xFF, 0xFF, 0xFF};
+    if (DP != NULL)
     {
-        uint8_t dummy_val[4] ={0xFF, 0xFF, 0xFF, 0xFF};
-        if (DP != NULL)
-        {
-            ret = mbedtls_mpi_read_binary(DP, dummy_val, sizeof(dummy_val));
-        }
-        else if (DQ != NULL)
-        {
-            ret = mbedtls_mpi_read_binary(DQ, dummy_val, sizeof(dummy_val));
-         }
-        else if (QP != NULL)
-        {
-            ret = mbedtls_mpi_read_binary(QP, dummy_val, sizeof(dummy_val));
-        }
-        else
-        {
-            ret = 0;
-        }
-        return ret;
+    	ret = mbedtls_mpi_read_binary(DP, dummy_val, sizeof(dummy_val));
     }
-    else 
-    #endif //   #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    else if (DQ != NULL)
     {
-        ret = mbedtls_rsa_deduce_crt(&ctx->P, &ctx->Q, &ctx->D, DP, DQ, QP);
-        if (ret)
-        {
-            return( MBEDTLS_ERROR_ADD( MBEDTLS_ERR_RSA_BAD_INPUT_DATA, ret ) );
-        }
+    	ret = mbedtls_mpi_read_binary(DQ, dummy_val, sizeof(dummy_val));
     }
+    else if (QP != NULL)
+    {
+    	ret = mbedtls_mpi_read_binary(QP, dummy_val, sizeof(dummy_val));
+    }
+    else
+    {
+    	ret = 0;
+    }
+    return ret;
 
   #endif
 
-    return( 0 );
 }
 
 /*

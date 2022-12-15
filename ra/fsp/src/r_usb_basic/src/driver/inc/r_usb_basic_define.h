@@ -45,6 +45,10 @@ extern "C" {
   #define USB_HIGH_SPEED_MODULE
  #endif                                /* defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) */
 
+ #if defined(BSP_MCU_GROUP_RA2A1)
+  #define USB_SUPPORT_HOCO_MODULE
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) */
+
 /* Version Number of API. */
  #define USB_VERSION_MAJOR        (1)
  #define USB_VERSION_MINOR        (0)
@@ -863,11 +867,15 @@ extern "C" {
  #define USB_REL_BLK(ID, BLK)          (usb_cstd_rel_blk((uint8_t) (ID), (usb_utr_t *) (BLK)))
 
 /* Descriptor size */
- #define USB_DEVICESIZE    (20U)       /* Device Descriptor size */
- #define USB_CONFIGSIZE    (256U)      /* Configuration Descriptor size */
+ #define USB_DEVICESIZE     (20U)      /* Device Descriptor size */
+ #ifdef USB_CFG_HUVC_USE
+  #define USB_CONFIGSIZE    (3 * 1024) /* Configuration Descriptor size */
+ #else
+  #define USB_CONFIGSIZE    (1 * 1024) /* Configuration Descriptor size */
+ #endif /* USB_CFG_HUVC_USE */
 
 /* Number of software retries when a no-response condition occurs during a transfer */
- #define USB_PIPEERROR     (1U)
+ #define USB_PIPEERROR      (1U)
 
 /** [Output debugging message in a console of IDE.]
  *   not defined(USB_DEBUG_ON) : No output the debugging message

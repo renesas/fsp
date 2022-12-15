@@ -92,6 +92,8 @@
 #define HW_SCE_AES_CCM_COUNTER_BYTE_SIZE      (16U)
 #define HW_SCE_AES128XTS_KEY_BYTE_SIZE        (32U)
 #define HW_SCE_AES256XTS_KEY_BYTE_SIZE        (64U)
+#define HW_SCE_AES128XTS_KEY_BIT_SIZE         (256U)
+#define HW_SCE_AES256XTS_KEY_BIT_SIZE         (512U)
 #define HW_SCE_AES_XTS_IV_BYTE_SIZE           (16U)
 
 /* For TDES operation. */
@@ -179,6 +181,8 @@
 #define HW_SCE_RSA_2048_DATA_BYTE_SIZE                          (256U)
 #define HW_SCE_RSA_3072_DATA_BYTE_SIZE                          (96  * 4U)
 #define HW_SCE_RSA_4096_DATA_BYTE_SIZE                          (128 * 4U)
+#define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE             (64U * 4U)
+#define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE              (65U * 4U)
 
 /* RSA HASH type. */
 #define HW_SCE_RSA_HASH_MD5                                     (0x01)  /* MD5     */
@@ -496,6 +500,12 @@ typedef struct sce_rsa2048_public_key_index
         uint32_t    key_management_info2[HW_SCE_RSA_2048_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE];
     }
     value;
+    struct
+    {
+        uint8_t     key[HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE];
+    }
+    plain_value;
+    
 } sce_rsa2048_public_key_index_t;
 
 /* RSA 2048bit private key index data structure */
@@ -509,6 +519,11 @@ typedef struct sce_rsa2048_private_key_index
         uint32_t    key_management_info2[HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE];
     }
     value;
+    struct
+    {
+        uint8_t     key[HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE];
+    }
+    plain_value;
 } sce_rsa2048_private_key_index_t;
 
 /* RSA 3072bit public key index data structure */

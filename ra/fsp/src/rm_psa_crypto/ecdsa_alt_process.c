@@ -24,45 +24,6 @@
 
 #if (defined(MBEDTLS_ECDSA_SIGN_ALT) || defined(MBEDTLS_ECDSA_VERIFY_ALT) || defined(MBEDTLS_ECP_ALT))
 
- #if BSP_FEATURE_CRYPTO_HAS_SCE7_MISSING_PROCS
-fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub(const uint32_t * InData_CurveType,
-                                               const uint32_t * InData_KeyIndex,
-                                               const uint32_t * InData_MsgDgst,
-                                               uint32_t       * OutData_Signature);
-
-fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub (const uint32_t * InData_CurveType,
-                                                const uint32_t * InData_KeyIndex,
-                                                const uint32_t * InData_MsgDgst,
-                                                uint32_t       * OutData_Signature)
-{
-    FSP_PARAMETER_NOT_USED(InData_CurveType);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_MsgDgst);
-    FSP_PARAMETER_NOT_USED(OutData_Signature);
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
-fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub(const uint32_t * InData_CurveType,
-                                                   const uint32_t * InData_KeyIndex,
-                                                   const uint32_t * InData_MsgDgst,
-                                                   const uint32_t * InData_Signature);
-
-fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t * InData_CurveType,
-                                                    const uint32_t * InData_KeyIndex,
-                                                    const uint32_t * InData_MsgDgst,
-                                                    const uint32_t * InData_Signature)
-{
-    FSP_PARAMETER_NOT_USED(InData_CurveType);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_MsgDgst);
-    FSP_PARAMETER_NOT_USED(InData_Signature);
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
- #endif
-
 fsp_err_t HW_SCE_ECC_256GenerateSign (const uint32_t * InData_DomainParam,
                                       const uint32_t * InData_G,
                                       const uint32_t * InData_PrivKey,
@@ -175,7 +136,7 @@ fsp_err_t HW_SCE_ECC_384GenerateSign (const uint32_t * InData_DomainParam,
     if (FSP_SUCCESS == err)
     {
         err =
-            HW_SCE_EcdsaP384SignatureGenerateSub(InData_DomainParam, wrapped_private_key, InData_MsgDgst, signature);
+            HW_SCE_EcdsaP384SignatureGenerateSub((uint32_t *)InData_DomainParam, wrapped_private_key, InData_MsgDgst, signature);
     }
 
     if (FSP_SUCCESS == err)
@@ -198,7 +159,7 @@ fsp_err_t HW_SCE_ECC_384HrkGenerateSign (const uint32_t * InData_DomainParam,
     FSP_PARAMETER_NOT_USED(InData_G);
     uint32_t  signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U] = {0};
     fsp_err_t err =
-        HW_SCE_EcdsaP384SignatureGenerateSub(InData_DomainParam, InData_KeyIndex, InData_MsgDgst, signature);
+        HW_SCE_EcdsaP384SignatureGenerateSub((uint32_t *)InData_DomainParam, InData_KeyIndex, InData_MsgDgst, signature);
     if (FSP_SUCCESS == err)
     {
         memcpy(OutData_R, signature, (HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 2U));
@@ -298,7 +259,7 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_DomainParam,
                                                       formatted_public_key);
     if (FSP_SUCCESS == err)
     {
-        err = HW_SCE_EcdsaP384SignatureVerificationSub(InData_DomainParam,
+        err = HW_SCE_EcdsaP384SignatureVerificationSub((uint32_t *)InData_DomainParam,
                                                        formatted_public_key,
                                                        InData_MsgDgst,
                                                        signature);

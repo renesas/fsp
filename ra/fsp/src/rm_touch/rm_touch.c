@@ -1682,10 +1682,20 @@ void touch_button_self_decode (touch_button_info_t * p_binfo, uint16_t value, ui
     {
         touch_button_off(p_binfo, button_id);
     }
+
+  #if (0 == TOUCH_CFG_CHATTERING_SUPPRESSION_TYPE)
     else
     {
         /* Do nothing during hysteresis */
     }
+  #else
+    else
+    {
+        /* touch count reset during hysteresis */
+        (*(p_binfo->p_on_count + button_id))  = 0;
+        (*(p_binfo->p_off_count + button_id)) = 0;
+    }
+  #endif
 }
 
  #endif
@@ -1733,10 +1743,20 @@ void touch_button_mutual_decode (touch_button_info_t * p_binfo, int16_t value, u
     {
         touch_button_off(p_binfo, button_id);
     }
+
+  #if (0 == TOUCH_CFG_CHATTERING_SUPPRESSION_TYPE)
     else
     {
         /* Do nothing during hysteresis */
     }
+  #else
+    else
+    {
+        /* touch count reset during hysteresis */
+        (*(p_binfo->p_on_count + button_id))  = 0;
+        (*(p_binfo->p_off_count + button_id)) = 0;
+    }
+  #endif
 }                                      /* End of function touch_button_decode() */
 
  #endif
@@ -3724,7 +3744,10 @@ void touch_tuning_qe_get_cfg (touch_instance_ctrl_t * const p_instance_ctrl)
         }
         else if (TOUCH_TUNING_MODE_MEASURE_PHASE2 == g_touch_tuning_mode)
         {
-            *(p_ctsu_instance_ctrl->p_tuning_count + i) = 0;
+            *(p_ctsu_instance_ctrl->p_element_complete_flag + i) = 0;
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+            *(p_ctsu_instance_ctrl->p_frequency_complete_flag + i) = 0;
+ #endif
  #if (BSP_FEATURE_CTSU_VERSION == 1)
             *(p_ctsu_instance_ctrl->p_tuning_diff + i) = 0;
  #endif
@@ -4105,9 +4128,14 @@ void touch_tuning_open (touch_instance_ctrl_t * const p_instance_ctrl)
              ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements)));
     }
  #endif
-    p_ctsu_instance_ctrl->p_tuning_count =
-        (p_ctsu_instance_ctrl->p_tuning_count -
+    p_ctsu_instance_ctrl->p_element_complete_flag =
+        (p_ctsu_instance_ctrl->p_element_complete_flag -
          (p_ctsu_instance_ctrl->ctsu_elem_index - p_ctsu_instance_ctrl->num_elements));
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+    p_ctsu_instance_ctrl->p_frequency_complete_flag =
+        (p_ctsu_instance_ctrl->p_frequency_complete_flag -
+         (p_ctsu_instance_ctrl->ctsu_elem_index - p_ctsu_instance_ctrl->num_elements));
+ #endif
     p_ctsu_instance_ctrl->p_tuning_diff =
         (p_ctsu_instance_ctrl->p_tuning_diff -
          (p_ctsu_instance_ctrl->ctsu_elem_index - p_ctsu_instance_ctrl->num_elements));
@@ -4165,11 +4193,6 @@ void touch_tuning_dataget (touch_instance_ctrl_t * const p_instance_ctrl)
         {
             if (p_ctsu_instance_ctrl->tuning == CTSU_TUNING_INCOMPLETE)
             {
-                for (i = 0; i < p_ctsu_instance_ctrl->num_elements; i++)
-                {
-                    *(p_ctsu_instance_ctrl->p_tuning_count + i) = 0;
-                }
-
                 g_touch_tuning_state = TOUCH_TUNING_STATE_SCAN;
             }
         }

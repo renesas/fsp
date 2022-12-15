@@ -115,7 +115,7 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
                 break;
             }
 
- #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7)
             case AES_CTR_KEY_SIZE_192_ROUNDS:
             {
                 status = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,

@@ -71,7 +71,10 @@
 #define NX_DRIVER_STATE_LINK_ENABLED                             4
 #define NX_DRIVER_ERROR                                          90
 
-/* Define basic netword driver information typedef.  */
+/* Driver Thread Events */
+#define RM_NETXDUO_DRIVER_THREAD_EVENT_DEINITIALIZE              (0x1)
+
+/* Define basic network driver information typedef.  */
 
 typedef struct NX_DRIVER_INFORMATION_STRUCT
 {
@@ -105,6 +108,7 @@ static NX_DRIVER_INFORMATION nx_driver_information;
 static NX_DRIVER_SOCKET      nx_driver_sockets[RM_NETXDUO_WIFI_SOCKETS_MAXIMUM];
 static TX_THREAD             nx_driver_thread;
 static UCHAR                 nx_driver_thread_stack[RM_NETXDUO_WIFI_DRIVER_THREAD_STACK_SIZE];
+static TX_EVENT_FLAGS_GROUP  nx_driver_thread_events;
 
 /* Define the routines for processing each driver entry request.  The contents of these routines will change with
  * each driver. However, the main driver entry function will not change, except for the entry function name.  */
@@ -191,6 +195,28 @@ VOID rm_netxduo_wifi (NX_IP_DRIVER * driver_req_ptr)
         {
             /* Process link initialize requests.  */
             _nx_driver_initialize(driver_req_ptr);
+            break;
+        }
+
+        case NX_LINK_UNINITIALIZE:
+        {
+            UINT thread_state = TX_READY;
+
+            /* Send signal for driver thread to exit */
+            tx_event_flags_set(&nx_driver_thread_events, RM_NETXDUO_DRIVER_THREAD_EVENT_DEINITIALIZE, TX_OR);
+
+            /* Wait for driver thread to exit */
+            while (TX_TERMINATED != thread_state)
+            {
+                tx_thread_info_get(&nx_driver_thread, NULL, &thread_state, NULL, NULL, NULL, NULL, NULL, NULL);
+                tx_thread_sleep(1);
+            }
+
+            /* Delete thread */
+            tx_thread_delete(&nx_driver_thread);
+
+            tx_event_flags_delete(&nx_driver_thread_events);
+
             break;
         }
 
@@ -751,6 +777,24 @@ static VOID _nx_driver_thread_entry (ULONG thread_input)
 
     for ( ; ; )
     {
+        ULONG actual_events = 0;
+
+        if (TX_SUCCESS ==
+            tx_event_flags_get(&nx_driver_thread_events, RM_NETXDUO_DRIVER_THREAD_EVENT_DEINITIALIZE, TX_AND_CLEAR,
+                               &actual_events, TX_NO_WAIT))
+        {
+            /* Check for driver close */
+            if (actual_events & RM_NETXDUO_DRIVER_THREAD_EVENT_DEINITIALIZE)
+            {
+                /* Attempt to release packets */
+                nx_packet_release(current_packet_ptr);
+                nx_packet_release(next_packet_ptr);
+
+                /* Terminate thread */
+                tx_thread_terminate(&nx_driver_thread);
+            }
+        }
+
         /* Obtain the IP internal mutex before processing the IP event.  */
         tx_mutex_get(&(ip_ptr->nx_ip_protection), TX_WAIT_FOREVER);
 
@@ -1246,21 +1290,34 @@ static UINT _nx_driver_hardware_initialize (NX_IP_DRIVER * driver_req_ptr)
     UINT status;
     UINT priority = 0;
 
-    /* Get priority of IP thread.  */
-    tx_thread_info_get(tx_thread_identify(), NX_NULL, NX_NULL, NX_NULL, &priority, NX_NULL, NX_NULL, NX_NULL, NX_NULL);
+    status = tx_event_flags_create(&nx_driver_thread_events, "nx_driver_thread_events");
 
-    /* Create the driver thread.  */
-    /* The priority of network thread is lower than IP thread.  */
-    status = tx_thread_create(&nx_driver_thread,
-                              "Driver Thread",
-                              _nx_driver_thread_entry,
-                              0,
-                              nx_driver_thread_stack,
-                              RM_NETXDUO_WIFI_DRIVER_THREAD_STACK_SIZE,
-                              priority + 1,
-                              priority + 1,
-                              TX_NO_TIME_SLICE,
-                              TX_DONT_START);
+    if (TX_SUCCESS == status)
+    {
+        /* Get priority of IP thread.  */
+        tx_thread_info_get(tx_thread_identify(),
+                           NX_NULL,
+                           NX_NULL,
+                           NX_NULL,
+                           &priority,
+                           NX_NULL,
+                           NX_NULL,
+                           NX_NULL,
+                           NX_NULL);
+
+        /* Create the driver thread.  */
+        /* The priority of network thread is lower than IP thread.  */
+        status = tx_thread_create(&nx_driver_thread,
+                                  "Driver Thread",
+                                  _nx_driver_thread_entry,
+                                  0,
+                                  nx_driver_thread_stack,
+                                  RM_NETXDUO_WIFI_DRIVER_THREAD_STACK_SIZE,
+                                  priority + 1,
+                                  priority + 1,
+                                  TX_NO_TIME_SLICE,
+                                  TX_DONT_START);
+    }
 
     /* Return success!  */
     return status;

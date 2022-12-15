@@ -56,7 +56,6 @@
 #define CTSU_TUNING_MIN                      (0x0000)
 #define CTSU_TUNING_VALUE_SELF               (15360)
 #define CTSU_TUNING_VALUE_MUTUAL             (10240)
-#define CTSU_TUNING_OT_COUNT                 (25)
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #define CTSU_SST_RECOMMEND                  (0x1F) // The recommend value of SST
@@ -307,11 +306,11 @@ static void ctsu_correction_fleq(ctsu_correction_multi_t * p_multi, uint16_t * p
 static void ctsu_correction_multi(ctsu_correction_multi_t * p_multi, uint16_t * p_pri, uint16_t * p_snd);
 
  #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
-static void ctsu_correction_scan_start(void);
-static void ctsu_correction_data_get(ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data);
+static void      ctsu_correction_scan_start(void);
+static fsp_err_t ctsu_correction_data_get(ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data);
 
   #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
-static void ctsu_correction_calib_rtrim(ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data);
+static fsp_err_t ctsu_correction_calib_rtrim(ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data);
 
   #endif
  #endif
@@ -356,7 +355,7 @@ static fsp_err_t ctsu_diag_data_get1(void);
 static void ctsu_diag_regi_store2(void);
 static void ctsu_diag_regi_restore2(void);
 
-static void      ctsu_diag_output_voltage_scan_start(ctsu_instance_ctrl_t * const p_instance_ctrl);
+static fsp_err_t ctsu_diag_output_voltage_scan_start(ctsu_instance_ctrl_t * const p_instance_ctrl);
 static fsp_err_t ctsu_diag_output_voltage_result(void);
 
 static void      ctsu_diag_over_voltage_scan_start(void);
@@ -388,7 +387,7 @@ static void      ctsu_diag_cfc_gain_data_get(void);
 
   #endif
 
-static void      ctsu_diag_scan_start2(ctsu_instance_ctrl_t * const p_instance_ctrl);
+static fsp_err_t ctsu_diag_scan_start2(ctsu_instance_ctrl_t * const p_instance_ctrl);
 static fsp_err_t ctsu_diag_data_get2(uint16_t * p_data);
 
  #endif
@@ -398,8 +397,11 @@ static fsp_err_t ctsu_diag_data_get2(uint16_t * p_data);
  * Private global variables
  **********************************************************************************************************************/
 
-static uint16_t      g_ctsu_element_index = 0;
-static uint8_t       g_ctsu_tuning_count[CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS];
+static uint16_t g_ctsu_element_index = 0;
+static uint8_t  g_ctsu_element_complete_flag[CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS];
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+static uint8_t g_ctsu_frequency_complete_flag[CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS];
+#endif
 static int32_t       g_ctsu_tuning_diff[CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS];
 static ctsu_ctsuwr_t g_ctsu_ctsuwr[(CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS) * CTSU_CFG_NUM_SUMULTI];
 #if (CTSU_CFG_NUM_SELF_ELEMENTS != 0)
@@ -434,7 +436,9 @@ static ctsu_corrcfc_info_t g_ctsu_corrcfc_info;
 static ctsu_diag_info_t     g_ctsu_diag_info;
 static ctsu_diag_save_reg_t g_ctsu_diag_reg;
  #endif
-
+ #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
+static uint32_t g_ctsu_temp_reg_ctsucra;
+ #endif
  #if (BSP_FEATURE_CTSU_VERSION == 2)
   #if (CTSU_CFG_NUM_SELF_ELEMENTS != 0)
 uint8_t g_ctsu_selected_freq_self[CTSU_CFG_NUM_SELF_ELEMENTS];
@@ -443,7 +447,6 @@ uint8_t g_ctsu_selected_freq_self[CTSU_CFG_NUM_SELF_ELEMENTS];
 uint8_t g_ctsu_selected_freq_mutual[CTSU_CFG_NUM_MUTUAL_ELEMENTS];
   #endif
  #endif
-
 #endif
 
 static ioport_instance_ctrl_t g_ctsu_tscap_ioport_ctrl;
@@ -633,7 +636,10 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
  #endif
     }
 #endif
-    p_instance_ctrl->p_tuning_count  = &g_ctsu_tuning_count[g_ctsu_element_index];
+    p_instance_ctrl->p_element_complete_flag = &g_ctsu_element_complete_flag[g_ctsu_element_index];
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+    p_instance_ctrl->p_frequency_complete_flag = &g_ctsu_frequency_complete_flag[g_ctsu_element_index];
+#endif
     p_instance_ctrl->p_tuning_diff   = &g_ctsu_tuning_diff[g_ctsu_element_index];
     p_instance_ctrl->p_ctsuwr        = &g_ctsu_ctsuwr[g_ctsu_element_index * CTSU_CFG_NUM_SUMULTI];
     g_ctsu_element_index             = (uint8_t) (g_ctsu_element_index + p_instance_ctrl->num_elements);
@@ -718,8 +724,11 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
 #endif
     for (element_id = 0; element_id < p_instance_ctrl->num_elements; element_id++)
     {
-        p_instance_ctrl->p_tuning_count[element_id] = 0;
-        p_instance_ctrl->p_tuning_diff[element_id]  = 0;
+        p_instance_ctrl->p_element_complete_flag[element_id] = 0;
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+        p_instance_ctrl->p_frequency_complete_flag[element_id] = 0;
+#endif
+        p_instance_ctrl->p_tuning_diff[element_id] = 0;
         element_cfgs = (p_cfg->p_elements + element_id);
 #if (BSP_FEATURE_CTSU_VERSION == 2)
         if (CTSU_MODE_CURRENT_SCAN == p_cfg->md)
@@ -1145,7 +1154,7 @@ fsp_err_t R_CTSU_ScanStart (ctsu_ctrl_t * const p_ctrl)
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
     if (CTSU_MODE_DIAGNOSIS_SCAN == p_instance_ctrl->md)
     {
-        ctsu_diag_scan_start2(p_instance_ctrl);
+        err = ctsu_diag_scan_start2(p_instance_ctrl);
     }
  #endif
  #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
@@ -1226,6 +1235,7 @@ fsp_err_t R_CTSU_ScanStart (ctsu_ctrl_t * const p_ctrl)
  * @retval FSP_ERR_CTSU_SCANNING    Scanning this instance.
  * @retval FSP_ERR_CTSU_INCOMPLETE_TUNING      Incomplete initial offset tuning.
  * @retval FSP_ERR_CTSU_DIAG_NOT_YET      Diagnosis of data collected no yet.
+ * @retval FSP_ERR_ABORTED                Operate error of Diagnosis ADC data collection ,since ADC use other
  **********************************************************************************************************************/
 fsp_err_t R_CTSU_DataGet (ctsu_ctrl_t * const p_ctrl, uint16_t * p_data)
 {
@@ -1244,7 +1254,7 @@ fsp_err_t R_CTSU_DataGet (ctsu_ctrl_t * const p_ctrl, uint16_t * p_data)
  #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
     if (CTSU_MODE_CORRECTION_SCAN == p_instance_ctrl->md)
     {
-        ctsu_correction_data_get(p_instance_ctrl, p_data);
+        err = ctsu_correction_data_get(p_instance_ctrl, p_data);
         p_instance_ctrl->state = CTSU_STATE_IDLE;
 
         return err;
@@ -1259,6 +1269,10 @@ fsp_err_t R_CTSU_DataGet (ctsu_ctrl_t * const p_ctrl, uint16_t * p_data)
         if (FSP_ERR_CTSU_DIAG_NOT_YET == err)
         {
             err = FSP_ERR_CTSU_DIAG_NOT_YET;
+        }
+        else if (FSP_ERR_ABORTED == err)
+        {
+            err = FSP_ERR_ABORTED;
         }
         else
         {
@@ -1385,8 +1399,11 @@ fsp_err_t R_CTSU_OffsetTuning (ctsu_ctrl_t * const p_ctrl)
         for (element_id = 0; element_id < p_instance_ctrl->num_elements; element_id++)
         {
             /* Counter clear for re-offset tuning */
-            *(p_instance_ctrl->p_tuning_count + element_id) = 0;
-            *(p_instance_ctrl->p_tuning_diff + element_id)  = 0;
+            *(p_instance_ctrl->p_element_complete_flag + element_id) = 0;
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+            *(p_instance_ctrl->p_frequency_complete_flag + element_id) = 0;
+#endif
+            *(p_instance_ctrl->p_tuning_diff + element_id) = 0;
         }
     }
 
@@ -2226,7 +2243,7 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
     /* element_id through each element for control block */
     for (element_id = 0; element_id < p_instance_ctrl->num_elements; element_id++)
     {
-        if (CTSU_TUNING_OT_COUNT != *(p_instance_ctrl->p_tuning_count + element_id))
+        if (0 == *(p_instance_ctrl->p_element_complete_flag + element_id))
         {
 #if (BSP_FEATURE_CTSU_VERSION == 1)
             if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
@@ -2316,63 +2333,66 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
             element_top = (uint16_t) (element_id * CTSU_CFG_NUM_SUMULTI);
             for (i = 0; i < CTSU_CFG_NUM_SUMULTI; i++)
             {
-                if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
+                /* Adjust only frequencies for which offset tuning is not completed */
+                if (0 == (p_instance_ctrl->p_frequency_complete_flag[element_id] & (1 << i)))
                 {
-                    target_val = (p_instance_ctrl->tuning_self_target_value / 2);
-                }
-                else
-                {
-                    target_val = (p_instance_ctrl->tuning_mutual_target_value / 2);
-                }
-
-                if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
-                {
-                    corr_data[i] = p_instance_ctrl->p_self_corr[element_top + i];
-                }
-                else
-                {
-                    corr_data[i] = p_instance_ctrl->p_mutual_pri_corr[element_top + i];
-                }
-
-                snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
-                       CTSU_SNUM_MAX;
-                target_val  = (uint16_t) (((uint32_t) target_val * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
-                offset_unit = (int32_t) ((CTSU_CORRECTION_OFFSET_UNIT * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
-
-                /* Calculate CTSUSO equivalent difference between current value and target value */
-                diff = (int32_t) ((int32_t) corr_data[i] - (int32_t) target_val) /
-                       (offset_unit >> p_instance_ctrl->range);
-
-                ctsuso  = (int32_t) (p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso & CTSU_TUNING_MAX);
-                ctsuso += diff;
-
-                /* If the CTSUSO exceeds the minimum value or the maximum value, tuning complete */
-                if (ctsuso < 0)
-                {
-                    ctsuso = 0;
-                    complete_flag++;
-                }
-                else if (ctsuso > CTSU_TUNING_MAX)
-                {
-                    ctsuso = CTSU_TUNING_MAX;
-                    complete_flag++;
-                }
-                else
-                {
-                    /* If the difference is large, tuning value may not be able to match, so create the next opportunity */
-                    if (0 == diff)
+                    if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
                     {
-                        complete_flag++;
+                        target_val = (p_instance_ctrl->tuning_self_target_value / 2);
                     }
                     else
                     {
-                        (*(p_instance_ctrl->p_tuning_count + element_id))++;
+                        target_val = (p_instance_ctrl->tuning_mutual_target_value / 2);
                     }
+
+                    if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
+                    {
+                        corr_data[i] = p_instance_ctrl->p_self_corr[element_top + i];
+                    }
+                    else
+                    {
+                        corr_data[i] = p_instance_ctrl->p_mutual_pri_corr[element_top + i];
+                    }
+
+                    snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
+                           CTSU_SNUM_MAX;
+                    target_val  = (uint16_t) (((uint32_t) target_val * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
+                    offset_unit = (int32_t) ((CTSU_CORRECTION_OFFSET_UNIT * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
+
+                    /* Calculate CTSUSO equivalent difference between current value and target value */
+                    diff = (int32_t) ((int32_t) corr_data[i] - (int32_t) target_val) /
+                           (offset_unit >> p_instance_ctrl->range);
+
+                    ctsuso  = (int32_t) (p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso & CTSU_TUNING_MAX);
+                    ctsuso += diff;
+
+                    /* If the CTSUSO exceeds the minimum value or the maximum value, tuning complete */
+                    if (ctsuso < 0)
+                    {
+                        ctsuso = 0;
+                        p_instance_ctrl->p_frequency_complete_flag[element_id] += (uint8_t) (1 << i);
+                    }
+                    else if (ctsuso > CTSU_TUNING_MAX)
+                    {
+                        ctsuso = CTSU_TUNING_MAX;
+                        p_instance_ctrl->p_frequency_complete_flag[element_id] += (uint8_t) (1 << i);
+                    }
+                    else
+                    {
+                        /* If the difference is large, tuning value may not be able to match, so create the next opportunity */
+                        if (0 == diff)
+                        {
+                            p_instance_ctrl->p_frequency_complete_flag[element_id] += (uint8_t) (1 << i);
+                        }
+                    }
+
+                    /* Set the result of the calculated CTSUSO */
+                    p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso &= (uint32_t) (~CTSU_TUNING_MAX);
+                    p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso |= (uint32_t) ctsuso;
                 }
 
-                /* Set the result of the calculated CTSUSO */
-                p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso &= (uint32_t) (~CTSU_TUNING_MAX);
-                p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso |= (uint32_t) ctsuso;
+                /* Add completion status for each frequency */
+                complete_flag += ((p_instance_ctrl->p_frequency_complete_flag[element_id] >> i) & 1);
             }
 #endif
         }
@@ -2383,10 +2403,11 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
 
         if (CTSU_CFG_NUM_SUMULTI == complete_flag)
         {
-            complete_flag = 0;
             num_complete++;
-            *(p_instance_ctrl->p_tuning_count + element_id) = CTSU_TUNING_OT_COUNT;
+            *(p_instance_ctrl->p_element_complete_flag + element_id) = 1;
         }
+
+        complete_flag = 0;
     }
 
     if (num_complete == p_instance_ctrl->num_elements)
@@ -3186,6 +3207,8 @@ void ctsu_correction_measurement (ctsu_instance_ctrl_t * const p_instance_ctrl, 
  ***********************************************************************************************************************/
 void ctsu_correction_scan_start (void)
 {
+    g_ctsu_temp_reg_ctsucra = R_CTSU->CTSUCRA;
+
     R_CTSU->CTSUCRA_b.MD0  = 1;
     R_CTSU->CTSUCRA_b.MD1  = 0;
     R_CTSU->CTSUCRA_b.MD2  = 0;
@@ -3248,15 +3271,19 @@ void ctsu_correction_scan_start (void)
 /***********************************************************************************************************************
  * ctsu_correction_data_get
  ***********************************************************************************************************************/
-void ctsu_correction_data_get (ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data)
+fsp_err_t ctsu_correction_data_get (ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data)
 {
-    uint32_t i;
-    uint32_t j;
-    uint16_t base_value;
-    uint16_t base_conv_dac;
-    int32_t  x0;
-    int32_t  x1;
-    int32_t  y0;
+  #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
+    adc_instance_t const * p_adc = p_instance_ctrl->p_ctsu_cfg->p_adc_instance;
+  #endif
+    uint32_t  i;
+    uint32_t  j;
+    uint16_t  base_value;
+    uint16_t  base_conv_dac;
+    int32_t   x0;
+    int32_t   x1;
+    int32_t   y0;
+    fsp_err_t err = FSP_SUCCESS;
 
     if (g_ctsu_correction_info.scan_index < CTSU_CORRECTION_POINT_NUM)
     {
@@ -3321,7 +3348,16 @@ void ctsu_correction_data_get (ctsu_instance_ctrl_t * const p_instance_ctrl, uin
 
         g_ctsu_correction_info.update_counter = 0;
   #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
-        ctsu_correction_calib_rtrim(p_instance_ctrl, p_data);
+        err = ctsu_correction_calib_rtrim(p_instance_ctrl, p_data);
+        if (FSP_ERR_ALREADY_OPEN != err)
+        {
+            p_adc->p_api->close(p_adc->p_ctrl);
+        }
+
+        if (FSP_SUCCESS != err)
+        {
+            err = FSP_ERR_ABORTED;
+        }
   #endif
     }
     else
@@ -3329,6 +3365,10 @@ void ctsu_correction_data_get (ctsu_instance_ctrl_t * const p_instance_ctrl, uin
         /* Indicates that ADC measurement was not performed. */
         *p_data = CTSU_COUNT_MAX;
     }
+
+    R_CTSU->CTSUCRA = g_ctsu_temp_reg_ctsucra;
+
+    return err;
 }
 
   #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
@@ -3336,7 +3376,7 @@ void ctsu_correction_data_get (ctsu_instance_ctrl_t * const p_instance_ctrl, uin
 /***********************************************************************************************************************
  * ctsu_correction_calib_rtrim
  ***********************************************************************************************************************/
-void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data)
+fsp_err_t ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * p_data)
 {
     adc_status_t           status;
     adc_instance_t const * p_adc = p_instance_ctrl->p_ctsu_cfg->p_adc_instance;
@@ -3347,10 +3387,14 @@ void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl, 
     int16_t                diff;
     int16_t                dir  = 0;
     uint16_t               comp = 0;
+    fsp_err_t              err;
 
     /* Initialize ADC for CTSU TSCAP */
-    p_adc->p_api->open(p_adc->p_ctrl, p_adc->p_cfg);
-    p_adc->p_api->scanCfg(p_adc->p_ctrl, p_adc->p_channel_cfg);
+    err = p_adc->p_api->open(p_adc->p_ctrl, p_adc->p_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    err = p_adc->p_api->scanCfg(p_adc->p_ctrl, p_adc->p_channel_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     R_ADC0->ADSSTRL = CTSU_CALIB_ADSSTRL;
 
     /* Self single scan mode */
@@ -3383,17 +3427,20 @@ void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl, 
         for (i = 0; i < CTSU_CALIB_AVERAGE_TIME; i++)
         {
             /* Software trigger start scan */
-            p_adc->p_api->scanStart(p_adc->p_ctrl);
+            err = p_adc->p_api->scanStart(p_adc->p_ctrl);
+            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
             /* Wait for conversion to complete. */
             status.state = ADC_STATE_SCAN_IN_PROGRESS;
             while (ADC_STATE_SCAN_IN_PROGRESS == status.state)
             {
-                p_adc->p_api->scanStatusGet(p_adc->p_ctrl, &status);
+                err = p_adc->p_api->scanStatusGet(p_adc->p_ctrl, &status);
+                FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
             }
 
             /* Read A/D data then scan normal end */
-            p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &adctdr_result);
+            err = p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &adctdr_result);
+            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
             adctdr_sum += adctdr_result;
         }
 
@@ -3442,6 +3489,8 @@ void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl, 
 
     /* Close ADC for CTSU TSCAP */
     p_adc->p_api->close(p_adc->p_ctrl);
+
+    return err;
 }
 
   #endif
@@ -4953,7 +5002,7 @@ static void ctsu_diag_dac_initial_tuning (void)
 
     if (CTSU_CFG_NUM_SUMULTI == complete_flag)
     {
-        g_ctsu_diag_info.tuning_diff = CTSU_TUNING_OT_COUNT;
+        g_ctsu_diag_info.tuning_diff = 0;
         g_ctsu_diag_info.so0_4uc_val = ctsuso;
         g_ctsu_diag_info.dac_init    = 3;
         g_ctsu_diag_info.tuning      = CTSU_TUNING_COMPLETE;
@@ -5119,8 +5168,11 @@ static fsp_err_t ctsu_diag_dac_result (void)
 /***********************************************************************************************************************
  * ctsu_diag_scan_start2
  ***********************************************************************************************************************/
-static void ctsu_diag_scan_start2 (ctsu_instance_ctrl_t * const p_instance_ctrl)
+static fsp_err_t ctsu_diag_scan_start2 (ctsu_instance_ctrl_t * const p_instance_ctrl)
 {
+    adc_instance_t const * p_adc = p_instance_ctrl->p_ctsu_cfg->p_adc_instance;
+    fsp_err_t              err   = FSP_SUCCESS;
+
     /* initial state change*/
     if (CTSU_DIAG_INIT == g_ctsu_diag_info.state)
     {
@@ -5133,8 +5185,36 @@ static void ctsu_diag_scan_start2 (ctsu_instance_ctrl_t * const p_instance_ctrl)
     /* scan register setting */
     if (CTSU_DIAG_OUTPUT_VOLTAGE == g_ctsu_diag_info.state)
     {
-        ctsu_diag_output_voltage_scan_start(p_instance_ctrl);
-        g_ctsu_diag_info.state = CTSU_DIAG_OVER_VOLTAGE;
+        err = ctsu_diag_output_voltage_scan_start(p_instance_ctrl);
+        if (FSP_SUCCESS == err)
+        {
+            g_ctsu_diag_info.state = CTSU_DIAG_OVER_VOLTAGE;
+        }
+        else
+        {
+            if (FSP_ERR_ALREADY_OPEN != err)
+            {
+                p_adc->p_api->close(p_adc->p_ctrl);
+            }
+
+            err = FSP_SUCCESS;
+
+            g_ctsu_diag_info.state   = CTSU_DIAG_OUTPUT_VOLTAGE;
+            R_CTSU->CTSUCRA_b.ATUNE1 = 0;
+            R_CTSU->CTSUCRA_b.ATUNE2 = 0;
+            R_CTSU->CTSUCRA_b.LOAD   = 0;
+            R_CTSU->CTSUMCH_b.MCA0   = 1;
+            R_CTSU->CTSUMCH_b.MCA1   = 0;
+            R_CTSU->CTSUMCH_b.MCA2   = 0;
+            R_CTSU->CTSUMCH_b.MCA3   = 0;
+            R_CTSU->CTSUCHACA        = g_ctsu_diag_info.chaca;
+            R_CTSU->CTSUCHACB        = g_ctsu_diag_info.chacb;
+            R_CTSU->CTSUCHTRC0       = 0;
+            R_CTSU->CTSUCHTRC1       = 0;
+            R_CTSU->CTSUCHTRC2       = 0;
+            R_CTSU->CTSUCHTRC3       = 0;
+            R_CTSU->CTSUCHTRC4       = 0;
+        }
     }
 
     if (CTSU_DIAG_OVER_VOLTAGE == g_ctsu_diag_info.state)
@@ -5179,6 +5259,8 @@ static void ctsu_diag_scan_start2 (ctsu_instance_ctrl_t * const p_instance_ctrl)
         ctsu_diag_cfc_gain_scan_start();
     }
   #endif
+
+    return err;
 }
 
 /***********************************************************************************************************************
@@ -5285,6 +5367,11 @@ static fsp_err_t ctsu_diag_data_get2 (uint16_t * p_data)
     {
         err = FSP_SUCCESS;
     }
+    else if (CTSU_DIAG_OUTPUT_VOLTAGE == g_ctsu_diag_info.state)
+    {
+        err = FSP_ERR_ABORTED;
+        g_ctsu_diag_info.state = CTSU_DIAG_INIT;
+    }
     else
     {
         err = FSP_ERR_CTSU_DIAG_NOT_YET;
@@ -5322,15 +5409,19 @@ static void ctsu_diag_regi_restore2 (void)
     R_CTSU->CTSUSUCLKB = g_ctsu_diag_reg.ctsusuclkb;
 }
 
-static void ctsu_diag_output_voltage_scan_start (ctsu_instance_ctrl_t * const p_instance_ctrl)
+static fsp_err_t ctsu_diag_output_voltage_scan_start (ctsu_instance_ctrl_t * const p_instance_ctrl)
 {
     uint8_t                k;
     adc_status_t           status;
     adc_instance_t const * p_adc = p_instance_ctrl->p_ctsu_cfg->p_adc_instance;
+    fsp_err_t              err;
 
     /* Initialize ADC for CTSU TSCAP */
-    p_adc->p_api->open(p_adc->p_ctrl, p_adc->p_cfg);
-    p_adc->p_api->scanCfg(p_adc->p_ctrl, p_adc->p_channel_cfg);
+    err = p_adc->p_api->open(p_adc->p_ctrl, p_adc->p_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    err = p_adc->p_api->scanCfg(p_adc->p_ctrl, p_adc->p_channel_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     R_ADC0->ADSSTRL = CTSU_DIAG_ADSSTRL;
 
     /* CTSU setting */
@@ -5456,20 +5547,25 @@ static void ctsu_diag_output_voltage_scan_start (ctsu_instance_ctrl_t * const p_
         R_CTSU->CTSUCALIB_b.DRV = 1;
 
         /* Measure TSCAP Voltage with ADC */
-        p_adc->p_api->scanStart(p_adc->p_ctrl);
+        err = p_adc->p_api->scanStart(p_adc->p_ctrl);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
         /* Wait for conversion to complete. */
         status.state = ADC_STATE_SCAN_IN_PROGRESS;
         while (ADC_STATE_SCAN_IN_PROGRESS == status.state)
         {
-            p_adc->p_api->scanStatusGet(p_adc->p_ctrl, &status);
+            err = p_adc->p_api->scanStatusGet(p_adc->p_ctrl, &status);
+            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
         }
 
-        p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &g_ctsu_diag_info.output_voltage_cnt[k]);
+        err = p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &g_ctsu_diag_info.output_voltage_cnt[k]);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
 
     /* Close ADC for CTSU TSCAP */
     p_adc->p_api->close(p_adc->p_ctrl);
+
+    return err;
 }
 
 static fsp_err_t ctsu_diag_output_voltage_result (void)
@@ -5793,6 +5889,9 @@ static void ctsu_diag_current_source_scan_start (void)
     /* DAC initial setting */
     R_CTSU->CTSUCALIB_b.DACMSEL  = 1;
     R_CTSU->CTSUCALIB_b.DACCARRY = 1;
+
+    R_CTSU->CTSUCRA_b.DCMODE = 0;
+    R_CTSU->CTSUCRA_b.DCBACK = 0;
 
     if (15 >= g_ctsu_diag_info.loop_count)
     {

@@ -75,7 +75,6 @@ fsp_err_t R_CAC_Open(cac_ctrl_t * const p_ctrl, cac_cfg_t const * const p_cfg);
 fsp_err_t R_CAC_StartMeasurement(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_StopMeasurement(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_Read(cac_ctrl_t * const p_ctrl, uint16_t * const p_counter);
-fsp_err_t R_CAC_Reset(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_Close(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_CallbackSet(cac_ctrl_t * const          p_ctrl,
                             void (                    * p_callback)(cac_callback_args_t *),

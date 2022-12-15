@@ -40,6 +40,10 @@
 #ifndef R_SCE_IF_HEADER_FILE
  #define R_SCE_IF_HEADER_FILE
 
+
+#define HW_SCE_AES128XTS_KEY_BIT_SIZE         (256U)
+#define HW_SCE_AES256XTS_KEY_BIT_SIZE         (512U)
+
 /* OEM Command */
 typedef enum e_sce_oem_cmd
 {

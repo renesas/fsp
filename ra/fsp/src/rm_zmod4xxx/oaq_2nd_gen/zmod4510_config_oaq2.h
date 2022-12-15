@@ -29,8 +29,9 @@
 #define _ZMOD4510_CONFIG_OAQ_2ND_GEN_H_
 
 #include <stdio.h>
-#if 0                                  // For multiple operations
- #include "zmod4xxx_types.h"
+
+#if TEST_RM_ZMOD4XXX  // For RA FSP test
+ #include "../../../../../fsp/src/rm_zmod4xxx/zmod4xxx_types.h"
 #else
  #include "../zmod4xxx_types.h"
 #endif

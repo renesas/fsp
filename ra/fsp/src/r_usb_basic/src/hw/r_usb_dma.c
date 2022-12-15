@@ -840,7 +840,7 @@ uint8_t usb_cstd_dma_ref_ch_no (usb_utr_t * p_utr, uint16_t use_port)
  ******************************************************************************/
 void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
 {
-    usb_cfg_t * p_cfg;
+    usb_cfg_t * p_cfg = USB_NULL;
     usb_utr_t   utr;
  #if (BSP_CFG_RTOS != 0)
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)

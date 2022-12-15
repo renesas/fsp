@@ -80,6 +80,10 @@
  #if defined(USB_CFG_PAUD_USE)
   #include "r_usb_paud_cfg.h"
  #endif                                /* defined(USB_CFG_PAUD_USE) */
+ #if defined(USB_CFG_HUVC_USE)
+  #include "r_usb_huvc_cfg.h"
+ #endif                                /* defined(USB_CFG_HUVC_USE) */
+
 #endif /* #if (BSP_CFG_RTOS != 1) */
 
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
@@ -138,6 +142,18 @@ static const uint8_t g_usb_pipe_host[] =
     USB_NULL,              USB_NULL,              /* HPRN: Address 3 using Hub */
     USB_NULL,              USB_NULL,              /* HPRN: Address 4 using Hub */
  #else                                            /* defined(USB_CFG_HPRN_USE) */
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+ #endif                                          /* defined(USB_CFG_HPRN_USE) */
+
+ #if defined(USB_CFG_HUVC_USE)
+    USB_CFG_HUVC_ISO_IN,   USB_CFG_HUVC_ISO_OUT, /* HPRN: Address 1 */
+    USB_CFG_HUVC_ISO_IN,   USB_CFG_HUVC_ISO_OUT, /* HPRN: Address 2 using Hub */
+    USB_NULL,              USB_NULL,             /* HPRN: Address 3 using Hub */
+    USB_NULL,              USB_NULL,             /* HPRN: Address 4 using Hub */
+ #else                                           /* defined(USB_CFG_HPRN_USE) */
     USB_NULL,              USB_NULL,
     USB_NULL,              USB_NULL,
     USB_NULL,              USB_NULL,
@@ -308,7 +324,11 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
 #else
     USB_NULL, USB_NULL,                              /* USB_HPRN (15) */
 #endif
-};                                                   /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
+
+    /* HUVC */
+
+    USB_NULL, USB_NULL,                /* USB_HUVC (16) */
+};                                     /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
 
 #if defined(USB_CFG_PCDC_USE)
 

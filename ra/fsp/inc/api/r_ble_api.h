@@ -128,6 +128,7 @@ enum RBLE_STATUS_enum
     BLE_ERR_RSP_TIMEOUT         = 0x0011,
     BLE_ERR_NOT_YET_READY       = 0x0012,
     BLE_ERR_UNSPECIFIED         = 0x0013,
+    BLE_ERR_ALREADY_INITIALIZED = 0x0014,
 
     /* HCI Spec Error */
     BLE_ERR_HC_UNKNOWN_HCI_CMD              = 0x1001,

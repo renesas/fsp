@@ -4050,10 +4050,12 @@ static fsp_err_t ble_abs_secure_data_read_bond_info (flash_instance_t const * p_
     p_bonds      = *pp_sec_data;
     FSP_ERROR_RETURN(NULL != p_bonds, FSP_ERR_BLE_ABS_NOT_FOUND);
 
-    ble_abs_secure_data_flash_read(p_instance,
-                                   (uint32_t) BLE_ABS_SECURE_DATA_BASE_ADDR,
-                                   p_bonds,
-                                   BLE_ABS_SECURE_DATA_MAX_SIZE);
+    retval = ble_abs_secure_data_flash_read(p_instance,
+                                            (uint32_t) BLE_ABS_SECURE_DATA_BASE_ADDR,
+                                            p_bonds,
+                                            BLE_ABS_SECURE_DATA_MAX_SIZE);
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == retval, retval);
 
     /** check magic number and bond number */
     *p_out_bond_num = 0;

@@ -176,6 +176,32 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
             ret = HW_SCE_GenerateEccPublicKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, indata_cmd, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
 
         }
+        else if (cmd == SCE_OEM_CMD_ECC_SECP256K1_PUBLIC)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_KOBLITZ;
+            indata_cmd[0]             = 0 ;
+            ret = HW_SCE_GenerateEccPublicKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, indata_cmd, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
+
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_P256R1_PUBLIC)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_BRAINPOOL;
+            indata_cmd[0]             = 0 ;
+            ret = HW_SCE_GenerateEccPublicKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, indata_cmd, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
+
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_P384_PUBLIC)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_NIST;            
+            ret = HW_SCE_GenerateEccP384PublicKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, (uint32_t *) iv,  (uint32_t *) encrypted_oem_key, key_index);
+
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_P384R1_PUBLIC)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_BRAINPOOL;
+            ret = HW_SCE_GenerateEccP384PublicKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, (uint32_t *) iv,  (uint32_t *) encrypted_oem_key, key_index);
+
+        }
         else if (cmd == SCE_OEM_CMD_ECC_P192_PRIVATE)
         {
             uint32_t curve_type = SCE_ECC_CURVE_TYPE_NIST;
@@ -195,6 +221,30 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
             indata_cmd[0]             = 0 ;
             ret = HW_SCE_GenerateEccPrivateKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, indata_cmd, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
 
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_SECP256K1_PRIVATE)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_KOBLITZ;
+            indata_cmd[0]             = 0 ;
+            ret = HW_SCE_GenerateEccPrivateKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, indata_cmd, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
+
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_P256R1_PRIVATE)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_BRAINPOOL;
+            indata_cmd[0]             = 0 ;
+            ret = HW_SCE_GenerateEccPrivateKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, indata_cmd, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
+
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_P384_PRIVATE)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_NIST;
+            ret = HW_SCE_GenerateEccP384PrivateKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
+        }
+        else if (cmd == SCE_OEM_CMD_ECC_P384R1_PRIVATE)
+        {
+            uint32_t curve_type = SCE_ECC_CURVE_TYPE_BRAINPOOL;
+            ret = HW_SCE_GenerateEccP384PrivateKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, &curve_type, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
         }
         else
         {

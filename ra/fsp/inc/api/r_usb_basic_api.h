@@ -157,7 +157,7 @@ FSP_HEADER
 #define USB_IFCLS_CDCD             (0x0AU)   ///< CDC-Data Class
 #define USB_IFCLS_CHIP             (0x0BU)   ///< Chip/Smart Card Class
 #define USB_IFCLS_CNT              (0x0CU)   ///< Content-Security Class
-#define USB_IFCLS_VID              (0x0DU)   ///< Video Class
+#define USB_IFCLS_VID              (0x0EU)   ///< Video Class
 #define USB_IFCLS_DIAG             (0xDCU)   ///< Diagnostic Device
 #define USB_IFCLS_WIRE             (0xE0U)   ///< Wireless Controller
 #define USB_IFCLS_APL              (0xFEU)   ///< Application-Specific
@@ -242,6 +242,7 @@ typedef enum e_usb_class
     USB_CLASS_HMSC,                    ///< HMSC Class
     USB_CLASS_PMSC,                    ///< PMSC Class
     USB_CLASS_HPRN,                    ///< HPRN Class
+    USB_CLASS_HUVC,                    ///< HUVC Class
     USB_CLASS_REQUEST,                 ///< USB Class Request
     USB_CLASS_END                      ///< USB Class End Code
 } usb_class_t;

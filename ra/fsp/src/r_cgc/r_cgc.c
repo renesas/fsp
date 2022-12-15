@@ -51,6 +51,10 @@
 
 /* PLLMUL in PLLCCR is 8 bits wide. */
  #define CGC_PRV_PLLCCR_PLLMUL_MASK              (0xFFU)
+#elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+/* PLLMUL in PLLCCR is 8 bits wide. */
+ #define CGC_PRV_PLLCCR_PLLMUL_MASK              (0xFFU)
 #else
 
 /* PLLMUL in PLLCCR is 6 bits wide. */
@@ -62,6 +66,9 @@
 
 /* PLSRCSEL in PLLCCR starts at bit 4. */
 #define CGC_PRV_PLLCCR_PLSRCSEL_BIT              (4U)
+
+/* PLSET in PLLCCR starts at bit 6. */
+#define CGC_PRV_PLLCCR_PLSET_BIT                 (6U)
 
 /* PLLMUL in PLLCCR2 is 5 bits wide. */
 #define CGC_PRV_PLLCCR2_PLLMUL_MASK              (0x1FU)
@@ -121,6 +128,8 @@
 /* Specifications for PLL on MCUs with PLLCCR. */
 #if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
  #define CGC_PRV_PLLCCR_PLL_MIN_HZ               (40000000U)
+#elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #define CGC_PRV_PLLCCR_PLL_MIN_HZ               (11000000U)
 #else
  #define CGC_PRV_PLLCCR_PLL_MIN_HZ               (120000000U)
 #endif
@@ -140,6 +149,9 @@
 
 /* Mask of the uppermost bit of all dividers in SCKDIVCR that are valid when oscillation stop detection is enabled. */
 #define CGC_PRV_SCKDIVCR_UPPER_BIT               (BSP_PRV_SCKDIVCR_MASK & 0x44444444U)
+
+/* Offset factor to convert PLL MUL values to register values. */
+#define CGC_PRV_PLLCCR_TYPE4_PLLMUL_OFFSET       (574U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -1778,6 +1790,19 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
      * 180.50 is larger than 180.66 in the integer representation of the enum. */
     FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_26_0);
     FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_180_5);
+  #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+    /* Ensure PLL configuration is supported on this MCU (MREF_INTERNAL_006). */
+
+    /* PLLCCR clock source can only be the subclock. */
+    FSP_ASSERT(CGC_CLOCK_SUBCLOCK == p_pll_cfg->source_clock);
+
+    /* Divider of 2 is the only supported value for PLLCCR. */
+    FSP_ASSERT(CGC_PLL_DIV_2 == p_pll_cfg->divider);
+
+    /* PLLCCR multiplier must be between 732 and 781. */
+    FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_732_0);
+    FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_781_0);
   #else
 
     /* Ensure PLL configuration is supported on this MCU (see Section 8.2.3 "PLL Clock Control Register 2 (PLLCCR2)" in
@@ -1915,7 +1940,7 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
     FSP_ASSERT(pll_hz >= CGC_PRV_PLLCCR_PLL_MIN_HZ);
     FSP_ASSERT(pll_hz <= BSP_FEATURE_CGC_PLLCCR_MAX_HZ);
   #endif
- #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE || 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
     FSP_PARAMETER_NOT_USED(pll_out);
 
     uint32_t multiplier            = (p_pll_cfg->multiplier + 1U) >> 1;
@@ -1989,6 +2014,12 @@ static uint32_t r_cgc_pllccr_calculate (cgc_pll_cfg_t const * const p_pll_cfg)
     uint32_t register_value = ((((pllmul & CGC_PRV_PLLCCR_PLLMUL_MASK) << CGC_PRV_PLLCCR_PLLMUL_BIT) |
                                 ((pllmulnf & CGC_PRV_PLLCCR_PLLMULNF_MASK) << CGC_PRV_PLLCCR_PLLMULNF_BIT) |
                                 (uint32_t) (plsrcsel << CGC_PRV_PLLCCR_PLSRCSEL_BIT)) | plidiv);
+
+    return register_value;
+ #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    uint8_t pllmul = (uint8_t) ((p_pll_cfg->multiplier >> 1) - CGC_PRV_PLLCCR_TYPE4_PLLMUL_OFFSET);
+
+    uint32_t register_value = ((pllmul & CGC_PRV_PLLCCR_PLLMUL_MASK) << CGC_PRV_PLLCCR_PLLMUL_BIT);
 
     return register_value;
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE

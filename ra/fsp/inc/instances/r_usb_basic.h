@@ -41,7 +41,7 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** ICU private control block. DO NOT MODIFY.  Initialization occurs when R_ICU_ExternalIrqOpen is called. */
+/** USB private control block. DO NOT MODIFY.  Initialization occurs when R_USB_Open is called. */
 
 typedef usb_event_info_t usb_instance_ctrl_t;
 

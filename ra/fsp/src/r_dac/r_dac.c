@@ -33,13 +33,17 @@
 #define DAC_OPEN                                     (0x44414300)
 #define DAC_VREF_AVCC0_AVSS0                         (0x01U)
 #define DAC_DAADSCR_REG_DAADST_BIT_POS               (0x07U)
-#define DAC_DAADUSR_REG_MASK                         (0x02U)
+#define DAC_DAADUSR_REG_MASK                         BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
 #define DAC_DADPR_REG_DPSEL_BIT_POS                  (0x07U)
 #define DAC_DAAMPCR_AMP_CTRL_BITS                    (0x06U) /* 6th bit for channel 0; 7th bit for channel 1 */
 #define DAC_DACR_DAOE_BITS                           (0x06U) /* 6th bit for channel 0; 7th bit for channel 1 */
 #define DAC_DAASWCR_DAASW0_MASK                      (0x40)
 #define DAC_DAASWCR_DAASW1_MASK                      (0x80)
-#define DAC_ADC_UNIT_1                               (0x01)
+#if 0x01U == BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
+ #define DAC_ADC_UNIT                                (0)
+#elif 0x02U == BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
+ #define DAC_ADC_UNIT                                (1)
+#endif
 #define DAC_MAX_CHANNELS_PER_UNIT                    (2U)
 
 /* Conversion time with Output Amplifier. See hardware manual (see Table 60.44
@@ -143,17 +147,17 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
     p_ctrl->p_reg->DADPR = (uint8_t) ((uint8_t) p_extend->data_format << (uint8_t) DAC_DADPR_REG_DPSEL_BIT_POS);
 
 #if BSP_FEATURE_DAC_HAS_DA_AD_SYNCHRONIZE
- #if BSP_FEATURE_ADC_UNIT_1_CHANNELS
+ #if BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
 
     /* DA/AD Synchronization. Described in hardware manual (see Section 48.2.7
      * 'D/A A/D Synchronous Unit Select Register (DAADUSR)' and Section 48.2.4
      * 'D/A A/D Synchronous Start Control Register (DAADSCR)'of the RA6M3 manual R01UH0886EJ0100). */
 
-    /* D/A A/D Synchronous Unit Select Register: Select ADC Unit 1 for synchronization with this DAC channel */
+    /* D/A A/D Synchronous Unit Select Register: Select ADC Unit for synchronization with this DAC channel */
     if ((0U == p_ctrl->p_reg->DAADSCR) && (p_cfg->ad_da_synchronized))
     {
         /* For correctly writing to this register:
-         * 1. ADC (unit 1) module stop bit must be cleared.
+         * 1. ADC module stop bit must be cleared.
          * 2. DAADSCR.DAADST must be cleared.
          *
          * If ADC module is started, this will have no effect.
@@ -162,9 +166,9 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
          * Since the ad_da_synchronized is set to true in the configuration structure
          * the ADC module is believed to be started at a later point in the application.
          */
-        R_BSP_MODULE_START(FSP_IP_ADC, (uint16_t) DAC_ADC_UNIT_1);
+        R_BSP_MODULE_START(FSP_IP_ADC, (uint16_t) DAC_ADC_UNIT);
 
-        p_ctrl->p_reg->DAADUSR = (uint8_t) DAC_DAADUSR_REG_MASK;
+        p_ctrl->p_reg->DAADUSR = (uint8_t) BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK;
 
         /* Configure D/A-A/D Synchronous Start Control Register(DAADSCR). */
         p_ctrl->p_reg->DAADSCR = (uint8_t) (1U << (uint8_t) DAC_DAADSCR_REG_DAADST_BIT_POS);

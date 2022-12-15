@@ -123,12 +123,10 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
 
                 if (FSP_SUCCESS == err)
                 {
-  #if 0
                     err =
                         HW_SCE_Rsa4096ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
                                                                 (uint32_t *) aligned_work_buffer,
                                                                 (uint32_t *) aligned_work_buffer);
-  #endif
                 }
                 NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
@@ -161,12 +159,10 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
 
                 if (FSP_SUCCESS == err)
                 {
-  #if 0
                     err =
                         HW_SCE_Rsa3072ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
                                                                 (uint32_t *) aligned_work_buffer,
                                                                 (uint32_t *) aligned_work_buffer);
-  #endif
                 }
                 NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif

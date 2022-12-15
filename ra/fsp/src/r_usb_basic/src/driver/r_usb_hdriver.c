@@ -3089,13 +3089,13 @@ static void usb_hvnd_pipe_info (usb_utr_t * p_utr, uint8_t * table, uint16_t spe
         if (USB_DT_ENDPOINT == table[ofdsc + 1])
         {
             pipe_no = (uint16_t) (usb_hvnd_make_pipe_reg_info(p_utr, USB_ADDRESS1, speed, &table[ofdsc], &ep_tbl));
-            if (USB_NULL == pipe_no)
+            if (USB_NULL != pipe_no)
             {
-                return;
+                usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
             }
             else
             {
-                usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
+                return;
             }
         }
 

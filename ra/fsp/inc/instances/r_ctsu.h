@@ -271,7 +271,10 @@ typedef struct st_ctsu_instance_ctrl
     uint16_t                 num_elements;       ///< Number of elements to scan
     uint16_t                 wr_index;           ///< Word index into ctsuwr register array.
     uint16_t                 rd_index;           ///< Word index into scan data buffer.
-    uint8_t                * p_tuning_count;     ///< Pointer to tuning count of each element. g_ctsu_tuning_count[] is set by Open API.
+    uint8_t * p_element_complete_flag;           ///< Pointer to complete flag of each element. g_ctsu_element_complete_flag[] is set by Open API.
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+    uint8_t * p_frequency_complete_flag;         ///< Pointer to complete flag of each frequency. g_ctsu_frequency_complete_flag[] is set by Open API.
+#endif
     int32_t                * p_tuning_diff;      ///< Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API.
     uint16_t                 average;            ///< CTSU Moving average counter.
     uint16_t                 num_moving_average; ///< Copy from config by Open API.

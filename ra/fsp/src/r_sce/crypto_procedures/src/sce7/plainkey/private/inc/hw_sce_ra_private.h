@@ -62,6 +62,14 @@
  #define SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED     (512)
  #define SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 8)
  #define SIZE_AES_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 32)
+
+ #define SIZE_AES_XTS_128BIT_KEYLEN_BITS_WRAPPED     (416)
+ #define SIZE_AES_XTS_128BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_XTS_128BIT_KEYLEN_BITS_WRAPPED) / 8)
+ #define SIZE_AES_XTS_128BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_XTS_128BIT_KEYLEN_BITS_WRAPPED) / 32)
+
+ #define SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED     (672)
+ #define SIZE_AES_XTS_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED) / 8)
+ #define SIZE_AES_XTS_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED) / 32)
  
  /** Return RSA wrapped private key size in bytes from the specified RSA modulus size in bits */
  #define RSA_WRAPPED_PRIVATE_KEY_SIZE_BYTES(RSA_SIZE_BITS)    (800U)
@@ -335,8 +343,8 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub(const uint32_t *InData_CurveType,
         const uint32_t *InData_KeyIndex, const uint32_t *InData_PubKey, uint32_t *OutData_R);
 fsp_err_t HW_SCE_Ecc384ScalarMultiplicationPrivate(uint32_t *InData_CurveType,
         uint32_t *InData_KeyIndex, uint32_t *InData_PubKey, uint32_t *OutData_R);
-//fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t *InData_CurveType,
-//        const uint32_t *InData_KeyIndex, const uint32_t *InData_PubKey, uint32_t *OutData_R);
+fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t *InData_CurveType,
+        const uint32_t *InData_KeyIndex, const uint32_t *InData_PubKey, uint32_t *OutData_R);
 
 fsp_err_t HW_SCE_TdesEcbEncryptInitPrivate(sce_tdes_key_index_t *key_index);
 fsp_err_t HW_SCE_TdesEcbEncryptUpdatePrivate(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT);
@@ -444,10 +452,9 @@ fsp_err_t HW_SCE_GenerateTlsP256EccKeyIndexSub(uint32_t *OutData_KeyIndex, uint3
 
 fsp_err_t HW_SCE_GenerateEccPrivateKeyIndexSub(const uint32_t * const InData_KeyType, const uint32_t * const InData_SharedKeyIndex,
         const uint32_t * const InData_SessionKey, const uint32_t * const InData_CurveType, const uint32_t * const InData_Cmd, const uint32_t * const InData_IV, const uint32_t * const InData_InstData, uint32_t *const OutData_KeyIndex);
-fsp_err_t HW_SCE_GenerateEccP384PrivateKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InData_SharedKeyIndex,
-        uint32_t *InData_SessionKey, uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
+fsp_err_t HW_SCE_GenerateEccP384PrivateKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InData_SharedKeyIndex, uint32_t *InData_SessionKey, uint32_t *InData_CurveType, uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
 fsp_err_t HW_SCE_GenerateEccPublicKeyIndexSub(const uint32_t * const InData_KeyType, const uint32_t * const InData_SharedKeyIndex, const uint32_t * const InData_SessionKey, const uint32_t * const InData_CurveType, const uint32_t * const InData_Cmd, const uint32_t * const InData_IV, const uint32_t * const InData_InstData, uint32_t * const OutData_KeyIndex);
-fsp_err_t HW_SCE_GenerateEccP384PublicKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InData_SharedKeyIndex, uint32_t *InData_SessionKey, uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
+fsp_err_t HW_SCE_GenerateEccP384PublicKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InData_SharedKeyIndex, uint32_t *InData_SessionKey, uint32_t *InData_CurveType, uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
 fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSub(const uint32_t *InData_CurveType, const uint32_t *InData_Cmd, const uint32_t *InData_KeyType, uint32_t *OutData_PubKeyIndex, uint32_t *OutData_PubKey, uint32_t *OutData_PrivKeyIndex, uint32_t *OutData_PrivKey);
 fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveType, const uint32_t *InData_KeyType, uint32_t *OutData_PubKeyIndex, uint32_t *OutData_PubKey, uint32_t *OutData_PrivKeyIndex, uint32_t *OutData_PrivKey);
 fsp_err_t HW_SCE_GenerateShaHmacKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InData_SharedKeyIndex, uint32_t *InData_SessionKey,
@@ -482,10 +489,8 @@ fsp_err_t HW_SCE_UpdateEccPrivateKeyIndexSub(const uint32_t * const InData_Curve
         const uint32_t * const InData_InstData, uint32_t * const OutData_KeyIndex);
 fsp_err_t HW_SCE_UpdateEccPublicKeyIndexSub(const uint32_t * const InData_CurveType, const uint32_t * const InData_Cmd, const uint32_t * const InData_IV,
         const uint32_t * const InData_InstData, uint32_t * const OutData_KeyIndex);
-fsp_err_t HW_SCE_UpdateEccP384PrivateKeyIndexSub(uint32_t *InData_IV,
-        uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
-fsp_err_t HW_SCE_UpdateEccP384PublicKeyIndexSub(uint32_t *InData_IV,
-        uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
+fsp_err_t HW_SCE_UpdateEccP384PrivateKeyIndexSub(uint32_t *InData_CurveType, uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
+fsp_err_t HW_SCE_UpdateEccP384PublicKeyIndexSub(uint32_t *InData_CurveType, uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
 fsp_err_t HW_SCE_UpdateShaHmacKeyIndexSub(uint32_t *InData_Cmd, uint32_t *InData_IV, uint32_t *InData_InstData,
         uint32_t *OutData_KeyIndex);
 
@@ -674,12 +679,10 @@ fsp_err_t HW_SCE_Rsa4096ModularExponentDecryptSub(uint32_t *InData_KeyIndex, uin
 
 fsp_err_t HW_SCE_EcdsaSignatureGenerateSub(const uint32_t *InData_CurveType, const uint32_t *InData_Cmd, const uint32_t *InData_KeyIndex,
         const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature);
-// fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub(const uint32_t *InData_KeyIndex,
-//         const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature);
+fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub(uint32_t *InData_CurveType, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature);
 fsp_err_t HW_SCE_EcdsaSignatureVerificationSub(const uint32_t *InData_CurveType, const uint32_t *InData_Cmd, const uint32_t *InData_KeyIndex,
         const uint32_t *InData_MsgDgst, const uint32_t *InData_Signature);
-// fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub(const uint32_t *InData_KeyIndex,
-//         const uint32_t *InData_MsgDgst, const uint32_t *InData_Signature);
+fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub(uint32_t *InData_CurveType, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, const uint32_t *InData_Signature);
 fsp_err_t HW_SCE_DlmsCosemQeuSignatureVerificationSub(uint32_t *InData_Cmd, uint32_t *InData_KeyIndex,
         uint32_t *InData_data, uint32_t *InData_Signature, uint32_t *OutData_KeyIndex);
 fsp_err_t HW_SCE_DlmsCosemQevSignatureGenerationSub(uint32_t *InData_Cmd, uint32_t *InData_KeyType,

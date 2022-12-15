@@ -1131,6 +1131,13 @@ int mbedtls_aes_crypt_xts( mbedtls_aes_xts_context *ctx,
     if( length > ( 1 << 20 ) * 16 )
         return MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH;
 
+#if BSP_FEATURE_CRYPTO_HAS_SCE9
+    if( mode == MBEDTLS_AES_ENCRYPT )
+        return( mbedtls_internal_aes_encrypt_xts( &ctx->tweak, length, data_unit, input, output ) );
+    else
+        return( mbedtls_internal_aes_decrypt_xts( &ctx->tweak, length, data_unit, input, output ) );
+#endif
+
     /* Compute the tweak. */
     ret = mbedtls_aes_crypt_ecb( &ctx->tweak, MBEDTLS_AES_ENCRYPT,
                                  data_unit, tweak );

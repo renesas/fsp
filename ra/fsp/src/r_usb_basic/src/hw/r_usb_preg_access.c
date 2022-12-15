@@ -236,7 +236,16 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
 
         USB_M0->SYSCFG &= (uint16_t) (~USB_DRPD);
 
-        USB_M0->SYSCFG   |= USB_USBE;
+        USB_M0->SYSCFG |= USB_USBE;
+
+ #if defined(USB_SUPPORT_HOCO_MODULE)
+        if (0 == (R_SYSTEM->SCKSCR & R_SYSTEM_SCKSCR_CKSEL_Msk))
+        {
+            /* Use HOCO */
+            hw_usb_set_uckselc();
+        }
+ #endif                                /* defined(USB_SUPPORT_HOCO_MODULE) */
+
         USB_M0->CFIFOSEL  = USB0_CFIFO_MBW;
         USB_M0->D0FIFOSEL = USB0_D0FIFO_MBW;
         USB_M0->D1FIFOSEL = USB0_D1FIFO_MBW;
@@ -245,6 +254,7 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
         USB_M0->D0FIFOSEL |= USB_BIGEND;
         USB_M0->D1FIFOSEL |= USB_BIGEND;
  #endif                                /* USB_CFG_ENDIAN == USB_CFG_BIG */
+
         USB_M0->INTENB0 = (USB_BEMPE | USB_BRDYE | USB_VBSE | USB_DVSE | USB_CTRE);
     }
     else

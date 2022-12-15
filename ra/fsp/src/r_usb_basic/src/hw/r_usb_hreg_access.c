@@ -773,6 +773,14 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
 
         USB_M0->SYSCFG |= USB_USBE;
 
+ #if defined(USB_SUPPORT_HOCO_MODULE)
+        if (0 == (R_SYSTEM->SCKSCR & R_SYSTEM_SCKSCR_CKSEL_Msk))
+        {
+            /* Use HOCO */
+            hw_usb_set_uckselc();
+        }
+ #endif                                /* defined(USB_SUPPORT_HOCO_MODULE) */
+
         USB_M0->CFIFOSEL  = USB0_CFIFO_MBW;
         USB_M0->D0FIFOSEL = USB0_D0FIFO_MBW;
         USB_M0->D1FIFOSEL = USB0_D1FIFO_MBW;
@@ -909,6 +917,7 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
         USB_M1->D0FIFOSEL |= USB_BIGEND;
         USB_M1->D1FIFOSEL |= USB_BIGEND;
   #endif
+
         switch (sts)
         {
             case USB_FS_JSTS:          /* USB device already connected */

@@ -133,6 +133,15 @@ volatile uint8_t g_usb_otg_chattering_counter = 0;
 volatile uint8_t g_usb_otg_hnp_counter        = 0;
 #endif                                 /* defined(USB_CFG_OTG_USE) */
 
+#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+static uint16_t g_usb_hstd_m0_reg_intenb0;
+static uint16_t g_usb_hstd_m0_reg_intenb1;
+ #if defined(USB_HIGH_SPEED_MODULE)
+static uint16_t g_usb_hstd_m1_reg_intenb0;
+static uint16_t g_usb_hstd_m1_reg_intenb1;
+ #endif                                /* defined(USB_HIGH_SPEED_MODULE) */
+#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+
 /******************************************************************************
  * Renesas Abstracted RSK functions
  ******************************************************************************/
@@ -480,6 +489,9 @@ void usb_cpu_int_enable (void)
         if (USB_MODE_HOST == g_p_usb_cfg_ip0->usb_mode)
         {
             R_BSP_IrqCfgEnable(g_p_usb_cfg_ip0->irq, g_p_usb_cfg_ip0->ipl, g_p_usb_cfg_ip0); /* USBI enable */
+
+            USB_M0->INTENB0 = g_usb_hstd_m0_reg_intenb0;
+            USB_M0->INTENB1 = g_usb_hstd_m0_reg_intenb1;
         }
     }
 
@@ -500,9 +512,12 @@ void usb_cpu_int_enable (void)
         if (USB_MODE_HOST == g_p_usb_cfg_ip1->usb_mode)
         {
             R_BSP_IrqCfgEnable(g_p_usb_cfg_ip1->hsirq, g_p_usb_cfg_ip1->hsipl, g_p_usb_cfg_ip1); /* USBIR enable */
+
+            USB_M1->INTENB0 = g_usb_hstd_m1_reg_intenb0;
+            USB_M1->INTENB1 = g_usb_hstd_m1_reg_intenb1;
         }
     }
- #endif /* defined (USB_HIGH_SPEED_MODULE) */
+ #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
 }
 
 /******************************************************************************
@@ -531,6 +546,11 @@ void usb_cpu_int_disable (void)
     {
         if (USB_MODE_HOST == g_p_usb_cfg_ip0->usb_mode)
         {
+            g_usb_hstd_m0_reg_intenb0 = USB_M0->INTENB0;
+            g_usb_hstd_m0_reg_intenb1 = USB_M0->INTENB1;
+            USB_M0->INTENB0           = 0;
+            USB_M0->INTENB1           = 0;
+
             R_BSP_IrqDisable(g_p_usb_cfg_ip0->irq); /* USBI enable */
         }
     }
@@ -551,6 +571,11 @@ void usb_cpu_int_disable (void)
     {
         if (USB_MODE_HOST == g_p_usb_cfg_ip1->usb_mode)
         {
+            g_usb_hstd_m1_reg_intenb0 = USB_M1->INTENB0;
+            g_usb_hstd_m1_reg_intenb1 = USB_M1->INTENB1;
+            USB_M1->INTENB0           = 0;
+            USB_M1->INTENB1           = 0;
+
             R_BSP_IrqDisable(g_p_usb_cfg_ip1->hsirq); /* USBIR enable */
         }
     }

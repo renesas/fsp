@@ -1743,7 +1743,7 @@ static void r_flash_lp_process_command (const uint32_t start_addr, uint32_t num_
     R_FACI_LP->FSARL = (uint16_t) (start_addr);
 
     /* BlankCheck end address setting */
-    R_FACI_LP->FEARH = ((end_addr_idx >> 16));
+    R_FACI_LP->FEARH = (uint16_t) ((end_addr_idx >> 16));
     R_FACI_LP->FEARL = (uint16_t) (end_addr_idx);
 
     /* Execute BlankCheck command */

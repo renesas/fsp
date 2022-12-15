@@ -87,11 +87,35 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap(const uint8_t * const              
                                              const uint8_t * const                    encrypted_key,
                                              sce_rsa2048_public_wrapped_key_t * const wrapped_key);
 
+fsp_err_t R_SCE_RSA3072_InitialPublicKeyWrap(const uint8_t * const                    key_type,
+                                             const uint8_t * const                    wrapped_user_factory_programming_key,
+                                             const uint8_t * const                    initial_vector,
+                                             const uint8_t * const                    encrypted_key,
+                                             sce_rsa3072_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_RSA4096_InitialPublicKeyWrap(const uint8_t * const                    key_type,
+                                             const uint8_t * const                    wrapped_user_factory_programming_key,
+                                             const uint8_t * const                    initial_vector,
+                                             const uint8_t * const                    encrypted_key,
+                                             sce_rsa4096_public_wrapped_key_t * const wrapped_key);
+
 fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap(const uint8_t * const                     key_type,
                                               const uint8_t * const                     wrapped_user_factory_programming_key,
                                               const uint8_t * const                     initial_vector,
                                               const uint8_t * const                     encrypted_key,
                                               sce_rsa2048_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_RSA3072_InitialPrivateKeyWrap(const uint8_t * const                     key_type,
+                                              const uint8_t * const                     wrapped_user_factory_programming_key,
+                                              const uint8_t * const                     initial_vector,
+                                              const uint8_t * const                     encrypted_key,
+                                              sce_rsa3072_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_RSA4096_InitialPrivateKeyWrap(const uint8_t * const                     key_type,
+                                              const uint8_t * const                     wrapped_user_factory_programming_key,
+                                              const uint8_t * const                     initial_vector,
+                                              const uint8_t * const                     encrypted_key,
+                                              sce_rsa4096_private_wrapped_key_t * const wrapped_key);
 
 fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap(const uint8_t * const                    initial_vector,
                                                const uint8_t * const                    encrypted_key,
@@ -109,7 +133,31 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap(const uint8_t * const        
                                                    const uint8_t * const                encrypted_key,
                                                    sce_ecc_public_wrapped_key_t * const wrapped_key);
 
+fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap(const uint8_t * const                key_type,
+                                                   const uint8_t * const                wrapped_user_factory_programming_key,
+                                                   const uint8_t * const                initial_vector,
+                                                   const uint8_t * const                encrypted_key,
+                                                   sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap(const uint8_t * const                key_type,
+                                                   const uint8_t * const                wrapped_user_factory_programming_key,
+                                                   const uint8_t * const                initial_vector,
+                                                   const uint8_t * const                encrypted_key,
+                                                   sce_ecc_public_wrapped_key_t * const wrapped_key);
+
 fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap(const uint8_t * const                 key_type,
+                                                    const uint8_t * const                 wrapped_user_factory_programming_key,
+                                                    const uint8_t * const                 initial_vector,
+                                                    const uint8_t * const                 encrypted_key,
+                                                    sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap(const uint8_t * const                 key_type,
+                                                    const uint8_t * const                 wrapped_user_factory_programming_key,
+                                                    const uint8_t * const                 initial_vector,
+                                                    const uint8_t * const                 encrypted_key,
+                                                    sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap(const uint8_t * const                 key_type,
                                                     const uint8_t * const                 wrapped_user_factory_programming_key,
                                                     const uint8_t * const                 initial_vector,
                                                     const uint8_t * const                 encrypted_key,
@@ -120,7 +168,27 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap(const uint8_t * const      
                                                      const sce_key_update_key_t * const   key_update_key,
                                                      sce_ecc_public_wrapped_key_t * const wrapped_key);
 
+fsp_err_t R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap(const uint8_t * const                initial_vector,
+                                                     const uint8_t * const                encrypted_key,
+                                                     const sce_key_update_key_t * const   key_update_key,
+                                                     sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap(const uint8_t * const                initial_vector,
+                                                     const uint8_t * const                encrypted_key,
+                                                     const sce_key_update_key_t * const   key_update_key,
+                                                     sce_ecc_public_wrapped_key_t * const wrapped_key);
+
 fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap(const uint8_t * const                 initial_vector,
+                                                      const uint8_t * const                 encrypted_key,
+                                                      const sce_key_update_key_t * const    key_update_key,
+                                                      sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap(const uint8_t * const                 initial_vector,
+                                                      const uint8_t * const                 encrypted_key,
+                                                      const sce_key_update_key_t * const    key_update_key,
+                                                      sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap(const uint8_t * const                 initial_vector,
                                                       const uint8_t * const                 encrypted_key,
                                                       const sce_key_update_key_t * const    key_update_key,
                                                       sce_ecc_private_wrapped_key_t * const wrapped_key);

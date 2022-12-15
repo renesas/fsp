@@ -90,26 +90,6 @@ fsp_err_t HW_SCE_ECC_256WrappedScalarMultiplication (const uint32_t * InData_Cur
     return HW_SCE_Ecc256ScalarMultiplicationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_P, OutData_R);
 }
 
-  #if BSP_FEATURE_CRYPTO_HAS_SCE7_MISSING_PROCS
-fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t * InData_CurveType,
-                                               const uint32_t * InData_KeyIndex,
-                                               const uint32_t * InData_PubKey,
-                                               uint32_t       * OutData_R);
-
-fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub (const uint32_t * InData_CurveType,
-                                                const uint32_t * InData_KeyIndex,
-                                                const uint32_t * InData_PubKey,
-                                                uint32_t       * OutData_R)
-{
-    FSP_PARAMETER_NOT_USED(InData_CurveType);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_PubKey);
-    FSP_PARAMETER_NOT_USED(OutData_R);
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
-  #endif
 fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication (const uint32_t * InData_CurveType,
                                                      const uint32_t * InData_Cmd,
                                                      const uint32_t * InData_KeyIndex,

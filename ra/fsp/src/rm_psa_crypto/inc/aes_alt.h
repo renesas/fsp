@@ -65,6 +65,8 @@ typedef struct mbedtls_aes_xts_context
   #endif /* MBEDTLS_CIPHER_MODE_XTS */
 
 int aes_setkey_generic(mbedtls_aes_context * ctx, const unsigned char * key, unsigned int keybits);
+int aes_xts_setkey_generic(mbedtls_aes_context * ctx, const unsigned char * key, unsigned int keybits);
+
 int mbedtls_internal_aes_encrypt_cbc(mbedtls_aes_context * ctx,
                                      unsigned int          length,
                                      unsigned char       * iv,
@@ -73,6 +75,16 @@ int mbedtls_internal_aes_encrypt_cbc(mbedtls_aes_context * ctx,
 int mbedtls_internal_aes_decrypt_cbc(mbedtls_aes_context * ctx,
                                      unsigned int          length,
                                      unsigned char       * iv,
+                                     const unsigned char * input,
+                                     unsigned char       * output);
+int mbedtls_internal_aes_encrypt_xts(mbedtls_aes_context * ctx,
+                                     unsigned int          length,
+                                     const unsigned char       * iv,
+                                     const unsigned char * input,
+                                     unsigned char       * output);
+int mbedtls_internal_aes_decrypt_xts(mbedtls_aes_context * ctx,
+                                     unsigned int          length,
+                                     const unsigned char       * iv,
                                      const unsigned char * input,
                                      unsigned char       * output);
 int mbedtls_internal_aes_encrypt_decrypt_ctr(mbedtls_aes_context * ctx,

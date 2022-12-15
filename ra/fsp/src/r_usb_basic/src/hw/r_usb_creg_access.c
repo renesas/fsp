@@ -2578,6 +2578,32 @@ uint16_t hw_usb_read_usbleng (uint8_t usb_ip)
 /******************************************************************************
  * End of function hw_usb_read_usbleng
  ******************************************************************************/
+#else
+ #if defined(USB_CFG_HUVC_USE)
+
+/******************************************************************************
+ * Function Name   : hw_usb_read_usbreq
+ * Description     : Returns USBREQ register content.
+ * Arguments       : none
+ * Return value    : USBREQ content
+ ******************************************************************************/
+uint16_t hw_usb_read_usbreq (uint8_t usb_ip)
+{
+    uint16_t result = 0;
+
+    if (USB_CFG_IP0 == usb_ip)
+    {
+        result = USB_M0->USBREQ;
+    }
+    else
+    {
+        result = USB_M1->USBREQ;
+    }
+
+    return result;
+}
+
+ #endif
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /******************************************************************************
@@ -3877,6 +3903,40 @@ void hw_usb_clear_vdcen (void)
  ******************************************************************************/
 
 #endif                                 /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
+
+#if defined(USB_SUPPORT_HOCO_MODULE)
+
+/******************************************************************************
+ * Function Name   : hw_usb_set_uckselc
+ * Description     : Set UCKSELC bit in UCKSEL register.
+ * Arguments       : none
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_set_uckselc (void)
+{
+    USB_M0->UCKSEL |= USB_UCKSELC;
+}
+
+/******************************************************************************
+ * End of function hw_usb_set_uckselc
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : hw_usb_clear_uckselc
+ * Description     : Clear UCLKSELC bit in UCKSEL register.
+ * Arguments       : none
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_clear_uckselc (void)
+{
+    USB_M0->UCKSEL = (uint16_t) (USB_M0->UCKSEL & (~USB_UCKSELC));
+}
+
+/******************************************************************************
+ * End of function hw_usb_clear_uckselc
+ ******************************************************************************/
+
+#endif                                 /* defined(USB_SUPPORT_HOCO_MODULE) */
 
 /******************************************************************************
  * End of file

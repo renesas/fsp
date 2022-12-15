@@ -62,6 +62,7 @@ FSP_HEADER
 typedef enum e_lpm_mode
 {
     LPM_MODE_SLEEP,                    ///< Sleep mode
+    LPM_MODE_DEEP_SLEEP,               ///< Deep Sleep mode
     LPM_MODE_STANDBY,                  ///< Software Standby mode
     LPM_MODE_STANDBY_SNOOZE,           ///< Software Standby mode with Snooze mode enabled
     LPM_MODE_DEEP,                     ///< Deep Software Standby mode
@@ -148,44 +149,51 @@ typedef enum e_lpm_snooze_dtc
     LPM_SNOOZE_DTC_ENABLE  = 1U,       ///< Enable DTC operation
 } lpm_snooze_dtc_t;
 
-/** Wake from standby mode sources, does not apply to sleep or deep standby modes */
+/** Wake from deep sleep or standby mode sources, does not apply to sleep or deep standby modes */
 typedef enum e_lpm_standby_wake_source
 {
-    LPM_STANDBY_WAKE_SOURCE_IRQ0    = 0x00000001ULL,  ///< IRQ0
-    LPM_STANDBY_WAKE_SOURCE_IRQ1    = 0x00000002ULL,  ///< IRQ1
-    LPM_STANDBY_WAKE_SOURCE_IRQ2    = 0x00000004ULL,  ///< IRQ2
-    LPM_STANDBY_WAKE_SOURCE_IRQ3    = 0x00000008ULL,  ///< IRQ3
-    LPM_STANDBY_WAKE_SOURCE_IRQ4    = 0x00000010ULL,  ///< IRQ4
-    LPM_STANDBY_WAKE_SOURCE_IRQ5    = 0x00000020ULL,  ///< IRQ5
-    LPM_STANDBY_WAKE_SOURCE_IRQ6    = 0x00000040ULL,  ///< IRQ6
-    LPM_STANDBY_WAKE_SOURCE_IRQ7    = 0x00000080ULL,  ///< IRQ7
-    LPM_STANDBY_WAKE_SOURCE_IRQ8    = 0x00000100ULL,  ///< IRQ8
-    LPM_STANDBY_WAKE_SOURCE_IRQ9    = 0x00000200ULL,  ///< IRQ9
-    LPM_STANDBY_WAKE_SOURCE_IRQ10   = 0x00000400ULL,  ///< IRQ10
-    LPM_STANDBY_WAKE_SOURCE_IRQ11   = 0x00000800ULL,  ///< IRQ11
-    LPM_STANDBY_WAKE_SOURCE_IRQ12   = 0x00001000ULL,  ///< IRQ12
-    LPM_STANDBY_WAKE_SOURCE_IRQ13   = 0x00002000ULL,  ///< IRQ13
-    LPM_STANDBY_WAKE_SOURCE_IRQ14   = 0x00004000ULL,  ///< IRQ14
-    LPM_STANDBY_WAKE_SOURCE_IRQ15   = 0x00008000ULL,  ///< IRQ15
-    LPM_STANDBY_WAKE_SOURCE_IWDT    = 0x00010000ULL,  ///< Independent watchdog interrupt
-    LPM_STANDBY_WAKE_SOURCE_KEY     = 0x00020000ULL,  ///< Key interrupt
-    LPM_STANDBY_WAKE_SOURCE_LVD1    = 0x00040000ULL,  ///< Low Voltage Detection 1 interrupt
-    LPM_STANDBY_WAKE_SOURCE_LVD2    = 0x00080000ULL,  ///< Low Voltage Detection 2 interrupt
-    LPM_STANDBY_WAKE_SOURCE_VBATT   = 0x00100000ULL,  ///< VBATT Monitor interrupt
-    LPM_STANDBY_WAKE_SOURCE_ACMPHS0 = 0x00400000ULL,  ///< Analog Comparator High-speed 0 interrupt
-    LPM_STANDBY_WAKE_SOURCE_ACMPLP0 = 0x00800000ULL,  ///< Analog Comparator Low-speed 0 interrupt
-    LPM_STANDBY_WAKE_SOURCE_RTCALM  = 0x01000000ULL,  ///< RTC Alarm interrupt
-    LPM_STANDBY_WAKE_SOURCE_RTCPRD  = 0x02000000ULL,  ///< RTC Period interrupt
-    LPM_STANDBY_WAKE_SOURCE_USBHS   = 0x04000000ULL,  ///< USB High-speed interrupt
-    LPM_STANDBY_WAKE_SOURCE_USBFS   = 0x08000000ULL,  ///< USB Full-speed interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT1UD  = 0x10000000ULL,  ///< AGT1 underflow interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT1CA  = 0x20000000ULL,  ///< AGT1 compare match A interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT1CB  = 0x40000000ULL,  ///< AGT1 compare match B interrupt
-    LPM_STANDBY_WAKE_SOURCE_IIC0    = 0x80000000ULL,  ///< I2C 0 interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT3UD  = 0x100000000ULL, ///< AGT3 underflow interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT3CA  = 0x200000000ULL, ///< AGT3 compare match A interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT3CB  = 0x400000000ULL, ///< AGT3 compare match B interrupt
-    LPM_STANDBY_WAKE_SOURCE_I3C0    = 0x80000000000ULL ///< I3C0 address match interrupt
+    LPM_STANDBY_WAKE_SOURCE_IRQ0    = 0x00000001ULL,      ///< IRQ0
+    LPM_STANDBY_WAKE_SOURCE_IRQ1    = 0x00000002ULL,      ///< IRQ1
+    LPM_STANDBY_WAKE_SOURCE_IRQ2    = 0x00000004ULL,      ///< IRQ2
+    LPM_STANDBY_WAKE_SOURCE_IRQ3    = 0x00000008ULL,      ///< IRQ3
+    LPM_STANDBY_WAKE_SOURCE_IRQ4    = 0x00000010ULL,      ///< IRQ4
+    LPM_STANDBY_WAKE_SOURCE_IRQ5    = 0x00000020ULL,      ///< IRQ5
+    LPM_STANDBY_WAKE_SOURCE_IRQ6    = 0x00000040ULL,      ///< IRQ6
+    LPM_STANDBY_WAKE_SOURCE_IRQ7    = 0x00000080ULL,      ///< IRQ7
+    LPM_STANDBY_WAKE_SOURCE_IRQ8    = 0x00000100ULL,      ///< IRQ8
+    LPM_STANDBY_WAKE_SOURCE_IRQ9    = 0x00000200ULL,      ///< IRQ9
+    LPM_STANDBY_WAKE_SOURCE_IRQ10   = 0x00000400ULL,      ///< IRQ10
+    LPM_STANDBY_WAKE_SOURCE_IRQ11   = 0x00000800ULL,      ///< IRQ11
+    LPM_STANDBY_WAKE_SOURCE_IRQ12   = 0x00001000ULL,      ///< IRQ12
+    LPM_STANDBY_WAKE_SOURCE_IRQ13   = 0x00002000ULL,      ///< IRQ13
+    LPM_STANDBY_WAKE_SOURCE_IRQ14   = 0x00004000ULL,      ///< IRQ14
+    LPM_STANDBY_WAKE_SOURCE_IRQ15   = 0x00008000ULL,      ///< IRQ15
+    LPM_STANDBY_WAKE_SOURCE_IWDT    = 0x00010000ULL,      ///< Independent watchdog interrupt
+    LPM_STANDBY_WAKE_SOURCE_KEY     = 0x00020000ULL,      ///< Key interrupt
+    LPM_STANDBY_WAKE_SOURCE_LVD1    = 0x00040000ULL,      ///< Low Voltage Detection 1 interrupt
+    LPM_STANDBY_WAKE_SOURCE_LVD2    = 0x00080000ULL,      ///< Low Voltage Detection 2 interrupt
+    LPM_STANDBY_WAKE_SOURCE_VBATT   = 0x00100000ULL,      ///< VBATT Monitor interrupt
+    LPM_STANDBY_WAKE_SOURCE_ACMPHS0 = 0x00400000ULL,      ///< Analog Comparator High-speed 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_ACMPLP0 = 0x00800000ULL,      ///< Analog Comparator Low-speed 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_RTCALM  = 0x01000000ULL,      ///< RTC Alarm interrupt
+    LPM_STANDBY_WAKE_SOURCE_RTCPRD  = 0x02000000ULL,      ///< RTC Period interrupt
+    LPM_STANDBY_WAKE_SOURCE_USBHS   = 0x04000000ULL,      ///< USB High-speed interrupt
+    LPM_STANDBY_WAKE_SOURCE_USBFS   = 0x08000000ULL,      ///< USB Full-speed interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT1UD  = 0x10000000ULL,      ///< AGT1 underflow interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT1CA  = 0x20000000ULL,      ///< AGT1 compare match A interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT1CB  = 0x40000000ULL,      ///< AGT1 compare match B interrupt
+    LPM_STANDBY_WAKE_SOURCE_IIC0    = 0x80000000ULL,      ///< I2C 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT3UD  = 0x100000000ULL,     ///< AGT3 underflow interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT3CA  = 0x200000000ULL,     ///< AGT3 compare match A interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT3CB  = 0x400000000ULL,     ///< AGT3 compare match B interrupt
+    LPM_STANDBY_WAKE_SOURCE_COMPHS0 = 0x800000000ULL,     ///< Comparator-HS0 Interrupt
+    LPM_STANDBY_WAKE_SOURCE_ULP0U   = 0x10000000000ULL,   ///< ULPT0 Underflow Interrupt
+    LPM_STANDBY_WAKE_SOURCE_ULP0A   = 0x20000000000ULL,   ///< ULPT0 Compare Match A Interrupt
+    LPM_STANDBY_WAKE_SOURCE_ULP0B   = 0x40000000000ULL,   ///< ULPT0 Compare Match B Interrupt
+    LPM_STANDBY_WAKE_SOURCE_I3C0    = 0x800000000000ULL,  ///< I3C0 address match interrupt
+    LPM_STANDBY_WAKE_SOURCE_ULP1U   = 0x1000000000000ULL, ///< ULPT1 Underflow Interrupt
+    LPM_STANDBY_WAKE_SOURCE_ULP1A   = 0x2000000000000ULL, ///< ULPT1 Compare Match A Interrupt
+    LPM_STANDBY_WAKE_SOURCE_ULP1B   = 0x4000000000000ULL, ///< ULPT1 Compare Match B Interrupt
 } lpm_standby_wake_source_t;
 
 typedef uint64_t lpm_standby_wake_source_bits_t;
@@ -226,6 +234,25 @@ typedef enum e_lpm_power_supply
      * disabled and the low power function in a poweron reset circuit is enabled
      */
     LPM_POWER_SUPPLY_DEEPCUT3 = 3UL,
+
+    /**
+     * Power to the standby RAM, Low-speed on-chip oscillator, Programmable Voltage Detection Unit 0,
+     * and USBFS/HS resume detecting unit is supplied in deep software standby mode.
+     */
+    LPM_POWER_SUPPLY_DEEP_STANDBY_MODE1 = 0U,
+
+    /**
+     * Power to standby RAM, USBFS/HS resume detecting unit, Low-speed on-chip oscillator, and IWDT is
+     * disabled in deep software standby mode. Power to the Programmable Voltage Detection Unit 0 is
+     * supplied in deep software standby mode.
+     */
+    LPM_POWER_SUPPLY_DEEP_STANDBY_MODE2 = 1U,
+
+    /**
+     * Power to standby RAM, Programmable Voltage Detection Unit 0, USBFS/HS resume detecting unit,
+     * Low-speed on-chip oscillator, and IWDT is disabled in deep software standby mode.
+     */
+    LPM_POWER_SUPPLY_DEEP_STANDBY_MODE3 = 2U,
 } lpm_power_supply_t;
 
 /** Deep Standby Interrupt Edge */
@@ -308,6 +335,11 @@ typedef enum e_lpm_deep_standby_cancel_source
     LPM_DEEP_STANDBY_CANCEL_SOURCE_USBFS = 0x01000000U,        ///< USBFS Suspend/Resume
     LPM_DEEP_STANDBY_CANCEL_SOURCE_USBHS = 0x02000000U,        ///< USBHS Suspend/Resume
     LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT1  = 0x04000000U,        ///< AGT1 Underflow
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT3  = 0x08000000U,        ///< AGT3 Underflow
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_ULPT0 = 0x04000000U,        ///< ULPT0 Overflow
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_ULPT1 = 0x08000000U,        ///< ULPT1 Overflow
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_IWDT  = 0x20000000U,        ///< IWDT Underflow
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_VBATT = 0x80000000U,        ///< VBATT Tamper Detection
 } lpm_deep_standby_cancel_source_t;
 
 typedef uint32_t lpm_deep_standby_cancel_source_bits_t;
@@ -332,14 +364,52 @@ typedef enum e_lpm_output_port_enable
     LPM_OUTPUT_PORT_ENABLE_RETAIN = 1U,
 } lpm_output_port_enable_t;
 
+/** Configure the behavior of an oscillator's LDO in standby mode. */
+typedef enum e_lpm_ldo_standby_operation
+{
+    /** The LDO is disabled in standby mode. */
+    LPM_LDO_STANDBY_OPERATION_DISABLED,
+
+    /** The LDO state is retained during standby mode. */
+    LPM_LDO_STANDBY_OPERATION_RETAINED,
+} lpm_ldo_standby_operation_t;
+
+#if BSP_FEATURE_LPM_HAS_PDRAMSCR || BSP_FEATURE_LPM_HAS_DPSBYCR_SRKEEP
+/** RAM Retention Configuration for deep sleep and standby modes. */
+typedef struct s_lpm_ram_retention
+{
+#if BSP_FEATURE_LPM_HAS_PDRAMSCR
+    /** Configure RAM retention in software standby mode. */
+    uint16_t ram_retention;
+
+    /** Enable or disable TCM retention in deep sleep and software standby modes. */
+    bool tcm_retention;
+#endif
+#if BSP_FEATURE_LPM_HAS_DPSBYCR_SRKEEP
+    /** Enable Standby RAM retention in software standby and deep software standby modes. */
+    bool standby_ram_retention;
+#endif
+} lpm_ram_retention_t;
+#endif
+
+/** Configure LDO operation in standby mode. */
+typedef struct lpm_ldo_standby_cfg_s
+{
+    lpm_ldo_standby_operation_t pll1_ldo; ///< Configure the state of PLL1 LDO in standby mode.
+    lpm_ldo_standby_operation_t pll2_ldo; ///< Configure the state of PLL2 LDO in standby mode.
+    lpm_ldo_standby_operation_t hoco_ldo; ///< Configure the state of HOCO LDO in standby mode.
+} lpm_ldo_standby_cfg_t;
+
 /** User configuration structure, used in open function */
 typedef struct st_lpm_cfg
 {
     /** Low Power Mode */
     lpm_mode_t low_power_mode;
 
-    /** Bitwise list of sources to wake from standby */
+    /** Bitwise list of sources to wake from deep sleep and standby mode */
     lpm_standby_wake_source_bits_t standby_wake_sources;
+
+#if BSP_FEATURE_LPM_HAS_SNOOZE
 
     /** Snooze request source */
     lpm_snooze_request_t snooze_request_source;
@@ -349,6 +419,7 @@ typedef struct st_lpm_cfg
 
     /** List of snooze cancel sources */
     lpm_snooze_cancel_t snooze_cancel_sources;
+#endif
 
     /** State of DTC in snooze mode, enabled or disabled */
     lpm_snooze_dtc_t dtc_state_in_snooze;
@@ -370,6 +441,18 @@ typedef struct st_lpm_cfg
 
     /** Signal edges for the sources that can trigger exit from deep standby */
     lpm_deep_standby_cancel_edge_bits_t deep_standby_cancel_edge;
+#endif
+
+#if BSP_FEATURE_LPM_HAS_PDRAMSCR || BSP_FEATURE_LPM_HAS_DPSBYCR_SRKEEP
+
+    /** RAM retention configuration for deep sleep and standby modes. */
+    lpm_ram_retention_t ram_retention_cfg;
+#endif
+
+#if BSP_FEATURE_LPM_HAS_LDO_CONTROL
+
+    /** Configure LDOs that are disabled in standby mode. */
+    lpm_ldo_standby_cfg_t ldo_standby_cfg;
 #endif
 
     /** Placeholder for extension. */

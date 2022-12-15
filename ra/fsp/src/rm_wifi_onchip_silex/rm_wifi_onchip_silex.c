@@ -38,7 +38,7 @@
 #endif
 #if (BSP_FEATURE_SCI_VERSION == 2U)
  #include "r_sci_b_uart.h"
-typedef sci_b_uart_instance_ctrl_t rm_wifi_onchip_silex_uart_instance_t;
+typedef sci_b_uart_instance_ctrl_t rm_wifi_onchip_silex_uart_instance_ctrl_t;
 typedef sci_b_uart_extended_cfg_t  rm_wifi_onchip_silex_uart_extended_cfg_t;
 typedef sci_b_baud_setting_t       rm_wifi_onchip_silex_baud_setting_t;
  #define RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_RTS                SCI_B_UART_FLOW_CONTROL_RTS
@@ -47,7 +47,7 @@ static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
                                                struct st_sci_b_baud_setting_t * const) = &R_SCI_B_UART_BaudCalculate;
 #else
  #include "r_sci_uart.h"
-typedef sci_uart_instance_ctrl_t rm_wifi_onchip_silex_uart_instance_t;
+typedef sci_uart_instance_ctrl_t rm_wifi_onchip_silex_uart_instance_ctrl_t;
 typedef sci_uart_extended_cfg_t  rm_wifi_onchip_silex_uart_extended_cfg_t;
 typedef baud_setting_t           rm_wifi_onchip_silex_baud_setting_t;
  #define RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_RTS                SCI_UART_FLOW_CONTROL_RTS
@@ -209,7 +209,11 @@ typedef enum
 #define WIFI_OPEN                                          (0x57495749ULL) // Is "WIFI" in ASCII
 
 /* Unique number for SCI Open Status */
-#define SCIU_OPEN                                          (0x53434955U)   // Is "SCIU" in ASCII
+#if (BSP_FEATURE_SCI_VERSION == 2U)
+ #define SCIU_OPEN                                         (0x53434942U)   // Is "SCIB" in ASCII
+#else
+ #define SCIU_OPEN                                         (0x53434955U)   // Is "SCIU" in ASCII
+#endif
 
 /***********************************************************************************************************************
  * Constants
@@ -304,12 +308,21 @@ static wifi_onchip_silex_instance_ctrl_t g_rm_wifi_onchip_silex_instance;
 
 static rm_wifi_onchip_silex_baud_setting_t g_baud_setting_115200 =
 {
+#if (2U == BSP_FEATURE_SCI_VERSION)
+    .baudrate_bits_b.brme  = 0,
+    .baudrate_bits_b.abcse = 0,
+    .baudrate_bits_b.abcs  = 0,
+    .baudrate_bits_b.bgdm  = 0,
+    .baudrate_bits_b.brr   = 0,
+    .baudrate_bits_b.mddr  = 0,
+#else
     .semr_baudrate_bits_b.brme  = 0,
     .semr_baudrate_bits_b.abcse = 0,
     .semr_baudrate_bits_b.abcs  = 0,
     .semr_baudrate_bits_b.bgdm  = 0,
     .brr  = 0,
     .mddr = 0,
+#endif
 };
 
 /***********************************************************************************************************************
@@ -2799,13 +2812,13 @@ static void rm_wifi_onchip_silex_cleanup_open (wifi_onchip_silex_instance_ctrl_t
 #endif
 
     uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
-    if (SCIU_OPEN == ((rm_wifi_onchip_silex_uart_instance_t *) p_uart->p_ctrl)->open)
+    if (SCIU_OPEN == ((rm_wifi_onchip_silex_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
 
     p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_SECOND_PORT];
-    if (SCIU_OPEN == ((rm_wifi_onchip_silex_uart_instance_t *) p_uart->p_ctrl)->open)
+    if (SCIU_OPEN == ((rm_wifi_onchip_silex_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
@@ -3460,9 +3473,9 @@ static fsp_err_t rm_wifi_onchip_silex_change_socket_index (wifi_onchip_silex_ins
         if (socket_no != p_instance_ctrl->curr_socket_index) // Only attempt change if socket number is different than current.
         {
 #if (BSP_CFG_RTOS == 1)
-            rm_wifi_onchip_silex_uart_instance_t * p_data_port_uart_ctrl =
-                (rm_wifi_onchip_silex_uart_instance_t *) p_instance_ctrl->uart_instance_objects[p_instance_ctrl->
-                                                                                                curr_data_port]->
+            rm_wifi_onchip_silex_uart_instance_ctrl_t * p_data_port_uart_ctrl =
+                (rm_wifi_onchip_silex_uart_instance_ctrl_t *) p_instance_ctrl->uart_instance_objects[p_instance_ctrl->
+                                                                                                     curr_data_port]->
                 p_ctrl;
 
             /* Set flow control in order to pause data over data port. */
@@ -4376,23 +4389,6 @@ size_t xStreamBufferReceiveAlternate (StreamBufferHandle_t xStreamBuffer,
 
     return xReceivedLength;
 }
-
- #if defined(__ARMCC_VERSION)
-
-/*******************************************************************************************************************//**
- * Default implementation of IotClock_GetTimestring for AC6.
- **********************************************************************************************************************/
-__attribute__((weak))
-bool IotClock_GetTimestring (char * pBuffer, size_t bufferSize, size_t * pTimestringLength)
-{
-    FSP_PARAMETER_NOT_USED(pBuffer);
-    FSP_PARAMETER_NOT_USED(bufferSize);
-    FSP_PARAMETER_NOT_USED(pTimestringLength);
-
-    return true;
-}
-
- #endif
 
 /*! \endcond */
 

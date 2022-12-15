@@ -357,7 +357,7 @@ int32_t Sockets_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength)
         }
         else
         {
-            IotLogError("prvNetworkRecv failed %d", socketStatus);
+            IotLogError("prvNetworkRecv failed");
             retRecvLength = SOCKETS_SOCKET_ERROR;
         }
 
@@ -391,7 +391,7 @@ int32_t Sockets_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLengt
 
         if (sentLength < 0)
         {
-            IotLogError("prvNetworkSend failed %d", socketStatus);
+            IotLogError("prvNetworkSend failed %d");
             sentLength = SOCKETS_SOCKET_ERROR;
         }
     }

@@ -296,6 +296,15 @@ uint16_t hw_usb_read_usbindx(uint8_t usb_ip);
 /************/
 uint16_t hw_usb_read_usbleng(uint8_t usb_ip);
 
+ #else
+  #if defined(USB_CFG_HUVC_USE)
+
+/************/
+/* USBREQ   */
+/************/
+uint16_t hw_usb_read_usbreq(uint8_t usb_ip);
+
+  #endif
  #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /************/
@@ -391,6 +400,8 @@ void     hw_usb_clear_suspm(uint8_t usb_ip);
 void     hw_usb_clear_idpsinke(usb_utr_t * ptr);
 void     hw_usb_set_vdcen(void);
 void     hw_usb_clear_vdcen(void);
+void     hw_usb_set_uckselc(void);
+void     hw_usb_clear_uckselc(void);
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_dcpmode(usb_utr_t * ptr);

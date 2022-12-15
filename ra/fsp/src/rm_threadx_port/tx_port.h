@@ -185,7 +185,7 @@ UINT    _tx_thread_secure_stack_free(struct TX_THREAD_STRUCT *thread_ptr);
 
 #ifndef TX_MISRA_ENABLE
 #ifndef TX_TRACE_TIME_SOURCE
-#if defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__)
+#if defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__)
 /* CM4 and CM33 do have DWT. */
 #define TX_TRACE_TIME_SOURCE                    *((ULONG *) 0xE0001004)
 #else
@@ -556,7 +556,7 @@ extern void    _tx_thread_secure_stack_initialize(void);
 /* Cortex-M4 and Cortex-M33 have BASEPRI, so BASEPRI can be used to allow high priority interrupts
  * to preempt the scheduler. */
 
-#if (defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__)) && TX_PORT_MAX_IPL != 0
+#if (defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__)) && TX_PORT_MAX_IPL != 0
 #define TX_PORT_USE_BASEPRI
 #endif
 

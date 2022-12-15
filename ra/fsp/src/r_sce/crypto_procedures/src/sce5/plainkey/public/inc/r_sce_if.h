@@ -113,6 +113,10 @@
 #define HW_SCE_AES_CCM_COUNTER_BYTE_SIZE      (16U)
 #define HW_SCE_KEYWRAP_AES128                 (0U)
 #define HW_SCE_KEYWRAP_AES256                 (2U)
+#define HW_SCE_AES128XTS_KEY_BYTE_SIZE        (32U)
+#define HW_SCE_AES256XTS_KEY_BYTE_SIZE        (64U)
+#define HW_SCE_AES128XTS_KEY_BIT_SIZE         (256U)
+#define HW_SCE_AES256XTS_KEY_BIT_SIZE         (512U)
 
 /* For TDES operation. */
 #define HW_SCE_TDES_KEY_INDEX_WORD_SIZE       (16U)

@@ -243,6 +243,8 @@ typedef enum e_canfd_frame_option
 /* CAN Instance Control Block   */
 typedef struct st_canfd_instance_ctrl
 {
+    R_CANFD_Type       * p_reg;                 // Pointer to register base address
+
     /* Parameters to control CAN peripheral device */
     can_cfg_t const    * p_cfg;                 // Pointer to the configuration structure
     uint32_t             open;                  // Open status of channel.

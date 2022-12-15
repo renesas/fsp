@@ -43,8 +43,10 @@
 #include "bsp_api.h"
 #include "r_ble_api.h"
 #ifndef BLE_CFG_RYZ012_DEVICE
- #include "r_flash_api.h"
- #include "r_timer_api.h"
+ #ifndef BLE_CFG_DA14531_DEVICE
+   #include "r_flash_api.h"
+   #include "r_timer_api.h"
+  #endif
 #else
  #include "r_uart_api.h"
  #include "r_spi_api.h"
@@ -787,8 +789,10 @@ typedef struct st_ble_abs_cfg
     uint8_t gatt_client_callback_list_number;                               ///< The number of GATT Client callback functions.
     ble_abs_pairing_parameter_t * p_pairing_parameter;                      ///< Pairing parameters.
 #ifndef BLE_CFG_RYZ012_DEVICE
+    #ifndef BLE_CFG_DA14531_DEVICE
     flash_instance_t const * p_flash_instance;                              ///< Pointer to flash instance.
     timer_instance_t const * p_timer_instance;                              ///< Pointer to timer instance.
+    #endif
 #else
     const uart_instance_t         * p_uart_instance;                        ///< SCI UART instance
     const spi_instance_t          * p_spi_instance;                         ///< SPI instance

@@ -183,16 +183,15 @@ UINT sce_nx_crypto_ecdsa_sign (NX_CRYPTO_EC * curve,
 
     switch (curve->nx_crypto_ec_id)
     {
- #if 0
+ 
         case NX_CRYPTO_EC_SECP384R1:
         {
             /* digest - No 0 padding, skip the first 2 '0' words */
             err =
-                HW_SCE_EcdsaP384SignatureGenerateSub(wrapped_private_key, (uint32_t *) &work_buffer[digest_offset],
+                HW_SCE_EcdsaP384SignatureGenerateSub(&curve_type, wrapped_private_key, (uint32_t *) &work_buffer[digest_offset],
                                                      sign);
             break;
         }
- #endif
 
         /* digest - 1 word 0 padding, skip the first '0' word */
         case NX_CRYPTO_EC_SECP224R1:
@@ -352,16 +351,14 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
     /* Verify procedure selection based on ECC curve (type & size) */
     switch (curve->nx_crypto_ec_id)
     {
- #if 0
         case NX_CRYPTO_EC_SECP384R1:
         {
             /* digest - No 0 padding, skip the first 2 '0' words */
             err =
-                HW_SCE_EcdsaP384SignatureVerificationSub(formatted_public_key, (uint32_t *) &digest[digest_offset],
+                HW_SCE_EcdsaP384SignatureVerificationSub(&curve_type, formatted_public_key, (uint32_t *) &digest[digest_offset],
                                                          sign);
             break;
         }
- #endif
 
         /* digest - 1 word 0 padding, skip the first '0' word */
         case NX_CRYPTO_EC_SECP224R1:

@@ -55,7 +55,7 @@
   #define RM_PSA_CRYPTO_RSA_KEY_WRAPPED      (1U)
   #define RM_PSA_CRYPTO_DUMMY_KEY_BYTES      (20U)
 
-  #if BSP_FEATURE_CRYPTO_HAS_SCE7_MISSING_PROCS
+  #if BSP_FEATURE_CRYPTO_HAS_SCE7
 fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSub (const uint32_t * InData_KeyIndex,
                                                    const uint32_t * InData_Text,
                                                    uint32_t       * OutData_Text)
@@ -166,6 +166,54 @@ fsp_err_t HW_SCE_HRK_RSA_2048PrivateKeyDecrypt (const uint32_t * InData_Text,
     return err;
 }
 
+fsp_err_t HW_SCE_RSA_2048KeyGenerate (uint32_t   num_tries,
+                                      uint32_t * OutData_PrivateKey,
+                                      uint32_t * OutData_N,
+                                      uint32_t * OutData_DomainParam)
+
+{
+    sce_rsa2048_key_pair_index_t key_pair_index = {0};
+    fsp_err_t err = FSP_SUCCESS;
+    uint32_t  local_dummy[RM_PSA_CRYPTO_DUMMY_KEY_BYTES / 4U];
+    uint32_t  indata_key_type = SCE_OEM_KEY_TYPE_PLAIN;
+
+    /* P.Q are the prime 1 and 2 fields that are in some cases generated when the private key is generated.
+     * This was the case with W1D; but this information is not provided on the RA6M4.
+     * There is no functional issue since the procedures do not require it for operation,
+     * however mbedCrypto requires these fields to be non-zero in order for the private key_export to work.
+     * These dummy values are placed into those fields to get past the non-zero check. */
+    uint8_t dummy_P_Q[24] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+
+    err =
+        HW_SCE_GenerateRsa2048RandomKeyIndexSub(num_tries,
+                                                &indata_key_type,
+                                                local_dummy,
+                                                (uint32_t *) &key_pair_index.pub_key.plain_value,
+                                                local_dummy,
+                                                (uint32_t *) &key_pair_index.priv_key.plain_value);
+
+    if (FSP_SUCCESS == err)
+    {
+        memcpy(OutData_PrivateKey, &key_pair_index.priv_key.plain_value, sizeof(key_pair_index.priv_key.plain_value));
+        memcpy(OutData_N, &key_pair_index.pub_key.plain_value, sizeof(key_pair_index.pub_key.value.key_n));
+        memcpy((uint8_t *) OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
+    }
+
+    return err;
+}
+
+static const hw_sce_rsa_generatekey_t g_rsa_keygen_lookup[2] =
+{
+  #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    [RM_PSA_CRYPTO_RSA_KEY_PLAINTEXT] =
+        HW_SCE_RSA_2048KeyGenerate,
+  #endif
+  #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    [RM_PSA_CRYPTO_RSA_KEY_WRAPPED] =
+        HW_SCE_HRK_RSA_2048KeyGenerate,
+  #endif
+};
+
 static const hw_sce_rsa_private_decrypt_t g_rsa_private_decrypt_lookup[2] =
 {
   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
@@ -234,14 +282,15 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
     uint32_t * p_rsa_public_modulus   = NULL;
     uint32_t * p_additional_key_info  = NULL;
 
-    fsp_err_t err = FSP_SUCCESS;
-    uint8_t   rsa_public_exponent[4] = {0x00, 0x01, 0x00, 0x01};
+    hw_sce_rsa_generatekey_t p_hw_sce_rsa_generatekey = NULL;
+    uint8_t rsa_public_exponent[4] = {0x00, 0x01, 0x00, 0x01};
 
-   #if !PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
-    FSP_PARAMETER_NOT_USED(private_key_size_bytes);
+    p_hw_sce_rsa_generatekey = g_rsa_keygen_lookup[(uint32_t) ctx->vendor_ctx];
+    if (NULL == p_hw_sce_rsa_generatekey)
+    {
+        return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+    }
 
-    ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
-   #endif
     if (ret == 0)
     {
         /* Obtain a 32-bit aligned block of memory. It will be used for all the following items in this order:
@@ -265,13 +314,9 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
         p_additional_key_info   = p_rsa_public_modulus + (public_key_size_bytes / 4);
         p_additional_key_info_8 = (uint8_t *) p_additional_key_info;
 
-   #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
-        err = HW_SCE_HRK_RSA_2048KeyGenerate(SCE_RSA_NUM_TRIES_20480,
-                                             p_rsa_private_exponent,
-                                             p_rsa_public_modulus,
-                                             p_additional_key_info);
-   #endif
-        if (FSP_SUCCESS != err)
+        if (FSP_SUCCESS !=
+            p_hw_sce_rsa_generatekey(SCE_RSA_NUM_TRIES_20480, p_rsa_private_exponent, p_rsa_public_modulus,
+                                     p_additional_key_info))
         {
             ret = MBEDTLS_ERR_RSA_KEY_GEN_FAILED;
         }

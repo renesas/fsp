@@ -113,7 +113,7 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
                 break;
             }
 
- #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7)
             case 12:
             {
                 ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
@@ -250,7 +250,7 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
                 break;
             }
 
- #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7)
             case 12:
             {
                 ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,

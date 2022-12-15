@@ -138,7 +138,7 @@ typedef struct u_cgc_divider_cfg
 {
     union
     {
-        uint32_t sckdivcr_w; ///< System clock Division control register
+        uint32_t sckdivcr_w;                   ///< System clock Division control register
 
         struct
         {
@@ -155,7 +155,7 @@ typedef struct u_cgc_divider_cfg
 
     union
     {
-        uint8_t sckdivcr2; ///< System clock Division control register 2
+        uint8_t sckdivcr2;                      ///< System clock Division control register 2
 
         struct
         {

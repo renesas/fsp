@@ -41,6 +41,7 @@
 #define USB_PMSC_SD4_BLENGTH      (0x16U)
 #define USB_PMSC_SD5_BLENGTH      (0x12U)
 #define USB_PMSC_SD6_BLENGTH      (0x1cU)
+#define NUM_STRING_DESCRIPTOR     (6U)
 
 /* Sub_class code */
 #define USB_ATAPI                 ((uint8_t) 0x05U)
@@ -322,6 +323,17 @@ uint8_t * g_apl_string_table[] =
     g_usb_pmsc_string_descriptor5,
     g_usb_pmsc_string_descriptor6
 };
+
+const usb_descriptor_t g_usb_descriptor =
+{
+    g_apl_device,
+    g_apl_configuration,
+    g_apl_hs_configuration,         /* Pointer to the configuration descriptor for Hi-speed */
+    g_apl_qualifier_descriptor,     /* Pointer to the qualifier descriptor */
+    g_apl_string_table,
+    NUM_STRING_DESCRIPTOR
+};
+
 
 /******************************************************************************
  * Renesas Abstracted Peripheral Mass Storage Class Driver API functions

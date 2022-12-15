@@ -802,6 +802,9 @@ typedef struct st_rm_ble_mesh_cfg
      */
     uint32_t maximum_health_server_num;
 
+    /** Maximum number of Light Lightness Controller Server Instances. */
+    uint32_t maximum_light_lc_server_num;
+
     /** The size of the Replay Protection cache. */
     uint32_t replay_cache_size;
 

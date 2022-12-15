@@ -258,12 +258,10 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
     /* Generate ECC key pair based on the curve type & size */
     if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP384R1)
     {
- #if 0
         err = HW_SCE_Ecc384ScalarMultiplicationSub(&curve_type,
                                                    (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
                                                    pub_key,
                                                    (uint32_t *) share_secret_key_ptr);
- #endif
     }
     else if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP256R1)
     {

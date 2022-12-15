@@ -39,21 +39,12 @@ extern "C" {
 
  #include <stdint.h>
  #include <math.h>
- #if 0                                 // For multiple operations
-  #include "zmod4xxx_types.h"
-
-/**
- * @brief Variables that describe the library version
- */
-typedef struct
-{
-    uint8_t major;
-    uint8_t minor;
-    uint8_t patch;
-} algorithm_version;
- #else
-  #include "../zmod4xxx_types.h"
- #endif
+ 
+#if TEST_RM_ZMOD4XXX  // For RA FSP test
+ #include "../../../../../fsp/src/rm_zmod4xxx/zmod4xxx_types.h"
+#else
+ #include "../zmod4xxx_types.h"
+#endif
 
 /** \addtogroup RetCodes Return codes of the algorithm functions.
  *  @{

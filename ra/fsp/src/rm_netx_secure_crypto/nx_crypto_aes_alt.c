@@ -2610,7 +2610,7 @@ UINT    status;
 
             message_len = input_length_in_byte - icv_len;
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-            (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B))
+            (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
             /* SCE9 APIs are different for Encryption and Decryption.
              * Since _nx_crypto_gcm_decrypt_init is mapped to _nx_crypto_gcm_encrypt_init this 
              * new function is created for supporting decryption specific HW acceleration: GHASH and block cipher.
@@ -2703,7 +2703,7 @@ UINT    status;
             }
 
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-            (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B))
+            (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
             /* SCE9 APIs are different for Encryption and Decryption.
              * Since _nx_crypto_gcm_decrypt_init is mapped to _nx_crypto_gcm_encrypt_init this 
              * new function is created for supporting decryption specific HW acceleration: GHASH and block cipher.

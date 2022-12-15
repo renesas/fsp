@@ -271,6 +271,13 @@ void usb_hstd_status_start (usb_utr_t * ptr)
         /* NoData Control */
         case USB_SETUPNDC:
         {
+ #if defined(USB_CFG_HUVC_USE)
+            if ((USB_SET_INTERFACE | USB_HOST_TO_DEV | USB_STANDARD | USB_INTERFACE) == hw_usb_read_usbreq(ptr->ip))
+            {
+                usb_cpu_delay_xms((uint16_t) 50);
+            }
+ #endif
+
             /* Control Read Status */
             usb_hstd_ctrl_read_start(ptr, (uint32_t) 0, (uint8_t *) &buf1);
 

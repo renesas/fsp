@@ -339,6 +339,8 @@ extern "C" {
  #define USB_TRCLR                 (0x0100U) /* b8: Transaction count clear */
  #define USB_TRNCNT                (0xFFFFU) /* b15-0: Transaction counter */
 
+ #define USB_UCKSELC               (0x0001U) /* b0: USB Clock Seielction Bit */
+
  #define USB_VDCEN                 (0x0080U) /* b7: Regulator ON/OFF control */
 
  #define USB_UPPHUB                (0x7800U) /* b14-11: HUB register */

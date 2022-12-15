@@ -45,6 +45,63 @@ FSP_HEADER
  * @{
  **********************************************************************************************************************/
 
+/** Light LC light event */
+typedef enum e_rm_ble_mesh_light_lc_srv_event
+{
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_OFF                 = 0x01, ///< Light LC Server Event Off
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_STANDBY             = 0x02, ///< Light LC Server Event Standby
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_FADE_ON             = 0x03, ///< Light LC Server Event Fade On
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_RUN                 = 0x04, ///< Light LC Server Event Run
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_FADE                = 0x05, ///< Light LC Server Event Fade
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_PROLONG             = 0x06, ///< Light LC Server Event Prolong
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_FADE_STANDBY_AUTO   = 0x07, ///< Light LC Server Event Standby Auto
+    RM_MESH_LIGHT_LC_SRV_LIGHT_EVENT_FADE_STANDBY_MANUAL = 0x08, ///< Light LC Server Event Standby Manual
+} rm_ble_mesh_light_lc_srv_event_t;
+
+/** Light LC state */
+typedef enum e_rm_ble_mesh_light_lc_srv_state
+{
+    RM_MESH_LIGHT_LC_SRV_STATE_OFF                 = 0x01, ///< Light LC Server State Off
+    RM_MESH_LIGHT_LC_SRV_STATE_STANDBY             = 0x02, ///< Light LC Server State Standby
+    RM_MESH_LIGHT_LC_SRV_STATE_FADE_ON             = 0x04, ///< Light LC Server State Fade On
+    RM_MESH_LIGHT_LC_SRV_STATE_RUN                 = 0x08, ///< Light LC Server State Run
+    RM_MESH_LIGHT_LC_SRV_STATE_FADE                = 0x10, ///< Light LC Server State Fade
+    RM_MESH_LIGHT_LC_SRV_STATE_PROLONG             = 0x20, ///< Light LC Server State Prolong
+    RM_MESH_LIGHT_LC_SRV_STATE_FADE_STANDBY_AUTO   = 0x40, ///< Light LC Server State Standby Auto
+    RM_MESH_LIGHT_LC_SRV_STATE_FADE_STANDBY_MANUAL = 0x80, ///< Light LC Server State Standby Manual
+} rm_ble_mesh_light_lc_srv_state_t;
+
+/** Light LC light state */
+typedef enum e_rm_mesh_light_lc_srv_light_state
+{
+    RM_MESH_LIGHT_LC_SRV_LIGHT_STATE_OFF = 0, ///< Light state Off
+    RM_MESH_LIGHT_LC_SRV_LIGHT_STATE_ON  = 1  ///< Light state ON
+} rm_mesh_light_lc_srv_light_state_t;
+
+/**
+ * Light LC Server State Info
+ */
+typedef struct st_rm_mesh_light_lc_srv_scenario
+{
+    /** Light LC Server Current Scenario */
+    rm_ble_mesh_light_lc_srv_state_t state;
+
+    /** Remaining Time in current scenario */
+    uint32_t remaining_time_in_ms;
+
+    /** Light LC Occupancy Mode Value */
+    uint8_t occupancy_mode;
+
+    /** Light LC Mode Value */
+    uint8_t mode;
+
+    /** Current Light LC ONOFF State */
+    rm_mesh_light_lc_srv_light_state_t present_light_state;
+
+    /** Target Light LC ONOFF State */
+    rm_mesh_light_lc_srv_light_state_t target_light_state;
+} rm_mesh_light_lc_srv_scenario_t;
+
 /** Light LC Mode state */
 typedef struct st_rm_mesh_light_lc_srv_mode_info
 {
@@ -108,6 +165,15 @@ typedef struct st_rm_mesh_light_lc_srv_property_info
     uint16_t  property_value_len;
 } rm_mesh_light_lc_srv_property_info_t;
 
+/** Light LC Property state */
+typedef struct st_rm_mesh_light_lc_srv_extended_callback_args
+{
+    rm_ble_mesh_access_model_handle_t * p_handle;   ///< Access model handle.
+    rm_ble_mesh_light_lc_srv_event_t    event_type; ///< Application events defined for Light LC Server Model.
+    uint8_t * p_event_data;                         ///< Event data.
+    uint16_t  event_data_length;                    ///< Event data length.
+} rm_mesh_light_lc_srv_extended_callback_args_t;
+
 /** BLE mesh light lc instance control block. DO NOT INITIALIZE. Initialization occurs when RM_MESH_LIGHT_LC_SRV_Open() is called. */
 typedef struct st_rm_mesh_light_lc_srv_instance_ctrl
 {
@@ -136,6 +202,16 @@ fsp_err_t RM_MESH_LIGHT_LC_SRV_Open(rm_ble_mesh_model_server_ctrl_t * const     
 fsp_err_t RM_MESH_LIGHT_LC_SRV_Close(rm_ble_mesh_model_server_ctrl_t * const p_ctrl);
 fsp_err_t RM_MESH_LIGHT_LC_SRV_StateUpdate(rm_ble_mesh_model_server_ctrl_t * const   p_ctrl,
                                            rm_ble_mesh_access_server_state_t const * p_state);
+fsp_err_t RM_MESH_LIGHT_LC_SRV_SetTimeProperty(rm_ble_mesh_model_server_ctrl_t * const    p_ctrl,
+                                               rm_ble_mesh_model_server_device_property_t property,
+                                               uint32_t                                   time_in_ms);
+fsp_err_t RM_MESH_LIGHT_LC_SRV_SetScenario(rm_ble_mesh_model_server_ctrl_t * const       p_ctrl,
+                                           rm_mesh_light_lc_srv_scenario_t const * const p_scenario);
+fsp_err_t RM_MESH_LIGHT_LC_SRV_GetCurrentScenario(rm_ble_mesh_model_server_ctrl_t * const p_ctrl,
+                                                  rm_mesh_light_lc_srv_scenario_t * const p_scenario);
+fsp_err_t RM_MESH_LIGHT_LC_SRV_ReportOccupancy(rm_ble_mesh_model_server_ctrl_t * const p_ctrl);
+fsp_err_t RM_MESH_LIGHT_LC_SRV_ReportLightOnOff(rm_ble_mesh_model_server_ctrl_t * const p_ctrl,
+                                                rm_mesh_light_lc_srv_light_state_t      state);
 
 /*******************************************************************************************************************//**
  * @} (end addgroup RM_MESH_LIGHT_LC_SRV)
