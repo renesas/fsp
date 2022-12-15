@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.1.0</span>
+   &#160;<span id="projectnumber">Release v4.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -540,7 +540,7 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ICU private control block. DO NOT MODIFY. Initialization occurs when R_ICU_ExternalIrqOpen is called. </p>
+<p>USB private control block. DO NOT MODIFY. Initialization occurs when R_USB_Open is called. </p>
 
 </div>
 </div>
@@ -758,7 +758,13 @@ Do not call this API in the interrupt function. </dd></dl>
 <dd>
 (2). When using High-speed and disabling continuous transfer mode, allocate the storage area with a size that is a multiple of 512. </dd>
 <dd>
-(3). When using Full-speed, allocate the storage area with a size that is a multiple of 64. </dd></dl>
+(3). When using Full-speed, allocate the storage area with a size that is a multiple of 64. </dd>
+<dd>
+3. Specify the following address to the 2nd argument (p_buf) when using DMA transfer. </dd>
+<dd>
+(1). When using High-speed module, specify start address of the buffer area aligned on 4-byte boundary. </dd>
+<dd>
+(2). When using Full-speed module, specify start address of the buffer area aligned on 2-byte boundary. </dd></dl>
 
 </div>
 </div>
@@ -820,7 +826,13 @@ e.g) </dd>
 <dd>
 R_USB_Write (&amp;g_basic0_ctrl, &amp;g_buf, USB_NULL); </dd>
 <dd>
-2. Do not call this API in the following function. </dd>
+2. Specify the following address to the 2nd argument (p_buf) when using DMA transfer. </dd>
+<dd>
+(1). When using High-speed module, specify start address of the buffer area aligned on 4-byte boundary. </dd>
+<dd>
+(2). When using Full-speed module, specify start address of the buffer area aligned on 2-byte boundary. </dd>
+<dd>
+3. Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1104,7 +1116,13 @@ R_USB_Write (&amp;g_basic0_ctrl, &amp;g_buf, USB_NULL); </dd>
 <dd>
 (2). When using High-speed and disabling continuous transfer mode, allocate the storage area with a size that is a multiple of 512. </dd>
 <dd>
-(3). When using Full-speed, allocate the storage area with a size that is a multiple of 64. </dd></dl>
+(3). When using Full-speed, allocate the storage area with a size that is a multiple of 64. </dd>
+<dd>
+3. Specify the following address to the 2nd argument (p_buf) when using DMA transfer. </dd>
+<dd>
+(1). When using High-speed module, specify start address of the buffer area aligned on 4-byte boundary. </dd>
+<dd>
+(2). When using Full-speed module, specify start address of the buffer area aligned on 2-byte boundary. </dd></dl>
 
 </div>
 </div>
@@ -1166,7 +1184,13 @@ e.g) </dd>
 <dd>
 R_USB_PipeWrite (&amp;g_basic0_ctrl, &amp;g_buf, USB_NULL, pipe_number); </dd>
 <dd>
-2. Do not call this API in the following function. </dd>
+2. Specify the following address to the 2nd argument (p_buf) when using DMA transfer. </dd>
+<dd>
+(1). When using High-speed module, specify start address of the buffer area aligned on 4-byte boundary. </dd>
+<dd>
+(2). When using Full-speed module, specify start address of the buffer area aligned on 2-byte boundary. </dd>
+<dd>
+3. Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1959,7 +1983,7 @@ In the FreeRTOS, please specify one of the following to the 1st argument of this
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

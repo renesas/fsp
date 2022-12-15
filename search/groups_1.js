@@ -3,7 +3,7 @@ var searchData=
   ['application_20callback',['Application Callback',['../group__access__cb.html',1,'']]],
   ['adc_20_28r_5fadc_29',['ADC (r_adc)',['../group___a_d_c.html',1,'']]],
   ['adc_20interface',['ADC Interface',['../group___a_d_c___a_p_i.html',1,'']]],
-  ['adc_20driver_20on_20r_5fadc_5fb',['ADC Driver on r_adc_b',['../group___a_d_c___b.html',1,'']]],
+  ['adc_20_28r_5fadc_5fb_29',['ADC (r_adc_b)',['../group___a_d_c___b.html',1,'']]],
   ['audio_20playback_20interface',['AUDIO PLAYBACK Interface',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html',1,'']]],
   ['aws_20https',['AWS HTTPS',['../group___a_w_s___h_t_t_p_s.html',1,'']]],
   ['aws_20mqtt',['AWS MQTT',['../group___a_w_s___m_q_t_t.html',1,'']]],

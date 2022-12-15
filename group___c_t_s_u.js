@@ -34,7 +34,7 @@ var group___c_t_s_u =
       [ "num_elements", "group___c_t_s_u.html#a67a41db2c42e9d1e46a7547d803b8296", null ],
       [ "wr_index", "group___c_t_s_u.html#a2f07e521837e8b03d7b2e3b93c9161a5", null ],
       [ "rd_index", "group___c_t_s_u.html#ab422bfa8a5f8e1c9e56866c44c440f75", null ],
-      [ "p_tuning_count", "group___c_t_s_u.html#a678f08dcec63a2aba0f31132e08667a6", null ],
+      [ "p_element_complete_flag", "group___c_t_s_u.html#a7d51d2cc89379ed752a6823fc2487603", null ],
       [ "p_tuning_diff", "group___c_t_s_u.html#a527001bce3114395980eb1ab84990d39", null ],
       [ "average", "group___c_t_s_u.html#aadfb1f17208413aec59916e5c0d030c2", null ],
       [ "num_moving_average", "group___c_t_s_u.html#aaaf1fa1d2eae6508aeb04433bd02be27", null ],

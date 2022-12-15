@@ -18,5 +18,6 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "NetX Duo WiFi Driver (rm_netxduo_wifi)", "group___r_m___n_e_t_x_d_u_o___w_i_f_i.html", null ],
     [ "PTP (r_ptp)", "group___p_t_p.html", "group___p_t_p" ],
     [ "SPP BLE Abstraction (rm_ble_abs_spp)", "group___b_l_e___a_b_s___s_p_p.html", null ],
+    [ "WiFi Onchip DA16200 Driver using r_sci_uart (rm_wifi_onchip_da16200)", "group___w_i_f_i___o_n_c_h_i_p___d_a16200.html", "group___w_i_f_i___o_n_c_h_i_p___d_a16200" ],
     [ "WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x" ]
 ];

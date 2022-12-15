@@ -46,7 +46,7 @@ var searchData=
   ['adc_5falignment_5ft',['adc_alignment_t',['../group___a_d_c___a_p_i.html#gaab0104c9c876400deb5772a77c1c5d76',1,'r_adc_api.h']]],
   ['adc_20interface',['ADC Interface',['../group___a_d_c___a_p_i.html',1,'']]],
   ['adc_5fapi_5ft',['adc_api_t',['../group___a_d_c___a_p_i.html#structadc__api__t',1,'']]],
-  ['adc_20driver_20on_20r_5fadc_5fb',['ADC Driver on r_adc_b',['../group___a_d_c___b.html',1,'']]],
+  ['adc_20_28r_5fadc_5fb_29',['ADC (r_adc_b)',['../group___a_d_c___b.html',1,'']]],
   ['adc_5fb_5fadd_5faverage_5f1',['ADC_B_ADD_AVERAGE_1',['../group___a_d_c___b.html#gga9e553524a7ac18c73592b7e1fe4fd040ace5f44fbfae931646a095d8940cfd3bd',1,'r_adc_b.h']]],
   ['adc_5fb_5fadd_5faverage_5f1024',['ADC_B_ADD_AVERAGE_1024',['../group___a_d_c___b.html#gga9e553524a7ac18c73592b7e1fe4fd040abd4909742275a25bc3f5664222f185ba',1,'r_adc_b.h']]],
   ['adc_5fb_5fadd_5faverage_5f128',['ADC_B_ADD_AVERAGE_128',['../group___a_d_c___b.html#gga9e553524a7ac18c73592b7e1fe4fd040a7f65c863b037a62ac02e0df163d510a2',1,'r_adc_b.h']]],

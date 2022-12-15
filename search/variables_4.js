@@ -38,6 +38,8 @@ var searchData=
   ['decode',['decode',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html#a41dd0a53c8ad80b599e3027508ebfdf4',1,'adpcm_decoder_api_t']]],
   ['decode_5finput_5fdata_5forder',['decode_input_data_order',['../group___j_p_e_g___a_p_i.html#ac4fac9f714d6a60ff93626ab03638949',1,'jpeg_cfg_t']]],
   ['decode_5foutput_5fdata_5forder',['decode_output_data_order',['../group___j_p_e_g___a_p_i.html#aaa2084664b0085dcc96dacb50462a032',1,'jpeg_cfg_t']]],
+  ['deep_5fstandby_5fcancel_5fedge',['deep_standby_cancel_edge',['../group___l_p_m___a_p_i.html#a5119f6201353cfcc468a554a8134546f',1,'lpm_cfg_t']]],
+  ['deep_5fstandby_5fcancel_5fsource',['deep_standby_cancel_source',['../group___l_p_m___a_p_i.html#a2764fdd4551e7a2f7abd9e3790c4a3ff',1,'lpm_cfg_t']]],
   ['default_5fcompany_5fid',['default_company_id',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a2f42a44bd8432353d0327e0559e05dd6',1,'rm_ble_mesh_cfg_t']]],
   ['default_5fmode',['default_mode',['../group___j_p_e_g___a_p_i.html#a79409bc4d7eb49db78ef16a8b2222a12',1,'jpeg_cfg_t']]],
   ['default_5fproduct_5fid',['default_product_id',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a2bf98e1d25c43155e907b0450e577019',1,'rm_ble_mesh_cfg_t']]],

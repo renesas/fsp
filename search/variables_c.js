@@ -12,6 +12,7 @@ var searchData=
   ['layer',['layer',['../group___d_i_s_p_l_a_y___a_p_i.html#a0d527f8a7654fc8b2cf49d350247d0db',1,'display_cfg_t::layer()'],['../group___d_i_s_p_l_a_y___a_p_i.html#abd363f5bea0685cb767a6002c3d5afe3',1,'display_runtime_cfg_t::layer()']]],
   ['layerchange',['layerChange',['../group___d_i_s_p_l_a_y___a_p_i.html#ac012f204038e500efa90632c7c8ce5a8',1,'display_api_t']]],
   ['lcid',['lcid',['../group___l2_c_a_p___a_p_i.html#a7d438cc58406db7187fc94e2fe2e101c',1,'st_ble_l2cap_conn_rsp_param_t']]],
+  ['ldo_5fstandby_5fcfg',['ldo_standby_cfg',['../group___l_p_m___a_p_i.html#a858f59e92ecc506ef433f1e1d9401659',1,'lpm_cfg_t']]],
   ['led_5forder',['led_order',['../group___r_m___o_b1203.html#a6ea712faa60b5098695c5bf9dee22fa9',1,'rm_ob1203_mode_extended_cfg_t']]],
   ['ledcurrentset',['ledCurrentSet',['../group___r_m___o_b1203___a_p_i.html#a7d3decdc87199472697b5aec3387d406',1,'rm_ob1203_api_t']]],
   ['legacy_5foob',['legacy_oob',['../group___g_a_p___a_p_i.html#a3df2c637074c5fe9a1ed46a87d0396f8',1,'st_ble_gap_oob_data_t']]],

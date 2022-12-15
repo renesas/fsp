@@ -1,5 +1,14 @@
 var group___l_p_m___a_p_i =
 [
+    [ "lpm_ram_retention_t", "group___l_p_m___a_p_i.html#structlpm__ram__retention__t", [
+      [ "ram_retention", "group___l_p_m___a_p_i.html#ad512e4622a3d25d8ffa8792f6ace2e2d", null ],
+      [ "tcm_retention", "group___l_p_m___a_p_i.html#ac9ede62b959c7bf7d5676cbb5a09b4a9", null ]
+    ] ],
+    [ "lpm_ldo_standby_cfg_t", "group___l_p_m___a_p_i.html#structlpm__ldo__standby__cfg__t", [
+      [ "pll1_ldo", "group___l_p_m___a_p_i.html#a0a4f9af3d37d4418df749d987babf17c", null ],
+      [ "pll2_ldo", "group___l_p_m___a_p_i.html#abf0afd56437a6a5c3bff8a162b3198ab", null ],
+      [ "hoco_ldo", "group___l_p_m___a_p_i.html#ae1233cf58a7ed4696daf39d59cd95dd2", null ]
+    ] ],
     [ "lpm_cfg_t", "group___l_p_m___a_p_i.html#structlpm__cfg__t", [
       [ "low_power_mode", "group___l_p_m___a_p_i.html#aea2b502b8e324f59cd122b015929147f", null ],
       [ "standby_wake_sources", "group___l_p_m___a_p_i.html#a2785215ffe3f2770156088cb6c28ffb1", null ],
@@ -7,6 +16,13 @@ var group___l_p_m___a_p_i =
       [ "snooze_end_sources", "group___l_p_m___a_p_i.html#afc612f30f50f3c8bd19667ac5d85a73f", null ],
       [ "snooze_cancel_sources", "group___l_p_m___a_p_i.html#af2d5d8e311760c5e7fc5e5fa31547bdc", null ],
       [ "dtc_state_in_snooze", "group___l_p_m___a_p_i.html#abef017cb36a71d7d3c2625df8eb0f4c1", null ],
+      [ "output_port_enable", "group___l_p_m___a_p_i.html#a1364840b49b73355d7d29e91590553f8", null ],
+      [ "io_port_state", "group___l_p_m___a_p_i.html#a4cfe3ab632b0dd4c77977e5e0722b5b7", null ],
+      [ "power_supply_state", "group___l_p_m___a_p_i.html#a01dacb434e56d80d3dae6253d8cf8e5c", null ],
+      [ "deep_standby_cancel_source", "group___l_p_m___a_p_i.html#a2764fdd4551e7a2f7abd9e3790c4a3ff", null ],
+      [ "deep_standby_cancel_edge", "group___l_p_m___a_p_i.html#a5119f6201353cfcc468a554a8134546f", null ],
+      [ "ram_retention_cfg", "group___l_p_m___a_p_i.html#af943753a27927ed87202f40defd77fc8", null ],
+      [ "ldo_standby_cfg", "group___l_p_m___a_p_i.html#a858f59e92ecc506ef433f1e1d9401659", null ],
       [ "p_extend", "group___l_p_m___a_p_i.html#aba5f12284eb8a49b9ff5466fc7b0b9e0", null ]
     ] ],
     [ "lpm_api_t", "group___l_p_m___a_p_i.html#structlpm__api__t", [
@@ -24,6 +40,7 @@ var group___l_p_m___a_p_i =
     [ "lpm_ctrl_t", "group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f", null ],
     [ "lpm_mode_t", "group___l_p_m___a_p_i.html#ga22283c51ece346b4ba08a30c7b0cc8dd", [
       [ "LPM_MODE_SLEEP", "group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda88181762f1414a0fdd7e3d778a145784", null ],
+      [ "LPM_MODE_DEEP_SLEEP", "group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda16eabfd91a897823f1120756b921e93a", null ],
       [ "LPM_MODE_STANDBY", "group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda74f737cd9d53ac41b98bdeba578f9921", null ],
       [ "LPM_MODE_STANDBY_SNOOZE", "group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda5ccbf1bbc651a5b4d787ba26e9730227", null ],
       [ "LPM_MODE_DEEP", "group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda3028cd84f8c7b598164d8e2936c6be96", null ]
@@ -115,7 +132,14 @@ var group___l_p_m___a_p_i =
       [ "LPM_STANDBY_WAKE_SOURCE_AGT3UD", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa53704d6dd4d12bbc3509055cd031eb4a", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_AGT3CA", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0facfe0e9a67684ea48ad8c07a44ac2ff87", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_AGT3CB", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fab99344c667c90fc8946096f55442bb4c", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_I3C0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa23ebaf8a51939e19a9eae929bf2e1985", null ]
+      [ "LPM_STANDBY_WAKE_SOURCE_COMPHS0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa7135d9346416fdc5a325d2ea13b9f38f", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_ULP0U", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0faa77ebd3c3891b975162af8c1193a4540", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_ULP0A", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa448bca53f49f1cd7a09b8b240e270174", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_ULP0B", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa8f0713fd2a82332e173df86ee9e0b586", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_I3C0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa23ebaf8a51939e19a9eae929bf2e1985", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_ULP1U", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa023b163dd5f41c22ab1c959b5089aaa4", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_ULP1A", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa1f8eb8fc08f33791f31e31416cdbb849", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_ULP1B", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa2a72ab5a947d5c5620e3871fc054a216", null ]
     ] ],
     [ "lpm_io_port_t", "group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3", [
       [ "LPM_IO_PORT_RESET", "group___l_p_m___a_p_i.html#gga93645998bccd96ec1dc8b97d84eea1a3a10c2ed5a6bb917390dc17df840afbbfb", null ],
@@ -124,7 +148,10 @@ var group___l_p_m___a_p_i =
     [ "lpm_power_supply_t", "group___l_p_m___a_p_i.html#ga7dddfc8756ccb1fb6e9e430ecbcd4f18", [
       [ "LPM_POWER_SUPPLY_DEEPCUT0", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a439565c110009057be575e34bdb7fcbb", null ],
       [ "LPM_POWER_SUPPLY_DEEPCUT1", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a8318dd0e2cbbba7d62e600732ab5ba8d", null ],
-      [ "LPM_POWER_SUPPLY_DEEPCUT3", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a7a473174c24fe201b19daac0b4b001fb", null ]
+      [ "LPM_POWER_SUPPLY_DEEPCUT3", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a7a473174c24fe201b19daac0b4b001fb", null ],
+      [ "LPM_POWER_SUPPLY_DEEP_STANDBY_MODE1", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a629b26d197850dbdc32e1311f01314f0", null ],
+      [ "LPM_POWER_SUPPLY_DEEP_STANDBY_MODE2", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a53e95b1e181b717910426dba4ab1c409", null ],
+      [ "LPM_POWER_SUPPLY_DEEP_STANDBY_MODE3", "group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18ad76a1d153dc5559ac367c9c44b1e7d91", null ]
     ] ],
     [ "lpm_deep_standby_cancel_edge_t", "group___l_p_m___a_p_i.html#gaecb8b2da6c5e7bf0b3532799418b9f70", [
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_EDGE_NONE", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a818cc3febb5c40eac3c942c5445d8fd4", null ],
@@ -192,10 +219,19 @@ var group___l_p_m___a_p_i =
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_NMI", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a8f917ccf42c1f653952f278880211a1a", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_USBFS", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438ac94eaace7e01751c259d2eb39938d46c", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_USBHS", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a74c706084e300994f53722481ba803cc", null ],
-      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT1", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a8d970dbc574284c10ee277107830a932", null ]
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT1", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a8d970dbc574284c10ee277107830a932", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT3", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438aebac38fa48ca93ac5eb81d9e752ede23", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_ULPT0", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438aac65c6fe7efc0b8f973f8af39f3cb3f1", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_ULPT1", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a18b7fe52067c6957ccb6b978859ef295", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IWDT", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a7b6b4e3305d9fe903fbc17c357d44d56", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_VBATT", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a85db837f8e054b2439291b81e820b456", null ]
     ] ],
     [ "lpm_output_port_enable_t", "group___l_p_m___a_p_i.html#ga9a22437bbccfdcc6663e585db99eaf91", [
       [ "LPM_OUTPUT_PORT_ENABLE_HIGH_IMPEDANCE", "group___l_p_m___a_p_i.html#gga9a22437bbccfdcc6663e585db99eaf91ad8c92a6e6649f3521f205e0aee44e67b", null ],
       [ "LPM_OUTPUT_PORT_ENABLE_RETAIN", "group___l_p_m___a_p_i.html#gga9a22437bbccfdcc6663e585db99eaf91ad37c1befe865a18a320c84e49cb2905a", null ]
+    ] ],
+    [ "lpm_ldo_standby_operation_t", "group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331", [
+      [ "LPM_LDO_STANDBY_OPERATION_DISABLED", "group___l_p_m___a_p_i.html#gga7e11877ba94d62e947260b6859334331a34bf28a81583b37bed300ff981070204", null ],
+      [ "LPM_LDO_STANDBY_OPERATION_RETAINED", "group___l_p_m___a_p_i.html#gga7e11877ba94d62e947260b6859334331a7ad95282069d65e7cc5a4aa68593dd36", null ]
     ] ]
 ];

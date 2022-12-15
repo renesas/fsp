@@ -4,6 +4,7 @@ var searchData=
   ['lpm_5fdeep_5fstandby_5fcancel_5fedge_5ft',['lpm_deep_standby_cancel_edge_t',['../group___l_p_m___a_p_i.html#gaecb8b2da6c5e7bf0b3532799418b9f70',1,'r_lpm_api.h']]],
   ['lpm_5fdeep_5fstandby_5fcancel_5fsource_5ft',['lpm_deep_standby_cancel_source_t',['../group___l_p_m___a_p_i.html#gab83f1826bb070e32d292d48f139d0438',1,'r_lpm_api.h']]],
   ['lpm_5fio_5fport_5ft',['lpm_io_port_t',['../group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3',1,'r_lpm_api.h']]],
+  ['lpm_5fldo_5fstandby_5foperation_5ft',['lpm_ldo_standby_operation_t',['../group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331',1,'r_lpm_api.h']]],
   ['lpm_5fmode_5ft',['lpm_mode_t',['../group___l_p_m___a_p_i.html#ga22283c51ece346b4ba08a30c7b0cc8dd',1,'r_lpm_api.h']]],
   ['lpm_5foutput_5fport_5fenable_5ft',['lpm_output_port_enable_t',['../group___l_p_m___a_p_i.html#ga9a22437bbccfdcc6663e585db99eaf91',1,'r_lpm_api.h']]],
   ['lpm_5fpower_5fsupply_5ft',['lpm_power_supply_t',['../group___l_p_m___a_p_i.html#ga7dddfc8756ccb1fb6e9e430ecbcd4f18',1,'r_lpm_api.h']]],

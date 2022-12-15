@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.1.0</span>
+   &#160;<span id="projectnumber">Release v4.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -236,7 +236,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i2s0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Value must be an integer between 0 and 1</td><td>0 </td><td>Specify the I2S channel. </td></tr>
+<td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the I2S channel. </td></tr>
 <tr>
 <td>Operating Mode (Master/Slave)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -292,7 +292,7 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable WS continue mode to output the word select (WS) pin even when transmission is idle. </td></tr>
 <tr>
-<td>Bit Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Bit Clock Source(available only in Master mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 External AUDIO_CLK</li>
 <li>
@@ -300,7 +300,7 @@ Internal AUDIO_CLK</li>
 </ul>
 </td><td>External AUDIO_CLK </td><td>Select External AUDIO_CLK for external signal to AUDIO_CLK input pin or Internal AUDIO_CLK for internal connection to MCU specific GPT channel. Please refer to the hardware manual for which GPT channel is connected to the internal signal </td></tr>
 <tr>
-<td>Bit Clock Divider</td><td>Refer to the RA Configuration tool for available options.</td><td>Audio Clock / 1 </td><td>Select divider used to generate bit clock from audio clock. </td></tr>
+<td>Bit Clock Divider(available only in Master mode)</td><td>Refer to the RA Configuration tool for available options.</td><td>Audio Clock / 1 </td><td>Select divider used to generate bit clock from audio clock. </td></tr>
 <tr>
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from all three interrupt service routines (ISR). </td></tr>
 <tr>
@@ -907,7 +907,7 @@ Select bit clock division ratio. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

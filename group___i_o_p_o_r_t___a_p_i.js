@@ -34,6 +34,8 @@ var group___i_o_p_o_r_t___a_p_i =
       [ "IOPORT_PERIPHERAL_IO", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a2f6455c416051e088f2339737b030b67", null ],
       [ "IOPORT_PERIPHERAL_DEBUG", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a66b5b7838b3c4b965e06bd030e78878a", null ],
       [ "IOPORT_PERIPHERAL_AGT", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a64d1b8cceeda767076613c173c787cf9", null ],
+      [ "IOPORT_PERIPHERAL_AGTW", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ab524021406375820083226f41b14295a", null ],
+      [ "IOPORT_PERIPHERAL_AGT1", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a09128fc454daf266119a4f2515899c68", null ],
       [ "IOPORT_PERIPHERAL_GPT0", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a85992fdc078e24d3dd245eba9e2794a0", null ],
       [ "IOPORT_PERIPHERAL_GPT1", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8acb7bd1929db899ee77ce971fd6c66a75", null ],
       [ "IOPORT_PERIPHERAL_SCI0_2_4_6_8", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a565b54d88476fba903552efc818d06c5", null ],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.1.0</span>
+   &#160;<span id="projectnumber">Release v4.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -257,6 +257,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable SCI_UART support for QE Tuning. </td></tr>
+<tr>
+<td>Type of chattering suppression</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+TypeA : Counter of exceed threshold is hold within hysteresis range</li>
+<li>
+TypeB : Counter of exceed threshold is reset within hysteresis range.</li>
+</ul>
+</td><td>TypeA : Counter of exceed threshold is hold within hysteresis range </td><td>TypeA of chattering suppression : Counter of exceed threshold is hold within hysteresis range. / TypeB of chattering suppression : Counter of exceed threshold is reset within hysteresis range. </td></tr>
 </table>
  <h2>Configurations for CapTouch &gt; Touch (rm_touch)</h2>
 This module can be added to the Stacks tab via New Stack &gt; CapTouch &gt; Touch (rm_touch). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -301,7 +309,16 @@ Button Touch Determination</div></div>
  <h3>Press and hold cancel</h3>
 <p>Strong noise or other sudden environment changes can disable the drift correction process, preventing return from the ON state. The press and hold cancel function implements the drift correction process and returns the button from the ON state by forcibly turning the state to OFF after a certain number of consecutive ON state periods.<br />
  Set the number of consecutive ON periods required for the press and hold cancel function to return the button to the OFF state in the configuration settings (cancel_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>). You can do this for all buttons in the touch interface configuration.</p>
-<h2>Touch Position Detection of Slider/Wheel</h2>
+<h3>Chattering suppression type (Build option)</h3>
+<p>This build option is a function to supplement the above functions (Positive Noise Filter/Negative Noise Filter and Hysteresis) for performing touch judgment.<br />
+ This build option changes the processing method for Counter of exceed threshold to TypeA or TypeB.<br />
+ TypeA of chattering suppression : Counter of exceed threshold is hold within hysteresis range.<br />
+ TypeB of chattering suppression : Counter of exceed threshold is reset within hysteresis range.</p>
+<div class="image">
+<img src="rm_touch_Chattering_Suppression_Type.png" alt="rm_touch_Chattering_Suppression_Type.png"/>
+<div class="caption">
+Chattering suppression type</div></div>
+ <h2>Touch Position Detection of Slider/Wheel</h2>
 <p>Configure a slider with multiple terminals to be measured (TS) physically arranged in a straight line. Configure a wheel with multiple terminals physically arranged in a circle.<br />
  The touch position is calculated from the measured values of the TS in the configuration. The calculation method for sliders and wheels is fundamentally the same.</p><ol type="1">
 <li>Detect the maximum value (TS_MAX) among the terminals in the configuration.</li>
@@ -1138,7 +1155,7 @@ Pointer to CTSU instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.1.0</span>
+   &#160;<span id="projectnumber">Release v4.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -397,7 +397,16 @@ Example of Shield Electrode Structure</div></div>
  The diagnosis function is executed by calling the API function. This is executed independently from the other measurements and does not affect them. <br />
  To enable the diagnosis function, set CTSU_CFG_DIAG_SUPPORT_ENABLE to 1.<br />
  For CTSU1, a 27pF condenser should be connected externally.<br />
- For CTSU2, use <a class="el" href="group___a_d_c.html">ADC (r_adc)</a>.</p>
+ For CTSU2, Diagnosis function uses the ADC module.<br />
+ If an error occurs in the ADC module used for Diagnosis mode, return FSP_ERR_ABORTED as the return value of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.<br />
+ If an ADC error is returned, exit the function so as not to measure or close the ADC.<br />
+ See ADC (r_adc) for ADC module errors. <br />
+ Please pay particular attention to the following three points.<br />
+</p><ol type="1">
+<li>Be sure to measure the ADC module when using the Diagnosis mode function of the CTSU module. Therefore, in order for the user to use it with Dignosis, please close the user's ADC. After closing, please use the Diagnosis mode function of the CTSU module.</li>
+<li>When creating an application with RTOS, please be careful about the scheduling of the CTSU module's Diagnosis mode function task and the user's ADC task.</li>
+<li>If FSP_ERR_ABORTED occurs, please call the user's ADC again when using the user's ADC.</li>
+</ol>
 <h2>Measurement Mode</h2>
 <p>This module supports all three modes offered by the CTSU2 peripheral: self-capacitance, mutual-capacitance, and current measurement modes. The temperature correction mode is also offered as a mode for updating the correction coefficient.</p>
 <h3>Self-capacitance Mode</h3>
@@ -470,7 +479,17 @@ Current Measurement Period</div></div>
 <img src="r_ctsu_Temperature_Correction_Measurement_Period.png" alt="r_ctsu_Temperature_Correction_Measurement_Period.png"/>
 <div class="caption">
 Temperature Correction Measurement Timing Chart</div></div>
- <h3>Diagnosis Mode</h3>
+<p> Temperature correction uses the ADC module.<br />
+ If an error occurs in the ADC module used for temperature correction, return FSP_ERR_ABORTED as the return value of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.<br />
+ If an ADC error is returned, exit the function so as not to measure or close the ADC.<br />
+ See ADC (r_adc) for ADC module errors. <br />
+ Please pay articular attention to the following three points.<br />
+</p><ol type="1">
+<li>When using the temperature correction of the CTSU module, be sure to measure the ADC module. Therefore, please close the user's ADC for use in temperature correction. After closing, please use temperature correction of CTSU module.</li>
+<li>When creating an RTOS, please be careful about the scheduling of the CTSU module's temperature correction task and the user's ADC task when creating an application.</li>
+<li>If FSP_ERR_ABORTED occurs, please call the user's ADC again when using the user's ADC.</li>
+</ol>
+<h3>Diagnosis Mode</h3>
 <p>The diagnosis mode is a mode in which various internal measurement values are scanned by using this diagnosis function <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Implements ctsu_api_t::diagnosis. ">R_CTSU_Diagnosis()</a>.</p>
 <h2>Measurement Timing</h2>
 <p>Measurements are initiated by a software trigger or an external event which is triggered by the Event Link Controller (ELC).<br />
@@ -765,10 +784,10 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ab422bfa8a5f8e1c9e56866c44c440f75">rd_index</a></td></tr>
 <tr class="memdesc:ab422bfa8a5f8e1c9e56866c44c440f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Word index into scan data buffer. <br /></td></tr>
 <tr class="separator:ab422bfa8a5f8e1c9e56866c44c440f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a678f08dcec63a2aba0f31132e08667a6"><td class="memItemLeft" align="right" valign="top"><a id="a678f08dcec63a2aba0f31132e08667a6"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a678f08dcec63a2aba0f31132e08667a6">p_tuning_count</a></td></tr>
-<tr class="memdesc:a678f08dcec63a2aba0f31132e08667a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to tuning count of each element. g_ctsu_tuning_count[] is set by Open API. <br /></td></tr>
-<tr class="separator:a678f08dcec63a2aba0f31132e08667a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d51d2cc89379ed752a6823fc2487603"><td class="memItemLeft" align="right" valign="top"><a id="a7d51d2cc89379ed752a6823fc2487603"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a7d51d2cc89379ed752a6823fc2487603">p_element_complete_flag</a></td></tr>
+<tr class="memdesc:a7d51d2cc89379ed752a6823fc2487603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to complete flag of each element. g_ctsu_element_complete_flag[] is set by Open API. <br /></td></tr>
+<tr class="separator:a7d51d2cc89379ed752a6823fc2487603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a527001bce3114395980eb1ab84990d39"><td class="memItemLeft" align="right" valign="top"><a id="a527001bce3114395980eb1ab84990d39"></a>
 int32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a527001bce3114395980eb1ab84990d39">p_tuning_diff</a></td></tr>
 <tr class="memdesc:a527001bce3114395980eb1ab84990d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API. <br /></td></tr>
@@ -1146,6 +1165,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
     <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_INCOMPLETE_TUNING</td><td>Incomplete initial offset tuning. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_DIAG_NOT_YET</td><td>Diagnosis of data collected no yet. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Operate error of Diagnosis ADC data collection ,since ADC use other </td></tr>
   </table>
   </dd>
 </dl>
@@ -1434,7 +1454,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

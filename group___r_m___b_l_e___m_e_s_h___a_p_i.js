@@ -55,6 +55,7 @@ var group___r_m___b_l_e___m_e_s_h___a_p_i =
       [ "max_num_transition_timers", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a78d95611dcdd4d9a6786f77ae685085d", null ],
       [ "max_num_periodic_step_timers", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a50770642fb49bcc646a6cfa8350fc7e7", null ],
       [ "maximum_health_server_num", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a4eb34b6ef587747ceb3c80a3d22fb61e", null ],
+      [ "maximum_light_lc_server_num", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a8ea4173cd3bcd7d8fbf876139cca086a", null ],
       [ "replay_cache_size", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a89b3b7778f132a2a72fd4630d42c3c37", null ],
       [ "default_company_id", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a2f42a44bd8432353d0327e0559e05dd6", null ],
       [ "default_product_id", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#a2bf98e1d25c43155e907b0450e577019", null ],

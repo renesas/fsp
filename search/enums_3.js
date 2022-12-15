@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['da16200_5frecv_5fstate',['da16200_recv_state',['../group___w_i_f_i___o_n_c_h_i_p___d_a16200.html#ga7f9781a5a6a7d726e808db2b6ce53ba9',1,'rm_wifi_onchip_da16200.h']]],
+  ['da16200_5fsocket_5frw',['da16200_socket_rw',['../group___w_i_f_i___o_n_c_h_i_p___d_a16200.html#ga7089e7382762ecdea82fa219244a2444',1,'rm_wifi_onchip_da16200.h']]],
+  ['da16200_5fsocket_5fstatus_5ft',['da16200_socket_status_t',['../group___w_i_f_i___o_n_c_h_i_p___d_a16200.html#ga0e447e57711a1cc0d66044d563963489',1,'rm_wifi_onchip_da16200.h']]],
   ['dac8_5fmode_5ft',['dac8_mode_t',['../group___d_a_c8.html#gaad896095c341ce32b42f85eee23d9c7f',1,'r_dac8.h']]],
   ['dac_5fdata_5fformat_5ft',['dac_data_format_t',['../group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591',1,'r_dac_api.h']]],
   ['display_5fcolor_5forder_5ft',['display_color_order_t',['../group___d_i_s_p_l_a_y___a_p_i.html#ga1da943d9034f9b7adc58d689c04202c1',1,'r_display_api.h']]],

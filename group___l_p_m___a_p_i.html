@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.1.0</span>
+   &#160;<span id="projectnumber">Release v4.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -178,6 +178,10 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structlpm__ram__retention__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#structlpm__ram__retention__t">lpm_ram_retention_t</a></td></tr>
+<tr class="separator:structlpm__ram__retention__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlpm__ldo__standby__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#structlpm__ldo__standby__cfg__t">lpm_ldo_standby_cfg_t</a></td></tr>
+<tr class="separator:structlpm__ldo__standby__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlpm__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a></td></tr>
 <tr class="separator:structlpm__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlpm__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#structlpm__api__t">lpm_api_t</a></td></tr>
@@ -214,8 +218,78 @@ Enumerations</h2></td></tr>
 <tr class="separator:gab83f1826bb070e32d292d48f139d0438"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9a22437bbccfdcc6663e585db99eaf91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga9a22437bbccfdcc6663e585db99eaf91">lpm_output_port_enable_t</a> </td></tr>
 <tr class="separator:ga9a22437bbccfdcc6663e585db99eaf91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e11877ba94d62e947260b6859334331"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331">lpm_ldo_standby_operation_t</a> </td></tr>
+<tr class="separator:ga7e11877ba94d62e947260b6859334331"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structlpm__ram__retention__t" id="structlpm__ram__retention__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlpm__ram__retention__t">&#9670;&nbsp;</a></span>lpm_ram_retention_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lpm_ram_retention_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RAM Retention Configuration for deep sleep and standby modes. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ad512e4622a3d25d8ffa8792f6ace2e2d"></a>uint16_t</td>
+<td class="fieldname">
+ram_retention</td>
+<td class="fielddoc">
+<p>Configure RAM retention in software standby mode. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac9ede62b959c7bf7d5676cbb5a09b4a9"></a>bool</td>
+<td class="fieldname">
+tcm_retention</td>
+<td class="fielddoc">
+<p>Enable or disable TCM retention in deep sleep and software standby modes. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlpm__ldo__standby__cfg__t" id="structlpm__ldo__standby__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlpm__ldo__standby__cfg__t">&#9670;&nbsp;</a></span>lpm_ldo_standby_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lpm_ldo_standby_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configure LDO operation in standby mode. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0a4f9af3d37d4418df749d987babf17c"></a><a class="el" href="group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331">lpm_ldo_standby_operation_t</a></td>
+<td class="fieldname">
+pll1_ldo</td>
+<td class="fielddoc">
+Configure the state of PLL1 LDO in standby mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="abf0afd56437a6a5c3bff8a162b3198ab"></a><a class="el" href="group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331">lpm_ldo_standby_operation_t</a></td>
+<td class="fieldname">
+pll2_ldo</td>
+<td class="fielddoc">
+Configure the state of PLL2 LDO in standby mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae1233cf58a7ed4696daf39d59cd95dd2"></a><a class="el" href="group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331">lpm_ldo_standby_operation_t</a></td>
+<td class="fieldname">
+hoco_ldo</td>
+<td class="fielddoc">
+Configure the state of HOCO LDO in standby mode. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structlpm__cfg__t" id="structlpm__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structlpm__cfg__t">&#9670;&nbsp;</a></span>lpm_cfg_t</h2>
 
@@ -242,7 +316,7 @@ low_power_mode</td>
 <td class="fieldname">
 standby_wake_sources</td>
 <td class="fielddoc">
-<p>Bitwise list of sources to wake from standby </p>
+<p>Bitwise list of sources to wake from deep sleep and standby mode </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a925853ca50abf398579c5f78d256db05"></a><a class="el" href="group___l_p_m___a_p_i.html#gad89b68cf8999a1082839128aaad4e9d4">lpm_snooze_request_t</a></td>
@@ -271,6 +345,55 @@ snooze_cancel_sources</td>
 dtc_state_in_snooze</td>
 <td class="fielddoc">
 <p>State of DTC in snooze mode, enabled or disabled </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1364840b49b73355d7d29e91590553f8"></a><a class="el" href="group___l_p_m___a_p_i.html#ga9a22437bbccfdcc6663e585db99eaf91">lpm_output_port_enable_t</a></td>
+<td class="fieldname">
+output_port_enable</td>
+<td class="fielddoc">
+<p>Output port enabled/disabled in standby and deep standby </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a4cfe3ab632b0dd4c77977e5e0722b5b7"></a><a class="el" href="group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3">lpm_io_port_t</a></td>
+<td class="fieldname">
+io_port_state</td>
+<td class="fielddoc">
+<p>IO port state in deep standby (maintained or reset) </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a01dacb434e56d80d3dae6253d8cf8e5c"></a><a class="el" href="group___l_p_m___a_p_i.html#ga7dddfc8756ccb1fb6e9e430ecbcd4f18">lpm_power_supply_t</a></td>
+<td class="fieldname">
+power_supply_state</td>
+<td class="fielddoc">
+<p>Internal power supply state in standby and deep standby (deepcut) </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a2764fdd4551e7a2f7abd9e3790c4a3ff"></a>lpm_deep_standby_cancel_source_bits_t</td>
+<td class="fieldname">
+deep_standby_cancel_source</td>
+<td class="fielddoc">
+<p>Sources that can trigger exit from deep standby </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a5119f6201353cfcc468a554a8134546f"></a>lpm_deep_standby_cancel_edge_bits_t</td>
+<td class="fieldname">
+deep_standby_cancel_edge</td>
+<td class="fielddoc">
+<p>Signal edges for the sources that can trigger exit from deep standby </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af943753a27927ed87202f40defd77fc8"></a><a class="el" href="group___l_p_m___a_p_i.html#structlpm__ram__retention__t">lpm_ram_retention_t</a></td>
+<td class="fieldname">
+ram_retention_cfg</td>
+<td class="fielddoc">
+<p>RAM retention configuration for deep sleep and standby modes. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a858f59e92ecc506ef433f1e1d9401659"></a><a class="el" href="group___l_p_m___a_p_i.html#structlpm__ldo__standby__cfg__t">lpm_ldo_standby_cfg_t</a></td>
+<td class="fieldname">
+ldo_standby_cfg</td>
+<td class="fielddoc">
+<p>Configure LDOs that are disabled in standby mode. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="aba5f12284eb8a49b9ff5466fc7b0b9e0"></a>void const  *</td>
@@ -480,6 +603,8 @@ Pointer to the API structure for this instance. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga22283c51ece346b4ba08a30c7b0cc8dda88181762f1414a0fdd7e3d778a145784"></a>LPM_MODE_SLEEP&#160;</td><td class="fielddoc"><p>Sleep mode. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga22283c51ece346b4ba08a30c7b0cc8dda16eabfd91a897823f1120756b921e93a"></a>LPM_MODE_DEEP_SLEEP&#160;</td><td class="fielddoc"><p>Deep Sleep mode. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga22283c51ece346b4ba08a30c7b0cc8dda74f737cd9d53ac41b98bdeba578f9921"></a>LPM_MODE_STANDBY&#160;</td><td class="fielddoc"><p>Software Standby mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga22283c51ece346b4ba08a30c7b0cc8dda5ccbf1bbc651a5b4d787ba26e9730227"></a>LPM_MODE_STANDBY_SNOOZE&#160;</td><td class="fielddoc"><p>Software Standby mode with Snooze mode enabled. </p>
@@ -657,7 +782,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Wake from standby mode sources, does not apply to sleep or deep standby modes </p>
+<p>Wake from deep sleep or standby mode sources, does not apply to sleep or deep standby modes </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa4aa9d1a8db03257d5e7d8d4fd43ebb9c"></a>LPM_STANDBY_WAKE_SOURCE_IRQ0&#160;</td><td class="fielddoc"><p>IRQ0. </p>
 </td></tr>
@@ -727,7 +852,21 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fab99344c667c90fc8946096f55442bb4c"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CB&#160;</td><td class="fielddoc"><p>AGT3 compare match B interrupt. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa7135d9346416fdc5a325d2ea13b9f38f"></a>LPM_STANDBY_WAKE_SOURCE_COMPHS0&#160;</td><td class="fielddoc"><p>Comparator-HS0 Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faa77ebd3c3891b975162af8c1193a4540"></a>LPM_STANDBY_WAKE_SOURCE_ULP0U&#160;</td><td class="fielddoc"><p>ULPT0 Underflow Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa448bca53f49f1cd7a09b8b240e270174"></a>LPM_STANDBY_WAKE_SOURCE_ULP0A&#160;</td><td class="fielddoc"><p>ULPT0 Compare Match A Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa8f0713fd2a82332e173df86ee9e0b586"></a>LPM_STANDBY_WAKE_SOURCE_ULP0B&#160;</td><td class="fielddoc"><p>ULPT0 Compare Match B Interrupt. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa23ebaf8a51939e19a9eae929bf2e1985"></a>LPM_STANDBY_WAKE_SOURCE_I3C0&#160;</td><td class="fielddoc"><p>I3C0 address match interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa023b163dd5f41c22ab1c959b5089aaa4"></a>LPM_STANDBY_WAKE_SOURCE_ULP1U&#160;</td><td class="fielddoc"><p>ULPT1 Underflow Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa1f8eb8fc08f33791f31e31416cdbb849"></a>LPM_STANDBY_WAKE_SOURCE_ULP1A&#160;</td><td class="fielddoc"><p>ULPT1 Compare Match A Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa2a72ab5a947d5c5620e3871fc054a216"></a>LPM_STANDBY_WAKE_SOURCE_ULP1B&#160;</td><td class="fielddoc"><p>ULPT1 Compare Match B Interrupt. </p>
 </td></tr>
 </table>
 
@@ -772,6 +911,12 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga7dddfc8756ccb1fb6e9e430ecbcd4f18a8318dd0e2cbbba7d62e600732ab5ba8d"></a>LPM_POWER_SUPPLY_DEEPCUT1&#160;</td><td class="fielddoc"><p>Power to the standby RAM, Low-speed on-chip oscillator, AGTn, and USBFS/HS resume detecting unit is not supplied in deep software standby mode </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7dddfc8756ccb1fb6e9e430ecbcd4f18a7a473174c24fe201b19daac0b4b001fb"></a>LPM_POWER_SUPPLY_DEEPCUT3&#160;</td><td class="fielddoc"><p>Power to the standby RAM, Low-speed on-chip oscillator, AGTn, and USBFS/HS resume detecting unit is not supplied in deep software standby mode. In addition, LVD is disabled and the low power function in a poweron reset circuit is enabled </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7dddfc8756ccb1fb6e9e430ecbcd4f18a629b26d197850dbdc32e1311f01314f0"></a>LPM_POWER_SUPPLY_DEEP_STANDBY_MODE1&#160;</td><td class="fielddoc"><p>Power to the standby RAM, Low-speed on-chip oscillator, Programmable Voltage Detection Unit 0, and USBFS/HS resume detecting unit is supplied in deep software standby mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7dddfc8756ccb1fb6e9e430ecbcd4f18a53e95b1e181b717910426dba4ab1c409"></a>LPM_POWER_SUPPLY_DEEP_STANDBY_MODE2&#160;</td><td class="fielddoc"><p>Power to standby RAM, USBFS/HS resume detecting unit, Low-speed on-chip oscillator, and IWDT is disabled in deep software standby mode. Power to the Programmable Voltage Detection Unit 0 is supplied in deep software standby mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7dddfc8756ccb1fb6e9e430ecbcd4f18ad76a1d153dc5559ac367c9c44b1e7d91"></a>LPM_POWER_SUPPLY_DEEP_STANDBY_MODE3&#160;</td><td class="fielddoc"><p>Power to standby RAM, Programmable Voltage Detection Unit 0, USBFS/HS resume detecting unit, Low-speed on-chip oscillator, and IWDT is disabled in deep software standby mode. </p>
 </td></tr>
 </table>
 
@@ -935,6 +1080,16 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438a8d970dbc574284c10ee277107830a932"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT1&#160;</td><td class="fielddoc"><p>AGT1 Underflow. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438aebac38fa48ca93ac5eb81d9e752ede23"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT3&#160;</td><td class="fielddoc"><p>AGT3 Underflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438aac65c6fe7efc0b8f973f8af39f3cb3f1"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_ULPT0&#160;</td><td class="fielddoc"><p>ULPT0 Overflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438a18b7fe52067c6957ccb6b978859ef295"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_ULPT1&#160;</td><td class="fielddoc"><p>ULPT1 Overflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438a7b6b4e3305d9fe903fbc17c357d44d56"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_IWDT&#160;</td><td class="fielddoc"><p>IWDT Underflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438a85db837f8e054b2439291b81e820b456"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_VBATT&#160;</td><td class="fielddoc"><p>VBATT Tamper Detection. </p>
+</td></tr>
 </table>
 
 </div>
@@ -960,13 +1115,34 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga7e11877ba94d62e947260b6859334331"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7e11877ba94d62e947260b6859334331">&#9670;&nbsp;</a></span>lpm_ldo_standby_operation_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331">lpm_ldo_standby_operation_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure the behavior of an oscillator's LDO in standby mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7e11877ba94d62e947260b6859334331a34bf28a81583b37bed300ff981070204"></a>LPM_LDO_STANDBY_OPERATION_DISABLED&#160;</td><td class="fielddoc"><p>The LDO is disabled in standby mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7e11877ba94d62e947260b6859334331a7ad95282069d65e7cc5a4aa68593dd36"></a>LPM_LDO_STANDBY_OPERATION_RETAINED&#160;</td><td class="fielddoc"><p>The LDO state is retained during standby mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

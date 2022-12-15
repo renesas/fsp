@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.1.0</span>
+   &#160;<span id="projectnumber">Release v4.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,6 +284,8 @@ The following build time configurations are defined in fsp_cfg/r_canfd_cfg.h:<br
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
+<td>Global Error Interrupt &gt; Callback Channel</td><td>MCU Specific Options</td><td></td><td>Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first. </td></tr>
+<tr>
 <td>Global Error Interrupt &gt; Priority</td><td>MCU Specific Options</td><td></td><td>This interrupt is fired for each of the error sources selected below. </td></tr>
 <tr>
 <td>Global Error Interrupt &gt; Sources</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -295,56 +297,6 @@ Message Lost</li>
 FD Payload Overflow</li>
 </ul>
 </td><td>0U </td><td>Select which errors should trigger an interrupt. </td></tr>
-<tr>
-<td>Global Error Interrupt &gt; Callback Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Channel 0</li>
-<li>
-Channel 1</li>
-</ul>
-</td><td>Channel 0 </td><td>Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first. </td></tr>
-<tr>
-<td>Flexible Data (FD) &gt; FD Frame Format</td><td>MCU Specific Options</td><td></td><td>Select whether to use the FD frame standard provided by ISO or Bosch. </td></tr>
-<tr>
-<td>Flexible Data (FD) &gt; Protocol Exceptions</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled (ISO 11898-1)</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled (ISO 11898-1) </td><td>Select whether to enter the protocol exception handling state when a RES bit is sampled recessive as defined in ISO 11898-1. </td></tr>
-<tr>
-<td>Flexible Data (FD) &gt; Payload Overflow</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Reject</li>
-<li>
-Truncate</li>
-</ul>
-</td><td>Reject </td><td>Configure whether received messages larger than the destination buffer should be truncated or rejected. </td></tr>
-<tr>
-<td>Reception &gt; Message Buffers &gt; Number of Buffers</td><td>RX Message Buffer number must be an integer between 0 and 32.</td><td>0 </td><td>Number of message buffers available for reception.<br />
-<br />
-As there is no interrupt for message buffer reception it is recommended to use RX FIFOs instead. Set this value to 0 to disable RX Message Buffers. </td></tr>
-<tr>
-<td>Reception &gt; Message Buffers &gt; Payload Size</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-8 bytes</li>
-<li>
-12 bytes</li>
-<li>
-16 bytes</li>
-<li>
-20 bytes</li>
-<li>
-24 bytes</li>
-<li>
-32 bytes</li>
-<li>
-48 bytes</li>
-<li>
-64 bytes</li>
-</ul>
-</td><td>8 bytes </td><td>Payload size for all RX Message Buffers. </td></tr>
 <tr>
 <td>Reception &gt; FIFOs &gt; FIFO 0 &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -476,9 +428,51 @@ Disabled</li>
 <tr>
 <td>Reception &gt; FIFOs &gt; Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>This priority level will apply to all FIFO interrupts globally. </td></tr>
 <tr>
+<td>Reception &gt; Message Buffers &gt; Number of Buffers</td><td>RX Message Buffer number must be an integer between 0 and 32.</td><td>0 </td><td>Number of message buffers available for reception.<br />
+<br />
+As there is no interrupt for message buffer reception it is recommended to use RX FIFOs instead. Set this value to 0 to disable RX Message Buffers. </td></tr>
+<tr>
+<td>Reception &gt; Message Buffers &gt; Payload Size</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+8 bytes</li>
+<li>
+12 bytes</li>
+<li>
+16 bytes</li>
+<li>
+20 bytes</li>
+<li>
+24 bytes</li>
+<li>
+32 bytes</li>
+<li>
+48 bytes</li>
+<li>
+64 bytes</li>
+</ul>
+</td><td>8 bytes </td><td>Payload size for all RX Message Buffers. </td></tr>
+<tr>
 <td>Reception &gt; Acceptance Filtering &gt; Channel 0 Rule Count</td><td>The number of AFL rules must be an integer between 0 and 128.</td><td>32 </td><td>Number of acceptance filter list rules dedicated to Channel 0. </td></tr>
 <tr>
 <td>Reception &gt; Acceptance Filtering &gt; Channel 1 Rule Count</td><td>The number of AFL rules must be an integer between 0 and 128.</td><td>0 </td><td>Number of acceptance filter list rules dedicated to Channel 1. </td></tr>
+<tr>
+<td>Flexible Data (FD) &gt; FD Frame Format</td><td>MCU Specific Options</td><td></td><td>Select whether to use the FD frame standard provided by ISO or Bosch. </td></tr>
+<tr>
+<td>Flexible Data (FD) &gt; Protocol Exceptions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled (ISO 11898-1)</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled (ISO 11898-1) </td><td>Select whether to enter the protocol exception handling state when a RES bit is sampled recessive as defined in ISO 11898-1. </td></tr>
+<tr>
+<td>Flexible Data (FD) &gt; Payload Overflow</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reject</li>
+<li>
+Truncate</li>
+</ul>
+</td><td>Reject </td><td>Configure whether received messages larger than the destination buffer should be truncated or rejected. </td></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1350,7 +1344,7 @@ Global configuration (global error callback channel only) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.1.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
