@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -80,6 +80,10 @@ static void rm_motor_encoder_init_speed_output(motor_speed_output_t * p_output);
 static void rm_motor_encoder_copy_speed_current(motor_speed_output_t * p_output, motor_current_input_t * p_input);
 static void rm_motor_encoder_copy_current_speed(motor_current_output_t * p_output, motor_speed_input_t * p_input);
 
+static void rm_motor_encoder_inertia_estimate_current_process(motor_instance_t * p_instance);
+static void rm_motor_encoder_inertia_estimate_speed_process(motor_instance_t * p_instance);
+static void rm_motor_encoder_return_origin_speed_process(motor_instance_t * p_instance);
+
 /* Action functions */
 static motor_encoder_action_return_t rm_motor_encoder_active(motor_encoder_instance_ctrl_t * p_ctrl);
 static motor_encoder_action_return_t rm_motor_encoder_inactive(motor_encoder_instance_ctrl_t * p_ctrl);
@@ -145,6 +149,7 @@ const motor_api_t g_motor_on_encoder =
     .speedGet        = RM_MOTOR_ENCODER_SpeedGet,
     .errorCheck      = RM_MOTOR_ENCODER_ErrorCheck,
     .waitStopFlagGet = RM_MOTOR_ENCODER_WaitStopFlagGet,
+    .functionSelect  = RM_MOTOR_ENCODER_FunctionSelect,
 };
 
 /*******************************************************************************************************************//**
@@ -181,15 +186,20 @@ fsp_err_t RM_MOTOR_ENCODER_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t const 
 #if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_cfg);
-    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
     /* Using modules' instance check */
     MOTOR_ENCODER_ERROR_RETURN(NULL != p_cfg->p_motor_speed_instance, FSP_ERR_ASSERTION);
     MOTOR_ENCODER_ERROR_RETURN(NULL != p_cfg->p_motor_current_instance, FSP_ERR_ASSERTION);
 
     MOTOR_ENCODER_ERROR_RETURN(NULL != p_cfg->p_extend, FSP_ERR_ASSERTION);
+#endif
 
     motor_encoder_extended_cfg_t * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_cfg->p_extend;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+
+    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
     MOTOR_ENCODER_ERROR_RETURN(p_extended_cfg->f_overcurrent_limit >= 0.0F, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_ENCODER_ERROR_RETURN(p_extended_cfg->f_overvoltage_limit >= 0.0F, FSP_ERR_INVALID_ARGUMENT);
@@ -207,6 +217,24 @@ fsp_err_t RM_MOTOR_ENCODER_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t const 
         if (FSP_SUCCESS == err)
         {
             p_instance_ctrl->p_cfg = p_cfg;
+
+            // Open Inertia estimate when supported
+            if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
+            {
+                err = p_extended_cfg->p_motor_inertia_estimate_instance->p_api->open(
+                    p_extended_cfg->p_motor_inertia_estimate_instance->p_ctrl,
+                    p_extended_cfg->p_motor_inertia_estimate_instance->p_cfg);
+            }
+
+            // Open Return origin function when supported
+            if (p_extended_cfg->p_motor_return_origin_instance != NULL)
+            {
+                err = p_extended_cfg->p_motor_return_origin_instance->p_api->open(
+                    p_extended_cfg->p_motor_return_origin_instance->p_ctrl,
+                    p_extended_cfg->p_motor_return_origin_instance->p_cfg);
+            }
+
+            p_instance_ctrl->e_function = MOTOR_FUNCTION_SELECT_NONE;
 
             p_instance_ctrl->u2_error_info = MOTOR_ERROR_NONE;
 
@@ -246,6 +274,12 @@ fsp_err_t RM_MOTOR_ENCODER_Close (motor_ctrl_t * const p_ctrl)
     MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    motor_encoder_extended_cfg_t * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+#endif
+
     /* Close using modules */
     err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
         p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
@@ -254,6 +288,20 @@ fsp_err_t RM_MOTOR_ENCODER_Close (motor_ctrl_t * const p_ctrl)
     {
         err = p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
             p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+
+        // Close Inertia estimate when supported
+        if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
+        {
+            err = p_extended_cfg->p_motor_inertia_estimate_instance->p_api->close(
+                p_extended_cfg->p_motor_inertia_estimate_instance->p_ctrl);
+        }
+
+        // Close Return origin function when supported
+        if (p_extended_cfg->p_motor_return_origin_instance != NULL)
+        {
+            err = p_extended_cfg->p_motor_return_origin_instance->p_api->close(
+                p_extended_cfg->p_motor_return_origin_instance->p_ctrl);
+        }
 
         if (FSP_SUCCESS == err)
         {
@@ -328,7 +376,10 @@ fsp_err_t RM_MOTOR_ENCODER_Run (motor_ctrl_t * const p_ctrl)
     MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    rm_motor_encoder_statemachine_event(p_instance_ctrl, MOTOR_ENCODER_CTRL_EVENT_RUN);
+    if (MOTOR_FUNCTION_SELECT_NONE == p_instance_ctrl->e_function)
+    {
+        rm_motor_encoder_statemachine_event(p_instance_ctrl, MOTOR_ENCODER_CTRL_EVENT_RUN);
+    }
 
     return err;
 }
@@ -356,7 +407,10 @@ fsp_err_t RM_MOTOR_ENCODER_Stop (motor_ctrl_t * const p_ctrl)
     MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    rm_motor_encoder_statemachine_event(p_instance_ctrl, MOTOR_ENCODER_CTRL_EVENT_STOP);
+    if (MOTOR_FUNCTION_SELECT_NONE == p_instance_ctrl->e_function)
+    {
+        rm_motor_encoder_statemachine_event(p_instance_ctrl, MOTOR_ENCODER_CTRL_EVENT_STOP);
+    }
 
     return err;
 }
@@ -446,9 +500,12 @@ fsp_err_t RM_MOTOR_ENCODER_PositionSet (motor_ctrl_t * const                    
     MOTOR_ENCODER_ERROR_RETURN(p_position != NULL, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
-        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
-        p_position);
+    if (MOTOR_FUNCTION_SELECT_NONE == p_instance_ctrl->e_function)
+    {
+        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
+            p_position);
+    }
 
     return err;
 }
@@ -648,6 +705,267 @@ fsp_err_t RM_MOTOR_ENCODER_WaitStopFlagGet (motor_ctrl_t * const p_ctrl, motor_w
     FSP_PARAMETER_NOT_USED(p_flag);
 
     return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Select using function. Implements @ref motor_api_t::functionSelect.
+ *
+ * @retval FSP_SUCCESS              Successfully resetted.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Mode unmatch
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ENCODER_FunctionSelect (motor_ctrl_t * const p_ctrl, motor_function_select_t const function)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_encoder_instance_ctrl_t * p_instance_ctrl = (motor_encoder_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    switch (p_instance_ctrl->e_function)
+    {
+        default:
+        {
+            /* Do nothing */
+            break;
+        }
+
+        case MOTOR_FUNCTION_SELECT_NONE:
+        {
+            if (MOTOR_FUNCTION_SELECT_NONE == function)
+            {
+                err = FSP_ERR_INVALID_MODE;
+            }
+            else
+            {
+                p_instance_ctrl->e_function = function;
+
+                /* Run */
+                rm_motor_encoder_active(p_instance_ctrl);
+            }
+
+            break;
+        }
+
+        case MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE:
+        {
+            if (MOTOR_FUNCTION_SELECT_NONE == function)
+            {
+                p_instance_ctrl->e_function = function;
+
+                /* Stop */
+                rm_motor_encoder_inactive(p_instance_ctrl);
+            }
+            else
+            {
+                err = FSP_ERR_INVALID_MODE;
+            }
+
+            break;
+        }
+
+        case MOTOR_FUNCTION_SELECT_RETURN_ORIGIN:
+        {
+            if (MOTOR_FUNCTION_SELECT_NONE == function)
+            {
+                p_instance_ctrl->e_function = function;
+
+                /* Stop */
+                rm_motor_encoder_inactive(p_instance_ctrl);
+            }
+            else
+            {
+                err = FSP_ERR_INVALID_MODE;
+            }
+
+            break;
+        }
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Start inertia estimation function.
+ *
+ * @retval FSP_SUCCESS              Successfully resetted.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Mode unmatch
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ENCODER_InertiaEstimateStart (motor_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_encoder_instance_ctrl_t * p_instance_ctrl = (motor_encoder_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    motor_encoder_extended_cfg_t * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+#endif
+
+    /* Only effective when Inertia estimation is selected */
+    if (MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE == p_instance_ctrl->e_function)
+    {
+        if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
+        {
+            err = p_extended_cfg->p_motor_inertia_estimate_instance->p_api->start(
+                p_extended_cfg->p_motor_inertia_estimate_instance->p_ctrl);
+        }
+    }
+    else
+    {
+        err = FSP_ERR_INVALID_MODE;
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Stop(Cancel) inertia estimation function.
+ *
+ * @retval FSP_SUCCESS              Successfully resetted.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Mode unmatch
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ENCODER_InertiaEstimateStop (motor_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_encoder_instance_ctrl_t * p_instance_ctrl = (motor_encoder_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    motor_encoder_extended_cfg_t * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+#endif
+
+    /* Only effective when Inertia estimation is selected */
+    if (MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE == p_instance_ctrl->e_function)
+    {
+        if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
+        {
+            err = p_extended_cfg->p_motor_inertia_estimate_instance->p_api->stop(
+                p_extended_cfg->p_motor_inertia_estimate_instance->p_ctrl);
+        }
+    }
+    else
+    {
+        err = FSP_ERR_INVALID_MODE;
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Start return origin function.
+ *
+ * @retval FSP_SUCCESS              Successfully resetted.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Mode unmatch
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ENCODER_ReturnOriginStart (motor_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_encoder_instance_ctrl_t * p_instance_ctrl = (motor_encoder_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    motor_encoder_extended_cfg_t * p_extended_cfg =
+        (motor_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+#endif
+
+    /* Only effective when Return origin is selected */
+    if (MOTOR_FUNCTION_SELECT_RETURN_ORIGIN == p_instance_ctrl->e_function)
+    {
+        if (p_extended_cfg->p_motor_return_origin_instance != NULL)
+        {
+            err = p_extended_cfg->p_motor_return_origin_instance->p_api->start(
+                p_extended_cfg->p_motor_return_origin_instance->p_ctrl);
+        }
+    }
+    else
+    {
+        err = FSP_ERR_INVALID_MODE;
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Stop(Cancel) return origin function.
+ *
+ * @retval FSP_SUCCESS              Successfully resetted.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Mode unmatch
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ENCODER_ReturnOriginStop (motor_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_encoder_instance_ctrl_t * p_instance_ctrl = (motor_encoder_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    motor_encoder_extended_cfg_t * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if MOTOR_ENCODER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+#endif
+
+    /* Only effective when Return origin is selected */
+    if (MOTOR_FUNCTION_SELECT_RETURN_ORIGIN == p_instance_ctrl->e_function)
+    {
+        if (p_extended_cfg->p_motor_return_origin_instance != NULL)
+        {
+            err = p_extended_cfg->p_motor_return_origin_instance->p_api->stop(
+                p_extended_cfg->p_motor_return_origin_instance->p_ctrl);
+        }
+    }
+    else
+    {
+        err = FSP_ERR_INVALID_MODE;
+    }
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -853,19 +1171,19 @@ static uint32_t rm_motor_encoder_statemachine_event (motor_encoder_instance_ctrl
 /***********************************************************************************************************************
  * Function Name : rm_motor_check_over_speed_error
  * Description   : Checks over-speed error
- * Arguments     : f4_speed_rad - The electrical speed[rad/s]
- *                 f4_speed_limit_rad - The speed[rad/s] threshold of the over-speed error, should be a positive value
+ * Arguments     : f4_speed - The electrical speed
+ *                 f4_speed_limit - The speed
  * Return Value  : The over-speed error flag
  **********************************************************************************************************************/
-static inline uint16_t rm_motor_check_over_speed_error (float f4_speed_rad, float f4_speed_limit_rad)
+static inline uint16_t rm_motor_check_over_speed_error (float f4_speed, float f4_speed_limit)
 {
     float    f4_temp0;
     uint16_t u2_temp0;
 
     u2_temp0 = MOTOR_ERROR_NONE;
 
-    f4_temp0 = fabsf(f4_speed_rad);
-    if (f4_temp0 > f4_speed_limit_rad)
+    f4_temp0 = fabsf(f4_speed);
+    if (f4_temp0 > f4_speed_limit)
     {
         u2_temp0 = MOTOR_ERROR_OVER_SPEED;
     }
@@ -1031,6 +1349,114 @@ static void rm_motor_encoder_init_speed_output (motor_speed_output_t * p_output)
     p_output->u1_flag_pi = MOTOR_ENCODER_FLAG_CLEAR;
 }                                      /* End of function rm_motor_encoder_init_speed_output() */
 
+/***********************************************************************************************************************
+ * Function Name : rm_motor_encoder_inertia_estimate_current_process
+ * Description   : Inertia estimate process in current cyclic
+ * Arguments     : p_instance - motor instance pointer
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_encoder_inertia_estimate_current_process (motor_instance_t * p_instance)
+{
+    motor_encoder_instance_ctrl_t   * p_ctrl         = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_encoder_extended_cfg_t    * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    motor_position_instance_t const * p_position     =
+        (motor_position_instance_t *) p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance;
+    motor_position_info_t temp_position_info;
+    motor_inertia_estimate_instance_t const * p_ie_instance = p_extended_cfg->p_motor_inertia_estimate_instance;
+
+    if (p_ie_instance != NULL)
+    {
+        if (MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE == p_ctrl->e_function)
+        {
+            p_ctrl->st_ie_set_data.f_iq = p_ctrl->st_current_output.f_iq;
+            p_ctrl->st_ie_set_data.f_speed_radian_control = p_ctrl->st_current_input.f_ref_speed_rad_ctrl;
+
+            p_position->p_api->infoGet(p_position->p_ctrl, &temp_position_info);
+
+            p_ctrl->st_ie_set_data.s2_position_degree = temp_position_info.s2_position_degree;
+            p_ctrl->st_ie_set_data.u1_position_state  = temp_position_info.u1_state_position_profile;
+
+            p_ie_instance->p_api->dataSet(p_ie_instance->p_ctrl, &(p_ctrl->st_ie_set_data));
+            p_ie_instance->p_api->infoGet(p_ie_instance->p_ctrl, &(p_ctrl->st_ie_get_data));
+            p_ie_instance->p_api->currentCyclic(p_ie_instance->p_ctrl);
+        }
+    }
+}                                      /* End of function rm_motor_encoder_inertia_estimate_current_process() */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_encoder_inertia_estimate_speed_process
+ * Description   : Inertia estimate process in speed cyclic
+ * Arguments     : p_instance - motor instance pointer
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_encoder_inertia_estimate_speed_process (motor_instance_t * p_instance)
+{
+    motor_encoder_instance_ctrl_t           * p_ctrl         = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_encoder_extended_cfg_t            * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    motor_inertia_estimate_instance_t const * p_ie_instance  = p_extended_cfg->p_motor_inertia_estimate_instance;
+    motor_speed_position_data_t               temp_position_data;
+
+    if (p_ie_instance != NULL)
+    {
+        if (MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE == p_ctrl->e_function)
+        {
+            p_ie_instance->p_api->speedCyclic(p_ie_instance->p_ctrl);
+
+            temp_position_data.e_step_mode               = MOTOR_SPEED_STEP_DISABLE;
+            temp_position_data.e_loop_mode               = MOTOR_SPEED_LOOP_MODE_POSITION;
+            temp_position_data.position_reference_degree =
+                p_ctrl->st_ie_get_data.s2_position_reference_degree;
+
+            /* Set position reference */
+            p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
+                &temp_position_data);
+        }
+    }
+}                                      /* End of function rm_motor_encoder_inertia_estimate_speed_process() */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_encoder_return_origin_speed_process
+ * Description   : Return origin process in speed cyclic
+ * Arguments     : p_instance - motor instance pointer
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_encoder_return_origin_speed_process (motor_instance_t * p_instance)
+{
+    motor_encoder_instance_ctrl_t        * p_ctrl         = (motor_encoder_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_encoder_extended_cfg_t         * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    motor_return_origin_instance_t const * p_ro_instance  = p_extended_cfg->p_motor_return_origin_instance;
+    motor_speed_position_data_t            temp_position_data;
+    int16_t s2_temp_position;
+
+    /* Return origin process */
+    if (p_ro_instance != NULL)
+    {
+        if (MOTOR_FUNCTION_SELECT_RETURN_ORIGIN == p_ctrl->e_function)
+        {
+            p_ctrl->st_ro_set_data.f_iq = p_ctrl->st_current_output.f_iq;
+            p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance->p_api->positionGet(
+                p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance->p_ctrl,
+                &s2_temp_position);
+            p_ctrl->st_ro_set_data.f_position_degree = (float) s2_temp_position;
+            p_ro_instance->p_api->dataSet(p_ro_instance->p_ctrl, &(p_ctrl->st_ro_set_data));
+
+            p_ro_instance->p_api->speedCyclic(p_ro_instance->p_ctrl);
+            p_ro_instance->p_api->infoGet(p_ro_instance->p_ctrl, &(p_ctrl->st_ro_info));
+
+            temp_position_data.e_step_mode               = MOTOR_SPEED_STEP_ENABLE;
+            temp_position_data.e_loop_mode               = MOTOR_SPEED_LOOP_MODE_POSITION;
+            temp_position_data.position_reference_degree =
+                (int16_t) p_ctrl->st_ro_info.f_position_reference_degree;
+
+            /* Set position reference */
+            p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
+                &temp_position_data);
+        }
+    }
+}                                      /* End of function rm_motor_encoder_return_origin_speed_process() */
+
 /* Callback function */
 
 /***********************************************************************************************************************
@@ -1071,6 +1497,8 @@ void rm_motor_encoder_current_callback (motor_current_callback_args_t * p_args)
 
         case MOTOR_CURRENT_EVENT_BACKWARD:
         {
+            rm_motor_encoder_inertia_estimate_current_process(p_instance);
+
             /* Invoke the callback function if it is set. */
             if (NULL != p_ctrl->p_cfg->p_callback)
             {
@@ -1124,6 +1552,9 @@ void rm_motor_encoder_speed_callback (motor_speed_callback_args_t * p_args)
 
         case MOTOR_SPEED_EVENT_BACKWARD:
         {
+            rm_motor_encoder_inertia_estimate_speed_process(p_instance);
+            rm_motor_encoder_return_origin_speed_process(p_instance);
+
             /* Invoke the callback function if it is set. */
             if (NULL != p_ctrl->p_cfg->p_callback)
             {

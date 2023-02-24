@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1777,26 +1777,26 @@ void touch_button_on (touch_button_info_t * p_binfo, uint16_t value, uint8_t but
     if (p_binfo->on_freq <= (*(p_binfo->p_on_count + button_id)))
     {
         p_binfo->status |= ((uint64_t) 1 << button_id);
+
+        /* ===== The reset judgment processing at the time of continuation on ===== */
+        if (p_binfo->cancel_freq > p_binfo->on_freq)
+        {
+            /* If reaching max_on_threshold, it makes result off and it revises a drift. */
+            if (p_binfo->cancel_freq <= (*(p_binfo->p_on_count + button_id)))
+            {
+                p_binfo->status &= ~(((uint64_t) 1 << button_id));
+                *(p_binfo->p_on_count + button_id)  = 0;
+                *(p_binfo->p_reference + button_id) = value;
+            }
+            else
+            {
+                (*(p_binfo->p_on_count + button_id))++;
+            }
+        }
     }
     else
     {
         (*(p_binfo->p_on_count + button_id))++;
-    }
-
-    /* ===== The reset judgment processing at the time of continuation on ===== */
-    if (p_binfo->cancel_freq > p_binfo->on_freq)
-    {
-        /* If reaching max_on_threshold, it makes result off and it revises a drift. */
-        if (p_binfo->cancel_freq <= (*(p_binfo->p_on_count + button_id)))
-        {
-            p_binfo->status &= ~(((uint64_t) 1 << button_id));
-            *(p_binfo->p_on_count + button_id)  = 0;
-            *(p_binfo->p_reference + button_id) = value;
-        }
-        else
-        {
-            (*(p_binfo->p_on_count + button_id))++;
-        }
     }
 }                                      /* End of function touch_button_on() */
 

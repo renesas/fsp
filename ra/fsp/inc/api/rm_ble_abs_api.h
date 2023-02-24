@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -42,15 +42,14 @@
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 #include "r_ble_api.h"
-#ifndef BLE_CFG_RYZ012_DEVICE
- #ifndef BLE_CFG_DA14531_DEVICE
-   #include "r_flash_api.h"
-   #include "r_timer_api.h"
-  #endif
-#else
+
+#if defined(BLE_CFG_RYZ012_DEVICE) || defined(BLE_CFG_DA14xxx_DEVICE)
  #include "r_uart_api.h"
  #include "r_spi_api.h"
  #include "r_external_irq_api.h"
+#else
+ #include "r_flash_api.h"
+ #include "r_timer_api.h"
 #endif
 
 #include "fsp_common_api.h"
@@ -183,7 +182,7 @@ typedef struct st_ble_abs_pairing_parameter
     uint8_t local_key_distribute;        ///< Type of keys to be distributed from local device.
     uint8_t remote_key_distribute;       ///< Type of keys which local device requests a remote device to distribute.
     uint8_t maximum_key_size;            ///< Maximum LTK size.
-    uint8_t padding[2];                  ///< padding
+    uint8_t padding[2];                  ///< Reserved
 } ble_abs_pairing_parameter_t;
 
 /** GATT Server callback function and the priority. */
@@ -224,37 +223,36 @@ typedef struct st_ble_abs_legacy_advertising_parameter
     uint8_t * p_scan_response_data;
 
     /**
-     *  @brief  Advertising with the fast_advertising_interval parameter continues for the period specified \n
-     *  by the fast_period parameter.\n
-     *  Time(ms) = fast_advertising_interval * 0.625. \n
-     *  If the fast_period parameter is 0, this parameter is ignored.\n
+     *  @brief  Advertising with the  @ref fast_advertising_interval parameter continues for the period specified \n
+     *  by the  @ref fast_advertising_period parameter.\n
+     *  Time(ms) =  @ref fast_advertising_interval * 0.625. \n
+     *  If the @ref fast_advertising_period parameter is 0, this parameter is ignored.\n
      *  Valid range is 0x00000020 - 0x00FFFFFF.
      */
     uint32_t fast_advertising_interval;
 
     /**
-     *  @brief After the elapse of the fast_period, advertising with the slow_advertising_interval parameter continues \n
-     *  for the period specified by the slow_advertising_interval parameter.\n
-     *  Time(ms) = slow_advertising_interval * 0.625. \n
-     *  If the slow_advertising_interval parameter is 0, this parameter is ignored.\n
+     *  @brief After the elapse of the @ref fast_advertising_period, advertising with the @ref slow_advertising_interval parameter continues \n
+     *  for the period specified by the @ref slow_advertising_period parameter.\n
+     *  Time(ms) = @ref slow_advertising_interval * 0.625. \n
      *  Valid range is 0x00000020 - 0x00FFFFFF.
      */
     uint32_t slow_advertising_interval;
 
     /**
-     *  @brief The period which advertising with the fast_advertising_interval parameter continues for. \n
+     *  @brief The period which advertising with the  @ref fast_advertising_interval parameter continues for. \n
      *  Time = duration * 10ms.\n
-     *  After the elapse of the fast_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped.\n
+     *  After the elapse of the @ref fast_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped.\n
      *  Valid range is 0x0000 - 0xFFFF. \n
-     *  If the fast_advertising_period parameter is 0x0000, advertising with the fast_advertising_interval parameter is not performed.
+     *  If the @ref fast_advertising_period parameter is 0x0000, advertising with the @ref fast_advertising_interval parameter is not performed.
      */
     uint16_t fast_advertising_period;
 
     /**
-     *  @brief The period which advertising with the slow_advertising_interval parameter continues for. Time = duration * 10ms. \n
-     *  After the elapse of the slow_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped. \n
+     *  @brief The period which advertising with the @ref slow_advertising_interval parameter continues for. Time = duration * 10ms. \n
+     *  After the elapse of the @ref slow_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped. \n
      *  Valid range is 0x0000 - 0xFFFF. \n
-     *  If the slow_advertising_period parameter is 0x0000, the advertising continues.
+     *  If the @ref slow_advertising_period parameter is 0x0000, the advertising continues.
      */
     uint16_t slow_advertising_period;
 
@@ -298,14 +296,14 @@ typedef struct st_ble_abs_legacy_advertising_parameter
 
     /**
      *  @brief  Own Bluetooth address type. \n Select one of the following.
-     *    |  macro                              |   description                                                                                                                |
-     *    |:------------------------------------|:---------------------------------------------------------------------------------------------------------------------------- |
-     *    | BLE_GAP_ADDR_PUBLIC(0x00)           | Public Address                                                                                                               |
-     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)    | Resolvable Private Address. \n If the IRK of local device has not been registered in Resolving List, public address is used. |
+     *    |  macro                              |   description                                                                                                                                         |
+     *    |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)           | Public Address                                                                                                                                        |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)    | Resolvable Private Address. \n If the IRK (Identity Resolving Key) of local device has not been registered in Resolving List, public address is used. |
      */
     uint8_t own_bluetooth_address_type;
     uint8_t own_bluetooth_address[6];  ///< Own Bluetooth address.
-    uint8_t padding[3];                ///< padding
+    uint8_t padding[3];                ///< Reserved
 } ble_abs_legacy_advertising_parameter_t;
 
 /** st_ble_abs_extend_advertising_parameter_t is the parameters for extended advertising. */
@@ -325,38 +323,37 @@ typedef struct st_ble_abs_extend_advertising_parameter
     uint8_t * p_advertising_data;
 
     /**
-     *  @brief Advertising with the fast_advertising_interval parameter continues for \n
-     *  the period specified by the fast_advertising_period parameter. \n
-     *  Time(ms) = fast_advertising_interval * 0.625. \n
-     *  If the fast_advertising_period parameter is 0, this parameter is ignored. \n
+     *  @brief Advertising with the @ref fast_advertising_interval parameter continues for \n
+     *  the period specified by the @ref fast_advertising_period parameter. \n
+     *  Time(ms) = @ref fast_advertising_interval * 0.625. \n
+     *  If the @ref fast_advertising_period parameter is 0, this parameter is ignored. \n
      *  Valid range is 0x00000020 - 0x00FFFFFF.
      */
     uint32_t fast_advertising_interval;
 
     /**
-     *  @brief After the elapse of the fast_advertising_period, advertising with the slow_advertising_interval parameter \n
-     *  continues for the period specified by the slow_advertising_period parameter. \n
-     *  Time(ms) = fast_advertising_interval * 0.625. \n
-     *  If the fast_advertising_period parameter is 0, this parameter is ignored. \n
+     *  @brief After the elapse of the @ref fast_advertising_period, advertising with the @ref slow_advertising_interval parameter \n
+     *  continues for the period specified by the @ref slow_advertising_period parameter. \n
+     *  Time(ms) = @ref slow_advertising_interval * 0.625. \n
      *  Valid range is 0x00000020 - 0x00FFFFFF.
      */
     uint32_t slow_advertising_interval;
 
     /**
-     *  @brief The period which advertising with the fast_advertising_interval parameter continues for. \n
+     *  @brief The period which advertising with the @ref fast_advertising_interval parameter continues for. \n
      *  Time = duration * 10ms. \n
-     *  After the elapse of the fast_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped. \n
+     *  After the elapse of the @ref fast_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped. \n
      *  Valid range is 0x0000 - 0xFFFF. \n
-     *  If the fast_advertising_period parameter is 0x0000, the fast_advertising_interval parameter is ignored.
+     *  If the @ref fast_advertising_period parameter is 0x0000, the @ref fast_advertising_interval parameter is ignored.
      */
     uint16_t fast_advertising_period;
 
     /**
-     *  @brief The period which advertising with the slow_advertising_interval parameter continues for. \n
+     *  @brief The period which advertising with the @ref slow_advertising_interval parameter continues for. \n
      *  Time = duration * 10ms. \n
-     *  After the elapse of the slow_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped. \n
+     *  After the elapse of the @ref slow_advertising_period, @ref BLE_GAP_EVENT_ADV_OFF event notifies that the advertising has stopped. \n
      *  Valid range is 0x0000 - 0xFFFF. \n
-     *  If the slow_advertising_period parameter is 0x0000, the advertising continues.
+     *  If the @ref slow_advertising_period parameter is 0x0000, the advertising continues.
      */
     uint16_t slow_advertising_period;
 
@@ -392,10 +389,10 @@ typedef struct st_ble_abs_extend_advertising_parameter
 
     /**
      *  @brief  Own Bluetooth address type. Select one of the following. \n
-     *    |  macro                              |   description                                                                                                                |
-     *    |:------------------------------------|:---------------------------------------------------------------------------------------------------------------------------- |
-     *    | BLE_GAP_ADDR_PUBLIC(0x00)           | Public Address                                                                                                               |
-     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)    | Resolvable Private Address. \n If the IRK of local device has not been registered in Resolving List, public address is used. |
+     *    |  macro                              |   description                                                                                                                                         |
+     *    |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)           | Public Address                                                                                                                                        |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)    | Resolvable Private Address. \n If the IRK (Identity Resolving Key) of local device has not been registered in Resolving List, public address is used. |
      */
     uint8_t own_bluetooth_address_type;
     uint8_t own_bluetooth_address[6];  ///< Own Bluetooth address.
@@ -420,7 +417,7 @@ typedef struct st_ble_abs_extend_advertising_parameter
      *    | BLE_GAP_ADV_PHY_CD(0x03)   | Use Coded PHY(S=8) as Secondary Advertising PHY. \n Coding scheme is configured by @ref R_BLE_VS_SetCodingScheme(). |
      */
     uint8_t secondary_advertising_phy;
-    uint8_t padding[3];                ///< padding
+    uint8_t padding[3];                ///< Reserved
 } ble_abs_extend_advertising_parameter_t;
 
 /** st_ble_abs_non_connectable_advertising_parameter_t is the parameters for non-connectable advertising. */
@@ -478,10 +475,10 @@ typedef struct st_ble_abs_non_connectable_advertising_parameter
 
     /**
      *  @brief  Own Bluetooth address type. Select one of the following. \n
-     *    |  macro                              |   description                                                                                                                |
-     *    |:------------------------------------|:---------------------------------------------------------------------------------------------------------------------------- |
-     *    | BLE_GAP_ADDR_PUBLIC(0x00)           | Public Address                                                                                                               |
-     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)    | Resolvable Private Address. \n If the IRK of local device has not been registered in Resolving List, public address is used. |
+     *    |  macro                              |   description                                                                                                                                         |
+     *    |:------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)           | Public Address                                                                                                                                        |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)    | Resolvable Private Address. \n If the IRK (Identity Resolving Key) of local device has not been registered in Resolving List, public address is used. |
      */
     uint8_t own_bluetooth_address_type;
     uint8_t own_bluetooth_address[6];  ///< Own Bluetooth address.
@@ -506,7 +503,7 @@ typedef struct st_ble_abs_non_connectable_advertising_parameter
      *    | BLE_GAP_ADV_PHY_CD(0x03)   | Use Coded PHY(S=8) as Secondary Advertising PHY. \n Coding scheme is configured by @ref R_BLE_VS_SetCodingScheme(). |
      */
     uint8_t secondary_advertising_phy;
-    uint8_t padding[2];                ///< padding
+    uint8_t padding[2];                ///< Reserved
 } ble_abs_non_connectable_advertising_parameter_t;
 
 /** st_ble_abs_periodic_advertising_parameter_t is the parameters for periodic advertising. */
@@ -579,7 +576,7 @@ typedef struct st_ble_abs_scan_phy_parameter
     uint8_t scan_type;
 
     /**
-     *  @brief padding.
+     *  @brief Reserved.
      */
     uint8_t padding[3];
 } ble_abs_scan_phy_parameter_t;
@@ -637,12 +634,12 @@ typedef struct st_ble_abs_scan_parameter
     /**
      *  @brief Scan Filter Policy. Select one of the following.\n
      *    - Address type setting (Field [7:4])
-     *    |  macro                           |   description                                                                                           |
-     *    |:---------------------------------|:------------------------------------------------------------------------------------------------------- |
-     *    | BLE_GAP_ADDR_PUBLIC(0x00)        | Use Public Address.                                                                                     |
-     *    | BLE_GAP_ADDR_RAND(0x01)          | Use Random Address.                                                                                     |
-     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address.  |
-     *    | BLE_GAP_ADDR_RPA_ID_RANDOM(0x03) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address.  |
+     *    |  macro                           |   description                                                                                                                    |
+     *    |:---------------------------------|:-------------------------------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)        | Use Public Address.                                                                                                              |
+     *    | BLE_GAP_ADDR_RAND(0x01)          | Use Random Address.                                                                                                              |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02) | If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Public Address.  |
+     *    | BLE_GAP_ADDR_RPA_ID_RANDOM(0x03) | If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Random Address.  |
      *
      *    - White list setting (Field [3:0])
      *    |  macro                                            |   description                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -739,12 +736,12 @@ typedef struct st_ble_abs_connection_parameter
     /**
      *  @brief The filter field specifies whether the White List is used or not, when connecting with a remote device.\n
      *    - Address type setting (Field [7:4])
-     *    |  macro                           |   description                                                                                           |
-     *    |:---------------------------------|:------------------------------------------------------------------------------------------------------- |
-     *    | BLE_GAP_ADDR_PUBLIC(0x00)        | Use Public Address.                                                                                     |
-     *    | BLE_GAP_ADDR_RAND(0x01)          | Use Random Address.                                                                                     |
-     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address.  |
-     *    | BLE_GAP_ADDR_RPA_ID_RANDOM(0x03) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address.  |
+     *    |  macro                           |   description                                                                                                                    |
+     *    |:---------------------------------|:-------------------------------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)        | Use Public Address.                                                                                                              |
+     *    | BLE_GAP_ADDR_RAND(0x01)          | Use Random Address.                                                                                                              |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02) | If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Public Address.  |
+     *    | BLE_GAP_ADDR_RPA_ID_RANDOM(0x03) | If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Random Address.  |
      *
      *    - White list setting (Field [3:0])
      *    |  macro                           |   description                                                                                                                      |
@@ -788,16 +785,16 @@ typedef struct st_ble_abs_cfg
     ble_abs_gatt_client_callback_set_t * p_gatt_client_callback_list;       ///< GATT Client callback set.
     uint8_t gatt_client_callback_list_number;                               ///< The number of GATT Client callback functions.
     ble_abs_pairing_parameter_t * p_pairing_parameter;                      ///< Pairing parameters.
-#ifndef BLE_CFG_RYZ012_DEVICE
-    #ifndef BLE_CFG_DA14531_DEVICE
-    flash_instance_t const * p_flash_instance;                              ///< Pointer to flash instance.
-    timer_instance_t const * p_timer_instance;                              ///< Pointer to timer instance.
-    #endif
-#else
+
+#if defined(BLE_CFG_RYZ012_DEVICE) || defined(BLE_CFG_DA14xxx_DEVICE)
     const uart_instance_t         * p_uart_instance;                        ///< SCI UART instance
     const spi_instance_t          * p_spi_instance;                         ///< SPI instance
     const external_irq_instance_t * p_irq_instance;                         ///< IRQ instance
+#else
+    flash_instance_t const * p_flash_instance;                              ///< Pointer to flash instance.
+    timer_instance_t const * p_timer_instance;                              ///< Pointer to timer instance.
 #endif
+
     void (* p_callback)(ble_abs_callback_args_t * p_args);                  ///< Callback provided when a BLE ISR occurs.
     void const * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                  ///< Placeholder for user extension.
@@ -891,7 +888,7 @@ typedef struct st_ble_abs_api
      * @par Implemented as
      * - RM_BLE_ABS_SetLocalPrivacy()
      * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[in]  p_lc_irk        Pointer to IRK to be registered in the resolving list.
+     * @param[in]  p_lc_irk        Pointer to IRK (Identity Resolving Key) to be registered in the resolving list.
      * @param[in]  privacy_mode        privacy_mode privacy mode.
      */
     fsp_err_t (* setLocalPrivacy)(ble_abs_ctrl_t * const p_ctrl, uint8_t const * const p_lc_irk, uint8_t privacy_mode);
@@ -918,7 +915,7 @@ typedef struct st_ble_abs_api
      * - RM_BLE_ABS_ImportKeyInformation()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_local_identity_address Pointer to local identiry address.
-     * @param[in]  uint8_t  p_local_irk Pointer to local IRK
+     * @param[in]  uint8_t  p_local_irk Pointer to local IRK (Identity Resolving Key)
      * @param[in]  uint8_t  p_local_csrk    Pointer to local CSRK
      */
     fsp_err_t (* importKeyInformation)(ble_abs_ctrl_t * const p_ctrl, ble_device_address_t * p_local_identity_address,
@@ -929,7 +926,7 @@ typedef struct st_ble_abs_api
      * - RM_BLE_ABS_ExportKeyInformation()
      * @param[in]   p_ctrl       Pointer to control structure.
      * @param[out]  p_local_identity_address Pointer to local identiry address.
-     * @param[out]  uint8_t  p_local_irk Pointer to local IRK
+     * @param[out]  uint8_t  p_local_irk Pointer to local IRK (Identity Resolving Key)
      * @param[out]  uint8_t  p_local_csrk    Pointer to local CSRK
      */
     fsp_err_t (* exportKeyInformation)(ble_abs_ctrl_t * const p_ctrl, ble_device_address_t * p_local_identity_address,

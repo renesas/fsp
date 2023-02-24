@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -234,6 +234,7 @@ typedef enum e_usb_class
     USB_CLASS_PHID2,                   ///< PHID2 Class
     USB_CLASS_PAUD,                    ///< PAUD Class
     USB_CLASS_PPRN,                    ///< PPRN Class
+    USB_CLASS_DFU,                     ///< DFU Class
     USB_CLASS_PVND,                    ///< PVND Class
     USB_CLASS_HCDC,                    ///< HCDC Class
     USB_CLASS_HCDCC,                   ///< HCDCC Class

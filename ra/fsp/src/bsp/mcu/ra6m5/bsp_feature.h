@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -85,8 +85,9 @@
 #define BSP_FEATURE_ADC_UNIT_1_CHANNELS                      (0x1FFF0007) // 0 to 2, 16 to 28
 #define BSP_FEATURE_ADC_VALID_UNIT_MASK                      (3U)
 
-#define BSP_FEATURE_AGT_HAS_AGTW                             (0U)
+#define BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT                   (0)
 #define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                      (5)
+#define BSP_FEATURE_AGT_USE_AGTIOSEL_ALT                     (0) // Indicates use of AGTIOSEL_ALT instead of AGTIOSEL
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                   (0x3F)
 
 #define BSP_FEATURE_BSP_FLASH_CACHE                          (1)
@@ -131,7 +132,6 @@
 #define BSP_FEATURE_BSP_NUM_PMSAR                            (12U)
 #define BSP_FEATURE_BSP_OFS1_HOCOFRQ_MASK                    (0xFFFFF9FFU)
 #define BSP_FEATURE_BSP_OFS1_HOCOFRQ_OFFSET                  (9U)
-#define BSP_FEATURE_BSP_HAS_OSIS_REG                         (0U)
 #define BSP_FEATURE_BSP_OFS_HAS_SECURITY_ATTRIBUTION         (1U)
 #define BSP_FEATURE_BSP_OSIS_PADDING                         (0U)
 #define BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED           (0U)
@@ -208,6 +208,7 @@
 #define BSP_FEATURE_CRYPTO_HAS_NEW_PROCS                     (0) // Feature not available on this MCU TODO_CHECK_FEATURE
 #define BSP_FEATURE_CRYPTO_HAS_RSA                           (1)
 #define BSP_FEATURE_CRYPTO_HAS_RSA_WRAPPED                   (1)
+#define BSP_FEATURE_CRYPTO_AES_IP_VERSION                    (0)
 #define BSP_FEATURE_CRYPTO_HAS_SCE5                          (0)
 #define BSP_FEATURE_CRYPTO_HAS_SCE5B                         (0)
 #define BSP_FEATURE_CRYPTO_HAS_SCE7                          (0)
@@ -287,6 +288,7 @@
 #define BSP_FEATURE_I3C_MAX_DEV_COUNT                        (0U) // Feature not available on this MCU
 #define BSP_FEATURE_I3C_NTDTBP0_DEPTH                        (0U) // Feature not available on this MCU
 #define BSP_FEATURE_I3C_NUM_CHANNELS                         (0U) // Feature not available on this MCU
+#define BSP_FEATURE_I3C_MSTP_OFFSET                          (0U) // Feature not available on this MCU
 
 #define BSP_FEATURE_ICU_HAS_INTERRUPT_GROUPS                 (0U)
 #define BSP_FEATURE_ICU_HAS_WUPEN1                           (1U)
@@ -361,7 +363,11 @@
 
 #define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS                (0x60000000U)
 
+#define BSP_FEATURE_HAS_RTC                                  (1U)
 #define BSP_FEATURE_RTC_HAS_ROPSEL                           (0U)
+#define BSP_FEATURE_RTC_HAS_TCEN                             (0U)
+#define BSP_FEATURE_RTC_RTCCR_CHANNELS                       (0U)
+#define BSP_FEATURE_SYSC_HAS_VBTICTLR                        (1U)
 
 #define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS               (0x3F9U)
 #define BSP_FEATURE_SCI_CHANNELS                             (0x3FFU)
@@ -398,7 +404,13 @@
 #define BSP_FEATURE_TFU_SUPPORTED                            (0U) // Trigonometric Function Unit (TFU) not available on this MCU
 
 #define BSP_FEATURE_TRNG_HAS_MODULE_STOP                     (0U)
-
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                         (1U)
+#define BSP_FEATURE_TZ_HAS_DLM                               (1U)
+
+#define BSP_FEATURE_ULPT_MAX_CHANNEL_NUM                     (0)
+#define BSP_FEATURE_ULPT_VALID_CHANNEL_MASK                  (0U)
+
+#define BSP_FEATURE_CRC_HAS_SNOOP                            (0U)
+#define BSP_FEATURE_CRC_SNOOP_ADDRESS_TYPE_TDR               (0x0U)
 
 #endif

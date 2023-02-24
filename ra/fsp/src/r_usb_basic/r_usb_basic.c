@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -449,6 +449,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         case USB_CLASS_INTERNAL_PMSC:
         case USB_CLASS_INTERNAL_PAUD:
         case USB_CLASS_INTERNAL_PPRN:
+        case USB_CLASS_INTERNAL_DFU:
         {
             FSP_ERROR_RETURN(USB_MODE_PERI == p_cfg->usb_mode, FSP_ERR_USB_PARAMETER)
 
@@ -899,6 +900,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PPRN);
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
 
+#if defined(USB_CFG_DFU_USE)
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_DFU);
+#endif                                 /* defined(USB_CFG_PPRN_USE) */
+
 #if defined(USB_CFG_OTG_USE)
             _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_B;
             (*g_p_otg_callback[p_ctrl->module_number])(UX_OTG_MODE_SLAVE);
@@ -919,10 +924,13 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         {
             usb_otg_irq_callback(0);
         }
+
+  #if USB_NUM_USBIP == 2
         else
         {
             usb2_otg_irq_callback(0);
         }
+  #endif                               /* USB_NUM_USBIP == 2 */
     }
  #endif                                /* defined(USB_CFG_OTG_USB) */
 #endif                                 /* (BSP_CFG_RTOS == 1) */

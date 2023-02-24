@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1472,8 +1472,22 @@ static VOID gx_dave2d_pixelmap_draw (GX_DRAW_CONTEXT * context,
         CHECK_DAVE_STATUS(d2_settexclut(dave, (d2_color *) pixelmap->gx_pixelmap_aux_data))
     }
 
-    CHECK_DAVE_STATUS(d2_setblitsrc(dave, (void *) pixelmap->gx_pixelmap_data, pixelmap->gx_pixelmap_width,
-                                    pixelmap->gx_pixelmap_width, pixelmap->gx_pixelmap_height, mode))
+    GX_VALUE width;
+    GX_VALUE height;
+
+    /* Swap width and height if image was generated in a rotated orientation */
+    if (pixelmap->gx_pixelmap_flags & (GX_PIXELMAP_ROTATED_CW | GX_PIXELMAP_ROTATED_CCW))
+    {
+        width  = pixelmap->gx_pixelmap_height;
+        height = pixelmap->gx_pixelmap_width;
+    }
+    else
+    {
+        width  = pixelmap->gx_pixelmap_width;
+        height = pixelmap->gx_pixelmap_height;
+    }
+
+    CHECK_DAVE_STATUS(d2_setblitsrc(dave, (void *) pixelmap->gx_pixelmap_data, width, width, height, mode))
 
     mode = (d2_u32) d2_bf_no_blitctxbackup;
 
@@ -1482,11 +1496,10 @@ static VOID gx_dave2d_pixelmap_draw (GX_DRAW_CONTEXT * context,
         mode |= (d2_u32) d2_bf_usealpha;
     }
 
-    CHECK_DAVE_STATUS(d2_blitcopy(dave, pixelmap->gx_pixelmap_width, pixelmap->gx_pixelmap_height, 0, 0,
-                                  (d2_width) (D2_FIX4((USHORT) pixelmap->gx_pixelmap_width)),
-                                  (d2_width) (D2_FIX4((USHORT) pixelmap->gx_pixelmap_height)),
-                                  (d2_point) (D2_FIX4((USHORT) xpos)),
-                                  (d2_point) (D2_FIX4((USHORT) ypos)), mode))
+    CHECK_DAVE_STATUS(d2_blitcopy(dave, width, height, 0, 0, (d2_width) (D2_FIX4((USHORT) width)),
+                                  (d2_width) (D2_FIX4((USHORT) height)), (d2_point) (D2_FIX4((USHORT) xpos)),
+                                  (d2_point) (D2_FIX4((USHORT) ypos)),
+                                  mode))
 
     /** Reset the alpha value. */
     gx_dave2d_alpha_set(dave, (UCHAR) GX_ALPHA_VALUE_OPAQUE);

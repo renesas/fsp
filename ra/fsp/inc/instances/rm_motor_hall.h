@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -135,6 +135,8 @@ fsp_err_t RM_MOTOR_HALL_ErrorCheck(motor_ctrl_t * const p_ctrl, uint16_t * const
 fsp_err_t RM_MOTOR_HALL_PositionSet(motor_ctrl_t * const p_ctrl, motor_speed_position_data_t const * const p_position);
 
 fsp_err_t RM_MOTOR_HALL_WaitStopFlagGet(motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag);
+
+fsp_err_t RM_MOTOR_HALL_FunctionSelect(motor_ctrl_t * const p_ctrl, motor_function_select_t const function);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_HALL)

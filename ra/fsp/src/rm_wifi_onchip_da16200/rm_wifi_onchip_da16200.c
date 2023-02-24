@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -508,6 +508,17 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
 
     /* Delay after open */
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_100MS));
+
+    /* Test basic communications with an AT command. */
+    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+                                            p_instance_ctrl->curr_cmd_port,
+                                            "ATZ\r",
+                                            0,
+                                            WIFI_ONCHIP_DA16200_TIMEOUT_500MS,
+                                            WIFI_ONCHIP_DA16200_DELAY_20MS,
+                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
     /* Set AP mode */
     err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
@@ -1770,22 +1781,32 @@ int32_t rm_wifi_onchip_da16200_recv (uint32_t socket_no, uint8_t * p_data, uint3
     FSP_ERROR_RETURN(0 != length, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    /* if socket read has been disabled by shutdown call then return 0 bytes received. */
+    /* if socket read has been disabled by shutdown call then return any bytes left in the stream buffer. 
+       However if 0 bytes left, return error. */
     if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_DA16200_SOCKET_READ))
     {
-        return 0;
+        size_t xReceivedBytes = xStreamBufferReceiveAlt(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl,
+                                                        p_data,
+                                                        length,
+                                                        0); /* No wait needed as data is already in stream buffer*/
+        if (0 < xReceivedBytes)
+        {
+            return (int32_t)xReceivedBytes;
+        }
+        
+        return -FSP_ERR_WIFI_FAILED;                
     }
 
     /* Take the receive mutex */
     mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_RX);
     FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
-                     FSP_ERR_WIFI_FAILED);
+                     -FSP_ERR_WIFI_FAILED);
 
     if (0 == p_instance_ctrl->sockets[socket_no].socket_create_flag)
     {
         rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
-        return FSP_ERR_WIFI_FAILED;
+        return -FSP_ERR_WIFI_FAILED;
     }
 
     if (socket_no != p_instance_ctrl->curr_socket_index)

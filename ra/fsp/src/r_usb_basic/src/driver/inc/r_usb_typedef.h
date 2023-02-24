@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -245,17 +245,18 @@ typedef enum e_usb_class_internal
     USB_CLASS_INTERNAL_PHID2,          ///< PHID2 Class     5
     USB_CLASS_INTERNAL_PAUD,           ///< PAUD Class      6
     USB_CLASS_INTERNAL_PPRN,           ///< PPRN Class      7
-    USB_CLASS_INTERNAL_PVND,           ///< PVND Class      8
-    USB_CLASS_INTERNAL_HCDC,           ///< HCDC Class      9
-    USB_CLASS_INTERNAL_HCDCC,          ///< HCDCC Class     10
-    USB_CLASS_INTERNAL_HHID,           ///< HHID Class      11
-    USB_CLASS_INTERNAL_HVND,           ///< HVND Class      12
-    USB_CLASS_INTERNAL_HMSC,           ///< HMSC Class      13
-    USB_CLASS_INTERNAL_PMSC,           ///< PMSC Class      14
-    USB_CLASS_INTERNAL_HPRN,           ///< HPRN Class      15
-    USB_CLASS_INTERNAL_HUVC,           ///< HUVC Class      16
-    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      17
-    USB_CLASS_INTERNAL_END             ///< USB Class       18
+    USB_CLASS_INTERNAL_DFU,            ///< DFU Class       8
+    USB_CLASS_INTERNAL_PVND,           ///< PVND Class      9
+    USB_CLASS_INTERNAL_HCDC,           ///< HCDC Class      10
+    USB_CLASS_INTERNAL_HCDCC,          ///< HCDCC Class     11
+    USB_CLASS_INTERNAL_HHID,           ///< HHID Class      12
+    USB_CLASS_INTERNAL_HVND,           ///< HVND Class      13
+    USB_CLASS_INTERNAL_HMSC,           ///< HMSC Class      14
+    USB_CLASS_INTERNAL_PMSC,           ///< PMSC Class      15
+    USB_CLASS_INTERNAL_HPRN,           ///< HPRN Class      16
+    USB_CLASS_INTERNAL_HUVC,           ///< HUVC Class      17
+    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      18
+    USB_CLASS_INTERNAL_END,            ///< USB Class       19
 } usb_class_internal_t;
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

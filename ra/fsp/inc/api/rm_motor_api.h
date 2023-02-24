@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -95,6 +95,14 @@ typedef enum  e_motor_wait_stop_flag
     MOTOR_WAIT_STOP_FLAG_CLEAR = 0,    ///< Wait stop flag clear
     MOTOR_WAIT_STOP_FLAG_SET   = 1,    ///< Wait stop flag set
 } motor_wait_stop_flag_t;
+
+/** Function select */
+typedef enum e_motor_function_select
+{
+    MOTOR_FUNCTION_SELECT_NONE             = 0, ///< No function selected
+    MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE = 1, ///< Inertia estimation
+    MOTOR_FUNCTION_SELECT_RETURN_ORIGIN    = 2, ///< Return origin position
+} motor_function_select_t;
 
 /** callback function parameter data */
 typedef struct st_rm_motor_callback_args
@@ -275,6 +283,19 @@ typedef struct st_motor_api
      * @param[out] p_error      Pointer to get occured error
      */
     fsp_err_t (* errorCheck)(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
+
+    /** FunctionSelect.
+     * @par Implemented as
+     * - @ref RM_MOTOR_ENCODER_FunctionSelect()
+     * - @ref RM_MOTOR_INDUCTION_FunctionSelect()
+     * - @ref RM_MOTOR_SENSORLESS_FunctionSelect()
+     * - @ref RM_MOTOR_HALL_FunctionSelect()
+     * - @ref RM_MOTOR_120_DEGREE_FunctionSelect()
+     *
+     * @param[in]  p_ctrl              Pointer to control structure.
+     * @param[in]  function            Selected function
+     */
+    fsp_err_t (* functionSelect)(motor_ctrl_t * const p_ctrl, motor_function_select_t const function);
 } motor_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

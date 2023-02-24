@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -229,6 +229,11 @@ fsp_err_t RM_MOTOR_120_CONTROL_SENSORLESS_Open (motor_120_control_ctrl_t * const
         p_extended_cfg->p_speed_calc_timer_instance->p_api->open(p_extended_cfg->p_speed_calc_timer_instance->p_ctrl,
                                                                  p_extended_cfg->p_speed_calc_timer_instance->p_cfg);
         p_extended_cfg->p_speed_calc_timer_instance->p_api->start(p_extended_cfg->p_speed_calc_timer_instance->p_ctrl);
+
+        timer_info_t timer_info;
+        p_extended_cfg->p_speed_calc_timer_instance->p_api->infoGet(p_extended_cfg->p_speed_calc_timer_instance->p_ctrl,
+                                                                    &timer_info);
+        p_instance_ctrl->timer_direction = timer_info.count_direction;
     }
 
     /* Mark driver as open */
@@ -1029,23 +1034,47 @@ static void rm_motor_120_control_sensorless_speed_calc (motor_120_control_sensor
                                                                 &gpt_timer_status);
     p_ctrl->u4_bemf_timer_cnt = gpt_timer_status.counter;
 
-    if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
+    if (TIMER_DIRECTION_UP == p_ctrl->timer_direction)
     {
-        if (p_ctrl->u4_bemf_timer_cnt >= p_ctrl->u4_pre_bemf_timer_cnt)
+        if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
         {
-            u4_temp = (p_ctrl->u4_bemf_timer_cnt - p_ctrl->u4_pre_bemf_timer_cnt);
+            if (p_ctrl->u4_bemf_timer_cnt >= p_ctrl->u4_pre_bemf_timer_cnt)
+            {
+                u4_temp = (p_ctrl->u4_bemf_timer_cnt - p_ctrl->u4_pre_bemf_timer_cnt);
 
-            /* calculate timer count in 60 degrees */
+                /* calculate timer count in 60 degrees */
+            }
+            else
+            {
+                u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
+                           p_ctrl->u4_pre_bemf_timer_cnt) + p_ctrl->u4_bemf_timer_cnt;
+            }
         }
         else
         {
-            u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
-                       p_ctrl->u4_pre_bemf_timer_cnt) + p_ctrl->u4_bemf_timer_cnt;
+            u4_temp = p_ctrl->u4_bemf_timer_cnt;
         }
     }
     else
     {
-        u4_temp = p_ctrl->u4_bemf_timer_cnt;
+        if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
+        {
+            if (p_ctrl->u4_bemf_timer_cnt <= p_ctrl->u4_pre_bemf_timer_cnt)
+            {
+                u4_temp = (p_ctrl->u4_pre_bemf_timer_cnt - p_ctrl->u4_bemf_timer_cnt);
+
+                /* calculate timer count in 60 degrees */
+            }
+            else
+            {
+                u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
+                           p_ctrl->u4_bemf_timer_cnt) + p_ctrl->u4_pre_bemf_timer_cnt;
+            }
+        }
+        else
+        {
+            u4_temp = p_ctrl->u4_bemf_timer_cnt;
+        }
     }
 
     /* average 6 times of motor speed timer */

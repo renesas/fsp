@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -701,7 +701,7 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
         /* Current Control Timing */
         case MOTOR_DRIVER_EVENT_CURRENT:
         {
-            /* Get A/D coverted data */
+            /* Get A/D converted data */
             p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_drv_crnt_get);
             f_iu_ad  = temp_drv_crnt_get.iu;
             f_iw_ad  = temp_drv_crnt_get.iw;

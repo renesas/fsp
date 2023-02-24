@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -29,9 +29,9 @@
 #include "bsp_api.h"
 #include "r_ble_cfg.h"
 
-#ifdef BLE_CFG_RYZ012_DEVICE
+#if defined (BLE_CFG_RYZ012_DEVICE)
  #include "rm_ble_abs_spp_cfg.h"
-#elif BLE_CFG_DA14531_DEVICE
+#elif defined (BLE_CFG_DA14xxx_DEVICE)
  #include "rm_ble_abs_gtl_cfg.h"
 #else
  #include "rm_ble_abs_cfg.h"

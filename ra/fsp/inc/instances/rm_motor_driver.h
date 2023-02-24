@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -87,6 +87,14 @@ typedef struct st_motor_driver_extended_cfg
 
     motor_driver_modulation_method_t modulation_method; ///< Modulation method
 
+    /* PWM output port */
+    bsp_io_port_pin_t port_up;                          ///< PWM output port UP
+    bsp_io_port_pin_t port_un;                          ///< PWM output port UN
+    bsp_io_port_pin_t port_vp;                          ///< PWM output port VP
+    bsp_io_port_pin_t port_vn;                          ///< PWM output port VN
+    bsp_io_port_pin_t port_wp;                          ///< PWM output port WP
+    bsp_io_port_pin_t port_wn;                          ///< PWM output port WN
+
     /* For 1shunt */
     float   f_ad_current_adjust;                        ///< Adjustment value for 1shunt A/D current
     int32_t s4_difference_minimum;                      ///< Minimum difference of PWM duty
@@ -127,6 +135,10 @@ typedef struct st_motor_driver_instance_ctrl
     /* for 1shunt current calculation */
     motor_driver_phase_t min_phase;    ///< Minimum phase information to calculate 1shunt current
     motor_driver_phase_t mid_phase;    ///< Middle phase information to calculate 1shunt current
+
+    /* Port configuration */
+    uint32_t u4_gtioca_low_cfg;        ///< I/O port "Low" config for gtioca
+    uint32_t u4_gtiocb_low_cfg;        ///< I/O port "Low" config for gtioca
 
     motor_driver_modulation_t  st_modulation;
     motor_driver_cfg_t const * p_cfg;

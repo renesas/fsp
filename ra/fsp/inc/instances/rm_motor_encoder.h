@@ -13,6 +13,8 @@
 #include "rm_motor_api.h"
 #include "rm_motor_speed.h"
 #include "rm_motor_current.h"
+#include "rm_motor_inertia_estimate_api.h"
+#include "rm_motor_return_origin_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -50,27 +52,43 @@ typedef struct  rm_motor_encoder_statemachine
 
 typedef struct st_motor_encoder_extended_cfg
 {
-    float f_overcurrent_limit;         ///< Over-current limit [A]
-    float f_overvoltage_limit;         ///< Over-voltage limit [V]
-    float f_overspeed_limit;           ///< Over-speed limit [rad/s]
-    float f_lowvoltage_limit;          ///< Low-voltage limit [V]
+    float f_overcurrent_limit;                                                   ///< Over-current limit [A]
+    float f_overvoltage_limit;                                                   ///< Over-voltage limit [V]
+    float f_overspeed_limit;                                                     ///< Over-speed limit [rpm]
+    float f_lowvoltage_limit;                                                    ///< Low-voltage limit [V]
+
+    /* Optional lower module instance used at inertia estimate function. Set to NULL if unused. */
+    motor_inertia_estimate_instance_t const * p_motor_inertia_estimate_instance; ///< Inertia estimate instance
+
+    /* Optional lower module instance used at return origin function. Set to NULL if unused. */
+    motor_return_origin_instance_t const * p_motor_return_origin_instance;       ///< Return origin instance
 } motor_encoder_extended_cfg_t;
 
 typedef struct st_motor_encoder_instance_ctrl
 {
-    uint32_t open;                            ///< Used to determine if the channel is configured
+    uint32_t open;                                    ///< Used to determine if the channel is configured
 
-    uint16_t u2_error_info;                   ///< Happened error
+    uint16_t u2_error_info;                           ///< Happened error
 
-    motor_encoder_statemachine_t st_statem;   ///< Statemachine structure
+    motor_encoder_statemachine_t st_statem;           ///< Statemachine structure
 
     /* Speed control <=> Current control interface */
-    motor_speed_input_t    st_speed_input;    ///< Speed input data buffer
-    motor_speed_output_t   st_speed_output;   ///< Speed output data buffer
-    motor_current_input_t  st_current_input;  ///< Current input data buffer
-    motor_current_output_t st_current_output; ///< Current output data buffer
+    motor_speed_input_t    st_speed_input;            ///< Speed input data buffer
+    motor_speed_output_t   st_speed_output;           ///< Speed output data buffer
+    motor_current_input_t  st_current_input;          ///< Current input data buffer
+    motor_current_output_t st_current_output;         ///< Current output data buffer
 
-    motor_cfg_t const * p_cfg;                ///< Pointer of configuration structure
+    motor_function_select_t e_function;               ///< Selected function
+
+    /* Support inertia estimate */
+    motor_inertia_estimate_info_t     st_ie_get_data; ///< Data buffer gotten from inertia estimation
+    motor_inertia_estimate_set_data_t st_ie_set_data; ///< Data buffer set to inertia estimation
+
+    /* Support return origin */
+    motor_return_origin_info_t     st_ro_info;        ///< Data buffer gotten from return origin
+    motor_return_origin_set_data_t st_ro_set_data;    ///< Data buffer set to return origin
+
+    motor_cfg_t const * p_cfg;                        ///< Pointer of configuration structure
 } motor_encoder_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -116,6 +134,16 @@ fsp_err_t RM_MOTOR_ENCODER_SpeedGet(motor_ctrl_t * const p_ctrl, float * const p
 fsp_err_t RM_MOTOR_ENCODER_ErrorCheck(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
 
 fsp_err_t RM_MOTOR_ENCODER_WaitStopFlagGet(motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag);
+
+fsp_err_t RM_MOTOR_ENCODER_FunctionSelect(motor_ctrl_t * const p_ctrl, motor_function_select_t const function);
+
+fsp_err_t RM_MOTOR_ENCODER_InertiaEstimateStart(motor_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_ENCODER_InertiaEstimateStop(motor_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_ENCODER_ReturnOriginStart(motor_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_ENCODER_ReturnOriginStop(motor_ctrl_t * const p_ctrl);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_ENCODER)

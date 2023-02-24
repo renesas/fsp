@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -64,7 +64,7 @@
   #endif
 
   #if defined(MBEDTLS_CIPHER_MODE_XTS)
-   #if BSP_FEATURE_CRYPTO_HAS_SCE9
+   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
 int aes_xts_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, unsigned int keybits)
 {
     FSP_ASSERT(ctx);
@@ -302,7 +302,7 @@ int mbedtls_aes_setkey_dec (mbedtls_aes_context * ctx, const unsigned char * key
 
   #if defined(MBEDTLS_CIPHER_MODE_XTS)
 
-   #if !(BSP_FEATURE_CRYPTO_HAS_SCE9)
+   #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
 static int mbedtls_aes_xts_decode_keys (const unsigned char  * key,
                                         unsigned int           keybits,
                                         const unsigned char ** key1,
@@ -345,7 +345,7 @@ int mbedtls_aes_xts_setkey_enc (mbedtls_aes_xts_context * ctx, const unsigned ch
     (void) key;
     (void) keybits;
 
-   #if BSP_FEATURE_CRYPTO_HAS_SCE9
+   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
     ret = aes_xts_setkey_generic(&ctx->tweak, key, keybits);
     if (ret != 0)
     {
@@ -353,7 +353,7 @@ int mbedtls_aes_xts_setkey_enc (mbedtls_aes_xts_context * ctx, const unsigned ch
     }
    #endif
 
-   #if !(BSP_FEATURE_CRYPTO_HAS_SCE9)
+   #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
     const unsigned char * key1;
     const unsigned char * key2;
     unsigned int          key1bits;
@@ -386,7 +386,7 @@ int mbedtls_aes_xts_setkey_dec (mbedtls_aes_xts_context * ctx, const unsigned ch
     (void) key;
     (void) keybits;
 
-   #if BSP_FEATURE_CRYPTO_HAS_SCE9
+   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
     ret = aes_xts_setkey_generic(&ctx->tweak, key, keybits);
     if (ret != 0)
     {
@@ -394,7 +394,7 @@ int mbedtls_aes_xts_setkey_dec (mbedtls_aes_xts_context * ctx, const unsigned ch
     }
    #endif
 
-   #if !(BSP_FEATURE_CRYPTO_HAS_SCE9)
+   #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
     const unsigned char * key1;
     const unsigned char * key2;
     unsigned int          key1bits;
@@ -560,7 +560,7 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
     return ret;
 }
 
-   #if BSP_FEATURE_CRYPTO_HAS_SCE9
+   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
 int mbedtls_internal_aes_encrypt_xts (mbedtls_aes_context * ctx,
                                       unsigned int          length,
                                       const unsigned char * iv,
@@ -810,7 +810,7 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
     return ret;
 }
 
-   #if BSP_FEATURE_CRYPTO_HAS_SCE9
+   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
 int mbedtls_internal_aes_decrypt_xts (mbedtls_aes_context * ctx,
                                       unsigned int          length,
                                       const unsigned char * iv,

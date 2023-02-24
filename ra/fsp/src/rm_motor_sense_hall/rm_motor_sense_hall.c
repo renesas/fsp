@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -363,23 +363,18 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
         }
     }
 
-    /* Angle limit within 0..2PI */
+    /* Converted angle within 0..2PI */
     if (f_temp_angle > MOTOR_SENSE_HALL_TWOPI)
     {
         f_temp_angle = f_temp_angle - MOTOR_SENSE_HALL_TWOPI;
     }
-    else if (f_temp_angle < -MOTOR_SENSE_HALL_TWOPI)
+    else if (f_temp_angle < 0.0F)
     {
         f_temp_angle = f_temp_angle + MOTOR_SENSE_HALL_TWOPI;
     }
     else
     {
         /* Do nothing */
-    }
-
-    if (f_temp_angle < 0.0F)
-    {
-        f_temp_angle = 0.0F;
     }
 
     *p_speed = p_instance_ctrl->f_calculated_speed;

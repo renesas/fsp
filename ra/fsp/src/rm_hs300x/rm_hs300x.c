@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -250,7 +250,7 @@ fsp_err_t RM_HS300X_DataCalculate (rm_hs300x_ctrl_t * const     p_api_ctrl,
 {
     rm_hs300x_instance_ctrl_t * p_ctrl = (rm_hs300x_instance_ctrl_t *) p_api_ctrl;
     uint8_t  status;
-    int32_t  tmp = 0;
+    int32_t  tmp_32  = 0;
     uint16_t tmp_u16 = 0x0000U;
 
 #if RM_HS300X_CFG_PARAM_CHECKING_ENABLE
@@ -267,19 +267,26 @@ fsp_err_t RM_HS300X_DataCalculate (rm_hs300x_ctrl_t * const     p_api_ctrl,
     FSP_ERROR_RETURN(RM_HS300X_DATA_STATUS_VALID == status, FSP_ERR_SENSOR_INVALID_DATA);
 
     /* Relative Humidity [%RH] */
-    tmp_u16 = (uint16_t) ((uint16_t) (p_raw_data->humidity[0] & RM_HS300X_MASK_HUMIDITY_UPPER_0X3F) << 8);
-    tmp_u16 = (uint16_t)(tmp_u16 | (uint16_t) (p_raw_data->humidity[1]));
-    tmp = (tmp_u16 * RM_HS300X_CALC_HUMD_VALUE_100 * 100) / RM_HS300X_CALC_STATIC_VALUE;
-    p_hs300x_data->humidity.integer_part = (int16_t)(tmp / 100);
-    p_hs300x_data->humidity.decimal_part = (int16_t)(tmp % 100);
+    tmp_u16 =
+        (uint16_t) ((uint16_t) (p_raw_data->humidity[0] & RM_HS300X_MASK_HUMIDITY_UPPER_0X3F) << 8);
+    tmp_u16 = (uint16_t) (tmp_u16 | (uint16_t) (p_raw_data->humidity[1]));
+    tmp_32  = (int32_t) (((int32_t) tmp_u16 * RM_HS300X_CALC_HUMD_VALUE_100 * RM_HS300X_CALC_DECIMAL_VALUE_100) /
+                         RM_HS300X_CALC_STATIC_VALUE);
+    p_hs300x_data->humidity.integer_part = (int16_t) (tmp_32 / RM_HS300X_CALC_DECIMAL_VALUE_100);
+    p_hs300x_data->humidity.decimal_part = (int16_t) (tmp_32 % RM_HS300X_CALC_DECIMAL_VALUE_100);
 
 #if RM_HS300X_CFG_DATA_BOTH_HUMIDITY_TEMPERATURE
+
     /* Temperature [Celsius] */
     tmp_u16 = (uint16_t) ((uint16_t) (p_raw_data->temperature[0]) << 8);
-    tmp_u16 = (uint16_t)((tmp_u16 | (uint16_t) (p_raw_data->temperature[1] & RM_HS300X_MASK_TEMPERATURE_LOWER_0XFC)) >> 2);
-    tmp = ((tmp_u16 * RM_HS300X_CALC_TEMP_C_VALUE_165 * 100) / RM_HS300X_CALC_STATIC_VALUE) - (RM_HS300X_CALC_TEMP_C_VALUE_40 * 100);
-    p_hs300x_data->temperature.integer_part = (int16_t)(tmp / 100);
-    p_hs300x_data->temperature.decimal_part = (int16_t)(tmp % 100);
+    tmp_u16 =
+        (uint16_t) ((tmp_u16 | (uint16_t) (p_raw_data->temperature[1] & RM_HS300X_MASK_TEMPERATURE_LOWER_0XFC)) >> 2);
+    tmp_32 =
+        (int32_t) ((((int32_t) tmp_u16 * RM_HS300X_CALC_TEMP_C_VALUE_165 * RM_HS300X_CALC_DECIMAL_VALUE_100) /
+                    RM_HS300X_CALC_STATIC_VALUE) -
+                   (RM_HS300X_CALC_TEMP_C_VALUE_40 * RM_HS300X_CALC_DECIMAL_VALUE_100));
+    p_hs300x_data->temperature.integer_part = (int16_t) (tmp_32 / RM_HS300X_CALC_DECIMAL_VALUE_100);
+    p_hs300x_data->temperature.decimal_part = (int16_t) (tmp_32 % RM_HS300X_CALC_DECIMAL_VALUE_100);
 #endif
 
     return FSP_SUCCESS;

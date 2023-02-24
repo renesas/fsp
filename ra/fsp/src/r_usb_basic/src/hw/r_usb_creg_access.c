@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -2091,11 +2091,14 @@ void hw_usb_set_bempenb (usb_utr_t * ptr, uint16_t pipeno)
             g_usb_cstd_bemp_skip[USB_IP0][pipeno] = USB_OFF;
             USB_M0->BEMPENB = (uint16_t) (USB_M0->BEMPENB | (1 << pipeno));
         }
+
+ #if USB_NUM_USBIP == 2
         else
         {
             g_usb_cstd_bemp_skip[USB_IP1][pipeno] = USB_OFF;
             USB_M1->BEMPENB = (uint16_t) (USB_M1->BEMPENB | (1 << pipeno));
         }
+ #endif                                /* USB_NUM_USBIP == 2 */
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
     }
     else

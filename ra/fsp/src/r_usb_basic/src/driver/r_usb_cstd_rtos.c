@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -730,8 +730,10 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
             }
         }
     }
-}
 
+  #if (USB_NUM_USBIP == 2)
+}
+  #endif                               /* (USB_NUM_USBIP == 2) */
  #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
     uint32_t ret;
 
@@ -1049,10 +1051,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
     }
    #endif                              /* USB_NUM_USBIP == 2 */
   #endif                               /* defined (USB_CFG_OTG_USE) */
-
  #endif                                /* BSP_CFG_RTOS */
 
-return err;
+    return err;
 }                                      /* End of function usb_rtos_configuration() */
 
 /******************************************************************************
@@ -1241,8 +1242,10 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
             vQueueDelete(g_pipe_hdl[ip_loop][pipe_loop]);
         }
     }
-}
 
+  #if (USB_NUM_USBIP == 2)
+}
+  #endif                               /* (USB_NUM_USBIP == 2) */
  #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
     uint32_t ret;
 
@@ -1497,10 +1500,9 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         return err;
     }
   #endif                               /* defined (USB_CFG_OTG_USE) */
-
  #endif                                /* BSP_CFG_RTOS */
 
-return err;
+    return err;
 }                                      /* End of function usb_rtos_delete() */
 
 /******************************************************************************

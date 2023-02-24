@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -126,11 +126,9 @@ static fsp_err_t iic_b_master_read_write(i2c_master_ctrl_t * const   p_api_ctrl,
 static void iic_b_master_notify(iic_b_master_instance_ctrl_t * const p_ctrl, i2c_master_event_t const event);
 
 #if IIC_B_MASTER_CFG_DTC_ENABLE
-static fsp_err_t iic_b_master_transfer_open(iic_b_master_instance_ctrl_t * p_ctrl,
-                                            i2c_master_cfg_t const * const p_cfg);
-static fsp_err_t iic_b_master_transfer_configure(iic_b_master_instance_ctrl_t * p_ctrl,
-                                                 transfer_instance_t const    * p_transfer,
-                                                 iic_b_master_transfer_dir_t    direction);
+static fsp_err_t iic_b_master_transfer_open(i2c_master_cfg_t const * const p_cfg);
+static fsp_err_t iic_b_master_transfer_configure(transfer_instance_t const * p_transfer,
+                                                 iic_b_master_transfer_dir_t direction);
 
 #endif
 
@@ -243,7 +241,7 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
 #if IIC_B_MASTER_CFG_DTC_ENABLE
 
     /* Open the IIC transfer interface if available */
-    err = iic_b_master_transfer_open(p_ctrl, p_cfg);
+    err = iic_b_master_transfer_open(p_cfg);
     if (FSP_SUCCESS != err)
     {
         R_BSP_MODULE_STOP(FSP_IP_IIC, p_cfg->channel);
@@ -690,29 +688,28 @@ static void iic_b_master_notify (iic_b_master_instance_ctrl_t * const p_ctrl, i2
  **********************************************************************************************************************/
 static void iic_b_master_abort_seq_master (iic_b_master_instance_ctrl_t * const p_ctrl, bool iic_reset)
 {
-    /* Check if there is an in-progress transfer associated with the match or an error event occurred */
-    if ((0U != p_ctrl->remain) || (p_ctrl->restarted) || (true == p_ctrl->err))
+    /* Safely stop the hardware from operating. */
+
+    /* Reset the peripheral */
+    if (true == iic_reset)
     {
-        /* Reset the peripheral */
-        if (true == iic_reset)
-        {
-            /* Disable channel interrupts */
-            p_ctrl->p_reg->BIE  = 0x00;
-            p_ctrl->p_reg->NTIE = 0x00;
+        /* Disable channel interrupts */
+        p_ctrl->p_reg->BIE  = 0x00;
+        p_ctrl->p_reg->NTIE = 0x00;
 
-            /* This helper function would do a full IIC reset
-             * followed by re-initializing the required peripheral registers. */
-            iic_b_master_open_hw_master(p_ctrl, p_ctrl->p_cfg);
-        }
-
-        /* Update the transfer descriptor to show no longer in-progress and an error */
-        p_ctrl->remain = 0U;
-
-        /* Update the transfer descriptor to make sure interrupts no longer process */
-        p_ctrl->addr_loaded = p_ctrl->addr_total;
-        p_ctrl->loaded      = p_ctrl->total;
-        p_ctrl->restarted   = false;
+        /* This helper function would do a full IIC reset
+         * followed by re-initializing the required peripheral registers. */
+        iic_b_master_open_hw_master(p_ctrl, p_ctrl->p_cfg);
     }
+
+    /* Update the transfer descriptor to show no longer in-progress and an error */
+    p_ctrl->remain = 0U;
+
+    /* Update the transfer descriptor to make sure interrupts no longer process */
+    p_ctrl->addr_loaded = p_ctrl->addr_total;
+    p_ctrl->loaded      = p_ctrl->total;
+    p_ctrl->restarted   = false;
+    p_ctrl->restart     = false;
 
     /* Enable Interrupts: TMOIE, ALIE, NAKIE, RIE, TIE.
      * Disable Interrupt: TEIE, STIE, SPIE
@@ -1465,20 +1462,19 @@ static void iic_b_master_txi_send_address (iic_b_master_instance_ctrl_t * const 
  * @retval      FSP_SUCCESS                Transfer interface initialized successfully.
  * @retval      FSP_ERR_ASSERTION          Pointer to transfer instance for I2C receive in p_cfg is NULL.
  **********************************************************************************************************************/
-static fsp_err_t iic_b_master_transfer_open (iic_b_master_instance_ctrl_t * p_ctrl,
-                                             i2c_master_cfg_t const * const p_cfg)
+static fsp_err_t iic_b_master_transfer_open (i2c_master_cfg_t const * const p_cfg)
 {
     fsp_err_t err = FSP_SUCCESS;
 
     if (NULL != p_cfg->p_transfer_rx)
     {
-        err = iic_b_master_transfer_configure(p_ctrl, p_cfg->p_transfer_rx, IIC_B_MASTER_TRANSFER_DIR_READ);
+        err = iic_b_master_transfer_configure(p_cfg->p_transfer_rx, IIC_B_MASTER_TRANSFER_DIR_READ);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
 
     if (NULL != p_cfg->p_transfer_tx)
     {
-        err = iic_b_master_transfer_configure(p_ctrl, p_cfg->p_transfer_tx, IIC_B_MASTER_TRANSFER_DIR_WRITE);
+        err = iic_b_master_transfer_configure(p_cfg->p_transfer_tx, IIC_B_MASTER_TRANSFER_DIR_WRITE);
         if (FSP_SUCCESS != err)
         {
             if (NULL != p_cfg->p_transfer_rx)
@@ -1501,37 +1497,28 @@ static fsp_err_t iic_b_master_transfer_open (iic_b_master_instance_ctrl_t * p_ct
  * @retval        FSP_SUCCESS                Transfer interface is configured with valid parameters.
  * @retval        FSP_ERR_ASSERTION          Pointer to transfer instance for I2C receive in p_cfg is NULL.
  **********************************************************************************************************************/
-static fsp_err_t iic_b_master_transfer_configure (iic_b_master_instance_ctrl_t * p_ctrl,
-                                                  transfer_instance_t const    * p_transfer,
-                                                  iic_b_master_transfer_dir_t    direction)
+static fsp_err_t iic_b_master_transfer_configure (transfer_instance_t const * p_transfer,
+                                                  iic_b_master_transfer_dir_t direction)
 {
     fsp_err_t err;
-    IRQn_Type irq;
 
     /* Set default transfer info and open receive transfer module, if enabled. */
  #if (IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_transfer->p_api);
-    FSP_ASSERT(NULL != p_transfer->p_ctrl);
     FSP_ASSERT(NULL != p_transfer->p_cfg);
     FSP_ASSERT(NULL != p_transfer->p_cfg->p_info);
  #endif
     transfer_info_t * p_cfg = p_transfer->p_cfg->p_info;
     if (IIC_B_MASTER_TRANSFER_DIR_READ == direction)
     {
-        irq = p_ctrl->p_cfg->rxi_irq;
         p_cfg->transfer_settings_word = IIC_B_MASTER_DTC_RX_TRANSFER_SETTINGS;
     }
     else
     {
-        irq = p_ctrl->p_cfg->txi_irq;
         p_cfg->transfer_settings_word = IIC_B_MASTER_DTC_TX_TRANSFER_SETTINGS;
     }
 
-    transfer_cfg_t       cfg = *(p_transfer->p_cfg);
-    dtc_extended_cfg_t * p_dtc_extended_configuration = (dtc_extended_cfg_t *) (cfg.p_extend);
-    p_dtc_extended_configuration->activation_source = irq;
-
-    err = p_transfer->p_api->open(p_transfer->p_ctrl, &cfg);
+    err = p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
     FSP_ERROR_RETURN((FSP_SUCCESS == err), err);
 
     return FSP_SUCCESS;

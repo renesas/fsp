@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -595,16 +595,19 @@ void usb_cstd_dma_send_continue (usb_utr_t * ptr, uint16_t useport)
                     g_usb_cstd_dma_fraction_size[ip][channel] = g_usb_cstd_dma_size[ip][channel] & USB_BIT_MBW16; /* fraction size(1-3) */
                     dma_size = (uint16_t) (dma_size & ~USB_BIT_MBW16);
                 }
+
+ #if USB_NUM_USBIP == 2
                 else
                 {
- #if defined(USB_HIGH_SPEED_MODULE)
+  #if defined(USB_HIGH_SPEED_MODULE)
                     g_usb_cstd_dma_fraction_size[ip][channel] = g_usb_cstd_dma_size[ip][channel] & USB_BIT_MBW32; /* fraction size(1-3) */
                     dma_size = (uint16_t) (dma_size & ~USB_BIT_MBW32);
- #else                                                                                                            /* defined (USB_HIGH_SPEED_MODULE) */
+  #else                                                                                                           /* defined (USB_HIGH_SPEED_MODULE) */
                     g_usb_cstd_dma_fraction_size[ip][channel] = g_usb_cstd_dma_size[ip][channel] & USB_BIT_MBW16; /* fraction size(1-3) */
                     dma_size = (uint16_t) (dma_size & ~USB_BIT_MBW16);
- #endif                                                                                                           /* defined (USB_HIGH_SPEED_MODULE) */
+  #endif                                                                                                          /* defined (USB_HIGH_SPEED_MODULE) */
                 }
+ #endif /* USB_NUM_USBIP == 2 */
 
                 g_usb_cstd_dma_fraction_adr[ip][channel] = (uint32_t) (p_src_adr + dma_size);                     /* fraction data address */
 
@@ -871,7 +874,11 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
     }
 
  #if (BSP_CFG_RTOS != 0)
+  #if USB_NUM_USBIP == 2
     if (USB_MODE_HOST == g_usb_usbmode[ip_no])
+  #else                                /* USB_NUM_USBIP == 2 */
+    if (USB_MODE_HOST == g_usb_usbmode[0])
+  #endif /* USB_NUM_USBIP == 2 */
     {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         utr.ip  = ip_no;
@@ -917,7 +924,11 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
     gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].p_cfg = p_cfg;
 
     utr.ip = ip_no;
+  #if USB_NUM_USBIP == 2
     if (USB_MODE_HOST == g_usb_usbmode[utr.ip])
+  #else                                /* USB_NUM_USBIP == 2 */
+    if (USB_MODE_HOST == g_usb_usbmode[0])
+  #endif /* USB_NUM_USBIP == 2 */
     {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         utr.ipp = usb_hstd_get_usb_ip_adr(utr.ip);

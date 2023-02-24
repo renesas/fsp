@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -135,6 +135,8 @@ typedef struct st_motor_120_control_sensorless_instance_ctrl
     float f4_pi_ctrl_refi;                                                  ///< PI control buffer of integral term
 
     motor_120_control_cfg_t const * p_cfg;                                  ///< Pointer of configuration structure
+
+    timer_direction_t timer_direction;                                      ///< Hold timer direction
 
     /* cyclic timer callback */
     timer_callback_args_t timer_args;                                       ///< For call timer callbackSet function

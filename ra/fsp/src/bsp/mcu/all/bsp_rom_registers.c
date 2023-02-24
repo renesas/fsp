@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -62,7 +62,7 @@
 
 #if !BSP_CFG_BOOT_IMAGE
 
- #if BSP_FEATURE_BSP_HAS_OSIS_REG == 1
+ #if BSP_FEATURE_FLASH_SUPPORTS_ID_CODE == 1
 
 /** ID code definitions defined here. */
 BSP_DONT_REMOVE static const uint32_t g_bsp_id_codes[] BSP_PLACE_IN_SECTION (BSP_SECTION_ID_CODE) =
@@ -105,22 +105,25 @@ BSP_DONT_REMOVE static const uint32_t g_bsp_rom_registers[] BSP_PLACE_IN_SECTION
     (uint32_t) BSP_ROM_REG_MPU_CONTROL_SETTING
 };
 
- #elif BSP_FEATURE_BSP_HAS_OSIS_REG == 1
+ #elif BSP_FEATURE_FLASH_SUPPORTS_ID_CODE == 1
 
-    BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs0") g_bsp_rom_ofs0 =
-        BSP_CFG_ROM_REG_OFS0;
+  #if !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs0") g_bsp_rom_ofs0 =
+    BSP_CFG_ROM_REG_OFS0;
 
-    BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_sas") g_bsp_rom_sas =
-        0xFFFFFFFF;
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_sas") g_bsp_rom_sas =
+    0xFFFFFFFF;
 
-    BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs1_sec") g_bsp_rom_ofs1 =
-        BSP_ROM_REG_OFS1_SETTING;
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs1_sec") g_bsp_rom_ofs1 =
+    BSP_ROM_REG_OFS1_SETTING;
 
-    BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sec0") g_bsp_rom_bps0 =
-        BSP_CFG_ROM_REG_BPS0;
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sec0") g_bsp_rom_bps0 =
+    BSP_CFG_ROM_REG_BPS0;
 
-    BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_pbps_sec0") g_bsp_rom_pbps0 =
-        BSP_CFG_ROM_REG_PBPS0;
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_pbps_sec0") g_bsp_rom_pbps0 =
+    BSP_CFG_ROM_REG_PBPS0;
+
+  #endif
 
  #else                                 /* CM33 parts */
 

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -55,91 +55,95 @@ typedef enum e_i3c_slave_error_recovery_type
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define I3C_OPEN                                   (('I' << 16U) | ('3' << 8U) | ('C' << 0U))
+#define I3C_OPEN                                     (('I' << 16U) | ('3' << 8U) | ('C' << 0U))
 
 /* Bitfield definitions for Command Descriptor fields. */
-#define I3C_CMD_DESC_CMD_ATTR_Pos                  (0U)
-#define I3C_CMD_DESC_CMD_ATTR_Msk                  (7U << I3C_CMD_DESC_CMD_ATTR_Pos)
-#define I3C_CMD_DESC_CND_ATTR_XFER                 (0U)
-#define I3C_CMD_DESC_CMD_ATTR_ADDR_ASSGN_CMD       (2U)
-#define I3C_CMD_DESC_TID_Pos                       (3U)
-#define I3C_CMD_DESC_TID_Msk                       (0x0FU << I3C_CMD_DESC_TID_Pos)
-#define I3C_CMD_DESC_CMD_Pos                       (7U)
-#define I3C_CMD_DESC_CMD_Msk                       (0xFFU << I3C_CMD_DESC_CMD_Pos)
-#define I3C_CMD_DESC_DEV_INDEX_Pos                 (16U)
-#define I3C_CMD_DESC_DEV_INDEX_Msk                 (0x01FFU << I3C_CMD_DESC_DEV_INDEX_Pos)
-#define I3C_CMD_DESC_ROC_Pos                       (30U)
-#define I3C_CMD_DESC_ROC_Msk                       (1U << I3C_CMD_DESC_ROC_Pos)
-#define I3C_CMD_DESC_TOC_Pos                       (31U)
-#define I3C_CMD_DESC_TOC_Msk                       (1U << I3C_CMD_DESC_TOC_Pos)
+#define I3C_CMD_DESC_CMD_ATTR_Pos                    (0U)
+#define I3C_CMD_DESC_CMD_ATTR_Msk                    (7U << I3C_CMD_DESC_CMD_ATTR_Pos)
+#define I3C_CMD_DESC_CND_ATTR_XFER                   (0U)
+#define I3C_CMD_DESC_CND_ATTR_IMMED_DATA_XFER        (1U)
+#define I3C_CMD_DESC_CMD_ATTR_ADDR_ASSGN_CMD         (2U)
+#define I3C_CMD_DESC_TID_Pos                         (3U)
+#define I3C_CMD_DESC_TID_Msk                         (0x0FU << I3C_CMD_DESC_TID_Pos)
+#define I3C_CMD_DESC_CMD_Pos                         (7U)
+#define I3C_CMD_DESC_CMD_Msk                         (0xFFU << I3C_CMD_DESC_CMD_Pos)
+#define I3C_CMD_DESC_DEV_INDEX_Pos                   (16U)
+#define I3C_CMD_DESC_DEV_INDEX_Msk                   (0x01FFU << I3C_CMD_DESC_DEV_INDEX_Pos)
+#define I3C_CMD_DESC_ROC_Pos                         (30U)
+#define I3C_CMD_DESC_ROC_Msk                         (1U << I3C_CMD_DESC_ROC_Pos)
+#define I3C_CMD_DESC_TOC_Pos                         (31U)
+#define I3C_CMD_DESC_TOC_Msk                         (1U << I3C_CMD_DESC_TOC_Pos)
 
 /* Command Descriptor definitions for Address Assign Commands. */
-#define I3C_CMD_DESC_ADDR_ASSGN_DEV_COUNT_Pos      (26U)
-#define I3C_CMD_DESC_ADDR_ASSGN_DEV_COUNT_Msk      (0x0FU << I3C_CMD_DESC_ADDR_ASSGN_DEV_COUNT_Pos)
+#define I3C_CMD_DESC_ADDR_ASSGN_DEV_COUNT_Pos        (26U)
+#define I3C_CMD_DESC_ADDR_ASSGN_DEV_COUNT_Msk        (0x0FU << I3C_CMD_DESC_ADDR_ASSGN_DEV_COUNT_Pos)
 
-/* Command Descriptor definitions for Regular transfer Commands. */
-#define I3C_CMD_DESC_XFER_CP_Pos                   (15U)
-#define I3C_CMD_DESC_XFER_CP_Msk                   (1U << I3C_CMD_DESC_XFER_CP_Pos)
-#define I3C_CMD_DESC_XFER_HJ_Pos                   (15U)
-#define I3C_CMD_DESC_XFER_HJ_Msk                   (1U << I3C_CMD_DESC_XFER_HJ_Pos)
-#define I3C_CMD_DESC_XFER_LENGTH_Pos               (16U)
-#define I3C_CMD_DESC_XFER_LENGTH_Msk               (0xFFFFU << I3C_CMD_DESC_XFER_LENGTH_Pos)
-#define I3C_CMD_DESC_XFER_MODE_Pos                 (26U)
-#define I3C_CMD_DESC_XFER_MODE_Msk                 (0x07U << I3C_CMD_DESC_XFER_MODE_Pos)
-#define I3C_CMD_DESC_XFER_RNW_Pos                  (29U)
-#define I3C_CMD_DESC_XFER_RNW_Msk                  (1U << I3C_CMD_DESC_XFER_RNW_Pos)
-#define I3C_CMD_DESC_XFER_MODE_I2C_STDBR           (0U)
-#define I3C_CMD_DESC_XFER_MODE_I2C_EXDBR           (1U)
-#define I3C_CMD_DESC_XFER_MODE_I3C_SDR_EXTBR_X2    (3U)
-#define I3C_CMD_DESC_XFER_MODE_I3C_SDR_EXTBR_X4    (4U)
+/* Command Descriptor definitions for Regular Transfer Commands. */
+#define I3C_CMD_DESC_XFER_CP_Pos                     (15U)
+#define I3C_CMD_DESC_XFER_CP_Msk                     (1U << I3C_CMD_DESC_XFER_CP_Pos)
+#define I3C_CMD_DESC_XFER_HJ_Pos                     (15U)
+#define I3C_CMD_DESC_XFER_HJ_Msk                     (1U << I3C_CMD_DESC_XFER_HJ_Pos)
+#define I3C_CMD_DESC_XFER_LENGTH_Pos                 (16U)
+#define I3C_CMD_DESC_XFER_LENGTH_Msk                 (0xFFFFU << I3C_CMD_DESC_XFER_LENGTH_Pos)
+#define I3C_CMD_DESC_XFER_MODE_Pos                   (26U)
+#define I3C_CMD_DESC_XFER_MODE_Msk                   (0x07U << I3C_CMD_DESC_XFER_MODE_Pos)
+#define I3C_CMD_DESC_XFER_RNW_Pos                    (29U)
+#define I3C_CMD_DESC_XFER_RNW_Msk                    (1U << I3C_CMD_DESC_XFER_RNW_Pos)
+#define I3C_CMD_DESC_XFER_MODE_I2C_STDBR             (0U)
+#define I3C_CMD_DESC_XFER_MODE_I2C_EXDBR             (1U)
+#define I3C_CMD_DESC_XFER_MODE_I3C_SDR_EXTBR_X2      (3U)
+#define I3C_CMD_DESC_XFER_MODE_I3C_SDR_EXTBR_X4      (4U)
+
+/* Command Descriptor definitions for Immediate Data Transfer Commands. */
+#define I3C_CMD_DESC_IMMED_DATA_XFER_BYTE_CNT_Pos    (23U)
 
 /* Bitfield definitions for the Response Status Descriptor fields. */
-#define I3C_RESP_STATUS_DESC_DATA_LENGTH_Pos       (0U)
-#define I3C_RESP_STATUS_DESC_DATA_LENGTH_Msk       (0xFFFFU << I3C_RESP_STATUS_DESC_DATA_LENGTH_Pos)
-#define I3C_RESP_STATUS_DESC_TID_Pos               (24U)
-#define I3C_RESP_STATUS_DESC_TID_Msk               (0x0FU << I3C_RESP_STATUS_DESC_TID_Pos)
-#define I3C_RESP_STATUS_DESC_ERR_STATUS_Pos        (28U)
-#define I3C_RESP_STATUS_DESC_ERR_STATUS_Msk        (0x0FU << I3C_RESP_STATUS_DESC_ERR_STATUS_Pos)
+#define I3C_RESP_STATUS_DESC_DATA_LENGTH_Pos         (0U)
+#define I3C_RESP_STATUS_DESC_DATA_LENGTH_Msk         (0xFFFFU << I3C_RESP_STATUS_DESC_DATA_LENGTH_Pos)
+#define I3C_RESP_STATUS_DESC_TID_Pos                 (24U)
+#define I3C_RESP_STATUS_DESC_TID_Msk                 (0x0FU << I3C_RESP_STATUS_DESC_TID_Pos)
+#define I3C_RESP_STATUS_DESC_ERR_STATUS_Pos          (28U)
+#define I3C_RESP_STATUS_DESC_ERR_STATUS_Msk          (0x0FU << I3C_RESP_STATUS_DESC_ERR_STATUS_Pos)
 
 /* Bitfield definitions for Receive Status Descriptor fields. */
-#define I3C_RECV_STATUS_DESC_DATA_LENGTH_Pos       (0U)
-#define I3C_RECV_STATUS_DESC_DATA_LENGTH_Msk       (0xFFFFU << I3C_RECV_STATUS_DESC_DATA_LENGTH_Pos)
-#define I3C_RECV_STATUS_DESC_CMD_Pos               (16U)
-#define I3C_RECV_STATUS_DESC_CMD_Msk               (0xFFU << I3C_RECV_STATUS_DESC_CMD_Pos)
-#define I3C_RECV_STATUS_DESC_SDR_R_W_TYPE_Pos      (23U)
-#define I3C_RECV_STATUS_DESC_SDR_R_W_TYPE_Msk      (0x01U << I3C_RECV_STATUS_DESC_SDR_R_W_TYPE_Pos)
-#define I3C_RECV_STATUS_DESC_ERR_STATUS_Pos        (24U)
-#define I3C_RECV_STATUS_DESC_ERR_STATUS_Msk        (0x07U << I3C_RECV_STATUS_DESC_ERR_STATUS_Pos)
-#define I3C_RECV_STATUS_DESC_TRANSFER_TYPE_Pos     (27U)
-#define I3C_RECV_STATUS_DESC_TRANSFER_TYPE_Msk     (0x03U << I3C_RECV_STATUS_DESC_TRANSFER_TYPE_Pos)
-#define I3C_RECV_STATUS_DESC_DEV_INDEX_Pos         (29U)
-#define I3C_RECV_STATUS_DESC_DEV_INDEX_Msk         (0x07U << I3C_RECV_STATUS_DESC_DEV_INDEX_Pos)
+#define I3C_RECV_STATUS_DESC_DATA_LENGTH_Pos         (0U)
+#define I3C_RECV_STATUS_DESC_DATA_LENGTH_Msk         (0xFFFFU << I3C_RECV_STATUS_DESC_DATA_LENGTH_Pos)
+#define I3C_RECV_STATUS_DESC_CMD_Pos                 (16U)
+#define I3C_RECV_STATUS_DESC_CMD_Msk                 (0xFFU << I3C_RECV_STATUS_DESC_CMD_Pos)
+#define I3C_RECV_STATUS_DESC_SDR_R_W_TYPE_Pos        (23U)
+#define I3C_RECV_STATUS_DESC_SDR_R_W_TYPE_Msk        (0x01U << I3C_RECV_STATUS_DESC_SDR_R_W_TYPE_Pos)
+#define I3C_RECV_STATUS_DESC_ERR_STATUS_Pos          (24U)
+#define I3C_RECV_STATUS_DESC_ERR_STATUS_Msk          (0x07U << I3C_RECV_STATUS_DESC_ERR_STATUS_Pos)
+#define I3C_RECV_STATUS_DESC_TRANSFER_TYPE_Pos       (27U)
+#define I3C_RECV_STATUS_DESC_TRANSFER_TYPE_Msk       (0x03U << I3C_RECV_STATUS_DESC_TRANSFER_TYPE_Pos)
+#define I3C_RECV_STATUS_DESC_DEV_INDEX_Pos           (29U)
+#define I3C_RECV_STATUS_DESC_DEV_INDEX_Msk           (0x07U << I3C_RECV_STATUS_DESC_DEV_INDEX_Pos)
 
 /* Bitfield definitions for IBI Status Descriptor fields. */
-#define I3C_IBI_STATUS_DESC_LENGTH_Pos             (0U)
-#define I3C_IBI_STATUS_DESC_LENGTH_Msk             (0xFFU << I3C_IBI_STATUS_DESC_LENGTH_Pos)
-#define I3C_IBI_STATUS_DESC_IBI_ID_Pos             (8U)
-#define I3C_IBI_STATUS_DESC_IBI_ID_Msk             (0xFFU << I3C_IBI_STATUS_DESC_IBI_ID_Pos)
-#define I3C_IBI_STATUS_DESC_LAST_STATUS_Pos        (24U)
-#define I3C_IBI_STATUS_DESC_LAST_STATUS_Msk        (1U << I3C_IBI_STATUS_DESC_LAST_STATUS_Pos)
-#define I3C_IBI_STATUS_DESC_TS_Pos                 (25U)
-#define I3C_IBI_STATUS_DESC_TS_Msk                 (1U << I3C_IBI_STATUS_DESC_TS_Pos)
-#define I3C_IBI_STATUS_DESC_ERR_STATUS_Pos         (26U)
-#define I3C_IBI_STATUS_DESC_ERR_STATUS_Msk         (0x7U << I3C_IBI_STATUS_DESC_ERR_STATUS_Pos)
-#define I3C_IBI_STATUS_DESC_IBI_ST_Pos             (31U)
-#define I3C_IBI_STATUS_DESC_IBI_ST_Msk             (1U << I3C_IBI_STATUS_DESC_IBI_ST_Pos)
+#define I3C_IBI_STATUS_DESC_LENGTH_Pos               (0U)
+#define I3C_IBI_STATUS_DESC_LENGTH_Msk               (0xFFU << I3C_IBI_STATUS_DESC_LENGTH_Pos)
+#define I3C_IBI_STATUS_DESC_IBI_ID_Pos               (8U)
+#define I3C_IBI_STATUS_DESC_IBI_ID_Msk               (0xFFU << I3C_IBI_STATUS_DESC_IBI_ID_Pos)
+#define I3C_IBI_STATUS_DESC_LAST_STATUS_Pos          (24U)
+#define I3C_IBI_STATUS_DESC_LAST_STATUS_Msk          (1U << I3C_IBI_STATUS_DESC_LAST_STATUS_Pos)
+#define I3C_IBI_STATUS_DESC_TS_Pos                   (25U)
+#define I3C_IBI_STATUS_DESC_TS_Msk                   (1U << I3C_IBI_STATUS_DESC_TS_Pos)
+#define I3C_IBI_STATUS_DESC_ERR_STATUS_Pos           (26U)
+#define I3C_IBI_STATUS_DESC_ERR_STATUS_Msk           (0x7U << I3C_IBI_STATUS_DESC_ERR_STATUS_Pos)
+#define I3C_IBI_STATUS_DESC_IBI_ST_Pos               (31U)
+#define I3C_IBI_STATUS_DESC_IBI_ST_Msk               (1U << I3C_IBI_STATUS_DESC_IBI_ST_Pos)
 
 /* Address that is written by the slave during a Hot Join request. */
-#define I3C_HOT_JOIN_ADDRESS                       (2U)
+#define I3C_HOT_JOIN_ADDRESS                         (2U)
 
 /* Mask for flushing the Read, Write, and Command FIFO. */
-#define I3C_RSTCTRL_FIFO_FLUSH_Msk                 (R_I3C0_RSTCTL_CMDQRST_Msk | R_I3C0_RSTCTL_TDBRST_Msk | \
-                                                    R_I3C0_RSTCTL_RDBRST_Msk)
+#define I3C_RSTCTRL_FIFO_FLUSH_Msk                   (R_I3C0_RSTCTL_CMDQRST_Msk | R_I3C0_RSTCTL_TDBRST_Msk | \
+                                                      R_I3C0_RSTCTL_RDBRST_Msk)
 
-#define I3C_MAX_PUSH_PULL_PERIOD                   (0x3FU)
+#define I3C_MAX_PUSH_PULL_PERIOD                     (0x3FU)
 
 /* Mask for converting the internal state into an I3C event. */
-#define I3C_INTERNAL_EVENT_MASK                    (0x7FU)
+#define I3C_INTERNAL_EVENT_MASK                      (0x7FU)
 
 /***********************************************************************************************************************
  * Function Prototypes
@@ -250,13 +254,17 @@ fsp_err_t R_I3C_Open (i3c_ctrl_t * const p_api_ctrl, i3c_cfg_t const * const p_c
     p_ctrl->p_cfg = p_cfg;
 
     /* Clear the I3C Module Stop bit. */
-    R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
+    R_BSP_MODULE_START(FSP_IP_I3C, p_cfg->channel);
 
     /* Get a pointer to the I3C registers for this channel. */
 #if BSP_FEATURE_I3C_NUM_CHANNELS > 1
     p_ctrl->p_reg = (R_I3C0_Type *) ((uint32_t) R_I3C0 + (p_cfg->channel * ((uint32_t) R_I3C1 - (uint32_t) R_I3C0)));
 #else
     p_ctrl->p_reg = R_I3C0;
+#endif
+
+#if BSP_FEATURE_BSP_HAS_I3C_CLOCK
+    p_ctrl->p_reg->CECTL = 1;
 #endif
 
     /*
@@ -295,13 +303,6 @@ fsp_err_t R_I3C_Enable (i3c_ctrl_t * const p_api_ctrl)
 
     i3c_extended_cfg_t const * p_extend = (i3c_extended_cfg_t const *) p_ctrl->p_cfg->p_extend;
 
-#if I3C_CFG_MASTER_SUPPORT
-
-    /* Write the standard and extended bitrate settings. */
-    p_ctrl->p_reg->STDBR = p_extend->bitrate_settings.stdbr;
-    p_ctrl->p_reg->EXTBR = p_extend->bitrate_settings.extbr;
-#endif
-
     /*
      * Write all remaining configuration settings (See Figure 25.102 I3C Communication Flow in the RA2E2
      * manual R01UH0919EJ0100).
@@ -327,6 +328,10 @@ fsp_err_t R_I3C_Enable (i3c_ctrl_t * const p_api_ctrl)
 
         /* Enable the Queue Empty/Full Interrupt. */
         ntie |= R_I3C0_NTIE_IBIQEFIE_Msk;
+
+        /* Write the standard and extended bitrate settings. */
+        p_ctrl->p_reg->STDBR = p_extend->bitrate_settings.stdbr;
+        p_ctrl->p_reg->EXTBR = p_extend->bitrate_settings.extbr;
     }
     else
 #endif
@@ -339,6 +344,10 @@ fsp_err_t R_I3C_Enable (i3c_ctrl_t * const p_api_ctrl)
          * IBI transmit FIFO.
          */
         nqthctl |= 1U << R_I3C0_NQTHCTL_IBIQTH_Pos;
+
+        /* Baudrate registers are not used in slave mode. */
+        p_ctrl->p_reg->STDBR = 0;
+        p_ctrl->p_reg->EXTBR = 0;
 #endif
     }
 
@@ -541,6 +550,9 @@ fsp_err_t R_I3C_DeviceCfgSet (i3c_ctrl_t * const p_api_ctrl, i3c_device_cfg_t co
         sdatbas0 |= (uint32_t) (p_device_cfg->slave_info.bcr_b.ibi_payload << R_I3C0_SDATBAS0_SDIBIPL_Pos) &
                     R_I3C0_SDATBAS0_SDIBIPL_Msk;
 
+        /* Set the slave address to valid. */
+        p_ctrl->p_reg->SVCTL_b.SVAEn = 1;
+
         /* Write settings to the Slave Device Address Table Register. */
         p_ctrl->p_reg->SDATBAS0 = sdatbas0;
 
@@ -556,9 +568,6 @@ fsp_err_t R_I3C_DeviceCfgSet (i3c_ctrl_t * const p_api_ctrl, i3c_device_cfg_t co
                                               (pid[1] << 16U) |
                                               (pid[2] << 8U) |
                                               (pid[3] << 0U));
-
-        /* Set the slave address to valid. */
-        p_ctrl->p_reg->SVCTL_b.SVAEn = 1;
 #endif
     }
 
@@ -889,29 +898,44 @@ fsp_err_t R_I3C_CommandSend (i3c_ctrl_t * const p_api_ctrl, i3c_command_descript
     p_transfer_descriptor->buffer_size = p_command_descriptor->length;
 
     /* Calculate the command descriptor. */
-    uint32_t command_descriptor = 0;
-    command_descriptor |= (p_ctrl->device_index << I3C_CMD_DESC_DEV_INDEX_Pos) & I3C_CMD_DESC_DEV_INDEX_Msk;
-    command_descriptor |= (0 << I3C_CMD_DESC_XFER_MODE_Pos) & I3C_CMD_DESC_XFER_MODE_Msk;
-    command_descriptor |= (uint32_t) (p_command_descriptor->rnw << I3C_CMD_DESC_XFER_RNW_Pos);
-    command_descriptor |= I3C_CMD_DESC_ROC_Msk;
-    command_descriptor |= (uint32_t) (!p_command_descriptor->restart << I3C_CMD_DESC_TOC_Pos) & I3C_CMD_DESC_TOC_Msk;
-    command_descriptor |= (uint32_t) (p_command_descriptor->command_code << I3C_CMD_DESC_CMD_Pos);
-    command_descriptor |= (1U << 15U);
-    command_descriptor |= (uint32_t) (I3C_EVENT_COMMAND_COMPLETE << I3C_CMD_DESC_TID_Pos);
+    uint32_t cmd1 = 0;
+    cmd1 |= (p_ctrl->device_index << I3C_CMD_DESC_DEV_INDEX_Pos) & I3C_CMD_DESC_DEV_INDEX_Msk;
+    cmd1 |= (0 << I3C_CMD_DESC_XFER_MODE_Pos) & I3C_CMD_DESC_XFER_MODE_Msk;
+    cmd1 |= (uint32_t) (p_command_descriptor->rnw << I3C_CMD_DESC_XFER_RNW_Pos);
+    cmd1 |= I3C_CMD_DESC_ROC_Msk;
+    cmd1 |= (uint32_t) (!p_command_descriptor->restart << I3C_CMD_DESC_TOC_Pos) & I3C_CMD_DESC_TOC_Msk;
+    cmd1 |= (uint32_t) (p_command_descriptor->command_code << I3C_CMD_DESC_CMD_Pos);
+    cmd1 |= I3C_CMD_DESC_XFER_CP_Msk;
+    cmd1 |= (uint32_t) (I3C_EVENT_COMMAND_COMPLETE << I3C_CMD_DESC_TID_Pos);
+
+    uint32_t cmd2;
+    if ((4 >= p_command_descriptor->length) && !p_command_descriptor->rnw)
+    {
+        /* If the transfer length is less than or equal to 4 bytes, then use "Immediate Data Transfer".
+         * See section "25.3.1.1.2 Immediate Transfer Command" in the RA2E2 manual R01UH0919EJ0100. */
+        cmd1 |= I3C_CMD_DESC_CND_ATTR_IMMED_DATA_XFER;
+        cmd1 |= (p_command_descriptor->length << I3C_CMD_DESC_IMMED_DATA_XFER_BYTE_CNT_Pos);
+        cmd2  = i3c_next_data_word_calculate(&p_ctrl->write_buffer_descriptor);
+        p_ctrl->write_buffer_descriptor.count = p_command_descriptor->length;
+    }
+    else
+    {
+        cmd2 = (p_command_descriptor->length << I3C_CMD_DESC_XFER_LENGTH_Pos) &
+               I3C_CMD_DESC_XFER_LENGTH_Msk;
+    }
 
     /*
      * Write the descriptor to the command queue.
      * Note that the command descriptor is two words. The least significant word must be written first followed by
      * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
      */
-    p_ctrl->p_reg->NCMDQP = command_descriptor;
-    p_ctrl->p_reg->NCMDQP = (p_command_descriptor->length << I3C_CMD_DESC_XFER_LENGTH_Pos) &
-                            I3C_CMD_DESC_XFER_LENGTH_Msk;
+    p_ctrl->p_reg->NCMDQP = cmd1;
+    p_ctrl->p_reg->NCMDQP = cmd2;
 
     /* Clear the command queue empty flag. */
     p_ctrl->p_reg->NTST_b.CMDQEF = 0;
 
-    if (!p_command_descriptor->rnw && (0 < p_command_descriptor->length))
+    if (!p_command_descriptor->rnw && (4 < p_command_descriptor->length))
     {
         /* Calculate the next data word that will be written to the FIFO. */
         p_ctrl->next_word = i3c_next_data_word_calculate(&p_ctrl->write_buffer_descriptor);
@@ -1011,14 +1035,18 @@ fsp_err_t R_I3C_Write (i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_da
     }
 #endif
 
-    /* Write data to the FIFO. */
-    i3c_fifo_write(p_ctrl);
-
-    /* If there is still data remaining in the transfer then it will be written in the Write Buffer Empty IRQ. */
-    if ((BSP_FEATURE_I3C_NTDTBP0_DEPTH * sizeof(uint32_t)) < length)
+    if ((length > 4) || (I3C_INTERNAL_STATE_SLAVE_IDLE == p_ctrl->internal_state))
     {
-        /* Enable the Write Buffer Empty IRQ. */
-        p_ctrl->p_reg->NTIE_b.TDBEIE0 = 1;
+        /* Write data to the FIFO. Note that in master mode, if the legnth is less than or equal to 4 bytes,
+         * the "Immediate Data Transfer" command must be used instead of the "Regular Transfer" command. */
+        i3c_fifo_write(p_ctrl);
+
+        /* If there is still data remaining in the transfer then it will be written in the Write Buffer Empty IRQ. */
+        if ((BSP_FEATURE_I3C_NTDTBP0_DEPTH * sizeof(uint32_t)) < length)
+        {
+            /* Enable the Write Buffer Empty IRQ. */
+            p_ctrl->p_reg->NTIE_b.TDBEIE0 = 1;
+        }
     }
 
 #if I3C_CFG_MASTER_SUPPORT
@@ -1031,11 +1059,25 @@ fsp_err_t R_I3C_Write (i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_da
          * Note that the command descriptor is two words. The least significant word must be written first followed by
          * the most significant word (See Section 25.3.1.1 in the RA2E2 manual R01UH0919EJ0100).
          */
-        p_ctrl->p_reg->NCMDQP = i3c_xfer_command_calculate(p_ctrl->device_index,
-                                                           false,
-                                                           p_ctrl->device_bitrate_mode,
-                                                           restart);
-        p_ctrl->p_reg->NCMDQP = (length << I3C_CMD_DESC_XFER_LENGTH_Pos) & I3C_CMD_DESC_XFER_LENGTH_Msk;
+        uint32_t cmd1 = i3c_xfer_command_calculate(p_ctrl->device_index, false, p_ctrl->device_bitrate_mode, restart);
+
+        uint32_t cmd2;
+        if (length <= 4)
+        {
+            /* If the transfer length is less than or equal to 4 bytes, then use "Immediate Data Transfer".
+             * See section "25.3.1.1.2 Immediate Transfer Command" in the RA2E2 manual R01UH0919EJ0100. */
+            cmd1 |= I3C_CMD_DESC_CND_ATTR_IMMED_DATA_XFER;
+            cmd1 |= (length << I3C_CMD_DESC_IMMED_DATA_XFER_BYTE_CNT_Pos);
+            cmd2  = p_ctrl->next_word;
+            p_ctrl->write_buffer_descriptor.count = length;
+        }
+        else
+        {
+            cmd2 = (length << I3C_CMD_DESC_XFER_LENGTH_Pos) & I3C_CMD_DESC_XFER_LENGTH_Msk;
+        }
+
+        p_ctrl->p_reg->NCMDQP = cmd1;
+        p_ctrl->p_reg->NCMDQP = cmd2;
 
         /* Clear the command queue empty flag. */
         p_ctrl->p_reg->NTST_b.CMDQEF = 0;
@@ -1327,7 +1369,7 @@ fsp_err_t R_I3C_Close (i3c_ctrl_t * const p_api_ctrl)
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
     /* Set the I3C Module Stop bit. */
-    R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
+    R_BSP_MODULE_STOP(FSP_IP_I3C, p_ctrl->p_cfg->channel);
 
     p_ctrl->open = 0;
 

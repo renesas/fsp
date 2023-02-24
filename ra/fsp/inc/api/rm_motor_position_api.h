@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -62,6 +62,13 @@ typedef enum  e_motor_position_ctrl_mode
     MOTOR_POSITION_CTRL_MODE_TRAPEZOID,
     MOTOR_POSITION_CTRL_MODE_STEP,
 } motor_position_ctrl_mode_t;
+
+/** Position information */
+typedef struct e_motor_position_info
+{
+    uint8_t u1_state_position_profile; ///< Position control profile state
+    int16_t s2_position_degree;        ///< Position data [degree]
+} motor_position_info_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
  * @par Implemented as
@@ -187,6 +194,15 @@ typedef struct st_motor_position_api
      * @param[out] p_speed_ref      Pointer to get speed reference
      */
     fsp_err_t (* speedReferenceFeedforwardGet)(motor_position_ctrl_t * const p_ctrl, float * const p_speed_ref);
+
+    /** Get Position information.
+     * @par Implemented as
+     * - @ref RM_MOTOR_POSITION_InfoGet()
+     *
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[out] p_info           Pointer to get information
+     */
+    fsp_err_t (* infoGet)(motor_position_ctrl_t * const p_ctrl, motor_position_info_t * const p_info);
 
     /** Update Parameters for the calculation in the Motor Position Module.
      * @par Implemented as

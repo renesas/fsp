@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -50,11 +50,11 @@
 #define FSP_SETUP_REQUEST          (1)
 #define FSP_SETUP_VALUE            (2)
 #define FSP_SETUP_LENGTH           (6)
-#if defined(USB_CFG_PAUD_USE)
+#if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
  #define FSP_SETUP_REQUEST_TYPE    (0)
  #define FSP_SETUP_INDEX_L         (4)
  #define FSP_SETUP_INDEX_H         (5)
-#endif                                 /* #if defined(USB_CFG_PAUD_USE) */
+#endif                                 /* #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)*/
 
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -1564,9 +1564,9 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
 
                 /* Search endpoint setting */
                 usb_pstd_set_eptbl_index(g_usb_pstd_req_index, g_usb_pstd_alt_num[g_usb_pstd_req_index]);
-  #ifndef USB_CFG_PAUD_USE
+  #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_DFU_USE)
                 usb_pstd_set_pipe_reg(p_utr);
-  #endif                               /* USB_CFG_PAUD_USE */
+  #endif                               /* #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_DFU_USE) */
   #if BSP_CFG_RTOS == 1
    #ifdef  USB_CFG_PAUD_USE
                 if (0 == (g_usb_pstd_req_value & USB_ALT_SET))
@@ -1673,14 +1673,14 @@ static void usb_peri_class_request_usbx (usb_setup_t * p_req)
                                FSP_SETUP_VALUE) = p_req->request_value;
                 *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
                                FSP_SETUP_LENGTH) = p_req->request_length;
-  #if defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
                 *(transfer_request->ux_slave_transfer_request_setup +
                   FSP_SETUP_REQUEST_TYPE) = (uint8_t) (p_req->request_type & VALUE_FFH);
                 *(transfer_request->ux_slave_transfer_request_setup +
                   FSP_SETUP_INDEX_L) = (uint8_t) (p_req->request_index & VALUE_FFH);
                 *(transfer_request->ux_slave_transfer_request_setup +
                   FSP_SETUP_INDEX_H) = (uint8_t) (p_req->request_index >> 8);
-  #endif                               /* #if defined(USB_CFG_PAUD_USE) */
+  #endif                               /* #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)*/
                 class_command.ux_slave_class_command_class_ptr = class;
                 status = class->ux_slave_class_entry_function(&class_command);
                 if (status == UX_SUCCESS)
@@ -2056,9 +2056,9 @@ void usb_peri_class_request_wss (usb_setup_t * req, usb_utr_t * p_utr)
 
     usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr);
  #if (BSP_CFG_RTOS == 1)
-  #if defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
     usb_peri_usbx_set_control_length(req);
-  #endif                               /* #if defined(USB_CFG_PAUD_USE) */
+  #endif                               /* #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)*/
     usb_peri_class_request_usbx(req);
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 }                                      /* End of function usb_peri_class_request_wss */

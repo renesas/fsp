@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -87,6 +87,15 @@ void rm_motor_speed_observer_SecondOrderLpffGainCalc(motor_speed_2nd_order_lpf_t
                                                      float                         f4_omega,
                                                      float                         f4_zeta,
                                                      float                         f4_ctrl_period);
+
+void rm_motor_speed_disturbance_observer_init(motor_speed_disturbance_observer_t * p_st_observer,
+                                              float                                f4_natural_freq_hz,
+                                              float                                f4_ctrl_period,
+                                              float                                f4_inertia_kgms2);
+void  rm_motor_speed_disturbance_observer_reset(motor_speed_disturbance_observer_t * p_st_observer);
+float rm_motor_speed_disturbance_observer_run(motor_speed_disturbance_observer_t * p_st_observer,
+                                              float                                f4_torque_cmd_nm,
+                                              float                                f4_speed_rad);
 
  #ifdef __cplusplus
 }

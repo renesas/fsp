@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -219,6 +219,21 @@ typedef struct st_sce_key_injection_api
      * @param[in,out] wrapped_key                           128-bit AES wrapped key
      */
     fsp_err_t (* AES128_InitialKeyWrap)(const uint8_t * const key_type,
+                                        const uint8_t * const wrapped_user_factory_programming_key,
+                                        const uint8_t * const initial_vector,
+                                        const uint8_t * const encrypted_key, sce_aes_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 192-bit AES wrapped key.
+     * @par Implemented as
+     * -  @ref R_SCE_AES192_InitialKeyWrap "R_SCE_AES192_InitialKeyWrap()"
+     *
+     * @param[in]     key_type                              Key type whether encrypted_key or plain key
+     * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
+     * @param[in]     initial_vector                        Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key                         User key encrypted and MAC appended
+     * @param[in,out] wrapped_key                           192-bit AES wrapped key
+     */
+    fsp_err_t (* AES192_InitialKeyWrap)(const uint8_t * const key_type,
                                         const uint8_t * const wrapped_user_factory_programming_key,
                                         const uint8_t * const initial_vector,
                                         const uint8_t * const encrypted_key, sce_aes_wrapped_key_t * const wrapped_key);
@@ -559,6 +574,73 @@ typedef struct st_sce_key_injection_api
                                                         const sce_key_update_key_t * const    key_update_key,
                                                         sce_ecc_private_wrapped_key_t * const wrapped_key);
 
+    /** This API outputs 256-bit Brainpool ECC public wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap "R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap()"
+     *
+     * @param[in]     key_type                              Key type whether encrypted_key or plain key
+     * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
+     * @param[in]     initial_vector                        Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key                         User key encrypted and MAC appended
+     * @param[in,out] wrapped_key                           256-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP256r1_InitialPublicKeyWrap)(const uint8_t * const key_type,
+                                                           const uint8_t * const
+                                                           wrapped_user_factory_programming_key,
+                                                           const uint8_t * const                initial_vector,
+                                                           const uint8_t * const                encrypted_key,
+                                                           sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 256-bit Brainpool ECC private wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap "R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap()"
+     *
+     * @param[in]     key_type                              Key type whether encrypted_key or plain key
+     * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
+     * @param[in]     initial_vector                        Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key                         User key encrypted and MAC appended
+     * @param[in,out] wrapped_key                           256-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP256r1_InitialPrivateKeyWrap)(const uint8_t * const key_type,
+                                                            const uint8_t * const
+                                                            wrapped_user_factory_programming_key,
+                                                            const uint8_t * const                 initial_vector,
+                                                            const uint8_t * const                 encrypted_key,
+                                                            sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 384-bit Brainpool ECC public wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap "R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap()"
+     *
+     * @param[in]     key_type                              Key type whether encrypted_key or plain key
+     * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
+     * @param[in]     initial_vector                        Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key                         User key encrypted and MAC appended
+     * @param[in,out] wrapped_key                           384-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP384r1_InitialPublicKeyWrap)(const uint8_t * const key_type,
+                                                           const uint8_t * const
+                                                           wrapped_user_factory_programming_key,
+                                                           const uint8_t * const                initial_vector,
+                                                           const uint8_t * const                encrypted_key,
+                                                           sce_ecc_public_wrapped_key_t * const wrapped_key);
+    
+    /** This API outputs 384-bit Brainpool ECC private wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap "R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap()"
+     *
+     * @param[in]     key_type                              Key type whether encrypted_key or plain key
+     * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
+     * @param[in]     initial_vector                        Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key                         User key encrypted and MAC appended
+     * @param[in,out] wrapped_key                           384-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP384r1_InitialPrivateKeyWrap)(const uint8_t * const key_type,
+                                                            const uint8_t * const
+                                                            wrapped_user_factory_programming_key,
+                                                            const uint8_t * const                 initial_vector,
+                                                            const uint8_t * const                 encrypted_key,
+                                                            sce_ecc_private_wrapped_key_t * const wrapped_key);
 
 } sce_key_injection_api_t;
 

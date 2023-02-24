@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -684,6 +684,7 @@ static void sci_i2c_abort_seq_master (sci_i2c_instance_ctrl_t * const p_ctrl)
     /* Update the transfer descriptor to show no longer in-progress and an error */
     p_ctrl->remain    = 0U;
     p_ctrl->restarted = false;
+    p_ctrl->restart   = false;
 
     /* Update the transfer descriptor to make sure interrupts no longer process */
     p_ctrl->addr_loaded = p_ctrl->addr_total;
@@ -1060,7 +1061,6 @@ static fsp_err_t sci_i2c_transfer_configure (sci_i2c_instance_ctrl_t       * p_c
                                              sci_i2c_dtc_interrupt_trigger_t trigger)
 {
     fsp_err_t err;
-    IRQn_Type irq;
 
     /* Set default transfer info and open receive transfer module, if enabled. */
  #if (SCI_I2C_CFG_PARAM_CHECKING_ENABLE)
@@ -1072,7 +1072,6 @@ static fsp_err_t sci_i2c_transfer_configure (sci_i2c_instance_ctrl_t       * p_c
     transfer_info_t * p_cfg = p_transfer->p_cfg->p_info;
     if (SCI_I2C_DTC_INTERRUPT_TRIGGER_RXI == trigger)
     {
-        irq = p_ctrl->p_cfg->rxi_irq;
         p_cfg->transfer_settings_word = SCI_I2C_PRV_DTC_RX_FOR_READ_TRANSFER_SETTINGS;
         p_cfg->p_src = (void *) (&(p_ctrl->p_reg->RDR));
     }
@@ -1083,18 +1082,13 @@ static fsp_err_t sci_i2c_transfer_configure (sci_i2c_instance_ctrl_t       * p_c
         /* Refer flow diagram of master reception as described in hardware manual (see Figure 34.68
          * 'Example flow of master reception in simple IIC mode with transmission interrupts and reception interrupts'
          *  of the RA6M3 manual R01UH0886EJ0100). */
-        irq = p_ctrl->p_cfg->txi_irq;
 
         /* In case of Write operation this will be reconfigured */
         p_cfg->transfer_settings_word = SCI_I2C_PRV_DTC_TX_FOR_READ_TRANSFER_SETTINGS;
         p_cfg->p_dest                 = (void *) (&(p_ctrl->p_reg->TDR));
     }
 
-    transfer_cfg_t       cfg = *(p_transfer->p_cfg);
-    dtc_extended_cfg_t * p_dtc_extended_configuration = (dtc_extended_cfg_t *) (cfg.p_extend);
-    p_dtc_extended_configuration->activation_source = irq;
-
-    err = p_transfer->p_api->open(p_transfer->p_ctrl, &cfg);
+    err = p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
     FSP_ERROR_RETURN((FSP_SUCCESS == err), err);
 
     return FSP_SUCCESS;

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -99,19 +99,19 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #define FLASH_HP_FACI_CMD_LOCK_BIT_READ               (0x71U)
 #define FLASH_HP_FACI_CMD_FINAL                       (0xD0U)
 
-/**  Configuration set Command offset*/
-#define FLASH_HP_FCU_CONFIG_SET_ID_BYTE               (0x0000A150U)
 #if (BSP_CFG_MCU_PART_SERIES == 8)
  #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0300A110U)
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0300A130U)
  #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE            (0x1300A190U)
-#elif !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2) || \
-    defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA4E1) || defined(BSP_MCU_GROUP_RA6E1) ||     \
-    defined(BSP_MCU_GROUP_RA6T2))
- #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0000A160U)
 #else
+ #if BSP_FEATURE_FLASH_SUPPORTS_ACCESS_WINDOW
+  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP      (0x0000A160U)
+  #define FLASH_HP_FCU_CONFIG_SET_ID_BYTE             (0x0000A150U)
+ #else
+  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP      (0x0100A130U)
+  #define FLASH_HP_FCU_CONFIG_SET_ID_BYTE             (0x0000A120U)
+ #endif
  #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0100A110U)
- #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0100A130U)
  #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE            (0x0100A190U)
 #endif
 
@@ -320,9 +320,12 @@ static fsp_err_t flash_hp_set_startup_area_boot(flash_hp_instance_ctrl_t * p_ctr
                                                 flash_startup_area_swap_t  swap_type,
                                                 bool                       is_temporary) PLACE_IN_RAM_SECTION;
 
+ #if (BSP_FEATURE_FLASH_SUPPORTS_ID_CODE == 1)
 static fsp_err_t flash_hp_set_id_code(flash_hp_instance_ctrl_t * p_ctrl,
                                       uint8_t const * const      p_id_code,
                                       flash_id_code_mode_t       mode) PLACE_IN_RAM_SECTION;
+
+ #endif
 
 #endif
 
@@ -2284,7 +2287,7 @@ static fsp_err_t flash_hp_set_startup_area_boot (flash_hp_instance_ctrl_t * p_ct
 
 #endif
 
-#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ID_CODE == 1)
 
 /*******************************************************************************************************************//**
  * Set the ID code.

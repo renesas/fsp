@@ -34,6 +34,8 @@
 #include "../../src/bsp/mcu/all/bsp_arm_exceptions.h"
 #include "cmsis_compiler.h"
 
+#include "bsp_api.h"                   /* This include brings in a workaround for defining __ARM_ARCH_8_1M_MAIN__. It should be removed when this behaviour is fixed. */
+
 #if   __ARM_ARCH_7EM__
  #define __MPU_PRESENT             1   /*!< MPU present or not                                                    */
  #define __NVIC_PRIO_BITS          4   /*!< Number of Bits used for Priority Levels                               */

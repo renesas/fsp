@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -121,6 +121,7 @@ typedef enum e_fsp_ip
     FSP_IP_TFU    = 74,                ///< Trigonometric Function Unit
     FSP_IP_IIRFA  = 75,                ///< IIR Filter Accelerator
     FSP_IP_CANFD  = 76,                ///< CAN-FD
+    FSP_IP_ULPT   = 77,                ///< Ultra Low Power Timer ULPT
 } fsp_ip_t;
 
 /** Signals that can be mapped to an interrupt. */
@@ -288,6 +289,9 @@ typedef enum e_fsp_signal
     FSP_SIGNAL_USB_RESUME,                        ///< USB RESUME
     FSP_SIGNAL_USB_USB_INT_RESUME,                ///< USB USB INT RESUME
     FSP_SIGNAL_WDT_UNDERFLOW = 0,                 ///< WDT UNDERFLOW
+    FSP_SIGNAL_ULPT_COMPARE_A = 0,                ///< ULPT COMPARE A
+    FSP_SIGNAL_ULPT_COMPARE_B,                    ///< ULPT COMPARE B
+    FSP_SIGNAL_ULPT_INT,                          ///< ULPT INT
 } fsp_signal_t;
 
 typedef void (* fsp_vector_t)(void);

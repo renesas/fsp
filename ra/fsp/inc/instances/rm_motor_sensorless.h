@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -72,7 +72,7 @@ typedef struct st_motor_sensorless_extended_cfg
 {
     float f_overcurrent_limit;         ///< Over-current limit [A]
     float f_overvoltage_limit;         ///< Over-voltage limit [V]
-    float f_overspeed_limit;           ///< Over-speed limit [rad/s]
+    float f_overspeed_limit;           ///< Over-speed limit [rpm]
     float f_lowvoltage_limit;          ///< Low-voltage limit [V]
 } motor_sensorless_extended_cfg_t;
 
@@ -136,6 +136,8 @@ fsp_err_t RM_MOTOR_SENSORLESS_PositionSet(motor_ctrl_t * const                  
                                           motor_speed_position_data_t const * const p_position);
 
 fsp_err_t RM_MOTOR_SENSORLESS_WaitStopFlagGet(motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag);
+
+fsp_err_t RM_MOTOR_SENSORLESS_FunctionSelect(motor_ctrl_t * const p_ctrl, motor_function_select_t const function);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_SENSORLESS)

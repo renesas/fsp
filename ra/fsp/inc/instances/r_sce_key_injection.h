@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -55,6 +55,12 @@ extern const sce_key_injection_api_t g_sce_key_injection_on_sce;
  **********************************************************************************************************************/
 
 fsp_err_t R_SCE_AES128_InitialKeyWrap(const uint8_t * const         key_type,
+                                      const uint8_t * const         wrapped_user_factory_programming_key,
+                                      const uint8_t * const         initial_vector,
+                                      const uint8_t * const         encrypted_key,
+                                      sce_aes_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_AES192_InitialKeyWrap(const uint8_t * const         key_type,
                                       const uint8_t * const         wrapped_user_factory_programming_key,
                                       const uint8_t * const         initial_vector,
                                       const uint8_t * const         encrypted_key,
@@ -192,6 +198,30 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap(const uint8_t * const     
                                                       const uint8_t * const                 encrypted_key,
                                                       const sce_key_update_key_t * const    key_update_key,
                                                       sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap(const uint8_t * const                key_type,
+                                                         const uint8_t * const                wrapped_user_factory_programming_key,
+                                                         const uint8_t * const                initial_vector,
+                                                         const uint8_t * const                encrypted_key,
+                                                         sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap(const uint8_t * const                 key_type,
+                                                          const uint8_t * const                 wrapped_user_factory_programming_key,
+                                                          const uint8_t * const                 initial_vector,
+                                                          const uint8_t * const                 encrypted_key,
+                                                          sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap(const uint8_t * const                key_type,
+                                                         const uint8_t * const                wrapped_user_factory_programming_key,
+                                                         const uint8_t * const                initial_vector,
+                                                         const uint8_t * const                encrypted_key,
+                                                         sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap(const uint8_t * const                 key_type,
+                                                          const uint8_t * const                 wrapped_user_factory_programming_key,
+                                                          const uint8_t * const                 initial_vector,
+                                                          const uint8_t * const                 encrypted_key,
+                                                          sce_ecc_private_wrapped_key_t * const wrapped_key);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

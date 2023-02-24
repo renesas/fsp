@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -72,7 +72,6 @@
 #define SCI_B_UART_CCR3_CKE_MASK               (0x03000000U)
 
 /* SCI Data register bit masks */
-#define SCI_B_UART_RDR_RDAT_MASK_8BITS         (0x000000FFU)
 #define SCI_B_UART_TDR_TDAT_MASK_9BITS         (0x000091FFU)
 
 /* SCI CSR register receiver error (overflow, framing, parity) bits masks */
@@ -1522,8 +1521,8 @@ void sci_b_uart_txi_isr (void)
                 }
                 else
                 {
-                    /* Write 1byte (uint8_t) data to (uint8_t) data register */
-                    p_ctrl->p_reg->TDR = (uint32_t) (*(p_ctrl->p_tx_src));
+                    /* Write 1byte data to TDR_BY register */
+                    p_ctrl->p_reg->TDR_BY = (*(p_ctrl->p_tx_src));
                 }
 
                 p_ctrl->tx_src_bytes -= p_ctrl->data_bytes;
@@ -1543,8 +1542,8 @@ void sci_b_uart_txi_isr (void)
             }
             else
             {
-                /* Write 1byte (uint8_t) data to (uint8_t) data register */
-                p_ctrl->p_reg->TDR = (uint32_t) (*(p_ctrl->p_tx_src));
+                /* Write 1byte data to TDR_BY register */
+                p_ctrl->p_reg->TDR_BY = (*(p_ctrl->p_tx_src));
             }
 
             p_ctrl->tx_src_bytes -= p_ctrl->data_bytes;
@@ -1625,7 +1624,14 @@ void sci_b_uart_rxi_isr (void)
             {
                 if (p_ctrl->p_reg->FRSR_b.R > 0U)
                 {
-                    data = p_ctrl->p_reg->RDR & R_SCI_B0_RDR_RDAT_Msk;
+                    if (2U == p_ctrl->data_bytes)
+                    {
+                        data = p_ctrl->p_reg->RDR & R_SCI_B0_RDR_RDAT_Msk;
+                    }
+                    else
+                    {
+                        data = p_ctrl->p_reg->RDR_BY;
+                    }
                 }
                 else
                 {
@@ -1642,7 +1648,7 @@ void sci_b_uart_rxi_isr (void)
             }
             else
             {
-                data = p_ctrl->p_reg->RDR & SCI_B_UART_RDR_RDAT_MASK_8BITS;
+                data = p_ctrl->p_reg->RDR_BY;
             }
 
             if (0 == p_ctrl->rx_dest_bytes)
@@ -1773,7 +1779,7 @@ void sci_b_uart_eri_isr (void)
     }
     else
     {
-        data = p_ctrl->p_reg->RDR & SCI_B_UART_RDR_RDAT_MASK_8BITS;
+        data = p_ctrl->p_reg->RDR_BY;
     }
 
     /* Determine cause of error. */

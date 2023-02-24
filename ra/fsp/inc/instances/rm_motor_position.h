@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -254,6 +254,8 @@ fsp_err_t RM_MOTOR_POSITION_SpeedReferenceIpdControlGet(motor_position_ctrl_t * 
 
 fsp_err_t RM_MOTOR_POSITION_SpeedReferenceFeedforwardGet(motor_position_ctrl_t * const p_ctrl,
                                                          float * const                 p_speed_ref);
+
+fsp_err_t RM_MOTOR_POSITION_InfoGet(motor_position_ctrl_t * const p_ctrl, motor_position_info_t * const p_info);
 
 fsp_err_t RM_MOTOR_POSITION_ParameterUpdate(motor_position_ctrl_t * const      p_ctrl,
                                             motor_position_cfg_t const * const p_cfg);

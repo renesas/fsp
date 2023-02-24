@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @addtogroup CTSU
+ * @addtogroup CTSU 
  * @{
  **********************************************************************************************************************/
 
@@ -35,6 +35,7 @@
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
+
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -147,6 +148,12 @@ typedef struct st_ctsu_self_buf
     uint16_t ref;                      ///< Reference counter data (Not used)
 } ctsu_self_buf_t;
 #endif
+
+typedef struct st_ctsu_data
+{
+    uint16_t decimal_point_data;
+    uint16_t int_data;
+} ctsu_data_t;
 
 /** Scan buffer data formats (Mutual) */
 #if (BSP_FEATURE_CTSU_VERSION == 2)
@@ -282,12 +289,12 @@ typedef struct st_ctsu_instance_ctrl
     ctsu_ctsuwr_t          * p_ctsuwr;           ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
     ctsu_self_buf_t        * p_self_raw;         ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
     uint16_t               * p_self_corr;        ///< Pointer to Self correction data. g_ctsu_self_corr[] is set by Open API.
-    uint16_t               * p_self_data;        ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
+    ctsu_data_t            * p_self_data;        ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
     ctsu_mutual_buf_t      * p_mutual_raw;       ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
     uint16_t               * p_mutual_pri_corr;  ///< Pointer to Mutual primary correction data. g_ctsu_self_corr[] is set by Open API.
     uint16_t               * p_mutual_snd_corr;  ///< Pointer to Mutual secondary correction data. g_ctsu_self_corr[] is set by Open API.
-    uint16_t               * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
-    uint16_t               * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
+    ctsu_data_t            * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
+    ctsu_data_t            * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
     ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info
     ctsu_txvsel_t            txvsel;             ///< CTSU Transmission Power Supply Select
     ctsu_txvsel2_t           txvsel2;            ///< CTSU Transmission Power Supply Select 2 (CTSU2 Only)

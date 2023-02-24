@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -23,6 +23,10 @@
 
 /** Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
+
+#if __has_include("internal/bsp_module_stop_internal.h")
+ #include "internal/bsp_module_stop_internal.h"
+#endif
 
 /*******************************************************************************************************************//**
  * @addtogroup BSP_MCU
@@ -69,8 +73,14 @@ FSP_HEADER
  #define BSP_MSTP_REG_FSP_IP_GPT(channel)       R_MSTP->MSTPCRD
  #define BSP_MSTP_BIT_FSP_IP_GPT(channel)       ((BSP_FEATURE_BSP_MSTP_GPT_MSTPD5_MAX_CH >= \
                                                   channel) ? (1U << 5U) : (1U << 6U));
- #define BSP_MSTP_REG_FSP_IP_AGT(channel)       R_MSTP->MSTPCRD
- #define BSP_MSTP_BIT_FSP_IP_AGT(channel)       (1U << (3U - channel));
+
+ #ifndef BSP_MSTP_REG_FSP_IP_AGT
+  #define BSP_MSTP_REG_FSP_IP_AGT(channel)      R_MSTP->MSTPCRD
+ #endif
+ #ifndef BSP_MSTP_BIT_FSP_IP_AGT
+  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)      (1U << (3U - channel));
+ #endif
+
  #define BSP_MSTP_REG_FSP_IP_POEG(channel)      R_MSTP->MSTPCRD
  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)      (1U << (14U));
 #else
@@ -114,7 +124,7 @@ FSP_HEADER
 #define BSP_MSTP_REG_FSP_IP_CEC(channel)        R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_CEC(channel)        (1U << (3U));
 #define BSP_MSTP_REG_FSP_IP_I3C(channel)        R_MSTP->MSTPCRB
-#define BSP_MSTP_BIT_FSP_IP_I3C(channel)        (1U << (4U));
+#define BSP_MSTP_BIT_FSP_IP_I3C(channel)        (1U << (BSP_FEATURE_I3C_MSTP_OFFSET - channel));
 #define BSP_MSTP_REG_FSP_IP_IRDA(channel)       R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_IRDA(channel)       (1U << (5U - channel));
 #define BSP_MSTP_REG_FSP_IP_QSPI(channel)       R_MSTP->MSTPCRB

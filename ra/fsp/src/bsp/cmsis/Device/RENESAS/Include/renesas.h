@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -66,6 +66,8 @@ extern "C" {
   #include "R7FA2L1AB.h"
  #elif BSP_MCU_GROUP_RA4E1
   #include "R7FA4E10D.h"
+ #elif BSP_MCU_GROUP_RA4E2
+  #include "R7FA4E2B9.h"
  #elif BSP_MCU_GROUP_RA4M1
   #include "R7FA4M1AB.h"
  #elif BSP_MCU_GROUP_RA4M2
@@ -76,6 +78,8 @@ extern "C" {
   #include "R7FA4W1AD.h"
  #elif BSP_MCU_GROUP_RA6E1
   #include "R7FA6E10F.h"
+ #elif BSP_MCU_GROUP_RA6E2
+  #include "R7FA6E2BB.h"
  #elif BSP_MCU_GROUP_RA6M1
   #include "R7FA6M1AD.h"
  #elif BSP_MCU_GROUP_RA6M2

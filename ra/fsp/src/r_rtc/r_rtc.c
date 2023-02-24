@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -26,61 +26,58 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RTC_MASK_MSB                        (0x0F)
-#define RTC_MASK_LSB                        (0xF0)
+#define RTC_MASK_MSB                      (0x0F)
+#define RTC_MASK_LSB                      (0xF0)
 
-#define RTC_FIRST_DAY_OF_A_MONTH            (1)
+#define RTC_FIRST_DAY_OF_A_MONTH          (1)
 
 /* Day of week : valid range between 0 to 6. */
-#define RTC_DAYS_IN_A_WEEK                  (6)
+#define RTC_DAYS_IN_A_WEEK                (6)
 
 /* Month : valid range between 0 to 11.*/
-#define RTC_MONTHS_IN_A_YEAR                (11)
-#define RTC_LAST_DAY_OF_LEAP_FEB_MONTH      (29)
-#define RTC_LAST_DAY_OF_A_MONTH             (31)
-#define RTC_YEAR_VALUE_MIN                  (100)
-#define RTC_YEAR_VALUE_MAX                  (199)
+#define RTC_MONTHS_IN_A_YEAR              (11)
+#define RTC_LAST_DAY_OF_LEAP_FEB_MONTH    (29)
+#define RTC_LAST_DAY_OF_A_MONTH           (31)
+#define RTC_YEAR_VALUE_MIN                (100)
+#define RTC_YEAR_VALUE_MAX                (199)
 
 /* Seconds : valid range between 0 to 59.*/
-#define RTC_SECONDS_IN_A_MINUTE             (59)
+#define RTC_SECONDS_IN_A_MINUTE           (59)
 
 /* Minute : valid range between 0 to 59. */
-#define RTC_MINUTES_IN_A_HOUR               (59)
+#define RTC_MINUTES_IN_A_HOUR             (59)
 
 /* Hours : valid range between 0 to 23. */
-#define RTC_HOURS_IN_A_DAY                  (23)
+#define RTC_HOURS_IN_A_DAY                (23)
 
 /* In Zeller algorithm value of (-[Y/100] + [Y/400]) is 15 for Y = 2000 to Y = 2099) */
-#define RTC_ZELLER_ALGM_CONST_FIFTEEN       (15)
+#define RTC_ZELLER_ALGM_CONST_FIFTEEN     (15)
 
 /* Macro definitions for February and March months */
-#define RTC_FEBRUARY_MONTH                  (2U)
-#define RTC_MARCH_MONTH                     (3U)
+#define RTC_FEBRUARY_MONTH                (2U)
+#define RTC_MARCH_MONTH                   (3U)
 
-#define RTC_TIME_H_MONTH_OFFSET             (1)
+#define RTC_TIME_H_MONTH_OFFSET           (1)
 
 /*The RTC has a 100 year calendar to match the starting year 2000, year offset(1900) is added like 117 + 1900 = 2017 */
-#define RTC_TIME_H_YEAR_OFFSET              (1900)
+#define RTC_TIME_H_YEAR_OFFSET            (1900)
 
 /** "RTC" in ASCII, used to determine if device is open. */
-#define RTC_OPEN                            (0x00525443ULL)
+#define RTC_OPEN                          (0x00525443ULL)
 
-#define RTC_MAX_ERROR_ADJUSTMENT_VALUE      (0x3FU)
+#define RTC_MAX_ERROR_ADJUSTMENT_VALUE    (0x3FU)
 
-#define RTC_RHRCNT_HOUR_MASK                (0x3f)
-#define RTC_COMPARE_ENB_BIT                 (7U)
-#define RTC_MASK_8TH_BIT                    (0x7F)
+#define RTC_RHRCNT_HOUR_MASK              (0x3f)
+#define RTC_COMPARE_ENB_BIT               (7U)
+#define RTC_MASK_8TH_BIT                  (0x7F)
 
 /* As per HW manual, value of Year is between 0 to 99, the RTC has a 100 year calendar from 2000 to 2099.
  * But as per C standards, tm_year is years since 1900.*/
-#define RTC_C_TIME_OFFSET                   (100)
+#define RTC_C_TIME_OFFSET                 (100)
 
 /* See section 26.2.20 Frequency Register (RFRH/RFRL)" of the RA6M3 manual R01UH0886EJ0100) */
-#define RTC_RFRL_MIN_VALUE_LOCO             (0x7U)
-#define RTC_RFRL_MAX_VALUE_LOCO             (0x1FFU)
-
-#define RTC_SUB_CLK_STABLIZATION_TIME_MS    (100)
-#define RTC_LOCO_STABLIZATION_TIME_US       (190)
+#define RTC_RFRL_MIN_VALUE_LOCO           (0x7U)
+#define RTC_RFRL_MAX_VALUE_LOCO           (0x1FFU)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -227,14 +224,6 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     p_instance_ctrl->carry_isr_triggered = false;
 
     r_rtc_config_rtc_interrupts(p_instance_ctrl, p_cfg);
-
-#if BSP_FEATURE_RTC_HAS_ROPSEL
-
-    /* Clear the RCR4_b.ROPSEL bit as it's value is undefined after MCU Reset and if its set to 1,
-     * the RTC operates in low-consumption clock mode. */
-    R_RTC->RCR4_b.ROPSEL = 0U;
-    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR4_b.ROPSEL, 0U);
-#endif
 
     /* On a cold-start, force the RTC to be in the stopped state. Some devices power up with the RTC started. */
     /* Checks to see if the PORF bit is set. PORF can be cleared by software if application code handles a POR. */
@@ -823,16 +812,9 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
     /* Select the count source (RCKSEL) */
     R_RTC->RCR4 = (uint8_t) p_ctrl->p_cfg->clock_source;
 
-    /* Supply 6 clocks of the count source (LOCO, 183us, 32kHZ).
+    /* Supply 6 clocks of the count source (LOCO/SOSC, 183us, 32kHZ).
      * See 26.3.2 "Clock and Count Mode Setting Procedure" of the RA6M3 manual R01UH0886EJ0100)*/
-    if (RTC_CLOCK_SOURCE_SUBCLK == p_ctrl->p_cfg->clock_source)
-    {
-        R_BSP_SoftwareDelay(RTC_SUB_CLK_STABLIZATION_TIME_MS, BSP_DELAY_UNITS_MILLISECONDS);
-    }
-    else
-    {
-        R_BSP_SoftwareDelay(RTC_LOCO_STABLIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
-    }
+    R_BSP_SoftwareDelay(BSP_PRV_RTC_RESET_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
 
     /* Set the START bit to 0 */
     r_rtc_start_bit_update(0U);
@@ -865,6 +847,15 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
 
     /* Execute RTC software reset */
     r_rtc_software_reset();
+
+#if BSP_FEATURE_RTC_HAS_TCEN
+    for (uint8_t index = 0U; index < BSP_FEATURE_RTC_RTCCR_CHANNELS; index++)
+    {
+        /* RTCCRn.TCEN must be cleared after reset. */
+        R_RTC->RTCCR[index].RTCCR_b.TCEN = 0U;
+        FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[index].RTCCR_b.TCEN, 0);
+    }
+#endif
 }
 
 /*******************************************************************************************************************//**

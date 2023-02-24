@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -69,6 +69,10 @@
  #if defined(USB_CFG_PPRN_USE)
   #include "r_usb_pprn_cfg.h"
  #endif                                /* defined(USB_CFG_PPRN_USE) */
+
+ #if defined(USB_CFG_DFU_USE)
+  #include "ux_device_class_dfu.h"
+ #endif                                /* defined(USB_CFG_DFU_USE) */
 
  #if defined(USB_CFG_HPRN_USE)
   #include "ux_host_class_printer.h"
@@ -167,8 +171,11 @@ static void usb_peri_usbx_pmsc_storage_uninit(void);
 
  #if defined(USB_CFG_OTG_USE)
 static UINT usb_otg_hnp_swap(ULONG type);
+
+  #if USB_NUM_USBIP == 2
 static UINT usb2_otg_hnp_swap(ULONG type);
 
+  #endif                               /* USB_NUM_USBIP == 2 */
  #endif                                /* defined(USB_CFG_OTG_USE) */
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -461,7 +468,7 @@ uint32_t usb_peri_usbx_initialize_complete (void)
     return UX_SUCCESS;
 }                                      /* End of function usb_peri_usbx_initialize_complete() */
 
-  #if defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
 
 /******************************************************************************
  * Function Name   : usb_peri_usbx_set_control_length
@@ -474,7 +481,7 @@ void usb_peri_usbx_set_control_length (usb_setup_t * p_req)
     *g_p_usb_actural_length[USB_PIPE0] = p_req->request_length;
 }                                      /* End of function usb_peri_usbx_set_control_length() */
 
-  #endif  /* #if defined(USB_CFG_PAUD_USE) */
+  #endif  /* #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)*/
 
 /******************************************************************************
  * Function Name   : usb_peri_usbx_transfer_complete_cb
@@ -578,7 +585,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
             else
             {
                 pipe = USB_PIPE0;
-  #if defined(USB_CFG_PAUD_USE)
+  #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
                 if ((transfer_request->ux_slave_transfer_request_setup[0] & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_IN)
                 {
                     transfer_request->ux_slave_transfer_request_phase = UX_TRANSFER_PHASE_DATA_OUT;
@@ -587,7 +594,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                 {
                     transfer_request->ux_slave_transfer_request_phase = UX_TRANSFER_PHASE_DATA_IN;
                 }
-  #endif                                                                         /* #if defined(USB_CFG_PAUD_USE) */
+  #endif                                                                         /* #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)*/
             }
 
             size = transfer_request->ux_slave_transfer_request_requested_length; /* Save Read Request Length */
@@ -845,6 +852,37 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                 /* This function is called when the device wants to wake up the host.  */
                 usb_peri_usbx_remote_wakeup(module_number);
             }
+
+  #if defined(USB_CFG_DFU_USE)
+            else if (parameter == (void *) UX_DEVICE_FORCE_DISCONNECT)
+            {
+                /* D+ Pullup Off */
+                hw_usb_pclear_dprpu(tran_data.ip);
+
+                if (_ux_system_slave->ux_system_slave_speed == (uint32_t) UX_HIGH_SPEED_DEVICE)
+                {
+                    hw_usb_clear_hse(&tran_data);
+                }
+
+                for (pipe = USB_MIN_PIPE_NO; pipe < (USB_MAXPIPE_NUM + 1); pipe++)
+                {
+                    if (USB_TRUE == g_usb_pipe_table[tran_data.ip][pipe].use_flag)
+                    {
+                        usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_STOP, &tran_data);
+                    }
+                }
+
+                /* Notify the application to switch (reinitialize) from normal mode to DFU mode in the application. */
+                if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
+                {
+                    _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_REMOVED);
+                }
+
+                /* "D+ Pullup On" is done by the application. */
+
+                status = (uint32_t) UX_SUCCESS;
+            }
+  #endif                               /* #if defined(USB_CFG_DFU_USE) */
             else
             {
                 if (parameter == (void *) UX_DEVICE_CONFIGURED)
@@ -1297,11 +1335,13 @@ static uint32_t usb_host_usbx_initialize_common (UX_HCD * hcd)
     hcd->ux_hcd_nb_root_hubs = 1U;
 
   #if defined(USB_CFG_OTG_USE)
+   #if USB_NUM_USBIP == 2
     if (R_USB_HS0_BASE == hcd->ux_hcd_io)
     {
         _ux_system_otg->ux_system_otg_function = usb2_otg_hnp_swap;
     }
     else
+   #endif                              /* USB_NUM_USBIP == 2 */
     {
         _ux_system_otg->ux_system_otg_function = usb_otg_hnp_swap;
     }

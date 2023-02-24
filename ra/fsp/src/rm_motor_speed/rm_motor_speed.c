@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -225,10 +225,20 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
     /* Speed Observer */
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
     {
-        rm_motor_speed_observer_init(&(p_instance_ctrl->st_observer));
-        rm_motor_speed_observer_gain_calc(&(p_instance_ctrl->st_observer),
-                                          &(p_extended_cfg->d_param),
-                                          p_extended_cfg->f_speed_ctrl_period);
+        if (MOTOR_SPEED_OBSERVER_SELECT_NORMAL == p_extended_cfg->observer_select)
+        {
+            rm_motor_speed_observer_init(&(p_instance_ctrl->st_observer));
+            rm_motor_speed_observer_gain_calc(&(p_instance_ctrl->st_observer),
+                                              &(p_extended_cfg->d_param),
+                                              p_extended_cfg->f_speed_ctrl_period);
+        }
+        else
+        {
+            rm_motor_speed_disturbance_observer_init(&(p_instance_ctrl->st_disturbance_observer),
+                                                     p_extended_cfg->f_natural_frequency,
+                                                     p_extended_cfg->f_speed_ctrl_period,
+                                                     p_extended_cfg->mtr_param.f4_mtr_j);
+        }
     }
 
     /* Set used timer instance */
@@ -280,7 +290,14 @@ fsp_err_t RM_MOTOR_SPEED_Close (motor_speed_ctrl_t * const p_ctrl)
 
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
     {
-        rm_motor_speed_observer_reset(&(p_instance_ctrl->st_observer));
+        if (MOTOR_SPEED_OBSERVER_SELECT_NORMAL == p_extended_cfg->observer_select)
+        {
+            rm_motor_speed_observer_reset(&(p_instance_ctrl->st_observer));
+        }
+        else
+        {
+            rm_motor_speed_disturbance_observer_reset(&(p_instance_ctrl->st_disturbance_observer));
+        }
     }
 
     /* Close used timer instance */
@@ -346,7 +363,14 @@ fsp_err_t RM_MOTOR_SPEED_Reset (motor_speed_ctrl_t * const p_ctrl)
 
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
     {
-        rm_motor_speed_observer_reset(&(p_instance_ctrl->st_observer));
+        if (MOTOR_SPEED_OBSERVER_SELECT_NORMAL == p_extended_cfg->observer_select)
+        {
+            rm_motor_speed_observer_reset(&(p_instance_ctrl->st_observer));
+        }
+        else
+        {
+            rm_motor_speed_disturbance_observer_reset(&(p_instance_ctrl->st_disturbance_observer));
+        }
     }
 
 #if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
@@ -859,9 +883,19 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
 
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
     {
-        rm_motor_speed_observer_gain_calc(&(p_instance_ctrl->st_observer),
-                                          &(p_extended_cfg->d_param),
-                                          p_extended_cfg->f_speed_ctrl_period);
+        if (MOTOR_SPEED_OBSERVER_SELECT_NORMAL == p_extended_cfg->observer_select)
+        {
+            rm_motor_speed_observer_gain_calc(&(p_instance_ctrl->st_observer),
+                                              &(p_extended_cfg->d_param),
+                                              p_extended_cfg->f_speed_ctrl_period);
+        }
+        else
+        {
+            rm_motor_speed_disturbance_observer_init(&(p_instance_ctrl->st_disturbance_observer),
+                                                     p_extended_cfg->f_natural_frequency,
+                                                     p_extended_cfg->f_speed_ctrl_period,
+                                                     p_extended_cfg->mtr_param.f4_mtr_j);
+        }
     }
 
     return FSP_SUCCESS;
@@ -1088,7 +1122,6 @@ static float rm_motor_speed_set_speed_ref_encoder (motor_speed_instance_ctrl_t *
         {
             /* speed must be zero while encoder angle adjustment */
 
-            // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
             if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
             {
                 /* check control loop mode */
@@ -1261,9 +1294,6 @@ static float rm_motor_speed_set_speed_ref_induction (motor_speed_instance_ctrl_t
         case MOTOR_SPEED_OPEN_LOOP_INDUCTION:
         {
             f4_speed_ref_calc_rad = p_ctrl->st_input.f_openloop_speed * p_ctrl->f_rpm2rad;
-
-            // f4_speed_ref_calc_rad = p_ctrl->st_input.f_openloop_speed * MOTOR_SPEED_TWOPI_60;
-            // f4_speed_ref_calc_rad *= p_extended_cfg->mtr_param.u2_mtr_pp;
 
             if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
             {
@@ -1564,10 +1594,26 @@ static float rm_motor_speed_set_iq_ref_hall (motor_speed_instance_ctrl_t * p_ctr
 
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
     {
-        f4_temp_speed_rad = rm_motor_speed_observer(&p_ctrl->st_observer,
-                                                    &p_extended_cfg->mtr_param,
-                                                    p_ctrl->f_iq_ref,
-                                                    p_ctrl->st_input.f_speed_rad);
+        if (MOTOR_SPEED_OBSERVER_SELECT_NORMAL == p_extended_cfg->observer_select)
+        {
+            f4_temp_speed_rad = rm_motor_speed_observer(&p_ctrl->st_observer,
+                                                        &p_extended_cfg->mtr_param,
+                                                        p_ctrl->f_iq_ref,
+                                                        p_ctrl->st_input.f_speed_rad);
+        }
+        else
+        {
+            float f4_torque_num = 0.0F;
+            f4_torque_num = ((float) p_extended_cfg->mtr_param.u2_mtr_pp * p_extended_cfg->mtr_param.f4_mtr_m) *
+                            p_ctrl->f_iq_ref;
+            f4_temp_speed_rad = rm_motor_speed_disturbance_observer_run(&p_ctrl->st_disturbance_observer,
+                                                                        f4_torque_num,
+                                                                        p_ctrl->st_input.f_speed_rad);
+        }
+    }
+    else
+    {
+        f4_temp_speed_rad = p_ctrl->st_input.f_speed_rad;
     }
 
     f4_iq_ref_calc = rm_motor_speed_speed_pi(p_ctrl, f4_temp_speed_rad);
@@ -1670,15 +1716,30 @@ static float rm_motor_speed_set_iq_ref_encoder (motor_speed_instance_ctrl_t * p_
 
     motor_position_instance_t const * p_position = p_ctrl->p_position_instance;
 
-    // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
     if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
     {
         if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
         {
-            f4_temp_speed_rad = rm_motor_speed_observer(&p_ctrl->st_observer,
-                                                        &p_extended_cfg->mtr_param,
-                                                        p_ctrl->f_iq_ref,
-                                                        p_ctrl->st_input.f_speed_rad);
+            if (MOTOR_SPEED_OBSERVER_SELECT_NORMAL == p_extended_cfg->observer_select)
+            {
+                f4_temp_speed_rad = rm_motor_speed_observer(&p_ctrl->st_observer,
+                                                            &p_extended_cfg->mtr_param,
+                                                            p_ctrl->f_iq_ref,
+                                                            p_ctrl->st_input.f_speed_rad);
+            }
+            else
+            {
+                float f4_torque_num = 0.0F;
+                f4_torque_num = ((float) p_extended_cfg->mtr_param.u2_mtr_pp * p_extended_cfg->mtr_param.f4_mtr_m) *
+                                p_ctrl->f_iq_ref;
+                f4_temp_speed_rad = rm_motor_speed_disturbance_observer_run(&p_ctrl->st_disturbance_observer,
+                                                                            f4_torque_num,
+                                                                            p_ctrl->st_input.f_speed_rad);
+            }
+        }
+        else
+        {
+            f4_temp_speed_rad = p_ctrl->st_input.f_speed_rad;
         }
 
         /*** speed PI control ***/
@@ -1752,7 +1813,6 @@ static float rm_motor_speed_set_id_ref_encoder (motor_speed_instance_ctrl_t * p_
 
                 /* angle adjusted to 0 degree */
 
-                // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_0DEG == p_ctrl->st_input.u1_adjust_status)
                 if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_0DEG == p_ctrl->st_input.u1_adjust_status)
                 {
                     /* repeat soft start */
@@ -1760,7 +1820,6 @@ static float rm_motor_speed_set_id_ref_encoder (motor_speed_instance_ctrl_t * p_
                 }
                 /* angle adjusted to Finish */
 
-                // else if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
                 else if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
                 {
                     /* id mode transition to zero constant mode */

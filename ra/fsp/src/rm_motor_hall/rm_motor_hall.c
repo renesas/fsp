@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -139,6 +139,7 @@ const motor_api_t g_motor_on_motor_hall =
     .errorCheck      = RM_MOTOR_HALL_ErrorCheck,
     .positionSet     = RM_MOTOR_HALL_PositionSet,
     .waitStopFlagGet = RM_MOTOR_HALL_WaitStopFlagGet,
+    .functionSelect  = RM_MOTOR_HALL_FunctionSelect,
 };
 
 /*******************************************************************************************************************//**
@@ -594,8 +595,6 @@ fsp_err_t RM_MOTOR_HALL_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t * cons
 /*******************************************************************************************************************//**
  * @brief Set position reference. Implements @ref motor_api_t::positionSet.
  *
- * Example:
- *
  * @retval FSP_ERR_UNSUPPORTED      Unsupported.
  *
  * @note
@@ -612,8 +611,6 @@ fsp_err_t RM_MOTOR_HALL_PositionSet (motor_ctrl_t * const p_ctrl, motor_speed_po
 /*******************************************************************************************************************//**
  * @brief Get wait stop flag. Implements @ref motor_api_t::waitStopFlagGet.
  *
- * Example:
- *
  * @retval FSP_ERR_UNSUPPORTED      Unsupported.
  *
  * @note
@@ -623,6 +620,22 @@ fsp_err_t RM_MOTOR_HALL_WaitStopFlagGet (motor_ctrl_t * const p_ctrl, motor_wait
 {
     FSP_PARAMETER_NOT_USED(p_ctrl);
     FSP_PARAMETER_NOT_USED(p_flag);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Select function. Implements @ref motor_api_t::functionSelect.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_HALL_FunctionSelect (motor_ctrl_t * const p_ctrl, motor_function_select_t const function)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(function);
 
     return FSP_ERR_UNSUPPORTED;
 }
@@ -828,19 +841,19 @@ static uint16_t rm_motor_hall_statemachine_event (motor_hall_instance_ctrl_t * p
 /***********************************************************************************************************************
  * Function Name : rm_motor_check_over_speed_error
  * Description   : Checks over-speed error
- * Arguments     : f4_speed_rad - The electrical speed[rad/s]
- *                 f4_speed_limit_rad - The speed[rad/s] threshold of the over-speed error, should be a positive value
+ * Arguments     : f4_speed - The electrical speed
+ *                 f4_speed_limit - The speed threshold of the over-speed error, should be a positive value
  * Return Value  : The over-speed error flag
  **********************************************************************************************************************/
-static inline uint16_t rm_motor_check_over_speed_error (float f4_speed_rad, float f4_speed_limit_rad)
+static inline uint16_t rm_motor_check_over_speed_error (float f4_speed, float f4_speed_limit)
 {
     float    f4_temp0;
     uint16_t u2_temp0;
 
     u2_temp0 = MOTOR_ERROR_NONE;
 
-    f4_temp0 = fabsf(f4_speed_rad);
-    if (f4_temp0 > f4_speed_limit_rad)
+    f4_temp0 = fabsf(f4_speed);
+    if (f4_temp0 > f4_speed_limit)
     {
         u2_temp0 = MOTOR_ERROR_OVER_SPEED;
     }

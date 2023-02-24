@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -101,6 +101,7 @@ const motor_position_api_t g_motor_position_on_motor_position =
     .speedReferencePControlGet    = RM_MOTOR_POSITION_SpeedReferencePControlGet,
     .speedReferenceIpdControlGet  = RM_MOTOR_POSITION_SpeedReferenceIpdControlGet,
     .speedReferenceFeedforwardGet = RM_MOTOR_POSITION_SpeedReferenceFeedforwardGet,
+    .infoGet                      = RM_MOTOR_POSITION_InfoGet,
     .parameterUpdate              = RM_MOTOR_POSITION_ParameterUpdate,
 };
 
@@ -476,6 +477,31 @@ fsp_err_t RM_MOTOR_POSITION_SpeedReferenceFeedforwardGet (motor_position_ctrl_t 
                                                        f4_speed_ff_rad,
                                                        f_temp_speed_ref,
                                                        p_extended_cfg->st_motor.u2_mtr_pp);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Get position information.
+ *
+ * @retval FSP_SUCCESS              Successfully data is set.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_ARGUMENT Output pointer is NULL.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_POSITION_InfoGet (motor_position_ctrl_t * const p_ctrl, motor_position_info_t * const p_info)
+{
+    motor_position_instance_ctrl_t * p_instance_ctrl = (motor_position_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_POSITION_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_POSITION_ERROR_RETURN(MOTOR_POSITION_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    MOTOR_POSITION_ERROR_RETURN(NULL != p_info, FSP_ERR_INVALID_ARGUMENT);
+#endif
+
+    p_info->u1_state_position_profile = p_instance_ctrl->st_profiling.u1_state_pos_pf;
+    p_info->s2_position_degree        =
+        (int16_t) (p_instance_ctrl->st_variable.f4_pos_rad * MOTOR_POSITION_360_TWOPI);
 
     return FSP_SUCCESS;
 }

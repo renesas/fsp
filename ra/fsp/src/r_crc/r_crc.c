@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -29,9 +29,16 @@
  **********************************************************************************************************************/
 
 /* "CRC" in ASCII, used to determine if channel is open. */
-#define CRC_OPEN                   (0x00435243ULL)
+#define CRC_OPEN                        (0x00435243ULL)
 
-#define CRC_CRCCR1_CRCSWR_SHIFT    (5)
+#define CRC_CRCCR1_CRCSWR_SHIFT         (5)
+
+/* Snoop address
+ * TDR and RDR depends on MCU.
+ * FTDRL is always 0x**F while FRDRL is always 0x**1.
+ */
+#define CRC_SNOOP_ADDRESS_TYPE_MASK     (0x0FU)
+#define CRC_SNOOP_ADDRESS_TYPE_FTDRL    (0x0FU)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -117,8 +124,11 @@ fsp_err_t R_CRC_Open (crc_ctrl_t * const p_ctrl, crc_cfg_t const * const p_cfg)
 
     R_CRC->CRCCR0 = crccr0;
 
+#if BSP_FEATURE_CRC_HAS_SNOOP
+
     /* Disable snooping */
     R_CRC->CRCCR1 = 0;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -217,37 +227,53 @@ fsp_err_t R_CRC_CalculatedValueGet (crc_ctrl_t * const p_ctrl, uint32_t * calcul
  * For example, if set to channel 0, transmit, every byte written out SCI channel 0 is also
  * sent to the CRC calculator as if the value was explicitly written directly to the CRC calculator.
  *
- * @retval FSP_SUCCESS             Snoop configured successfully.
- * @retval FSP_ERR_ASSERTION       Pointer to control stucture is NULL
- * @retval FSP_ERR_NOT_OPEN        The driver is not opened.
+ * @retval FSP_SUCCESS                  Snoop configured successfully.
+ * @retval FSP_ERR_ASSERTION            Pointer to control stucture is NULL
+ * @retval FSP_ERR_NOT_OPEN             The driver is not opened.
+ * @retval FSP_ERR_UNSUPPORTED          SNOOP operation is not supported.
+ * @retval FSP_ERR_INVALID_ARGUMENT     SNOOP address is invalid.
  *
  **********************************************************************************************************************/
 fsp_err_t R_CRC_SnoopEnable (crc_ctrl_t * const p_ctrl, uint32_t crc_seed)
 {
+#if BSP_FEATURE_CRC_HAS_SNOOP
     crc_instance_ctrl_t * p_instance_ctrl = (crc_instance_ctrl_t *) p_ctrl;
 
-#if CRC_CFG_PARAM_CHECKING_ENABLE
+ #if CRC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl);
     FSP_ERROR_RETURN(CRC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
-    uint8_t crccr1 = 0;
-    uint8_t crcsar = 0;
-
-    /* Set CRC snoop direction */
-    crccr1 = (uint8_t) ((p_instance_ctrl->p_cfg->snoop_address & 2) << CRC_CRCCR1_CRCSWR_SHIFT);
-
-    /* Set CRC snoop address */
-    crcsar = (uint8_t) (p_instance_ctrl->p_cfg->snoop_address & R_CRC_CRCSAR_CRCSA_Msk);
-
-    R_CRC->CRCSAR = crcsar;
+    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->snoop_address >= 0, FSP_ERR_INVALID_ARGUMENT);
+ #endif
 
     crc_seed_value_update(p_instance_ctrl, crc_seed);
 
-    /* Enable the snoop operation */
-    crccr1       |= (1 << R_CRC_CRCCR1_CRCSEN_Pos);
-    R_CRC->CRCCR1 = crccr1;
+    /* Set CRC snoop address */
+    R_CRC->CRCSAR =
+        (uint16_t) (((uint32_t) p_instance_ctrl->p_cfg->snoop_address & R_CRC_CRCSAR_CRCSA_Msk) <<
+                    R_CRC_CRCSAR_CRCSA_Pos);
+
+    /*
+     * Enable snoop operation and set direction:
+     */
+    uint8_t addr = (uint8_t) p_instance_ctrl->p_cfg->snoop_address & CRC_SNOOP_ADDRESS_TYPE_MASK;
+    if ((BSP_FEATURE_CRC_SNOOP_ADDRESS_TYPE_TDR == addr) || (CRC_SNOOP_ADDRESS_TYPE_FTDRL == addr))
+    {
+        R_CRC->CRCCR1 = (uint8_t) ((1UL << R_CRC_CRCCR1_CRCSEN_Pos) | (1UL << R_CRC_CRCCR1_CRCSWR_Pos));
+    }
+    else
+    {
+        R_CRC->CRCCR1 = (uint8_t) (1 << R_CRC_CRCCR1_CRCSEN_Pos);
+    }
+
+    FSP_REGISTER_READ(R_CRC->CRCCR1_b.CRCSWR);
 
     return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(crc_seed);
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -258,21 +284,28 @@ fsp_err_t R_CRC_SnoopEnable (crc_ctrl_t * const p_ctrl, uint32_t crc_seed)
  * @retval FSP_SUCCESS             Snoop disabled.
  * @retval FSP_ERR_ASSERTION       p_ctrl is NULL.
  * @retval FSP_ERR_NOT_OPEN        The driver is not opened.
+ * @retval FSP_ERR_UNSUPPORTED     SNOOP operation is not supported.
  *
  **********************************************************************************************************************/
 fsp_err_t R_CRC_SnoopDisable (crc_ctrl_t * const p_ctrl)
 {
-#if CRC_CFG_PARAM_CHECKING_ENABLE
+#if BSP_FEATURE_CRC_HAS_SNOOP
+ #if CRC_CFG_PARAM_CHECKING_ENABLE
     crc_instance_ctrl_t * p_instance_ctrl = (crc_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(p_ctrl);
     FSP_ERROR_RETURN(CRC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
     /* Clear CRCSEN to disable snoop operation */
     R_CRC->CRCCR1 = 0;
 
     return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /** @} (end addtogroup CRC) */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -147,6 +147,10 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
         else if (cmd == SCE_OEM_CMD_AES256)
         {
             ret = HW_SCE_GenerateAes256KeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
+        }
+        else if (cmd == SCE_OEM_CMD_AES128_XTS)
+        {
+            ret = HW_SCE_GenerateAes128XtsKeyIndexSub(indata_key_type, install_key_ring_index, (uint32_t *) encrypted_provisioning_key, (uint32_t *) iv, (uint32_t *) encrypted_oem_key, key_index);
         }
         else if (cmd == SCE_OEM_CMD_RSA2048_PUBLIC)
         {

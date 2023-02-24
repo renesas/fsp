@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1137,9 +1137,15 @@ static void bsp_clock_freq_var_init (void)
 #endif
 #if BSP_PRV_PLL_SUPPORTED
  #if BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_CLOCK_SOURCE
+  #if (3U != BSP_FEATURE_CGC_PLLCCR_TYPE)
 
     /* The PLL Is the startup clock. */
     g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL] = BSP_STARTUP_SOURCE_CLOCK_HZ;
+  #else
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL]   = BSP_CFG_PLL1P_FREQUENCY_HZ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL1Q] = BSP_CFG_PLL1Q_FREQUENCY_HZ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL1R] = BSP_CFG_PLL1R_FREQUENCY_HZ;
+  #endif
  #else
 
     /* The PLL value will be calculated at initialization. */
@@ -1976,5 +1982,66 @@ uint32_t R_BSP_SourceClockHzGet (fsp_priv_source_clock_t clock)
 
     return source_clock;
 }
+
+#if BSP_FEATURE_HAS_RTC || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+
+/*******************************************************************************************************************//**
+ * RTC Initialization
+ *
+ * Some RTC registers must be initialized after reset to ensure correct operation.
+ * This reset is not performed automatically if the RTC is used in a project as it will
+ * be handled by the RTC driver if needed.
+ **********************************************************************************************************************/
+void R_BSP_Init_RTC (void)
+{
+    /* RA4M3 UM r01uh0893ej0120: Figure 23.14 Initialization procedure */
+
+    /* RCKSEL bit is not initialized after reset. Use LOCO as the default
+     * clock source if it is available. Note RCR4.ROPSEL is also cleared.
+     */
+ #if BSP_PRV_LOCO_USED
+    R_RTC->RCR4 = 1 << R_RTC_RCR4_RCKSEL_Pos;
+ #else
+
+    /* Sses SOSC as clock source, or there is no clock source. */
+    R_RTC->RCR4 = 0;
+ #endif
+
+ #if !BSP_CFG_RTC_USED
+  #if BSP_PRV_LOCO_USED || (BSP_FEATURE_CGC_HAS_SOSC && BSP_CLOCK_CFG_SUBCLOCK_POPULATED)
+
+    /*Wait for 6 clocks: 200 > (6*1000000) / 32K */
+    R_BSP_SoftwareDelay(BSP_PRV_RTC_RESET_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+    R_RTC->RCR2 = 0;
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2, 0);
+
+    R_RTC->RCR2_b.RESET = 1;
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.RESET, 0);
+
+    /* Disable RTC interrupts */
+    R_RTC->RCR1 = 0;
+
+   #if BSP_FEATURE_RTC_HAS_TCEN
+    for (uint8_t index = 0U; index < BSP_FEATURE_RTC_RTCCR_CHANNELS; index++)
+    {
+        /* RTCCRn.TCEN must be cleared after reset. */
+        R_RTC->RTCCR[index].RTCCR_b.TCEN = 0U;
+        FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[index].RTCCR_b.TCEN, 0);
+    }
+   #endif
+  #endif
+ #endif
+
+ #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+
+    /* VBTICTLR.VCHnINEN must be cleared after reset. */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+    R_SYSTEM->VBTICTLR = 0U;
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
+ #endif
+}
+
+#endif
 
 /** @} (end addtogroup BSP_MCU_PRV) */

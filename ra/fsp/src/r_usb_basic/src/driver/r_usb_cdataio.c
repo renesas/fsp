@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -202,6 +202,8 @@ static const uint8_t g_usb_pipe_peri[] =
  #else                                            /* defined(USB_CFG_PPRN_USE) */
     USB_NULL,               USB_NULL,
  #endif                                           /* defined(USB_CFG_PPRN_USE) */
+
+    USB_NULL,               USB_NULL,             /* USB_DFU (8) */
 };
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
@@ -273,61 +275,64 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     USB_NULL, USB_NULL,                              /* USB_PPRN (7) */
 #endif /* defined(USB_CFG_PPRN_USE) */
 
+    /* DFU */
+    USB_NULL, USB_NULL,                              /* USB_DFU (8) */
+
     /* PVND */
-    USB_NULL, USB_NULL,                              /* USB_PVND (8) */
+    USB_NULL, USB_NULL,                              /* USB_PVND (9) */
 
     /* HCDC, HCDCC */
 #if defined(USB_CFG_HCDC_USE)
  #if (BSP_CFG_RTOS == 1)
-    USB_NULL, USB_NULL,                              /* USB_HCDC  (9) */
-    USB_NULL, USB_NULL,                              /* USB_HCDCC (10) */
+    USB_NULL, USB_NULL,                              /* USB_HCDC  (10) */
+    USB_NULL, USB_NULL,                              /* USB_HCDCC (11) */
  #else  /* #if (BSP_CFG_RTOS == 1) */
-    usb_hcdc_read_complete, usb_hcdc_write_complete, /* USB_HCDC  (9) */
-    usb_hcdc_read_complete, USB_NULL,                /* USB_HCDCC (10) */
+    usb_hcdc_read_complete, usb_hcdc_write_complete, /* USB_HCDC  (10) */
+    usb_hcdc_read_complete, USB_NULL,                /* USB_HCDCC (11) */
  #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HCDC  (9) */
-    USB_NULL, USB_NULL,                              /* USB_HCDCC (10) */
+    USB_NULL, USB_NULL,                              /* USB_HCDC  (10) */
+    USB_NULL, USB_NULL,                              /* USB_HCDCC (11) */
 #endif
 
     /* HHID */
 #if defined(USB_CFG_HHID_USE)
  #if (BSP_CFG_RTOS == 1)
-    USB_NULL, USB_NULL,                              /* USB_HHID (11) */
+    USB_NULL, USB_NULL,                              /* USB_HHID (12) */
  #else                                               /* #if (BSP_CFG_RTOS == 1) */
-    usb_hhid_read_complete, usb_hhid_write_complete, /* USB_HHID  (11) */
+    usb_hhid_read_complete, usb_hhid_write_complete, /* USB_HHID  (12) */
  #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HHID  (11) */
+    USB_NULL, USB_NULL,                              /* USB_HHID  (12) */
 #endif
 
     /* HVND */
 #if defined(USB_CFG_HVND_USE)
-    usb_hvnd_read_complete, usb_hvnd_write_complete, /* USB_HVND  (12) */
+    usb_hvnd_read_complete, usb_hvnd_write_complete, /* USB_HVND  (13) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HVND  (12) */
+    USB_NULL, USB_NULL,                              /* USB_HVND  (13) */
 #endif
 
     /* HMSC */
-    USB_NULL, USB_NULL,                              /* USB_HMSC  (13) */
+    USB_NULL, USB_NULL,                              /* USB_HMSC  (14) */
 
     /* PMSC */
-    USB_NULL, USB_NULL,                              /* USB_PMSC  (14) */
+    USB_NULL, USB_NULL,                              /* USB_PMSC  (15) */
 
     /* HPRN */
 #if defined(USB_CFG_HPRN_USE)
  #if (BSP_CFG_RTOS == 1)
-    USB_NULL, USB_NULL,                              /* USB_HPRN (15) */
+    USB_NULL, USB_NULL,                              /* USB_HPRN (16) */
  #else                                               /* #if (BSP_CFG_RTOS == 1) */
-    usb_hprn_read_complete, usb_hprn_write_complete, /* USB_HPRN (15) */
+    usb_hprn_read_complete, usb_hprn_write_complete, /* USB_HPRN (16) */
  #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HPRN (15) */
+    USB_NULL, USB_NULL,                              /* USB_HPRN (16) */
 #endif
 
     /* HUVC */
 
-    USB_NULL, USB_NULL,                /* USB_HUVC (16) */
+    USB_NULL, USB_NULL,                /* USB_HUVC (17) */
 };                                     /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
 
 #if defined(USB_CFG_PCDC_USE)

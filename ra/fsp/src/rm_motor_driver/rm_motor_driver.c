@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -34,27 +34,27 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_DRIVER_OPEN             (0X4D445241L)
+#define     MOTOR_DRIVER_OPEN                   (0X4D445241L)
 
-#define     MOTOR_DRIVER_FLG_CLR          (0)     /* For flag clear */
-#define     MOTOR_DRIVER_FLG_SET          (1)     /* For flag set */
+#define     MOTOR_DRIVER_FLG_CLR                (0)     /* For flag clear */
+#define     MOTOR_DRIVER_FLG_SET                (1)     /* For flag set */
 
-#define     MOTOR_DRIVER_KHZ_TRANS        (1000U) /* x1000 */
+#define     MOTOR_DRIVER_KHZ_TRANS              (1000U) /* x1000 */
 
-#define     MOTOR_DRIVER_DEF_HALF         (0.5F)
-#define     MOTOR_DRIVER_MULTIPLE_TWO     (2.0F)
+#define     MOTOR_DRIVER_DEF_HALF               (0.5F)
+#define     MOTOR_DRIVER_MULTIPLE_TWO           (2.0F)
 
-#define     MOTOR_DRIVER_ADC_DATA_MASK    (0x00000FFF)
+#define     MOTOR_DRIVER_ADC_DATA_MASK          (0x00000FFF)
 
 /* Select SVPWM as default method when MOD_METHOD is undefined */
-#define     MOTOR_DRIVER_METHOD_SPWM      (0)      /* Sinusoidal pulse-width-modulation */
-#define     MOTOR_DRIVER_METHOD_SVPWM     (1)      /* Space vector pulse-width-modulation */
-#define     MOTOR_DRIVER_SATFLAG_BITU     (1 << 0) /* Saturation flag bit for U phase */
-#define     MOTOR_DRIVER_SATFLAG_BITV     (1 << 1) /* Saturation flag bit for V phase */
-#define     MOTOR_DRIVER_SATFLAG_BITW     (1 << 2) /* Saturation flag bit for W phase */
+#define     MOTOR_DRIVER_METHOD_SPWM            (0)      /* Sinusoidal pulse-width-modulation */
+#define     MOTOR_DRIVER_METHOD_SVPWM           (1)      /* Space vector pulse-width-modulation */
+#define     MOTOR_DRIVER_SATFLAG_BITU           (1 << 0) /* Saturation flag bit for U phase */
+#define     MOTOR_DRIVER_SATFLAG_BITV           (1 << 1) /* Saturation flag bit for V phase */
+#define     MOTOR_DRIVER_SATFLAG_BITW           (1 << 2) /* Saturation flag bit for W phase */
 
 #ifndef MOTOR_DRIVER_METHOD
- #define MOTOR_DRIVER_METHOD              (MOTOR_DRIVER_METHOD_SPWM)
+ #define MOTOR_DRIVER_METHOD                    (MOTOR_DRIVER_METHOD_SPWM)
 #endif
 
 /*
@@ -62,8 +62,13 @@
  *   SVPWM :  Vdc * (MOD_VDC_TO_VAMAX_MULT) * (Max duty - Min duty) * (MOD_SVPWM_MULT)
  *   SPWM  :  Vdc * (MOD_VDC_TO_VAMAX_MULT) * (Max duty - Min duty)
  */
-#define MOTOR_DRIVER_VDC_TO_VAMAX_MULT    (0.6124F) /* The basic coefficient used to convert Vdc to Vamax */
-#define MOTOR_DRIVER_SVPWM_MULT           (1.155F)  /* The usable voltage is multiplied by sqrt(4/3) when using SVPWM */
+#define MOTOR_DRIVER_VDC_TO_VAMAX_MULT          (0.6124F)   /* The basic coefficient used to convert Vdc to Vamax */
+#define MOTOR_DRIVER_SVPWM_MULT                 (1.155F)    /* The usable voltage is multiplied by sqrt(4/3) when using SVPWM */
+
+#define MOTOR_DRIVER_IO_PORT_CFG_LOW            (0x3000004) /* Set I/O port with low output */
+#define MOTOR_DRIVER_IO_PORT_CFG_HIGH           (0x3000005) /* Set I/O port with high output*/
+#define MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK    (0x0010000) /* Mask for pin to operate as a peripheral pin */
+#define MOTOR_DRIVER_IO_PORT_GPIO_MASK          (0xFFEFFFF) /* Mask for pin to operate as a GPIO pin */
 
 #ifndef MOTOR_DRIVER_ERROR_RETURN
  #define    MOTOR_DRIVER_ERROR_RETURN(a, err)    FSP_ERROR_RETURN((a), (err))
@@ -88,6 +93,10 @@ static void rm_motor_driver_current_get(motor_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_driver_1shunt_current_get(motor_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_driver_modulation(motor_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_driver_1shunt_modulation(motor_driver_instance_ctrl_t * p_ctrl);
+
+static void rm_motor_driver_pin_cfg(bsp_io_port_pin_t pin, uint32_t cfg);
+static void rm_motor_driver_output_enable(motor_driver_instance_ctrl_t * p_ctrl);
+static void rm_motor_driver_output_disable(motor_driver_instance_ctrl_t * p_ctrl);
 
 /* Modulation functions */
 static void rm_motor_driver_mod_run(motor_driver_instance_ctrl_t * p_ctrl,
@@ -166,6 +175,35 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
     /* Start GPT three phase module */
     if (p_cfg->p_three_phase_instance != NULL)
     {
+        /* For Port setting */
+        three_phase_instance_t const * p_three_phase;
+        timer_instance_t const       * p_u_phase_gpt;
+        timer_cfg_t const            * p_u_phase_gpt_cfg;
+        gpt_extended_cfg_t const     * p_u_phase_gpt_extend;
+
+        p_three_phase        = p_cfg->p_three_phase_instance;
+        p_u_phase_gpt        = p_three_phase->p_cfg->p_timer_instance[0];
+        p_u_phase_gpt_cfg    = p_u_phase_gpt->p_cfg;
+        p_u_phase_gpt_extend = p_u_phase_gpt_cfg->p_extend;
+
+        if (p_u_phase_gpt_extend->gtioca.stop_level == GPT_PIN_LEVEL_LOW)
+        {
+            p_instance_ctrl->u4_gtioca_low_cfg = MOTOR_DRIVER_IO_PORT_CFG_LOW;
+        }
+        else
+        {
+            p_instance_ctrl->u4_gtioca_low_cfg = MOTOR_DRIVER_IO_PORT_CFG_HIGH;
+        }
+
+        if (p_u_phase_gpt_extend->gtiocb.stop_level == GPT_PIN_LEVEL_HIGH)
+        {
+            p_instance_ctrl->u4_gtiocb_low_cfg = MOTOR_DRIVER_IO_PORT_CFG_LOW;
+        }
+        else
+        {
+            p_instance_ctrl->u4_gtiocb_low_cfg = MOTOR_DRIVER_IO_PORT_CFG_HIGH;
+        }
+
         p_cfg->p_three_phase_instance->p_api->open(p_cfg->p_three_phase_instance->p_ctrl,
                                                    p_cfg->p_three_phase_instance->p_cfg);
 
@@ -183,6 +221,11 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
                                          p_instance_ctrl->st_modulation.f4_neutral_duty,
                                          p_instance_ctrl->st_modulation.f4_neutral_duty,
                                          p_instance_ctrl->st_modulation.f4_neutral_duty);
+        }
+
+        if (p_extended_cfg->port_up != 0)
+        {
+            rm_motor_driver_output_disable(p_instance_ctrl);
         }
 
         p_cfg->p_three_phase_instance->p_api->start(p_cfg->p_three_phase_instance->p_ctrl);
@@ -247,7 +290,13 @@ fsp_err_t RM_MOTOR_DRIVER_Close (motor_driver_ctrl_t * const p_ctrl)
     MOTOR_DRIVER_ERROR_RETURN(MOTOR_DRIVER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    motor_driver_cfg_t * p_cfg = (motor_driver_cfg_t *) p_instance_ctrl->p_cfg;
+    motor_driver_cfg_t          * p_cfg          = (motor_driver_cfg_t *) p_instance_ctrl->p_cfg;
+    motor_driver_extended_cfg_t * p_extended_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
+
+    if (p_extended_cfg->port_up != 0)
+    {
+        rm_motor_driver_output_disable(p_instance_ctrl);
+    }
 
     rm_motor_driver_reset(p_instance_ctrl);
 
@@ -292,6 +341,9 @@ fsp_err_t RM_MOTOR_DRIVER_Reset (motor_driver_ctrl_t * const p_ctrl)
     MOTOR_DRIVER_ERROR_RETURN(MOTOR_DRIVER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    motor_driver_cfg_t          * p_cfg          = (motor_driver_cfg_t *) p_instance_ctrl->p_cfg;
+    motor_driver_extended_cfg_t * p_extended_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
+
     p_instance_ctrl->f_refu = p_instance_ctrl->st_modulation.f4_neutral_duty;
     p_instance_ctrl->f_refv = p_instance_ctrl->st_modulation.f4_neutral_duty;
     p_instance_ctrl->f_refw = p_instance_ctrl->st_modulation.f4_neutral_duty;
@@ -300,6 +352,12 @@ fsp_err_t RM_MOTOR_DRIVER_Reset (motor_driver_ctrl_t * const p_ctrl)
                                  p_instance_ctrl->st_modulation.f4_neutral_duty,
                                  p_instance_ctrl->st_modulation.f4_neutral_duty,
                                  p_instance_ctrl->st_modulation.f4_neutral_duty);
+
+    if (p_extended_cfg->port_up != 0)
+    {
+        rm_motor_driver_output_disable(p_instance_ctrl);
+    }
+
     rm_motor_driver_reset(p_instance_ctrl);
 
     return FSP_SUCCESS;
@@ -396,35 +454,39 @@ fsp_err_t RM_MOTOR_DRIVER_FlagCurrentOffsetGet (motor_driver_ctrl_t * const p_ct
     motor_driver_extended_cfg_t * p_extended_cfg =
         (motor_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
+    /* Enable PWM output */
+    if (p_extended_cfg->port_up != 0)
+    {
+        rm_motor_driver_output_enable(p_instance_ctrl);
+    }
+
     /* Measure current A/D offset */
     if (MOTOR_DRIVER_FLG_CLR == p_instance_ctrl->u1_flag_offset_calc)
     {
         /* 2 or 3 shunt */
         if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT != p_instance_ctrl->p_cfg->shunt)
         {
-            /* Output neautral PWM */
+            /* Output neutral PWM */
             rm_motor_driver_set_uvw_duty(p_instance_ctrl,
                                          p_instance_ctrl->st_modulation.f4_neutral_duty,
                                          p_instance_ctrl->st_modulation.f4_neutral_duty,
                                          p_instance_ctrl->st_modulation.f4_neutral_duty);
 
             u2_temp_offset_count = p_extended_cfg->u2_offset_calc_count;
-            if (MOTOR_DRIVER_FLG_CLR == p_instance_ctrl->u1_flag_offset_calc)
+
+            if (p_instance_ctrl->u2_offset_calc_times < u2_temp_offset_count)
             {
-                if (p_instance_ctrl->u2_offset_calc_times < u2_temp_offset_count)
-                {
-                    p_instance_ctrl->f_sum_iu_ad += p_instance_ctrl->f_iu_ad;
-                    p_instance_ctrl->f_sum_iv_ad += p_instance_ctrl->f_iv_ad;
-                    p_instance_ctrl->f_sum_iw_ad += p_instance_ctrl->f_iw_ad;
-                    p_instance_ctrl->u2_offset_calc_times++;
-                }
-                else
-                {
-                    p_instance_ctrl->f_offset_iu         = p_instance_ctrl->f_sum_iu_ad / u2_temp_offset_count;
-                    p_instance_ctrl->f_offset_iv         = p_instance_ctrl->f_sum_iv_ad / u2_temp_offset_count;
-                    p_instance_ctrl->f_offset_iw         = p_instance_ctrl->f_sum_iw_ad / u2_temp_offset_count;
-                    p_instance_ctrl->u1_flag_offset_calc = MOTOR_DRIVER_FLG_SET;
-                }
+                p_instance_ctrl->f_sum_iu_ad += p_instance_ctrl->f_iu_ad;
+                p_instance_ctrl->f_sum_iv_ad += p_instance_ctrl->f_iv_ad;
+                p_instance_ctrl->f_sum_iw_ad += p_instance_ctrl->f_iw_ad;
+                p_instance_ctrl->u2_offset_calc_times++;
+            }
+            else
+            {
+                p_instance_ctrl->f_offset_iu         = p_instance_ctrl->f_sum_iu_ad / u2_temp_offset_count;
+                p_instance_ctrl->f_offset_iv         = p_instance_ctrl->f_sum_iv_ad / u2_temp_offset_count;
+                p_instance_ctrl->f_offset_iw         = p_instance_ctrl->f_sum_iw_ad / u2_temp_offset_count;
+                p_instance_ctrl->u1_flag_offset_calc = MOTOR_DRIVER_FLG_SET;
             }
         }
         /* 1 shunt */
@@ -1047,6 +1109,85 @@ static void rm_motor_driver_1shunt_modulation (motor_driver_instance_ctrl_t * p_
         R_GPT_AdcTriggerSet(timer_u->p_ctrl, GPT_ADC_COMPARE_MATCH_ADC_B, (uint32_t) s4_AD2_trigger);
     }
 }                                      /* End of function rm_motor_driver_1shunt_modulation */
+
+/***********************************************************************************************************************
+ * Function Name: rm_motor_driver_pin_cfg
+ * Description  : Configure a pin
+ * Arguments    : pin -
+ *                    The pin
+ *                cfg -
+ *                    Configuration for the pin (PmnPFS register setting)
+ * Return Value : None
+ **********************************************************************************************************************/
+static void rm_motor_driver_pin_cfg (bsp_io_port_pin_t pin, uint32_t cfg)
+{
+    R_BSP_PinAccessEnable();
+    R_BSP_PinCfg(pin, cfg);
+    R_BSP_PinAccessDisable();
+}                                      /* End of function rm_motor_driver_pin_cfg() */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_driver_output_enable
+ * Description   : Enable PWM output
+ * Arguments     : p_ctrl - The pointer to the motor driver module instance
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_driver_output_enable (motor_driver_instance_ctrl_t * p_ctrl)
+{
+    motor_driver_cfg_t           * p_cfg         = (motor_driver_cfg_t *) p_ctrl->p_cfg;
+    motor_driver_extended_cfg_t  * p_extended    = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
+    three_phase_instance_t const * p_three_phase = p_cfg->p_three_phase_instance;
+    timer_instance_t const       * p_u_phase_gpt = p_three_phase->p_cfg->p_timer_instance[0];
+    timer_instance_t const       * p_v_phase_gpt = p_three_phase->p_cfg->p_timer_instance[1];
+    timer_instance_t const       * p_w_phase_gpt = p_three_phase->p_cfg->p_timer_instance[2];
+
+    p_ctrl->u4_gtioca_low_cfg |= MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK;
+    p_ctrl->u4_gtiocb_low_cfg |= MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK;
+
+    /* Set pin function */
+    rm_motor_driver_pin_cfg(p_extended->port_up, p_ctrl->u4_gtioca_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_un, p_ctrl->u4_gtiocb_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_vp, p_ctrl->u4_gtioca_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_vn, p_ctrl->u4_gtiocb_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_wp, p_ctrl->u4_gtioca_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_wn, p_ctrl->u4_gtiocb_low_cfg);
+
+    /* PWM output enable */
+    R_GPT_OutputEnable(p_u_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+    R_GPT_OutputEnable(p_v_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+    R_GPT_OutputEnable(p_w_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+}                                      /* End of function rm_motor_driver_output_enable */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_driver_output_disable
+ * Description   : Disable PWM output
+ * Arguments     : p_ctrl - The pointer to the motor driver module instance
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_driver_output_disable (motor_driver_instance_ctrl_t * p_ctrl)
+{
+    motor_driver_cfg_t           * p_cfg         = (motor_driver_cfg_t *) p_ctrl->p_cfg;
+    motor_driver_extended_cfg_t  * p_extended    = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
+    three_phase_instance_t const * p_three_phase = p_cfg->p_three_phase_instance;
+    timer_instance_t const       * p_u_phase_gpt = p_three_phase->p_cfg->p_timer_instance[0];
+    timer_instance_t const       * p_v_phase_gpt = p_three_phase->p_cfg->p_timer_instance[1];
+    timer_instance_t const       * p_w_phase_gpt = p_three_phase->p_cfg->p_timer_instance[2];
+
+    /* PWM output disable */
+    R_GPT_OutputDisable(p_u_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+    R_GPT_OutputDisable(p_v_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+    R_GPT_OutputDisable(p_w_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+
+    p_ctrl->u4_gtioca_low_cfg &= MOTOR_DRIVER_IO_PORT_GPIO_MASK;
+    p_ctrl->u4_gtiocb_low_cfg &= MOTOR_DRIVER_IO_PORT_GPIO_MASK;
+
+    rm_motor_driver_pin_cfg(p_extended->port_up, p_ctrl->u4_gtioca_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_un, p_ctrl->u4_gtiocb_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_vp, p_ctrl->u4_gtioca_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_vn, p_ctrl->u4_gtiocb_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_wp, p_ctrl->u4_gtioca_low_cfg);
+    rm_motor_driver_pin_cfg(p_extended->port_wn, p_ctrl->u4_gtiocb_low_cfg);
+}                                      /* End of function rm_motor_driver_output_disable */
 
 /***********************************************************************************************************************
  * Function Name: rm_motor_driver_mod_svpwm

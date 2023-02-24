@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -367,6 +367,10 @@ FSP_HEADER
 #else
  #define BSP_PRV_HOCO_USE_FLL                  (0)
  #define BSP_PRV_FLL_STABILIZATION_TIME_US     (0)
+#endif
+
+#if BSP_FEATURE_HAS_RTC || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+ #define BSP_PRV_RTC_RESET_DELAY_US            (200)
 #endif
 
 /* Operating power control modes. */
@@ -1094,6 +1098,12 @@ void     bsp_prv_power_change_mstp_clear(uint32_t mstp_clear_bitmask);
 
 void bsp_prv_prepare_pll(uint32_t pll_freq_hz);
 void bsp_prv_clock_set(uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2);
+
+/* RTC Initialization */
+#if BSP_FEATURE_HAS_RTC || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+void R_BSP_Init_RTC(void);
+
+#endif
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
