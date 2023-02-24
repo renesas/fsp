@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,6 +203,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga77fae675142bf911c9275a73e748a49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga164300ede2cb4269d8b16f991b4d995e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e">motor_wait_stop_flag_t</a> </td></tr>
 <tr class="separator:ga164300ede2cb4269d8b16f991b4d995e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42e5fa63634ab0afe67581c3e05758f0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0">motor_function_select_t</a> </td></tr>
+<tr class="separator:ga42e5fa63634ab0afe67581c3e05758f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structmotor__callback__args__t" id="structmotor__callback__args__t"></a>
@@ -323,6 +325,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a429db729202458c2b375023fb5822c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4646d3816e8fb2b123246a83a6034888"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888">errorCheck</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, uint16_t *const p_error)</td></tr>
 <tr class="separator:a4646d3816e8fb2b123246a83a6034888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1191b1ba3d266297f524cd67b9504705"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a1191b1ba3d266297f524cd67b9504705">functionSelect</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0">motor_function_select_t</a> const function)</td></tr>
+<tr class="separator:a1191b1ba3d266297f524cd67b9504705"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a95a2ccb7727a5081979dc59fd3cdd728"></a>
@@ -685,6 +689,35 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="a1191b1ba3d266297f524cd67b9504705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1191b1ba3d266297f524cd67b9504705">&#9670;&nbsp;</a></span>functionSelect</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_api_t::functionSelect) (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0">motor_function_select_t</a> const function)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>FunctionSelect. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga6b32f781158071cf86e20110bf1b0bd8">RM_MOTOR_ENCODER_FunctionSelect()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#gaf677a5b2703c171d1005e3b82716c247">RM_MOTOR_INDUCTION_FunctionSelect()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga2a909a8c9577747bedfd2111c724c87a">RM_MOTOR_SENSORLESS_FunctionSelect()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___h_a_l_l.html#ga43e5abf6a7576376d41c45aabf00ab41">RM_MOTOR_HALL_FunctionSelect()</a></li>
+<li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga5f62b1dc795c43d931ec053397c2baee">RM_MOTOR_120_DEGREE_FunctionSelect()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">function</td><td>Selected function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -813,13 +846,36 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga42e5fa63634ab0afe67581c3e05758f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga42e5fa63634ab0afe67581c3e05758f0">&#9670;&nbsp;</a></span>motor_function_select_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0">motor_function_select_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function select </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga42e5fa63634ab0afe67581c3e05758f0a4c7c7977516d3c814a6067e006e1fb24"></a>MOTOR_FUNCTION_SELECT_NONE&#160;</td><td class="fielddoc"><p>No function selected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga42e5fa63634ab0afe67581c3e05758f0a44d55b2a0480f9d99f826e351b781d05"></a>MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE&#160;</td><td class="fielddoc"><p>Inertia estimation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga42e5fa63634ab0afe67581c3e05758f0a96d3a56ade18549435b94a292c25ca3b"></a>MOTOR_FUNCTION_SELECT_RETURN_ORIGIN&#160;</td><td class="fielddoc"><p>Return origin position. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -301,6 +301,14 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the battery backup registers are accessible for the Non-secure application. If Secure State is selected, all battery backup registers are read only except for VBTBKRn registers which are both read and write protected.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
+<tr>
+<td>Security &gt; Uninitialized Non-Secure Application Fallback</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable Uninitialized Non-Secure Application Fallback</li>
+<li>
+Disable Uninitialized Non-Secure Application Fallback</li>
+</ul>
+</td><td>Enable Uninitialized Non-Secure Application Fallback </td><td>If enabled, the secure application checks if the non-secure application has been programmed in non-secure flash before branching. If the non-secure application has not been programmed, then the secure application branches to an infinite loop in non-secure RAM. This prevents an issue where the debugger may not connect if the MCU is configured in the NSECSD lifecycle state. </td></tr>
 <tr>
 <td>OFS0 register settings &gt; Independent WDT &gt; Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -579,7 +587,7 @@ Disabled</li>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

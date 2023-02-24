@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -177,6 +177,8 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__position__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__info__t">motor_position_info_t</a></td></tr>
+<tr class="separator:structmotor__position__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__position__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__cfg__t">motor_position_cfg_t</a></td></tr>
 <tr class="separator:structmotor__position__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__position__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__api__t">motor_position_api_t</a></td></tr>
@@ -195,6 +197,36 @@ Enumerations</h2></td></tr>
 <tr class="separator:gac587def649947014173cac649a4b73e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__position__info__t" id="structmotor__position__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__position__info__t">&#9670;&nbsp;</a></span>motor_position_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_position_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Position information </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a58bc41b375126e4068de2e198669954e"></a>uint8_t</td>
+<td class="fieldname">
+u1_state_position_profile</td>
+<td class="fielddoc">
+Position control profile state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6035e50490314ca1781a2c65c5dfecf4"></a>int16_t</td>
+<td class="fieldname">
+s2_position_degree</td>
+<td class="fielddoc">
+Position data [degree]. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structmotor__position__cfg__t" id="structmotor__position__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structmotor__position__cfg__t">&#9670;&nbsp;</a></span>motor_position_cfg_t</h2>
 
@@ -263,6 +295,8 @@ p_extend</td>
 <tr class="separator:abbf4901eb0af5f453618460b67f3d876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d7391a9c6fe97908aa43b92d135b1ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a8d7391a9c6fe97908aa43b92d135b1ca">speedReferenceFeedforwardGet</a> )(<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, float *const p_speed_ref)</td></tr>
 <tr class="separator:a8d7391a9c6fe97908aa43b92d135b1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62159043c35ed28f42052c1e2104ebad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a62159043c35ed28f42052c1e2104ebad">infoGet</a> )(<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__info__t">motor_position_info_t</a> *const p_info)</td></tr>
+<tr class="separator:a62159043c35ed28f42052c1e2104ebad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87bc994d6018b82c71bd34ce4055a55b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a87bc994d6018b82c71bd34ce4055a55b">parameterUpdate</a> )(<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__cfg__t">motor_position_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="separator:a87bc994d6018b82c71bd34ce4055a55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -566,6 +600,31 @@ p_extend</td>
 
 </div>
 </div>
+<a id="a62159043c35ed28f42052c1e2104ebad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62159043c35ed28f42052c1e2104ebad">&#9670;&nbsp;</a></span>infoGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_position_api_t::infoGet) (<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__info__t">motor_position_info_t</a> *const p_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get Position information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#gaad8a33851e84dd7771d66e9260c1fad7">RM_MOTOR_POSITION_InfoGet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_info</td><td>Pointer to get information </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a87bc994d6018b82c71bd34ce4055a55b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a87bc994d6018b82c71bd34ce4055a55b">&#9670;&nbsp;</a></span>parameterUpdate</h2>
 
@@ -671,7 +730,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

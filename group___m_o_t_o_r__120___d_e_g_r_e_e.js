@@ -36,5 +36,6 @@ var group___m_o_t_o_r__120___d_e_g_r_e_e =
     [ "RM_MOTOR_120_DEGREE_WaitStopFlagGet", "group___m_o_t_o_r__120___d_e_g_r_e_e.html#gadba69522cd127f7934c82d0e436eaf17", null ],
     [ "RM_MOTOR_120_DEGREE_ErrorCheck", "group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga2a7098995201a3e33fc4415003c6e7aa", null ],
     [ "RM_MOTOR_120_DEGREE_PositionSet", "group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga8ba53ebb135f0eafd7634bf0370be97b", null ],
-    [ "RM_MOTOR_120_DEGREE_AngleGet", "group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga234d2b5e16f9a11acde14cafae1471f0", null ]
+    [ "RM_MOTOR_120_DEGREE_AngleGet", "group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga234d2b5e16f9a11acde14cafae1471f0", null ],
+    [ "RM_MOTOR_120_DEGREE_FunctionSelect", "group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga5f62b1dc795c43d931ec053397c2baee", null ]
 ];

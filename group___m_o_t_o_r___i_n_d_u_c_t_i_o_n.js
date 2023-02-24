@@ -23,5 +23,10 @@ var group___m_o_t_o_r___i_n_d_u_c_t_i_o_n =
     [ "RM_MOTOR_INDUCTION_AngleGet", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga18535fe7e3c7630e75a89d808edbe8e8", null ],
     [ "RM_MOTOR_INDUCTION_SpeedGet", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga5534bd478e36f0899af95aa444888a17", null ],
     [ "RM_MOTOR_INDUCTION_ErrorCheck", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga54d19cc20c9a5459fcb9350c94068ffe", null ],
-    [ "RM_MOTOR_INDUCTION_WaitStopFlagGet", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga3eaa0b435b3d076ad246ebec39f8c21a", null ]
+    [ "RM_MOTOR_INDUCTION_WaitStopFlagGet", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga3eaa0b435b3d076ad246ebec39f8c21a", null ],
+    [ "RM_MOTOR_INDUCTION_FunctionSelect", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#gaf677a5b2703c171d1005e3b82716c247", null ],
+    [ "RM_MOTOR_INDUCTION_InertiaEstimateStart", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga7fc4286bf31ca9268cfd32f8a42ce637", null ],
+    [ "RM_MOTOR_INDUCTION_InertiaEstimateStop", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#gaa47a8233095cb63a7793b9e8b289b592", null ],
+    [ "RM_MOTOR_INDUCTION_ReturnOriginStart", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#gad3c3449b1ccacaaa9b3b266bcca050b3", null ],
+    [ "RM_MOTOR_INDUCTION_ReturnOriginStop", "group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga53c71d87e8c9999cb4dba5da28e072d3", null ]
 ];

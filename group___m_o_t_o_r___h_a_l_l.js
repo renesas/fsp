@@ -12,5 +12,6 @@ var group___m_o_t_o_r___h_a_l_l =
     [ "RM_MOTOR_HALL_SpeedGet", "group___m_o_t_o_r___h_a_l_l.html#ga3d11167473ba65bc8101079591afcf66", null ],
     [ "RM_MOTOR_HALL_ErrorCheck", "group___m_o_t_o_r___h_a_l_l.html#ga20743c2e70d15910bf73f5edb78332b7", null ],
     [ "RM_MOTOR_HALL_PositionSet", "group___m_o_t_o_r___h_a_l_l.html#gacf9ab348ae91fc3f7498581bf2eeac12", null ],
-    [ "RM_MOTOR_HALL_WaitStopFlagGet", "group___m_o_t_o_r___h_a_l_l.html#gafd31b1c14a892244b88dac4912ca8435", null ]
+    [ "RM_MOTOR_HALL_WaitStopFlagGet", "group___m_o_t_o_r___h_a_l_l.html#gafd31b1c14a892244b88dac4912ca8435", null ],
+    [ "RM_MOTOR_HALL_FunctionSelect", "group___m_o_t_o_r___h_a_l_l.html#ga43e5abf6a7576376d41c45aabf00ab41", null ]
 ];

@@ -13,8 +13,12 @@ var searchData=
   ['motor_20angle_20_28rm_5fmotor_5festimate_29',['Motor Angle (rm_motor_estimate)',['../group___m_o_t_o_r___e_s_t_i_m_a_t_e.html',1,'']]],
   ['motor_20vector_20control_20with_20hall_20sensors_20_28rm_5fmotor_5fhall_29',['Motor Vector Control with hall sensors (rm_motor_hall)',['../group___m_o_t_o_r___h_a_l_l.html',1,'']]],
   ['motor_20vector_20control_20with_20induction_20sensor_20_28rm_5fmotor_5finduction_29',['Motor vector control with induction sensor (rm_motor_induction)',['../group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html',1,'']]],
+  ['motor_20inertia_20estimate_20_28rm_5fmotor_5finertia_5festimate_29',['Motor Inertia estimate (rm_motor_inertia_estimate)',['../group___m_o_t_o_r___i_n_e_r_t_i_a___e_s_t_i_m_a_t_e.html',1,'']]],
+  ['motor_20inertia_20estimate_20interface',['Motor Inertia Estimate Interface',['../group___m_o_t_o_r___i_n_e_r_t_i_a___e_s_t_i_m_a_t_e___a_p_i.html',1,'']]],
   ['motor_20position_20controller_20_28rm_5fmotor_5fposition_29',['Motor Position Controller (rm_motor_position)',['../group___m_o_t_o_r___p_o_s_i_t_i_o_n.html',1,'']]],
   ['motor_20position_20interface',['Motor position Interface',['../group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html',1,'']]],
+  ['motor_20return_20origin_20_28rm_5fmotor_5freturn_5forigin_29',['Motor return origin (rm_motor_return_origin)',['../group___m_o_t_o_r___r_e_t_u_r_n___o_r_i_g_i_n.html',1,'']]],
+  ['motor_20return_20origin_20function_20interface',['Motor Return Origin Function Interface',['../group___m_o_t_o_r___r_e_t_u_r_n___o_r_i_g_i_n___a_p_i.html',1,'']]],
   ['motor_20angle_20_28rm_5fmotor_5fsense_5fencoder_29',['Motor Angle (rm_motor_sense_encoder)',['../group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html',1,'']]],
   ['motor_20angle_20and_20speed_20calculation_20with_20hall_20sensors_20_28rm_5fmotor_5fsense_5fhall_29',['Motor Angle and Speed Calculation with Hall sensors (rm_motor_sense_hall)',['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html',1,'']]],
   ['motor_20angle_20and_20speed_20calculation_20with_20induction_20sensor_20_28rm_5fmotor_5fsense_5finduction_29',['Motor Angle and Speed Calculation with induction sensor (rm_motor_sense_induction)',['../group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html',1,'']]],
@@ -25,5 +29,5 @@ var searchData=
   ['monitoring',['Monitoring',['../group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___m_o_d_u_l_e_s.html',1,'']]],
   ['motor',['Motor',['../group___r_e_n_e_s_a_s___m_o_t_o_r___m_o_d_u_l_e_s.html',1,'']]],
   ['mcuboot_20port_20_28rm_5fmcuboot_5fport_29',['MCUboot Port (rm_mcuboot_port)',['../group___r_m___m_c_u_b_o_o_t___p_o_r_t.html',1,'']]],
-  ['mbed_20crypto_20hw_20acceleration_20_28rm_5fpsa_5fcrypto_29',['Mbed Crypto HW Acceleration (rm_psa_crypto)',['../group___r_m___p_s_a___c_r_y_p_t_o.html',1,'']]]
+  ['mbed_20crypto_20h_2fw_20acceleration_20_28rm_5fpsa_5fcrypto_29',['Mbed Crypto H/W Acceleration (rm_psa_crypto)',['../group___r_m___p_s_a___c_r_y_p_t_o.html',1,'']]]
 ];

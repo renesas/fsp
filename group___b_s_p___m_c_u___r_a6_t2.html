@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -295,6 +295,14 @@ Secure State</li>
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
 <tr>
+<td>Security &gt; Uninitialized Non-Secure Application Fallback</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable Uninitialized Non-Secure Application Fallback</li>
+<li>
+Disable Uninitialized Non-Secure Application Fallback</li>
+</ul>
+</td><td>Enable Uninitialized Non-Secure Application Fallback </td><td>If enabled, the secure application checks if the non-secure application has been programmed in non-secure flash before branching. If the non-secure application has not been programmed, then the secure application branches to an infinite loop in non-secure RAM. This prevents an issue where the debugger may not connect if the MCU is configured in the NSECSD lifecycle state. </td></tr>
+<tr>
 <td>OFS0 register settings &gt; Independent WDT &gt; Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IWDT is Disabled</li>
@@ -509,18 +517,6 @@ Enabled after reset</li>
 <tr>
 <td>Permanent Block Protection Settings (PBPS) &gt; PBPS0</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Permanent Block Protection Register 0 </td></tr>
 <tr>
-<td>Clocks &gt; HOCO FLL Function</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Setting this option to Enabled improves HOCO accuracy significantly by using the subclock, but incurs certain restrictions.<br />
-<br />
-The FLL function requires the subclock oscillator to be running and stabilized. When enabled and running the PLL or system clock from HOCO, the BSP will wait for both the Subclock Stabilization Time as well as the FLL Stabilization Time when setting up clocks at startup.<br />
-<br />
-When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
-<tr>
 <td>Startup C-Cache Line Size</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 32 Bytes</li>
@@ -576,7 +572,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum elc_event_t</td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_t2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -590,7 +586,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

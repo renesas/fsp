@@ -4,7 +4,7 @@ var group___c_r_c___a_p_i =
     [ "crc_cfg_t", "group___c_r_c___a_p_i.html#structcrc__cfg__t", [
       [ "polynomial", "group___c_r_c___a_p_i.html#a77a51a5aaddd34da23595f1b522cab3d", null ],
       [ "bit_order", "group___c_r_c___a_p_i.html#a1647f8768f919a79d36f7dba45ff0bb4", null ],
-      [ "snoop_address", "group___c_r_c___a_p_i.html#a6092ce832942f874107390ddea210a4e", null ],
+      [ "snoop_address", "group___c_r_c___a_p_i.html#a03f801e161129c06a4bb41d1ec4bdc06", null ],
       [ "p_extend", "group___c_r_c___a_p_i.html#aa38d898bb2b40f121ce3ec1b54bf921f", null ]
     ] ],
     [ "crc_api_t", "group___c_r_c___a_p_i.html#structcrc__api__t", [

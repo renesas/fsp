@@ -22,6 +22,10 @@ var group___m_o_t_o_r___s_p_e_e_d =
       [ "MOTOR_SPEED_OBSERVER_SWITCH_DISABLE", "group___m_o_t_o_r___s_p_e_e_d.html#ggab71db61d94f8e0e39bd0a113d7732c7cad0af718189bcc696a4a777997c01841c", null ],
       [ "MOTOR_SPEED_OBSERVER_SWITCH_ENABLE", "group___m_o_t_o_r___s_p_e_e_d.html#ggab71db61d94f8e0e39bd0a113d7732c7ca8bd88ba4a2a971b39dbc7cb44c19d5bf", null ]
     ] ],
+    [ "motor_speed_observer_select_t", "group___m_o_t_o_r___s_p_e_e_d.html#ga119ca2c2994e7665ffcb4b6cf26d0de8", [
+      [ "MOTOR_SPEED_OBSERVER_SELECT_NORMAL", "group___m_o_t_o_r___s_p_e_e_d.html#gga119ca2c2994e7665ffcb4b6cf26d0de8a1da05345853bf0e35e5bee7fdc0bad34", null ],
+      [ "MOTOR_SPEED_OBSERVER_SELECT_DISTURBANCE", "group___m_o_t_o_r___s_p_e_e_d.html#gga119ca2c2994e7665ffcb4b6cf26d0de8a7b84fe887b203dc6e3bc803e2cf2a4b0", null ]
+    ] ],
     [ "motor_speed_ctrl_status_t", "group___m_o_t_o_r___s_p_e_e_d.html#gace9850ec1b01422641e625bf515dbed4", [
       [ "MOTOR_SPEED_CTRL_STATUS_INIT", "group___m_o_t_o_r___s_p_e_e_d.html#ggace9850ec1b01422641e625bf515dbed4a6936f7c5bbcfd6b97955d70ea93e2546", null ],
       [ "MOTOR_SPEED_CTRL_STATUS_BOOT", "group___m_o_t_o_r___s_p_e_e_d.html#ggace9850ec1b01422641e625bf515dbed4afbeb539f583a51591b1847f6b52622dc", null ],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -257,6 +257,18 @@ SPWM</li>
 </ul>
 </td><td>SVPWM </td><td>Select PWM modulation method </td></tr>
 <tr>
+<td>General &gt; PWM output port UP</td><td>Manual Entry</td><td>0 </td><td>PWM output port UP </td></tr>
+<tr>
+<td>General &gt; PWM output port UN</td><td>Manual Entry</td><td>0 </td><td>PWM output port UN </td></tr>
+<tr>
+<td>General &gt; PWM output port VP</td><td>Manual Entry</td><td>0 </td><td>PWM output port VP </td></tr>
+<tr>
+<td>General &gt; PWM output port VN</td><td>Manual Entry</td><td>0 </td><td>PWM output port VN </td></tr>
+<tr>
+<td>General &gt; PWM output port WP</td><td>Manual Entry</td><td>0 </td><td>PWM output port WP </td></tr>
+<tr>
+<td>General &gt; PWM output port WN</td><td>Manual Entry</td><td>0 </td><td>PWM output port WN </td></tr>
+<tr>
 <td>General &gt; PWM Timer Frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
 <tr>
 <td>General &gt; PWM Carrier Period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
@@ -269,29 +281,29 @@ SPWM</li>
 <tr>
 <td>General &gt; Counts for current offset measurement</td><td>Must be a valid non-negative value.</td><td>500 </td><td>How many times to measure current offset </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for U Phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D channel for U phase current </td></tr>
+<td>General &gt; A/D conversion channel for U Phase current</td><td>Value must be a supported channel number</td><td>0 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for W Phase current</td><td>Manual Entry</td><td>2 </td><td>Specify the A/D channel for W phase current </td></tr>
+<td>General &gt; A/D conversion channel for W Phase current</td><td>Value must be a supported channel number</td><td>2 </td><td>Specify the A/D channel for W phase current (channel availability varies by MCU) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for Main Line Voltage</td><td>Manual Entry</td><td>5 </td><td>Specify the A/D channel for main line voltage </td></tr>
+<td>General &gt; A/D conversion channel for Main Line Voltage</td><td>Value must be a supported channel number</td><td>5 </td><td>Specify the A/D channel for main line voltage (channel availability varies by MCU) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for V Phase current</td><td>Manual Entry</td><td>1 </td><td>Specify the A/D channel for V phase current </td></tr>
+<td>General &gt; A/D conversion channel for V Phase current</td><td>Value must be a supported channel number</td><td>1 </td><td>Specify the A/D channel for V phase current (channel availability varies by MCU) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for sin signal</td><td>Manual Entry</td><td>27 </td><td>Specify the A/D channel for sin signal of induction sensor </td></tr>
+<td>General &gt; A/D conversion channel for sin signal</td><td>Value must be a supported channel number</td><td>27 </td><td>Specify the A/D channel for sin signal of induction sensor (channel availability varies by MCU) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for cos signal</td><td>Manual Entry</td><td>28 </td><td>Specify the A/D channel for cos signal of induction sensor </td></tr>
+<td>General &gt; A/D conversion channel for cos signal</td><td>Value must be a supported channel number</td><td>28 </td><td>Specify the A/D channel for cos signal of induction sensor (channel availability varies by MCU) </td></tr>
 <tr>
 <td>General &gt; Adjustment value to current A/D</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Value to adjust 1shunt A/D double buffer </td></tr>
 <tr>
-<td>General &gt; Minimum difference of PWM duty</td><td>Manual Entry</td><td>300 </td><td>Minimum difference of PWM duty </td></tr>
+<td>General &gt; Minimum difference of PWM duty</td><td>Must be a valid non-negative value.</td><td>300 </td><td>Minimum difference of PWM duty </td></tr>
 <tr>
-<td>General &gt; Adjustment delay of A/D conversion</td><td>Manual Entry</td><td>240 </td><td>Adjustment delay of A/D conversion </td></tr>
+<td>General &gt; Adjustment delay of A/D conversion</td><td>Must be a valid non-negative value.</td><td>240 </td><td>Adjustment delay of A/D conversion </td></tr>
 <tr>
 <td>General &gt; Input Voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Input voltage </td></tr>
 <tr>
-<td>General &gt; Resolution of A/D conversion</td><td>Manual Entry</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
+<td>General &gt; Resolution of A/D conversion</td><td>Must be a valid Resolution of ADC.</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
 <tr>
-<td>General &gt; Offset of A/D conversion for current</td><td>Manual Entry</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
+<td>General &gt; Offset of A/D conversion for current</td><td>Must be a valid non-negative value.</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
 <tr>
 <td>General &gt; Conversion level of A/D conversion for voltage</td><td>Must be a valid value</td><td>0.66F </td><td>Conversion level of A/D conversion for voltage </td></tr>
 <tr>
@@ -653,7 +665,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -215,8 +215,8 @@ Features</h2>
 </li>
 <li>Random number generation <a class="anchor" id="um_crypto_random_number_generation"></a></li>
 <li>ECC<ul>
-<li>ECDSA: Supported Curves - SECP384R1, SECP256R1, SECP224R1. <a class="anchor" id="um_crypto_ECC_ECDSA_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDSA_256R1"></a><a class="anchor" id="um_crypto_ECC_ECDSA_224R1"></a></li>
-<li>ECDH: Supported Curves - SECP384R1, SECP256R1, SECP224R1. <a class="anchor" id="um_crypto_ECC_ECDH_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDH_256R1"></a><a class="anchor" id="um_crypto_ECC_ECDH_224R1"></a></li>
+<li>ECDSA: Supported Curves - SECP384R1, SECP256R1. <a class="anchor" id="um_crypto_ECC_ECDSA_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDSA_256R1"></a></li>
+<li>ECDH: Supported Curves - SECP384R1, SECP256R1. <a class="anchor" id="um_crypto_ECC_ECDH_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDH_256R1"></a></li>
 </ul>
 </li>
 <li>RSA<ul>
@@ -332,7 +332,7 @@ AES Configuration</h2>
 <p>To enable hardware acceleration for the AES128/192/256 operation, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT must be defined in the configuration file. By default AES is enabled which can be disabled using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-netx-secure-crypto-ecc-configuration"></a>
 ECC Configuration</h2>
-<p>To enable hardware acceleration for the ECDSA and ECDH for curves SECP384R1, SECP256R1 and SECP224R1, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT must be defined in the configuration file. By default ECC operations are enabled which can be disabled using the RA Configuration editor.</p>
+<p>To enable hardware acceleration for the ECDSA and ECDH for curves SECP384R1 and SECP256R1, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT must be defined in the configuration file. By default ECC operations are enabled which can be disabled using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-netx-secure-crypto-rsa-configuration"></a>
 RSA Configuration</h2>
 <p>To enable hardware acceleration for the RSA Encrypt/Decrypt (or Sign/Verify) operation(s), the macro(s) below must be must be defined in the configuration file: </p><table class="doxtable">
@@ -392,7 +392,7 @@ ECC Usage</h2>
 </table>
 <p>Note:</p><ul>
 <li>Uncompressed public key is of the form (0x04 || Qx || Qy). Refer Section 2.2. Subject Public Key under <a href="https://tools.ietf.org/html/rfc5480">RFC5480</a></li>
-<li>Formatted public key is of the form (Key Info (4 bytes) || Qx || Qy || Key Info (16 bytes)). This is the key which is used internally by SCE peripheral. (Qx and Qy are zero padded for 224 bit curves).</li>
+<li>Formatted public key is of the form (Key Info (4 bytes) || Qx || Qy || Key Info (16 bytes)). This is the key which is used internally by SCE peripheral.</li>
 </ul>
 <h2><a class="anchor" id="rm-netx-secure-rsa-usage"></a>
 RSA Usage</h2>
@@ -432,7 +432,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

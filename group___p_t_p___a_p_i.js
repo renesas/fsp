@@ -103,8 +103,8 @@ var group___p_t_p___a_p_i =
       [ "clock_properties", "group___p_t_p___a_p_i.html#a61b7009af3a05be4961d55f5c7fc40a1", null ],
       [ "timesource", "group___p_t_p___a_p_i.html#abb8328bc2ec847755c59d9508152c455", null ],
       [ "p_multicast_addr_filter", "group___p_t_p___a_p_i.html#a80d387b424e8e014e168acbfccad06e4", null ],
-      [ "ether", "group___p_t_p___a_p_i.html#a0a5f236a1d9ee80b69dddef0484242e7", null ],
-      [ "ipv4", "group___p_t_p___a_p_i.html#a78c69d131a666a54b274d2c055716801", null ]
+      [ "ether", "group___p_t_p___a_p_i.html#a340a209d5b050edf1db648010ba933af", null ],
+      [ "ipv4", "group___p_t_p___a_p_i.html#a68571577ec4d7e9dfb02e1d7fc70abf9", null ]
     ] ],
     [ "ptp_synfp_cfg_t.ether", "group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ether", [
       [ "p_primary_mac_addr", "group___p_t_p___a_p_i.html#a0f927a373824bd7c043a987878931431", null ],

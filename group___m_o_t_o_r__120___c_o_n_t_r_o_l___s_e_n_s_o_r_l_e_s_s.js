@@ -63,6 +63,7 @@ var group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s =
       [ "f4_pi_ctrl_err", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#a6427920c09358d7c48caac69ef2beb0d", null ],
       [ "f4_pi_ctrl_refi", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#affad7658593fcf351f48e7741ebab4e0", null ],
       [ "p_cfg", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#ab45f9723e647d9d5bdef9b61b4d0b2c9", null ],
+      [ "timer_direction", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#aa0dc7f0ec0d91c013e07a3f20aab25c3", null ],
       [ "timer_args", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#a519ad55f2993b11b2ad855f137ed27a1", null ]
     ] ],
     [ "motor_120_control_sensorless_draw_in_position_t", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#ga7f7292c8a9b623625446e8078e573f36", [

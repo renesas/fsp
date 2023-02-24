@@ -1,9 +1,9 @@
 var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
 [
     [ "AWS Cellular Interface on RYZ (rm_cellular_ryz_aws)", "group___r_m___c_e_l_l_u_l_a_r___r_y_z___a_w_s.html", null ],
-    [ "AWS HTTPS", "group___a_w_s___h_t_t_p_s.html", null ],
     [ "AWS MQTT", "group___a_w_s___m_q_t_t.html", null ],
     [ "AWS PKCS11 PAL on LittleFS (rm_aws_pkcs11_pal_littlefs)", "group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html", null ],
+    [ "AWS coreHTTP", "group___a_w_s__core_h_t_t_p.html", null ],
     [ "Azure Embedded Wireless Framework RYZ Port (rm_azure_ewf_ryz)", "group___r_m___a_z_u_r_e___e_w_f___r_y_z.html", null ],
     [ "BLE Abstraction (rm_ble_abs)", "group___b_l_e___a_b_s.html", "group___b_l_e___a_b_s" ],
     [ "BLE Driver (r_ble_balance)", "group___b_l_e___b_a_l_a_n_c_e.html", null ],
@@ -14,6 +14,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "Ethernet (r_ether)", "group___e_t_h_e_r.html", "group___e_t_h_e_r" ],
     [ "Ethernet (r_ether_phy)", "group___e_t_h_e_r___p_h_y.html", "group___e_t_h_e_r___p_h_y" ],
     [ "FreeRTOS+TCP Wrapper to r_ether (rm_freertos_plus_tcp)", "group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html", null ],
+    [ "GTL BLE Abstraction (rm_ble_abs_gtl)", "group___b_l_e___a_b_s___g_t_l.html", null ],
     [ "NetX Duo Ethernet Driver (rm_netxduo_ether)", "group___r_m___n_e_t_x_d_u_o___e_t_h_e_r.html", null ],
     [ "NetX Duo WiFi Driver (rm_netxduo_wifi)", "group___r_m___n_e_t_x_d_u_o___w_i_f_i.html", null ],
     [ "PTP (r_ptp)", "group___p_t_p.html", "group___p_t_p" ],

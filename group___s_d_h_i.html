@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -427,7 +427,8 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. It is configurable for SDIO only. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
     <tr><td class="paramname">FSP_ERR_CARD_INIT_FAILED</td><td>Device was not identified as an SD card, eMMC device, or SDIO card. </td></tr>
-    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device did not respond or responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
     <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
   </table>
   </dd>
@@ -587,7 +588,8 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
     <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
-    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device did not respond or responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
     <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
   </table>
   </dd>
@@ -648,7 +650,8 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
     <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Write operation failed. </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
-    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device did not respond or responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
     <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
   </table>
   </dd>
@@ -915,7 +918,8 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
     <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
     <tr><td class="paramname">FSP_ERR_CARD_WRITE_PROTECTED</td><td>SD card is Write Protected. </td></tr>
-    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device did not respond or responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
     <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
   </table>
   </dd>
@@ -1006,7 +1010,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

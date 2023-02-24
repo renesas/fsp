@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['r_5fport0_5ftype',['R_PORT0_Type',['../struct_r___p_o_r_t0___type.html',1,'']]],
   ['rm_5fble_5fmesh_5faccess_5faddress_5ft',['rm_ble_mesh_access_address_t',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__address__t',1,'']]],
   ['rm_5fble_5fmesh_5faccess_5fapi_5ft',['rm_ble_mesh_access_api_t',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__api__t',1,'']]],
   ['rm_5fble_5fmesh_5faccess_5fassociated_5fkeys_5ft',['rm_ble_mesh_access_associated_keys_t',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__associated__keys__t',1,'']]],

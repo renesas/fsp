@@ -22,7 +22,8 @@ var group___m_o_t_o_r___a_p_i =
       [ "angleGet", "group___m_o_t_o_r___a_p_i.html#a2667442da1af9179b7ea009e67d74c77", null ],
       [ "speedGet", "group___m_o_t_o_r___a_p_i.html#a9cdbead2d65894e3243ea33fbfcb89cb", null ],
       [ "waitStopFlagGet", "group___m_o_t_o_r___a_p_i.html#a429db729202458c2b375023fb5822c39", null ],
-      [ "errorCheck", "group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888", null ]
+      [ "errorCheck", "group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888", null ],
+      [ "functionSelect", "group___m_o_t_o_r___a_p_i.html#a1191b1ba3d266297f524cd67b9504705", null ]
     ] ],
     [ "motor_instance_t", "group___m_o_t_o_r___a_p_i.html#structmotor__instance__t", [
       [ "p_ctrl", "group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a", null ],
@@ -44,5 +45,10 @@ var group___m_o_t_o_r___a_p_i =
     [ "motor_wait_stop_flag_t", "group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e", [
       [ "MOTOR_WAIT_STOP_FLAG_CLEAR", "group___m_o_t_o_r___a_p_i.html#gga164300ede2cb4269d8b16f991b4d995eae95f69c38c6a9052b84be80912966390", null ],
       [ "MOTOR_WAIT_STOP_FLAG_SET", "group___m_o_t_o_r___a_p_i.html#gga164300ede2cb4269d8b16f991b4d995eaaa39a54931bcbd679079025b7622e761", null ]
+    ] ],
+    [ "motor_function_select_t", "group___m_o_t_o_r___a_p_i.html#ga42e5fa63634ab0afe67581c3e05758f0", [
+      [ "MOTOR_FUNCTION_SELECT_NONE", "group___m_o_t_o_r___a_p_i.html#gga42e5fa63634ab0afe67581c3e05758f0a4c7c7977516d3c814a6067e006e1fb24", null ],
+      [ "MOTOR_FUNCTION_SELECT_INERTIA_ESTIMATE", "group___m_o_t_o_r___a_p_i.html#gga42e5fa63634ab0afe67581c3e05758f0a44d55b2a0480f9d99f826e351b781d05", null ],
+      [ "MOTOR_FUNCTION_SELECT_RETURN_ORIGIN", "group___m_o_t_o_r___a_p_i.html#gga42e5fa63634ab0afe67581c3e05758f0a96d3a56ade18549435b94a292c25ca3b", null ]
     ] ]
 ];

@@ -46,6 +46,7 @@ var group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l =
       [ "u4_hall_intr_cnt", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#a4c154c92377ad3aef9659b39e933df7a", null ],
       [ "u4_adc_interrupt_cnt", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#a7a2adbb92ec7f42dc6e759336f32d15a", null ],
       [ "p_cfg", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#a0459f69b6b25e0e97ea6c55a428ac967", null ],
+      [ "timer_direction", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#a2e30754903afeea08bf6a1030a469ca3", null ],
       [ "hall_interrupt_args", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#af1a0458558c196cdd177c9b5d4f4c43e", null ],
       [ "timer_args", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#adb946ccb1b5936f485f2d2ac26569aae", null ]
     ] ],

@@ -1,5 +1,12 @@
 var NAVTREEINDEX15 =
 {
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__evt__t":[5,2,4,0,33],
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t":[5,2,4,0,40],
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__param__t":[5,2,4,0,8],
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__phy__param__t":[5,2,4,0,9],
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__upd__evt__t":[5,2,4,0,38],
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__upd__req__evt__t":[5,2,4,0,39],
+"group___g_a_p___a_p_i.html#structst__ble__gap__create__conn__param__t":[5,2,4,0,10],
 "group___g_a_p___a_p_i.html#structst__ble__gap__data__len__chg__evt__t":[5,2,4,0,41],
 "group___g_a_p___a_p_i.html#structst__ble__gap__dev__info__evt__t":[5,2,4,0,37],
 "group___g_a_p___a_p_i.html#structst__ble__gap__disconn__evt__t":[5,2,4,0,34],
@@ -242,12 +249,5 @@ var NAVTREEINDEX15 =
 "group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ad9890a7a12537adb9c1cacdc1385cac1":[5,2,4,2,24,5],
 "group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#add43264665a5f5f20a3ff28e1813c498":[5,2,4,2,24,0],
 "group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ade09c8c202b06ea0d7544d0dc859f96f":[5,2,4,2,18,1],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae065386eebd312f5f298df3d64c3ad05":[5,2,4,2,25,3],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae2ed9a03bd7637187b788e7ed473139c":[5,2,4,2,2,2],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae43f5abb71f03c1dd3441cc6c230a8db":[5,2,4,2,21,1],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae64acb27bd2ee7c08254e7a39e33631c":[5,2,4,2,24,3],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae65a7306e1d0cfc515f85ba92a91f2a5":[5,2,4,2,16,0],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae71f4a3a56e5a04a7ffec4468d0131ba":[5,2,4,2,2,0],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae888379d9ae6b508e548da22be059f93":[5,2,4,2,19,0],
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae91f5312a35b923fe19e07ee8ddf825e":[5,2,4,2,1,1]
+"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae065386eebd312f5f298df3d64c3ad05":[5,2,4,2,25,3]
 };

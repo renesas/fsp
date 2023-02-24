@@ -1,5 +1,12 @@
 var NAVTREEINDEX21 =
 {
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a50c4e60416f5c5909fa614b3089cf200":[5,2,40,6,14],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a565b54d88476fba903552efc818d06c5":[5,2,40,6,7],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a569ee3b30428745c75d109ece3cdd8b4":[5,2,40,6,41],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0":[5,2,40,6,13],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a64d1b8cceeda767076613c173c787cf9":[5,2,40,6,2],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a66b5b7838b3c4b965e06bd030e78878a":[5,2,40,6,1],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a749d8f405d2dc05308293c8eb53bd186":[5,2,40,6,16],
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a83951c39c247388f70f38287edd67a2d":[5,2,40,6,37],
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a85992fdc078e24d3dd245eba9e2794a0":[5,2,40,6,5],
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9":[5,2,40,6,34],
@@ -242,12 +249,5 @@ var NAVTREEINDEX21 =
 "group___l2_c_a_p___a_p_i.html#gga762881ed36bad0a9982d324af15fe7b6aaa947bba5e446c1770f2578c6a84cc17":[5,2,4,4,16,2],
 "group___l2_c_a_p___a_p_i.html#gga762881ed36bad0a9982d324af15fe7b6aef1e5a7319a8f004623910d1de52fa85":[5,2,4,4,16,5],
 "group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__conn__evt__t":[5,2,4,4,2],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__credit__evt__t":[5,2,4,4,4],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__data__evt__t":[5,2,4,4,3],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__disconn__evt__t":[5,2,4,4,5],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__evt__data__t":[5,2,4,4,7],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__conn__req__param__t":[5,2,4,4,0],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__conn__rsp__param__t":[5,2,4,4,1],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__rej__evt__t":[5,2,4,4,6],
-"group___l_p_m.html":[5,1,11,0]
+"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__credit__evt__t":[5,2,4,4,4]
 };

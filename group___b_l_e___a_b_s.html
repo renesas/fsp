@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -653,7 +653,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a848e12c8f599245c02c8a5581ace89e9"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
+<a id="a56bcbde341e6a36236c281d026dabed2"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
 <td class="fieldname">
 advertising_parameter</td>
 <td class="fielddoc">
@@ -928,6 +928,17 @@ Pointer to the BLE ABS configuration block. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer presented. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Requested channel is already open in a different configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid input parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid mode during open call</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Host stack is initialized with this function. Before using All the R_BLE APIs, it's necessary to call this function. A callback functions are registered with this function. In order to receive the GAP, GATT, Vendor specific event, it's necessary to register a callback function. The result of this API call is notified in BLE_GAP_EVENT_STACK_ON event. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a84d7676435519fb9b324c484e4ce8b24">ble_abs_api_t::open</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#gaa4b69ce603223da8394cf8338474251c">RM_BLE_ABS_Open</a>(&amp;g_ble_abs0_ctrl, &amp;g_ble_abs0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer presented. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>The channel number is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Requested channel is already open in a different configuration. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid input parameter. </td></tr>
@@ -954,6 +965,14 @@ Pointer to the BLE ABS configuration block. </td></tr>
 </div><div class="memdoc">
 
 <p>Close the BLE channel. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#abdc48fd7588fd6d422f7bd7b4d59637a">ble_abs_api_t::close</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close BLE driver */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#gadebdd1a85c6106e2a7ec3ad77cabcfb1">RM_BLE_ABS_Close</a>(&amp;g_ble_abs0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel closed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer presented. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close BLE driver */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#gadebdd1a85c6106e2a7ec3ad77cabcfb1">RM_BLE_ABS_Close</a>(&amp;g_ble_abs0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Channel closed successfully. </td></tr>
@@ -1042,6 +1061,18 @@ Pointer to the BLE ABS configuration block. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Start Legacy Advertising after setting advertising parameters, advertising data and scan response data. The legacy advertising uses the advertising set whose advertising handle is 0. The advertising type is connectable and scannable(ADV_IND). The address type of local device is Public Identity Address or RPA(If the resolving list contains no matching entry, use the public address.). Scan request event(BLE_GAP_EVENT_SCAN_REQ_RECV) is not notified. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a729b404106cfd3c8847f78bb4d760d98">ble_abs_api_t::startLegacyAdvertising</a></p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start advertising. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga0ddc7b65d81cae204fa9dc000bb39a96">RM_BLE_ABS_StartLegacyAdvertising</a>(&amp;g_ble_abs0_ctrl, &amp;legacy_advertising_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl is specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Host stack hasn't been initialized. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>p_advertising_parameter is specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>The advertising parameter is out of range.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Start Legacy Advertising after setting advertising parameters, advertising data and scan response data. The legacy advertising uses the advertising set whose advertising handle is 0. The advertising type is connectable and scannable(ADV_IND). The address type of local device is Public Identity Address or RPA(If the resolving list contains no matching entry, use the public address.). Scan request event(BLE_GAP_EVENT_SCAN_REQ_RECV) is not notified. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a729b404106cfd3c8847f78bb4d760d98">ble_abs_api_t::startLegacyAdvertising</a></p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start advertising. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga0ddc7b65d81cae204fa9dc000bb39a96">RM_BLE_ABS_StartLegacyAdvertising</a>(&amp;g_ble_abs0_ctrl, &amp;legacy_advertising_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1258,6 +1289,16 @@ Pointer to the BLE ABS configuration block. </td></tr>
 <p>Start scanning after setting scan parameters. The scanner address type is Public Identity Address. Fast scan is followed by slow scan. The end of fast scan or slow scan is notified with BLE_GAP_EVENT_SCAN_TO event. If fast_period is 0, only slow scan is carried out. If scan_period is 0, slow scan continues. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#add26234f552e169063aafebcfbaada57">ble_abs_api_t::startScanning</a>.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start scanning. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga65b966bfa5d93cf5c1a6683038096e58">RM_BLE_ABS_StartScanning</a>(&amp;g_ble_abs0_ctrl, &amp;scan_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl is specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>p_scan_parameter is specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function is not supported</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Start scanning after setting scan parameters. The scanner address type is Public Identity Address. Fast scan is followed by slow scan. The end of fast scan or slow scan is notified with BLE_GAP_EVENT_SCAN_TO event. If fast_period is 0, only slow scan is carried out. If scan_period is 0, slow scan continues. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#add26234f552e169063aafebcfbaada57">ble_abs_api_t::startScanning</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start scanning. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga65b966bfa5d93cf5c1a6683038096e58">RM_BLE_ABS_StartScanning</a>(&amp;g_ble_abs0_ctrl, &amp;scan_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl is specified as NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
@@ -1297,6 +1338,17 @@ Pointer to the BLE ABS configuration block. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Request create connection. The initiator address type is Public Identity Address. The scan interval is 60ms and the scan window is 30ms in case of 1M PHY or 2M PHY. The scan interval is 180ms and the scan window is 90ms in case of coded PHY. The Minimum CE Length and the Maximum CE Length are 0xFFFF. When the request for a connection has been received by the Controller, BLE_GAP_EVENT_CREATE_CONN_COMP event is notified. When a link has beens established, BLE_GAP_EVENT_CONN_IND event is notified. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a68ac3bccdd07538ecd6de9ee4eecd60a">ble_abs_api_t::createConnection</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Create connection with remote device. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga4628e9d39df688687e6307505deb9f05">RM_BLE_ABS_CreateConnection</a>(&amp;g_ble_abs0_ctrl, &amp;g_connection_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl is specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>p_connection_parameter is specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>The create connection parameter is out of range. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function is not supported</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Request create connection. The initiator address type is Public Identity Address. The scan interval is 60ms and the scan window is 30ms in case of 1M PHY or 2M PHY. The scan interval is 180ms and the scan window is 90ms in case of coded PHY. The Minimum CE Length and the Maximum CE Length are 0xFFFF. When the request for a connection has been received by the Controller, BLE_GAP_EVENT_CREATE_CONN_COMP event is notified. When a link has beens established, BLE_GAP_EVENT_CONN_IND event is notified. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a68ac3bccdd07538ecd6de9ee4eecd60a">ble_abs_api_t::createConnection</a>.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Create connection with remote device. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga4628e9d39df688687e6307505deb9f05">RM_BLE_ABS_CreateConnection</a>(&amp;g_ble_abs0_ctrl, &amp;g_connection_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1422,6 +1474,18 @@ Pointer to the BLE ABS configuration block. </td></tr>
 </ul>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start authentication with remote device. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga6a9bbe44610417982b5a1d44fba3f238">RM_BLE_ABS_StartAuthentication</a>(&amp;g_ble_abs0_ctrl, g_connection_handle);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl or connection_handle are specified as NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function is not supported</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Start pairing or encryption. If pairing has been done, start encryption. The pairing parameters are configured by <a class="el" href="group___b_l_e___a_b_s.html#gaa4b69ce603223da8394cf8338474251c">RM_BLE_ABS_Open()</a> or <a class="el" href="group___g_a_p___a_p_i.html#gabbbc839cb89d46358ee932d4b0e84856" title="Set the parameters using pairing. ">R_BLE_GAP_SetPairingParams()</a>. If the pairing parameters are configure by <a class="el" href="group___b_l_e___a_b_s.html#gaa4b69ce603223da8394cf8338474251c">RM_BLE_ABS_Open()</a>,</p><ul>
+<li>bonding policy is that bonding information is stored.</li>
+<li>Key press notification is not supported. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a65ce1d52c18d6261fa6122c50d42438f">ble_abs_api_t::startAuthentication</a>.</li>
+</ul>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start authentication with remote device. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga6a9bbe44610417982b5a1d44fba3f238">RM_BLE_ABS_StartAuthentication</a>(&amp;g_ble_abs0_ctrl, g_connection_handle);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl or connection_handle are specified as NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
@@ -1457,6 +1521,16 @@ Pointer to the BLE ABS configuration block. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Delete bonding information from BLE stack and storage. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb">ble_abs_api_t::deleteBondInformation</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Delete bonding information. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga022825a039b69fbf25070f5c84032128">RM_BLE_ABS_DeleteBondInformation</a>(&amp;g_ble_abs0_ctrl, &amp;g_bond_information_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Operation was successful </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_instance_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>The parameter p_bond_information_parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Delete bonding information from BLE stack and storage. Implements <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb">ble_abs_api_t::deleteBondInformation</a>.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Delete bonding information. */</span></div><div class="line">    err = <a class="code" href="group___b_l_e___a_b_s.html#ga022825a039b69fbf25070f5c84032128">RM_BLE_ABS_DeleteBondInformation</a>(&amp;g_ble_abs0_ctrl, &amp;g_bond_information_parameter);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1592,7 +1666,7 @@ Pointer to the BLE ABS configuration block. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

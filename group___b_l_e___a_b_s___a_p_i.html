@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -542,7 +542,7 @@ Maximum LTK size. </td></tr>
 <td class="fieldname">
 padding[2]</td>
 <td class="fielddoc">
-padding </td></tr>
+Reserved. </td></tr>
 </table>
 
 </div>
@@ -649,40 +649,39 @@ If the p_scan_response_data is specified as NULL, Scan Response Data is not incl
 <td class="fieldname">
 fast_advertising_interval</td>
 <td class="fielddoc">
-Advertising with the fast_advertising_interval parameter continues for the period specified <br />
-by the fast_period parameter.<br />
-Time(ms) = fast_advertising_interval * 0.625. <br />
-If the fast_period parameter is 0, this parameter is ignored.<br />
+Advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aceb0d0f5219f668f7cb3f5f4cce528ec">fast_advertising_interval</a> parameter continues for the period specified <br />
+by the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aa60c5b227db005d12f08b230d33957a7">fast_advertising_period</a> parameter.<br />
+Time(ms) = <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aceb0d0f5219f668f7cb3f5f4cce528ec">fast_advertising_interval</a> * 0.625. <br />
+If the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aa60c5b227db005d12f08b230d33957a7">fast_advertising_period</a> parameter is 0, this parameter is ignored.<br />
 Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0bf4026c588d7df66eeaa89e89a0c77d"></a>uint32_t</td>
 <td class="fieldname">
 slow_advertising_interval</td>
 <td class="fielddoc">
-After the elapse of the fast_period, advertising with the slow_advertising_interval parameter continues <br />
-for the period specified by the slow_advertising_interval parameter.<br />
-Time(ms) = slow_advertising_interval * 0.625. <br />
-If the slow_advertising_interval parameter is 0, this parameter is ignored.<br />
+After the elapse of the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aa60c5b227db005d12f08b230d33957a7">fast_advertising_period</a>, advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a0bf4026c588d7df66eeaa89e89a0c77d">slow_advertising_interval</a> parameter continues <br />
+for the period specified by the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a4089b4f63cdb65248bae31b53072ace5">slow_advertising_period</a> parameter.<br />
+Time(ms) = <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a0bf4026c588d7df66eeaa89e89a0c77d">slow_advertising_interval</a> * 0.625. <br />
 Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa60c5b227db005d12f08b230d33957a7"></a>uint16_t</td>
 <td class="fieldname">
 fast_advertising_period</td>
 <td class="fielddoc">
-The period which advertising with the fast_advertising_interval parameter continues for. <br />
+The period which advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aceb0d0f5219f668f7cb3f5f4cce528ec">fast_advertising_interval</a> parameter continues for. <br />
 Time = duration * 10ms.<br />
-After the elapse of the fast_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped.<br />
+After the elapse of the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aa60c5b227db005d12f08b230d33957a7">fast_advertising_period</a>, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped.<br />
 Valid range is 0x0000 - 0xFFFF. <br />
-If the fast_advertising_period parameter is 0x0000, advertising with the fast_advertising_interval parameter is not performed. </td></tr>
+If the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aa60c5b227db005d12f08b230d33957a7">fast_advertising_period</a> parameter is 0x0000, advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#aceb0d0f5219f668f7cb3f5f4cce528ec">fast_advertising_interval</a> parameter is not performed. </td></tr>
 <tr><td class="fieldtype">
 <a id="a4089b4f63cdb65248bae31b53072ace5"></a>uint16_t</td>
 <td class="fieldname">
 slow_advertising_period</td>
 <td class="fielddoc">
-The period which advertising with the slow_advertising_interval parameter continues for. Time = duration * 10ms. <br />
-After the elapse of the slow_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+The period which advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a0bf4026c588d7df66eeaa89e89a0c77d">slow_advertising_interval</a> parameter continues for. Time = duration * 10ms. <br />
+After the elapse of the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a4089b4f63cdb65248bae31b53072ace5">slow_advertising_period</a>, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
 Valid range is 0x0000 - 0xFFFF. <br />
-If the slow_advertising_period parameter is 0x0000, the advertising continues. </td></tr>
+If the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a4089b4f63cdb65248bae31b53072ace5">slow_advertising_period</a> parameter is 0x0000, the advertising continues. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7f7d1f671a851ece4facf1605ed9c23f"></a>uint16_t</td>
 <td class="fieldname">
@@ -750,7 +749,7 @@ Own Bluetooth address type. <br />
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Public Address </td></tr>
 <tr>
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">Resolvable Private Address. <br />
- If the IRK of local device has not been registered in Resolving List, public address is used. </td></tr>
+ If the IRK (Identity Resolving Key) of local device has not been registered in Resolving List, public address is used. </td></tr>
 </table>
 </td></tr>
 <tr><td class="fieldtype">
@@ -764,7 +763,7 @@ Own Bluetooth address. </td></tr>
 <td class="fieldname">
 padding[3]</td>
 <td class="fielddoc">
-padding </td></tr>
+Reserved. </td></tr>
 </table>
 
 </div>
@@ -803,41 +802,40 @@ Advertising data. If p_adv_data is specified as NULL, advertising data is not se
 <td class="fieldname">
 fast_advertising_interval</td>
 <td class="fielddoc">
-Advertising with the fast_advertising_interval parameter continues for <br />
-the period specified by the fast_advertising_period parameter. <br />
-Time(ms) = fast_advertising_interval * 0.625. <br />
-If the fast_advertising_period parameter is 0, this parameter is ignored. <br />
+Advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a70126a0241219b40414e7edf08bb72bd">fast_advertising_interval</a> parameter continues for <br />
+the period specified by the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a7ec4dfbd8ed04ebe41015f4d0ac3bb38">fast_advertising_period</a> parameter. <br />
+Time(ms) = <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a70126a0241219b40414e7edf08bb72bd">fast_advertising_interval</a> * 0.625. <br />
+If the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a7ec4dfbd8ed04ebe41015f4d0ac3bb38">fast_advertising_period</a> parameter is 0, this parameter is ignored. <br />
 Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0a6e67ba6debdfbb031e17140c17f2cb"></a>uint32_t</td>
 <td class="fieldname">
 slow_advertising_interval</td>
 <td class="fielddoc">
-After the elapse of the fast_advertising_period, advertising with the slow_advertising_interval parameter <br />
-continues for the period specified by the slow_advertising_period parameter. <br />
-Time(ms) = fast_advertising_interval * 0.625. <br />
-If the fast_advertising_period parameter is 0, this parameter is ignored. <br />
+After the elapse of the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a7ec4dfbd8ed04ebe41015f4d0ac3bb38">fast_advertising_period</a>, advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a0a6e67ba6debdfbb031e17140c17f2cb">slow_advertising_interval</a> parameter <br />
+continues for the period specified by the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ad7a6da96e6ca0d13892cc7aa1f2428bb">slow_advertising_period</a> parameter. <br />
+Time(ms) = <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a0a6e67ba6debdfbb031e17140c17f2cb">slow_advertising_interval</a> * 0.625. <br />
 Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7ec4dfbd8ed04ebe41015f4d0ac3bb38"></a>uint16_t</td>
 <td class="fieldname">
 fast_advertising_period</td>
 <td class="fielddoc">
-The period which advertising with the fast_advertising_interval parameter continues for. <br />
+The period which advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a70126a0241219b40414e7edf08bb72bd">fast_advertising_interval</a> parameter continues for. <br />
 Time = duration * 10ms. <br />
-After the elapse of the fast_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+After the elapse of the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a7ec4dfbd8ed04ebe41015f4d0ac3bb38">fast_advertising_period</a>, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
 Valid range is 0x0000 - 0xFFFF. <br />
-If the fast_advertising_period parameter is 0x0000, the fast_advertising_interval parameter is ignored. </td></tr>
+If the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a7ec4dfbd8ed04ebe41015f4d0ac3bb38">fast_advertising_period</a> parameter is 0x0000, the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a70126a0241219b40414e7edf08bb72bd">fast_advertising_interval</a> parameter is ignored. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad7a6da96e6ca0d13892cc7aa1f2428bb"></a>uint16_t</td>
 <td class="fieldname">
 slow_advertising_period</td>
 <td class="fielddoc">
-The period which advertising with the slow_advertising_interval parameter continues for. <br />
+The period which advertising with the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a0a6e67ba6debdfbb031e17140c17f2cb">slow_advertising_interval</a> parameter continues for. <br />
 Time = duration * 10ms. <br />
-After the elapse of the slow_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+After the elapse of the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ad7a6da96e6ca0d13892cc7aa1f2428bb">slow_advertising_period</a>, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
 Valid range is 0x0000 - 0xFFFF. <br />
-If the slow_advertising_period parameter is 0x0000, the advertising continues. </td></tr>
+If the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ad7a6da96e6ca0d13892cc7aa1f2428bb">slow_advertising_period</a> parameter is 0x0000, the advertising continues. </td></tr>
 <tr><td class="fieldtype">
 <a id="ae0be5b133d30b92c241b6515bc7b7830"></a>uint16_t</td>
 <td class="fieldname">
@@ -895,7 +893,7 @@ Own Bluetooth address type. Select one of the following. <br />
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Public Address </td></tr>
 <tr>
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">Resolvable Private Address. <br />
- If the IRK of local device has not been registered in Resolving List, public address is used. </td></tr>
+ If the IRK (Identity Resolving Key) of local device has not been registered in Resolving List, public address is used. </td></tr>
 </table>
 </td></tr>
 <tr><td class="fieldtype">
@@ -944,7 +942,7 @@ Secondary advertising Phy. Select one of the following. </p><table class="doxtab
 <td class="fieldname">
 padding[3]</td>
 <td class="fielddoc">
-padding </td></tr>
+Reserved. </td></tr>
 </table>
 
 </div>
@@ -1038,7 +1036,7 @@ Own Bluetooth address type. Select one of the following. <br />
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Public Address </td></tr>
 <tr>
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">Resolvable Private Address. <br />
- If the IRK of local device has not been registered in Resolving List, public address is used. </td></tr>
+ If the IRK (Identity Resolving Key) of local device has not been registered in Resolving List, public address is used. </td></tr>
 </table>
 </td></tr>
 <tr><td class="fieldtype">
@@ -1090,7 +1088,7 @@ Secondary advertising Phy. Select one of the following. </p><table class="doxtab
 <td class="fieldname">
 padding[2]</td>
 <td class="fielddoc">
-padding </td></tr>
+Reserved. </td></tr>
 </table>
 
 </div>
@@ -1206,7 +1204,7 @@ Scan type. </p><table class="doxtable">
 <td class="fieldname">
 padding[3]</td>
 <td class="fielddoc">
-padding. </td></tr>
+Reserved. </td></tr>
 </table>
 
 </div>
@@ -1293,9 +1291,9 @@ Scan Filter Policy. Select one of the following.<br />
 <tr>
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9e780870a7451000b7a0d78c767b1499">BLE_GAP_ADDR_RAND(0x01)</a> </td><td align="left">Use Random Address. </td></tr>
 <tr>
-<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address. </td></tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Public Address. </td></tr>
 <tr>
-<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga50ae4657d7dc5ff04c1e38a7e38671ba" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_RANDOM(0x03)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address. </td></tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga50ae4657d7dc5ff04c1e38a7e38671ba" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_RANDOM(0x03)</a> </td><td align="left">If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Random Address. </td></tr>
 </table>
 </li>
 <li>White list setting (Field [3:0]) <table class="doxtable">
@@ -1461,9 +1459,9 @@ The filter field specifies whether the White List is used or not, when connectin
 <tr>
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9e780870a7451000b7a0d78c767b1499">BLE_GAP_ADDR_RAND(0x01)</a> </td><td align="left">Use Random Address. </td></tr>
 <tr>
-<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address. </td></tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Public Address. </td></tr>
 <tr>
-<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga50ae4657d7dc5ff04c1e38a7e38671ba" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_RANDOM(0x03)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address. </td></tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga50ae4657d7dc5ff04c1e38a7e38671ba" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_RANDOM(0x03)</a> </td><td align="left">If the IRK (Identity Resolving Key) of local device has been registered in Resolving list, use RPA. If not, use Random Address. </td></tr>
 </table>
 </li>
 <li>White list setting (Field [3:0]) <table class="doxtable">
@@ -1872,7 +1870,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_lc_irk</td><td>Pointer to IRK to be registered in the resolving list. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_lc_irk</td><td>Pointer to IRK (Identity Resolving Key) to be registered in the resolving list. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">privacy_mode</td><td>privacy_mode privacy mode. </td></tr>
   </table>
   </dd>
@@ -1949,7 +1947,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_local_identity_address</td><td>Pointer to local identiry address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">uint8_t</td><td>p_local_irk Pointer to local IRK </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uint8_t</td><td>p_local_irk Pointer to local IRK (Identity Resolving Key) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">uint8_t</td><td>p_local_csrk Pointer to local CSRK </td></tr>
   </table>
   </dd>
@@ -1976,7 +1974,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_local_identity_address</td><td>Pointer to local identiry address. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">uint8_t</td><td>p_local_irk Pointer to local IRK </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">uint8_t</td><td>p_local_irk Pointer to local IRK (Identity Resolving Key) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">uint8_t</td><td>p_local_csrk Pointer to local CSRK </td></tr>
   </table>
   </dd>
@@ -2210,7 +2208,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

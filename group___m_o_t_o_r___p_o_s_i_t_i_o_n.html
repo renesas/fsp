@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -204,6 +204,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3d5e8fed455bc6eaba3635d2e528f4bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga3d5e8fed455bc6eaba3635d2e528f4bd">RM_MOTOR_POSITION_SpeedReferenceFeedforwardGet</a> (<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, float *const p_speed_ref)</td></tr>
 <tr class="memdesc:ga3d5e8fed455bc6eaba3635d2e528f4bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Speed Reference by Feedforward. Implements <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a8d7391a9c6fe97908aa43b92d135b1ca">motor_position_api_t::speedReferenceFeedforwardGet</a>.  <a href="#ga3d5e8fed455bc6eaba3635d2e528f4bd">More...</a><br /></td></tr>
 <tr class="separator:ga3d5e8fed455bc6eaba3635d2e528f4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad8a33851e84dd7771d66e9260c1fad7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#gaad8a33851e84dd7771d66e9260c1fad7">RM_MOTOR_POSITION_InfoGet</a> (<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__info__t">motor_position_info_t</a> *const p_info)</td></tr>
+<tr class="memdesc:gaad8a33851e84dd7771d66e9260c1fad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get position information.  <a href="#gaad8a33851e84dd7771d66e9260c1fad7">More...</a><br /></td></tr>
+<tr class="separator:gaad8a33851e84dd7771d66e9260c1fad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga73432f1adbf331659500c13afecea711"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga73432f1adbf331659500c13afecea711">RM_MOTOR_POSITION_ParameterUpdate</a> (<a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__cfg__t">motor_position_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="memdesc:ga73432f1adbf331659500c13afecea711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the parameters of Position Control Calculation. Implements <a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a87bc994d6018b82c71bd34ce4055a55b">motor_position_api_t::parameterUpdate</a>.  <a href="#ga73432f1adbf331659500c13afecea711">More...</a><br /></td></tr>
 <tr class="separator:ga73432f1adbf331659500c13afecea711"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -798,6 +801,45 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<a id="gaad8a33851e84dd7771d66e9260c1fad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad8a33851e84dd7771d66e9260c1fad7">&#9670;&nbsp;</a></span>RM_MOTOR_POSITION_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_POSITION_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576">motor_position_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__info__t">motor_position_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get position information. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Output pointer is NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga73432f1adbf331659500c13afecea711"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga73432f1adbf331659500c13afecea711">&#9670;&nbsp;</a></span>RM_MOTOR_POSITION_ParameterUpdate()</h2>
 
@@ -843,7 +885,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

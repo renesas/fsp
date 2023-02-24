@@ -16,5 +16,6 @@ var group___m_o_t_o_r___p_o_s_i_t_i_o_n =
     [ "RM_MOTOR_POSITION_SpeedReferencePControlGet", "group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga261fe6d9cf9c3056c7df8cf51efab5ac", null ],
     [ "RM_MOTOR_POSITION_SpeedReferenceIpdControlGet", "group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga6020732961501cfdb6f3ba4a270797e7", null ],
     [ "RM_MOTOR_POSITION_SpeedReferenceFeedforwardGet", "group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga3d5e8fed455bc6eaba3635d2e528f4bd", null ],
+    [ "RM_MOTOR_POSITION_InfoGet", "group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#gaad8a33851e84dd7771d66e9260c1fad7", null ],
     [ "RM_MOTOR_POSITION_ParameterUpdate", "group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga73432f1adbf331659500c13afecea711", null ]
 ];

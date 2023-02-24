@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,7 +237,7 @@ Disabled</li>
 <tr>
 <td>Internal Thread &gt; Priority</td><td>Value must be between 0 to 31</td><td>30 </td><td>Priority of the GUIX Internal Thread. The value must be between 0 to 31. </td></tr>
 <tr>
-<td>Internal Thread &gt; Time Slice</td><td>Value must be a non-negative integer</td><td>10 </td><td>Time Slice value of the GUIX Internal Thread. The value must be between 0 (TX_NO_TIME_SLICE) to 0xFFFFFFFF. </td></tr>
+<td>Internal Thread &gt; Time Slice</td><td>Value must be in range 0 to 0xFFFFFFFF</td><td>10 </td><td>Time Slice value of the GUIX Internal Thread. The value must be between 0 (TX_NO_TIME_SLICE) to 0xFFFFFFFF. </td></tr>
 <tr>
 <td>System Timer (ms)</td><td>Value must be greater than or equal to 10</td><td>20 </td><td>GUIX system timer period (GX_SYSTEM_TIMER_MS). This value will be internally converted to RTOS ticks and will be rounded down to the next smallest multiple of the RTOS tick period (1000 / TX_TIMER_TICKS_PER_SECOND). </td></tr>
 <tr>
@@ -502,7 +502,7 @@ Error code if RM_GUIX_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

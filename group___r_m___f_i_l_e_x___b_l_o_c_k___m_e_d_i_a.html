@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,11 +237,11 @@ The following build time configurations are defined in fsp_cfg/azure/fx/fx_user.
 <tr>
 <td>Common &gt; Max Last Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>This value defines the maximum file name length, which includes full path name. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
 <tr>
-<td>Common &gt; Max Sector Cache</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies the maximum number of logical sectors that can be cached by FileX. The actual number of sectors that can be cached is lesser of this constant and how many sectors can fit in the amount of memory supplied at fx_media_open. The default value if left blank is 256. All values must be a power of 2. </td></tr>
+<td>Common &gt; Max Sector Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the maximum number of logical sectors that can be cached by FileX. The actual number of sectors that can be cached is lesser of this constant and how many sectors can fit in the amount of memory supplied at fx_media_open. The default value if left blank is 256. All values must be a power of 2. </td></tr>
 <tr>
 <td>Common &gt; Fat Map Size</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies the number of sectors that can be represented in the FAT update map. The default value if left blank is 256. Larger values help reduce unneeded updates of secondary FAT sectors. </td></tr>
 <tr>
-<td>Common &gt; Max Fat Cache</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies the number of entries in the internal FAT cache. The default value if left blank is 16. All values must be a power of 2. </td></tr>
+<td>Common &gt; Max Fat Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the number of entries in the internal FAT cache. The default value if left blank is 16. All values must be a power of 2. </td></tr>
 <tr>
 <td>Threading &gt; Update Rate (Seconds)</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies rate at which system time in FileX is adjusted. Default value if left blank is 10, specifying that the FileX system time is updated every 10 seconds. </td></tr>
 <tr>
@@ -447,7 +447,7 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Azure
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_fx_media0 </td><td>Symbol used for media_ptr parameter in FileX APIs </td></tr>
 <tr>
-<td>Volume Name</td><td>Name must be a valid C symbol</td><td>Volume 1 </td><td>Volume name string, which is a maximum of 11 characters. </td></tr>
+<td>Volume Name</td><td>Name must be a maximum of 11 characters</td><td>Volume 1 </td><td>Volume name string, which is a maximum of 11 characters. </td></tr>
 <tr>
 <td>Number of FATs</td><td>Number of FATs must be an integer greater than 0</td><td>1 </td><td>Number of FATs in the media. The minimal value is 1 for the primary FAT. Values greater than 1 result in additional FAT copies being maintained at run-time. </td></tr>
 <tr>
@@ -634,7 +634,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

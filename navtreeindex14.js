@@ -1,5 +1,12 @@
 var NAVTREEINDEX14 =
 {
+"group___g_a_p___a_p_i.html#ga1872cc0cb04b7b2929100e7aac51b0b6":[5,2,4,0,133],
+"group___g_a_p___a_p_i.html#ga18bc350fdf261161538a288dd30b7fb4":[5,2,4,0,144],
+"group___g_a_p___a_p_i.html#ga1b7495214e738848a57826b0c4c3c6bf":[5,2,4,0,141],
+"group___g_a_p___a_p_i.html#ga1e1682697e79ffe4c425936412596b66":[5,2,4,0,155],
+"group___g_a_p___a_p_i.html#ga1f275641a055d3b327a943eb7dfb3e04":[5,2,4,0,238],
+"group___g_a_p___a_p_i.html#ga1fbdd0bde9e09e398a6056b5420f75e8":[5,2,4,0,135],
+"group___g_a_p___a_p_i.html#ga23397269b43c99ffb29dbd47f2b7d967":[5,2,4,0,166],
 "group___g_a_p___a_p_i.html#ga24f670373402f6012e55525135bb2e41":[5,2,4,0,151],
 "group___g_a_p___a_p_i.html#ga25d1cfdfc74463bd80d5c4294b70a1e9":[5,2,4,0,104],
 "group___g_a_p___a_p_i.html#ga28a6f8f1e741d4fb3b7da4cefd8cefe2":[5,2,4,0,126],
@@ -242,12 +249,5 @@ var NAVTREEINDEX14 =
 "group___g_a_p___a_p_i.html#structst__ble__gap__adv__set__evt__t":[5,2,4,0,29],
 "group___g_a_p___a_p_i.html#structst__ble__gap__auth__info__t":[5,2,4,0,14],
 "group___g_a_p___a_p_i.html#structst__ble__gap__bond__info__t":[5,2,4,0,62],
-"group___g_a_p___a_p_i.html#structst__ble__gap__cmd__err__evt__t":[5,2,4,0,23],
-"group___g_a_p___a_p_i.html#structst__ble__gap__conn__evt__t":[5,2,4,0,33],
-"group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t":[5,2,4,0,40],
-"group___g_a_p___a_p_i.html#structst__ble__gap__conn__param__t":[5,2,4,0,8],
-"group___g_a_p___a_p_i.html#structst__ble__gap__conn__phy__param__t":[5,2,4,0,9],
-"group___g_a_p___a_p_i.html#structst__ble__gap__conn__upd__evt__t":[5,2,4,0,38],
-"group___g_a_p___a_p_i.html#structst__ble__gap__conn__upd__req__evt__t":[5,2,4,0,39],
-"group___g_a_p___a_p_i.html#structst__ble__gap__create__conn__param__t":[5,2,4,0,10]
+"group___g_a_p___a_p_i.html#structst__ble__gap__cmd__err__evt__t":[5,2,4,0,23]
 };

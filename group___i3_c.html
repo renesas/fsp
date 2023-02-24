@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -216,14 +216,14 @@ Features</h2>
 <li>Timeout Detection</li>
 </ul>
 <h1>Master Mode</h1>
-<p>On an I3C bus, only one device may operate in master mode at a time. The current master is responsible for initiating I2C Legacy transfers, SDR transfers, Common Command Codes, and handling IBIs (Interrupt Requests, Hot-Join Requests). In order to perform these operations, the driver has an internal device table that is used for storing configuration information for each device on the bus (See <a class="el" href="group___i3_c___a_p_i.html#structi3c__device__table__cfg__t">i3c_device_table_cfg_t</a>). Each entry in the device table contains the static or dynamic address of the device, and IBI permissions for accepting or rejecting IBI requests from the device. The device table has four entries as well as one extended device entry that only contains the static or dynamic address of a device (See below).</p>
+<p>On an I3C bus, only one device may operate in master mode at a time. The current master is responsible for initiating I2C Legacy transfers, SDR transfers, Common Command Codes, and handling IBIs (Interrupt Requests, Hot-Join Requests). In order to perform these operations, the driver has an internal device table that is used for storing configuration information for each device on the bus (See <a class="el" href="group___i3_c___a_p_i.html#structi3c__device__table__cfg__t">i3c_device_table_cfg_t</a>). Each entry in the device table contains the static or dynamic address of the device, and IBI permissions for accepting or rejecting IBI requests from the device. The device table has a limited number of entries as well as one extended device entry that only contains the static or dynamic address of a device (See below).</p>
 <div class="image">
 <object type="image/svg+xml" data="r_i3c_device_table.svg">r_i3c_device_table.svg</object>
 <div class="caption">
 Master Device Table</div></div>
 <p> In order to initiate I2C Legacy transfers, SDR transfers, or Common Command Codes, the master must select a device entry from the device table using <a class="el" href="group___i3_c___a_p_i.html#a1e24e768130b9ea12f10743ff3143fa7">i3c_api_t::deviceSelect</a>. Once a device has been selected, all subsequent operations will be directed to the selected device until a new device is selected using <a class="el" href="group___i3_c___a_p_i.html#a1e24e768130b9ea12f10743ff3143fa7">i3c_api_t::deviceSelect</a>.</p>
 <p>The master may also receive IBI requests that are initiated by slave devices on the bus. If there is a payload, then the driver will write the data into a buffer that is provided by the application by calling <a class="el" href="group___i3_c___a_p_i.html#a3b2a78b5f633df2cfb07133ad5ae9c91">i3c_api_t::ibiRead</a>. If the application has not provided an IBI buffer prior to receiving an IBI, then the it will get a callback requesting an IBI buffer. Once the IBI is completed, the application will be notified by a callback.</p>
-<dl class="section note"><dt>Note</dt><dd>1. Even though there are only four device table entries and one extended device table entry, the application can operate on more devices by maintaining its own list of devices and updating the extended device entry as needed. Note however that devices defined in the extended device table entry will not be able to initiate IBI requests.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>1. Even though there are only a limited number of device table entries and one extended device table entry, the application can operate on more devices by maintaining its own list of devices and updating the extended device entry as needed. Note however that devices defined in the extended device table entry will not be able to initiate IBI requests.</dd></dl>
 <h2>Main Master</h2>
 <p>The main master is responsible for configuring the dynamic address of all devices on the bus. The driver initiates this procedure by calling <a class="el" href="group___i3_c___a_p_i.html#ae57d3fa9fa4a966a5c8cac38b0ea0660">i3c_api_t::dynamicAddressAssignmentStart</a>. Before starting address assignment, the application must configure the device table using <a class="el" href="group___i3_c___a_p_i.html#ac790719d9f6a87b3458bfab85ffda558">i3c_api_t::masterDeviceTableSet</a>.</p>
 <h3>Enter Dynamic Address Assignment (ENTDAA):</h3>
@@ -295,7 +295,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <td>Bitrate Settings &gt; Standard Mode &gt; Open-Drain &gt; Frequency</td><td>Must be an integer greater than 0.</td><td>1000000 </td><td>The Frequency of SCL during Standard Mode Open Drain transfers. </td></tr>
 <tr>
-<td>Bitrate Settings &gt; Standard Mode &gt; Push-Pull &gt; Logic High Period (ns)</td><td>Must be an integer greater than 0.</td><td>167 </td><td>The Logic High period of SCL during Standard Mode Push Pull transfers. </td></tr>
+<td>Bitrate Settings &gt; Standard Mode &gt; Push-Pull &gt; Logic High Period (ns)</td><td>The Logic High Period must be greater than or equal to 24 Nanoseconds.</td><td>167 </td><td>The Logic High period of SCL during Standard Mode Push Pull transfers. </td></tr>
 <tr>
 <td>Bitrate Settings &gt; Standard Mode &gt; Push-Pull &gt; Frequency</td><td>Push-Pull frequency must be greater than or equal to 10000 Hz.</td><td>3400000 </td><td>The Frequency of SCL during Standard Mode Push-Pull transfers. </td></tr>
 <tr>
@@ -303,7 +303,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <td>Bitrate Settings &gt; Extended Mode &gt; Open-Drain &gt; Frequency</td><td>Must be an integer greater than 0.</td><td>1000000 </td><td>The Frequency of SCL during Extended Mode Open Drain transfers. </td></tr>
 <tr>
-<td>Bitrate Settings &gt; Extended Mode &gt; Push-Pull &gt; Logic High Period (ns)</td><td>Must be an integer greater than 0.</td><td>167 </td><td>The Logic High period of SCL during Extended Mode Push Pull transfers. </td></tr>
+<td>Bitrate Settings &gt; Extended Mode &gt; Push-Pull &gt; Logic High Period (ns)</td><td>The Logic High Period must be greater than or equal to 24 Nanoseconds.</td><td>167 </td><td>The Logic High period of SCL during Extended Mode Push Pull transfers. </td></tr>
 <tr>
 <td>Bitrate Settings &gt; Extended Mode &gt; Push-Pull &gt; Frequency</td><td>Push-Pull frequency must be greater than or equal to 10000 Hz.</td><td>3400000 </td><td>The Frequency of SCL during Extended Mode Push-Pull transfers. </td></tr>
 <tr>
@@ -477,9 +477,9 @@ Disabled</li>
 <tr>
 <td>Interrupts &gt; Error and Event Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The interrupt priority of the EEI ISR which is used to notify the application when an Internal Error, HDR Exit Pattern, or Timeout is detected. </td></tr>
 <tr>
-<td>Interrupts &gt; Receive Status ICU Group 3</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
+<td>Interrupts &gt; Receive Status ICU Group 3 (RA2E2 Only)</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
 <tr>
-<td>Interrupts &gt; Receive Status ICU Group 5</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
+<td>Interrupts &gt; Receive Status ICU Group 5 (RA2E2 Only)</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i3c0 </td><td>Module name. </td></tr>
 <tr>
@@ -512,9 +512,8 @@ Disabled</li>
 </p>
 <h2><a class="anchor" id="r-i3c-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The I3C peripheral is clocked off of PCLKB and PCLKD. The SCL clock is generated by the I3C internal clock which is derived from PCLKD.</p>
-<p>The following settings are used to configure SCL.</p><ul>
-<li>Frequency of PCLKD</li>
+<p>The following settings are used to configure the timing of SCL.</p><ul>
+<li>Frequency of TCLK</li>
 <li>Standard Mode<ul>
 <li>Open Drain High Period (T<sub>HIGH</sub>)</li>
 <li>Open Drain Frequency</li>
@@ -531,7 +530,7 @@ Clock Configuration</h2>
 </li>
 <li><a class="el" href="group___i3_c.html#ga593ed75f723650402086aaaa2b814828">i3c_bitrate_mode_t</a> (Set during <a class="el" href="group___i3_c___a_p_i.html#a1e24e768130b9ea12f10743ff3143fa7">i3c_api_t::deviceSelect</a>)</li>
 </ul>
-<p>The Standard and Extended Mode settings define two seperate SCL configurations that can be selected at run-time using <a class="el" href="group___i3_c___a_p_i.html#a1e24e768130b9ea12f10743ff3143fa7">i3c_api_t::deviceSelect</a>.</p>
+<p>The Standard and Extended Mode settings define two separate SCL configurations that can be selected at run-time using <a class="el" href="group___i3_c___a_p_i.html#a1e24e768130b9ea12f10743ff3143fa7">i3c_api_t::deviceSelect</a>.</p>
 <p>In addition to selecting between the Standard and Extended Mode settings, the base SCL period can also be multiplied using the following options:</p><ul>
 <li>I3C_BITRATE_MODE_I3C_SDR2_STDBR_X2: Multiple the base Standard Open Drain and Push-Pull period by 2.</li>
 <li>I3C_BITRATE_MODE_I3C_SDR3_EXTBR_X2: Multiple the base Extended Open Drain and Push-Pull period by 2.</li>
@@ -540,9 +539,9 @@ Clock Configuration</h2>
 <p>In order to get accurate frequency calculations, the Rising and Falling edges must be input into the calculation. These values will depend on the topology the I3C bus that will be different for every application.</p>
 <dl class="section note"><dt>Note</dt><dd>1. The Standard and Extended Open Drain period settings define the period to use during legacy I2C transfers (Only use the following <a class="el" href="group___i3_c.html#ga593ed75f723650402086aaaa2b814828">i3c_bitrate_mode_t</a> settings with I2C transfers: I3C_BITRATE_MODE_I2C_STDBR, I3C_BITRATE_MODE_I2C_EXTBR). </dd>
 <dd>
-2. The clock frequency ratio of PCLKD and PCLKB must be 2:1 or 1:1 when using the I3C module. Operation is not guaranteed for other settings. </dd>
+2. T<sub>HIGH</sub> is defined in Figure 31 in the MIPI I3C Specification v1.0 and describes the Logic High period. </dd>
 <dd>
-3. T<sub>HIGH</sub> is defined in Figure 31 in the MIPI I3C Specification v1.0 and describe the Logic High period.</dd></dl>
+3. Depending on the MCU, TCLK is either derived from PCLKD or from a dedicated I3C Clock (I3CCLK).</dd></dl>
 <h2><a class="anchor" id="r-i3c-pin-configuration"></a>
 Pin Configuration</h2>
 <p>The I3C peripheral module uses pins on the MCU to communicate to external devices. I/O pins must be selected and configured as required by the external device. An I3C channel would consist of two pins - SDA and SCL for data/address and clock respectively.</p>
@@ -574,9 +573,9 @@ In slave mode, if the master issues a stop condition before the slave ends the t
 <p>Support for performing read and write operations on unaligned buffers can be disabled in order to improve performance. When unaligned buffer support is disabled, all buffers passed to read, ibiRead, write, ibiWrite, and commandSend must be aligned to 4 bytes and the size of the buffers must be a multiple of 4 bytes.</p>
 <p>In master mode, the value of the length passed to <a class="el" href="group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad">i3c_api_t::read</a> and <a class="el" href="group___i3_c___a_p_i.html#a0b27ccf4720531545b0c2e118032539b">i3c_api_t::write</a> sets the total length of the operation in bytes. During the read or write operation, the driver may read or write to the last word of memory during the operation. This means that the allocated memory for the buffer passed to read and write needs to be a multiple of 4 bytes even though the transfer length is not a multiple of 4 bytes.</p>
 <p>In slave mode, the length passed to <a class="el" href="group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad">i3c_api_t::read</a> must be a multiple of 4 bytes. The length passed to <a class="el" href="group___i3_c___a_p_i.html#a0b27ccf4720531545b0c2e118032539b">i3c_api_t::write</a> sets the number of bytes that the slave will write. The size of the buffer passed to write still needs to be a multiple of 4 bytes.</p>
-<h2>Max Data Speed Limitation</h2>
-<p>In Slave Mode, it is highly reccomended that BCR[0] be set to '1' in order to indicate to the master that the device doesn't support the max data speed. The master is then required to use the GETMXDS command to get the device specific data speed limitations.</p>
-<p>This will alow the slave to specify its Maximum Supported Data Rate for read/write transfers and the Maximum Read Turnaround Time (See GETMXDS in the MIPI I3C Specification v1.0).</p>
+<h2>Max Data Speed Limitation on RA2E2 MCUs</h2>
+<p>In Slave Mode, it is highly recommended that BCR[0] be set to '1' in order to indicate to the master that the device doesn't support the max data speed. The master is then required to use the GETMXDS command to get the device specific data speed limitations.</p>
+<p>This will allow the slave to specify its maximum supported data rate for read/write, and the maximum read turnaround time (See GETMXDS in the MIPI I3C Specification v1.0).</p>
 <h2>Mixed Fast Bus</h2>
 <p>The MIPI I3C Specification v1.0 defines a Mixed Fast Bus as a bus that has legacy I2C devices that all have a 50ns Spike Filter.</p>
 <p>On Mixed Fast Buses, SCL has the following constraints during I3C SDR transfers:</p><ul>
@@ -1861,7 +1860,7 @@ Error and Event Interrupt Priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

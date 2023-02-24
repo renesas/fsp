@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.2.0</span>
+   &#160;<span id="projectnumber">Release v4.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -261,6 +261,8 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor S
 <tr>
 <td>General &gt; Step of speed feedback at open-loop</td><td>Must be a valid value</td><td>0.20F </td><td>Step of speed feedback at open-loop. </td></tr>
 <tr>
+<td>General &gt; Natural frequency</td><td>Must be a valid non-negative value.</td><td>100.0 </td><td>Natural frequency for disturbance speed observer. </td></tr>
+<tr>
 <td>General &gt; Open-loop damping</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -292,6 +294,14 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Enable </td><td>Select enable/disable Speed observer process. </td></tr>
+<tr>
+<td>General &gt; Selection of speed observer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal</li>
+<li>
+Disturbance</li>
+</ul>
+</td><td>Disturbance </td><td>Select speed observer type. </td></tr>
 <tr>
 <td>General &gt; Control method</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -394,6 +404,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaa81defb02831707a1b2003d7c09d67fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab71db61d94f8e0e39bd0a113d7732c7c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d.html#gab71db61d94f8e0e39bd0a113d7732c7c">motor_speed_observer_switch_t</a> </td></tr>
 <tr class="separator:gab71db61d94f8e0e39bd0a113d7732c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga119ca2c2994e7665ffcb4b6cf26d0de8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d.html#ga119ca2c2994e7665ffcb4b6cf26d0de8">motor_speed_observer_select_t</a> </td></tr>
+<tr class="separator:ga119ca2c2994e7665ffcb4b6cf26d0de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace9850ec1b01422641e625bf515dbed4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d.html#gace9850ec1b01422641e625bf515dbed4">motor_speed_ctrl_status_t</a> </td></tr>
 <tr class="separator:gace9850ec1b01422641e625bf515dbed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -497,6 +509,26 @@ Enumerations</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab71db61d94f8e0e39bd0a113d7732c7cad0af718189bcc696a4a777997c01841c"></a>MOTOR_SPEED_OBSERVER_SWITCH_DISABLE&#160;</td><td class="fielddoc"><p>Disable speed observer. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab71db61d94f8e0e39bd0a113d7732c7ca8bd88ba4a2a971b39dbc7cb44c19d5bf"></a>MOTOR_SPEED_OBSERVER_SWITCH_ENABLE&#160;</td><td class="fielddoc"><p>Enable speed observer. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga119ca2c2994e7665ffcb4b6cf26d0de8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga119ca2c2994e7665ffcb4b6cf26d0de8">&#9670;&nbsp;</a></span>motor_speed_observer_select_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___s_p_e_e_d.html#ga119ca2c2994e7665ffcb4b6cf26d0de8">motor_speed_observer_select_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga119ca2c2994e7665ffcb4b6cf26d0de8a1da05345853bf0e35e5bee7fdc0bad34"></a>MOTOR_SPEED_OBSERVER_SELECT_NORMAL&#160;</td><td class="fielddoc"><p>Normal speed observer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga119ca2c2994e7665ffcb4b6cf26d0de8a7b84fe887b203dc6e3bc803e2cf2a4b0"></a>MOTOR_SPEED_OBSERVER_SELECT_DISTURBANCE&#160;</td><td class="fielddoc"><p>Disturbance speed observer. </p>
 </td></tr>
 </table>
 
@@ -876,7 +908,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.2.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

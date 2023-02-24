@@ -2,6 +2,7 @@ var group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i =
 [
     [ "sce_key_injection_api_t", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structsce__key__injection__api__t", [
       [ "AES128_InitialKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a690c7585f2b4184245dfe3967e654b55", null ],
+      [ "AES192_InitialKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a2420d2236a07236deda0563f081e5c73", null ],
       [ "AES256_InitialKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a051e586f0c02139d0689e80fdc3288d4", null ],
       [ "KeyUpdateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af240f4f39e5eeb5514616b5be0ab1bb3", null ],
       [ "AES128_EncryptedKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a045626f57abaadb1c9f7fff7bcb2770d", null ],
@@ -23,6 +24,10 @@ var group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i =
       [ "ECC_secp384r1_EncryptedPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a30ad1b3d8fc505f112aadb4c1f93e177", null ],
       [ "ECC_secp256r1_EncryptedPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a361afc82335f71e0d3fc16d39a16caa1", null ],
       [ "ECC_secp256k1_EncryptedPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a3362072b077f2a7922d062178b778e51", null ],
-      [ "ECC_secp384r1_EncryptedPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ab73a4325ba8924b1f3df8fe5c692114a", null ]
+      [ "ECC_secp384r1_EncryptedPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ab73a4325ba8924b1f3df8fe5c692114a", null ],
+      [ "ECC_brainpoolP256r1_InitialPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a8c0daa4c91cfec1569d679406a879378", null ],
+      [ "ECC_brainpoolP256r1_InitialPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a74fc546208f24a01e23f38c2157b40f7", null ],
+      [ "ECC_brainpoolP384r1_InitialPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a968fe49311aa2fe8909a524040a87eb2", null ],
+      [ "ECC_brainpoolP384r1_InitialPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ac876bd23221723dcc8a067ae7d130bfd", null ]
     ] ]
 ];
