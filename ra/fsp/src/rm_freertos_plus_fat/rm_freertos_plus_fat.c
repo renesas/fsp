@@ -389,7 +389,7 @@ int32_t rm_freertos_plus_fat_read (uint8_t * p_data, uint32_t sector, uint32_t n
 
     if (FSP_SUCCESS != err)
     {
-        return FF_ERR_IOMAN_DRIVER_FATAL_ERROR;
+        return (int32_t) (FF_ERR_IOMAN_DRIVER_FATAL_ERROR | FF_ERRFLAG);
     }
 
     lReturnCode = FF_ERR_NONE;
@@ -434,7 +434,7 @@ int32_t rm_freertos_plus_fat_write (uint8_t * p_data, uint32_t sector, uint32_t 
 
     if (FSP_SUCCESS != err)
     {
-        return FF_ERR_IOMAN_DRIVER_FATAL_ERROR;
+        return (int32_t) (FF_ERR_IOMAN_DRIVER_FATAL_ERROR | FF_ERRFLAG);
     }
 
     lReturnCode = FF_ERR_NONE;
