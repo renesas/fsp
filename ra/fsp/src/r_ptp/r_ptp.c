@@ -2051,7 +2051,7 @@ void r_ptp_edmac_callback (edmac_callback_args_t * p_args)
 void r_ptp_mint_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type             irq             = R_FSP_CurrentIrqGet();
     ptp_instance_ctrl_t * p_instance_ctrl = (ptp_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -2202,7 +2202,7 @@ void r_ptp_mint_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -2213,7 +2213,7 @@ void r_ptp_mint_isr (void)
 void r_ptp_ipls_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type             irq             = R_FSP_CurrentIrqGet();
     ptp_instance_ctrl_t * p_instance_ctrl = (ptp_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -2230,5 +2230,5 @@ void r_ptp_ipls_isr (void)
     p_instance_ctrl->p_cfg->p_callback(&callback_args);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }

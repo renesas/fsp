@@ -1522,7 +1522,7 @@ static void r_gpt_enable_irq (IRQn_Type const irq, uint32_t priority, void * p_c
 #if GPT_CFG_OUTPUT_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
- * Calculates duty cycle register values.  GTPR must be set before entering this function.
+ * Calculates duty cycle register values.  GTPBR must be set before entering this function.
  *
  * @param[in]  p_instance_ctrl         Instance control structure
  * @param[in]  duty_cycle_counts       Duty cycle to set
@@ -1535,9 +1535,9 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
 {
     /* Determine the current period. The actual period is one cycle longer than the register value for saw waves
      * and twice the register value for triangle waves. Reference section 23.2.21 "General PWM Timer Cycle Setting
-     * Register (GTPR)". The setting passed to the configuration is expected to be half the desired duty cycle for
+     * Register (GTPBR)". The setting passed to the configuration is expected to be half the desired duty cycle for
      * triangle waves. */
-    uint32_t current_period = p_instance_ctrl->p_reg->GTPR;
+    uint32_t current_period = p_instance_ctrl->p_reg->GTPBR;
  #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
     if (p_instance_ctrl->p_cfg->mode < TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM)
  #endif
@@ -1776,7 +1776,7 @@ static void r_gpt_capture_common_isr (gpt_prv_capture_event_t event)
 void gpt_counter_overflow_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1810,7 +1810,7 @@ void gpt_counter_overflow_isr (void)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
@@ -1821,7 +1821,7 @@ void gpt_counter_overflow_isr (void)
 void gpt_counter_underflow_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1835,7 +1835,7 @@ void gpt_counter_underflow_isr (void)
     r_gpt_call_callback(p_instance_ctrl, TIMER_EVENT_TROUGH, 0);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #endif

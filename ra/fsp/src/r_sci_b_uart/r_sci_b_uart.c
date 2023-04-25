@@ -1495,7 +1495,7 @@ static void r_sci_b_uart_call_callback (sci_b_uart_instance_ctrl_t * p_ctrl, uin
 void sci_b_uart_txi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1569,7 +1569,7 @@ void sci_b_uart_txi_isr (void)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #endif
@@ -1592,7 +1592,7 @@ void sci_b_uart_txi_isr (void)
 void sci_b_uart_rxi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1714,7 +1714,7 @@ void sci_b_uart_rxi_isr (void)
  #endif
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #endif
@@ -1729,7 +1729,7 @@ void sci_b_uart_rxi_isr (void)
 void sci_b_uart_tei_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1749,7 +1749,7 @@ void sci_b_uart_tei_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #endif
@@ -1763,7 +1763,7 @@ void sci_b_uart_tei_isr (void)
 void sci_b_uart_eri_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1808,7 +1808,7 @@ void sci_b_uart_eri_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #endif

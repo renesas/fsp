@@ -18,58 +18,38 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#ifndef __BOOTUTIL_CRYPTO_SCE9_SHA256_H_
- #define __BOOTUTIL_CRYPTO_SCE9_SHA256_H_
+/***********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
 
- #include "r_sce.h"
- #define BOOTUTIL_CRYPTO_SHA256_BLOCK_SIZE     (64)
- #define BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE    (32)
+#include "bsp_api.h"
+#include "hw_sce_trng_private.h"
 
- #include <stdint.h>
-
- #ifdef __cplusplus
-extern "C" {
- #endif
-
-typedef struct sce_sha_md5_handle bootutil_sha256_context;
-static inline void bootutil_sha256_init (bootutil_sha256_context * ctx)
-{
-    R_SCE_SHA256_Init(ctx);
-}
-
-static inline void bootutil_sha256_drop (bootutil_sha256_context * ctx)
-{
-    (void) ctx;
-}
-
-static inline int bootutil_sha256_update (bootutil_sha256_context * ctx, const void * data, uint32_t data_len)
-{
-    fsp_err_t fsp_err = FSP_SUCCESS;
-    fsp_err = R_SCE_SHA256_Update(ctx, (uint8_t *) data, data_len);
-    if (fsp_err != FSP_SUCCESS)
+/*******************************************************************************************************************//**
+ * 128bit Random Number Generation
+ * @param      OutData_Text    The out data text
+ * @retval FSP_SUCCESS      The operation completed successfully.
+ **********************************************************************************************************************/
+fsp_err_t HW_SCE_RNG_Read (uint32_t * OutData_Text) {
+    uint8_t * ptmp = (uint8_t *) OutData_Text;
+    uint32_t  k;
+    for (k = 0; k < 4; k++)            // read 4 words of random data similar (to make this API consistent with S7 and S3 implementation)
     {
-        return -1;
+        /* Set SGCEN bit and SGSTART bit */
+        R_TRNG->TRNGSCR0_b.SGCEN   = 1;
+        R_TRNG->TRNGSCR0_b.SGSTART = 1;
+
+        /* Wait for RDRDY bit to be set */
+        while (0 == R_TRNG->TRNGSCR0_b.RDRDY)
+        {
+        }
+
+        /* Read generated random data */
+        *ptmp++ = R_TRNG->TRNGSDR;
+        *ptmp++ = R_TRNG->TRNGSDR;
+        *ptmp++ = R_TRNG->TRNGSDR;
+        *ptmp++ = R_TRNG->TRNGSDR;
     }
 
-    return 0;
+    return FSP_SUCCESS;
 }
-
-static inline int bootutil_sha256_finish (bootutil_sha256_context * ctx, uint8_t * output)
-{
-    fsp_err_t fsp_err       = FSP_SUCCESS;
-    uint32_t  digest_length = 0;
-
-    fsp_err = R_SCE_SHA256_Final(ctx, output, &digest_length);
-    if (fsp_err != FSP_SUCCESS)
-    {
-        return -1;
-    }
-
-    return 0;
-}
-
- #ifdef __cplusplus
-}
- #endif
-
-#endif                                 /* __BOOTUTIL_CRYPTO_SCE9_SHA256_H_ */

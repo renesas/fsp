@@ -307,7 +307,7 @@ void Sockets_Disconnect (Socket_t xSocket)
                 recvLength = rm_wifi_onchip_silex_recv(pWiFiSocketContext->socketId,
                                                        buf,
                                                        128, // NOLINT
-                                                       pWiFiSocketContext->socketId);
+                                                       pWiFiSocketContext->receiveTimeout);
                 IotLogDebug("%u bytes received in close", recvLength);
             } while (recvLength > 0);
 

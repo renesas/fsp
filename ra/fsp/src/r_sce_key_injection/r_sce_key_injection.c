@@ -29,36 +29,6 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-/* SCE5 */
-#if defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4W1)
- #define SCE5      (1U)
-#else
- #define SCE5      (0U)
-#endif
-
-/* SCE5_B */
-#if defined(BSP_MCU_GROUP_RA6T2)
- #define SCE5_B    (1U)
-#else
- #define SCE5_B    (0U)
-#endif
-
-/* SCE7 */
-#if defined(BSP_MCU_GROUP_RA6M1) || defined(BSP_MCU_GROUP_RA6M2) || defined(BSP_MCU_GROUP_RA6M3) || \
-    defined(BSP_MCU_GROUP_RA6T1)
- #define SCE7      (1U)
-#else
- #define SCE7      (0U)
-#endif
-
-/* SCE9 */
-#if defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA6M4) || \
-    defined(BSP_MCU_GROUP_RA6M5)
- #define SCE9      (1U)
-#else
- #define SCE9      (0U)
-#endif
-
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -77,29 +47,32 @@
 
 const sce_key_injection_api_t g_sce_key_injection_on_sce =
 {
-    .AES128_InitialKeyWrap                         = R_SCE_AES128_InitialKeyWrap,
-#if (SCE9)
-    .AES192_InitialKeyWrap                         = R_SCE_AES192_InitialKeyWrap,
+    .AES128_InitialKeyWrap                       = R_SCE_AES128_InitialKeyWrap,
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+    .AES192_InitialKeyWrap                       = R_SCE_AES192_InitialKeyWrap,
 #endif
-    .AES256_InitialKeyWrap                         = R_SCE_AES256_InitialKeyWrap,
-#if ((SCE5) || (SCE7))
+    .AES256_InitialKeyWrap                       = R_SCE_AES256_InitialKeyWrap,
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE5) || (BSP_FEATURE_CRYPTO_HAS_SCE7))
     .KeyUpdateKeyWrap        = R_SCE_KeyUpdateKeyWrap,
     .AES128_EncryptedKeyWrap = R_SCE_AES128_EncryptedKeyWrap,
-    .AES256_EncryptedKeyWrap = R_SCE_AES256_EncryptedKeyWrap,
+ #if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    .AES192_EncryptedKeyWrap                     = R_SCE_AES192_EncryptedKeyWrap,
+ #endif
+    .AES256_EncryptedKeyWrap                     = R_SCE_AES256_EncryptedKeyWrap,
 #endif
-#if ((SCE7) || (SCE9))
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
     .RSA2048_InitialPublicKeyWrap  = R_SCE_RSA2048_InitialPublicKeyWrap,
     .RSA2048_InitialPrivateKeyWrap = R_SCE_RSA2048_InitialPrivateKeyWrap,
 #endif
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE9)
     .RSA3072_InitialPublicKeyWrap = R_SCE_RSA3072_InitialPublicKeyWrap,
     .RSA4096_InitialPublicKeyWrap = R_SCE_RSA4096_InitialPublicKeyWrap,
 #endif
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     .RSA2048_EncryptedPublicKeyWrap  = R_SCE_RSA2048_EncryptedPublicKeyWrap,
     .RSA2048_EncryptedPrivateKeyWrap = R_SCE_RSA2048_EncryptedPrivateKeyWrap,
 #endif
-#if ((SCE7) || (SCE9))
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
     .ECC_secp256r1_InitialPublicKeyWrap  = R_SCE_ECC_secp256r1_InitialPublicKeyWrap,
     .ECC_secp256r1_InitialPrivateKeyWrap = R_SCE_ECC_secp256r1_InitialPrivateKeyWrap,
     .ECC_secp384r1_InitialPublicKeyWrap  = R_SCE_ECC_secp384r1_InitialPublicKeyWrap,
@@ -107,7 +80,7 @@ const sce_key_injection_api_t g_sce_key_injection_on_sce =
     .ECC_secp256k1_InitialPublicKeyWrap  = R_SCE_ECC_secp256k1_InitialPublicKeyWrap,
     .ECC_secp256k1_InitialPrivateKeyWrap = R_SCE_ECC_secp256k1_InitialPrivateKeyWrap,
 #endif
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     .ECC_secp256r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap,
     .ECC_secp256r1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap,
     .ECC_secp384r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap,
@@ -115,11 +88,17 @@ const sce_key_injection_api_t g_sce_key_injection_on_sce =
     .ECC_secp256k1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap,
     .ECC_secp256k1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap,
 #endif
-#if (SCE9)
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
     .ECC_brainpoolP256r1_InitialPublicKeyWrap  = R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap,
     .ECC_brainpoolP256r1_InitialPrivateKeyWrap = R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap,
     .ECC_brainpoolP384r1_InitialPublicKeyWrap  = R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap,
     .ECC_brainpoolP384r1_InitialPrivateKeyWrap = R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap,
+#endif
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    .ECC_brainpoolP256r1_EncryptedPublicKeyWrap  = R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap,
+    .ECC_brainpoolP256r1_EncryptedPrivateKeyWrap = R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap,
+    .ECC_brainpoolP384r1_EncryptedPublicKeyWrap  = R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap,
+    .ECC_brainpoolP384r1_EncryptedPrivateKeyWrap = R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap,
 #endif
 };
 
@@ -163,7 +142,7 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE5)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE5)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -175,7 +154,17 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
                                                        (uint32_t *) initial_vector,
                                                        (uint32_t *) encrypted_key,
                                                        wrapped_key->value);
-#elif ((SCE5_B) || (SCE9))
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif ((BSP_FEATURE_CRYPTO_HAS_SCE5B) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -198,7 +187,17 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                wrapped_key->value);
-#elif (SCE7)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -209,15 +208,6 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
                                                       (uint32_t *) initial_vector,
                                                       (uint32_t *) encrypted_key,
                                                       wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -227,6 +217,16 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -262,7 +262,28 @@ fsp_err_t R_SCE_AES192_InitialKeyWrap (const uint8_t * const         key_type,
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_keytype         = 0;
+    uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
+
+    indata_keytype = change_endian_long((uint32_t) (*key_type));
+    error_code     = HW_SCE_GenerateAes192KeyIndexSub(&indata_keytype,
+                                                      &install_key_ring_index,
+                                                      (uint32_t *) wrapped_user_factory_programming_key,
+                                                      (uint32_t *) initial_vector,
+                                                      (uint32_t *) encrypted_key,
+                                                      wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES192;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -285,6 +306,7 @@ fsp_err_t R_SCE_AES192_InitialKeyWrap (const uint8_t * const         key_type,
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                wrapped_key->value);
+
     if (FSP_SUCCESS == error_code)
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_AES192;
@@ -293,15 +315,15 @@ fsp_err_t R_SCE_AES192_InitialKeyWrap (const uint8_t * const         key_type,
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
 #else
-    error_code = FSP_ERR_UNSUPPORTED;
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
 
     FSP_PARAMETER_NOT_USED(key_type);
     FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
     FSP_PARAMETER_NOT_USED(initial_vector);
     FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
 #endif
 
     return error_code;
@@ -338,7 +360,7 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE5)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE5)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -350,7 +372,17 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
                                                        (uint32_t *) initial_vector,
                                                        (uint32_t *) encrypted_key,
                                                        wrapped_key->value);
-#elif ((SCE5_B) || (SCE9))
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES256;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif ((BSP_FEATURE_CRYPTO_HAS_SCE5B) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -373,7 +405,17 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                wrapped_key->value);
-#elif (SCE7)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES256;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -384,15 +426,6 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
                                                       (uint32_t *) initial_vector,
                                                       (uint32_t *) encrypted_key,
                                                       wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -402,6 +435,16 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -434,7 +477,7 @@ fsp_err_t R_SCE_KeyUpdateKeyWrap (const uint8_t * const        wrapped_user_fact
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE5)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE5)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -444,24 +487,6 @@ fsp_err_t R_SCE_KeyUpdateKeyWrap (const uint8_t * const        wrapped_user_fact
                                                               (uint32_t *) initial_vector,
                                                               (uint32_t *) encrypted_key,
                                                               key_update_key->value);
-#elif (SCE7)
-    uint32_t indata_keytype         = 0;
-    uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
-
-    error_code = HW_SCE_GenerateUpdateKeyRingKeyIndexSub(&indata_keytype,
-                                                         &install_key_ring_index,
-                                                         (uint32_t *) wrapped_user_factory_programming_key,
-                                                         (uint32_t *) initial_vector,
-                                                         (uint32_t *) encrypted_key,
-                                                         key_update_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -471,6 +496,35 @@ fsp_err_t R_SCE_KeyUpdateKeyWrap (const uint8_t * const        wrapped_user_fact
     {
         key_update_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_keytype         = 0;
+    uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
+
+    error_code = HW_SCE_GenerateUpdateKeyRingKeyIndexSub(&indata_keytype,
+                                                         &install_key_ring_index,
+                                                         (uint32_t *) wrapped_user_factory_programming_key,
+                                                         (uint32_t *) initial_vector,
+                                                         (uint32_t *) encrypted_key,
+                                                         key_update_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        key_update_key->type = SCE_KEY_INDEX_TYPE_UPDATE_KEY_RING;
+    }
+    else
+    {
+        key_update_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#else
+    error_code           = FSP_ERR_UNSUPPORTED;
+    key_update_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -499,20 +553,12 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap (const uint8_t * const              init
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if ((SCE5) || (SCE7))
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE5) || (BSP_FEATURE_CRYPTO_HAS_SCE7))
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code = HW_SCE_UpdateAes128KeyIndexSub((uint32_t *) initial_vector,
                                                 (uint32_t *) encrypted_key,
                                                 wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -522,6 +568,67 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap (const uint8_t * const              init
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 192-bit AES key within the user routine.
+ *
+ * @param[in] initial_vector Initialization vector when generating encrypted_key
+ * @param[in] encrypted_key  User key encryptedand MAC appended
+ * @param[in] key_update_key Key update keyring
+ * @param[in,out] wrapped_key   192-bit AES wrapped key
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_UNSUPPORTED                  API not supported.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL Internal I/O buffer is not empty.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_AES192_EncryptedKeyWrap (const uint8_t * const              initial_vector,
+                                         const uint8_t * const              encrypted_key,
+                                         const sce_key_update_key_t * const key_update_key,
+                                         sce_aes_wrapped_key_t * const      wrapped_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
+
+    error_code = HW_SCE_UpdateAes192KeyIndexSub((uint32_t *) initial_vector,
+                                                (uint32_t *) encrypted_key,
+                                                wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES192;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -550,20 +657,12 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (const uint8_t * const              init
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if ((SCE5) || (SCE7))
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE5) || (BSP_FEATURE_CRYPTO_HAS_SCE7))
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code = HW_SCE_UpdateAes256KeyIndexSub((uint32_t *) initial_vector,
                                                 (uint32_t *) encrypted_key,
                                                 wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -573,6 +672,15 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (const uint8_t * const              init
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -608,7 +716,7 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap (const uint8_t * const             
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -620,7 +728,17 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap (const uint8_t * const             
                                                          (uint32_t *) initial_vector,
                                                          (uint32_t *) encrypted_key,
                                                          (uint32_t *) &wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_RSA2048_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -644,15 +762,6 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap (const uint8_t * const             
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -662,6 +771,16 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap (const uint8_t * const             
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -697,7 +816,7 @@ fsp_err_t R_SCE_RSA3072_InitialPublicKeyWrap (const uint8_t * const             
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -721,15 +840,6 @@ fsp_err_t R_SCE_RSA3072_InitialPublicKeyWrap (const uint8_t * const             
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -739,6 +849,16 @@ fsp_err_t R_SCE_RSA3072_InitialPublicKeyWrap (const uint8_t * const             
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -774,7 +894,7 @@ fsp_err_t R_SCE_RSA4096_InitialPublicKeyWrap (const uint8_t * const             
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -798,15 +918,6 @@ fsp_err_t R_SCE_RSA4096_InitialPublicKeyWrap (const uint8_t * const             
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -816,6 +927,16 @@ fsp_err_t R_SCE_RSA4096_InitialPublicKeyWrap (const uint8_t * const             
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -851,7 +972,7 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap (const uint8_t * const            
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -863,7 +984,17 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap (const uint8_t * const            
                                                           (uint32_t *) initial_vector,
                                                           (uint32_t *) encrypted_key,
                                                           (uint32_t *) &wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_RSA2048_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -887,15 +1018,6 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap (const uint8_t * const            
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -905,6 +1027,16 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap (const uint8_t * const            
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -933,21 +1065,13 @@ fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap (const uint8_t * const           
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code =
         HW_SCE_UpdateRsa2048PublicKeyIndexSub((uint32_t *) initial_vector,
                                               (uint32_t *) encrypted_key,
                                               (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -957,6 +1081,15 @@ fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap (const uint8_t * const           
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -985,21 +1118,13 @@ fsp_err_t R_SCE_RSA2048_EncryptedPrivateKeyWrap (const uint8_t * const          
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code =
         HW_SCE_UpdateRsa2048PrivateKeyIndexSub((uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1009,6 +1134,15 @@ fsp_err_t R_SCE_RSA2048_EncryptedPrivateKeyWrap (const uint8_t * const          
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1044,7 +1178,7 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap (const uint8_t * const       
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1062,7 +1196,17 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap (const uint8_t * const       
                                                      (uint32_t *) initial_vector,
                                                      (uint32_t *) encrypted_key,
                                                      (uint32_t *) &wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1087,15 +1231,6 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap (const uint8_t * const       
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1105,6 +1240,16 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap (const uint8_t * const       
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -1140,7 +1285,7 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap (const uint8_t * const       
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1158,7 +1303,17 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap (const uint8_t * const       
                                                      (uint32_t *) initial_vector,
                                                      (uint32_t *) encrypted_key,
                                                      (uint32_t *) &wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_SECP256K1_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1183,15 +1338,6 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap (const uint8_t * const       
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1201,6 +1347,16 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap (const uint8_t * const       
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -1236,7 +1392,7 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap (const uint8_t * const       
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = 0;
     uint32_t indata_curve_type      = 0;
@@ -1252,7 +1408,17 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap (const uint8_t * const       
                                                          (uint32_t *) initial_vector,
                                                          (uint32_t *) encrypted_key,
                                                          (uint32_t *) &wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P384_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1277,15 +1443,6 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap (const uint8_t * const       
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1295,6 +1452,16 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap (const uint8_t * const       
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -1330,7 +1497,7 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap (const uint8_t * const      
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1348,7 +1515,17 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap (const uint8_t * const      
                                                       (uint32_t *) initial_vector,
                                                       (uint32_t *) encrypted_key,
                                                       wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1372,15 +1549,6 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap (const uint8_t * const      
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1390,6 +1558,16 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap (const uint8_t * const      
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -1425,7 +1603,7 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap (const uint8_t * const      
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1443,7 +1621,17 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap (const uint8_t * const      
                                                       (uint32_t *) initial_vector,
                                                       (uint32_t *) encrypted_key,
                                                       wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_SECP256K1_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1467,15 +1655,6 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap (const uint8_t * const      
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1485,6 +1664,16 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap (const uint8_t * const      
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -1520,7 +1709,7 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap (const uint8_t * const      
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_curve_type      = 0;
@@ -1535,7 +1724,17 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap (const uint8_t * const      
                                                           (uint32_t *) initial_vector,
                                                           (uint32_t *) encrypted_key,
                                                           wrapped_key->value);
-#elif (SCE9)
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P384_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1559,15 +1758,6 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap (const uint8_t * const      
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1577,6 +1767,16 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap (const uint8_t * const      
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -1605,7 +1805,7 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (const uint8_t * const     
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_cmd       = 0;
     uint32_t inData_curveType = 0;
 
@@ -1620,14 +1820,6 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (const uint8_t * const     
                                           (uint32_t *) initial_vector,
                                           (uint32_t *) encrypted_key,
                                           (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1637,6 +1829,15 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (const uint8_t * const     
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1665,7 +1866,7 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap (const uint8_t * const     
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_cmd        = 0x0;                       /* P-256 */
     uint32_t indata_curve_type = 0;
 
@@ -1678,14 +1879,6 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap (const uint8_t * const     
                                           (uint32_t *) initial_vector,
                                           (uint32_t *) encrypted_key,
                                           (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1695,6 +1888,15 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap (const uint8_t * const     
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1723,7 +1925,7 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (const uint8_t * const     
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t inData_curveType = 0;
     inData_curveType = change_endian_long(0); /* NIST */
 
@@ -1733,14 +1935,6 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (const uint8_t * const     
                                                        (uint32_t *) initial_vector,
                                                        (uint32_t *) encrypted_key,
                                                        (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1750,6 +1944,15 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (const uint8_t * const     
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1778,7 +1981,7 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (const uint8_t * const    
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_cmd       = 0;
     uint32_t inData_curveType = 0;
 
@@ -1793,14 +1996,6 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (const uint8_t * const    
                                            (uint32_t *) initial_vector,
                                            (uint32_t *) encrypted_key,
                                            wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1810,6 +2005,15 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (const uint8_t * const    
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1838,7 +2042,7 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap (const uint8_t * const    
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t indata_cmd        = 0x0;                       /* P-256 */
     uint32_t indata_curve_type = 0;
 
@@ -1852,14 +2056,6 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap (const uint8_t * const    
                                            (uint32_t *) initial_vector,
                                            (uint32_t *) encrypted_key,
                                            wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1869,6 +2065,15 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap (const uint8_t * const    
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1897,7 +2102,7 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (const uint8_t * const    
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE7)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
     uint32_t inData_curveType = 0;
     inData_curveType = change_endian_long(0); /* NIST */
 
@@ -1907,14 +2112,6 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (const uint8_t * const    
                                                         (uint32_t *) initial_vector,
                                                         (uint32_t *) encrypted_key,
                                                         wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(key_update_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1924,6 +2121,15 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (const uint8_t * const    
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }
@@ -1959,7 +2165,35 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap (const uint8_t * const 
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_keytype         = 0;
+    uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
+    uint32_t indata_cmd             = 0;
+    uint32_t indata_curve_type      = 0;
+
+    indata_cmd        = change_endian_long(0); /* P-256 */;
+    indata_curve_type = change_endian_long(0x01); /* Brainpool */;
+    indata_keytype    = change_endian_long((uint32_t) (*key_type));
+
+    error_code = HW_SCE_GenerateEccPublicKeyIndexSub(&indata_keytype,
+                                                     &install_key_ring_index,
+                                                     (uint32_t *) wrapped_user_factory_programming_key,
+                                                     &indata_curve_type,
+                                                     &indata_cmd,
+                                                     (uint32_t *) initial_vector,
+                                                     (uint32_t *) encrypted_key,
+                                                     (uint32_t *) &wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1984,15 +2218,6 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap (const uint8_t * const 
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -2002,6 +2227,16 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap (const uint8_t * const 
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -2037,7 +2272,35 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap (const uint8_t * const
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_keytype         = 0;
+    uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
+    uint32_t indata_cmd             = 0;
+    uint32_t indata_curve_type      = 0;
+
+    indata_cmd        = change_endian_long(0); /* P-256 */;
+    indata_curve_type = change_endian_long(0x01); /* Brainpool */;
+    indata_keytype    = change_endian_long((uint32_t) (*key_type));
+
+    error_code = HW_SCE_GenerateEccPrivateKeyIndexSub(&indata_keytype,
+                                                      &install_key_ring_index,
+                                                      (uint32_t *) wrapped_user_factory_programming_key,
+                                                      &indata_curve_type,
+                                                      &indata_cmd,
+                                                      (uint32_t *) initial_vector,
+                                                      (uint32_t *) encrypted_key,
+                                                      wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2061,15 +2324,6 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap (const uint8_t * const
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -2079,6 +2333,16 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap (const uint8_t * const
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -2114,7 +2378,33 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap (const uint8_t * const 
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_keytype         = 0;
+    uint32_t install_key_ring_index = 0;
+    uint32_t indata_curve_type      = 0;
+
+    install_key_ring_index = change_endian_long((uint32_t) R_SCE_INSTALL_KEY_RING_INDEX);
+    indata_curve_type      = change_endian_long(0x01); /* Brainpool */;
+    indata_keytype         = change_endian_long((uint32_t) (*key_type));
+
+    error_code = HW_SCE_GenerateEccP384PublicKeyIndexSub(&indata_keytype,
+                                                         &install_key_ring_index,
+                                                         (uint32_t *) wrapped_user_factory_programming_key,
+                                                         &indata_curve_type,
+                                                         (uint32_t *) initial_vector,
+                                                         (uint32_t *) encrypted_key,
+                                                         (uint32_t *) &wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P384_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2139,15 +2429,6 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap (const uint8_t * const 
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -2157,6 +2438,16 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap (const uint8_t * const 
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
 
     return error_code;
 }
@@ -2192,7 +2483,32 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap (const uint8_t * const
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (SCE9)
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_keytype         = 0;
+    uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
+    uint32_t indata_curve_type      = 0;
+
+    indata_curve_type = change_endian_long(0x01); /* Brainpool */;
+    indata_keytype    = change_endian_long((uint32_t) (*key_type));
+
+    error_code = HW_SCE_GenerateEccP384PrivateKeyIndexSub(&indata_keytype,
+                                                          &install_key_ring_index,
+                                                          (uint32_t *) wrapped_user_factory_programming_key,
+                                                          &indata_curve_type,
+                                                          (uint32_t *) initial_vector,
+                                                          (uint32_t *) encrypted_key,
+                                                          wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P384_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2216,15 +2532,6 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap (const uint8_t * const
                                                (uint32_t *) initial_vector,
                                                (uint32_t *) encrypted_key,
                                                (uint32_t *) &wrapped_key->value);
-#else
-    error_code = FSP_ERR_UNSUPPORTED;
-
-    FSP_PARAMETER_NOT_USED(key_type);
-    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
-    FSP_PARAMETER_NOT_USED(initial_vector);
-    FSP_PARAMETER_NOT_USED(encrypted_key);
-    FSP_PARAMETER_NOT_USED(wrapped_key);
-#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -2234,6 +2541,250 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap (const uint8_t * const
     {
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 256-bit Brainpool ECC key within the user routine.
+ *
+ * @param[in] initial_vector Initialization vector when generating encrypted_key
+ * @param[in] encrypted_key  User key encryptedand MAC appended
+ * @param[in] key_update_key Key update keyring
+ * @param[in,out] wrapped_key   256-bit ECC wrapped key
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_UNSUPPORTED                  API not supported.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL Internal I/O buffer is not empty.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap (const uint8_t * const                initial_vector,
+                                                            const uint8_t * const                encrypted_key,
+                                                            const sce_key_update_key_t * const   key_update_key,
+                                                            sce_ecc_public_wrapped_key_t * const wrapped_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_cmd       = 0;
+    uint32_t inData_curveType = 0;
+
+    indata_cmd       = change_endian_long(0);    /* P-256 */
+    inData_curveType = change_endian_long(0x01); /* Brainpool */
+
+    memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
+
+    error_code =
+        HW_SCE_UpdateEccPublicKeyIndexSub(&inData_curveType,
+                                          &indata_cmd,
+                                          (uint32_t *) initial_vector,
+                                          (uint32_t *) encrypted_key,
+                                          (uint32_t *) &wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 256-bit Brainpool ECC key within the user routine.
+ *
+ * @param[in] initial_vector Initialization vector when generating encrypted_key
+ * @param[in] encrypted_key  User key encryptedand MAC appended
+ * @param[in] key_update_key Key update keyring
+ * @param[in,out] wrapped_key   256-bit ECC wrapped key
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_UNSUPPORTED                  API not supported.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL Internal I/O buffer is not empty.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap (const uint8_t * const                 initial_vector,
+                                                             const uint8_t * const                 encrypted_key,
+                                                             const sce_key_update_key_t * const    key_update_key,
+                                                             sce_ecc_private_wrapped_key_t * const wrapped_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t indata_cmd       = 0;
+    uint32_t inData_curveType = 0;
+
+    indata_cmd       = change_endian_long(0);    /* P-256 */
+    inData_curveType = change_endian_long(0x01); /* Brainpool */
+
+    memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
+
+    error_code =
+        HW_SCE_UpdateEccPrivateKeyIndexSub(&inData_curveType,
+                                           &indata_cmd,
+                                           (uint32_t *) initial_vector,
+                                           (uint32_t *) encrypted_key,
+                                           wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 384-bit Brainpool ECC key within the user routine.
+ *
+ * @param[in] initial_vector Initialization vector when generating encrypted_key
+ * @param[in] encrypted_key  User key encryptedand MAC appended
+ * @param[in] key_update_key Key update keyring
+ * @param[in,out] wrapped_key   384-bit ECC wrapped key
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_UNSUPPORTED                  API not supported.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL Internal I/O buffer is not empty.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap (const uint8_t * const                initial_vector,
+                                                            const uint8_t * const                encrypted_key,
+                                                            const sce_key_update_key_t * const   key_update_key,
+                                                            sce_ecc_public_wrapped_key_t * const wrapped_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t inData_curveType = 0;
+    inData_curveType = change_endian_long(0x1); /* Brainpool */
+
+    memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
+
+    error_code = HW_SCE_UpdateEccP384PublicKeyIndexSub(&inData_curveType,
+                                                       (uint32_t *) initial_vector,
+                                                       (uint32_t *) encrypted_key,
+                                                       (uint32_t *) &wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P384_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 384-bit Brainpool ECC key within the user routine.
+ *
+ * @param[in] initial_vector Initialization vector when generating encrypted_key
+ * @param[in] encrypted_key  User key encryptedand MAC appended
+ * @param[in] key_update_key Key update keyring
+ * @param[in,out] wrapped_key   384-bit ECC wrapped key
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_UNSUPPORTED                  API not supported.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL Internal I/O buffer is not empty.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap (const uint8_t * const                 initial_vector,
+                                                             const uint8_t * const                 encrypted_key,
+                                                             const sce_key_update_key_t * const    key_update_key,
+                                                             sce_ecc_private_wrapped_key_t * const wrapped_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+    uint32_t inData_curveType = 0;
+    inData_curveType = change_endian_long(0x01); /* Brainpool */
+
+    memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
+
+    error_code = HW_SCE_UpdateEccP384PrivateKeyIndexSub(&inData_curveType,
+                                                        (uint32_t *) initial_vector,
+                                                        (uint32_t *) encrypted_key,
+                                                        wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P384_PRIVATE;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+
+#else
+    error_code        = FSP_ERR_UNSUPPORTED;
+    wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(initial_vector);
+    FSP_PARAMETER_NOT_USED(encrypted_key);
+    FSP_PARAMETER_NOT_USED(key_update_key);
+#endif
 
     return error_code;
 }

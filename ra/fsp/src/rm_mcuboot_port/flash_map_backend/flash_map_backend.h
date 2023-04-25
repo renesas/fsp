@@ -140,6 +140,9 @@ struct flash_map_entry
  */
 int flash_device_base(uint8_t fd_id, uintptr_t * ret);
 
+/* Initialiaze all flash driver */
+int flash_area_driver_init(void);
+
 /*< Opens the area for use. id is one of the `fa_id`s */
 int  flash_area_open(uint8_t id, const struct flash_area ** area);
 void flash_area_close(const struct flash_area * area);

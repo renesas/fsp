@@ -1184,7 +1184,11 @@ static bool adc_channel_is_sample_hold_enabled (adc_channel_t channel, uint8_t s
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_calend0_isr (void) {
+void adc_b_calend0_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_CALIBRATION_COMPLETE,
                                       ADC_GROUP_MASK_NONE,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1192,6 +1196,9 @@ void adc_b_calend0_isr (void) {
 
     R_ADC_B->ADCALENDSCR = R_ADC_B0_ADCALENDSCR_CALENDC0_Msk;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1199,7 +1206,11 @@ void adc_b_calend0_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_calend1_isr (void) {
+void adc_b_calend1_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_CALIBRATION_COMPLETE,
                                       ADC_GROUP_MASK_NONE,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1207,6 +1218,9 @@ void adc_b_calend1_isr (void) {
 
     R_ADC_B->ADCALENDSCR = R_ADC_B0_ADCALENDSCR_CALENDC1_Msk;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1214,7 +1228,11 @@ void adc_b_calend1_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_limclpi_isr (void) {
+void adc_b_limclpi_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     adc_group_mask_t     group_mask        = (adc_group_mask_t) R_ADC_B->ADLIMGRSR;
     uint32_t             physical_channels = R_ADC_B->ADLIMCHSR0;
     uint64_t             extended_channels = (uint64_t) R_ADC_B->ADLIMEXSR << ADC_B_CHANNEL_MASK_EXT_OFFSET;
@@ -1226,6 +1244,9 @@ void adc_b_limclpi_isr (void) {
     R_ADC_B->ADLIMCHSCR0 = physical_channels;
     R_ADC_B->ADLIMEXSCR  = (uint32_t) (extended_channels >> ADC_B_CHANNEL_MASK_EXT_OFFSET);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1233,7 +1254,11 @@ void adc_b_limclpi_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_err0_isr (void) {
+void adc_b_err0_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_CONVERSION_ERROR,
                                       ADC_GROUP_MASK_NONE,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1241,6 +1266,9 @@ void adc_b_err0_isr (void) {
 
     R_ADC_B->ADERSCR = R_ADC_B0_ADERSCR_ADERCLR0_Msk;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1248,7 +1276,11 @@ void adc_b_err0_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_err1_isr (void) {
+void adc_b_err1_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_CONVERSION_ERROR,
                                       ADC_GROUP_MASK_NONE,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1256,6 +1288,9 @@ void adc_b_err1_isr (void) {
 
     R_ADC_B->ADERSCR = R_ADC_B0_ADERSCR_ADERCLR1_Msk;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1263,7 +1298,11 @@ void adc_b_err1_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_resovf0_isr (void) {
+void adc_b_resovf0_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     uint32_t             physical_channels = R_ADC_B->ADOVFCHSR0;
     uint32_t             extended_channels = R_ADC_B->ADOVFEXSR;
     uint64_t             extended_mask     = ((uint64_t) extended_channels) << ADC_B_CHANNEL_MASK_EXT_OFFSET;
@@ -1275,6 +1314,9 @@ void adc_b_resovf0_isr (void) {
     R_ADC_B->ADOVFEXSCR  = extended_channels;
     R_ADC_B->ADOVFERSCR  = ADC_B_UNIT_MASK_0;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1282,7 +1324,11 @@ void adc_b_resovf0_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_resovf1_isr (void) {
+void adc_b_resovf1_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     uint32_t             physical_channels = R_ADC_B->ADOVFCHSR0;
     uint32_t             extended_channels = R_ADC_B->ADOVFEXSR;
     uint64_t             extended_mask     = ((uint64_t) extended_channels) << ADC_B_CHANNEL_MASK_EXT_OFFSET;
@@ -1294,6 +1340,9 @@ void adc_b_resovf1_isr (void) {
     R_ADC_B->ADOVFEXSCR  = extended_channels;
     R_ADC_B->ADOVFERSCR  = ADC_B_UNIT_MASK_1;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1301,7 +1350,11 @@ void adc_b_resovf1_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_adi0_isr (void) {
+void adc_b_adi0_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_SCAN_COMPLETE,
                                       ADC_GROUP_MASK_0,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1309,6 +1362,9 @@ void adc_b_adi0_isr (void) {
 
     R_ADC_B->ADSCANENDSCR = ADC_GROUP_MASK_0;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1316,7 +1372,11 @@ void adc_b_adi0_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_adi1_isr (void) {
+void adc_b_adi1_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_SCAN_COMPLETE,
                                       ADC_GROUP_MASK_1,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1324,6 +1384,9 @@ void adc_b_adi1_isr (void) {
 
     R_ADC_B->ADSCANENDSCR = ADC_GROUP_MASK_1;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1331,7 +1394,11 @@ void adc_b_adi1_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_adi2_isr (void) {
+void adc_b_adi2_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_SCAN_COMPLETE,
                                       ADC_GROUP_MASK_2,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1339,6 +1406,9 @@ void adc_b_adi2_isr (void) {
 
     R_ADC_B->ADSCANENDSCR = ADC_GROUP_MASK_2;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1346,7 +1416,11 @@ void adc_b_adi2_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_adi3_isr (void) {
+void adc_b_adi3_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_SCAN_COMPLETE,
                                       ADC_GROUP_MASK_3,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1354,6 +1428,9 @@ void adc_b_adi3_isr (void) {
 
     R_ADC_B->ADSCANENDSCR = ADC_GROUP_MASK_3;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1361,7 +1438,11 @@ void adc_b_adi3_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_adi4_isr (void) {
+void adc_b_adi4_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_SCAN_COMPLETE,
                                       ADC_GROUP_MASK_4,
                                       ADC_B_CHANNEL_MASK_NONE,
@@ -1369,6 +1450,9 @@ void adc_b_adi4_isr (void) {
 
     R_ADC_B->ADSCANENDSCR = ADC_GROUP_MASK_4;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1376,7 +1460,11 @@ void adc_b_adi4_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_adi5678_isr (void) {
+void adc_b_adi5678_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     uint8_t          group_id   = __CLZ(__RBIT(ADC_B_GROUP_MASK_5678 & R_ADC_B->ADSCANENDSR));
     adc_group_mask_t group_mask =
         (adc_group_mask_t) ((group_id > 31) ? ADC_GROUP_MASK_NONE : (1U << group_id));
@@ -1388,6 +1476,9 @@ void adc_b_adi5678_isr (void) {
 
     R_ADC_B->ADSCANENDSCR = group_mask;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1395,7 +1486,11 @@ void adc_b_adi5678_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fifoovf_isr (void) {
+void adc_b_fifoovf_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     adc_group_mask_t group_mask = (adc_group_mask_t) R_ADC_B->ADFIFOERSR_b.FIFOOVFn;
 
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_FIFO_OVERFLOW,
@@ -1406,6 +1501,9 @@ void adc_b_fifoovf_isr (void) {
     R_ADC_B->ADFIFODCR               = group_mask;
     R_ADC_B->ADFIFOERSCR_b.FIFOOVFCn = group_mask;
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1413,12 +1511,19 @@ void adc_b_fifoovf_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fiforeq0_isr (void) {
+void adc_b_fiforeq0_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                       ADC_GROUP_MASK_0,
                                       ADC_B_CHANNEL_MASK_NONE,
                                       ADC_B_UNIT_MASK_UNDEFINED);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1426,12 +1531,19 @@ void adc_b_fiforeq0_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fiforeq1_isr (void) {
+void adc_b_fiforeq1_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                       ADC_GROUP_MASK_1,
                                       ADC_B_CHANNEL_MASK_NONE,
                                       ADC_B_UNIT_MASK_UNDEFINED);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1439,12 +1551,19 @@ void adc_b_fiforeq1_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fiforeq2_isr (void) {
+void adc_b_fiforeq2_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                       ADC_GROUP_MASK_2,
                                       ADC_B_CHANNEL_MASK_NONE,
                                       ADC_B_UNIT_MASK_UNDEFINED);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1452,12 +1571,19 @@ void adc_b_fiforeq2_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fiforeq3_isr (void) {
+void adc_b_fiforeq3_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                       ADC_GROUP_MASK_3,
                                       ADC_B_CHANNEL_MASK_NONE,
                                       ADC_B_UNIT_MASK_UNDEFINED);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1465,12 +1591,19 @@ void adc_b_fiforeq3_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fiforeq4_isr (void) {
+void adc_b_fiforeq4_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                       ADC_GROUP_MASK_4,
                                       ADC_B_CHANNEL_MASK_NONE,
                                       ADC_B_UNIT_MASK_UNDEFINED);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -1478,7 +1611,11 @@ void adc_b_fiforeq4_isr (void) {
  * @param  None
  * @return None
  **********************************************************************************************************************/
-void adc_b_fiforeq5678_isr (void) {
+void adc_b_fiforeq5678_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     /* Get groups with less data availabe than threshold */
     adc_group_mask_t group = (adc_group_mask_t) (ADC_B_GROUP_MASK_5678 & R_ADC_B->ADFIFOERSR_b.FIFOFLFn);
     IRQn_Type        irq   = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
@@ -1486,4 +1623,7 @@ void adc_b_fiforeq5678_isr (void) {
                                                ADC_B_CHANNEL_MASK_NONE,
                                                ADC_B_UNIT_MASK_UNDEFINED);
     R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }

@@ -91,6 +91,12 @@
 /* PLODIVP in PLLCCR2 starts at bit 8. */
 #define CGC_PRV_PLLCCR2_PLODIVR_BIT              (8U)
 
+#if 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+/* Bit-mask of values that must be 1 for PLLCCR type 4. */
+ #define CGC_PRV_PLLCCR_RESET_VALUE              (0x04U)
+#endif
+
 #if BSP_PRV_PLL_SUPPORTED
  #if BSP_PRV_PLL2_SUPPORTED
   #define CGC_PRV_NUM_CLOCKS                     ((uint8_t) CGC_CLOCK_PLL2 + 1U)
@@ -1940,7 +1946,19 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
     FSP_ASSERT(pll_hz >= CGC_PRV_PLLCCR_PLL_MIN_HZ);
     FSP_ASSERT(pll_hz <= BSP_FEATURE_CGC_PLLCCR_MAX_HZ);
   #endif
- #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE || 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+    /* Normal P,Q,R outputs are not supported. */
+    FSP_PARAMETER_NOT_USED(pll_out);
+
+    /* PLLCCR type 4 only supports the subclock as a source. */
+    pll_src_freq_hz = BSP_SUB_CLOCK_HZ;
+
+    uint32_t multiplier            = (p_pll_cfg->multiplier + BSP_PRV_CLOCKS_PLL_MUL_INT_OFFSET);
+    uint32_t clock_freq_multiplied = pll_src_freq_hz * multiplier;
+
+    uint32_t pll_hz = clock_freq_multiplied >> 1; // Always div-by-2 for this PLLCCR type.
+ #else                                            // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
     FSP_PARAMETER_NOT_USED(pll_out);
 
     uint32_t multiplier            = (p_pll_cfg->multiplier + 1U) >> 1;
@@ -2057,6 +2075,9 @@ static inline cgc_clock_t r_cgc_pll_clocksource_get (void)
     {
         pll_src = CGC_CLOCK_HOCO;
     }
+
+ #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    pll_src = CGC_CLOCK_SUBCLOCK;
  #endif
 
     return pll_src;
@@ -2106,7 +2127,7 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pl
     /* Calculate the PLLCCR register. */
     uint32_t pllccr = r_cgc_pllccr_calculate(p_pll_cfg);
 
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE || 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
     volatile uint16_t * p_pllccr_reg;
  #else
     volatile uint8_t * p_pllccr_reg;
@@ -2116,7 +2137,7 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pl
     if (CGC_CLOCK_PLL == pll)
  #endif
     {
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE || 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
         p_pllccr_reg = &(R_SYSTEM->PLLCCR);
  #else
         p_pllccr_reg = &(R_SYSTEM->PLLCCR2);
@@ -2159,6 +2180,8 @@ static void r_cgc_pll_cfg (uint32_t pll_hz, uint32_t pllccr)
 {
  #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE || 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
     R_SYSTEM->PLLCCR = (uint16_t) pllccr;
+ #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    R_SYSTEM->PLLCCR = (uint16_t) pllccr | CGC_PRV_PLLCCR_RESET_VALUE;
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
     R_SYSTEM->PLLCCR2 = (uint8_t) pllccr;
  #endif

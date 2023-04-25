@@ -82,6 +82,11 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap(const uint8_t * const              initi
                                         const sce_key_update_key_t * const key_update_key,
                                         sce_aes_wrapped_key_t * const      wrapped_key);
 
+fsp_err_t R_SCE_AES192_EncryptedKeyWrap(const uint8_t * const              initial_vector,
+                                        const uint8_t * const              encrypted_key,
+                                        const sce_key_update_key_t * const key_update_key,
+                                        sce_aes_wrapped_key_t * const      wrapped_key);
+
 fsp_err_t R_SCE_AES256_EncryptedKeyWrap(const uint8_t * const              initial_vector,
                                         const uint8_t * const              encrypted_key,
                                         const sce_key_update_key_t * const key_update_key,
@@ -222,6 +227,26 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap(const uint8_t * const 
                                                           const uint8_t * const                 initial_vector,
                                                           const uint8_t * const                 encrypted_key,
                                                           sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap(const uint8_t * const                initial_vector,
+                                                           const uint8_t * const                encrypted_key,
+                                                           const sce_key_update_key_t * const   key_update_key,
+                                                           sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap(const uint8_t * const                 initial_vector,
+                                                            const uint8_t * const                 encrypted_key,
+                                                            const sce_key_update_key_t * const    key_update_key,
+                                                            sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap(const uint8_t * const                initial_vector,
+                                                           const uint8_t * const                encrypted_key,
+                                                           const sce_key_update_key_t * const   key_update_key,
+                                                           sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+fsp_err_t R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap(const uint8_t * const                 initial_vector,
+                                                            const uint8_t * const                 encrypted_key,
+                                                            const sce_key_update_key_t * const    key_update_key,
+                                                            sce_ecc_private_wrapped_key_t * const wrapped_key);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

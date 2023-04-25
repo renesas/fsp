@@ -186,6 +186,7 @@ fsp_err_t RM_MOTOR_ESTIMATE_Reset (motor_angle_ctrl_t * const p_ctrl)
     rm_motor_estimate_speed_reset(&(p_instance_ctrl->st_pll_est));
     p_instance_ctrl->u1_flg_pi_ctrl   = MOTOR_ESTIMATE_FLG_CLR;
     p_instance_ctrl->u1_flg_pll_start = MOTOR_ESTIMATE_FLG_SET;
+    p_instance_ctrl->f4_angle_rad     = 0.0F;
 
     return err;
 }

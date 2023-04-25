@@ -42,3 +42,19 @@ uint32_t tfm_hal_get_ns_entry_point(void)
 {
     return *((uint32_t *)(memory_regions.non_secure_code_start + 4));
 }
+
+void tfm_hal_system_reset(void)
+{
+    __disable_irq();
+
+    NVIC->ICPR[0] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[1] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[2] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[3] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[4] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[5] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[6] = UINT32_MAX;         /* Clear all pending interrupts */
+    NVIC->ICPR[7] = UINT32_MAX;         /* Clear all pending interrupts */
+
+    NVIC_SystemReset();
+}

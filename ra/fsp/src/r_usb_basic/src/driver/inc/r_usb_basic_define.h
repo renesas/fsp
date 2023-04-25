@@ -55,24 +55,26 @@ extern "C" {
 
  #endif                                /* defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) */
 
- #if defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2)   \
-    || defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3) \
-    || defined(BSP_MCU_GROUP_RA4W1) || defined(BSP_MCU_GROUP_RA6M1) || defined(BSP_MCU_GROUP_RA6M2) \
+ #if defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA6T3) || \
+    defined(BSP_MCU_GROUP_RA4E2) || defined(BSP_MCU_GROUP_RA6E1) || defined(BSP_MCU_GROUP_RA4E1)     \
+    || defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3)  \
+    || defined(BSP_MCU_GROUP_RA4W1) || defined(BSP_MCU_GROUP_RA6M1) || defined(BSP_MCU_GROUP_RA6M2)  \
     || defined(BSP_MCU_GROUP_RA6M4)
 
   #define USB_IP0_MODULE    USB_FS_MODULE
   #define USB_IP1_MODULE    USB_NOT_SUPPORT
 
   #define USB_NUM_USBIP     (1U)
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1 || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA2A1 || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA6T3) || defined(BSP_MCU_GROUP_RA4E2) */
 
- #if defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2)
+ #if defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA6T3) || \
+    defined(BSP_MCU_GROUP_RA4E2)
 
   #define USB_SUPPORT_MINI_MODULE
   #define USB_NOT_SUPPORT_HOST
   #define USB_NOT_SUPPORT_DMAC
 
- #endif                                      /* defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2) */
+ #endif                                      /* defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA6T3) || defined(BSP_MCU_GROUP_RA4E2) */
 
  #if defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA4W1)
 
@@ -121,7 +123,7 @@ extern "C" {
   #define USB_CNEN_SYSCFG_USB_IP1      /* CNEN bit */
   #define USB_SUPPORT_BC_HS            /* Battery Charging in High-speed module */
 
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1 || defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || (BSP_CFG_MCU_PART_SERIES == 8) */
 
  #if defined(BSP_MCU_GROUP_RA2A1)
 
@@ -130,10 +132,10 @@ extern "C" {
 
  #endif                                /* defined(USB_SUPPORT_MINI_MODULE) */                            /* defined(BSP_MCU_GROUP_RA2A1 */
 
- #if defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2)                                   \
+ #if defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA6T3) || defined(BSP_MCU_GROUP_RA4E2)   \
     || defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3) \
     || defined(BSP_MCU_GROUP_RA4W1) || defined(BSP_MCU_GROUP_RA6M5)                                 \
-    || defined(BSP_MCU_GROUP_RA6M4)
+    || defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA6E1) || defined(BSP_MCU_GROUP_RA4E1)
 
   #define USB_CNEN_PHYSECTRL_USB_IP0   /* CNEN bit */
 
@@ -142,11 +144,12 @@ extern "C" {
    #define USB_SUPPORT_BC_FS           /* Battery Charging in Full-speed module */
   #endif                               /* defined(BSP_MCU_GROUP_RA6M5) */
 
-  #if defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3) \
-    || defined(BSP_MCU_GROUP_RA4W1) || defined(BSP_MCU_GROUP_RA6M4)
+  #if defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3)     \
+    || defined(BSP_MCU_GROUP_RA4W1) || defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA6E1) || \
+    defined(BSP_MCU_GROUP_RA4E1)
    #define USB_SUPPORT_BC_FS
   #endif                               /* defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3) */
- #endif                                /* defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA4E2) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6E2) || defined(BSP_MCU_GROUP_RA6T3) || defined(BSP_MCU_GROUP_RA4E2) */
 
 /* Version Number of API. */
  #define USB_VERSION_MAJOR        (1)
@@ -156,9 +159,9 @@ extern "C" {
  #if (BSP_CFG_RTOS != 0)
 
 /* The buffer size of interrupt info is increased to avoid overlapping interrupt events. */
-  #define USB_INT_BUFSIZE         (32U)  /* Size of Interrupt info buffer */
+  #define USB_INT_BUFSIZE         (8U)   /* Size of Interrupt info buffer */
  #else /* #if (BSP_CFG_RTOS != 0) */
-  #define USB_INT_BUFSIZE         (10U)  /* Size of Interrupt info buffer */
+  #define USB_INT_BUFSIZE         (8U)   /* Size of Interrupt info buffer */
  #endif /* #if (BSP_CFG_RTOS != 0) */
  #define USB_EVENT_MAX            (10)
 

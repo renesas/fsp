@@ -279,6 +279,19 @@ typedef struct st_sce_key_injection_api
                                           const sce_key_update_key_t * const key_update_key,
                                           sce_aes_wrapped_key_t * const wrapped_key);
 
+    /** This API updates 192-bit AES wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_AES192_EncryptedKeyWrap "R_SCE_AES192_EncryptedKeyWrap()"
+     *
+     * @param[in]     initial_vector Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key  User key encryptedand MAC appended
+     * @param[in]     key_update_key Key update keyring
+     * @param[in,out] wrapped_key    192-bit AES wrapped key
+     */
+    fsp_err_t (* AES192_EncryptedKeyWrap)(const uint8_t * const initial_vector, const uint8_t * const encrypted_key,
+                                          const sce_key_update_key_t * const key_update_key,
+                                          sce_aes_wrapped_key_t * const wrapped_key);
+
     /** This API outputs 256-bit AES wrapped key.
      * @par Implemented as
      * - @ref R_SCE_AES256_EncryptedKeyWrap "R_SCE_AES256_EncryptedKeyWrap()"
@@ -641,6 +654,62 @@ typedef struct st_sce_key_injection_api
                                                             const uint8_t * const                 initial_vector,
                                                             const uint8_t * const                 encrypted_key,
                                                             sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 256-bit ECC public wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap "R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap()"
+     *
+     * @param[in]     initial_vector Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key  User key encryptedand MAC appended
+     * @param[in]     key_update_key Key update keyring
+     * @param[in,out] wrapped_key    256-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP256r1_EncryptedPublicKeyWrap)(const uint8_t * const                initial_vector,
+                                                             const uint8_t * const                encrypted_key,
+                                                             const sce_key_update_key_t * const   key_update_key,
+                                                             sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 256-bit ECC private wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap "R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap()"
+     *
+     * @param[in]     initial_vector Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key  User key encryptedand MAC appended
+     * @param[in]     key_update_key Key update keyring
+     * @param[in,out] wrapped_key    256-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP256r1_EncryptedPrivateKeyWrap)(const uint8_t * const                 initial_vector,
+                                                              const uint8_t * const                 encrypted_key,
+                                                              const sce_key_update_key_t * const    key_update_key,
+                                                              sce_ecc_private_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 384-bit ECC public wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap "R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap()"
+     *
+     * @param[in]     initial_vector Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key  User key encryptedand MAC appended
+     * @param[in]     key_update_key Key update keyring
+     * @param[in,out] wrapped_key    256-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP384r1_EncryptedPublicKeyWrap)(const uint8_t * const                initial_vector,
+                                                             const uint8_t * const                encrypted_key,
+                                                             const sce_key_update_key_t * const   key_update_key,
+                                                             sce_ecc_public_wrapped_key_t * const wrapped_key);
+
+    /** This API outputs 384-bit ECC private wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap "R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap()"
+     *
+     * @param[in]     initial_vector Initialization vector when generating encrypted_key
+     * @param[in]     encrypted_key  User key encryptedand MAC appended
+     * @param[in]     key_update_key Key update keyring
+     * @param[in,out] wrapped_key    384-bit ECC wrapped key
+     */
+    fsp_err_t (* ECC_brainpoolP384r1_EncryptedPrivateKeyWrap)(const uint8_t * const                 initial_vector,
+                                                              const uint8_t * const                 encrypted_key,
+                                                              const sce_key_update_key_t * const    key_update_key,
+                                                              sce_ecc_private_wrapped_key_t * const wrapped_key);
 
 } sce_key_injection_api_t;
 

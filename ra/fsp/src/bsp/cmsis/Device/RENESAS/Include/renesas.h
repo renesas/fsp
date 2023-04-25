@@ -74,6 +74,8 @@ extern "C" {
   #include "R7FA4M2AD.h"
  #elif BSP_MCU_GROUP_RA4M3
   #include "R7FA4M3AF.h"
+ #elif BSP_MCU_GROUP_RA4T1
+  #include "R7FA4T1BB.h"
  #elif BSP_MCU_GROUP_RA4W1
   #include "R7FA4W1AD.h"
  #elif BSP_MCU_GROUP_RA6E1
@@ -94,6 +96,8 @@ extern "C" {
   #include "R7FA6T1AD.h"
  #elif BSP_MCU_GROUP_RA6T2
   #include "R7FA6T2BD.h"
+ #elif BSP_MCU_GROUP_RA6T3
+  #include "R7FA6T3BB.h"
  #else
   #if __has_include("renesas_internal.h")
    #include "renesas_internal.h"

@@ -312,10 +312,12 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
         error_code = R_SCE_FwIntegrityCheckPrivate();
     }
 
+#if (0 == SCE_USER_FAST_BOOT)
     if (FSP_SUCCESS == error_code)
     {
         error_code = R_SCE_SelfCheck2Private();
     }
+#endif 
 
     if (FSP_SUCCESS == error_code)
     {

@@ -260,6 +260,8 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
     else
     {
  #if defined(USB_HIGH_SPEED_MODULE)
+        USB_M1->PHYSET = (USB_DIRPD | USB_PLLRESET | USB_CLKSEL);
+
   #if USB_CFG_CLKSEL == USB_CFG_20MHZ
         USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
         USB_M1->PHYSET |= USB_CLKSEL_20;

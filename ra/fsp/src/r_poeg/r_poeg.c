@@ -316,7 +316,7 @@ fsp_err_t R_POEG_Close (poeg_ctrl_t * const p_ctrl)
 void poeg_event_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     poeg_callback_args_t args;
 
@@ -372,5 +372,5 @@ void poeg_event_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }

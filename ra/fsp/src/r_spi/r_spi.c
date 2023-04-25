@@ -1108,7 +1108,7 @@ void spi_rx_dmac_callback (spi_instance_ctrl_t const * const p_ctrl)
 void spi_rxi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
@@ -1133,7 +1133,7 @@ void spi_rxi_isr (void)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1166,7 +1166,7 @@ void spi_tx_dmac_callback (spi_instance_ctrl_t const * const p_ctrl)
 void spi_txi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
@@ -1203,7 +1203,7 @@ void spi_txi_isr (void)
 #endif
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1212,7 +1212,7 @@ void spi_txi_isr (void)
 void spi_tei_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
@@ -1244,7 +1244,7 @@ void spi_tei_isr (void)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1253,7 +1253,7 @@ void spi_tei_isr (void)
 void spi_eri_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     spi_instance_ctrl_t * p_ctrl = (spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1305,7 +1305,7 @@ void spi_eri_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /* End of file R_SPI. */

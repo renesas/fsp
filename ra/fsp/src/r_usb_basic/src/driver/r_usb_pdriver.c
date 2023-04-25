@@ -2261,7 +2261,7 @@ void usb_peri_detach (usb_utr_t * ptr, uint16_t usb_state, uint16_t data2)
          * before doing the warm start.                                                             */
         if (USB_DEFAULT == usb_state)
         {
-            for (pipe = USB_MIN_PIPE_NO; pipe < (USB_MAXPIPE_NUM + 1); pipe++)
+            for (pipe = USB_MIN_PIPE_NO; pipe < (USB_MAX_PIPE_NO + 1); pipe++)
             {
                 g_usb_peri_usbx_is_detach[pipe] = USB_NO;
                 tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);

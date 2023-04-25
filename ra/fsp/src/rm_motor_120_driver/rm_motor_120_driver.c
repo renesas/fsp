@@ -1133,9 +1133,9 @@ fsp_err_t RM_MOTOR_120_DRIVER_PhasePatternSet (motor_120_driver_ctrl_t * const  
         }
 
         /* Reset PWM counter */
-        p_u_phase_gpt_ctrl->p_reg->GTCNT = 0;
-        p_v_phase_gpt_ctrl->p_reg->GTCNT = 0;
-        p_w_phase_gpt_ctrl->p_reg->GTCNT = 0;
+        R_GPT_CounterSet(p_u_phase_gpt_ctrl, 0U);
+        R_GPT_CounterSet(p_v_phase_gpt_ctrl, 0U);
+        R_GPT_CounterSet(p_w_phase_gpt_ctrl, 0U);
 
         if (p_extended_cfg->motor_120_type == MOTOR_120_DRIVER_TYPE_HALL)
         {

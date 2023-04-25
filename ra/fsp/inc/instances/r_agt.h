@@ -38,16 +38,16 @@ FSP_HEADER
 /* Leading zeroes removed to avoid coding standards violation. */
 
 /** Maximum number of clock counts for standard AGT peripheral. */
-#define AGT_MAX_CLOCK_COUNTS_16BIT  (UINT16_MAX)
+#define AGT_MAX_CLOCK_COUNTS_16BIT    (UINT16_MAX)
 
 /** Maximum number of clock counts for AGTW peripheral. */
-#define AGT_MAX_CLOCK_COUNTS_32BIT  (UINT32_MAX)
+#define AGT_MAX_CLOCK_COUNTS_32BIT    (UINT32_MAX)
 
 /** Maximum period value allowed for standard AGT peripheral. */
-#define AGT_MAX_PERIOD_16BIT        (UINT16_MAX + 1U)
+#define AGT_MAX_PERIOD_16BIT          (UINT16_MAX + 1U)
 
 /** Maximum period valud allowed for AGTW peripheral. */
-#define AGT_MAX_PERIOD_32BIT        (UINT32_MAX)
+#define AGT_MAX_PERIOD_32BIT          (UINT32_MAX)
 
 /*******************************************************************************************************************//**
  * @addtogroup AGT
@@ -125,8 +125,8 @@ typedef struct st_agt_instance_ctrl
 {
     uint32_t            open;                     // Whether or not channel is open
     const timer_cfg_t * p_cfg;                    // Pointer to initial configurations
-    R_AGTX0_Type * p_reg;                         // Base register for this channel
-    uint32_t period;                              // Current timer period (counts)
+    R_AGTX0_Type      * p_reg;                    // Base register for this channel
+    uint32_t            period;                   // Current timer period (counts)
 
     void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
     timer_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.

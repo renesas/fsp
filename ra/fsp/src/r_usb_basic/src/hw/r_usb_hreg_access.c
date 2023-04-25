@@ -848,6 +848,8 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
     else
     {
   #if defined(USB_HIGH_SPEED_MODULE)
+        USB_M1->PHYSET = (USB_DIRPD | USB_PLLRESET | USB_CLKSEL);
+
    #if USB_CFG_CLKSEL == USB_CFG_24MHZ
         USB_M1->PHYSET &= (uint16_t) ~USB_HSEB;
    #endif                              /* USB_CFG_CLKSEL == USB_CFG_24MHZ */

@@ -74,7 +74,7 @@ int aes_xts_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key
     const unsigned char * p_internal_key = key;
 
     /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
-    uint8_t encrypted_aes_key[SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED] = {0};
+    uint8_t encrypted_aes_key[SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED] = {0};
 
     switch (keybits)
     {
@@ -99,7 +99,7 @@ int aes_xts_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key
 
         case HW_SCE_AES256XTS_KEY_BIT_SIZE:
         {
-            local_keybits = SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED;
+            local_keybits = SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 14;
             if (false == (bool) ctx->vendor_ctx)
             {

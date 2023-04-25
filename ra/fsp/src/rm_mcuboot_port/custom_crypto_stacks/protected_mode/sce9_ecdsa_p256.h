@@ -23,10 +23,13 @@
 
  #include "sce9_sha256.h"
  #include "r_sce.h"
+ #include "r_sce_private.h"
 
- #define BOOTUTIL_CRYPTO_ECDSA_P256_SIGNATURE_SIZE               (64U)
+ #define BOOTUTIL_CRYPTO_ECDSA_P256_SIGNATURE_SIZE_BYTES         (64U)
  #define MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES              (21U * 4U)
  #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO_WORD_SIZE_TEMP    (1U)
+
+ #define MCUBOOT_CHECK_32BIT_UNALIGNED(x)    (0 != (x & 0x03))
 
 /** ECC P-192/224/256 public wrapped key data structure.
  * This type is create temporarily since the definition of sce_ecc_public_wrapped_key_t in r_sce_api.h has
@@ -47,6 +50,7 @@ extern "C" {
  #endif
 
 typedef uintptr_t bootutil_ecdsa_p256_context;
+
 static inline void bootutil_ecdsa_p256_init (bootutil_ecdsa_p256_context * ctx)
 {
     (void) ctx;
@@ -55,40 +59,6 @@ static inline void bootutil_ecdsa_p256_init (bootutil_ecdsa_p256_context * ctx)
 static inline void bootutil_ecdsa_p256_drop (bootutil_ecdsa_p256_context * ctx)
 {
     (void) ctx;
-}
-
-static inline int bootutil_ecdsa_p256_verify (bootutil_ecdsa_p256_context * ctx,
-                                              const uint8_t               * pk,
-                                              const uint8_t               * hash,
-                                              const uint8_t               * sig)
-{
-    (void) ctx;
-    fsp_err_t                    fsp_err = FSP_SUCCESS;
-    sce_ecdsa_byte_data_t        local_sig;
-    sce_ecdsa_byte_data_t        local_hash;
-    sce_ecc_public_wrapped_key_t ecc_public_key_installed;
-
-    /* Set to data type used by SCE9. The other fields are not used by the driver.*/
-
-    local_sig.pdata       = (uint8_t *) sig;
-    local_sig.data_length = BOOTUTIL_CRYPTO_ECDSA_P256_SIGNATURE_SIZE;
-
-    local_hash.data_length = BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE;
-    local_hash.data_type   = 1;        // 1 indicates that the data is a hash; 0 indicates that the data is to be hashed
-    local_hash.pdata       = (uint8_t *) hash;
-
-    memcpy((uint8_t *) &ecc_public_key_installed.value, (uint8_t *) pk, MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES);
-
-    ecc_public_key_installed.type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
-
-    fsp_err = R_SCE_ECDSA_secp256r1_SignatureVerify(&local_sig, &local_hash, &ecc_public_key_installed);
-
-    if (fsp_err != FSP_SUCCESS)
-    {
-        return -1;
-    }
-
-    return 0;
 }
 
  #ifdef __cplusplus

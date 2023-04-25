@@ -799,8 +799,9 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
         edge              |= (p_extend->trigger_edge & R_AGTX0_AGT16_CTRL_AGTMR1_TEDGPL_Msk);
         agtioc            |= (p_extend->enable_pin & R_AGTX0_AGT16_CTRL_AGTIOC_TIOGT_Msk);
         p_reg_ctrl->AGTISR = (p_extend->enable_pin & R_AGTX0_AGT16_CTRL_AGTISR_EEPS_Msk);
-        if (BSP_FEATURE_AGT_USE_AGTIOSEL_ALT)
+        if (AGT_PRV_IS_AGTW(p_instance_ctrl) && BSP_FEATURE_AGT_USE_AGTIOSEL_ALT)
         {
+            /* The ALT register is only used for devices with an AGTW whose AGTIOSEL is at offset 0x0F. */
             p_reg_ctrl->AGTIOSEL_ALT = (uint8_t) (p_extend->count_source & (uint8_t) ~AGT_CLOCK_AGTIO);
         }
         else

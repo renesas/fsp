@@ -856,13 +856,12 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
   #if defined(USB_CFG_DFU_USE)
             else if (parameter == (void *) UX_DEVICE_FORCE_DISCONNECT)
             {
-                /* D+ Pullup Off */
-                hw_usb_pclear_dprpu(tran_data.ip);
-
+   #if defined(USB_HIGH_SPEED_MODULE)
                 if (_ux_system_slave->ux_system_slave_speed == (uint32_t) UX_HIGH_SPEED_DEVICE)
                 {
                     hw_usb_clear_hse(&tran_data);
                 }
+   #endif                              /* defined (USB_HIGH_SPEED_MODULE) */
 
                 for (pipe = USB_MIN_PIPE_NO; pipe < (USB_MAXPIPE_NUM + 1); pipe++)
                 {

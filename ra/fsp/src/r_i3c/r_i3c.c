@@ -1654,6 +1654,9 @@ static inline i3c_ctrl_t * i3c_isr_context_get (void)
  **********************************************************************************************************************/
 void i3c_resp_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     i3c_instance_ctrl_t * p_ctrl = i3c_isr_context_get();
 
     /* Get the response status from the Response Status Queue. */
@@ -1831,6 +1834,9 @@ void i3c_resp_isr (void)
 
     /* Notify the application of the event. */
     p_ctrl->p_cfg->p_callback(&callback_args);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1839,6 +1845,9 @@ void i3c_resp_isr (void)
  **********************************************************************************************************************/
 void i3c_rx_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     i3c_instance_ctrl_t * p_ctrl = i3c_isr_context_get();
 
     /*
@@ -1872,6 +1881,9 @@ void i3c_rx_isr (void)
         }
     }
 #endif
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1880,10 +1892,16 @@ void i3c_rx_isr (void)
  **********************************************************************************************************************/
 void i3c_tx_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     i3c_instance_ctrl_t * p_ctrl = i3c_isr_context_get();
 
     /* Write data to the FIFO. */
     i3c_fifo_write(p_ctrl);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1892,6 +1910,9 @@ void i3c_tx_isr (void)
  **********************************************************************************************************************/
 void i3c_rcv_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
 #if I3C_CFG_SLAVE_SUPPORT
     i3c_instance_ctrl_t * p_ctrl = i3c_isr_context_get();
 
@@ -2067,6 +2088,9 @@ void i3c_rcv_isr (void)
     /* Notify the application of the event. */
     p_ctrl->p_cfg->p_callback(&callback_args);
 #endif
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -2074,6 +2098,9 @@ void i3c_rcv_isr (void)
  **********************************************************************************************************************/
 void i3c_ibi_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     i3c_instance_ctrl_t * p_ctrl = i3c_isr_context_get();
 #if I3C_CFG_SLAVE_SUPPORT
     if (I3C_INTERNAL_STATE_SLAVE_IBI == p_ctrl->internal_state)
@@ -2181,6 +2208,9 @@ void i3c_ibi_isr (void)
         }
 #endif
     }
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -2193,6 +2223,9 @@ void i3c_ibi_isr (void)
  **********************************************************************************************************************/
 void i3c_eei_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     i3c_instance_ctrl_t * p_ctrl = i3c_isr_context_get();
 
     i3c_callback_args_t callback_args;
@@ -2241,6 +2274,9 @@ void i3c_eei_isr (void)
     /* Clear the status flags that have been handled. */
     p_ctrl->p_reg->INST &= ~inst_clear_mask;
     p_ctrl->p_reg->BST  &= ~bst_clear_mask;
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 #if I3C_CFG_MASTER_SUPPORT

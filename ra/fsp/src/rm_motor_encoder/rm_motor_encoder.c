@@ -757,6 +757,8 @@ fsp_err_t RM_MOTOR_ENCODER_FunctionSelect (motor_ctrl_t * const p_ctrl, motor_fu
         {
             if (MOTOR_FUNCTION_SELECT_NONE == function)
             {
+                RM_MOTOR_ENCODER_InertiaEstimateStop(p_instance_ctrl);
+
                 p_instance_ctrl->e_function = function;
 
                 /* Stop */
@@ -774,6 +776,8 @@ fsp_err_t RM_MOTOR_ENCODER_FunctionSelect (motor_ctrl_t * const p_ctrl, motor_fu
         {
             if (MOTOR_FUNCTION_SELECT_NONE == function)
             {
+                RM_MOTOR_ENCODER_ReturnOriginStop(p_instance_ctrl);
+
                 p_instance_ctrl->e_function = function;
 
                 /* Stop */
@@ -1104,6 +1108,12 @@ static motor_encoder_action_return_t rm_motor_encoder_error (motor_encoder_insta
 {
     p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
     p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+
+    /* If motor function is working, cancel it. */
+    if (p_ctrl->e_function != MOTOR_FUNCTION_SELECT_NONE)
+    {
+        RM_MOTOR_ENCODER_FunctionSelect(p_ctrl, MOTOR_FUNCTION_SELECT_NONE);
+    }
 
     return MOTOR_ENCODER_ACTION_RETURN_OK;
 }                                      /* End of function mtr_act_error */

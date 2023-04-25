@@ -12,11 +12,9 @@
 #include "tfm_attest_hal.h"
 #include "psa/crypto.h"
 #include "tfm_spm_log.h"
-#include "tfm_memory_utils.h"
 #include "tfm_common_config.h"
 #include "flash_otp_nv_counters_backend.h"
 #include "Driver_Flash.h"
-#include "flash_layout.h"
 
 #include <string.h>
 
@@ -76,11 +74,6 @@ const struct flash_otp_nv_counters_region_t otp_rea_dummy_provision =
         0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC,
         0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD,
     },
-    .hw_version               =
-    {'0', '6', '0', '4', '5',
-     '6', '5', '2',
-     '7', '2', '8', '2',
-     '9', '1', '0', '0'},
     .verification_service_url = "www.trustedfirmware.org",
     .profile_definition       = "PSA_IOT_PROFILE_1",
 
@@ -126,7 +119,6 @@ const struct flash_otp_nv_counters_region_t otp_rea_dummy_provision =
  #ifdef PLATFORM_DEFAULT_NV_COUNTERS
     .flash_nv_counters        = {0x0,                       0x0,0x0},
  #endif
-    .is_valid                 = OTP_NV_COUNTERS_IS_VALID
 };
 #else
 static struct flash_otp_nv_counters_region_t otp_rea_dummy_provision;
@@ -146,7 +138,7 @@ void tfm_plat_provisioning_check_for_dummy_keys (void)
         SPMLOG_ERRMSG("\033[0m\r\n");
     }
 
-    tfm_memset(&iak_start, 0, sizeof(iak_start));
+    memset(&iak_start, 0, sizeof(iak_start));
 }
 
 int tfm_plat_provisioning_is_required (void)

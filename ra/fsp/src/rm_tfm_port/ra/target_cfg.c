@@ -28,8 +28,8 @@
 /* The section names come from the scatter file */
 REGION_DECLARE(Load$$LR$$, LR_NS_PARTITION, $$Base);
 REGION_DECLARE(Load$$LR$$, LR_NS_IMAGE, $$Base);
-REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Base);
-REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Limit);
+REGION_DECLARE(Image$$, ER_VENEER, $$Base);
+REGION_DECLARE(Image$$, VENEER_ALIGN, $$Limit);
 REGION_DECLARE(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base);
 
 const struct memory_region_limits memory_regions = {
@@ -44,10 +44,10 @@ const struct memory_region_limits memory_regions = {
   RM_TFM_PORT_NONSECURE_IMAGE_SIZE - 1,
 
   .veneer_base =
-  (uint32_t) &REGION_NAME(Load$$LR$$, LR_VENEER, $$Base),
+  (uint32_t) &REGION_NAME(Image$$, ER_VENEER, $$Base),
 
   .veneer_limit =
-  (uint32_t) &REGION_NAME(Load$$LR$$, LR_VENEER, $$Limit),
+  (uint32_t) &REGION_NAME(Image$$, VENEER_ALIGN, $$Limit),
 };
 
 /* To write into AIRCR register, 0x5FA value must be write to the VECTKEY field,

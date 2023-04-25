@@ -276,7 +276,9 @@ WIFIReturnCode_t WIFI_Ping (uint8_t * pucIPAddr, uint16_t usCount, uint32_t ulIn
 WIFIReturnCode_t WIFI_GetIPInfo (WIFIIPConfiguration_t * pxIPInfo) {
     int32_t ret = -1;
 
-    ret = (int32_t) rm_wifi_onchip_da16200_ipaddr_get(pxIPInfo->xIPAddress.ulAddress);
+    ret = (int32_t) rm_wifi_onchip_da16200_network_info_get(pxIPInfo->xIPAddress.ulAddress,
+                                                            pxIPInfo->xNetMask.ulAddress,
+                                                            pxIPInfo->xGateway.ulAddress);
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, eWiFiFailure);
 
     return eWiFiSuccess;

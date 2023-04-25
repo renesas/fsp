@@ -755,6 +755,8 @@ fsp_err_t RM_MOTOR_INDUCTION_FunctionSelect (motor_ctrl_t * const p_ctrl, motor_
         {
             if (MOTOR_FUNCTION_SELECT_NONE == function)
             {
+                RM_MOTOR_INDUCTION_InertiaEstimateStop(p_instance_ctrl);
+
                 p_instance_ctrl->e_function = function;
 
                 /* Stop */
@@ -772,6 +774,8 @@ fsp_err_t RM_MOTOR_INDUCTION_FunctionSelect (motor_ctrl_t * const p_ctrl, motor_
         {
             if (MOTOR_FUNCTION_SELECT_NONE == function)
             {
+                RM_MOTOR_INDUCTION_ReturnOriginStop(p_instance_ctrl);
+
                 p_instance_ctrl->e_function = function;
 
                 /* Stop */
@@ -1115,6 +1119,12 @@ static motor_induction_action_return_t rm_motor_induction_error (motor_induction
 {
     p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
     p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+
+    /* If motor function is working, cancel it. */
+    if (p_ctrl->e_function != MOTOR_FUNCTION_SELECT_NONE)
+    {
+        RM_MOTOR_INDUCTION_FunctionSelect(p_ctrl, MOTOR_FUNCTION_SELECT_NONE);
+    }
 
     return MOTOR_INDUCTION_ACTION_RETURN_OK;
 }                                      /* End of function rm_motor_induction_error() */

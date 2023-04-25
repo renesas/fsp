@@ -780,4 +780,25 @@ void firm_mac_read(uint32_t *InData_Program);
 
 uint32_t change_endian_long(uint32_t data);
 
+fsp_err_t HW_SCE_Aes128CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[]);
+fsp_err_t HW_SCE_Aes192CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[]);
+fsp_err_t HW_SCE_Aes256CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[]);
+void HW_SCE_Aes128CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT);
+void HW_SCE_Aes192CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT);
+void HW_SCE_Aes256CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_Aes128CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[]);
+fsp_err_t HW_SCE_Aes192CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[]);
+fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[]);
 #endif /* HW_SCE_RA_PRIVATE_HEADER_FILE */

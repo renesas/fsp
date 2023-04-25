@@ -44,6 +44,8 @@
 
 #define MOTOR_SENSE_ENCODER_TWOPI                   (3.14159265358979F * 2.0F)
 
+#define MOTOR_SENSE_ENCODER_16BIT                   (0x10000U)
+
 /* position and speed calculation mode */
 #define MOTOR_SENSE_ENCODER_ENCD_INTERRUPT          (0)
 #define MOTOR_SENSE_ENCODER_CTRL_INTERRUPT          (1)
@@ -862,8 +864,8 @@ void rm_motor_sense_encoder_interrupt (timer_callback_args_t * p_args)
     int32_t                               s4_encd_delta_tcnt    = 0;
     float                                 f4_temp_speed_rad_avg = 0.0F;
     unsigned short                        u2_temp               = 0U;
-    uint32_t                              u4_temp               = 0.0F;
-    int32_t                               s4_temp               = 0.0F;
+    uint32_t                              u4_temp               = 0U;
+    int32_t                               s4_temp               = 0;
     float                                 f4_temp0              = 0.0F;
     motor_angle_instance_t              * p_angle               = (motor_angle_instance_t *) p_args->p_context;
     motor_sense_encoder_instance_ctrl_t * st_encoder            =
@@ -891,7 +893,15 @@ void rm_motor_sense_encoder_interrupt (timer_callback_args_t * p_args)
             st_encoder->st_encoder_highspeed.u1_encoder_interrupt_on_flag = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
         }
 
-        s4_encd_delta_tcnt = (int32_t) (u4_temp - st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
+        if (temp_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
+        {
+            s4_encd_delta_tcnt = (int32_t) (u4_temp - st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
+        }
+        else
+        {
+            s4_encd_delta_tcnt =
+                (int16_t) ((uint16_t) u4_temp - (uint16_t) st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
+        }
 
         /* Correction at counter boundary (max=>0 or 0=>max) */
         if (s4_encd_delta_tcnt <= -(st_encoder->st_encoder_parameter.s2_encoder_cpr))
@@ -939,9 +949,22 @@ void rm_motor_sense_encoder_interrupt (timer_callback_args_t * p_args)
         /* Pulse width calculation */
         /* Calculate integrated pulse width */
         p_timer->p_api->statusGet(p_timer->p_ctrl, &temp_status);
+        p_timer->p_api->infoGet(p_timer->p_ctrl, &temp_info);
         st_encoder->st_encoder_parameter.u4_encoder_timer_capture = temp_status.counter;
-        s4_temp = (int32_t) (st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
-                             st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
+        if (temp_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
+        {
+            s4_temp =
+                (int32_t) (st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
+                           st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
+        }
+        else
+        {
+            u2_temp =
+                ((uint16_t) st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
+                 (uint16_t) st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
+            s4_temp = (int32_t) u2_temp;
+        }
+
         st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff += s4_temp;
         st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture =
             st_encoder->st_encoder_parameter.u4_encoder_timer_capture;

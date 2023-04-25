@@ -305,11 +305,13 @@ void SystemInit (void)
  #elif defined(__GNUC__)
     memcpy(&__data_start__, &__etext, ((uint32_t) &__data_end__ - (uint32_t) &__data_start__));
   #if BSP_FEATURE_BSP_HAS_DTCM == 1
-    memcpy(&__dtcm_data_start__, &__dtcm_data_init_start,
+    memcpy(&__dtcm_data_start__,
+           &__dtcm_data_init_start,
            ((uint32_t) &__dtcm_data_end__ - (uint32_t) &__dtcm_data_start__));
   #endif
  #elif defined(__ICCARM__)
-    memcpy((uint32_t *) __section_begin(".data"), (uint32_t *) __section_begin(".data_init"),
+    memcpy((uint32_t *) __section_begin(".data"),
+           (uint32_t *) __section_begin(".data_init"),
            (uint32_t) __section_size(".data"));
 
     /* Copy functions to be executed from RAM. */
@@ -322,7 +324,8 @@ void SystemInit (void)
     /* Copy main thread TLS to RAM. */
   #pragma section="__DLIB_PERTHREAD_init"
   #pragma section="__DLIB_PERTHREAD"
-    memcpy((uint32_t *) __section_begin("__DLIB_PERTHREAD"), (uint32_t *) __section_begin("__DLIB_PERTHREAD_init"),
+    memcpy((uint32_t *) __section_begin("__DLIB_PERTHREAD"),
+           (uint32_t *) __section_begin("__DLIB_PERTHREAD_init"),
            (uint32_t) __section_size("__DLIB_PERTHREAD_init"));
   #if BSP_FEATURE_BSP_HAS_DTCM == 1
     memcpy((uint32_t *) __section_begin(".dtcm_data"),
@@ -340,14 +343,12 @@ void SystemInit (void)
             (void (*)(void))((uint32_t) &Image$$INIT_ARRAY$$Base + (uint32_t) Image$$INIT_ARRAY$$Base[i]);
         p_init_func();
     }
-
  #elif defined(__GNUC__)
     int32_t count = __init_array_end - __init_array_start;
     for (int32_t i = 0; i < count; i++)
     {
         __init_array_start[i]();
     }
-
  #elif defined(__ICCARM__)
     void const * pibase = __section_begin("SHT$$PREINIT_ARRAY");
     void const * ilimit = __section_end("SHT$$INIT_ARRAY");
@@ -358,7 +359,7 @@ void SystemInit (void)
     /* Initialize SystemCoreClock variable. */
     SystemCoreClockUpdate();
 
-#if BSP_FEATURE_HAS_RTC || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+#if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
 
     /* For TZ project, it should be called by the secure application, whether RTC module is to be configured as secure or not. */
  #if !BSP_TZ_NONSECURE_BUILD

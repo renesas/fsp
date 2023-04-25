@@ -40,7 +40,6 @@
 // read  access   :                                                 //
 //////////////////////////////////////////////////////////////////////
 
-#include "SC324_private.h"
 #include "sc324_aes_private.h"
 #include "hw_sce_aes_private.h"
 

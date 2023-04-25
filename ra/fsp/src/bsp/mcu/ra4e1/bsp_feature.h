@@ -363,7 +363,8 @@
 
 #define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS                (0x60000000U)
 
-#define BSP_FEATURE_HAS_RTC                                  (1U)
+#define BSP_FEATURE_RTC_IS_AVAILABLE                         (1U)
+#define BSP_FEATURE_RTC_IS_IRTC                              (0U)
 #define BSP_FEATURE_RTC_HAS_ROPSEL                           (0U)
 #define BSP_FEATURE_RTC_HAS_TCEN                             (1U)
 #define BSP_FEATURE_RTC_RTCCR_CHANNELS                       (1U)

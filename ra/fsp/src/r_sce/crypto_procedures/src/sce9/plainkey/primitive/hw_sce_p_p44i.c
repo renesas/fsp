@@ -48,6 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
+
 fsp_err_t HW_SCE_Aes256CmacInitSub(uint32_t *InData_KeyIndex)
 {
     uint32_t iLoop    = 0U;

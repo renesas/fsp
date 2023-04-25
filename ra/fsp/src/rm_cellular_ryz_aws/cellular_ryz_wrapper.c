@@ -254,16 +254,6 @@ CellularError_t Cellular_GetEidrxSettings (CellularHandle_t              cellula
 }
 
 /*******************************************************************************************************************//**
- * Cellular_SetPdnConfig wrapper, implemented by Cellular Common
- **********************************************************************************************************************/
-CellularError_t Cellular_SetPdnConfig (CellularHandle_t            cellularHandle,
-                                       uint8_t                     contextId,
-                                       const CellularPdnConfig_t * pPdnConfig)
-{
-    return Cellular_CommonSetPdnConfig(cellularHandle, contextId, pPdnConfig);
-}
-
-/*******************************************************************************************************************//**
  * Cellular_SetRatPriority wrapper, currently not supported since RYZ014A only supports CAT-M1
  **********************************************************************************************************************/
 CellularError_t Cellular_SetRatPriority (CellularHandle_t      cellularHandle,

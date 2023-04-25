@@ -365,6 +365,7 @@ extern void * rm_guix_port_jpeg_instance_get(ULONG display_handle);
  * GUIX display driver function prototypes (called by GUIX)
  **********************************************************************************************************************/
 VOID _gx_ra_buffer_toggle(GX_CANVAS * canvas, GX_RECTANGLE * dirty);
+VOID _gx_ra_rotated_buffer_toggle(GX_CANVAS * canvas, GX_RECTANGLE * dirty);
 
 #if (GX_USE_RENESAS_JPEG == 1)
 VOID _gx_renesas_jpeg_draw(GX_DRAW_CONTEXT * p_context, INT x, INT y, GX_PIXELMAP * p_pixelmap);
@@ -2709,6 +2710,16 @@ VOID _gx_ra_buffer_toggle (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
             }
         }
     }
+}
+
+/*******************************************************************************************************************//**
+ * @brief  CW/CCW rotation shim for _gx_ra_buffer_toggle
+ * @param[in]    canvas        Pointer to a GUIX canvas
+ * @param[in]   dirty          Pointer to a dirty rectangle area
+ **********************************************************************************************************************/
+VOID _gx_ra_rotated_buffer_toggle (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
+{
+    _gx_ra_buffer_toggle(canvas, dirty);
 }
 
 #endif

@@ -710,7 +710,7 @@ fsp_err_t RM_MOTOR_SPEED_SpeedControl (motor_speed_ctrl_t * const p_ctrl)
         {
             /* f4_temp0 : The absolute value of speed command [rad/s] */
             f4_temp0 = fabsf(p_instance_ctrl->f_speed_lpf_rad);
-            if (f4_temp0 < (p_extended_cfg->f_id_up_speed_rad) * MOTOR_SPEED_TWOPI_60)
+            if (f4_temp0 < (p_extended_cfg->ol_param.f4_id_up_speed_rad) * MOTOR_SPEED_TWOPI_60)
             {
                 p_instance_ctrl->u1_flag_down_to_ol   = MOTOR_SPEED_FLAG_SET;
                 p_instance_ctrl->f_ref_speed_rad_ctrl = p_instance_ctrl->f_speed_lpf_rad;

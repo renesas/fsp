@@ -281,7 +281,18 @@ FSP_HEADER
 #define BSP_CLOCKS_PLL_DIV_16            (15)
 
 /* PLL multiplier options. */
-#if (3U != BSP_FEATURE_CGC_PLLCCR_TYPE)
+#if (4U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+
+/* Offset from decimal multiplier to register value for PLLCCR type 4. */
+ #define BSP_PRV_CLOCKS_PLL_MUL_INT_OFFSET    (574)
+
+/**
+ * X=Integer portion of the multiplier.
+ * Y=Fractional portion of the multiplier. (not used for this PLLCCR type)
+ */
+ #define BSP_CLOCKS_PLL_MUL(X, Y)    ((X) -BSP_PRV_CLOCKS_PLL_MUL_INT_OFFSET)
+
+#elif (3U != BSP_FEATURE_CGC_PLLCCR_TYPE)
 
 /**
  * X=Integer portion of the multiplier.
@@ -369,7 +380,7 @@ FSP_HEADER
  #define BSP_PRV_FLL_STABILIZATION_TIME_US     (0)
 #endif
 
-#if BSP_FEATURE_HAS_RTC || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+#if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
  #define BSP_PRV_RTC_RESET_DELAY_US            (200)
 #endif
 
@@ -1100,7 +1111,7 @@ void bsp_prv_prepare_pll(uint32_t pll_freq_hz);
 void bsp_prv_clock_set(uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2);
 
 /* RTC Initialization */
-#if BSP_FEATURE_HAS_RTC || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+#if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
 void R_BSP_Init_RTC(void);
 
 #endif

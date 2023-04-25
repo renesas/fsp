@@ -848,15 +848,14 @@ static void sci_b_i2c_run_hw_master (sci_b_i2c_instance_ctrl_t * const p_ctrl)
 void sci_b_i2c_rxi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
-
+    FSP_CONTEXT_SAVE
     /* This interrupt is invoked once DTC supported Read transfer is completed. Nothing to be done here. */
 
     /* Clear pending IRQ */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 #endif
@@ -868,8 +867,7 @@ void sci_b_i2c_rxi_isr (void)
 void sci_b_i2c_txi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
-
+    FSP_CONTEXT_SAVE
     /* Clear pending IRQ */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
@@ -880,7 +878,7 @@ void sci_b_i2c_txi_isr (void)
     sci_b_i2c_txi_handler(p_ctrl);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /******************************************************************************************************************//**
@@ -890,7 +888,7 @@ void sci_b_i2c_txi_isr (void)
 void sci_b_i2c_tei_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     sci_b_i2c_instance_ctrl_t * p_ctrl = (sci_b_i2c_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -902,7 +900,7 @@ void sci_b_i2c_tei_isr (void)
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /******************************************************************************************************************//**

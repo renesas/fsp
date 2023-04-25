@@ -112,6 +112,7 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_Open (rm_freertos_plus_fat_ctrl_t * const      p_
 #endif
 
 #if 2 == BSP_CFG_RTOS
+
     /* The semaphore will be used to protect critical sections in
      * the +FAT disk, and also to avoid concurrent calls to Read()/Write()
      * from different tasks. */
@@ -370,6 +371,7 @@ int32_t rm_freertos_plus_fat_read (uint8_t * p_data, uint32_t sector, uint32_t n
     rm_freertos_plus_fat_instance_ctrl_t * p_instance_ctrl = (rm_freertos_plus_fat_instance_ctrl_t *) p_disk->pvTag;
 
 #if 2 == BSP_CFG_RTOS
+
     /* Store the handle of the calling task. */
     p_instance_ctrl->current_task = xTaskGetCurrentTaskHandle();
 #else
@@ -415,6 +417,7 @@ int32_t rm_freertos_plus_fat_write (uint8_t * p_data, uint32_t sector, uint32_t 
     rm_freertos_plus_fat_instance_ctrl_t * p_instance_ctrl = (rm_freertos_plus_fat_instance_ctrl_t *) p_disk->pvTag;
 
 #if 2 == BSP_CFG_RTOS
+
     /* Store the handle of the calling task. */
     p_instance_ctrl->current_task = xTaskGetCurrentTaskHandle();
 #else
@@ -471,6 +474,7 @@ void rm_freertos_plus_fat_memory_callback (rm_block_media_callback_args_t * p_ar
         p_instance_ctrl->last_event |= p_args->event;
 
 #if 2 == BSP_CFG_RTOS
+
         /* Notify the task that the transmission is complete. */
         if (NULL != p_instance_ctrl->current_task)
         {
@@ -486,6 +490,7 @@ void rm_freertos_plus_fat_memory_callback (rm_block_media_callback_args_t * p_ar
              * use and may be called portEND_SWITCHING_ISR(). */
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
         }
+
 #else
         p_instance_ctrl->event_ready = true;
 #endif
@@ -506,6 +511,7 @@ static fsp_err_t rm_freertos_plus_fat_wait_event (rm_freertos_plus_fat_instance_
                                                   uint32_t                               timeout)
 {
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS
+
     /* Wait to be notified that the transmission is complete.  Note the first
      * parameter is pdTRUE, which has the effect of clearing the task's notification
      * value back to 0, making the notification value act like a binary (rather than

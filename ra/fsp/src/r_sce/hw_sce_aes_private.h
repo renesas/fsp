@@ -53,6 +53,15 @@ typedef struct st_sce_data
     uint32_t * p_data;
 } r_sce_data_t;
 
+
+typedef fsp_err_t (* hw_sce_cmac_init_t) (const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[]);
+typedef void      (* hw_sce_cmac_update_t)(const uint32_t InData_Text[], const uint32_t MAX_CNT);
+typedef fsp_err_t (* hw_sce_cmac_final_t)(const uint32_t InData_Cmd[],
+                                          const uint32_t InData_Text[],
+                                          const uint32_t InData_DataT[],
+                                          const uint32_t InData_DataTLen[],
+                                          uint32_t       OutData_DataT[]);
+
 typedef fsp_err_t (* hw_sce_aes_gcm_crypt_init_t)(uint32_t * InData_KeyType, uint32_t * InData_KeyIndex,
                                                   uint32_t * InData_IV);
 typedef void      (* hw_sce_aes_gcm_update_aad_t)(uint32_t * InData_DataA, uint32_t MAX_CNT);

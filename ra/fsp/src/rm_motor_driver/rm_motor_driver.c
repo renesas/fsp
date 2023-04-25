@@ -235,12 +235,14 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
     /* For 1shunt, Vdc is need to read by ADC module #1. */
     if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt)
     {
+#if (BSP_FEATURE_ADC_UNIT_1_CHANNELS != 0)
         if (p_cfg->p_adc2_instance != NULL)
         {
             p_cfg->p_adc2_instance->p_api->open(p_cfg->p_adc2_instance->p_ctrl, p_cfg->p_adc2_instance->p_cfg);
             p_cfg->p_adc2_instance->p_api->scanCfg(p_cfg->p_adc2_instance->p_ctrl,
                                                    p_cfg->p_adc2_instance->p_channel_cfg);
         }
+#endif
     }
 
     if (p_cfg->p_adc_instance != NULL)
@@ -714,27 +716,37 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
     motor_driver_extended_cfg_t * p_extend_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
 
 #if (MOTOR_DRIVER_CFG_ADC_B_SUPPORTED == 0)
+    adc_status_t temp_adc_status;
+
+    /* Get double buffer data */
+    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_A, &u2_Iac_raw0);
+    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_B, &u2_Iac_raw1);
 
     /* Not using ADC_B module */
     /* Read A/D converted data */
     if (p_cfg->p_adc2_instance != NULL)
     {
+ #if (BSP_FEATURE_ADC_UNIT_1_CHANNELS == 0)
+        p_cfg->p_adc_instance->p_api->close(p_cfg->p_adc_instance->p_ctrl);
+        p_cfg->p_adc2_instance->p_api->open(p_cfg->p_adc2_instance->p_ctrl, p_cfg->p_adc2_instance->p_cfg);
+        p_cfg->p_adc2_instance->p_api->scanCfg(p_cfg->p_adc2_instance->p_ctrl, p_cfg->p_adc2_instance->p_channel_cfg);
+ #endif
         p_cfg->p_adc2_instance->p_api->scanStart(p_cfg->p_adc2_instance->p_ctrl);
-
-        while ((R_ADC1->ADCSR_b.ADST) == 1)
+        p_cfg->p_adc2_instance->p_api->scanStatusGet(p_cfg->p_adc2_instance->p_ctrl, &temp_adc_status);
+        while (ADC_STATE_SCAN_IN_PROGRESS == temp_adc_status.state)
         {
             /* wait A/D conversion finish */
+            p_cfg->p_adc2_instance->p_api->scanStatusGet(p_cfg->p_adc2_instance->p_ctrl, &temp_adc_status);
         }
 
         p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[0]);
-
-        /* Get induction sensor output */
-        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[1]);
-        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[2]);
-
-        /* Get double buffer data */
-        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_A, &u2_Iac_raw0);
-        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_B, &u2_Iac_raw1);
+ #if (BSP_FEATURE_ADC_UNIT_1_CHANNELS == 0)
+        p_cfg->p_adc2_instance->p_api->close(p_cfg->p_adc2_instance->p_ctrl);
+        p_cfg->p_adc_instance->p_api->open(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_cfg);
+        p_cfg->p_adc_instance->p_api->scanCfg(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_channel_cfg);
+        p_cfg->p_adc_instance->p_api->calibrate(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_cfg->p_extend);
+        p_cfg->p_adc_instance->p_api->scanStart(p_cfg->p_adc_instance->p_ctrl);
+ #endif
     }
 
 #else

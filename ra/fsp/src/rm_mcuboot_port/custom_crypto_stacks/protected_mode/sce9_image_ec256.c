@@ -39,6 +39,7 @@
   #include "mbedtls/asn1.h"
   #include "bootutil/crypto/ecdsa_p256.h"
   #include "bootutil_priv.h"
+  #include "sce9_ecdsa_p256.h"
 
 /*
  * Declaring these like this adds NULL termination.
@@ -46,6 +47,47 @@
 static const uint8_t ec_pubkey_oid[] = MBEDTLS_OID_EC_ALG_UNRESTRICTED;
 static const uint8_t ec_secp256r1_oid[] = MBEDTLS_OID_EC_GRP_SECP256R1;
 
+/** Aligned buffers to be used if the input data is unaligned since the SCE procedures require 32 bit aligned buffers. */
+static uint32_t aligned_sig[BOOTUTIL_CRYPTO_ECDSA_P256_SIGNATURE_SIZE_BYTES/4] = {0};
+static uint32_t aligned_hash[BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE_BYTES/4] = {0};
+static uint32_t aligned_pk[MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES/4] = {0};
+
+static int bootutil_ecdsa_p256_verify (bootutil_ecdsa_p256_context * ctx,
+                                              const uint8_t               * pk,
+                                              const uint8_t               * hash,
+                                              const uint8_t               * sig)
+{
+    (void) ctx;
+    fsp_err_t fsp_err = FSP_SUCCESS;
+    uint8_t * p_pk = (uint8_t *) pk; 
+    uint8_t * p_hash = (uint8_t *) hash;
+    uint8_t * p_sig = (uint8_t *) sig;
+
+    if (MCUBOOT_CHECK_32BIT_UNALIGNED((uint32_t) pk))
+    {
+        memcpy(aligned_pk, pk, MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES);
+        p_pk = (uint8_t *) aligned_pk;
+    }
+    if (MCUBOOT_CHECK_32BIT_UNALIGNED((uint32_t) hash))
+    {
+        memcpy(aligned_hash, hash, BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE_BYTES);
+        p_hash = (uint8_t *) aligned_hash;
+    }
+    if (MCUBOOT_CHECK_32BIT_UNALIGNED((uint32_t) sig))
+    {
+        memcpy(aligned_sig, sig, BOOTUTIL_CRYPTO_ECDSA_P256_SIGNATURE_SIZE_BYTES);
+        p_sig = (uint8_t *) aligned_sig;
+    }
+
+    fsp_err = R_SCE_EcdsaNistP256SignatureVerificationSub((uint32_t *) p_pk, (uint32_t *) p_hash, (uint32_t *) p_sig);
+
+    if (fsp_err != FSP_SUCCESS)
+    {
+        return -1;
+    }
+
+    return 0;
+}
 /*
  * Parse the public key used for signing.
  */
@@ -175,11 +217,13 @@ bootutil_verify_sig(uint8_t *hash, uint32_t hlen, uint8_t *sig, size_t slen,
     }
 
     /* The key_id passed to this function is for a key from bootutil_keys[] and its hash has already been validated.
-     Since the imgtool.py does not handle the hash for the wrapped public key, we compare the public key portion of the 
-     wrappedkey from bootutil_keys_wrapped[] with the key from bootutil_keys[] and if both are the same, then we use the 
-     key from bootutil_keys_wrapped[] to perform the verification using the protected mode procedures. */
-    memcpy((uint8_t *) &public_key_installed.value, (uint8_t *) bootutil_keys_wrapped[key_id].key, MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES);
-    if (memcmp (&public_key_installed.value.key_q, pubkey, 2 * NUM_ECC_BYTES))
+     * Since the imgtool.py does not handle the hash for the wrapped public key, we compare the public key portion of the
+     * wrappedkey from bootutil_keys_wrapped[] with the key from bootutil_keys[] and if both are the same, then we use the
+     * key from bootutil_keys_wrapped[] to perform the verification using the protected mode procedures. */
+    memcpy((uint8_t *) &public_key_installed.value,
+           (uint8_t *) bootutil_keys_wrapped[key_id].key,
+           MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES);
+    if (memcmp(&public_key_installed.value.key_q, pubkey, 2 * NUM_ECC_BYTES))
     {
         return -1;
     }

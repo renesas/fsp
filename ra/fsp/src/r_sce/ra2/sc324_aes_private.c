@@ -21,25 +21,25 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include "SC324_private.h"
+
 #include "sc324_aes_private.h"
 #include "hw_sce_private.h"
 #include "hw_sce_aes_private.h"
 
 __STATIC_INLINE void hw_sc324_aes_kernel_module_enable ()
 {
-    SCE1_AES->AESMOD_b.module_en = 1;
+    R_AES->AESMOD_b.MODEN = 1;
 }
 
 __STATIC_INLINE void hw_sc324_aes_kernel_module_disable ()
 {
-    SCE1_AES->AESMOD_b.module_en = 0;
+    R_AES->AESMOD_b.MODEN = 0;
 }
 
 __STATIC_INLINE void hw_sc324_aes_kernel_wait_com_write_ready ()
 {
     // wait for com_write_ready
-    while (SCE1_AES->AESCMD_b.com_write_ready == 0)
+    while (R_AES->AESCMD_b.CWRDY == 0)
     {
         ;
     }
@@ -51,14 +51,14 @@ __STATIC_INLINE void hw_sc324_aes_kernel_inverse_cipher_set (hw_sc324_aes_encryp
     hw_sc324_aes_kernel_wait_com_write_ready();
 
     // set the inverse_cipher mode to encrypt
-    SCE1_AES->AESCMD_b.inverse_cipher = flag;
+    R_AES->AESCMD_b.INVCIP = flag;
 }
 
 __STATIC_INLINE void hw_sc324_aes_kernel_chaining_mode_set (hw_sc324_aes_modes_t aes_chaining_mode)
 {
     // wait for com_write_ready
     hw_sc324_aes_kernel_wait_com_write_ready();
-    SCE1_AES->AESCMD_b.chaining = aes_chaining_mode;
+    R_AES->AESCMD_b.CHAIN = aes_chaining_mode;
 }
 
 static void hw_sc324_aes_endian_convert (uint32_t * p_dest, const uint32_t * p_source, uint32_t num_words)
@@ -78,19 +78,19 @@ static void hw_sc324_aes_kernel_key_set (const uint32_t * p_key, hw_sc324_aes_ke
     hw_sc324_aes_kernel_wait_com_write_ready();
 
     // set the key_length
-    SCE1_AES->AESCMD_b.key_length = key_length;
+    R_AES->AESCMD_b.KEYLN = key_length;
 
     // wait for key_write_ready0
-    while (SCE1_AES->AESCMD_b.key_write_ready0 == 0)
+    while (R_AES->AESCMD_b.KWRDY0 == 0)
     {
         ;
     }
 
     hw_sc324_aes_endian_convert(temp, (uint32_t *) p_key, 4);
-    SCE1_AES->AESKW0 = temp[0];
-    SCE1_AES->AESKW0 = temp[1];
-    SCE1_AES->AESKW0 = temp[2];
-    SCE1_AES->AESKW0 = temp[3];
+    R_AES->AESKW0 = temp[0];
+    R_AES->AESKW0 = temp[1];
+    R_AES->AESKW0 = temp[2];
+    R_AES->AESKW0 = temp[3];
 
     if (key_length == SC324_AES_KEYSIZE_128)
     {
@@ -98,16 +98,16 @@ static void hw_sc324_aes_kernel_key_set (const uint32_t * p_key, hw_sc324_aes_ke
     }
 
     // wait for key_write_ready1
-    while (SCE1_AES->AESCMD_b.key_write_ready1 == 0)
+    while (R_AES->AESCMD_b.KWRDY1 == 0)
     {
         ;
     }
 
     hw_sc324_aes_endian_convert(temp, (uint32_t *) p_key + 4, 4);
-    SCE1_AES->AESKW1 = temp[0];
-    SCE1_AES->AESKW1 = temp[1];
-    SCE1_AES->AESKW1 = temp[2];
-    SCE1_AES->AESKW1 = temp[3];
+    R_AES->AESKW1 = temp[0];
+    R_AES->AESKW1 = temp[1];
+    R_AES->AESKW1 = temp[2];
+    R_AES->AESKW1 = temp[3];
 }
 
 static void hw_sc324_aes_kernel_iv_set (const uint32_t * p_iv)
@@ -115,16 +115,16 @@ static void hw_sc324_aes_kernel_iv_set (const uint32_t * p_iv)
     uint32_t temp[4];
 
     // wait for iv_write_ready
-    while (SCE1_AES->AESCMD_b.iv_write_ready == 0)
+    while (R_AES->AESCMD_b.IWRDY == 0)
     {
         ;
     }
 
     hw_sc324_aes_endian_convert(temp, p_iv, 4);
-    SCE1_AES->AESIVW = temp[0];
-    SCE1_AES->AESIVW = temp[1];
-    SCE1_AES->AESIVW = temp[2];
-    SCE1_AES->AESIVW = temp[3];
+    R_AES->AESIVW = temp[0];
+    R_AES->AESIVW = temp[1];
+    R_AES->AESIVW = temp[2];
+    R_AES->AESIVW = temp[3];
 }
 
 static void hw_sc324_aes_kernel_iv_get (uint32_t * p_iv)
@@ -132,15 +132,15 @@ static void hw_sc324_aes_kernel_iv_get (uint32_t * p_iv)
     uint32_t temp[4];
 
     // wait for iv_read_ready
-    while (SCE1_AES->AESCMD_b.iv_read_ready == 0)
+    while (R_AES->AESCMD_b.IRRDY == 0)
     {
         ;
     }
 
-    temp[0] = SCE1_AES->AESIVW;
-    temp[1] = SCE1_AES->AESIVW;
-    temp[2] = SCE1_AES->AESIVW;
-    temp[3] = SCE1_AES->AESIVW;
+    temp[0] = R_AES->AESIVW;
+    temp[1] = R_AES->AESIVW;
+    temp[2] = R_AES->AESIVW;
+    temp[3] = R_AES->AESIVW;
 
     hw_sc324_aes_endian_convert(p_iv, temp, 4);
 }
@@ -150,16 +150,16 @@ static void hw_sc324_aes_kernel_data_write (const uint32_t * p_data)
     uint32_t temp[4];
 
     // wait for write_ready
-    while (SCE1_AES->AESCMD_b.write_ready == 0)
+    while (R_AES->AESCMD_b.DWRDY == 0)
     {
         ;
     }
 
     hw_sc324_aes_endian_convert(temp, (uint32_t *) p_data, 4);
-    SCE1_AES->AESDW = temp[0];
-    SCE1_AES->AESDW = temp[1];
-    SCE1_AES->AESDW = temp[2];
-    SCE1_AES->AESDW = temp[3];
+    R_AES->AESDW = temp[0];
+    R_AES->AESDW = temp[1];
+    R_AES->AESDW = temp[2];
+    R_AES->AESDW = temp[3];
 }
 
 static void hw_sc324_aes_kernel_data_read (uint32_t * p_data)
@@ -167,15 +167,15 @@ static void hw_sc324_aes_kernel_data_read (uint32_t * p_data)
     uint32_t temp[4];
 
     // wait for read_ready
-    while (SCE1_AES->AESCMD_b.read_ready == 0)
+    while (R_AES->AESCMD_b.DRRDY == 0)
     {
         ;
     }
 
-    temp[0] = SCE1_AES->AESDW;
-    temp[1] = SCE1_AES->AESDW;
-    temp[2] = SCE1_AES->AESDW;
-    temp[3] = SCE1_AES->AESDW;
+    temp[0] = R_AES->AESDW;
+    temp[1] = R_AES->AESDW;
+    temp[2] = R_AES->AESDW;
+    temp[3] = R_AES->AESDW;
     hw_sc324_aes_endian_convert(p_data, temp, 4);
 }
 

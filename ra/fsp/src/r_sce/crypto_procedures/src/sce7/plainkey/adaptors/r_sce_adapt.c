@@ -264,3 +264,70 @@ uint32_t change_endian_long (uint32_t a)
 {
     return __REV(a);
 }
+
+fsp_err_t HW_SCE_Aes128CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+{
+    return HW_SCE_Aes128CmacInitSub((uint32_t *)InData_KeyType, (uint32_t *)InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
+    return FSP_ERR_UNSUPPORTED;
+}
+
+fsp_err_t HW_SCE_Aes256CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+{
+    return HW_SCE_Aes256CmacInitSub((uint32_t *)InData_KeyType, (uint32_t *)InData_KeyIndex);
+}
+
+void HW_SCE_Aes128CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+{
+    HW_SCE_Aes128CmacUpdateSub((uint32_t *)InData_Text, (uint32_t)MAX_CNT);
+}
+
+void HW_SCE_Aes192CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+{
+    FSP_PARAMETER_NOT_USED(InData_Text);
+    FSP_PARAMETER_NOT_USED(MAX_CNT);
+}
+
+void HW_SCE_Aes256CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+{
+    HW_SCE_Aes256CmacUpdateSub((uint32_t *)InData_Text, (uint32_t)MAX_CNT);
+}
+
+fsp_err_t HW_SCE_Aes128CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[])
+{
+    return HW_SCE_Aes128CmacFinalSub((uint32_t *)InData_Cmd, (uint32_t *)InData_Text, (uint32_t *)InData_DataT,
+                                     (uint32_t *)InData_DataTLen, OutData_DataT);
+}
+
+fsp_err_t HW_SCE_Aes192CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_Text);
+    FSP_PARAMETER_NOT_USED(InData_DataT);
+    FSP_PARAMETER_NOT_USED(InData_DataTLen);
+    FSP_PARAMETER_NOT_USED(OutData_DataT);
+    return FSP_ERR_UNSUPPORTED;
+}
+
+fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[])
+{
+    return HW_SCE_Aes256CmacFinalSub((uint32_t *)InData_Cmd, (uint32_t *)InData_Text, (uint32_t *)InData_DataT,
+                                     (uint32_t *)InData_DataTLen, OutData_DataT);
+}

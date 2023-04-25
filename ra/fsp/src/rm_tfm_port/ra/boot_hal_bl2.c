@@ -172,6 +172,22 @@ int32_t boot_platform_init (void)
     return result;
 }
 
+__WEAK int32_t boot_platform_post_init(void)
+{
+#ifdef CRYPTO_HW_ACCELERATOR
+    int32_t result;
+
+    result = crypto_hw_accelerator_init();
+    if (result) {
+        return 1;
+    }
+
+    (void)fih_delay_init();
+#endif /* CRYPTO_HW_ACCELERATOR */
+
+    return 0;
+}
+
 void boot_platform_quit (struct boot_arm_vector_table * vt)
 {
     /* Clang at O0, stores variables on the stack with SP relative addressing.
@@ -180,6 +196,39 @@ void boot_platform_quit (struct boot_arm_vector_table * vt)
      * no effect on them.
      */
     static struct boot_arm_vector_table * vt_cpy;
+    int32_t result;
+
+#ifdef CRYPTO_HW_ACCELERATOR
+    result = crypto_hw_accelerator_finish();
+    if (result) {
+        while (1){}
+    }
+#endif /* CRYPTO_HW_ACCELERATOR */
+
+#ifdef FLASH_DEV_NAME
+    result = FLASH_DEV_NAME.Uninitialize();
+    if (result != ARM_DRIVER_OK) {
+        while(1) {}
+    }
+#endif /* FLASH_DEV_NAME */
+#ifdef FLASH_DEV_NAME_2
+    result = FLASH_DEV_NAME_2.Uninitialize();
+    if (result != ARM_DRIVER_OK) {
+        while(1) {}
+    }
+#endif /* FLASH_DEV_NAME_2 */
+#ifdef FLASH_DEV_NAME_3
+    result = FLASH_DEV_NAME_3.Uninitialize();
+    if (result != ARM_DRIVER_OK) {
+        while(1) {}
+    }
+#endif /* FLASH_DEV_NAME_3 */
+#ifdef FLASH_DEV_NAME_SCRATCH
+    result = FLASH_DEV_NAME_SCRATCH.Uninitialize();
+    if (result != ARM_DRIVER_OK) {
+        while(1) {}
+    }
+#endif /* FLASH_DEV_NAME_SCRATCH */
 
     vt_cpy = vt;
 #if BSP_FEATURE_BSP_HAS_SP_MON
@@ -200,4 +249,14 @@ void boot_platform_quit (struct boot_arm_vector_table * vt)
     __ISB();
 
     boot_jump_to_next_image(vt_cpy->reset);
+}
+
+__WEAK int boot_platform_pre_load(uint32_t image_id)
+{
+    return 0;
+}
+
+__WEAK int boot_platform_post_load(uint32_t image_id)
+{
+    return 0;
 }

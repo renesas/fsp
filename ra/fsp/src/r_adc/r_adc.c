@@ -1669,7 +1669,7 @@ static void r_adc_call_callback (adc_instance_ctrl_t * p_ctrl, adc_callback_args
 static void r_adc_scan_end_common_isr (adc_event_t event)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     adc_instance_ctrl_t * p_instance_ctrl = (adc_instance_ctrl_t *) R_FSP_IsrContextGet(R_FSP_CurrentIrqGet());
 
@@ -1706,7 +1706,7 @@ static void r_adc_scan_end_common_isr (adc_event_t event)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1731,7 +1731,7 @@ void adc_scan_end_b_isr (void)
 void adc_window_compare_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -1807,5 +1807,5 @@ void adc_window_compare_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }

@@ -34,6 +34,7 @@
 #define     MOTOR_RETURN_ORIGIN_TWO_PI           (6.283185307F)
 #define     MOTOR_RETURN_ORIGIN_TWO_PI_60        (6.283185307F / 60.0F)
 #define     MOTOR_RETURN_ORIGIN_RAD_TO_DEGREE    (360.0F / MOTOR_RETURN_ORIGIN_TWO_PI)
+#define     MOTOR_RETURN_ORIGIN_DEGREE_TO_RAD    (MOTOR_RETURN_ORIGIN_TWO_PI / 360.0F)
 #define     MOTOR_RETURN_ORIGIN_HALF             (0.5F)
 
 #ifndef MOTOR_RETURN_ORIGIN_ERROR_RETURN
@@ -116,6 +117,8 @@ fsp_err_t RM_MOTOR_RETURN_ORIGIN_Open (motor_return_origin_ctrl_t * const      p
     p_instance_ctrl->p_cfg = p_cfg;
 
     rm_motor_return_origin_initialize(p_instance_ctrl);
+    p_instance_ctrl->f_angle_degree_on_edge         = 0.0F;
+    p_instance_ctrl->f_origin_position_angle_degree = 0.0F;
 
     /* Pushing mode */
     if (MOTOR_RETURN_ORIGIN_MODE_PUSH == p_instance_ctrl->p_cfg->mode)
@@ -134,6 +137,10 @@ fsp_err_t RM_MOTOR_RETURN_ORIGIN_Open (motor_return_origin_ctrl_t * const      p
         if (temp_search_speed < 0.0F)
         {
             p_instance_ctrl->s1_direction = -1;
+        }
+        else
+        {
+            p_instance_ctrl->s1_direction = 1;
         }
 
         p_instance_ctrl->f_search_speed = fabsf(temp_search_speed * p_extended_cfg->f_speed_ctrl_period);
@@ -165,6 +172,8 @@ fsp_err_t RM_MOTOR_RETURN_ORIGIN_Close (motor_return_origin_ctrl_t * const p_ctr
 #endif
 
     rm_motor_return_origin_initialize(p_instance_ctrl);
+    p_instance_ctrl->f_angle_degree_on_edge         = 0.0F;
+    p_instance_ctrl->f_origin_position_angle_degree = 0.0F;
 
     p_instance_ctrl->open = 0U;
 
@@ -238,6 +247,8 @@ fsp_err_t RM_MOTOR_RETURN_ORIGIN_Reset (motor_return_origin_ctrl_t * const p_ctr
 #endif
 
     rm_motor_return_origin_initialize(p_instance_ctrl);
+    p_instance_ctrl->f_angle_degree_on_edge         = 0.0F;
+    p_instance_ctrl->f_origin_position_angle_degree = 0.0F;
 
     return FSP_SUCCESS;
 }
@@ -368,6 +379,10 @@ fsp_err_t RM_MOTOR_RETURN_ORIGIN_ParameterUpdate (motor_return_origin_ctrl_t * c
         {
             p_instance_ctrl->s1_direction = -1;
         }
+        else
+        {
+            p_instance_ctrl->s1_direction = 1;
+        }
 
         p_instance_ctrl->f_search_speed = fabsf(temp_search_speed * p_extended_cfg->f_speed_ctrl_period);
     }
@@ -391,12 +406,10 @@ fsp_err_t RM_MOTOR_RETURN_ORIGIN_ParameterUpdate (motor_return_origin_ctrl_t * c
  **********************************************************************************************************************/
 static void rm_motor_return_origin_initialize (motor_return_origin_instance_ctrl_t * const p_ctrl)
 {
-    p_ctrl->start_flag                     = MOTOR_RETURN_ORIGIN_START_FLAG_STOP;
-    p_ctrl->state                          = MOTOR_RETURN_ORIGIN_STATE_START;
-    p_ctrl->s1_direction                   = 1;
-    p_ctrl->f_angle_degree_on_edge         = 0.0F;
-    p_ctrl->f_current_speed                = 0.0F;
-    p_ctrl->f_origin_position_angle_degree = 0.0F;
+    p_ctrl->start_flag      = MOTOR_RETURN_ORIGIN_START_FLAG_STOP;
+    p_ctrl->state           = MOTOR_RETURN_ORIGIN_STATE_START;
+    p_ctrl->s1_direction    = 1;
+    p_ctrl->f_current_speed = 0.0F;
 
     p_ctrl->f_position_reference_degree = 0.0F;
 
@@ -460,10 +473,12 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
         case MOTOR_RETURN_ORIGIN_STATE_START:
         {
             /* Initilize valiables to calculate */
-            p_ctrl->st_pushing.u4_time_counter = 0U;
-            p_ctrl->st_pushing.f_sum_position  = 0.0F;
-            p_ctrl->st_pushing.u4_sum_counter  = 0U;
-            p_ctrl->st_pushing.f_move_amount   = 0.0F;
+            p_ctrl->st_pushing.u4_time_counter     = 0U;
+            p_ctrl->st_pushing.f_sum_position      = 0.0F;
+            p_ctrl->st_pushing.u4_sum_counter      = 0U;
+            p_ctrl->st_pushing.f_move_amount       = 0.0F;
+            p_ctrl->f_angle_degree_on_edge         = 0.0F;
+            p_ctrl->f_origin_position_angle_degree = 0.0F;
 
             /* Go to search the stopper */
             p_ctrl->state = MOTOR_RETURN_ORIGIN_STATE_SEARCH_STOPPER;
@@ -490,6 +505,8 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
                         fabsf(p_extended_cfg->f_mechanical_gear_ratio) *
                         p_ctrl->s1_direction * p_extended_cfg->f_return_degree;
                     p_ctrl->f_origin_position_angle_degree = p_ctrl->f_angle_degree_on_edge - f_mechanical_reverse;
+
+                    f_mechanical_reverse *= MOTOR_RETURN_ORIGIN_DEGREE_TO_RAD;
 
                     /* Set reference to current position */
                     f_calculated_ref_position = p_ctrl->receive_data.f_position_degree;
@@ -520,12 +537,15 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
             }
             /* The stopper could not be detected. */
             else if (((p_extended_cfg->f_over_degree > 0.0F) || (p_extended_cfg->f_over_degree < 0.0F)) &&
-                     (p_ctrl->st_pushing.f_move_amount > p_extended_cfg->f_over_degree))
+                     (p_ctrl->st_pushing.f_move_amount >
+                      (p_extended_cfg->f_over_degree * MOTOR_RETURN_ORIGIN_DEGREE_TO_RAD)))
             {
                 // Set state to error and stop the process
-                f_calculated_ref_position = (float) p_ctrl->s1_direction * p_ctrl->st_pushing.f_move_amount;
-                p_ctrl->state             = MOTOR_RETURN_ORIGIN_STATE_ERROR;
-                p_ctrl->start_flag        = MOTOR_RETURN_ORIGIN_START_FLAG_STOP;
+                f_calculated_ref_position =
+                    (float) p_ctrl->s1_direction *
+                    p_ctrl->st_pushing.f_move_amount * MOTOR_RETURN_ORIGIN_RAD_TO_DEGREE;
+                p_ctrl->state      = MOTOR_RETURN_ORIGIN_STATE_ERROR;
+                p_ctrl->start_flag = MOTOR_RETURN_ORIGIN_START_FLAG_STOP;
             }
             else
             {
@@ -536,7 +556,9 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
             {
                 rm_motor_return_origin_calculate_search_speed_accel(p_ctrl);
                 p_ctrl->st_pushing.f_move_amount += p_ctrl->f_current_speed;
-                f_calculated_ref_position         = (float) p_ctrl->s1_direction * p_ctrl->st_pushing.f_move_amount;
+                f_calculated_ref_position         =
+                    (float) p_ctrl->s1_direction *
+                    p_ctrl->st_pushing.f_move_amount * MOTOR_RETURN_ORIGIN_RAD_TO_DEGREE;
             }
 
             break;
@@ -547,7 +569,8 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
         {
             rm_motor_return_origin_calculate_search_speed_accel(p_ctrl);
             p_ctrl->st_pushing.f_move_amount -= p_ctrl->f_current_speed;
-            f_calculated_ref_position         = (float) p_ctrl->s1_direction * p_ctrl->f_current_speed;
+            f_calculated_ref_position        -=
+                (float) p_ctrl->s1_direction * p_ctrl->f_current_speed * MOTOR_RETURN_ORIGIN_RAD_TO_DEGREE;
             if (p_ctrl->st_pushing.f_move_amount <= 0.0F)
             {
                 p_ctrl->state = MOTOR_RETURN_ORIGIN_STATE_DECELERATE;
@@ -560,7 +583,8 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
         case MOTOR_RETURN_ORIGIN_STATE_DECELERATE:
         {
             f_calculated_ref_position -=
-                (float) p_ctrl->s1_direction * rm_motor_return_origin_calculate_search_speed_decleration(p_ctrl);
+                (float) p_ctrl->s1_direction * rm_motor_return_origin_calculate_search_speed_decleration(p_ctrl) *
+                MOTOR_RETURN_ORIGIN_RAD_TO_DEGREE;
             if ((p_ctrl->f_current_speed > 0.0F) || (p_ctrl->f_current_speed < 0.0F))
             {
                 /* Do nothing */

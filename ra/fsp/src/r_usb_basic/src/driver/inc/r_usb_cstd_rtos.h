@@ -86,7 +86,7 @@ typedef uint32_t     rtos_time_t;
     #define MGR_STACK_SIZE    (1536 + 1024)
    #endif
    #define HUB_STACK_SIZE     (512)
-   #define PCD_STACK_SIZE     (1024 * 2)
+   #define PCD_STACK_SIZE     (1024)
    #define PMSC_STACK_SIZE    (512)
    #define HCDC_STACK_SIZE    (512)
    #define HHID_STACK_SIZE    (512)
@@ -100,7 +100,7 @@ typedef uint32_t     rtos_time_t;
    #define HHID_STACK_SIZE    (512)
   #endif                               /* #if (BSP_CFG_RTOS == 1) */
 /* Number of Memory Block */
-  #define    NUM_OF_BLOCK     (64)
+  #define    NUM_OF_BLOCK     (8)
 
 /******************************************************************************
  * Typedef definitions

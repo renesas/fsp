@@ -28,7 +28,6 @@
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
 
-#include "bignum_internal.h"
 #include <string.h>
 
 #if defined(MBEDTLS_ECP_ALT)

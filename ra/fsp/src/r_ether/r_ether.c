@@ -1956,6 +1956,9 @@ static void ether_call_callback (ether_instance_ctrl_t * p_instance_ctrl, ether_
  ***********************************************************************************************************************/
 void ether_eint_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     uint32_t status_ecsr;
     uint32_t status_eesr;
 
@@ -2027,6 +2030,9 @@ void ether_eint_isr (void)
     /* Clear pending interrupt flag to make sure it doesn't fire again
      * after exiting. */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }                                      /* End of function ether_eint_isr() */
 
 /***********************************************************************************************************************

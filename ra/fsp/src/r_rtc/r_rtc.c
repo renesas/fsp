@@ -223,15 +223,6 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 
     p_instance_ctrl->carry_isr_triggered = false;
 
-    r_rtc_config_rtc_interrupts(p_instance_ctrl, p_cfg);
-
-    /* On a cold-start, force the RTC to be in the stopped state. Some devices power up with the RTC started. */
-    /* Checks to see if the PORF bit is set. PORF can be cleared by software if application code handles a POR. */
-    if (R_SYSTEM->RSTSR0 == 1)
-    {
-        r_rtc_start_bit_update(0U);
-    }
-
 #if RTC_CFG_OPEN_SET_CLOCK_SOURCE
 
     /* Set the clock source for RTC.
@@ -239,6 +230,8 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
      * at power on. (see section 26.2.19 RTC Control Register 4 (RCR4) of the RA6M3 manual R01UH0886EJ0100)*/
     r_rtc_set_clock_source(p_instance_ctrl, p_cfg);
 #endif
+
+    r_rtc_config_rtc_interrupts(p_instance_ctrl, p_cfg);
 
     /** Mark driver as open by initializing it to "RTC" in its ASCII equivalent. */
     p_instance_ctrl->open = RTC_OPEN;
@@ -816,15 +809,7 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
      * See 26.3.2 "Clock and Count Mode Setting Procedure" of the RA6M3 manual R01UH0886EJ0100)*/
     R_BSP_SoftwareDelay(BSP_PRV_RTC_RESET_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
 
-    /* Set the START bit to 0 */
     r_rtc_start_bit_update(0U);
-
-    /* Initialize registers. */
-    R_RTC->RCR1 = 0U;
-    R_RTC->RCR2 = 0U;
-
-    /* Force RTC to 24 hour mode. Set HR24 bit in the RCR2 register */
-    R_RTC->RCR2_b.HR24 = 1U;
 
     if (RTC_CLOCK_SOURCE_LOCO == p_ctrl->p_cfg->clock_source)
     {
@@ -835,18 +820,26 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
         R_RTC->RFRL = (uint16_t) p_cfg->freq_compare_value_loco;
     }
 
-    /* Clear the the CNTMD bit in the RCR2 register */
-    R_RTC->RCR2_b.CNTMD = 0U;
-
-    /* Wait for the CNTMD bit to become 0 */
+    R_RTC->RCR2 = 0;
 
     /* When setting the count mode, execute an RTC software reset and start again from the initial settings.
      * This bit is updated synchronously with the count source, and its value is fixed before the RTC software
      * reset is completed (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.CNTMD, RTC_CALENDAR_MODE);
 
-    /* Execute RTC software reset */
     r_rtc_software_reset();
+
+    /* Disable RTC interrupts */
+    R_RTC->RCR1 = 0;
+
+    /* Force RTC to 24 hour mode. Set HR24 bit in the RCR2 register */
+    R_RTC->RCR2_b.HR24 = 1U;
+
+    /*
+     * See 23.6.5 "Notes on Writing to and Reading from Registers" of the RA6M5 manual R01UH0891EJ0120.
+     * The value written is reflected when fourth read operations are performed after writing.
+     */
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.HR24, 1);
 
 #if BSP_FEATURE_RTC_HAS_TCEN
     for (uint8_t index = 0U; index < BSP_FEATURE_RTC_RTCCR_CHANNELS; index++)
@@ -1359,7 +1352,7 @@ static void r_rtc_error_adjustment_set (rtc_error_adjustment_cfg_t const * const
 void rtc_alarm_periodic_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     rtc_instance_ctrl_t * p_ctrl = (rtc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1386,7 +1379,7 @@ void rtc_alarm_periodic_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1398,7 +1391,7 @@ void rtc_alarm_periodic_isr (void)
 void rtc_carry_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     rtc_instance_ctrl_t * p_ctrl = (rtc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1409,7 +1402,7 @@ void rtc_carry_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**

@@ -872,7 +872,7 @@ static void r_sci_b_spi_call_callback (sci_b_spi_instance_ctrl_t * p_ctrl, spi_e
 void sci_b_spi_txi_isr (void)
 {
     /* Save context if RTOS is used. */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
     sci_b_spi_instance_ctrl_t * p_ctrl = (sci_b_spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -893,7 +893,7 @@ void sci_b_spi_txi_isr (void)
     }
 
     /* Restore context if RTOS is used. */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -907,7 +907,7 @@ void sci_b_spi_txi_isr (void)
 void sci_b_spi_rxi_isr (void)
 {
     /* Save context if RTOS is used. */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
@@ -934,7 +934,7 @@ void sci_b_spi_rxi_isr (void)
     }
 
     /* Restore context if RTOS is used. */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -946,7 +946,7 @@ void sci_b_spi_rxi_isr (void)
 void sci_b_spi_tei_isr (void)
 {
     /* Save context if RTOS is used. */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     sci_b_spi_instance_ctrl_t * p_ctrl = (sci_b_spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -964,7 +964,7 @@ void sci_b_spi_tei_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used. */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -976,7 +976,7 @@ void sci_b_spi_tei_isr (void)
 void sci_b_spi_eri_isr (void)
 {
     /* Save context if RTOS is used. */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     sci_b_spi_instance_ctrl_t * p_ctrl = (sci_b_spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -995,5 +995,5 @@ void sci_b_spi_eri_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used. */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }

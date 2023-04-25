@@ -170,7 +170,7 @@ void usb_pstd_detach_process (usb_utr_t * p_utr)
     g_usb_pstd_remote_wakeup = USB_FALSE;
 
     /* WAIT_LOOP */
-    for (i = USB_MIN_PIPE_NO; i < (USB_MAXPIPE_NUM + 1); i++)
+    for (i = USB_MIN_PIPE_NO; i < (USB_MAX_PIPE_NO + 1); i++)
     {
         if (USB_TRUE == g_usb_pipe_table[p_utr->ip][i].use_flag)
         {
@@ -189,8 +189,6 @@ void usb_pstd_detach_process (usb_utr_t * p_utr)
     {
         (*g_usb_pstd_driver.devdetach)(p_utr, USB_POWERED, USB_NULL);
     }
-
-    usb_pstd_stop_clock(p_utr->ip);
 }
 
 /******************************************************************************

@@ -991,7 +991,7 @@ static void r_sdadc_disable_irq (IRQn_Type irq)
 void sdadc_scanend_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type               irq             = R_FSP_CurrentIrqGet();
     sdadc_instance_ctrl_t * p_instance_ctrl = (sdadc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1010,7 +1010,7 @@ void sdadc_scanend_isr (void)
     p_instance_ctrl->p_cfg->p_callback(&args);
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1019,7 +1019,7 @@ void sdadc_scanend_isr (void)
 void sdadc_adi_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type               irq             = R_FSP_CurrentIrqGet();
     sdadc_instance_ctrl_t * p_instance_ctrl = (sdadc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1071,7 +1071,7 @@ void sdadc_adi_isr (void)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1080,7 +1080,7 @@ void sdadc_adi_isr (void)
 void sdadc_caliend_isr (void)
 {
     /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
+    FSP_CONTEXT_SAVE
 
     IRQn_Type               irq             = R_FSP_CurrentIrqGet();
     sdadc_instance_ctrl_t * p_instance_ctrl = (sdadc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
@@ -1103,5 +1103,5 @@ void sdadc_caliend_isr (void)
     }
 
     /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE;
+    FSP_CONTEXT_RESTORE
 }

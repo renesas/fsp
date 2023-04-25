@@ -18,54 +18,41 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-/////////////////////////////////////////////////////////////////////////
-// <SC32#4 128bit Random Number Generation>                            //
-// Procedure number: 03                                                //
-// File name      : SC324_p03.prc                                      //
-// State Diagram  : main(FSM1)                                         //
-// Start State    : main03                                             //
-// End State      : main03                                             //
-// Input Data     : void                                               //
-// Output Data    : OutData_Text[4]                                    //
-// Return Value   : Pass or Resource_Conflict                          //
-// ---------------------------------------------------------------------//
-// total cycle    : polling + write access + read access               //
-// polling        :     cycle                                          //
-// polling access :     cycle                                          //
-// write access   :     times                                          //
-// read  access   :     times                                          //
-/////////////////////////////////////////////////////////////////////////
-
-#include "SC324_private.h"
-#include "bsp_api.h"
-#include "hw_sce_trng_private.h"
-
 /*******************************************************************************************************************//**
- * 128bit Random Number Generation
- * @param      OutData_Text    The out data text
- * @retval FSP_SUCCESS      The operation completed successfully.
+ * @addtogroup BOARD_RA6E2_FPB
+ * @brief Board specific code for the RA6E2-FPB Board
+ *
+ * This include file is specific to the RA6E2-FPB board.
+ *
+ * @{
  **********************************************************************************************************************/
-fsp_err_t HW_SCE_RNG_Read (uint32_t * OutData_Text) {
-    uint8_t * ptmp = (uint8_t *) OutData_Text;
-    uint32_t  k;
 
-    for (k = 0; k < 4; k++)            // read 4 words of random data similar (to make this API consistent with S7 and S3 implementation)
-    {
-        /* Set core_en bit and rng_start bit */
-        SCE1_TRNG->TRNGSCR0.core_en   = 1;
-        SCE1_TRNG->TRNGSCR0.rng_start = 1;
+#ifndef BOARD_INIT_H
+#define BOARD_INIT_H
 
-        /* Wait for RDRDY bit to be set */
-        while (0 == SCE1_TRNG->TRNGSCR0.rdrdy)
-        {
-        }
+/** Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
-        /* Read generated random data */
-        *ptmp++ = SCE1_TRNG->REG_00H;
-        *ptmp++ = SCE1_TRNG->REG_00H;
-        *ptmp++ = SCE1_TRNG->REG_00H;
-        *ptmp++ = SCE1_TRNG->REG_00H;
-    }
+/***********************************************************************************************************************
+ * Macro definitions
+ **********************************************************************************************************************/
 
-    return FSP_SUCCESS;
-}
+/***********************************************************************************************************************
+ * Typedef definitions
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Exported global variables
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Exported global functions (to be accessed by other files)
+ **********************************************************************************************************************/
+void bsp_init(void * p_args);
+
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
+#endif
+
+/** @} (end addtogroup BOARD_RA6E2_FPB) */

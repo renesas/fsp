@@ -179,3 +179,61 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
                                          (uint32_t *) encrypted_oem_key,
                                          key_index);
 }
+
+fsp_err_t HW_SCE_Aes128CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+{
+    return HW_SCE_Aes128CmacInitSub(InData_KeyType, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    return HW_SCE_Aes192CmacInitSub(InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes256CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+{
+    return HW_SCE_Aes256CmacInitSub(InData_KeyType, InData_KeyIndex);
+}
+
+void HW_SCE_Aes128CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+{
+    HW_SCE_Aes128CmacUpdateSub(InData_Text, MAX_CNT);
+}
+
+void HW_SCE_Aes192CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+{
+    HW_SCE_Aes192CmacUpdateSub(InData_Text, MAX_CNT);
+}
+
+void HW_SCE_Aes256CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+{
+    HW_SCE_Aes256CmacUpdateSub(InData_Text, MAX_CNT);
+}
+
+fsp_err_t HW_SCE_Aes128CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[])
+{
+    return HW_SCE_Aes128CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
+}
+
+fsp_err_t HW_SCE_Aes192CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[])
+{
+    return HW_SCE_Aes192CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
+}
+
+fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
+                                 const uint32_t InData_Text[],
+                                 const uint32_t InData_DataT[],
+                                 const uint32_t InData_DataTLen[],
+                                 uint32_t       OutData_DataT[])
+{
+    return HW_SCE_Aes256CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
+}

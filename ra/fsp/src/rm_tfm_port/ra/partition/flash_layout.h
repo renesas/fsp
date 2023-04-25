@@ -103,12 +103,6 @@ extern "C" {
 /* Specifies the smallest flash programmable unit in bytes */
  #define TFM_HAL_PS_PROGRAM_UNIT                 (0x1)
 
-/* The maximum asset size to be stored in the PS area */
- #define PS_MAX_ASSET_SIZE                       (2048)
-
-/* The maximum number of assets to be stored in the PS area */
- #define PS_NUM_ASSETS                           (10)
-
 /* Internal Trusted Storage (ITS) Service definitions
  * Note: Further documentation of these definitions can be found in the
  * TF-M ITS Integration Guide. The ITS should be in the internal flash, but is
@@ -153,9 +147,10 @@ extern "C" {
                                                   128U))
 #define FLASH_OTP_NV_COUNTERS_AREA_OFFSET        (CFG_DATA_FLASH_OTP_NV_COUNTERS_AREA_OFFSET)
 #define FLASH_OTP_NV_COUNTERS_AREA_SIZE          (DATA_FLASH_OTP_NV_COUNTERS_AREA_SIZE)
-#define FLASH_OTP_NV_COUNTERS_SECTOR_SIZE        (2 * DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
+#define FLASH_OTP_NV_COUNTERS_SECTOR_SIZE        (DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
 
 /* OTP / NV counter definitions */
+#define OTP_NV_COUNTERS_WRITE_BLOCK_SIZE         (DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
 #define TFM_OTP_NV_COUNTERS_AREA_SIZE            (FLASH_OTP_NV_COUNTERS_AREA_SIZE)
 #define TFM_OTP_NV_COUNTERS_AREA_ADDR            FLASH_OTP_NV_COUNTERS_AREA_OFFSET
 #define TFM_OTP_NV_COUNTERS_SECTOR_SIZE          FLASH_OTP_NV_COUNTERS_SECTOR_SIZE

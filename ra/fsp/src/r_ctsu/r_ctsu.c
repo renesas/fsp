@@ -2439,12 +2439,16 @@ void ctsu_moving_average (ctsu_data_t * p_average, uint16_t new_data, uint16_t a
  ***********************************************************************************************************************/
 void ctsu_write_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
 #if (CTSU_CFG_DTC_SUPPORT_ENABLE == 1)
 
     /** Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
 #else
-    IRQn_Type              irq             = R_FSP_CurrentIrqGet();
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /** Clear the BSP IRQ Flag     */
@@ -2500,6 +2504,9 @@ void ctsu_write_isr (void)
         p_instance_ctrl->wr_index++;
     }
 #endif
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -2510,12 +2517,16 @@ void ctsu_write_isr (void)
  ***********************************************************************************************************************/
 void ctsu_read_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
 #if (CTSU_CFG_DTC_SUPPORT_ENABLE == 1)
 
     /** Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
 #else
-    IRQn_Type              irq             = R_FSP_CurrentIrqGet();
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /** Clear the BSP IRQ Flag     */
@@ -2662,6 +2673,9 @@ void ctsu_read_isr (void)
         ctsu_end_interrupt(p_instance_ctrl);
     }
 #endif
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /***********************************************************************************************************************
@@ -2670,6 +2684,9 @@ void ctsu_read_isr (void)
  ***********************************************************************************************************************/
 void ctsu_end_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type              irq             = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     uint16_t               rd_index;
@@ -2749,6 +2766,9 @@ void ctsu_end_isr (void)
     }
 
     ctsu_end_interrupt(p_instance_ctrl);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 void ctsu_end_interrupt (ctsu_instance_ctrl_t * const p_instance_ctrl)

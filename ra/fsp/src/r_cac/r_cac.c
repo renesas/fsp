@@ -488,11 +488,13 @@ static void r_cac_isr_handler (cac_event_t event, uint32_t clear_mask)
  **********************************************************************************************************************/
 void cac_ferri_isr (void)
 {
-    FSP_CONTEXT_SAVE;
-
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+    /* Call isr handler */
     r_cac_isr_handler(CAC_EVENT_FREQUENCY_ERROR, CAC_PRV_CAICR_FERRFCL_MASK);
 
-    FSP_CONTEXT_RESTORE;
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -500,11 +502,13 @@ void cac_ferri_isr (void)
  **********************************************************************************************************************/
 void cac_ovfi_isr (void)
 {
-    FSP_CONTEXT_SAVE;
-
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+    /* Call isr handler */
     r_cac_isr_handler(CAC_EVENT_COUNTER_OVERFLOW, CAC_PRV_CAICR_OVFFCL_MASK);
 
-    FSP_CONTEXT_RESTORE;
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -512,9 +516,11 @@ void cac_ovfi_isr (void)
  **********************************************************************************************************************/
 void cac_mendi_isr (void)
 {
-    FSP_CONTEXT_SAVE;
-
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+    /* Call isr handler */
     r_cac_isr_handler(CAC_EVENT_MEASUREMENT_COMPLETE, CAC_PRV_CAICR_MENDFCL_MASK);
 
-    FSP_CONTEXT_RESTORE;
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }

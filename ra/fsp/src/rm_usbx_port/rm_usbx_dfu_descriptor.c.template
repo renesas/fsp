@@ -241,7 +241,7 @@ uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_FULL_SPEED] =
     /* Run-Time DFU Functional Descriptor */
     USB_ID_BLENGTH,                 /*  0:bLength */
     VALUE_21H,                      /*  1:bDescriptorType */
-    0x0F,                           /*  2:bmAttributes */
+    0x09,                           /*  2:bmAttributes */
     VALUE_E8H,                      /*  3:wDetachTimeOut */
     0x03,
     VALUE_40H,                      /*  5:wTransferSize */
@@ -410,7 +410,7 @@ uint8_t g_device_framework_hi_speed[DEVICE_FRAME_LENGTH_HI_SPEED] =
     /* Run-Time DFU Functional Descriptor */
     USB_ID_BLENGTH,                 /*  0:bLength */
     VALUE_21H,                      /*  1:bDescriptorType */
-    0x0F,                           /*  2:bmAttributes */
+    0x09,                           /*  2:bmAttributes */
     VALUE_E8H,                      /*  3:wDetachTimeOut */
     0x03,
     VALUE_40H,                      /*  5:wTransferSize */
@@ -577,7 +577,7 @@ UCHAR g_dfu_device_framework_full_speed[] = {
     /* Functional descriptor for DFU. */
     0x09,                               /*  0:bLength */
     VALUE_21H,                          /*  1:bDescriptorType */
-    0x0D,                               /*  2:bmAttributes */
+    0x09,                               /*  2:bmAttributes */
     VALUE_E8H,                          /*  3:wDetachTimeOut */
     0x03,
     VALUE_40H,                          /*  5:wTransferSize */

@@ -58,6 +58,7 @@ typedef struct st_motor_estimate_bemf_obs_axis
     float f4_i_est_pre;                ///< Previous value of estimated current
     float f4_d_est;                    ///< Estimated voltage disturbance
     float f4_d_est_pre;                ///< Previous value of voltage disturbance
+    float f4_d_est_limit;              ///< Integration limit value of voltage disturbance estimate
 } motor_estimate_bemf_obs_axis_t;
 
 typedef struct st_motor_estimate_motor_parameter
@@ -68,6 +69,7 @@ typedef struct st_motor_estimate_motor_parameter
     float    f4_mtr_lq;                ///< Inductance for q-axis [H]
     float    f4_mtr_m;                 ///< Magnet flux [Wb]
     float    f4_mtr_j;                 ///< Rotor inertia [kgm^2]
+    float    f4_mtr_nominal_current;   ///< Nominal current [Arms]
 } motor_estimate_motor_parameter_t;
 
 typedef struct st_motor_estimate_bemf_observer

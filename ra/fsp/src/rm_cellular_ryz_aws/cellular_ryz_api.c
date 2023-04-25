@@ -2846,3 +2846,100 @@ static CellularPktStatus_t _Cellular_RecvFuncGetImsi (CellularContext_t         
 
     return pktStatus;
 }
+
+/* Implementation of Cellular_SetPdnConfig */
+CellularError_t Cellular_SetPdnConfig (CellularHandle_t            cellularHandle,
+                                       uint8_t                     contextId,
+                                       const CellularPdnConfig_t * pPdnConfig)
+{
+    CellularContext_t * pContext       = (CellularContext_t *) cellularHandle;
+    CellularError_t     cellularStatus = CELLULAR_SUCCESS;
+    CellularPktStatus_t pktStatus      = CELLULAR_PKT_STATUS_OK;
+
+    char cmdBuf[CELLULAR_AT_CMD_MAX_SIZE * 2] = {'\0'}; /* APN and auth info is too long */
+
+    CellularAtReq_t atReqSetPdn =
+    {
+        cmdBuf,
+        CELLULAR_AT_NO_RESULT,
+        NULL,
+        NULL,
+        NULL,
+        0,
+    };
+
+    if (pPdnConfig == NULL)
+    {
+        LogError(("Cellular_ATCommandRaw: Input parameter is NULL"));
+        cellularStatus = CELLULAR_BAD_PARAMETER;
+    }
+
+    if (cellularStatus == CELLULAR_SUCCESS)
+    {
+        cellularStatus = _Cellular_IsValidPdn(contextId);
+    }
+
+    if (cellularStatus == CELLULAR_SUCCESS)
+    {
+        /* Make sure the library is open. */
+        cellularStatus = _Cellular_CheckLibraryStatus(pContext);
+    }
+
+    if (cellularStatus == CELLULAR_SUCCESS)
+    {
+        const char * pPdnType;
+
+        /* Set PDN context IP type string for AT+CGDCONT */
+        if (pPdnConfig->pdnContextType == CELLULAR_PDN_CONTEXT_IPV6)
+        {
+            pPdnType = "IPV6";
+        }
+        else if (pPdnConfig->pdnContextType == CELLULAR_PDN_CONTEXT_IPV4V6)
+        {
+            pPdnType = "IPV4V6";
+        }
+        else
+        {
+            pPdnType = "IP";           // default: CELLULAR_PDN_CONTEXT_IPV4
+        }
+
+        /* Build AT+CGDCONT command to set the PDN context type and APN name */
+        (void) snprintf(cmdBuf, sizeof(cmdBuf), "AT+CGDCONT=%d,\"%s\",\"%s\"", contextId, pPdnType,
+                        pPdnConfig->apnName);
+
+        pktStatus = _Cellular_AtcmdRequestWithCallback(pContext, atReqSetPdn);
+
+        if (pktStatus != CELLULAR_PKT_STATUS_OK)
+        {
+            LogError(("Cellular_SetPdnConfig: can't set PDN, cmdBuf:%s, PktRet: %d", cmdBuf, pktStatus));
+            cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
+        }
+
+        /* Check if APN authentication is specified */
+        if (pPdnConfig->pdnAuthType == 0)
+        {
+            (void) snprintf(cmdBuf, sizeof(cmdBuf), "AT+CGAUTH=%d,0", contextId);
+        }
+        else
+        {
+            /* Send AT+CGAUTH command to set APN authentication type, username, and password */
+            (void) snprintf(cmdBuf,
+                            sizeof(cmdBuf),
+                            "AT+CGAUTH=%d,%d,\"%s\",\"%s\"",
+                            contextId,
+                            pPdnConfig->pdnAuthType,
+                            pPdnConfig->username,
+                            pPdnConfig->password);
+        }
+
+        pktStatus = _Cellular_AtcmdRequestWithCallback(pContext, atReqSetPdn);
+
+        if (pktStatus != CELLULAR_PKT_STATUS_OK)
+        {
+            LogError(("Cellular_SetPdnConfig: can't set PDN, cmdBuf:%s, PktRet: %d", cmdBuf, pktStatus));
+            cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
+        }
+    }
+
+    return cellularStatus;
+}

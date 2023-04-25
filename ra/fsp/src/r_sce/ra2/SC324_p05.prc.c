@@ -38,7 +38,6 @@
 // read  access   :   4 + (MAX_CNT-4) times                            //
 /////////////////////////////////////////////////////////////////////////
 
-#include "SC324_private.h"
 #include "sc324_aes_private.h"
 #include "hw_sce_aes_private.h"
 

@@ -1504,12 +1504,17 @@ static fsp_err_t iic_master_transfer_configure (transfer_instance_t const * p_tr
  **********************************************************************************************************************/
 void iic_master_rxi_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
     /* Clear the IR flag */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     iic_master_instance_ctrl_t * p_ctrl = (iic_master_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     iic_master_rxi_master(p_ctrl);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1520,12 +1525,17 @@ void iic_master_rxi_isr (void)
  **********************************************************************************************************************/
 void iic_master_txi_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
     /* Clear the IR flag */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     iic_master_instance_ctrl_t * p_ctrl = (iic_master_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     iic_master_txi_master(p_ctrl);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1536,12 +1546,18 @@ void iic_master_txi_isr (void)
  **********************************************************************************************************************/
 void iic_master_tei_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     iic_master_instance_ctrl_t * p_ctrl = (iic_master_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     iic_master_tei_master(p_ctrl);
 
     /* Clear the IR flag */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
 
 /*******************************************************************************************************************//**
@@ -1552,10 +1568,16 @@ void iic_master_tei_isr (void)
  **********************************************************************************************************************/
 void iic_master_eri_isr (void)
 {
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     iic_master_instance_ctrl_t * p_ctrl = (iic_master_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     iic_master_err_master(p_ctrl);
 
     /* Clear the IR flag */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }
