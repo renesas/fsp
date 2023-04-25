@@ -9,6 +9,7 @@ var searchData=
   ['ra4m1',['RA4M1',['../group___b_s_p___m_c_u___r_a4_m1.html',1,'']]],
   ['ra4m2',['RA4M2',['../group___b_s_p___m_c_u___r_a4_m2.html',1,'']]],
   ['ra4m3',['RA4M3',['../group___b_s_p___m_c_u___r_a4_m3.html',1,'']]],
+  ['ra4t1',['RA4T1',['../group___b_s_p___m_c_u___r_a4_t1.html',1,'']]],
   ['ra4w1',['RA4W1',['../group___b_s_p___m_c_u___r_a4_w1.html',1,'']]],
   ['ra6e1',['RA6E1',['../group___b_s_p___m_c_u___r_a6_e1.html',1,'']]],
   ['ra6e2',['RA6E2',['../group___b_s_p___m_c_u___r_a6_e2.html',1,'']]],
@@ -19,6 +20,7 @@ var searchData=
   ['ra6m5',['RA6M5',['../group___b_s_p___m_c_u___r_a6_m5.html',1,'']]],
   ['ra6t1',['RA6T1',['../group___b_s_p___m_c_u___r_a6_t1.html',1,'']]],
   ['ra6t2',['RA6T2',['../group___b_s_p___m_c_u___r_a6_t2.html',1,'']]],
+  ['ra6t3',['RA6T3',['../group___b_s_p___m_c_u___r_a6_t3.html',1,'']]],
   ['rtos',['RTOS',['../group___r_e_n_e_s_a_s___r_t_o_s___m_o_d_u_l_e_s.html',1,'']]],
   ['realtime_20clock_20_28r_5frtc_29',['Realtime Clock (r_rtc)',['../group___r_t_c.html',1,'']]],
   ['rtc_20interface',['RTC Interface',['../group___r_t_c___a_p_i.html',1,'']]]

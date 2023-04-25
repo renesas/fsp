@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -217,15 +217,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>This enables checking of function parameters. When this is disabled, parameter checking code is not present and the footprint is reduced </td></tr>
+</td><td>Enabled </td><td>This enables checking of function parameters. When this is disabled, parameter checking code is not present and the footprint is reduced </td></tr>
 <tr>
-<td>Debug</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Enable Logging</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>This enables compilation of debug code. When disabled, debug code is not present and the footprint is reduced </td></tr>
+</td><td>Disabled </td><td>This enables logging and the compilation of debug code. When disabled, logging and debug code is not present and the footprint is reduced. </td></tr>
 <tr>
 <td>Verbose Logging</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -233,9 +233,11 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>This enables verbose logging </td></tr>
+</td><td>Disabled </td><td>This enables verbose logging. Verbose logging will only work if a EWF Log Function is set and logging is enabled. </td></tr>
 <tr>
-<td>EWF_LOG(...)</td><td>Manual Entry</td><td>printf(__VA_ARGS__) </td><td>Function the library uses for logging. </td></tr>
+<td>EWF Log Function</td><td>Manual Entry</td><td>printf(__VA_ARGS__) </td><td>Function the library uses for standard log messages when logging is enabled. </td></tr>
+<tr>
+<td>EWF Log Error Function</td><td>Manual Entry</td><td>printf(__VA_ARGS__) </td><td>Function the library uses for error log messages when logging is enabled. </td></tr>
 </table>
 </p>
 <h1><a class="anchor" id="rm-azure-ewf-ryz-usage_notes"></a>
@@ -268,7 +270,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

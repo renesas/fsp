@@ -2,6 +2,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
 [
     [ "AWS Cellular Interface on RYZ (rm_cellular_ryz_aws)", "group___r_m___c_e_l_l_u_l_a_r___r_y_z___a_w_s.html", null ],
     [ "AWS MQTT", "group___a_w_s___m_q_t_t.html", null ],
+    [ "AWS OTA PAL on MCUBoot (rm_aws_ota_pal_mcuboot)", "group___a_w_s___o_t_a___p_a_l___m_c_u_b_o_o_t.html", null ],
     [ "AWS PKCS11 PAL on LittleFS (rm_aws_pkcs11_pal_littlefs)", "group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html", null ],
     [ "AWS coreHTTP", "group___a_w_s__core_h_t_t_p.html", null ],
     [ "Azure Embedded Wireless Framework RYZ Port (rm_azure_ewf_ryz)", "group___r_m___a_z_u_r_e___e_w_f___r_y_z.html", null ],

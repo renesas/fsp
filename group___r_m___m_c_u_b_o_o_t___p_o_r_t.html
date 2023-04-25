@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -412,6 +412,14 @@ MCUboot Memory Map with QSPI</div></div>
 <li>SCE9 Protected Mode on devices that have the SCE9 (eg: RA6M4, RA4M3, RA4M2)</li>
 </ol>
 <p>MbedTLS provides the best performance for MCUBoot signature verification on the RA6 and RA4 devices but has a much larger code footprint compared to TinyCrypt. For RA2 devices TinyCrypt is the best option.</p>
+<h2>MCUboot boot time</h2>
+<p>The time from Reset to executing the application will depend on how quickly MCUboot finishes execution. This is dependent on a variety of factors including</p><ol type="1">
+<li>The crypto algorithms chosen for image verification and whether hardware acceleration is enabled. Hardware accelerated SHA256 will be the fastest while encryption enabled modes will be the slowest.</li>
+<li>The operating clock speeds.</li>
+<li>Whether flash programming was required.</li>
+</ol>
+<h3>Reducing boot time on SCE9 devices</h3>
+<p>On devices that have the SCE9, it is possible to reduce the time taken for EC-P256 signature verification by setting the Initialization property for the SCE9 module to only initialize the crypto primitives required for EC-P256 verification. Note that this feature is only supported for EC-P256 currently. Enabling it for any other algorithm will cause a runtime failure.</p>
 <h2>Using SCE9 Protected Mode Crypto Stack</h2>
 <p>Using this crypto stack with MCUBoot provides additional security by ensuring that any keys that are used were securely provisioned for the specific device. The Application Note "Installing and Updating Secure Keys for RA Family" (R11AN0496) provides detailed steps on how to go about installing these keys. Since the section "Preparing Keys for Installation and Update Using RFP" document currently only provides information on how to install an AES key, this section will provide information on how to install an ECC public key. These steps can be used to install the public keys used for image verification or the keys used for image encryption.</p>
 <dl class="section note"><dt>Note</dt><dd>When using the SCE9 Protected Mode Stack with MCUboot it is required that the public keys in the format described in the "MCUboot Example Keys" module in the stack is also provided in the project.</dd></dl>
@@ -434,7 +442,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

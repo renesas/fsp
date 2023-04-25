@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -274,7 +274,7 @@ The following build time configurations are defined in arm/mbedtls/config.h:<br 
 <tr>
 <td>Hardware Acceleration &gt; TRNG</td><td>Enabled</td><td>Enabled </td><td>Defines MBEDTLS_ENTROPY_HARDWARE_ALT. </td></tr>
 <tr>
-<td>Hardware Acceleration &gt; Secure Crypto Engine Initialization</td><td>Enabled</td><td>Enabled </td><td>MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT </td></tr>
+<td>Hardware Acceleration &gt; Crypto Engine Initialization</td><td>Enabled</td><td>Enabled </td><td>MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT </td></tr>
 <tr>
 <td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_SETBUF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -702,13 +702,13 @@ Undefine</li>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_write </td><td>MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value </td></tr>
 <tr>
-<td>General &gt; PSA_CRYPTO_SECURE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_PSA_CRYPTO_DRIVERS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>PSA_CRYPTO_SECURE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_DRIVERS </td></tr>
 <tr>
 <td>General &gt; MBEDTLS_DEPRECATED_WARNING</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -930,13 +930,7 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_CHACHAPOLY_ALT </td></tr>
 <tr>
-<td>Cipher &gt; Alternate &gt; MBEDTLS_CMAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>Undefine </td><td>MBEDTLS_CMAC_ALT </td></tr>
+<td>Cipher &gt; Alternate &gt; MBEDTLS_CMAC_ALT</td><td>MCU Specific Options</td><td></td><td>MBEDTLS_CMAC_ALT </td></tr>
 <tr>
 <td>Cipher &gt; Alternate &gt; MBEDTLS_DES_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1562,6 +1556,22 @@ Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_BIGNUM_C </td></tr>
 <tr>
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_LMS_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Define </td><td>MBEDTLS_LMS_C </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_LMS_PRIVATE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_LMS_PRIVATE </td></tr>
+<tr>
 <td>Public Key Cryptography (PKC) &gt; MBEDTLS_OID_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -1617,6 +1627,14 @@ Define</li>
 Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_PKCS5_C </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PKCS7_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>MBEDTLS_PKCS7_C </td></tr>
 <tr>
 <td>Public Key Cryptography (PKC) &gt; MBEDTLS_PKCS12_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -2048,6 +2066,14 @@ Undefine</li>
 </ul>
 </td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS </td></tr>
 <tr>
+<td>Key Configuration &gt; PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>PSA_CRYPTO_DRIVER_TFM_BUILTIN_KEY_LOADER </td></tr>
+<tr>
 <td>Key Configuration &gt; MBEDTLS_PSA_KEY_SLOT_COUNT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -2276,7 +2302,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

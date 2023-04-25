@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -581,9 +581,9 @@ Trigger Event A/D Converter Start Request B During Down Counting</li>
 </ul>
 </td><td></td><td>Select which A/D converter start request interrupts to generate and at which point in the cycle to generate them. </td></tr>
 <tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for channels that do not have GTDVD. </td></tr>
+<td>Extra Features &gt; Dead Time (Value range varies with Channel) &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for channels that do not have GTDVD. The dead time count up value can be set up to 0xffffffff (32-bit) or 0xffff (16-bit). </td></tr>
 <tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (Channels with GTDVD only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. </td></tr>
+<td>Extra Features &gt; Dead Time (Value range varies with Channel) &gt; Dead Time Count Down (Raw Counts) (Channels with GTDVD only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. The dead time count down value can be set up to 0xffffffff (32-bit) or 0xffff (16-bit). </td></tr>
 <tr>
 <td>Extra Features &gt; ADC Trigger (Channels with GTADTRA only) &gt; ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. </td></tr>
 <tr>
@@ -2231,7 +2231,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

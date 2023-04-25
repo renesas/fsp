@@ -5,6 +5,7 @@ var group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n =
     [ "R_SCE_AES256_InitialKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gae2a760d36f38eef802cce273d81c0d94", null ],
     [ "R_SCE_KeyUpdateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gad8ddf78088c0ad7fec59fbfcc7a099e7", null ],
     [ "R_SCE_AES128_EncryptedKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga70332d016ebe0ff5207847d3d8654468", null ],
+    [ "R_SCE_AES192_EncryptedKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga25fa436402163587db692170b8d94abf", null ],
     [ "R_SCE_AES256_EncryptedKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga75cb36583cd4dbe9bf03ef35f0b6e23f", null ],
     [ "R_SCE_RSA2048_InitialPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga0cd79d55aad16ae02949d4aedb3ab69e", null ],
     [ "R_SCE_RSA3072_InitialPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gaad2e7aabd78369d5f8d2fd0278b6ffa7", null ],
@@ -27,5 +28,9 @@ var group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n =
     [ "R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga0546d0c8a9eecf8f061dd2327b667706", null ],
     [ "R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga6d1be095f2c12dd0127a5333ab68947f", null ],
     [ "R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gafe5bec8572c9d44db55e95a20e2cd312", null ],
-    [ "R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga210e302666164e0d8339d0010c2e1a5e", null ]
+    [ "R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga210e302666164e0d8339d0010c2e1a5e", null ],
+    [ "R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gad7c71e894d01806372dbcbc276bdcd15", null ],
+    [ "R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gab951aaca8ae950fef46d102a5cceb77c", null ],
+    [ "R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gada8d15ab4a3adbe2e691e3b32a2ea7b9", null ],
+    [ "R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap", "group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gab942f4db18f3fd84da4ca7ce29e236e3", null ]
 ];

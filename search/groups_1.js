@@ -7,6 +7,7 @@ var searchData=
   ['audio_20playback_20interface',['AUDIO PLAYBACK Interface',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html',1,'']]],
   ['aws_20corehttp',['AWS coreHTTP',['../group___a_w_s__core_h_t_t_p.html',1,'']]],
   ['aws_20mqtt',['AWS MQTT',['../group___a_w_s___m_q_t_t.html',1,'']]],
+  ['aws_20ota_20pal_20on_20mcuboot_20_28rm_5faws_5fota_5fpal_5fmcuboot_29',['AWS OTA PAL on MCUBoot (rm_aws_ota_pal_mcuboot)',['../group___a_w_s___o_t_a___p_a_l___m_c_u_b_o_o_t.html',1,'']]],
   ['aws_20pkcs11_20pal_20on_20littlefs_20_28rm_5faws_5fpkcs11_5fpal_5flittlefs_29',['AWS PKCS11 PAL on LittleFS (rm_aws_pkcs11_pal_littlefs)',['../group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html',1,'']]],
   ['aws_20device_20provisioning',['AWS Device Provisioning',['../group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html',1,'']]],
   ['adc_20and_20pwm_20modulation_20_28rm_5fmotor_5f120_5fdriver_29',['ADC and PWM modulation (rm_motor_120_driver)',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html',1,'']]],

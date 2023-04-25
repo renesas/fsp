@@ -1,5 +1,8 @@
 var NAVTREEINDEX14 =
 {
+"group___g_a_p___a_p_i.html#ga16c1cfba3c8b1c5ebee76d04d6ab5d06":[5,2,4,0,188],
+"group___g_a_p___a_p_i.html#ga173d08bb5b7e0502e6f5f34740924c4e":[5,2,4,0,243],
+"group___g_a_p___a_p_i.html#ga1834a7766f984fe07cf708f92222b42f":[5,2,4,0,159],
 "group___g_a_p___a_p_i.html#ga1872cc0cb04b7b2929100e7aac51b0b6":[5,2,4,0,133],
 "group___g_a_p___a_p_i.html#ga18bc350fdf261161538a288dd30b7fb4":[5,2,4,0,144],
 "group___g_a_p___a_p_i.html#ga1b7495214e738848a57826b0c4c3c6bf":[5,2,4,0,141],
@@ -246,8 +249,5 @@ var NAVTREEINDEX14 =
 "group___g_a_p___a_p_i.html#structst__ble__gap__adv__off__evt__t":[5,2,4,0,30],
 "group___g_a_p___a_p_i.html#structst__ble__gap__adv__rept__evt__t":[5,2,4,0,27],
 "group___g_a_p___a_p_i.html#structst__ble__gap__adv__rept__t":[5,2,4,0,24],
-"group___g_a_p___a_p_i.html#structst__ble__gap__adv__set__evt__t":[5,2,4,0,29],
-"group___g_a_p___a_p_i.html#structst__ble__gap__auth__info__t":[5,2,4,0,14],
-"group___g_a_p___a_p_i.html#structst__ble__gap__bond__info__t":[5,2,4,0,62],
-"group___g_a_p___a_p_i.html#structst__ble__gap__cmd__err__evt__t":[5,2,4,0,23]
+"group___g_a_p___a_p_i.html#structst__ble__gap__adv__set__evt__t":[5,2,4,0,29]
 };

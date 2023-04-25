@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -530,6 +530,13 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <h2>Getting Started: Creating a SCE Protected Mode Project</h2>
 <p>Start by creating a new project in e2 studio or RASC. On the Stacks tab, add New &gt; Security &gt; SCE Protected Mode. For information on how to install and update secure keys, refer to the Application Note R11AN0496.</p>
+<h2>Reducing intialization time</h2>
+<p>The SCE intialization sequence can be modified to support a smaller subset of features and allow for a shorter intialization period. This is particularly useful in cases where startup time is important and the cryptographic features that are required are known in advance. The current fast boot configuration option supports the cryptographic primitives requried by MCUBoot including:</p>
+<ul>
+<li>RSA 3K/4K signature verification</li>
+<li>ECC P256 signature verification</li>
+<li>SHA224/256 and GHASH calcuation</li>
+</ul>
 <h2><a class="anchor" id="r-sce-protected-limitations"></a>
 Limitations</h2>
 <h2><a class="anchor" id="r-sce-protected-ecdsa-secp384r1"></a>
@@ -541,7 +548,7 @@ Usage of R_SCE_ECDSA_secp384r1_SignatureGenerate/Verify</h2>
 </ul>
 <h3><a class="anchor" id="r-sce-protected-user-sha384"></a>
 SCE_USER_SHA_384_FUNCTION()</h3>
-<div class="fragment"><div class="line">uint32_t SCE_USER_SHA_384_FUNCTION(uint8_t * message, uint8_t * digest, uint32_t message_length)</div></div><!-- fragment --><p> SHA-384 hash calculation is performed for an area extending the number of bytes specified by the argument message_length from the address specified by the argument message. The calculation result should be stored at the address specified by the argument digest. </p><dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line">uint32_t SCE_USER_SHA_384_FUNCTION(uint8_t *message, uint8_t* digest, uint32_t message_length)</div></div><!-- fragment --><p> SHA-384 hash calculation is performed for an area extending the number of bytes specified by the argument message_length from the address specified by the argument message. The calculation result should be stored at the address specified by the argument digest. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">message</td><td>[in] Start address of message </td></tr>
     <tr><td class="paramname">digest</td><td>[in,out] address for storing hash calculation result (48 bytes) </td></tr>
@@ -8732,7 +8739,7 @@ Please note that this is slightly contrary to the protected mode policy as it om
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

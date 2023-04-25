@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -185,7 +185,7 @@ Functions</h2></td></tr>
 Overview</h1>
 <h2><a class="anchor" id="rm-audio-playback-pwm-features"></a>
 Features</h2>
-<p>The Audio Playback with PWM middleware is used to play audio streams at user selected playback rate using Pulse Width Modulation hardware on GPT or AGT timers. This module can play the 16 bit or 32 bit(available on selected MCUs) uncompressed, unsigned PCM audio stream when AGT is selected as PWM interface and can play 32 bit uncompressed, unsigned PCM audio stream when GPT is used as PWM interface. The application code is expected to convert the signed PCM data to unsigned PCM data and scale it with the playback rate before starting the playback.</p>
+<p>The Audio Playback with PWM middleware is used to play audio streams at user selected playback rate using Pulse Width Modulation hardware on GPT or AGT timers. This module can play 16-bit or 32-bit(available on selected MCUs) uncompressed, unsigned PCM audio stream when AGT is selected as PWM interface, and can play 32-bit uncompressed, unsigned PCM audio stream when GPT is used as PWM interface. Note some MCUs have 16-bit GPT timers/channels. In this case audio stream still needs to be 32 bits because the duty cycle register is 32-bit - just the upper 16 bits are ignored. The application code is expected to convert the signed PCM data to unsigned PCM data and scale it with the playback rate before starting the playback.</p>
 <h1><a class="anchor" id="rm-audio-playback-pwm-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_audio_playback_pwm</h2>
@@ -220,7 +220,7 @@ This module can be added to the Stacks tab via New Stack &gt; Audio &gt; Audio P
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_rm_audio_playback0 </td><td>Module name. </td></tr>
 <tr>
-<td>General &gt; Playback Speed (Hz)</td><td>Manual Entry</td><td>44100 </td><td>Enter playback sample rate in Hz. </td></tr>
+<td>General &gt; Playback Speed (Hz)</td><td>Must be an integer and greater than 0</td><td>44100 </td><td>Enter playback sample rate in Hz. </td></tr>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>g_rm_audio_playback0_callback </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the playback completes. </td></tr>
 <tr>
@@ -521,7 +521,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

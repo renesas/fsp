@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -216,9 +216,9 @@ Enable </li>
 <tr>
 <td>DNS Request Attempts</td><td>Value must be an integer</td><td>2 </td><td>When a cache is present, ipconfigDNS_REQUEST_ATTEMPTS can be kept low and also DNS may use small timeouts. </td></tr>
 <tr>
-<td>IP stack task priority</td><td>Manual Entry</td><td>configMAX_PRIORITIES - 2 </td><td>Set the priority of the task that executes the IP stack. </td></tr>
+<td>IP stack task priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMAX_PRIORITIES - 2 </td><td>Set the priority of the task that executes the IP stack. </td></tr>
 <tr>
-<td>Stack size in words (not bytes)</td><td>Manual Entry</td><td>configMINIMAL_STACK_SIZE * 5 </td><td>The size, in words (not bytes), of the stack allocated to the FreeRTOS+TCP stack. </td></tr>
+<td>Stack size in words (not bytes)</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE * 5 </td><td>The size, in words (not bytes), of the stack allocated to the FreeRTOS+TCP stack. </td></tr>
 <tr>
 <td>Network Events call vApplicationIPNetworkEventHook</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -228,7 +228,7 @@ Enable </li>
 </ul>
 </td><td>Enable </td><td>vApplicationIPNetworkEventHook is called when the network connects or disconnects. </td></tr>
 <tr>
-<td>Max UDP send block time</td><td>Manual Entry</td><td>15000 / portTICK_PERIOD_MS </td><td>Max UDP send block time </td></tr>
+<td>Max UDP send block time</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>15000 / portTICK_PERIOD_MS </td><td>Max UDP send block time </td></tr>
 <tr>
 <td>Use DHCP</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -270,7 +270,7 @@ Enable </li>
 </ul>
 </td><td>Disable </td><td>Provide an implementation of the DHCP callback function(xApplicationDHCPHook) </td></tr>
 <tr>
-<td>Interval between transmissions</td><td>Manual Entry</td><td>120000 / portTICK_PERIOD_MS </td><td>When ipconfigUSE_DHCP is set to 1, DHCP requests will be sent out at increasing time intervals until either a reply is received from a DHCP server and accepted, or the interval between transmissions reaches ipconfigMAXIMUM_DISCOVER_TX_PERIOD. </td></tr>
+<td>Interval between transmissions</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>120000 / portTICK_PERIOD_MS </td><td>When ipconfigUSE_DHCP is set to 1, DHCP requests will be sent out at increasing time intervals until either a reply is received from a DHCP server and accepted, or the interval between transmissions reaches ipconfigMAXIMUM_DISCOVER_TX_PERIOD. </td></tr>
 <tr>
 <td>ARP Cache Entries</td><td>Value must be an integer</td><td>6 </td><td>The maximum number of entries that can exist in the ARP table at any one time </td></tr>
 <tr>
@@ -288,7 +288,7 @@ Enable </li>
 <tr>
 <td>Total number of available network buffers</td><td>Value must be an integer</td><td>10 </td><td>Define the total number of network buffer that are available to the IP stack </td></tr>
 <tr>
-<td>Set the maximum number of events</td><td>Please enter a valid function name without spaces or funny characters</td><td>ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS + 5 </td><td>Set the maximum number of events that can be queued for processing at any one time. The event queue must be a minimum of 5 greater than the total number of network buffers </td></tr>
+<td>Set the maximum number of events</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS + 5 </td><td>Set the maximum number of events that can be queued for processing at any one time. The event queue must be a minimum of 5 greater than the total number of network buffers </td></tr>
 <tr>
 <td>Enable FreeRTOS_sendto() without calling Bind</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -470,7 +470,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

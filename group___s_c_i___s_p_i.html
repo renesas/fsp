@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.3.0</span>
+   &#160;<span id="projectnumber">Release v4.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -337,6 +337,8 @@ Clock Configuration</h2>
 <tr>
 <td>RA4M3</td><td>PCLKA</td></tr>
 <tr>
+<td>RA4T1</td><td>PCLKA</td></tr>
+<tr>
 <td>RA4W1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6E1</td><td>PCLKA</td></tr>
@@ -354,6 +356,8 @@ Clock Configuration</h2>
 <td>RA6M5</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6T1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6T3</td><td>PCLKA</td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r_sci_spi-pin-configuration"></a>
@@ -365,8 +369,12 @@ Usage Notes</h1>
 <h2>Transfer Complete Event</h2>
 <p>The transfer complete event is triggered when all of the data has been transfered. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
 <h2>Performance</h2>
-<p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors.</p>
-<p>In order to improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC.</p>
+<p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors. In order to improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC.</p>
+<p>Also note when using DTC for data transfer, SCI SPI can experience overrun error if the application makes heavy use of DMAC and/or another DTC instance. This is because DMAC has a higher priority over DTC in arbitration for the mastership of the DMA bus, and the arbitration between different triggers/transfers in DTC is done based on interrupt/trigger priority. Overrun error can be averted with one of the following options:</p><ol type="1">
+<li>If SCI SPI uses DTC for data transfer, avoid the use of DMAC or another DTC instance in an application.</li>
+<li>If DMAC/DTC is a must for other data transfers, avoid the use of DTC with SCI SPI.</li>
+<li>Use the RSPI instead of SCI SPI. The RSPI hardware can handle overrun conditions.</li>
+</ol>
 <h3>Transmit From RXI Interrupt</h3>
 <p>After every byte, the SCI SPI peripheral generates a transmit buffer empty interrupt and a receive buffer full interrupt. Whenever possible, the SCI_SPI module handles both interrupts in the receive buffer full interrupt. This improves performance when the DTC is not being used.</p>
 <h2>Slave Select Pin</h2>
@@ -869,7 +877,7 @@ Set to 0 to disable MDDR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.3.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

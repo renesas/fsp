@@ -108,6 +108,7 @@ var searchData=
   ['aes128gcm_5fencryptfinal',['AES128GCM_EncryptFinal',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ae00f34091ddf1b227e2f0ba40ca00fa8',1,'sce_api_t']]],
   ['aes128gcm_5fencryptinit',['AES128GCM_EncryptInit',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a6c31f19dfcdd5b112dbafb698377026c',1,'sce_api_t']]],
   ['aes128gcm_5fencryptupdate',['AES128GCM_EncryptUpdate',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a7b3f4ea7859c2afa6437ae84756e1afc',1,'sce_api_t']]],
+  ['aes192_5fencryptedkeywrap',['AES192_EncryptedKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#aaa9cae5d23140a197283a2178018e06a',1,'sce_key_injection_api_t']]],
   ['aes192_5finitialkeywrap',['AES192_InitialKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a2420d2236a07236deda0563f081e5c73',1,'sce_key_injection_api_t']]],
   ['aes256_5fencryptedkeywrap',['AES256_EncryptedKeyWrap',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aabd77c807d7e599627969dd11cc5db18',1,'sce_api_t::AES256_EncryptedKeyWrap()'],['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5a2a7cb14bf667ec221c1469c903d33e',1,'sce_key_injection_api_t::AES256_EncryptedKeyWrap()']]],
   ['aes256_5finitialkeywrap',['AES256_InitialKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a051e586f0c02139d0689e80fdc3288d4',1,'sce_key_injection_api_t']]],
