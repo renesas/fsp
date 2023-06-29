@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -197,7 +197,8 @@ Features</h2>
 <li>Initialize, start and stop the SLCDC<a class="anchor" id="um_slcdc_initializing_lcd"></a><a class="anchor" id="um_slcdc_enable_and_disable_lcd"></a><a class="anchor" id="um_slcdc_stop_display_and_power"></a></li>
 <li>Set and modify the output pattern<a class="anchor" id="um_slcdc_display_pattern"></a><a class="anchor" id="um_slcdc_segment_register"></a></li>
 <li>Blink between two patterns based on a periodic RTC interrupt signal<a class="anchor" id="um_slcdc_blinking_display"></a></li>
-<li>Adjust display contrast (only when using internal voltage boosting)<a class="anchor" id="um_slcdc_display_adjustment"></a> </li>
+<li>Adjust display contrast (only when using internal voltage boosting)<a class="anchor" id="um_slcdc_display_adjustment"></a></li>
+<li>Select reference voltage mode: VL1 reference mode (1/3 or 1/4 Bias) and VL2 reference mode (1/3 Bias) can be selected at internal voltage boosting method, conventional VCC reference mode (1/3 Bias) and VL4 reference mode (1/3) Bias can be selected at capacitor split method<a class="anchor" id="um_slcdc_reference_voltage"></a> </li>
 </ul>
 <h1><a class="anchor" id="r-slcdc-configuration"></a>
 Configuration</h1>
@@ -225,19 +226,9 @@ This module can be added to the Stacks tab via New Stack &gt; Graphics &gt; Segm
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_slcdc0 </td><td>Module Name </td></tr>
 <tr>
-<td>Clock &gt; Source</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-LOCO</li>
-<li>
-SOSC</li>
-<li>
-MOSC</li>
-<li>
-HOCO</li>
-</ul>
-</td><td>HOCO </td><td>Select the clock source. </td></tr>
+<td>Clock &gt; Source</td><td>MCU Specific Options</td><td></td><td>Select the clock source. </td></tr>
 <tr>
-<td>Clock &gt; Divisor</td><td>Refer to the RA Configuration tool for available options.</td><td>(HOCO/MOSC) 16384 </td><td>Select the clock divisor. </td></tr>
+<td>Clock &gt; Divisor</td><td>MCU Specific Options</td><td></td><td>Select the clock divisor. </td></tr>
 <tr>
 <td>Output &gt; Bias method</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -249,19 +240,7 @@ HOCO</li>
 </ul>
 </td><td>1/2 bias </td><td>Select the bias method. This determines the number of voltage levels used to create the waveforms. </td></tr>
 <tr>
-<td>Output &gt; Timeslice</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Static</li>
-<li>
-2-slice</li>
-<li>
-3-slice</li>
-<li>
-4-slice</li>
-<li>
-8-slice</li>
-</ul>
-</td><td>Static </td><td>Select the LCD time slice. The number of slices should match the number of common (COM) pins for your LCD panel. </td></tr>
+<td>Output &gt; Timeslice</td><td>MCU Specific Options</td><td></td><td>Select the LCD time slice. The number of slices should match the number of common (COM) pins for your LCD panel. </td></tr>
 <tr>
 <td>Output &gt; Waveform</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -281,12 +260,48 @@ Capacitor split</li>
 </ul>
 </td><td>External resistance division </td><td>Select the LCD drive method. </td></tr>
 <tr>
-<td>Output &gt; Default contrast (if available)</td><td>Refer to the RA Configuration tool for available options.</td><td>0 </td><td>Select the default contrast level. </td></tr>
+<td>Output &gt; Reference Voltage</td><td>MCU Specific Options</td><td></td><td>Select the LCD reference voltage. </td></tr>
+<tr>
+<td>Output &gt; Default contrast (if available)</td><td>MCU Specific Options</td><td></td><td>Select the default contrast level. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-slcdc-valid-configs"></a>
 Valid Configurations</h2>
 <p>Though there are many setting combinations only a limited subset are supported by the SLCDC peripheral hardware:</p>
+<p>Boards have feature Select reference voltage mode (see User's Manual (r01uh1005ej0050) for details)</p>
+<table class="doxtable">
+<tr>
+<th>Waveform </th><th>Slices </th><th>Bias </th><th>External Resistance </th><th>Internal boosting VL1 </th><th>Internal boosting VL2 </th><th>Capacitor split VCC </th><th>Capacitor split VL4  </th></tr>
+<tr>
+<td>A </td><td>8 </td><td>1/4 </td><td>Available </td><td>Available </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td></tr>
+<tr>
+<td>A </td><td>6 </td><td>1/4 </td><td>&mdash; </td><td>Available </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td></tr>
+<tr>
+<td>A </td><td>8 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>A </td><td>6 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>A </td><td>4 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>A </td><td>3 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>A </td><td>3 </td><td>1/2 </td><td>Available </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td></tr>
+<tr>
+<td>A </td><td>2 </td><td>1/2 </td><td>Available </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td></tr>
+<tr>
+<td>A </td><td>Static </td><td>&mdash; </td><td>Available </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td></tr>
+<tr>
+<td>B </td><td>8 </td><td>1/4 </td><td>Available </td><td>Available </td><td>&mdash; </td><td>&mdash; </td><td>&mdash; </td></tr>
+<tr>
+<td>B </td><td>8 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>B </td><td>6 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>B </td><td>4 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+<tr>
+<td>B </td><td>3 </td><td>1/3 </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td><td>Available </td></tr>
+</table>
+<p>Others:</p>
 <table class="doxtable">
 <tr>
 <th>Waveform </th><th>Slices </th><th>Bias </th><th>External Resistance </th><th>Internal Boost </th><th>Capacitor Split  </th></tr>
@@ -309,7 +324,8 @@ Valid Configurations</h2>
 </table>
 <h2><a class="anchor" id="r-slcdc-clock-configuration"></a>
 Clock Configuration</h2>
-<p><a class="anchor" id="um_slcdc_clock_settings"></a> The SLCDC clock can be sourced from the main clock (MOSC), sub-clock (SOSC), HOCO or LOCO. Dividers of 4 to 1024 are available for SOSC/LOCO and 256 to 524288 for MOSC/HOCO. It is recommended to adjust the divisor such that the resulting clock provides a frame frequency of 32-128 Hz.</p>
+<p><a class="anchor" id="um_slcdc_clock_settings"></a> User's Manual (r01uh1005ej0050): The SLCDC clock can be sourced from the main clock (MOSC), sub-clock (SOSC), HOCO, LOCO or MOCO. Dividers of 4 to 1024 are available for SOSC/LOCO and 256 to 1048576 are for MOSC/HOCO/MOCO. It is recommended to adjust the divisor such that the resulting clock provides a frame frequency of 32-128 Hz (some conditions have a frame frequency 24 to 128 Hz - see Table 36.10 in the User's Manual (r01uh1005ej0050) for details).</p>
+<p>Others: The SLCDC clock can be sourced from the main clock (MOSC), sub-clock (SOSC), HOCO or LOCO. Dividers of 4 to 1024 are available for SOSC/LOCO and 256 to 524288 for MOSC/HOCO. It is recommended to adjust the divisor such that the resulting clock provides a frame frequency of 32-128 Hz.</p>
 <dl class="section note"><dt>Note</dt><dd>Make sure your desired source clock is enabled and running before starting SLCDC output.</dd>
 <dd>
 Do not set the segment LCD clock over 512 Hz when using internal boost or capacitor split modes.</dd></dl>
@@ -675,7 +691,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -30,6 +30,7 @@ var searchData=
   ['bluetooth_20low_20energy_20mesh_20network_20upper_20trans_20_28rm_5fble_5fmesh_5fupper_5ftrans_29',['Bluetooth Low Energy Mesh Network Upper Trans (rm_ble_mesh_upper_trans)',['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html',1,'']]],
   ['ble_20mesh_20upper_20trans_20interface',['BLE Mesh Upper Trans Interface',['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html',1,'']]],
   ['block_20media_20interface',['Block Media Interface',['../group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html',1,'']]],
+  ['block_20media_20ram_20_28rm_5fblock_5fmedia_5fram_29',['Block Media RAM (rm_block_media_ram)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html',1,'']]],
   ['block_20media_20sd_2fmmc_20_28rm_5fblock_5fmedia_5fsdmmc_29',['Block Media SD/MMC (rm_block_media_sdmmc)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html',1,'']]],
   ['block_20media_20spi_20flash_20_28rm_5fblock_5fmedia_5fspi_29',['Block Media SPI Flash (rm_block_media_spi)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html',1,'']]],
   ['block_20media_20usb_20_28rm_5fblock_5fmedia_5fusb_29',['Block Media USB (rm_block_media_usb)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html',1,'']]],

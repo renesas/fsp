@@ -1,6 +1,7 @@
 var group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s =
 [
     [ "Block Media Custom Implementation (rm_block_media_user)", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_e_r.html", null ],
+    [ "Block Media RAM (rm_block_media_ram)", "group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m" ],
     [ "Block Media SD/MMC (rm_block_media_sdmmc)", "group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c" ],
     [ "Block Media SPI Flash (rm_block_media_spi)", "group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i" ],
     [ "Block Media USB (rm_block_media_usb)", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b" ],

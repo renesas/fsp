@@ -1,5 +1,9 @@
 var group___r_t_c =
 [
+    [ "rtc_extended_cfg_t", "group___r_t_c.html#structrtc__extended__cfg__t", [
+      [ "alarm1_ipl", "group___r_t_c.html#ac36b179a4311fe95bde1820384dd35cc", null ],
+      [ "alarm1_irq", "group___r_t_c.html#ae7f72a6fbe27e9a3ef60c99022798c9b", null ]
+    ] ],
     [ "rtc_instance_ctrl_t", "group___r_t_c.html#structrtc__instance__ctrl__t", [
       [ "open", "group___r_t_c.html#a531f0ac7759fe0ec50841022ae9a9bfe", null ],
       [ "p_cfg", "group___r_t_c.html#a02ff7a87b8c7fdf8ec2ecc4ad4a817c6", null ],

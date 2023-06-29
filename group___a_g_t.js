@@ -7,7 +7,8 @@ var group___a_g_t =
       [ "measurement_mode", "group___a_g_t.html#a4e7c2f097b585a98de264c40872b7780", null ],
       [ "agtio_filter", "group___a_g_t.html#a01cf20505a0b410881c7a6ee20cfae9c", null ],
       [ "enable_pin", "group___a_g_t.html#a1de9ee52b4fcb42c858e229c57ebe48c", null ],
-      [ "trigger_edge", "group___a_g_t.html#a037c0d66459f040e08d09ef9ac75e346", null ]
+      [ "trigger_edge", "group___a_g_t.html#a037c0d66459f040e08d09ef9ac75e346", null ],
+      [ "counter_bit_width", "group___a_g_t.html#a09cb8f9a3ba35a6c10b9c8d7292337ea", null ]
     ] ],
     [ "agt_clock_t", "group___a_g_t.html#ga5281c5967b6830f430bdf20ac9424f1c", [
       [ "AGT_CLOCK_PCLKB", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1ca50fe24f4105e9689a219df33fcd0b843", null ],
@@ -48,6 +49,11 @@ var group___a_g_t =
       [ "AGT_PIN_CFG_DISABLED", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a34ef90e5d639605e1f468af8df43094b", null ],
       [ "AGT_PIN_CFG_START_LEVEL_LOW", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a3fab671eb8f52a392eeb9bb91896f5f5", null ],
       [ "AGT_PIN_CFG_START_LEVEL_HIGH", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a49e8e6f466efe14a756d1f684b7c01bb", null ]
+    ] ],
+    [ "agt_counter_bit_width_t", "group___a_g_t.html#ga5f8ff3a9f2e9e5316dbd8e57f7dbe923", [
+      [ "AGT_COUNTER_BIT_WIDTH_DEFAULT", "group___a_g_t.html#gga5f8ff3a9f2e9e5316dbd8e57f7dbe923a7aeba293d0af43fe0a5c1875221dbc3b", null ],
+      [ "AGT_COUNTER_BIT_WIDTH_16", "group___a_g_t.html#gga5f8ff3a9f2e9e5316dbd8e57f7dbe923a3eefc8570114f14ea3bb3c3ccc3acb2d", null ],
+      [ "AGT_COUNTER_BIT_WIDTH_32", "group___a_g_t.html#gga5f8ff3a9f2e9e5316dbd8e57f7dbe923a0c40a808ec40c17d16ab51a139a183fe", null ]
     ] ],
     [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
     [ "R_AGT_Start", "group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d", null ],

@@ -44,6 +44,7 @@ var searchData=
   ['adc_5fwindow_5fb_5fmode_5ft',['adc_window_b_mode_t',['../group___a_d_c.html#ga0d0c470ca46c2801d243c06f03916e67',1,'r_adc.h']]],
   ['agt_5fagtio_5ffilter_5ft',['agt_agtio_filter_t',['../group___a_g_t.html#ga511738730422c0c8cc2b9de318005d1b',1,'r_agt.h']]],
   ['agt_5fclock_5ft',['agt_clock_t',['../group___a_g_t.html#ga5281c5967b6830f430bdf20ac9424f1c',1,'r_agt.h']]],
+  ['agt_5fcounter_5fbit_5fwidth_5ft',['agt_counter_bit_width_t',['../group___a_g_t.html#ga5f8ff3a9f2e9e5316dbd8e57f7dbe923',1,'r_agt.h']]],
   ['agt_5fenable_5fpin_5ft',['agt_enable_pin_t',['../group___a_g_t.html#ga310d73c260c901d1b8e7585dcb8f7507',1,'r_agt.h']]],
   ['agt_5fmeasure_5ft',['agt_measure_t',['../group___a_g_t.html#ga53f383c41ec6fc2cd240e67fab1b969f',1,'r_agt.h']]],
   ['agt_5foutput_5fpin_5ft',['agt_output_pin_t',['../group___a_g_t.html#gab3f3aa0cc9a2951751e76f493dd429eb',1,'r_agt.h']]],

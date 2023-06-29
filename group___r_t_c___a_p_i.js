@@ -18,7 +18,8 @@ var group___r_t_c___a_p_i =
       [ "mday_match", "group___r_t_c___a_p_i.html#a40c6580113cd30f538f7985b2e6bed46", null ],
       [ "mon_match", "group___r_t_c___a_p_i.html#a1037fb218fb45e450dd41965a9ca1df7", null ],
       [ "year_match", "group___r_t_c___a_p_i.html#ab20077ad52e2ef1a05a206d3cf216662", null ],
-      [ "dayofweek_match", "group___r_t_c___a_p_i.html#a7c550dd3aaa641771433b71675a41acf", null ]
+      [ "dayofweek_match", "group___r_t_c___a_p_i.html#a7c550dd3aaa641771433b71675a41acf", null ],
+      [ "channel", "group___r_t_c___a_p_i.html#ae9bd30168ad8a2932e542beaed85b2e1", null ]
     ] ],
     [ "rtc_info_t", "group___r_t_c___a_p_i.html#structrtc__info__t", [
       [ "clock_source", "group___r_t_c___a_p_i.html#aba0edee87eb628db01fb1fa070a0c144", null ],
@@ -60,8 +61,10 @@ var group___r_t_c___a_p_i =
     [ "rtc_ctrl_t", "group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e", null ],
     [ "rtc_event_t", "group___r_t_c___a_p_i.html#gad2e192ed9a33b6c005c2c19ccbd6a21b", [
       [ "RTC_EVENT_ALARM_IRQ", "group___r_t_c___a_p_i.html#ggad2e192ed9a33b6c005c2c19ccbd6a21bab2d201ffa3ef8219d41fec7009c5a3d4", null ],
+      [ "RTC_EVENT_ALARM1_IRQ", "group___r_t_c___a_p_i.html#ggad2e192ed9a33b6c005c2c19ccbd6a21bad269f3ac02b4c6a8cd6b0be90b62ba30", null ],
       [ "RTC_EVENT_PERIODIC_IRQ", "group___r_t_c___a_p_i.html#ggad2e192ed9a33b6c005c2c19ccbd6a21ba32818d089c15c50d17a13dce861db7d8", null ]
     ] ],
+    [ "rtc_alarm_channel_t", "group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1", null ],
     [ "rtc_clock_source_t", "group___r_t_c___a_p_i.html#gad8eef26a825fa4a0c5a417f8be08ccc6", [
       [ "RTC_CLOCK_SOURCE_SUBCLK", "group___r_t_c___a_p_i.html#ggad8eef26a825fa4a0c5a417f8be08ccc6a7b64e5bbc3adc81add25128016631364", null ],
       [ "RTC_CLOCK_SOURCE_LOCO", "group___r_t_c___a_p_i.html#ggad8eef26a825fa4a0c5a417f8be08ccc6abd7cdef56193166a8a680504e1f3f5fa", null ]

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -396,7 +396,7 @@ Low Power Modes</h2>
 <p><a class="anchor" id="um_threadx_port_low_power_mode_in_idle_loop"></a>The idle processing executes WFI() when no thread is ready to run. If the MCU is configured to enter software standby mode or deep software standby mode when the idle processing executes WFI(), the RA ThreadX port changes the low power mode to sleep mode so the idle processing can wake from SysTick. The low power mode settings are restored when the MCU wakes from sleep mode.</p>
 <h2><a class="anchor" id="r-threadx-port-trustzone-integration"></a>
 TrustZone Integration</h2>
-<p><a class="anchor" id="um_threadx_port_trustzone"></a>When using an RTOS in a TrustZone project, ARM recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the thread has allocated a secure context (using tx_thread_secure_stack_allocate).</p>
+<p><a class="anchor" id="um_threadx_port_trustzone"></a>When using an RTOS in a TrustZone project, Arm recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the thread has allocated a secure context (using tx_thread_secure_stack_allocate).</p>
 <p>The secure context can be freed by deleting the thread or calling tx_thread_secure_stack_free.</p>
 <h1><a class="anchor" id="r-threadx-port-examples"></a>
 Examples</h1>
@@ -410,7 +410,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

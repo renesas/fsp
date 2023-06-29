@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['rai_5fdata_5fcollector_5fdata_5ftype_5ft',['rai_data_collector_data_type_t',['../group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ga5ebafdaaa775caf42d3b0465d9e0abb9',1,'rm_rai_data_collector_api.h']]],
+  ['rai_5fdata_5fcollector_5ferror_5fevent_5ft',['rai_data_collector_error_event_t',['../group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ga525e6a9d22d8fbd8772bd27f1ff92b5f',1,'rm_rai_data_collector_api.h']]],
   ['rm_5fble_5fmesh_5faccess_5fiv_5fupdate_5ftest_5fmode_5ft',['rm_ble_mesh_access_iv_update_test_mode_t',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gabb73b27e0f2e4fe7b21b8259b9cc7f02',1,'rm_ble_mesh_access_api.h']]],
   ['rm_5fble_5fmesh_5faccess_5fmessage_5fopcode_5ft',['rm_ble_mesh_access_message_opcode_t',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ga96b80f220e372887c3594055c7982cd7',1,'rm_ble_mesh_access_api.h']]],
   ['rm_5fble_5fmesh_5faccess_5fmodel_5fid_5finfo_5ft',['rm_ble_mesh_access_model_id_info_t',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaa6cd952969ae7a96e940a5208e5833d6',1,'rm_ble_mesh_access_api.h']]],
@@ -103,6 +105,7 @@ var searchData=
   ['rm_5fzmod4xxx_5fevent_5ft',['rm_zmod4xxx_event_t',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#gadd54ca8592a0f7cb81913d2250e89060',1,'rm_zmod4xxx_api.h']]],
   ['rm_5fzmod4xxx_5flib_5ftype_5ft',['rm_zmod4xxx_lib_type_t',['../group___r_m___z_m_o_d4_x_x_x.html#gacebf611dd2d5d0b091db57023ea373b6',1,'rm_zmod4xxx.h']]],
   ['rm_5fzmod4xxx_5fsulfur_5fodor_5ft',['rm_zmod4xxx_sulfur_odor_t',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga47f50ad1a54e470fb44b443351c39beb',1,'rm_zmod4xxx_api.h']]],
+  ['rtc_5falarm_5fchannel_5ft',['rtc_alarm_channel_t',['../group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1',1,'r_rtc_api.h']]],
   ['rtc_5fclock_5fsource_5ft',['rtc_clock_source_t',['../group___r_t_c___a_p_i.html#gad8eef26a825fa4a0c5a417f8be08ccc6',1,'r_rtc_api.h']]],
   ['rtc_5ferror_5fadjustment_5fmode_5ft',['rtc_error_adjustment_mode_t',['../group___r_t_c___a_p_i.html#ga4cbfe07cf288ae153c30b4fef99163e7',1,'r_rtc_api.h']]],
   ['rtc_5ferror_5fadjustment_5fperiod_5ft',['rtc_error_adjustment_period_t',['../group___r_t_c___a_p_i.html#gaa9758f6f29579df6e9f5c64ff486c097',1,'r_rtc_api.h']]],

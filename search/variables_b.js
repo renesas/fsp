@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['keep_5falive_5fseconds',['keep_alive_seconds',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a1c0e120b8c6cf61e31c43c560a0daea9',1,'mqtt_onchip_da16xxx_cfg_t']]],
   ['key_5fex_5fparam',['key_ex_param',['../group___g_a_p___a_p_i.html#a4310ea81141b8ddc7089e186aeb6bf66',1,'st_ble_gap_peer_key_info_evt_t']]],
   ['key_5fid',['key_id',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a156a9d174f4f72ea949a1d60b7425761',1,'sce_ecdh_handle_t']]],
   ['key_5fnotf',['key_notf',['../group___g_a_p___a_p_i.html#a80799d7680e6e63d8b35fa77c34bef51',1,'st_ble_gap_pairing_param_t']]],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -296,7 +296,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-mcuboot-port-usage-notes"></a>
 Usage Notes</h1>
 <h2>Getting Started: Creating an MCUboot Project</h2>
-<p>Start by creating a new project in e2 studio or RASC. If the MCU supports TrustZone, select a Flat project. The bootloader resides entirely in Secure memory, but it is considered a flat project because it does not provide any Non-Secure Callable functions. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
+<p>Start by creating a new project in e&sup2; studio or RASC. If the MCU supports TrustZone, select a Flat project. The bootloader resides entirely in Secure memory, but it is considered a flat project because it does not provide any Non-Secure Callable functions. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot &gt; Quick Setup &gt; Call Quick Setup. Add a call to mcuboot_quick_setup() in the application and make any desired updates.</p>
 <dl class="section note"><dt>Note</dt><dd>MCUboot will contain either the verification public key or its hash. During production it is necessary to permanently lock the flash region where MCUboot is programmed to prevent the keys or the code from being modified.</dd></dl>
 <h2>Getting Started: Signing Tool Prerequisite</h2>
@@ -307,7 +307,7 @@ Usage Notes</h1>
 <p>Any existing project can be converted to an MCUboot image.</p>
 <ol type="1">
 <li>If the project was created with a version prior to FSP v3.0.0, update the linker script to the v3.0.0 version before using it as an MCUboot application image.</li>
-<li>Right click the project to convert in e2 studio or RASC and select Properties.</li>
+<li>Right click the project to convert in e&sup2; studio or RASC and select Properties.</li>
 <li>Open C/C++ Build and select Build Variables.</li>
 <li>Click Add...</li>
 <li>For Variable Name, enter BootloaderDataFile. For Type, select File. Browse to the *.bld file created alongside the *.elf file for the associated MCUboot project.</li>
@@ -315,11 +315,11 @@ Usage Notes</h1>
 </ol>
 <p>To convert a TrustZone image, follow the steps above for both the Secure project and the Non-Secure project.</p>
 <p>MCUboot application images must also be signed to work with MCUboot. At a minimum, this involves adding a SHA and MCUboot specific constant data called boot magic in the image trailer.</p>
-<p>Signing can be done on the as a post-build step in e2 studio. To sign the image as a post-build step:</p>
+<p>Signing can be done on the as a post-build step in e&sup2; studio. To sign the image as a post-build step:</p>
 <ol type="1">
 <li>If Linux is used to develop the application image, change the MCUboot property <code>Signing &gt; Python</code> to <code>python3</code>.</li>
 <li>Build the bootloader project to generate the *.bld file. Make sure to build the bootloader project on the same computer as the application image to ensure the path to the signing script is correct.</li>
-<li>Define environment variables in the Properties of the application image project in e2 studio.<ol type="a">
+<li>Define environment variables in the Properties of the application image project in e&sup2; studio.<ol type="a">
 <li>Right click the application image project, and select <b>Properties</b>.</li>
 <li>Select <b>C/C++ Build &gt; Environment</b> on the left.</li>
 <li>Click <b>Add...</b></li>
@@ -345,12 +345,12 @@ Usage Notes</h1>
 <li>The signed image is output next to the application &lt;project&gt;.elf file with the name &lt;project&gt;bin.signed.</li>
 </ol>
 <h2>Getting Started: Download and Debug</h2>
-<p>For projects that do not use TrustZone, debug the MCUboot project using the default configuration. Before running, load the signed image to the address specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e2 studio. Upgrade images can be loaded to the upgrade image slots using the same method.</p>
-<p>For TrustZone projects, debug using the Secure project to ensure the IDAU is partitioned correctly when debugging in e2 studio. Make the following modifications before debugging in e2 studio:</p>
+<p>For projects that do not use TrustZone, debug the MCUboot project using the default configuration. Before running, load the signed image to the address specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e&sup2; studio. Upgrade images can be loaded to the upgrade image slots using the same method.</p>
+<p>For TrustZone projects, debug using the Secure project to ensure the IDAU is partitioned correctly when debugging in e&sup2; studio. Make the following modifications before debugging in e&sup2; studio:</p>
 <ol type="1">
 <li>In the Debug Configurations for your project, on the Startup tab, click Add... to add the MCUboot project *.elf file (Image and Symbols), and optionally the Non-Secure project *.elf file.</li>
 <li>For the Secure and Non-Secure project *.elf file, load Symbols Only.</li>
-<li>After starting to debug, load the signed Secure image and the signed Non-Secure image into the addresses specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e2 studio. Upgrade images can be loaded to the upgrade image slots using the same method.</li>
+<li>After starting to debug, load the signed Secure image and the signed Non-Secure image into the addresses specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e&sup2; studio. Upgrade images can be loaded to the upgrade image slots using the same method.</li>
 </ol>
 <h2>Confirming Upgrade in Swap Mode</h2>
 <p>In Swap Mode operation, if the upgrade image is signed with the &ndash;pad option, MCUboot will install that image as a temporary update where if nothing else is done, a reboot will cause MCUboot to revert to the image version that was swapped out during the upgrade. In order for the updated image to prevent this reversion and make the update permanent, the boot_set_confirmed() must be called from the application.</p>
@@ -442,7 +442,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

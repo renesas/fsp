@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,11 +170,7 @@ $(document).ready(function(){initNavTree('group___s_p_i___f_l_a_s_h___a_p_i.html
 <p>Interface for accessing external SPI flash devices. </p>
 <h1><a class="anchor" id="SPI_FLASH_API_SUMMARY"></a>
 Summary</h1>
-<p>The SPI flash API provides an interface that configures, writes, and erases sectors in SPI flash devices.</p>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___o_s_p_i.html">OSPI Flash (r_ospi)</a></li>
-<li><a class="el" href="group___q_s_p_i.html">QSPI (r_qspi)</a> </li>
-</ul>
+<p>The SPI flash API provides an interface that configures, writes, and erases sectors in SPI flash devices. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -257,17 +253,17 @@ Size of erase for associated command, set to SPI_FLASH_ERASE_SIZE_CHIP_ERASE for
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
+<a id="ae8ecd6bc53c5026ff6ebc78a163c46ee"></a>union <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#unionspi__flash__direct__transfer__t_8____unnamed____">spi_flash_direct_transfer_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="a5120cdb55dcd4ce8da04eb8baa69254d"></a>uint32_t</td>
 <td class="fieldname">
 address</td>
 <td class="fielddoc">
 Starting address. </td></tr>
-<tr><td class="fieldtype">
-<a id="a52ae9ed9880e98f7a02107c2b31b673b"></a>uint32_t</td>
-<td class="fieldname">
-data</td>
-<td class="fielddoc">
-Data. </td></tr>
 <tr><td class="fieldtype">
 <a id="ab20fca5fa35e25becd87abc7539a4246"></a>uint16_t</td>
 <td class="fieldname">
@@ -291,7 +287,7 @@ Command length. </td></tr>
 <td class="fieldname">
 address_length</td>
 <td class="fielddoc">
-Address lengrh. </td></tr>
+Address length. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5e3c48eb88187944722f745231f955f3"></a>uint8_t</td>
 <td class="fieldname">
@@ -321,7 +317,7 @@ Data length. </td></tr>
 <td class="fieldname">
 spi_protocol</td>
 <td class="fielddoc">
-Initial SPI protocol. SPI protocol can be changed in <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a3328711e7e70c8379f4373d2861d785a">spi_flash_api_t::spiProtocolSet</a>. </td></tr>
+Initial SPI protocol. SPI protocol can be changed in <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a423e63cd15ce3984410c2f5cdf717e35">spi_flash_api_t::spiProtocolSet</a>. </td></tr>
 <tr><td class="fieldtype">
 <a id="a40a6269760d8c4aaf75bf84613d1f551"></a><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gae289e2a797dab4712dfc07986f6a3544">spi_flash_read_mode_t</a></td>
 <td class="fieldname">
@@ -462,50 +458,46 @@ write_in_progress</td>
 <div class="textblock"><p>SPI flash implementations follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a6b8a1ae0eed7bca555c94959c1314ae3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a6b8a1ae0eed7bca555c94959c1314ae3">open</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:a6b8a1ae0eed7bca555c94959c1314ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31a1d575f3d8876154d4e217caebf110"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a31a1d575f3d8876154d4e217caebf110">directWrite</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t const *const p_src, uint32_t const bytes, bool const read_after_write)</td></tr>
-<tr class="separator:a31a1d575f3d8876154d4e217caebf110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3366fdcb333cb6950ff38bb35618c401"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a3366fdcb333cb6950ff38bb35618c401">directRead</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
-<tr class="separator:a3366fdcb333cb6950ff38bb35618c401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21da248768dd75281ea7b29f2d243afd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a21da248768dd75281ea7b29f2d243afd">directTransfer</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td></tr>
-<tr class="separator:a21da248768dd75281ea7b29f2d243afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3328711e7e70c8379f4373d2861d785a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a3328711e7e70c8379f4373d2861d785a">spiProtocolSet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> spi_protocol)</td></tr>
-<tr class="separator:a3328711e7e70c8379f4373d2861d785a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61e667a9ae9af76c5f8fd9f1973c6838"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a61e667a9ae9af76c5f8fd9f1973c6838">write</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t const *const p_src, uint8_t *const p_dest, uint32_t byte_count)</td></tr>
-<tr class="separator:a61e667a9ae9af76c5f8fd9f1973c6838"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f241a48dd8f386e19a6e0fe44e8a2d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a0f241a48dd8f386e19a6e0fe44e8a2d9">erase</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_device_address, uint32_t byte_count)</td></tr>
-<tr class="separator:a0f241a48dd8f386e19a6e0fe44e8a2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eea2761178ddd8ca7ef3aacd5c80507"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a1eea2761178ddd8ca7ef3aacd5c80507">statusGet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> *const p_status)</td></tr>
-<tr class="separator:a1eea2761178ddd8ca7ef3aacd5c80507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5c6cc5c82e73038ddcef82a906b966f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab5c6cc5c82e73038ddcef82a906b966f">xipEnter</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:ab5c6cc5c82e73038ddcef82a906b966f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a7c2aae058a733f879ae294c63ce2c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a3a7c2aae058a733f879ae294c63ce2c6">xipExit</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:a3a7c2aae058a733f879ae294c63ce2c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14581133205383b71df54a65439c0dcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a14581133205383b71df54a65439c0dcf">bankSet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint32_t bank)</td></tr>
-<tr class="separator:a14581133205383b71df54a65439c0dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad04434e2c049da61d3389355d5961f31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ad04434e2c049da61d3389355d5961f31">autoCalibrate</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:ad04434e2c049da61d3389355d5961f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16810f14e3fff6ed04f36eca44353785"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a16810f14e3fff6ed04f36eca44353785">close</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:a16810f14e3fff6ed04f36eca44353785"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a4468493abb92f6bf484ed93718f6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a75a4468493abb92f6bf484ed93718f6f">open</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a75a4468493abb92f6bf484ed93718f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebfa0317034f04f53b6b788da0debe80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#aebfa0317034f04f53b6b788da0debe80">directWrite</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t const *const p_src, uint32_t const bytes, bool const read_after_write)</td></tr>
+<tr class="separator:aebfa0317034f04f53b6b788da0debe80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b3bfefb3b1ff0580fe1cce97b81c56f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a4b3bfefb3b1ff0580fe1cce97b81c56f">directRead</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
+<tr class="separator:a4b3bfefb3b1ff0580fe1cce97b81c56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a875857cdb3d6ebf0971115737b9e2989"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a875857cdb3d6ebf0971115737b9e2989">directTransfer</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td></tr>
+<tr class="separator:a875857cdb3d6ebf0971115737b9e2989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423e63cd15ce3984410c2f5cdf717e35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a423e63cd15ce3984410c2f5cdf717e35">spiProtocolSet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> spi_protocol)</td></tr>
+<tr class="separator:a423e63cd15ce3984410c2f5cdf717e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35480fe077054fff8bd41c67dbce88fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a35480fe077054fff8bd41c67dbce88fb">write</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t const *const p_src, uint8_t *const p_dest, uint32_t byte_count)</td></tr>
+<tr class="separator:a35480fe077054fff8bd41c67dbce88fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fb48ee9af80243cf7f8f966b4c6c56e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a4fb48ee9af80243cf7f8f966b4c6c56e">erase</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t *const p_device_address, uint32_t byte_count)</td></tr>
+<tr class="separator:a4fb48ee9af80243cf7f8f966b4c6c56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36600006109effd5c9d47283a7760ce6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a36600006109effd5c9d47283a7760ce6">statusGet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> *const p_status)</td></tr>
+<tr class="separator:a36600006109effd5c9d47283a7760ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48a9a0db1f5bcb24acc9cc1cea14f0ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a48a9a0db1f5bcb24acc9cc1cea14f0ab">xipEnter</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a48a9a0db1f5bcb24acc9cc1cea14f0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00317079cf31b5311592d0845caa4d8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a00317079cf31b5311592d0845caa4d8a">xipExit</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a00317079cf31b5311592d0845caa4d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae581e587fb514ab784257d07a77d6b32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae581e587fb514ab784257d07a77d6b32">bankSet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint32_t bank)</td></tr>
+<tr class="separator:ae581e587fb514ab784257d07a77d6b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac78c55ffe2b7d99681612ce796a384c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ac78c55ffe2b7d99681612ce796a384c5">autoCalibrate</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ac78c55ffe2b7d99681612ce796a384c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28bdae798428b85222739a0b9fd43a15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a28bdae798428b85222739a0b9fd43a15">close</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a28bdae798428b85222739a0b9fd43a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a6b8a1ae0eed7bca555c94959c1314ae3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b8a1ae0eed7bca555c94959c1314ae3">&#9670;&nbsp;</a></span>open</h2>
+<a id="a75a4468493abb92f6bf484ed93718f6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75a4468493abb92f6bf484ed93718f6f">&#9670;&nbsp;</a></span>open</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::open) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a> const *const p_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::open) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open the SPI flash driver module. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open the SPI flash driver module.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -516,22 +508,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a31a1d575f3d8876154d4e217caebf110"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31a1d575f3d8876154d4e217caebf110">&#9670;&nbsp;</a></span>directWrite</h2>
+<a id="aebfa0317034f04f53b6b788da0debe80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebfa0317034f04f53b6b788da0debe80">&#9670;&nbsp;</a></span>directWrite</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directWrite) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t const *const p_src, uint32_t const bytes, bool const read_after_write)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directWrite) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t const *const p_src, uint32_t const bytes, bool const read_after_write)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write raw data to the SPI flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gaf6ab989b108b38433d20f040fab28058">R_OSPI_DirectWrite()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite()</a></li>
-</ul>
-</dd></dl>
+<p>Write raw data to the SPI flash.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -544,22 +532,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a3366fdcb333cb6950ff38bb35618c401"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3366fdcb333cb6950ff38bb35618c401">&#9670;&nbsp;</a></span>directRead</h2>
+<a id="a4b3bfefb3b1ff0580fe1cce97b81c56f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b3bfefb3b1ff0580fe1cce97b81c56f">&#9670;&nbsp;</a></span>directRead</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directRead) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directRead) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read raw data from the SPI flash. Must follow a call to <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a31a1d575f3d8876154d4e217caebf110">spi_flash_api_t::directWrite</a>. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#ga1564458b224a405eac16094481653146">R_OSPI_DirectRead()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#gacddc3f64e5e87d4df22dd0da7a444308">R_QSPI_DirectRead()</a></li>
-</ul>
-</dd></dl>
+<p>Read raw data from the SPI flash. Must follow a call to <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#aebfa0317034f04f53b6b788da0debe80">spi_flash_api_t::directWrite</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -571,22 +555,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a21da248768dd75281ea7b29f2d243afd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21da248768dd75281ea7b29f2d243afd">&#9670;&nbsp;</a></span>directTransfer</h2>
+<a id="a875857cdb3d6ebf0971115737b9e2989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875857cdb3d6ebf0971115737b9e2989">&#9670;&nbsp;</a></span>directTransfer</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directTransfer) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directTransfer) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Direct Read/Write raw data to the SPI flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#gaf3439f15e60af9cf55e15e8016b67875">R_QSPI_DirectTransfer()</a></li>
-</ul>
-</dd></dl>
+<p>Direct Read/Write raw data to the SPI flash.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -598,22 +578,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a3328711e7e70c8379f4373d2861d785a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3328711e7e70c8379f4373d2861d785a">&#9670;&nbsp;</a></span>spiProtocolSet</h2>
+<a id="a423e63cd15ce3984410c2f5cdf717e35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a423e63cd15ce3984410c2f5cdf717e35">&#9670;&nbsp;</a></span>spiProtocolSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::spiProtocolSet) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> spi_protocol)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::spiProtocolSet) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> spi_protocol)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Change the SPI protocol in the driver. The application must change the SPI protocol on the device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#ga444cbc1cfd56931216589b0ead8be582">R_OSPI_SpiProtocolSet()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga7d09918d3ab7458bbd15908f17bae951">R_QSPI_SpiProtocolSet()</a></li>
-</ul>
-</dd></dl>
+<p>Change the SPI protocol in the driver. The application must change the SPI protocol on the device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -624,22 +600,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a61e667a9ae9af76c5f8fd9f1973c6838"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61e667a9ae9af76c5f8fd9f1973c6838">&#9670;&nbsp;</a></span>write</h2>
+<a id="a35480fe077054fff8bd41c67dbce88fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35480fe077054fff8bd41c67dbce88fb">&#9670;&nbsp;</a></span>write</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::write) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t const *const p_src, uint8_t *const p_dest, uint32_t byte_count)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::write) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t const *const p_src, uint8_t *const p_dest, uint32_t byte_count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Program a page of data to the flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4">R_OSPI_Write()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga9d449604f886f5f59952d9e789d5dc65">R_QSPI_Write()</a></li>
-</ul>
-</dd></dl>
+<p>Program a page of data to the flash.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -652,22 +624,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a0f241a48dd8f386e19a6e0fe44e8a2d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f241a48dd8f386e19a6e0fe44e8a2d9">&#9670;&nbsp;</a></span>erase</h2>
+<a id="a4fb48ee9af80243cf7f8f966b4c6c56e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fb48ee9af80243cf7f8f966b4c6c56e">&#9670;&nbsp;</a></span>erase</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::erase) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_device_address, uint32_t byte_count)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::erase) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint8_t *const p_device_address, uint32_t byte_count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Erase a certain number of bytes of the flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gab6b1ae4fbb819789a75de733edad9ecb">R_OSPI_Erase()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#gaa0409e8bb9585e9bd0be17ba9840f8fb">R_QSPI_Erase()</a></li>
-</ul>
-</dd></dl>
+<p>Erase a certain number of bytes of the flash.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -679,22 +647,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a1eea2761178ddd8ca7ef3aacd5c80507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1eea2761178ddd8ca7ef3aacd5c80507">&#9670;&nbsp;</a></span>statusGet</h2>
+<a id="a36600006109effd5c9d47283a7760ce6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36600006109effd5c9d47283a7760ce6">&#9670;&nbsp;</a></span>statusGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::statusGet) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> *const p_status)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::statusGet) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> *const p_status)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the write or erase status of the flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2">R_OSPI_StatusGet()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga03da39d9d9f82ea0dfd0f7cc4f253189">R_QSPI_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get the write or erase status of the flash.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -705,22 +669,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="ab5c6cc5c82e73038ddcef82a906b966f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5c6cc5c82e73038ddcef82a906b966f">&#9670;&nbsp;</a></span>xipEnter</h2>
+<a id="a48a9a0db1f5bcb24acc9cc1cea14f0ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48a9a0db1f5bcb24acc9cc1cea14f0ab">&#9670;&nbsp;</a></span>xipEnter</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::xipEnter) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::xipEnter) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enter XIP mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gaf5282594853d8c2d8bb5949f21365e21">R_OSPI_XipEnter()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga13cbc9d58890d7094712edcf64bc1bf1">R_QSPI_XipEnter()</a></li>
-</ul>
-</dd></dl>
+<p>Enter XIP mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -730,22 +690,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a3a7c2aae058a733f879ae294c63ce2c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a7c2aae058a733f879ae294c63ce2c6">&#9670;&nbsp;</a></span>xipExit</h2>
+<a id="a00317079cf31b5311592d0845caa4d8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00317079cf31b5311592d0845caa4d8a">&#9670;&nbsp;</a></span>xipExit</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::xipExit) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::xipExit) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Exit XIP mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gacea57f7086d808a872db9ec1c54794b8">R_OSPI_XipExit()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga9c894a8a9ef0bb28ba8db701e5a71b3a">R_QSPI_XipExit()</a></li>
-</ul>
-</dd></dl>
+<p>Exit XIP mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -755,22 +711,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a14581133205383b71df54a65439c0dcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14581133205383b71df54a65439c0dcf">&#9670;&nbsp;</a></span>bankSet</h2>
+<a id="ae581e587fb514ab784257d07a77d6b32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae581e587fb514ab784257d07a77d6b32">&#9670;&nbsp;</a></span>bankSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::bankSet) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint32_t bank)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::bankSet) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint32_t bank)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Select the bank to access. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#ga6495853f86b39d1f524d5df3df6c455b">R_OSPI_BankSet()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga3762ca61aea95737c5a018d0aa9bd6f1">R_QSPI_BankSet()</a></li>
-</ul>
-</dd></dl>
+<p>Select the bank to access. See implementation for details.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -781,22 +733,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="ad04434e2c049da61d3389355d5961f31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad04434e2c049da61d3389355d5961f31">&#9670;&nbsp;</a></span>autoCalibrate</h2>
+<a id="ac78c55ffe2b7d99681612ce796a384c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac78c55ffe2b7d99681612ce796a384c5">&#9670;&nbsp;</a></span>autoCalibrate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::autoCalibrate) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::autoCalibrate) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>AutoCalibrate the SPI flash driver module. Expected to be used when auto-calibrating OSPI RAM device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#ga5ec63f4c7e754a3442ca228934febc80">R_OSPI_AutoCalibrate()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga3f163c6c0a41fae3a196d3bf2eeb0907">R_QSPI_AutoCalibrate()</a></li>
-</ul>
-</dd></dl>
+<p>AutoCalibrate the SPI flash driver module. Expected to be used when auto-calibrating OSPI RAM device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -806,22 +754,18 @@ write_in_progress</td>
 
 </div>
 </div>
-<a id="a16810f14e3fff6ed04f36eca44353785"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16810f14e3fff6ed04f36eca44353785">&#9670;&nbsp;</a></span>close</h2>
+<a id="a28bdae798428b85222739a0b9fd43a15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28bdae798428b85222739a0b9fd43a15">&#9670;&nbsp;</a></span>close</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::close) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::close) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the SPI flash driver module. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___o_s_p_i.html#gacc44a5f9c8c6b1b9d62726b7537429d4">R_OSPI_Close()</a></li>
-<li><a class="el" href="group___q_s_p_i.html#ga96b3e76ff7daef41184898e3af0aa1a4">R_QSPI_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close the SPI flash driver module.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
@@ -882,11 +826,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>SPI flash control block. Allocate an instance specific control block to pass into the SPI flash API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___q_s_p_i.html#structqspi__instance__ctrl__t">qspi_instance_ctrl_t</a></li>
-<li><a class="el" href="group___o_s_p_i.html#structospi__instance__ctrl__t">ospi_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>SPI flash control block. Allocate an instance specific control block to pass into the SPI flash API calls. </p>
 
 </div>
 </div>
@@ -933,13 +873,25 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>SPI protocol. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a1b7d1595891e2e14a3dc9e718b5188c3"></a>SPI_FLASH_PROTOCOL_EXTENDED_SPI&#160;</td><td class="fielddoc"><p>Extended SPI mode (commands on 1 line) </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a1b7d1595891e2e14a3dc9e718b5188c3"></a>SPI_FLASH_PROTOCOL_EXTENDED_SPI&#160;</td><td class="fielddoc"><p>Extended SPI mode (commands on 1 line) or 1S-1S-1S protocol mode on OSPI_B. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535abf7718fe53c0e4daa1dcad6f4d6d215e"></a>SPI_FLASH_PROTOCOL_QPI&#160;</td><td class="fielddoc"><p>QPI mode (commands on 4 lines). Note that the application must ensure the device is in QPI mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535aa8b956dd00ae8afcb2e4497fb1b9ab58"></a>SPI_FLASH_PROTOCOL_SOPI&#160;</td><td class="fielddoc"><p>SOPI mode (command and data on 8 lines). Note that the application must ensure the device is in SOPI mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535afd83f451b4164b209b240ebb0f4bb158"></a>SPI_FLASH_PROTOCOL_DOPI&#160;</td><td class="fielddoc"><p>DOPI mode (command and data on 8 lines, dual data rate). Note that the application must ensure the device is in DOPI mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a54c52d62f8a1e16099da8ab9a203a1be"></a>SPI_FLASH_PROTOCOL_4S_4D_4D&#160;</td><td class="fielddoc"><p>4S-4D-4D protocol mode on OSPI_B. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606"></a>SPI_FLASH_PROTOCOL_8D_8D_8D&#160;</td><td class="fielddoc"><p>8D-8D-8D protocol mode on OSPI_B. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a6d421df12293ebbae4fa97b4cf152081"></a>SPI_FLASH_PROTOCOL_1S_2S_2S&#160;</td><td class="fielddoc"><p>1S-2S-2S protocol mode on OSPI_B. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a668b4a0330a7e2de10b77f25fbea4567"></a>SPI_FLASH_PROTOCOL_2S_2S_2S&#160;</td><td class="fielddoc"><p>2S-2S-2S protocol mode on OSPI_B. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535acd8ffe88180ff5b8288dee7739e581a8"></a>SPI_FLASH_PROTOCOL_1S_4S_4S&#160;</td><td class="fielddoc"><p>1S-4S-4S protocol mode on OSPI_B. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05"></a>SPI_FLASH_PROTOCOL_4S_4S_4S&#160;</td><td class="fielddoc"><p>4S-4S-4S protocol mode on OSPI_B. </p>
 </td></tr>
 </table>
 
@@ -960,7 +912,7 @@ Pointer to the API structure for this instance. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga289ef915326b8e75e7d0dd331c2d0797ab4c7c4e57259098044562889ba84709f"></a>SPI_FLASH_ADDRESS_BYTES_3&#160;</td><td class="fielddoc"><p>3 address bytes </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga289ef915326b8e75e7d0dd331c2d0797a186abc2724fdf1c4fac86d0d83cb5303"></a>SPI_FLASH_ADDRESS_BYTES_4&#160;</td><td class="fielddoc"><p>4 address bytes with standard commands. If this option is selected, the application must issue the EN4B command using <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a31a1d575f3d8876154d4e217caebf110">spi_flash_api_t::directWrite()</a> if required by the device. </p>
+<tr><td class="fieldname"><a id="gga289ef915326b8e75e7d0dd331c2d0797a186abc2724fdf1c4fac86d0d83cb5303"></a>SPI_FLASH_ADDRESS_BYTES_4&#160;</td><td class="fielddoc"><p>4 address bytes with standard commands. If this option is selected, the application must issue the EN4B command using <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#aebfa0317034f04f53b6b788da0debe80">spi_flash_api_t::directWrite()</a> if required by the device. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga289ef915326b8e75e7d0dd331c2d0797aed752a37fe0a5f0b6dfb6781d67319bb"></a>SPI_FLASH_ADDRESS_BYTES_4_4BYTE_READ_CODE&#160;</td><td class="fielddoc"><p>4 address bytes using standard 4-byte command set. </p>
 </td></tr>
@@ -1061,7 +1013,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -183,15 +183,15 @@ Functions</h2></td></tr>
 <p>Driver for the LVD peripheral on RA MCUs. This module implements the <a class="el" href="group___l_v_d___a_p_i.html">Low Voltage Detection Interface</a>. </p>
 <h1><a class="anchor" id="r-lvd-overview"></a>
 Overview</h1>
-<p>The Low Voltage Detection module configures the voltage monitors to detect when V<sub>CC</sub> crosses a specified threshold.</p>
+<p>The Low Voltage Detection module configures the voltage monitors to detect when a power supply pin or a voltage detector pin voltages crosses a specified threshold.</p>
 <h2><a class="anchor" id="r-lvd-features"></a>
 Features</h2>
 <p>The LVD HAL module supports the following functions:</p><ul>
-<li>Two run-time configurable voltage monitors (Voltage Monitor 1, Voltage Monitor 2)<ul>
+<li>Five run-time configurable voltage monitors (Voltage Monitor 1, Voltage Monitor 2, LVD VBAT, LVD VRTC, EXLVD)<ul>
 <li>Configurable voltage threshold</li>
 <li>Digital filter (Available on specific MCUs)</li>
 <li>Support for both interrupt or polling<ul>
-<li>NMI or maskable interrupt can be configured</li>
+<li>NMI or maskable interrupt can be configured (NMI support for Voltage Monitor 1 &amp; Voltage Monitor 2 only).</li>
 </ul>
 </li>
 <li>Rising, falling, or both edge event detection</li>
@@ -271,7 +271,7 @@ Clock Configuration</h2>
 <p>The LOCO clock must be enabled in order to use the digital filter.</p>
 <h2><a class="anchor" id="r-lvd-pin-configuration"></a>
 Pin Configuration</h2>
-<p>This module does not use I/O pins.</p>
+<p>To use LVD module, you need to switch pin funtion of EXLVDVBAT pin, VRTC pin, EXLVD pin to enable LVD function on this pin.</p>
 <h1><a class="anchor" id="r-lvd-usage_notes"></a>
 Usage Notes</h1>
 <h2>Startup Edge Detection</h2>
@@ -534,7 +534,7 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

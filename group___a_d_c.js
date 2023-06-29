@@ -67,6 +67,7 @@ var group___a_d_c =
       [ "ADC_MASK_CHANNEL_25", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaa5d1b9967b76bd206dd9834adedb7511d", null ],
       [ "ADC_MASK_CHANNEL_26", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaaebec3e24f9142260a7c06b7c70e49a74", null ],
       [ "ADC_MASK_CHANNEL_27", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaa1114ae29dc12afc9748bdbfe1586f60a", null ],
+      [ "ADC_MASK_CHANNEL_28", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaaf945b5f44424c9d6fb0f4fcc0c50b217", null ],
       [ "ADC_MASK_TEMPERATURE", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaac1ac20cd379e67bf23b34d826a49dc1a", null ],
       [ "ADC_MASK_VOLT", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaa7cb05f1111dcc356ccac809b1a337691", null ],
       [ "ADC_MASK_SENSORS", "group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaa083aadf81dbe5a4a3e3869e7ad7c34cb", null ]

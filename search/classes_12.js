@@ -6,8 +6,6 @@ var searchData=
   ['uart_5finfo_5ft',['uart_info_t',['../group___u_a_r_t___a_p_i.html#structuart__info__t',1,'']]],
   ['uart_5finstance_5ft',['uart_instance_t',['../group___u_a_r_t___a_p_i.html#structuart__instance__t',1,'']]],
   ['ulpgn_5fsocket_5ft',['ulpgn_socket_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#structulpgn__socket__t',1,'']]],
-  ['ulpt_5fextended_5fcfg_5ft',['ulpt_extended_cfg_t',['../group___u_l_p_t.html#structulpt__extended__cfg__t',1,'']]],
-  ['ulpt_5finstance_5fctrl_5ft',['ulpt_instance_ctrl_t',['../group___u_l_p_t.html#structulpt__instance__ctrl__t',1,'']]],
   ['usb_5fapi_5ft',['usb_api_t',['../group___u_s_b___a_p_i.html#structusb__api__t',1,'']]],
   ['usb_5fcfg_5ft',['usb_cfg_t',['../group___u_s_b___a_p_i.html#structusb__cfg__t',1,'']]],
   ['usb_5fhcdc_5fabstractstate_5ft',['usb_hcdc_abstractstate_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__abstractstate__t',1,'']]],

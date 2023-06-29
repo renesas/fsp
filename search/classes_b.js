@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['mbedtls_5fccm_5fcontext',['mbedtls_ccm_context',['../structmbedtls__ccm__context.html',1,'']]],
   ['mbedtls_5fgcm_5fcontext',['mbedtls_gcm_context',['../structmbedtls__gcm__context.html',1,'']]],
   ['mbedtls_5fplatform_5fcontext',['mbedtls_platform_context',['../structmbedtls__platform__context.html',1,'']]],
   ['mbedtls_5fsha256_5fcontext',['mbedtls_sha256_context',['../structmbedtls__sha256__context.html',1,'']]],
@@ -66,5 +67,10 @@ var searchData=
   ['motor_5fspeed_5fcallback_5fargs_5ft',['motor_speed_callback_args_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__callback__args__t',1,'']]],
   ['motor_5fspeed_5fcfg_5ft',['motor_speed_cfg_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__cfg__t',1,'']]],
   ['motor_5fspeed_5finstance_5ft',['motor_speed_instance_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__instance__t',1,'']]],
-  ['motor_5fspeed_5fposition_5fdata_5ft',['motor_speed_position_data_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t',1,'']]]
+  ['motor_5fspeed_5fposition_5fdata_5ft',['motor_speed_position_data_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t',1,'']]],
+  ['mqtt_5fonchip_5fda16xxx_5fcallback_5fargs_5ft',['mqtt_onchip_da16xxx_callback_args_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__callback__args__t',1,'']]],
+  ['mqtt_5fonchip_5fda16xxx_5fcfg_5ft',['mqtt_onchip_da16xxx_cfg_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__cfg__t',1,'']]],
+  ['mqtt_5fonchip_5fda16xxx_5finstance_5fctrl_5ft',['mqtt_onchip_da16xxx_instance_ctrl_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t',1,'']]],
+  ['mqtt_5fonchip_5fda16xxx_5fpub_5finfo_5ft',['mqtt_onchip_da16xxx_pub_info_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__pub__info__t',1,'']]],
+  ['mqtt_5fonchip_5fda16xxx_5fsub_5finfo_5ft',['mqtt_onchip_da16xxx_sub_info_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__sub__info__t',1,'']]]
 ];

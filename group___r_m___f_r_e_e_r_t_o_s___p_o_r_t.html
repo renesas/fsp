@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,6 +174,7 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-freertos-port-configuration"></a>
 Configuration</h1>
+<dl class="section note"><dt>Note</dt><dd><b>The FreeRTOS Port and libraries use <code>printf</code> by default when logging is enabled. <code>printf</code> requires a heap (BSP Tab -&gt; Properties -&gt; RA Common -&gt; Heap size (bytes)).</b></dd></dl>
 <p><h2>Build Time Configurations for all</h2>
 The following build time configurations are defined in aws/FreeRTOSConfig.h:<br />
 </p><table class="doxtable">
@@ -355,9 +356,9 @@ A full interrupt nesting model is achieved by setting configMAX_SYSCALL_INTERRUP
 <br />
 Interrupts that do not call API functions can execute at priorities above configMAX_SYSCALL_INTERRUPT_PRIORITY and therefore never be delayed by the RTOS kernel execution.<br />
 <br />
-A special note for ARM Cortex-M users: Please read the page dedicated to interrupt priority settings on ARM Cortex-M devices. As a minimum, remember that ARM Cortex-M cores use numerically low priority numbers to represent HIGH priority interrupts, which can seem counter-intuitive and is easy to forget! If you wish to assign an interrupt a low priority do NOT assign it a priority of 0 (or other low numeric value) as this can result in the interrupt actually having the highest priority in the system - and therefore potentially make your system crash if this priority is above configMAX_SYSCALL_INTERRUPT_PRIORITY.<br />
+A special note for Arm Cortex-M users: Please read the page dedicated to interrupt priority settings on Arm Cortex-M devices. As a minimum, remember that Arm Cortex-M cores use numerically low priority numbers to represent HIGH priority interrupts, which can seem counter-intuitive and is easy to forget! If you wish to assign an interrupt a low priority do NOT assign it a priority of 0 (or other low numeric value) as this can result in the interrupt actually having the highest priority in the system - and therefore potentially make your system crash if this priority is above configMAX_SYSCALL_INTERRUPT_PRIORITY.<br />
 <br />
-The lowest priority on a ARM Cortex-M core is in fact 255 - however different ARM Cortex-M vendors implement a different number of priority bits and supply library functions that expect priorities to be specified in different ways. For example, on the RA6M3 the lowest priority you can specify is 15 - and the highest priority you can specify is 0. </td></tr>
+The lowest priority on a Arm Cortex-M core is in fact 255 - however different Arm Cortex-M vendors implement a different number of priority bits and supply library functions that expect priorities to be specified in different ways. For example, on the RA6M3 the lowest priority you can specify is 15 - and the highest priority you can specify is 0. </td></tr>
 <tr>
 <td>General &gt; Assert</td><td>Manual Entry</td><td>assert(x) </td><td>The semantics of the configASSERT() macro are the same as the standard C assert() macro. An assertion is triggered if the parameter passed into configASSERT() is zero.<br />
 configASSERT() is called throughout the FreeRTOS source files to check how the application is using FreeRTOS. It is highly recommended to develop FreeRTOS applications with configASSERT() defined.<br />
@@ -757,7 +758,7 @@ Low Power Modes</h2>
 <p><a class="anchor" id="um_freertos_low_power"></a>When FreeRTOS is configured to use tickless idle, the idle task executes WFI() when no task is ready to run. If the MCU is configured to enter software standby mode or deep software standby mode when the idle task executes WFI(), the RA FreeRTOS port changes the low power mode to sleep mode so the idle task can wake from SysTick. The low power mode settings are restored when the MCU wakes from sleep mode.</p>
 <h2><a class="anchor" id="r-freertos-port-trustzone-integration"></a>
 TrustZone Integration</h2>
-<p><a class="anchor" id="um_freertos_port_trustzone"></a>When using an RTOS in a TrustZone project, ARM recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the task has allocated a secure context (using portALLOCATE_SECURE_CONTEXT).</p>
+<p><a class="anchor" id="um_freertos_port_trustzone"></a>When using an RTOS in a TrustZone project, Arm recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the task has allocated a secure context (using portALLOCATE_SECURE_CONTEXT).</p>
 <p>The secure context can be freed by deleting the thread or using the portCLEAN_UP_TCB(pxTCB) macro.</p>
 <h1><a class="anchor" id="r-freertos-port-examples"></a>
 Examples</h1>
@@ -771,7 +772,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

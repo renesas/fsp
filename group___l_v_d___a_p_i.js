@@ -61,7 +61,18 @@ var group___l_v_d___a_p_i =
       [ "LVD_THRESHOLD_MONITOR_2_LEVEL_3_84V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca269c8f77dee2e99fb7e37d253ed4a097", null ],
       [ "LVD_THRESHOLD_MONITOR_2_LEVEL_2_99V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca2a171125d262bb0f74f5d1fdba340219", null ],
       [ "LVD_THRESHOLD_MONITOR_2_LEVEL_2_92V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5caa1edb8d4e508a3613c6abb70653b47f0", null ],
-      [ "LVD_THRESHOLD_MONITOR_2_LEVEL_2_85V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca0bb1747e9be9c1cb09402c519a7be44c", null ]
+      [ "LVD_THRESHOLD_MONITOR_2_LEVEL_2_85V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca0bb1747e9be9c1cb09402c519a7be44c", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_3_1V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5cac64f4a6bf57c1d95eeec7f3a8a87f418", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_9V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5cafdb3c968870f88470132aa26fb2730aa", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_8V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca3558f499bd1c0dfe92d8d6b4d00c54c1", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_7V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5cab6ed4ff6f4355c743461914f5c3d05e6", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_6V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5cac185d09be6aa7a0bc2f62000b9819a1b", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_4V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca0a8ffef22af8fe30bc5d00b2bc8f5a1b", null ],
+      [ "LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_2V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5cad198101ad95e73429fe8f41fa372d12b", null ],
+      [ "LVD_THRESHOLD_LVDVRTC_LEVEL_2_8V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca35c97817dedd677636b420273861ecd9", null ],
+      [ "LVD_THRESHOLD_LVDVRTC_LEVEL_2_6V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca5ecfbf4251e8138f079af650dfa00ded", null ],
+      [ "LVD_THRESHOLD_LVDVRTC_LEVEL_2_4V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca09cf7522273fe7c6dce1581a66a04ffe", null ],
+      [ "LVD_THRESHOLD_LVDVRTC_LEVEL_2_2V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5caa588e463f00b5acfb37be28136cc0d64", null ]
     ] ],
     [ "lvd_response_t", "group___l_v_d___a_p_i.html#gac3a698471443aa948c50dd6dc6661cdb", [
       [ "LVD_RESPONSE_NMI", "group___l_v_d___a_p_i.html#ggac3a698471443aa948c50dd6dc6661cdbafb0d4cd16abf017cec80877f73ad25c1", null ],

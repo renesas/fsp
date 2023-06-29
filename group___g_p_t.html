@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -323,7 +323,7 @@ PWM: Generates basic PWM waveforms.<br />
 Triangle-Wave Symmetric PWM: Generates symmetric PWM waveforms with duty cycle determined by compare match set during a crest interrupt and updated at the next trough.<br />
 Triangle-Wave Asymmetric PWM: Generates asymmetric PWM waveforms with duty cycle determined by compare match set during a crest/trough interrupt and updated at the next trough/crest. </td></tr>
 <tr>
-<td>General &gt; Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x100000000 </td><td>Specify the timer period in units selected below. Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000 (32-bit) or 0x4000000 (16-bit) which will use a divider of 1024 with the maximum period.<br />
+<td>General &gt; Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the timer period in units selected below. Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000 (32-bit) or 0x4000000 (16-bit) which will use a divider of 1024 with the maximum period.<br />
 <br />
 If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the generated <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
 <tr>
@@ -2231,7 +2231,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

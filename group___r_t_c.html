@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,15 +203,14 @@ Features</h2>
 <li>RTC time and date alarm get and set.</li>
 <li>RTC alarm and periodic event notification.</li>
 </ul>
-<p><a class="anchor" id="um_rtc_set_the_calendar_time"></a><a class="anchor" id="um_rtc_get_the_calendar_time"></a><a class="anchor" id="um_rtc_set_the_calendar_alarm"></a><a class="anchor" id="um_rtc_get_the_calendar_alarm"></a><a class="anchor" id="um_rtc_date_and_time_value_standard"></a><a class="anchor" id="um_rtc_get_rtc_information"></a><a class="anchor" id="um_rtc_set_the_periodic_rate"></a> The RTC HAL module supports three different interrupt types:</p>
+<p><a class="anchor" id="um_rtc_set_the_calendar_time"></a><a class="anchor" id="um_rtc_get_the_calendar_time"></a><a class="anchor" id="um_rtc_set_the_calendar_alarm"></a><a class="anchor" id="um_rtc_get_the_calendar_alarm"></a><a class="anchor" id="um_rtc_date_and_time_value_standard"></a><a class="anchor" id="um_rtc_get_rtc_information"></a><a class="anchor" id="um_rtc_set_the_periodic_rate"></a>The RTC HAL module supports three different interrupt types:</p>
 <ul>
 <li>An alarm interrupt generated on a match of any combination of year, month, day, day of the week, hour, minute or second</li>
 <li>A periodic interrupt generated every 2, 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, or 1/256 second(s)</li>
-<li>A carry interrupt is used internally when reading time from the RTC calender to get accurant time readings.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>See section "23.3.5 Reading 64-Hz Counter and Time" of the RA6M3 manual R01UH0886EJ0100 for more details.<br />
+<li>A carry interrupt is used internally when reading time from the RTC calender to get accurant time readings. <dl class="section note"><dt>Note</dt><dd>See section "23.3.5 Reading 64-Hz Counter and Time" of the RA6M3 manual R01UH0886EJ0100 for more details.<br />
 </dd></dl>
-<p>A user-defined callback function can be registered (in the <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> API call) and will be called from the interrupt service routine (ISR) for alarm and periodic interrupt. When called, it is passed a pointer to a structure (<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a>) that holds a user-defined context pointer and an indication of which type of interrupt was fired.</p>
+A user-defined callback function can be registered (in the <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> API call) and will be called from the interrupt service routine (ISR) for alarm and periodic interrupt. When called, it is passed a pointer to a structure (<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a>) that holds a user-defined context pointer and an indication of which type of interrupt was fired.</li>
+</ul>
 <h2>Date and Time validation</h2>
 <p>"Parameter Checking" needs to be enabled if date and time validation is required for calendarTimeSet and calendarAlarmSet APIs. If "Parameter Checking" is enabled, the 'day of the week' field is automatically calculated and updated by the driver for the provided date. When using the calendarAlarmSet API, only the fields which have their corresponding match flag set are written to the registers. Other register fields are reset to default value.</p>
 <h2>Sub-Clock error adjustment (Time Error Adjustment Function)</h2>
@@ -316,7 +315,7 @@ Clock Configuration</h2>
 <li>LOCO (Low Speed On-Chip Oscillator) with less accuracy</li>
 <li>Sub-clock oscillator with increased accuracy</li>
 </ul>
-<p>The LOCO is the default selection during configuration.</p>
+<p>Users have to select the right source for their application. LOCO is the default during configuration when it is available. </p>
 <h2><a class="anchor" id="r-rtc-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
@@ -354,10 +353,42 @@ Examples</h1>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Open the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the RTC clock source. Can be skipped if &quot;Set Source Clock in Open&quot; property is enabled. */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaa08e35bcfca849283de15698beb6b150">R_RTC_ClockSourceSet</a>(&amp;g_rtc0_ctrl);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structrtc__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#structrtc__extended__cfg__t">rtc_extended_cfg_t</a></td></tr>
+<tr class="separator:structrtc__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrtc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#structrtc__instance__ctrl__t">rtc_instance_ctrl_t</a></td></tr>
 <tr class="separator:structrtc__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrtc__extended__cfg__t" id="structrtc__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrtc__extended__cfg__t">&#9670;&nbsp;</a></span>rtc_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rtc_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RTC extend configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac36b179a4311fe95bde1820384dd35cc"></a>uint8_t</td>
+<td class="fieldname">
+alarm1_ipl</td>
+<td class="fielddoc">
+Alarm 1 interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae7f72a6fbe27e9a3ef60c99022798c9b"></a>IRQn_Type</td>
+<td class="fieldname">
+alarm1_irq</td>
+<td class="fielddoc">
+Alarm 1 interrupt vector. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structrtc__instance__ctrl__t" id="structrtc__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrtc__instance__ctrl__t">&#9670;&nbsp;</a></span>rtc_instance_ctrl_t</h2>
 
@@ -475,6 +506,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful and RTC has started. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid p_ctrl or p_cfg pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid clock source. </td></tr>
   </table>
   </dd>
 </dl>
@@ -812,7 +844,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -432,7 +432,7 @@ Scan Procedure</h2>
 <p>In this document, the term "scan" refers to the AUTOSCAN feature of the SDADC, which works as follows:</p>
 <ol type="1">
 <li>Conversions are performed on enabled channels in ascending order of channel number. All conversions required for a single channel are completed before the sequencer moves to the next channel.</li>
-<li>Conversions are performed at the rate (in Hz) of the SDADC oversampling clock frequency / oversampling ratio (configured per channel). The FSP uses the normal mode SDADC oversampling clock frequency.</li>
+<li>Conversions are performed at the rate (in Hz) of the SDADC oversampling clock frequency / oversampling ratio (configured per channel). FSP uses the normal mode SDADC oversampling clock frequency.</li>
 <li>If averaging is enabled for the channel, the number of conversions to average are performed before each conversion end interrupt occurs.</li>
 <li><p class="startli">If the number of conversions for the channel is more than 1, SDADC performs the number of conversions requested. These are performed consecutively. There is a settling time associated with switching channels. Performing all of the requested conversions for each channel at a time avoids this settling time after the first conversion.</p>
 <p class="startli">If averaging is enabled for the channel, each averaged result counts as a single conversion.</p>
@@ -1365,7 +1365,7 @@ Do not use this API if the conversion end interrupt (SDADC0_ADI) is used to trig
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

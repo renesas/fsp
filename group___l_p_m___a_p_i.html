@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -666,15 +666,23 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a4eda57eb94265aad8965ae307cd8e0d0"></a>LPM_SNOOZE_REQUEST_ACMPHS0&#160;</td><td class="fielddoc"><p>Enable High-speed analog comparator 0 snooze request. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4aadf9d57a99301e02ef02b8a4184e83f3"></a>LPM_SNOOZE_REQUEST_RTC_ALARM1&#160;</td><td class="fielddoc"><p>Enable RTC alarm 1 snooze request. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a2a667ffd46bd824f23da26d2b8bbd94c"></a>LPM_SNOOZE_REQUEST_RTC_ALARM&#160;</td><td class="fielddoc"><p>Enable RTC alarm snooze request. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4abec9224f843748c9d298bef3754ab34d"></a>LPM_SNOOZE_REQUEST_RTC_PERIOD&#160;</td><td class="fielddoc"><p>Enable RTC period snooze request. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a3da6e4656763ba67a5c5b175abeaf2b5"></a>LPM_SNOOZE_REQUEST_AGT1_UNDERFLOW&#160;</td><td class="fielddoc"><p>Enable AGT1 underflow snooze request. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4aad42c1daebf1a43dcc94a142ca4d62c2"></a>LPM_SNOOZE_REQUEST_AGTW1_UNDERFLOW&#160;</td><td class="fielddoc"><p>Enable AGTW1 underflow snooze request. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4ac9805dc794feb3fa20414f3cf9a29ced"></a>LPM_SNOOZE_REQUEST_AGT1_COMPARE_A&#160;</td><td class="fielddoc"><p>Enable AGT1 compare match A snooze request. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4acff278ba1dd198c645ead9a10d0f7a9b"></a>LPM_SNOOZE_REQUEST_AGTW1_COMPARE_A&#160;</td><td class="fielddoc"><p>Enable AGTW1 compare match A snooze request. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a95e72ac2db2d91b1a1497b7bf63e85b9"></a>LPM_SNOOZE_REQUEST_AGT1_COMPARE_B&#160;</td><td class="fielddoc"><p>Enable AGT1 compare match B snooze request. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4ab6955f208d5eddd0d79d69597c85d792"></a>LPM_SNOOZE_REQUEST_AGTW1_COMPARE_B&#160;</td><td class="fielddoc"><p>Enable AGTW1 compare match B snooze request. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a6ae0789d5e9b75e16d144009f7079579"></a>LPM_SNOOZE_REQUEST_AGT3_UNDERFLOW&#160;</td><td class="fielddoc"><p>Enable AGT3 underflow snooze request. </p>
 </td></tr>
@@ -702,6 +710,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3a2d713059c1f391dec5658c5171606e69"></a>LPM_SNOOZE_END_STANDBY_WAKE_SOURCES&#160;</td><td class="fielddoc"><p>Transition from Snooze to Normal mode directly. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3a38d55d77589d7508a95902ce294d2e1a"></a>LPM_SNOOZE_END_AGT1_UNDERFLOW&#160;</td><td class="fielddoc"><p>AGT1 underflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3ad487f07104685932187c34a4b90f1fbb"></a>LPM_SNOOZE_END_AGTW1_UNDERFLOW&#160;</td><td class="fielddoc"><p>AGTW1 underflow. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3ac1de34a767258cdd428ab6dab300483d"></a>LPM_SNOOZE_END_DTC_TRANS_COMPLETE&#160;</td><td class="fielddoc"><p>Last DTC transmission completion. </p>
 </td></tr>
@@ -826,9 +836,15 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faf749878129ad68ba4ead1650c455dbb6"></a>LPM_STANDBY_WAKE_SOURCE_VBATT&#160;</td><td class="fielddoc"><p>VBATT Monitor interrupt. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa40ed48f5a0f84c31c92a15b919b2f36e"></a>LPM_STANDBY_WAKE_SOURCE_VRTC&#160;</td><td class="fielddoc"><p>LVDVRTC interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa8483dca75872d71851ecc859d0b6ab76"></a>LPM_STANDBY_WAKE_SOURCE_EXLVD&#160;</td><td class="fielddoc"><p>LVDEXLVD interrupt. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa9502912f5788f081446c0d6a0d800f8a"></a>LPM_STANDBY_WAKE_SOURCE_ACMPHS0&#160;</td><td class="fielddoc"><p>Analog Comparator High-speed 0 interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa1ef13409f8246b93a006c2aeda2bf380"></a>LPM_STANDBY_WAKE_SOURCE_ACMPLP0&#160;</td><td class="fielddoc"><p>Analog Comparator Low-speed 0 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faab053d69061b9706524dbf3f391cc8a4"></a>LPM_STANDBY_WAKE_SOURCE_RTCALM1&#160;</td><td class="fielddoc"><p>RTC Alarm interrupt 1. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa1b99df4ae0c5015d61401c8c86119e9d"></a>LPM_STANDBY_WAKE_SOURCE_RTCALM&#160;</td><td class="fielddoc"><p>RTC Alarm interrupt. </p>
 </td></tr>
@@ -838,21 +854,47 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa2ad0de45ea8983d2c97af196823cd086"></a>LPM_STANDBY_WAKE_SOURCE_USBFS&#160;</td><td class="fielddoc"><p>USB Full-speed interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa5d03eb6b042dbac516295dfadedeca9d"></a>LPM_STANDBY_WAKE_SOURCE_AGT1UD&#160;</td><td class="fielddoc"><p>AGT1 underflow interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa7f69366b60972542bf32cee6ff5fea24"></a>LPM_STANDBY_WAKE_SOURCE_AGTW0UD&#160;</td><td class="fielddoc"><p>AGTW0 Underflow interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fadd558be7cbbc458a3c087fcc4eb7cc72"></a>LPM_STANDBY_WAKE_SOURCE_AGT1CA&#160;</td><td class="fielddoc"><p>AGT1 compare match A interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa8fdd16ed725681dc84ad94ea725b4974"></a>LPM_STANDBY_WAKE_SOURCE_AGTW1UD&#160;</td><td class="fielddoc"><p>AGTW1 Underflow interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0134448ef091896bb8eb0997331e2c9b"></a>LPM_STANDBY_WAKE_SOURCE_AGT1CB&#160;</td><td class="fielddoc"><p>AGT1 compare match B interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fae31e95799886d0162302969d96481d37"></a>LPM_STANDBY_WAKE_SOURCE_AGTW1CA&#160;</td><td class="fielddoc"><p>AGTW1 Compare Match A interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa9d2e340070b924c25680d471f783287f"></a>LPM_STANDBY_WAKE_SOURCE_AGTW1CB&#160;</td><td class="fielddoc"><p>AGTW1 Compare Match B interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa5d03eb6b042dbac516295dfadedeca9d"></a>LPM_STANDBY_WAKE_SOURCE_AGT1UD&#160;</td><td class="fielddoc"><p>AGT1 Underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fadd558be7cbbc458a3c087fcc4eb7cc72"></a>LPM_STANDBY_WAKE_SOURCE_AGT1CA&#160;</td><td class="fielddoc"><p>AGT1 Compare Match A interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0134448ef091896bb8eb0997331e2c9b"></a>LPM_STANDBY_WAKE_SOURCE_AGT1CB&#160;</td><td class="fielddoc"><p>AGT1 Compare Match B interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa738e21394c9f0ca03cf86292dd647974"></a>LPM_STANDBY_WAKE_SOURCE_IIC0&#160;</td><td class="fielddoc"><p>I2C 0 interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa53704d6dd4d12bbc3509055cd031eb4a"></a>LPM_STANDBY_WAKE_SOURCE_AGT3UD&#160;</td><td class="fielddoc"><p>AGT3 underflow interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa95d8c14b1a24b0ae1650079bcfe0921d"></a>LPM_STANDBY_WAKE_SOURCE_AGT0UD&#160;</td><td class="fielddoc"><p>AGT0 Underflow interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0facfe0e9a67684ea48ad8c07a44ac2ff87"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CA&#160;</td><td class="fielddoc"><p>AGT3 compare match A interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa53704d6dd4d12bbc3509055cd031eb4a"></a>LPM_STANDBY_WAKE_SOURCE_AGT3UD&#160;</td><td class="fielddoc"><p>AGT3 Underflow interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fab99344c667c90fc8946096f55442bb4c"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CB&#160;</td><td class="fielddoc"><p>AGT3 compare match B interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0cd989582dedf1084c405ccd9d0d70ce"></a>LPM_STANDBY_WAKE_SOURCE_AGT1UD_S&#160;</td><td class="fielddoc"><p>AGT1 Underflow interrupt for specific board. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0facfe0e9a67684ea48ad8c07a44ac2ff87"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CA&#160;</td><td class="fielddoc"><p>AGT3 Compare Match A interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faea32c92b8a9e99cc40181952a2f28e7e"></a>LPM_STANDBY_WAKE_SOURCE_AGT2UD&#160;</td><td class="fielddoc"><p>AGT2 Underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fab99344c667c90fc8946096f55442bb4c"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CB&#160;</td><td class="fielddoc"><p>AGT3 Compare Match B interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa70010ade8bcfbea251d5252ef0c4c13d"></a>LPM_STANDBY_WAKE_SOURCE_AGT3UD_S&#160;</td><td class="fielddoc"><p>AGT3 Underflow interrupt for specific board. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa7135d9346416fdc5a325d2ea13b9f38f"></a>LPM_STANDBY_WAKE_SOURCE_COMPHS0&#160;</td><td class="fielddoc"><p>Comparator-HS0 Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0b8e8963fa74ca2f981f3cd0a254b502"></a>LPM_STANDBY_WAKE_SOURCE_AGT4UD&#160;</td><td class="fielddoc"><p>AGT4 Underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa110a6cef6d727ba49d45d89d2d78c9be"></a>LPM_STANDBY_WAKE_SOURCE_AGT5UD&#160;</td><td class="fielddoc"><p>AGT5 Underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faf4660c3e31af5184efee74b6b3652917"></a>LPM_STANDBY_WAKE_SOURCE_AGT6UD&#160;</td><td class="fielddoc"><p>AGT6 Underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fada25144add7147f9513f6973f3933952"></a>LPM_STANDBY_WAKE_SOURCE_AGT7UD&#160;</td><td class="fielddoc"><p>AGT7 Underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa50c940eb892d9f17dd21fdf084babf76"></a>LPM_STANDBY_WAKE_SOURCE_SOSTD&#160;</td><td class="fielddoc"><p>SOSTD interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faa77ebd3c3891b975162af8c1193a4540"></a>LPM_STANDBY_WAKE_SOURCE_ULP0U&#160;</td><td class="fielddoc"><p>ULPT0 Underflow Interrupt. </p>
 </td></tr>
@@ -1142,7 +1184,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

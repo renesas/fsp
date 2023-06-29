@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -281,7 +281,7 @@ Usage Notes</h1>
 </ul>
 <h2>Polling Mode</h2>
 <p>By default, the driver will poll a status flag for completion after writing input data to IIRFA. Disabling polling significantly improves performance when using a low number of stages, but may cause higher global interrupt latency during processing.</p>
-<dl class="section note"><dt>Note</dt><dd>If only one stage is used it is recommended to disable polling as IIRFA will typically execute faster than code resulting in no wait cycles. If polling must be used with a one stage filter, please note that in some situations the ARM CMSIS DSP Library functions <code>arm_biquad_cascade_df2T_init_f32</code> and <code>arm_biquad_cascade_df2T_f32</code> may provide better performance. It up to the user to evaluate performance within their own project.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If only one stage is used it is recommended to disable polling as IIRFA will typically execute faster than code resulting in no wait cycles. If polling must be used with a one stage filter, please note that in some situations the Arm CMSIS DSP Library functions <code>arm_biquad_cascade_df2T_init_f32</code> and <code>arm_biquad_cascade_df2T_f32</code> may provide better performance. It up to the user to evaluate performance within their own project.</dd></dl>
 <p><a class="anchor" id="r-iirfa-software-warning"></a> </p><dl class="section warning"><dt>Warning</dt><dd>When polling is disabled, filter operation works by writing a value to IIRCHnINP then immediately reading IIRCHnOUT. While this maximizes performance, the core will wait for output data to become available before continuing execution. <b>While execution waits for IIRCHnOUT no interrupts will be processed by the core.</b> The maximum wait time for a 32-stage filter may be up to approximately 64 ICLK cycles for single sample processing or 224 ICLK cycles for multi-sample processing (decreasing linearly with the number of stages used).</dd></dl>
 <h2>Single Sample Processing</h2>
 <p>In applications such as motor control where each sample needs immediate processing, the inline function <a class="el" href="group___i_i_r_f_a.html#ga988b1b886bae8b85a9394f47ce62bd73">R_IIRFA_SingleFilter</a> is provided. This function has no parameter checking, takes one sample, and returns a filtered sample. Polling is supported by this function (if configured).</p>
@@ -555,7 +555,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

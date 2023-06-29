@@ -121,6 +121,7 @@ var NAVTREEINDEX0 =
 "_s_t_a_r_t__d_e_v.html#locked-channels":[2,4,4,3],
 "_s_t_a_r_t__d_e_v.html#locked-resources":[2,4,4,2],
 "_s_t_a_r_t__d_e_v.html#modifying-toolchain-settings":[2,1,9],
+"_s_t_a_r_t__d_e_v.html#non-dlm-devices":[2,4,5,2],
 "_s_t_a_r_t__d_e_v.html#non-secure":[2,4,2,3],
 "_s_t_a_r_t__d_e_v.html#non-secure-debug":[2,4,6,0],
 "_s_t_a_r_t__d_e_v.html#non-secure-project":[2,4,1,1],
@@ -171,6 +172,7 @@ var NAVTREEINDEX0 =
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-create-project":[2,5,1,1],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-modify-project":[2,5,1,2],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-notes-restrictions":[2,5,1,4],
+"_s_t_a_r_t__d_e_v.html#using-semihosting-in-a-project":[2,1,12],
 "_s_t_a_r_t__d_e_v.html#using-the-fsp-and-e2-studio":[2,3,1,0],
 "_s_t_a_r_t__d_e_v.html#viewing-event-links":[2,1,4,5],
 "_s_t_a_r_t__d_e_v.html#wdt-application-flow":[2,3,1,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88":[5,1,0,0,16],
 "group___a_d_c.html#ga9b5242c153c6320a564ed9ffd324f144":[5,1,0,0,20],
 "group___a_d_c.html#ga9ddc074052e3b84fcc2defed431fe022":[5,1,0,0,7],
-"group___a_d_c.html#gac73578543d084faf58d17474dbaad23a":[5,1,0,0,27],
-"group___a_d_c.html#gacbc895a0d0e7849fe0844f0d1938d9cd":[5,1,0,0,19],
-"group___a_d_c.html#gad6bfc8395b53a96ee89f266fc940e2da":[5,1,0,0,22]
+"group___a_d_c.html#gac73578543d084faf58d17474dbaad23a":[5,1,0,0,27]
 };

@@ -11,18 +11,18 @@ var NAVTREE =
         [ "Ease of Use", "index.html#ease-of-use-fsp", null ],
         [ "Scalability", "index.html#scalability", null ],
         [ "Build Time Configurations", "index.html#build-time-configurations", null ],
-        [ "e2 studio IDE", "index.html#e2-studio-ide", null ]
+        [ "e² studio IDE", "index.html#e2-studio-ide", null ]
       ] ]
     ] ],
     [ "Reference Materials", "_r_e_f__m_a_t_e_r_i_a_l_s.html", "_r_e_f__m_a_t_e_r_i_a_l_s" ],
     [ "Starting Development", "_s_t_a_r_t__d_e_v.html", [
       [ "Starting Development Introduction", "_s_t_a_r_t__d_e_v.html#starting-development-introduction", null ],
-      [ "e2 studio User Guide", "_s_t_a_r_t__d_e_v.html#e2studio-user-guide", [
-        [ "What is e2 studio?", "_s_t_a_r_t__d_e_v.html#what-is-e2studio", null ],
-        [ "e2 studio Prerequisites", "_s_t_a_r_t__d_e_v.html#e2studio-prerequisites", [
+      [ "e² studio User Guide", "_s_t_a_r_t__d_e_v.html#e2studio-user-guide", [
+        [ "What is e² studio?", "_s_t_a_r_t__d_e_v.html#what-is-e2studio", null ],
+        [ "e² studio Prerequisites", "_s_t_a_r_t__d_e_v.html#e2studio-prerequisites", [
           [ "Obtaining an RA MCU Kit", "_s_t_a_r_t__d_e_v.html#obtaining-a-ra-mcu-kit", null ],
           [ "PC Requirements", "_s_t_a_r_t__d_e_v.html#pc-requirements", null ],
-          [ "Installing e2 studio, platform installer and the FSP package", "_s_t_a_r_t__d_e_v.html#installing-e2studio-and-fsp", null ],
+          [ "Installing e² studio, platform installer and the FSP package", "_s_t_a_r_t__d_e_v.html#installing-e2studio-and-fsp", null ],
           [ "Choosing a Toolchain", "_s_t_a_r_t__d_e_v.html#choosing-a-toolchain", null ],
           [ "Licensing", "_s_t_a_r_t__d_e_v.html#licensing", null ]
         ] ],
@@ -30,7 +30,7 @@ var NAVTREE =
         [ "Creating a Project", "_s_t_a_r_t__d_e_v.html#creating-a-project", [
           [ "Creating a New Project", "_s_t_a_r_t__d_e_v.html#creating-a-new-project", null ],
           [ "Selecting a Board and Toolchain", "_s_t_a_r_t__d_e_v.html#selecting-a-board-and-toolchain", null ],
-          [ "Selecting Flat or Arm® TrustZone® Project", "_s_t_a_r_t__d_e_v.html#selecting-flat-or-trustzone-project", null ],
+          [ "Selecting Flat or Arm TrustZone Project", "_s_t_a_r_t__d_e_v.html#selecting-flat-or-trustzone-project", null ],
           [ "Selecting a Project Template", "_s_t_a_r_t__d_e_v.html#selecting-a-project-template", null ]
         ] ],
         [ "Configuring a Project", "_s_t_a_r_t__d_e_v.html#configuring-a-project", [
@@ -71,8 +71,9 @@ var NAVTREE =
         ] ],
         [ "Debugging the Project", "_s_t_a_r_t__d_e_v.html#debugging-the-project", null ],
         [ "Modifying Toolchain Settings", "_s_t_a_r_t__d_e_v.html#modifying-toolchain-settings", null ],
-        [ "Creating RA project with ARM Compiler 6 in e2 studio", "_s_t_a_r_t__d_e_v.html#creating-ra-project-with-arm-compiler-6-in-e2-studio", null ],
-        [ "Importing an Existing Project into e2 studio", "_s_t_a_r_t__d_e_v.html#importing-an-existing-project-into-e2-studio", null ]
+        [ "Creating RA project with Arm Compiler 6 in e² studio", "_s_t_a_r_t__d_e_v.html#creating-ra-project-with-arm-compiler-6-in-e2-studio", null ],
+        [ "Importing an Existing Project into e² studio", "_s_t_a_r_t__d_e_v.html#importing-an-existing-project-into-e2-studio", null ],
+        [ "Using Semihosting in a Project", "_s_t_a_r_t__d_e_v.html#using-semihosting-in-a-project", null ]
       ] ],
       [ "Tutorial: Your First RA MCU Project - Blinky", "_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky", [
         [ "Tutorial Blinky", "_s_t_a_r_t__d_e_v.html#tutorial-blinky", null ],
@@ -96,13 +97,13 @@ var NAVTREE =
       ] ],
       [ "Tutorial: Using HAL Drivers - Programming the WDT", "_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt", [
         [ "Application WDT", "_s_t_a_r_t__d_e_v.html#application-wdt", null ],
-        [ "Creating a WDT Application Using the RA MCU FSP and e2 studio", "_s_t_a_r_t__d_e_v.html#creating-a-wdt-application-using-the-ra-fsp-and-e2-studio", [
-          [ "Using the FSP and e2 studio", "_s_t_a_r_t__d_e_v.html#using-the-fsp-and-e2-studio", null ],
+        [ "Creating a WDT Application Using the RA MCU FSP and e² studio", "_s_t_a_r_t__d_e_v.html#creating-a-wdt-application-using-the-ra-fsp-and-e2-studio", [
+          [ "Using FSP and e² studio", "_s_t_a_r_t__d_e_v.html#using-the-fsp-and-e2-studio", null ],
           [ "The WDT Application", "_s_t_a_r_t__d_e_v.html#the-wdt-application", null ],
           [ "WDT Application flow", "_s_t_a_r_t__d_e_v.html#wdt-application-flow", null ]
         ] ],
-        [ "Creating the Project with e2 studio", "_s_t_a_r_t__d_e_v.html#creating-the-project-with-e2-studio", null ],
-        [ "Configuring the Project with e2 studio", "_s_t_a_r_t__d_e_v.html#configuring-the-project-with-e2-studio", [
+        [ "Creating the Project with e² studio", "_s_t_a_r_t__d_e_v.html#creating-the-project-with-e2-studio", null ],
+        [ "Configuring the Project with e² studio", "_s_t_a_r_t__d_e_v.html#configuring-the-project-with-e2-studio", [
           [ "BSP Tab", "_s_t_a_r_t__d_e_v.html#bsp-tab", null ],
           [ "Clocks Tab", "_s_t_a_r_t__d_e_v.html#clocks-tab", null ],
           [ "Interrupts Tab", "_s_t_a_r_t__d_e_v.html#interrupts-tab", null ],
@@ -119,8 +120,8 @@ var NAVTREE =
         ] ],
         [ "Building and Testing the Project", "_s_t_a_r_t__d_e_v.html#building-and-testing-the-project", null ]
       ] ],
-      [ "Primer: ARM® TrustZone® Project Development", "_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development", [
-        [ "Renesas Implementation of ARM® TrustZone® Technology", "_s_t_a_r_t__d_e_v.html#renesas-implementation-of-arm-trustzone-technology", [
+      [ "Primer: Arm TrustZone Project Development", "_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development", [
+        [ "Renesas Implementation of Arm TrustZone Technology", "_s_t_a_r_t__d_e_v.html#renesas-implementation-of-arm-trustzone-technology", [
           [ "Calling from Non-Secure to Secure", "_s_t_a_r_t__d_e_v.html#calling-from-non-secure-to-secure", null ],
           [ "Calling from Secure to Non-Secure", "_s_t_a_r_t__d_e_v.html#calling-from-secure-to-non-secure", null ]
         ] ],
@@ -131,7 +132,7 @@ var NAVTREE =
         ] ],
         [ "RA Project Generator (PG)", "_s_t_a_r_t__d_e_v.html#ra-project-generator-pg", [
           [ "Secure Project Set Up", "_s_t_a_r_t__d_e_v.html#secure-project-set-up", null ],
-          [ "RTOS Support in TZ Project", "_s_t_a_r_t__d_e_v.html#rtos-support-in-tz-project", null ],
+          [ "RTOS Support in TrustZone Project", "_s_t_a_r_t__d_e_v.html#rtos-support-in-tz-project", null ],
           [ "Peripheral Security Attribution", "_s_t_a_r_t__d_e_v.html#peripheral-security-attribution", null ],
           [ "Non-Secure", "_s_t_a_r_t__d_e_v.html#non-secure", null ],
           [ "Flat Project Type", "_s_t_a_r_t__d_e_v.html#flat-project-type", null ],
@@ -158,7 +159,8 @@ var NAVTREE =
         ] ],
         [ "IDAU registers", "_s_t_a_r_t__d_e_v.html#idau-registers", [
           [ "SCI Boot Mode", "_s_t_a_r_t__d_e_v.html#sci-boot-mode", null ],
-          [ "DLM States", "_s_t_a_r_t__d_e_v.html#dlm-states", null ]
+          [ "DLM States", "_s_t_a_r_t__d_e_v.html#dlm-states", null ],
+          [ "Non-DLM Devices", "_s_t_a_r_t__d_e_v.html#non-dlm-devices", null ]
         ] ],
         [ "Debug", "_s_t_a_r_t__d_e_v.html#debug", [
           [ "Non-Secure Debug", "_s_t_a_r_t__d_e_v.html#non-secure-debug", null ]
@@ -246,61 +248,62 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_o_p_y_r_i_g_h_t.html",
-"group___a_d_c.html#gada437c4b88ed24eb8b9c94c0b45d76ea",
-"group___a_d_c___a_p_i.html#ggaee17c30275c1c9376cc485a62ea121ebaad618fc3cf12d1bb5575659bb56ffb84",
-"group___a_d_c___b.html#gga8d18c2c63ac4b34ebd6e9ee0fb1f63f2adeed30da0e84ec805e29e2670690760d",
-"group___b_l_e___a_b_s___a_p_i.html#a0102de6fc9e075231e9401b646038598",
-"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa36e2154fc88734cd50cd8f212f6dd711",
-"group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000",
-"group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950aef8c67a45bb552b5c90f7e26d45d7ffd",
-"group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404",
-"group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7",
-"group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe",
-"group___d_i_s_p_l_a_y___a_p_i.html#abe12c2c124144670dee32ff106ed6985",
-"group___e_t_h_e_r___a_p_i.html#a3500b706d40693b385e0d8d47af5ca28",
-"group___g_a_p___a_p_i.html#a00bc7d3ae8d71af91253da5331f8cb46",
-"group___g_a_p___a_p_i.html#ga16c1cfba3c8b1c5ebee76d04d6ab5d06",
-"group___g_a_p___a_p_i.html#structst__ble__gap__auth__info__t",
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#add43264665a5f5f20a3ff28e1813c498",
-"group___g_p_t.html#ad908895a31952a884009f3a63fdac8d0",
-"group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8cac04326f0bdc42f852e082d2fc0e7ad65",
-"group___i3_c___a_p_i.html#gga81ac58196d67e74a0a3702c3e760ede7ae53f3f0966395df095e951839052c6ca",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea3c274abf3acaafb71f0a28738b7f0b6a",
-"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a4009808e34e8af6f5791f1469a7dc081",
-"group___l2_c_a_p___a_p_i.html#gga762881ed36bad0a9982d324af15fe7b6aef1e5a7319a8f004623910d1de52fa85",
-"group___l_v_d___a_p_i.html#a5709e5f6ee2f70d1170e29db5c388286",
-"group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#a719f14d3844b138273eae2d58f66eeda",
-"group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__api__t",
-"group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga9f130fbc7ee6d7b6b99ad6c6acab0f78",
-"group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#gaa79cd6d2c50ed21a0ca8d00176d97561",
-"group___p_d_c___a_p_i.html#ab82be0c50aadbb28051b55aaa3d8b372",
-"group___p_t_p___a_p_i.html#ga2934142038c79d935eaeda6b9e47fac3",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a19beacb3a5e19f362431d08a1fcaaa5d",
-"group___r_m___b_l_e___m_e_s_h.html#ga2ed79a38381be2a6285a07b5fd5d61f0",
-"group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gga330467cf1d910e39c621185206b669c0a2c953a232cf08ef00acf286907a30ee7",
-"group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gga96b80f220e372887c3594055c7982cd7ae249e75f8d068653450d12e66338970f",
-"group___r_m___b_l_e___m_e_s_h___a_p_i.html#ggada936fe1f7fc81238176b75e5bc556d2a5c08a14740fc6b33661f0069e4cfd372",
-"group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s.html#ga32b34770badd3b17270491c3c2cc40bb",
-"group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#ggabd731d130a2e4168b367267f922fd202a277d542bd64e42bdff948d003f96d921",
-"group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a60043eb4a0d35ae57eb1d5a18e86f333",
-"group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t.html#ga54dcb93bccb7c4a39a8ee8237c3402eb",
-"group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#structrm__littlefs__instance__t",
-"group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___s_r_v.html#structrm__mesh__generic__on__off__srv__instance__ctrl__t",
-"group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#a38043a6922ad303c660529aa1e17d430",
-"group___r_m___m_e_s_h___s_e_n_s_o_r___s_r_v.html#a5925bffd2d058ec77f82a1c20c006b3f",
-"group___r_m___o_b1203___a_p_i.html#gga463e63a319a589ebdcf29b0b482b2f00a13648173ac9d85546b5b8fb1b3c70f0b",
-"group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6dc721959ed25ffaade04a78ba4c1ba6",
-"group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga4611df7b0e582b74488ecf8e0c7c8cb4",
-"group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9f2a6cc54b86345a8f712c310fc963da",
-"group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6",
-"group___s_l_c_d_c___a_p_i.html#ga6e306c03a7dc9caeff436fe58ab1a7fb",
-"group___s_p_i___b.html#a992f7cfe75bd98e8fe2c9120d0c7b26b",
-"group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aa2eb9fa5372856039d5d53dfbbbe6040",
-"group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810",
-"group___u_s_b___a_p_i.html#gacf9ff1be1615bfa28383f6cddf751c16",
-"group___v_s___a_p_i.html#a84506a971a80bb6b062bb406cfcdf418",
-"group___w_i_f_i___a_p_i.html#ae5fd60f26f383a4c2df0a82ad86e253b",
-"group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga388791b21824a1bee7f32a51f6803138"
+"group___a_d_c.html#gacbc895a0d0e7849fe0844f0d1938d9cd",
+"group___a_d_c___a_p_i.html#ggaee17c30275c1c9376cc485a62ea121eba434af3ad0c8079644a51035acd8fd835",
+"group___a_d_c___b.html#gga7bfbcbbef0724dc1832e18c4341a2f9bacd53b061b7e20fe18950add0696dcf0c",
+"group___b_l_e___a_b_s.html#ga3386d2c70d4f15ec3942ba196eed7446",
+"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa231c964355b188ad0697adeabe43754b",
+"group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2",
+"group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ab918e1bc5afd9102b555918fdebfeb70",
+"group___c_a_n___a_p_i.html#a59787b23ec15fa38f51d167e10389081",
+"group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b",
+"group___c_t_s_u.html#ac0528bef59c8c84d71b8f14ec06e63ef",
+"group___d_i_s_p_l_a_y___a_p_i.html#a750857fca52f9fdf256b456ea9f09c5f",
+"group___e_t_h_e_r.html#gga84685e14baf908ba6180ecbfafc18621afc172a815ac21e377ad33af9f15ca4be",
+"group___f_l_a_s_h___l_p.html",
+"group___g_a_p___a_p_i.html#ga009184f47e9f09ae09b1799d49b01ed4",
+"group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad8690048d017c0d5d7e8facf282e1d23",
+"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a92e102d15d504df4659c8160535ae78b",
+"group___g_p_t.html#a5f0b69cc2d3cfe89baefcf348563df21",
+"group___i2_c___s_l_a_v_e___a_p_i.html#ad9693d9cbb58cc0abb6e4e85548e4e18",
+"group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad",
+"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea208ca9f765ec2596596872bf9afd2eb0",
+"group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574a5fd65cdd983a6ad552efba798d5aa8e6",
+"group___l2_c_a_p___a_p_i.html#ga48f715e8f82e786deecb2e0d4f3fe519",
+"group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a8e7da29c434c778ef41e07efc1b46f1d",
+"group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#ae5ad310b7f78190a239995cf417f694b",
+"group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#ggae20b0c2189e6dda2744a6cd0a865967da09aee8e8134d8e21267fa13693e6f72e",
+"group___m_o_t_o_r___e_n_c_o_d_e_r.html#gga0feb7dece163f5af5cccd8f307f630dca567fcea426342a4355d0f00d215ac9a7",
+"group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga2f090bf0e113cf9cb539cb03d718394c",
+"group___o_p_a_m_p.html#ac884d13f70da29fc88da52d313e37c66",
+"group___p_t_p.html#ga449c98ce945e5d8821fa74c89b8dfb75",
+"group___p_t_p___a_p_i.html#structptp__cfg__t",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a9d78c4f75ac89707794eece78d3fa1c7",
+"group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a389a4528728166997aceba0ca463095d",
+"group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gga96b80f220e372887c3594055c7982cd7a74527ff7292a851636a0c8f43a5210d1",
+"group___r_m___b_l_e___m_e_s_h___a_p_i.html#a008ab2aca76382d2ab28714bc48e4a3f",
+"group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a13d237a2c2563cd481b5ab80c838f11f",
+"group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#gga4a5da1b554e2f42a3d5bc8ef6dd90916a06904ae6e3336edee38e849a08a7880d",
+"group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga02bb7eb0aafdb600b9dd3da65c376da0af29e58978b57d616933e61aa0966d1df",
+"group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#afcbc27df490a8fc36abd2a12694bf8aa",
+"group___r_m___g_u_i_x___p_o_r_t.html#afe363b7a17c200d29f816b48b8bbcb98",
+"group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#ga93c2b612fd972cb42ff33313cf67bc7a",
+"group___r_m___m_e_s_h___g_e_n_e_r_i_c___u_s_e_r___p_r_o_p___s_r_v.html#structrm__mesh__generic__user__prop__srv__instance__ctrl__t",
+"group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___s_r_v.html#a45b6930f0017412094357184a966bd5f",
+"group___r_m___o_b1203.html#a3d101a3a796221fc394abb203998d492",
+"group___r_m___o_b1203___a_p_i.html#ggab55b5fd0ddd115230c80a2ef140cfdc8a852688e58f305b400ecec5c8b1b589e2",
+"group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1923a191333769644eb59d939c58a90d",
+"group___s_c_e___p_r_o_t_e_c_t_e_d.html",
+"group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a7a7b1103e4743b7c3788ad522bb4be83",
+"group___s_c_i___s_m_c_i.html#ga2dd22a1d0b7720dbe84a888897320c8c",
+"group___s_d_m_m_c___a_p_i.html#ggadd4486d95cc9042b3278638b1ca77326abf421e464fa79c88865b2dab1972d0a5",
+"group___s_p_i.html#a7ccba130a8c80270295601d0ddee67c3",
+"group___s_p_i___f_l_a_s_h___a_p_i.html#ad2403240c3b40bb518d0623283712248",
+"group___t_o_u_c_h___a_p_i.html#a1c7eb001375ed21c8830473011319f40",
+"group___u_s_b___a_p_i.html#a97dfef91a7453ab8012f1825b1a91218",
+"group___u_s_b___h_h_i_d___a_p_i.html#a2624c916cc5fa8bdb61bb47d02db1e7c",
+"group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925",
+"group___w_i_f_i___a_p_i.html#struct_wi_fi_event_info_a_p_station_connected__t"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

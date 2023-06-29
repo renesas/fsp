@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -215,13 +215,7 @@ The following build time configurations are defined in fsp_cfg/azure/gx/gx_user.
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Hardware Acceleration &gt; JPEG Codec Support</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Select whether or not to use the JPEG Codec for hardware acceleration. </td></tr>
+<td>Hardware Acceleration &gt; JPEG Codec Support</td><td>MCU Specific Options</td><td></td><td>Select whether or not to use the JPEG Codec for hardware acceleration. </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; DRW Engine Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -304,7 +298,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>When screen rotation is set to a value other than 0 a canvas buffer must be used. The canvas buffer size will be the same as a frame buffer for the display module. </td></tr>
+</td><td>Disabled </td><td>When screen rotation is set to 180 degrees (FLIP), a canvas buffer must be used. The canvas buffer size will be the same as a frame buffer for the display module. </td></tr>
 <tr>
 <td>Display Rotation &gt; Canvas Buffer Memory Section</td><td>This property must be a valid section name</td><td>bss </td><td>Specify the memory section where the GUIX Canvas Buffer will be allocated. </td></tr>
 <tr>
@@ -336,7 +330,7 @@ Usage Notes</h1>
 Getting Started</h2>
 <p>To get started with GUIX in an RA project the following must be performed:</p>
 <ol type="1">
-<li>In e2 studio, open the RA Configuration editor for your GUIX project</li>
+<li>In e&sup2; studio, open the RA Configuration editor for your GUIX project</li>
 <li>Select or create a thread</li>
 <li>Add GUIX to your project in the Stacks view by clicking <b>New Stack -&gt; Azure RTOS -&gt; GUIX</b></li>
 <li>Ensure the configuration options for GUIX and the port layer are set as necessary for your application</li>
@@ -502,7 +496,7 @@ Error code if RM_GUIX_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

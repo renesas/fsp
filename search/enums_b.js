@@ -53,5 +53,7 @@ var searchData=
   ['motor_5fspeed_5fobserver_5fswitch_5ft',['motor_speed_observer_switch_t',['../group___m_o_t_o_r___s_p_e_e_d.html#gab71db61d94f8e0e39bd0a113d7732c7c',1,'rm_motor_speed.h']]],
   ['motor_5fspeed_5fopenloop_5fdamping_5ft',['motor_speed_openloop_damping_t',['../group___m_o_t_o_r___s_p_e_e_d.html#ga34ad035595f726d4cce1c81478afd6c6',1,'rm_motor_speed.h']]],
   ['motor_5fspeed_5fstep_5ft',['motor_speed_step_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#gaf50bebe25b4c3e57b458d0a247da4003',1,'rm_motor_speed_api.h']]],
-  ['motor_5fwait_5fstop_5fflag_5ft',['motor_wait_stop_flag_t',['../group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e',1,'rm_motor_api.h']]]
+  ['motor_5fwait_5fstop_5fflag_5ft',['motor_wait_stop_flag_t',['../group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e',1,'rm_motor_api.h']]],
+  ['mqtt_5fonchip_5fda16xxx_5fqos_5ft',['mqtt_onchip_da16xxx_qos_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gacf4d0a83b425273cf518d734b5af9247',1,'rm_mqtt_onchip_da16xxx.h']]],
+  ['mqtt_5fonchip_5fda16xxx_5ftls_5fcipher_5fsuites_5ft',['mqtt_onchip_da16xxx_tls_cipher_suites_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gae0b3aeac3132b05dda3ca1f992a69c28',1,'rm_mqtt_onchip_da16xxx.h']]]
 ];

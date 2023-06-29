@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -164,10 +164,10 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#starting-development-introduction">Starting Development Introduction</a></li>
-<li class="level1"><a href="#e2studio-user-guide">e2 studio User Guide</a><ul><li class="level2"><a href="#what-is-e2studio">What is e2 studio?</a></li>
-<li class="level2"><a href="#e2studio-prerequisites">e2 studio Prerequisites</a><ul><li class="level3"><a href="#obtaining-a-ra-mcu-kit">Obtaining an RA MCU Kit</a></li>
+<li class="level1"><a href="#e2studio-user-guide">e&sup2; studio User Guide</a><ul><li class="level2"><a href="#what-is-e2studio">What is e&sup2; studio?</a></li>
+<li class="level2"><a href="#e2studio-prerequisites">e&sup2; studio Prerequisites</a><ul><li class="level3"><a href="#obtaining-a-ra-mcu-kit">Obtaining an RA MCU Kit</a></li>
 <li class="level3"><a href="#pc-requirements">PC Requirements</a></li>
-<li class="level3"><a href="#installing-e2studio-and-fsp">Installing e2 studio, platform installer and the FSP package</a></li>
+<li class="level3"><a href="#installing-e2studio-and-fsp">Installing e&sup2; studio, platform installer and the FSP package</a></li>
 <li class="level3"><a href="#choosing-a-toolchain">Choosing a Toolchain</a></li>
 <li class="level3"><a href="#licensing">Licensing</a></li>
 </ul>
@@ -175,7 +175,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#what-is-a-project">What is a Project?</a></li>
 <li class="level2"><a href="#creating-a-project">Creating a Project</a><ul><li class="level3"><a href="#creating-a-new-project">Creating a New Project</a></li>
 <li class="level3"><a href="#selecting-a-board-and-toolchain">Selecting a Board and Toolchain</a></li>
-<li class="level3"><a href="#selecting-flat-or-trustzone-project">Selecting Flat or Arm® TrustZone® Project</a></li>
+<li class="level3"><a href="#selecting-flat-or-trustzone-project">Selecting Flat or Arm TrustZone Project</a></li>
 <li class="level3"><a href="#selecting-a-project-template">Selecting a Project Template</a></li>
 </ul>
 </li>
@@ -217,8 +217,9 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level2"><a href="#debugging-the-project">Debugging the Project</a></li>
 <li class="level2"><a href="#modifying-toolchain-settings">Modifying Toolchain Settings</a></li>
-<li class="level2"><a href="#creating-ra-project-with-arm-compiler-6-in-e2-studio">Creating RA project with ARM Compiler 6 in e2 studio</a></li>
-<li class="level2"><a href="#importing-an-existing-project-into-e2-studio">Importing an Existing Project into e2 studio</a></li>
+<li class="level2"><a href="#creating-ra-project-with-arm-compiler-6-in-e2-studio">Creating RA project with Arm Compiler 6 in e&sup2; studio</a></li>
+<li class="level2"><a href="#importing-an-existing-project-into-e2-studio">Importing an Existing Project into e&sup2; studio</a></li>
+<li class="level2"><a href="#using-semihosting-in-a-project">Using Semihosting in a Project</a></li>
 </ul>
 </li>
 <li class="level1"><a href="#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a><ul><li class="level2"><a href="#tutorial-blinky">Tutorial Blinky</a></li>
@@ -242,13 +243,13 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </ul>
 </li>
 <li class="level1"><a href="#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a><ul><li class="level2"><a href="#application-wdt">Application WDT</a></li>
-<li class="level2"><a href="#creating-a-wdt-application-using-the-ra-fsp-and-e2-studio">Creating a WDT Application Using the RA MCU FSP and e2 studio</a><ul><li class="level3"><a href="#using-the-fsp-and-e2-studio">Using the FSP and e2 studio</a></li>
+<li class="level2"><a href="#creating-a-wdt-application-using-the-ra-fsp-and-e2-studio">Creating a WDT Application Using the RA MCU FSP and e&sup2; studio</a><ul><li class="level3"><a href="#using-the-fsp-and-e2-studio">Using FSP and e&sup2; studio</a></li>
 <li class="level3"><a href="#the-wdt-application">The WDT Application</a></li>
 <li class="level3"><a href="#wdt-application-flow">WDT Application flow</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#creating-the-project-with-e2-studio">Creating the Project with e2 studio</a></li>
-<li class="level2"><a href="#configuring-the-project-with-e2-studio">Configuring the Project with e2 studio</a><ul><li class="level3"><a href="#bsp-tab">BSP Tab</a></li>
+<li class="level2"><a href="#creating-the-project-with-e2-studio">Creating the Project with e&sup2; studio</a></li>
+<li class="level2"><a href="#configuring-the-project-with-e2-studio">Configuring the Project with e&sup2; studio</a><ul><li class="level3"><a href="#bsp-tab">BSP Tab</a></li>
 <li class="level3"><a href="#clocks-tab">Clocks Tab</a></li>
 <li class="level3"><a href="#interrupts-tab">Interrupts Tab</a></li>
 <li class="level3"><a href="#event-links-tab">Event Links Tab</a></li>
@@ -266,7 +267,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#building-and-testing-the-project">Building and Testing the Project</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#primer-trustzone-project-development">Primer: ARM® TrustZone® Project Development</a><ul><li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of ARM® TrustZone® Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
+<li class="level1"><a href="#primer-trustzone-project-development">Primer: Arm TrustZone Project Development</a><ul><li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of Arm TrustZone Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
 <li class="level3"><a href="#calling-from-secure-to-non-secure">Calling from Secure to Non-Secure</a></li>
 </ul>
 </li>
@@ -276,7 +277,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </ul>
 </li>
 <li class="level2"><a href="#ra-project-generator-pg">RA Project Generator (PG)</a><ul><li class="level3"><a href="#secure-project-set-up">Secure Project Set Up</a></li>
-<li class="level3"><a href="#rtos-support-in-tz-project">RTOS Support in TZ Project</a></li>
+<li class="level3"><a href="#rtos-support-in-tz-project">RTOS Support in TrustZone Project</a></li>
 <li class="level3"><a href="#peripheral-security-attribution">Peripheral Security Attribution</a></li>
 <li class="level3"><a href="#non-secure">Non-Secure</a></li>
 <li class="level3"><a href="#flat-project-type">Flat Project Type</a></li>
@@ -304,6 +305,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level2"><a href="#idau-registers">IDAU registers</a><ul><li class="level3"><a href="#sci-boot-mode">SCI Boot Mode</a></li>
 <li class="level3"><a href="#dlm-states">DLM States</a></li>
+<li class="level3"><a href="#non-dlm-devices">Non-DLM Devices</a></li>
 </ul>
 </li>
 <li class="level2"><a href="#debug">Debug</a><ul><li class="level3"><a href="#non-secure-debug">Non-Secure Debug</a></li>
@@ -336,16 +338,16 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </div>
 <div class="textblock"><h1><a class="anchor" id="starting-development-introduction"></a>
 Starting Development Introduction</h1>
-<p>The wealth of resources available to learn about and use e2 studio and FSP can be overwhelming on first inspection, so this section provides a Starting Development Guide with a list of the most important initial steps. Following these highly recommended first 11 steps will bring you up to speed on the development environment in record time. Even experienced developers can benefit from the use of this guide, to learn the terminology that might be unfamiliar or different from previous environments.</p>
+<p>The wealth of resources available to learn about and use e&sup2; studio and FSP can be overwhelming on first inspection, so this section provides a Starting Development Guide with a list of the most important initial steps. Following these highly recommended first 11 steps will bring you up to speed on the development environment in record time. Even experienced developers can benefit from the use of this guide, to learn the terminology that might be unfamiliar or different from previous environments.</p>
 <ol type="1">
-<li>Read the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e2 studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a>. This will provide a description of the various windows and views to use e2 studio to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
+<li>Read the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e&sup2; studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e&sup2; studio Prerequisites</a>. This will provide a description of the various windows and views to use e&sup2; studio to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
 <li>Read the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a>, <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> and <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks">FSP Stacks</a> sections. These provide the basic background on how FSP modules and stacks are used to construct your application. Understanding their definitions and the theory behind how they combine will make it easier to develop with FSP.</li>
 <li>Read a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code.</li>
-<li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
+<li>After you have a Kit and you have downloaded and installed e&sup2; studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e&sup2; studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e&sup2; studio and is a good way to learn the basics.</li>
 <li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do this next.</li>
 <li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/category/31087/subcategory/31090">https://en-support.renesas.com/knowledgeBase/category/31087/subcategory/31090</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
 <li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them so you know what they contain, in case you need them.</li>
-<li>The balance of the e2 studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to, but not including, <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Much of this may be familiar after running through the tutorials and Quick Labs. However, it is important to have a good grasp of what each of the configuration tabs are used for as that is where the bulk of the project preparation work takes place prior to writing code. Skim over this section as it may help with any questions in the future.</li>
+<li>The balance of the e&sup2; studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to, but not including, <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Much of this may be familiar after running through the tutorials and Quick Labs. However, it is important to have a good grasp of what each of the configuration tabs are used for as that is where the bulk of the project preparation work takes place prior to writing code. Skim over this section as it may help with any questions in the future.</li>
 <li>Read the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. It also includes a short description for several of the code accelerators you should be familiar with by now. Using additional Quick FSP Labs is a good way to become familiar with the application development process and links to them are included in the appropriate places in this section. You can find the complete list of available Quick FSP Labs here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>.</li>
 <li>Scan the <a class="el" href="_s_t_a_r_t__d_e_v.html#debugging-the-project">Debugging the Project</a> section to see the steps required to download and start a debug session.</li>
 <li>Explore the additional material available on the following web pages and bookmark the resources that look most valuable to you:<ol type="a">
@@ -362,11 +364,11 @@ Starting Development Introduction</h1>
 </li>
 </ol>
 <h1><a class="anchor" id="e2studio-user-guide"></a>
-e2 studio User Guide</h1>
+e² studio User Guide</h1>
 <h2><a class="anchor" id="what-is-e2studio"></a>
-What is e2 studio?</h2>
-<p>Renesas e2 studio is a development tool encompassing code development, build, and debug. e2 studio is based on the open-source Eclipse IDE and the associated C/C++ Development Tooling (CDT).</p>
-<p>When developing for RA MCUs, e2 studio hosts the Renesas Flexible Software Package (FSP). FSP provides a wide range of time saving tools to simplify the selection, configuration, and management of modules and threads, to easily implement complex applications. The time saving tools available in e2 studio and FSP include the following:</p>
+What is e² studio?</h2>
+<p>Renesas e&sup2; studio is a development tool encompassing code development, build, and debug. e&sup2; studio is based on the open-source Eclipse IDE and the associated C/C++ Development Tooling (CDT).</p>
+<p>When developing for RA MCUs, e&sup2; studio hosts the Renesas Flexible Software Package (FSP). FSP provides a wide range of time saving tools to simplify the selection, configuration, and management of modules and threads, to easily implement complex applications. The time saving tools available in e&sup2; studio and FSP include the following:</p>
 <ul>
 <li>A Graphical User Interface (GUI) (see <a class="el" href="_s_t_a_r_t__d_e_v.html#adding-threads-and-drivers">Adding Threads and Drivers</a>) with numerous wizards for configuring and auto-generating code</li>
 <li>A context sensitive Autocomplete (see <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>) feature that provides intelligent options for completing a programming element</li>
@@ -377,65 +379,65 @@ What is e2 studio?</h2>
 <div class="image">
 <img src="sd-splash.png" alt="sd-splash.png"/>
 <div class="caption">
-e2 studio Splash Screen</div></div>
-<p> e2 studio organizes project work based on Perspectives, Views, Windows, Panes, and Pages (sometimes called Tabs). A window is a section of the e2 studio GUI that presents information on a key topic. Windows often use tabs to select sub-topics. For example, an editor window might have a tab available for each open file, so it is easy to switch back and forth between them. A window Pane is a section of a window. Within a window, multiple Panes can be opened and viewed simultaneously, as opposed to a tabbed window, where only individual content is displayed. A memory-display Window, for example, might have multiple Panes that allow the data to be displayed in different formats, simultaneously. A Perspective is a collection of Views and Windows typical for a specific stage of development. The default perspectives are a C/C++ Perspective, an FSP Configuration Perspective and a Debug Perspective. These provide specific Views, Windows, Tabs, and Panes tailored for the common tasks needed during the specific development stage.</p>
+e&sup2; studio Splash Screen</div></div>
+<p> e&sup2; studio organizes project work based on Perspectives, Views, Windows, Panes, and Pages (sometimes called Tabs). A window is a section of the e&sup2; studio GUI that presents information on a key topic. Windows often use tabs to select sub-topics. For example, an editor window might have a tab available for each open file, so it is easy to switch back and forth between them. A window Pane is a section of a window. Within a window, multiple Panes can be opened and viewed simultaneously, as opposed to a tabbed window, where only individual content is displayed. A memory-display Window, for example, might have multiple Panes that allow the data to be displayed in different formats, simultaneously. A Perspective is a collection of Views and Windows typical for a specific stage of development. The default perspectives are a C/C++ Perspective, an FSP Configuration Perspective and a Debug Perspective. These provide specific Views, Windows, Tabs, and Panes tailored for the common tasks needed during the specific development stage.</p>
 <div class="image">
 <img src="sd-default-perspective.png" alt="sd-default-perspective.png"/>
 <div class="caption">
 Default Perspective</div></div>
-<p> In addition to managing project development, selecting modules, configuring them and simplifying code development, e2 studio also hosts the engine for automatically generating code based on module selections and configurations. The engine continually checks for dependencies and automatically adds any needed lower level modules to the module stack. It also identifies any lower level modules that require configuration (for example, an interrupt that needs to have a priority assigned). It also provides a guide for selecting between multiple choices or options to make it easy to complete a fully functional module stack.</p>
-<p>The Generate Project Content function takes the selected and configured modules and automatically generates the complete and correct configuration code. The code is added to the folders visible in the <b>Project Explorer</b> window in e2 studio. The <code>configuration.xml</code> file in the project folder holds all the generated configuration settings. This file can be opened in the GUI-based RA Configuration editor to make further edits and changes. Once a project has been generated, you can go back and reconfigure any of the modules and settings if required using this editor.</p>
+<p> In addition to managing project development, selecting modules, configuring them and simplifying code development, e&sup2; studio also hosts the engine for automatically generating code based on module selections and configurations. The engine continually checks for dependencies and automatically adds any needed lower level modules to the module stack. It also identifies any lower level modules that require configuration (for example, an interrupt that needs to have a priority assigned). It also provides a guide for selecting between multiple choices or options to make it easy to complete a fully functional module stack.</p>
+<p>The Generate Project Content function takes the selected and configured modules and automatically generates the complete and correct configuration code. The code is added to the folders visible in the <b>Project Explorer</b> window in e&sup2; studio. The <code>configuration.xml</code> file in the project folder holds all the generated configuration settings. This file can be opened in the GUI-based RA Configuration editor to make further edits and changes. Once a project has been generated, you can go back and reconfigure any of the modules and settings if required using this editor.</p>
 <div class="image">
 <img src="sd-e2studio-proj-config.jpg" alt="sd-e2studio-proj-config.jpg"/>
 <div class="caption">
 Project Explorer Window showing generated folders and configuration.xml file</div></div>
 <h2><a class="anchor" id="e2studio-prerequisites"></a>
-e2 studio Prerequisites</h2>
+e² studio Prerequisites</h2>
 <h3><a class="anchor" id="obtaining-a-ra-mcu-kit"></a>
 Obtaining an RA MCU Kit</h3>
-<p>To develop applications with FSP, start with one of the Renesas RA MCU Evaluation Kits. The Renesas RA MCU Evaluation Kits are designed to seamlessly integrate with the e2 studio.</p>
+<p>To develop applications with FSP, start with one of the Renesas RA MCU Evaluation Kits. The Renesas RA MCU Evaluation Kits are designed to seamlessly integrate with e&sup2; studio.</p>
 <p>Ordering information, Quick Start Guides, User Manuals, and other related documents for all RA MCU Evaluation Kits are available at <a href="https://www.renesas.com/ra">https://www.renesas.com/ra</a>.</p>
 <h3><a class="anchor" id="pc-requirements"></a>
 PC Requirements</h3>
-<p>The following are the minimum PC requirements to use e2 studio:</p>
+<p>The following are the minimum PC requirements to use e&sup2; studio:</p>
 <ul>
 <li>Windows 10 with Intel i5 or i7, or AMD A10-7850K or FX</li>
 <li>Memory: 8-GB DDR3 or DDR4 DRAM (16-GB DDR4/2400-MHz RAM is preferred)</li>
 <li>Minimum 250-GB hard disk</li>
 </ul>
 <h3><a class="anchor" id="installing-e2studio-and-fsp"></a>
-Installing e2 studio, platform installer and the FSP package</h3>
-<p>Detailed installation instructions for the e2 studio and the FSP are available on the Renesas website <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a>. Review the release notes for e2 studio to ensure that the e2 studio version supports the selected FSP version. The starting version of the installer includes all features of the RA MCUs.</p>
+Installing e² studio, platform installer and the FSP package</h3>
+<p>Detailed installation instructions for e&sup2; studio and FSP are available on the Renesas website <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a>. Review the release notes for e&sup2; studio to ensure that the e&sup2; studio version supports the selected FSP version. The starting version of the installer includes all features of the RA MCUs.</p>
 <h3><a class="anchor" id="choosing-a-toolchain"></a>
 Choosing a Toolchain</h3>
-<p>e2 studio can work with several toolchains and toolchain versions such as the GNU Arm compiler and Arm AC6. A version of the GNU Arm compiler is included in the e2 studio installer and has been verified to run with the FSP version.</p>
+<p>e&sup2; studio can work with several toolchains and toolchain versions such as the GNU Arm compiler and Arm AC6. A version of the GNU Arm compiler is included in the e&sup2; studio installer and has been verified to run with the FSP version.</p>
 <h3><a class="anchor" id="licensing"></a>
 Licensing</h3>
 <p>FSP licensing includes full source code, limited to Renesas hardware only.</p>
 <h2><a class="anchor" id="what-is-a-project"></a>
 What is a Project?</h2>
-<p>In e2 studio, all FSP applications are organized in RA MCU projects. Setting up an RA MCU project involves:</p>
+<p>In e&sup2; studio, all FSP applications are organized in RA MCU projects. Setting up an RA MCU project involves:</p>
 <ol type="1">
 <li><a class="el" href="_s_t_a_r_t__d_e_v.html#creating-a-project">Creating a Project</a></li>
 <li><a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a></li>
 </ol>
-<p>These steps are described in detail in the next two sections. When you have existing projects already, after you launch e2 studio and select a workspace, all projects previously saved in the selected workspace are loaded and displayed in the <b>Project Explorer</b> window. Each project has an associated configuration file named <code>configuration.xml</code>, which is located in the project's root directory.</p>
+<p>These steps are described in detail in the next two sections. When you have existing projects already, after you launch e&sup2; studio and select a workspace, all projects previously saved in the selected workspace are loaded and displayed in the <b>Project Explorer</b> window. Each project has an associated configuration file named <code>configuration.xml</code>, which is located in the project's root directory.</p>
 <div class="image">
 <img src="sd-e2studio-proj-config.jpg" alt="sd-e2studio-proj-config.jpg"/>
 <div class="caption">
-e2 studio Project Configuration file</div></div>
-<p>Double-click on the <code>configuration.xml</code> file to open the RA MCU Project Editor. To edit the project configuration, make sure that the <b>FSP Configuration</b> perspective is selected in the upper right hand corner of the e2 studio window. Once selected, you can use the editor to view or modify the configuration settings associated with this project.</p>
+e&sup2; studio Project Configuration file</div></div>
+<p>Double-click on the <code>configuration.xml</code> file to open the RA MCU Project Editor. To edit the project configuration, make sure that the <b>FSP Configuration</b> perspective is selected in the upper right hand corner of the e&sup2; studio window. Once selected, you can use the editor to view or modify the configuration settings associated with this project.</p>
 <div class="image">
 <img src="sd-e2studio-ra-config.png" alt="sd-e2studio-ra-config.png"/>
 <div class="caption">
-e2 studio FSP Configuration Perspective</div></div>
+e&sup2; studio FSP Configuration Perspective</div></div>
  <dl class="section note"><dt>Note</dt><dd>Whenever the RA project configuration (that is, the <code>configuration.xml</code> file) is saved, a verbose RA Project Report file (<code>ra_cfg.txt</code>) with all the project settings is generated. The format allows differences to be easily viewed using a text comparison tool. The generated file is located in the project root directory.</dd></dl>
 <div class="image">
 <img src="sd-ra-mcu-proj-rpt.jpg" alt="sd-ra-mcu-proj-rpt.jpg"/>
 <div class="caption">
 RA Project Report</div></div>
 <p> The RA Project Editor has a number of tabs. The configuration steps and options for individual tabs are discussed in the following sections.</p>
-<dl class="section note"><dt>Note</dt><dd>The tabs available in the RA Project Editor depend on the e2 studio version and the layout may vary slightly, however the functionality should be easy to follow..</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The tabs available in the RA Project Editor depend on the e&sup2; studio version and the layout may vary slightly, however the functionality should be easy to follow..</dd></dl>
 <div class="image">
 <img src="sd-proj-ed-tabs.png" alt="sd-proj-ed-tabs.png"/>
 <div class="caption">
@@ -491,13 +493,13 @@ RA MCU Project Generator (Screen 2)</div></div>
 </li>
 </ol>
 <h3><a class="anchor" id="selecting-flat-or-trustzone-project"></a>
-Selecting Flat or Arm® TrustZone® Project</h3>
-<p>If you selected a device or tool based on an Arm® Cortex®-M33, you next select whether to use Arm® TrustZone® in your project. For normal, non-TrustZone projects, select "Flat".</p>
+Selecting Flat or Arm TrustZone Project</h3>
+<p>If you selected a device or tool based on an Arm® Cortex®-M33, you next select whether to use Arm® TrustZone® technology in your project. For normal, non-TrustZone projects, select "Flat".</p>
 <div class="image">
 <img src="sd-flat-non-trustzone.png" alt="sd-flat-non-trustzone.png"/>
 <div class="caption">
 Flat, Secure, or Non-Secure Project</div></div>
-<p> For more information on Arm® TrustZone®, see <a class="el" href="_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development">Primer: ARM® TrustZone® Project Development</a>.</p>
+<p> For more information on Arm TrustZone technology, see <a class="el" href="_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development">Primer: Arm TrustZone Project Development</a>.</p>
 <h3><a class="anchor" id="selecting-a-project-template"></a>
 Selecting a Project Template</h3>
 <p>In the next window, select the buiild artifact and RTOS.</p>
@@ -511,7 +513,7 @@ RA MCU Project Generator (Screen 3)</div></div>
 <img src="sd-ra-proj-3.png" alt="sd-ra-proj-3.png"/>
 <div class="caption">
 RA MCU Project Generator (Screen 4)</div></div>
-<p> When the project is created, e2 studio displays a summary of the current project configuration in the RA MCU Project Editor.</p>
+<p> When the project is created, e&sup2; studio displays a summary of the current project configuration in the RA MCU Project Editor.</p>
 <div class="image">
 <img src="sd-proj-ed-tabs.png" alt="sd-proj-ed-tabs.png"/>
 <div class="caption">
@@ -530,7 +532,7 @@ RA MCU Project Editor and available editor tabs</div></div>
 <p>The functions and use of each of these tabs is explained in detail in the next section.</p>
 <h2><a class="anchor" id="configuring-a-project"></a>
 Configuring a Project</h2>
-<p>Each of the configurable elements in an FSP project can be edited using the appropriate tab in the RA Configuration editor window. Importantly, the initial configuration of the MCU after reset and before any user code is executed is set by the configuration settings in the <b>BSP</b>, <b>Clocks</b> and <b>Pins</b> tabs. When you select a project template during project creation, e2 studio configures default values that are appropriate for the associated board. You can change those default values as needed. The following sections detail the process of configuring each of the project elements for each of the associated tabs.</p>
+<p>Each of the configurable elements in an FSP project can be edited using the appropriate tab in the RA Configuration editor window. Importantly, the initial configuration of the MCU after reset and before any user code is executed is set by the configuration settings in the <b>BSP</b>, <b>Clocks</b> and <b>Pins</b> tabs. When you select a project template during project creation, e&sup2; studio configures default values that are appropriate for the associated board. You can change those default values as needed. The following sections detail the process of configuring each of the project elements for each of the associated tabs.</p>
 <h3><a class="anchor" id="summary-tab"></a>
 Summary Tab</h3>
 <div class="image">
@@ -547,7 +549,7 @@ Configuring the BSP</h3>
 <img src="sd-e2-bsp-tab.png" alt="sd-e2-bsp-tab.png"/>
 <div class="caption">
 Configuration BSP tab</div></div>
-<p> The <b>Properties</b> view shows the configurable options available for the BSP. These can be changed as required. The BSP is the FSP layer above the MCU hardware. e2 studio checks the entry fields to flag invalid entries. For example, only valid numeric values can be entered for the stack size.</p>
+<p> The <b>Properties</b> view shows the configurable options available for the BSP. These can be changed as required. The BSP is the FSP layer above the MCU hardware. e&sup2; studio checks the entry fields to flag invalid entries. For example, only valid numeric values can be entered for the stack size.</p>
 <p>When you click the <b>Generate Project Content</b> button, the BSP configuration contents are written to <code>ra_cfg/fsp_cfg/bsp/bsp_cfg.h</code></p>
 <p>This file is created if it does not already exist.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Do not edit this file as it is overwritten whenever the <b>Generate Project Content</b> button is clicked.</dd></dl>
@@ -564,7 +566,7 @@ Configuration Clocks tab</div></div>
 <h3><a class="anchor" id="configuring-pins"></a>
 Configuring Pins</h3>
 <p>The <b>Pins</b> tab provides flexible configuration of the MCU's pins. As many pins are able to provide multiple functions, they can be configured on a peripheral basis. For example, selecting a serial channel via the SCI peripheral offers multiple options for the location of the receive and transmit pins for that module and channel. Once a pin is configured, it is shown as green in the <b>Package</b> view.</p>
-<dl class="section note"><dt>Note</dt><dd>If the <b>Package</b> view window is not open in e2 studio, select <b>Window &gt; Show View &gt; Pin Configurator &gt; Package</b> from the top menu bar to open it.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the <b>Package</b> view window is not open in e&sup2; studio, select <b>Window &gt; Show View &gt; Pin Configurator &gt; Package</b> from the top menu bar to open it.</dd></dl>
 <p>The <b>Pins</b> tab simplifies the configuration of large packages with highly multiplexed pins by highlighting errors and presenting the options for each pin or for each peripheral. If you selected a project template for a specific board such as the EK-RA6M3, some peripherals connected on the board are preselected.</p>
 <div class="image">
 <img src="sd-pins-tab.jpg" alt="sd-pins-tab.jpg"/>
@@ -575,16 +577,16 @@ Pins Configuration</div></div>
 <div class="image">
 <img src="sd-e2-pin-config.png" alt="sd-e2-pin-config.png"/>
 <div class="caption">
-e2 studio Pin configurator</div></div>
+e&sup2; studio Pin configurator</div></div>
 <p>The pin configurator also shows a package view and the selected electrical or functional characteristics of each pin.</p>
 <div class="image">
 <img src="sd-pin-config-pkg-view.png" alt="sd-pin-config-pkg-view.png"/>
 <div class="caption">
-e2 studio Pin configurator package view</div></div>
+e&sup2; studio Pin configurator package view</div></div>
 <p> When you click the <b>Generate Project Content</b> button, the pin configuration contents are written to: <code>ra_gen\bsp_pin_cfg.h</code></p>
 <p>This file will be created if it does not already exist.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Do not edit this file as it is overwritten whenever the <b>Generate Project Content</b> button is clicked.</dd></dl>
-<p>To make it easy to share pinning information for your project, e2 studio exports your pin configuration settings to a csv format and copies the csv file to <code>ra_gen/&lt;MCU package&gt;.csv</code>.</p>
+<p>To make it easy to share pinning information for your project, e&sup2; studio exports your pin configuration settings to a csv format and copies the csv file to <code>ra_gen/&lt;MCU package&gt;.csv</code>.</p>
 <h3><a class="anchor" id="configuring-interrupts"></a>
 Configuring Interrupts from the Stacks Tab</h3>
 <p>You can use the <b>Properties</b> view in the <b>Stacks</b> tab to enable interrupts by setting the interrupt priority. Select the driver in the <b>Stacks</b> pane to view and edit its properties.</p>
@@ -594,7 +596,7 @@ Configuring Interrupts from the Stacks Tab</h3>
 Configuring Interrupts in the Stacks tab</div></div>
  <h4><a class="anchor" id="interrupts"></a>
 Creating Interrupts from the Interrupts Tab</h4>
-<p>On the <b>Interrupts</b> tab, the user can bypass a peripheral interrupt set by the FSP by setting a user-defined ISR. This can be done by adding a new event via the <b>New User Event</b> button.</p>
+<p>On the <b>Interrupts</b> tab, the user can bypass a peripheral interrupt set by FSP by setting a user-defined ISR. This can be done by adding a new event via the <b>New User Event</b> button.</p>
 <div class="image">
 <img src="sd-config-int-in-interrupt-tab.png" alt="sd-config-int-in-interrupt-tab.png"/>
 <div class="caption">
@@ -623,9 +625,9 @@ Viewing Event Links</div></div>
 <dl class="section note"><dt>Note</dt><dd>When selecting an ELC event to receive for a module (or when manually defining an event link), only the events that are made available by the modules configured in the project will be shown.</dd></dl>
 <h2><a class="anchor" id="adding-threads-and-drivers"></a>
 Adding Threads and Drivers</h2>
-<p>Every RTOS-based RA Project includes at least one RTOS Thread and a stack of FSP modules running in that thread. The <b>Stacks</b> tab is a graphical user interface which helps you to add the right modules to a thread and configure the properties of both the threads and the modules associated with each thread. Once you have configured the thread, e2 studio automatically generates the code reflecting your configuration choices.</p>
-<p>For any driver, or, more generally, any module that you add to a thread, e2 studio automatically resolves all dependencies with other modules and creates the appropriate stack. This stack is displayed in the Stacks pane, which e2 studio populates with the selected modules and module options for the selected thread.</p>
-<p>The default view of the <b>Stacks</b> tab includes a Common Thread called <b>HAL/Common</b>. This thread includes the driver for I/O control (IOPORT). The default stack is shown in the <b>HAL/Common Stacks</b> pane. The default modules added to the HAL/Common driver are special in that the FSP only requires a single instance of each, which e2 studio then includes in every user-defined thread by default.</p>
+<p>Every RTOS-based RA Project includes at least one RTOS Thread and a stack of FSP modules running in that thread. The <b>Stacks</b> tab is a graphical user interface which helps you to add the right modules to a thread and configure the properties of both the threads and the modules associated with each thread. Once you have configured the thread, e&sup2; studio automatically generates the code reflecting your configuration choices.</p>
+<p>For any driver, or, more generally, any module that you add to a thread, e&sup2; studio automatically resolves all dependencies with other modules and creates the appropriate stack. This stack is displayed in the Stacks pane, which e&sup2; studio populates with the selected modules and module options for the selected thread.</p>
+<p>The default view of the <b>Stacks</b> tab includes a Common Thread called <b>HAL/Common</b>. This thread includes the driver for I/O control (IOPORT). The default stack is shown in the <b>HAL/Common Stacks</b> pane. The default modules added to the HAL/Common driver are special in that FSP only requires a single instance of each, which e&sup2; studio then includes in every user-defined thread by default.</p>
 <p>In applications that do not use an RTOS or run outside of the RTOS, the HAL/Common thread becomes the default location where you can add additional drivers to your application.</p>
 <p>For a detailed description on how to add and configure modules and stacks, see the following sections:</p>
 <ul>
@@ -643,9 +645,9 @@ Adding and Configuring HAL Drivers</h3>
 <div class="image">
 <img src="sd-proj-config-add-drivers.png" alt="sd-proj-config-add-drivers.png"/>
 <div class="caption">
-e2 studio Project configurator - Adding drivers</div></div>
+e&sup2; studio Project configurator - Adding drivers</div></div>
 </li>
-<li>Click <b>New Stack</b> to see a drop-down list of HAL level drivers available in the FSP.</li>
+<li>Click <b>New Stack</b> to see a drop-down list of HAL level drivers available in FSP.</li>
 <li><p class="startli">Select a driver from the menu <b>New Stack &gt; Driver</b>.</p>
 <div class="image">
 <img src="sd-select-driver.png" alt="sd-select-driver.png"/>
@@ -654,7 +656,7 @@ Select a driver</div></div>
 </li>
 <li>Select the driver module in the <b>HAL/Common Modules</b> pane and configure the driver properties in the <b>Properties</b> view.</li>
 </ol>
-<p>e2 studio adds the following files when you click the <b>Generate Project Content</b> button:</p>
+<p>e&sup2; studio adds the following files when you click the <b>Generate Project Content</b> button:</p>
 <ul>
 <li>The selected driver module and its files to the <code>ra/fsp</code> directory</li>
 <li>The <code>main()</code> function and configuration structures and header files for your application as shown in the table below.</li>
@@ -683,7 +685,7 @@ Adding Drivers to a Thread and Configuring the Drivers</h3>
 Adding a new RTOS Thread on the Stacks tab</div></div>
 </li>
 <li><p class="startli">In the <b>Properties</b> view, click on the <b>Name</b> and <b>Symbol</b> entries and enter a distinctive name and symbol for the new thread.</p>
-<dl class="section note"><dt>Note</dt><dd>e2 studio updates the name of the thread stacks pane to <b>My Thread Stacks</b>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>e&sup2; studio updates the name of the thread stacks pane to <b>My Thread Stacks</b>.</dd></dl>
 </li>
 <li><p class="startli">In the <b>My Thread Stacks</b> pane, click on <b>New</b> <b>Stack</b> to see a list of modules and drivers. HAL-level drivers can be added here.</p>
 <div class="image">
@@ -700,7 +702,7 @@ Configuring Module or Driver properties</div></div>
 </li>
 <li>If needed, add another thread by clicking <b>New Thread</b> in the <b>Threads</b> pane.</li>
 </ol>
-<p>When you press the <b>Generate Project Content</b> button for the example above, e2 studio creates the files as shown in the following table:</p>
+<p>When you press the <b>Generate Project Content</b> button for the example above, e&sup2; studio creates the files as shown in the following table:</p>
 <table class="doxtable">
 <tr>
 <th>File </th><th>Contents </th><th>Overwritten by Generate Project Content?  </th></tr>
@@ -729,7 +731,7 @@ Configuring Threads</h3>
 <div class="caption">
 New Thread Properties</div></div>
 <p> The <b>Properties</b> view contains settings common for all Threads (<b>Common</b>) and settings for this particular thread (<b>Thread</b>).</p>
-<p>For this thread instance, the thread's name and properties (such as priority level or stack size) can be easily configured. e2 studio checks that the entries in the property field are valid. For example, it will verify that the field <b>Priority</b>, which requires an integer value, only contains numeric values between 0 and 9.</p>
+<p>For this thread instance, the thread's name and properties (such as priority level or stack size) can be easily configured. e&sup2; studio checks that the entries in the property field are valid. For example, it will verify that the field <b>Priority</b>, which requires an integer value, only contains numeric values between 0 and 9.</p>
 <p>To add RTOS resources to a Thread, select a thread and click on <b>New Object</b> in the Thread Objects pane. The pane takes on the name of the selected thread, in this case <b>My Thread Objects</b>.</p>
 <div class="image">
 <img src="sd-configuring-thread-object-properties.png" alt="sd-configuring-thread-object-properties.png"/>
@@ -750,14 +752,14 @@ Components Tab</div></div>
 <li><code>ra/fsp/src/bsp</code></li>
 <li><code>ra/fsp/src/&lt;Driver_Name&gt;</code></li>
 </ul>
-<p>e2 studio also creates configuration files in the <code>ra_cfg/fsp_cfg</code> folder with configuration options set in the <b>Stacks</b> tab.</p>
+<p>e&sup2; studio also creates configuration files in the <code>ra_cfg/fsp_cfg</code> folder with configuration options set in the <b>Stacks</b> tab.</p>
 <h2><a class="anchor" id="writing-the-application"></a>
 Writing the Application</h2>
 <p>Once you have added Modules and drivers and set their configuration parameters in the <b>Stacks</b> tab, you can add the application code that calls the Modules and drivers.</p>
 <dl class="section note"><dt>Note</dt><dd>To check your configuration, build the project once without errors before adding any of your own application code.</dd></dl>
 <h3><a class="anchor" id="coding-features"></a>
 Coding Features</h3>
-<p>e2 studio provides several efficiency improving features that help write code. Review these features prior to digging into the code development step-by-step sections that follow.</p>
+<p>e&sup2; studio provides several efficiency improving features that help write code. Review these features prior to digging into the code development step-by-step sections that follow.</p>
 <h4>Autocomplete</h4>
 <p>Autocomplete is a context aware coding accelerator that suggests possible completions for partially typed-in code elements. If you can 'guess' the first part of a macro, for example, the Autocomplete function can suggest options for completing the rest of the macro.</p>
 <p>In the following example, a macro related to a BSP_IO setting needs to be found. After typing <code>BSP_IO_</code> in a source code file, pressing <code>Ctrl + Space</code> opens the Autocomplete list. This list shows a selection of context aware options for completing the macro. Scroll through the window to find the desired macro (in this case <code>BSP_IO_LEVEL_HIGH</code>) and click on it to add it to your code.</p>
@@ -769,7 +771,7 @@ Autocomplete example</div></div>
 <p>For a hands-on experience using Autocomplete use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, and the Help system.</p>
 <h4><a class="anchor" id="welcome-window"></a>
 Welcome Window</h4>
-<p>The e2 studio Welcome window displays useful information and common links to assist in development. Check out these resources to see what is available. They are updated with each release, so check back to see what has been added after a new release.</p>
+<p>The e&sup2; studio Welcome window displays useful information and common links to assist in development. Check out these resources to see what is available. They are updated with each release, so check back to see what has been added after a new release.</p>
 <div class="image">
 <img src="sd-welcome-window.png" alt="sd-welcome-window.png"/>
 <div class="caption">
@@ -783,7 +785,7 @@ Cheat Sheets</h4>
 Cheat Sheets</div></div>
  <h4><a class="anchor" id="developer-assistance"></a>
 Developer Assistance</h4>
-<p>FSP Developer Assistance provides developers with module and Application Programming Interface (API) reference documentation in e2 studio. After configuring the threads and software stacks for an FSP project with the RA Configuration editor, Developer Assistance quickly helps you get started writing C/C++ application code for the project using the configured stack modules.</p>
+<p>FSP Developer Assistance provides developers with module and Application Programming Interface (API) reference documentation in e&sup2; studio. After configuring the threads and software stacks for an FSP project with the RA Configuration editor, Developer Assistance quickly helps you get started writing C/C++ application code for the project using the configured stack modules.</p>
 <ol type="1">
 <li><p class="startli">Expand the project explorer to view Developer Assistance</p>
 <div class="image">
@@ -823,11 +825,11 @@ Opening the Help System</div></div>
 <img src="sd-ra-content-help.png" alt="sd-ra-content-help.png"/>
 <div class="caption">
 RA Content Help</div></div>
-<p> You can also search for help topics by using the Search bar. Below is an example searching for Visual Expressions, a helpful feature in the e2 studio debugger.</p>
+<p> You can also search for help topics by using the Search bar. Below is an example searching for Visual Expressions, a helpful feature in the e&sup2; studio debugger.</p>
 <div class="image">
 <img src="sd-e2-studio-help-from-search-bar.png" alt="sd-e2-studio-help-from-search-bar.png"/>
 <div class="caption">
-e2 studio Help from the Search Bar</div></div>
+e&sup2; studio Help from the Search Bar</div></div>
 <p> For a hands-on experience using the Help system use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110786">An Introduction to Developer Assistance</a>, <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, and the Help system.</p>
 <h3><a class="anchor" id="hal-modules-in-fsp"></a>
 HAL Modules in FSP: A Practical Description</h3>
@@ -850,7 +852,7 @@ Module Api Reference Section Example</div></div>
 RTOS-Independent Applications</h3>
 <p>To write application code:</p>
 <ol type="1">
-<li>Add all drivers and modules in the <b>Stacks</b> tab and resolve all dependencies flagged by e2 studio such as missing interrupts or drivers.</li>
+<li>Add all drivers and modules in the <b>Stacks</b> tab and resolve all dependencies flagged by e&sup2; studio such as missing interrupts or drivers.</li>
 <li>Configure the drivers in the <b>Properties</b> view.</li>
 <li>In the Project Configuration view, click the <b>Generate Project Content</b> button.</li>
 <li><p class="startli">In the <b>Project Explorer</b> view, double-click on the <code>src/hal_entry.c</code> file to edit the source file.</p>
@@ -876,7 +878,7 @@ RTOS Applications</h3>
 <ol type="1">
 <li>Add a thread using the <b>Stacks</b> tab.</li>
 <li>Provide a unique name for the thread in the <b>Properties</b> view for this thread.</li>
-<li>Configure all drivers and resources for this thread and resolve all dependencies flagged by e2 studio such as missing interrupts or drivers.</li>
+<li>Configure all drivers and resources for this thread and resolve all dependencies flagged by e&sup2; studio such as missing interrupts or drivers.</li>
 <li>Configure the thread objects.</li>
 <li>Provide unique names for each thread object in the <b>Properties</b> view for each object.</li>
 <li>Add more threads if needed and repeat steps 1 to 5.</li>
@@ -935,21 +937,21 @@ Debugging the Project</h2>
 <dl class="section note"><dt>Note</dt><dd>For details on using J-Link and connecting the board to the PC, see the Quick Start Guide included in the RA MCU Kit.</dd></dl>
 <h2><a class="anchor" id="modifying-toolchain-settings"></a>
 Modifying Toolchain Settings</h2>
-<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e2 studio through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU Arm toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
+<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e&sup2; studio through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU Arm toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
 <div class="image">
 <img src="sd-e2-proj-toolchain.png" alt="sd-e2-proj-toolchain.png"/>
 <div class="caption">
-e2 studio Project toolchain settings</div></div>
+e&sup2; studio Project toolchain settings</div></div>
 <p> The scope for the settings is project scope which means that the settings are valid only for the project being modified.</p>
 <p>The settings for the linker which control the location of the various memory sections are contained in a script file specific for the device being used. This script file is included in the project when it is created and is found in the script folder (for example, <code>/script/a6m3.ld</code>).</p>
 <h2><a class="anchor" id="creating-ra-project-with-arm-compiler-6-in-e2-studio"></a>
-Creating RA project with ARM Compiler 6 in e2 studio</h2>
-<p>e2 studio does not include the ARM Compiler 6 (AC6) toolchain by default. Follow the steps below to integrate AC6 into e2 studio and create an AC6 RA project.</p>
-<dl class="section note"><dt>Note</dt><dd>It is assumed that the user is already familiar with RA project creation in e2 studio. e2 studio does not include ARM Compiler 6 (AC6) toolchain by default.</dd></dl>
-<p>Steps 1 through 8 describe the process for integrating ARM Compiler 6 into e2 studio.</p>
+Creating RA project with Arm Compiler 6 in e² studio</h2>
+<p>e&sup2; studio does not include the Arm Compiler 6 (AC6) toolchain by default. Follow the steps below to integrate AC6 into e&sup2; studio and create an AC6 RA project.</p>
+<dl class="section note"><dt>Note</dt><dd>It is assumed that the user is already familiar with RA project creation in e&sup2; studio. e&sup2; studio does not include Arm Compiler 6 (AC6) toolchain by default.</dd></dl>
+<p>Steps 1 through 8 describe the process for integrating Arm Compiler 6 into e&sup2; studio.</p>
 <ol type="1">
 <li>Download, install, and configure license for the AC6 toolchain (<a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6">https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6</a>).</li>
-<li>Launch e2 studio.</li>
+<li>Launch e&sup2; studio.</li>
 <li>Go to <b>Window &gt; Preferences &gt; Toolchains</b>.</li>
 <li><p class="startli">Click <b>Add</b>.</p>
 <div class="image">
@@ -989,17 +991,17 @@ Select Arm Compiler</div></div>
  </li>
 </ol>
 <h2><a class="anchor" id="importing-an-existing-project-into-e2-studio"></a>
-Importing an Existing Project into e2 studio</h2>
+Importing an Existing Project into e² studio</h2>
 <ol type="1">
-<li>Start by opening e2 studio.</li>
+<li>Start by opening e&sup2; studio.</li>
 <li>Open an existing Workspace to import the project and skip to step d. If the workspace doesn't exist, proceed with the following steps:<ol type="a">
-<li><p class="startli">At the end of e2 studio startup, you will see the Workspace Launcher Dialog box as shown in the following figure.</p>
+<li><p class="startli">At the end of e&sup2; studio startup, you will see the Workspace Launcher Dialog box as shown in the following figure.</p>
 <div class="image">
 <img src="sd-workspace-launcher-dialog.png" alt="sd-workspace-launcher-dialog.png"/>
 <div class="caption">
 Workspace Launcher dialog</div></div>
 </li>
-<li><p class="startli">Enter a new workspace name in the Workspace Launcher Dialog as shown in the following figure. e2 studio creates a new workspace with this name.</p>
+<li><p class="startli">Enter a new workspace name in the Workspace Launcher Dialog as shown in the following figure. e&sup2; studio creates a new workspace with this name.</p>
 <div class="image">
 <img src="sd-workspace-launcher-select-workspace.png" alt="sd-workspace-launcher-select-workspace.png"/>
 <div class="caption">
@@ -1060,11 +1062,15 @@ Import Existing Project dialog 2</div></div>
 </li>
 <li>Click <b>Finish</b> to import the project.</li>
 </ol>
-<h1><a class="anchor" id="tutorial-your-first-ra-mcu-project-blinky"></a>
+<h2><a class="anchor" id="using-semihosting-in-a-project"></a>
+Using Semihosting in a Project</h2>
+<dl class="section note"><dt>Note</dt><dd><b>printf requires use of the heap (BSP Tab -&gt; Properties -&gt; RA Common -&gt; Heap size (bytes))</b></dd></dl>
+<p>When using certain standard C I/O functions such as <code>printf</code> and <code>scanf</code> semihosting must be initialized for them to work correctly with the <b>Renesas Debug Virtual Console</b>. In order to setup semihosting a call to <code>initialise_monitor_handles</code> should be added somewhere in your application before any semihosting related calls are made. Here is an example declaration and call:</p>
+<div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> initialise_monitor_handles(<span class="keywordtype">void</span>); <span class="comment">/* Add this declaration before calling. */</span></div><div class="line"></div><div class="line">initialise_monitor_handles(); <span class="comment">/* Add this call to your application. */</span></div></div><!-- fragment --><h1><a class="anchor" id="tutorial-your-first-ra-mcu-project-blinky"></a>
 Tutorial: Your First RA MCU Project - Blinky</h1>
 <h2><a class="anchor" id="tutorial-blinky"></a>
 Tutorial Blinky</h2>
-<p>The goal of this tutorial is to quickly get acquainted with the Flexible Platform by moving through the steps of creating a simple application using e2 studio and running that application on an RA MCU board.</p>
+<p>The goal of this tutorial is to quickly get acquainted with the Flexible Platform by moving through the steps of creating a simple application using e&sup2; studio and running that application on an RA MCU board.</p>
 <h2><a class="anchor" id="what-does-blinky-do"></a>
 What Does Blinky Do?</h2>
 <p>The application used in this tutorial is Blinky, traditionally the first program run in a new embedded development environment.</p>
@@ -1086,7 +1092,7 @@ Prerequisites</h2>
 <p>To follow this tutorial, you need:</p>
 <ul>
 <li>Windows based PC</li>
-<li>e2 studio</li>
+<li>e&sup2; studio</li>
 <li>Flexible Software Package</li>
 <li>An RA MCU board kit</li>
 </ul>
@@ -1095,36 +1101,36 @@ Create a New Project for Blinky</h2>
 <p>The creation and configuration of an RA MCU project is the first step in the creation of an application. The base RA MCU pack includes a pre-written Blinky example application that is simple and works on all Renesas RA MCU boards.</p>
 <p>Follow these steps to create an RA MCU project:</p>
 <ol type="1">
-<li>In e2 studio, click <b>File &gt; New &gt; C/C++ Project &gt; Renesas RA</b> and select <b>Renesas RA C/C++ Project</b>.</li>
+<li>In e&sup2; studio, click <b>File &gt; New &gt; C/C++ Project &gt; Renesas RA</b> and select <b>Renesas RA C/C++ Project</b>.</li>
 <li>Assign a name to this new project. Blinky is a good name to use for this tutorial.</li>
 <li><p class="startli">Click <b>Next</b>. The <b>Project Configuration</b> window shows your selection.</p>
 <div class="image">
 <img src="sd-proj-config-1-blinky.png" alt="sd-proj-config-1-blinky.png"/>
 <div class="caption">
-e2 studio Project Configuration window (part 1)</div></div>
+e&sup2; studio Project Configuration window (part 1)</div></div>
 </li>
 <li><p class="startli">Select the board support package by selecting the name of your board from the <b>Device Selection</b> drop-down list and click <b>Next</b>.</p>
 <div class="image">
 <img src="sd-proj-config-2.png" alt="sd-proj-config-2.png"/>
 <div class="caption">
-e2 studio Project Configuration window (part 2)</div></div>
+e&sup2; studio Project Configuration window (part 2)</div></div>
 </li>
 <li><p class="startli">Select the build artifact and RTOS.</p>
 <div class="image">
 <img src="sd-proj-config-2a.png" alt="sd-proj-config-2a.png"/>
 <div class="caption">
-e2 studio Project Configuration window (part 3)</div></div>
+e&sup2; studio Project Configuration window (part 3)</div></div>
 </li>
 <li><p class="startli">Select the Blinky template for your board and click <b>Finish</b>.</p>
 <div class="image">
 <img src="sd-proj-config-3.png" alt="sd-proj-config-3.png"/>
 <div class="caption">
-e2 studio Project Configuration window (part 4)</div></div>
-<p> Once the project has been created, the name of the project will show up in the <b>Project Explorer</b> window of e2 studio. Now click the <b>Generate Project Content</b> button in the top right corner of the <b>Project Configuration</b> window to generate your board specific files.</p>
+e&sup2; studio Project Configuration window (part 4)</div></div>
+<p> Once the project has been created, the name of the project will show up in the <b>Project Explorer</b> window of e&sup2; studio. Now click the <b>Generate Project Content</b> button in the top right corner of the <b>Project Configuration</b> window to generate your board specific files.</p>
 <div class="image">
 <img src="sd-proj-config-tab.png" alt="sd-proj-config-tab.png"/>
 <div class="caption">
-e2 studio Project Configuration tab</div></div>
+e&sup2; studio Project Configuration tab</div></div>
 <p> Your new project is now created, configured, and ready to build.</p>
 </li>
 </ol>
@@ -1134,10 +1140,10 @@ Details about the Blinky Configuration</h3>
 <p>For example, if you check a box next to a module in the <b>Components</b> tab and click the <b>Generate Project Content</b> button, all the files necessary for the inclusion of that module into the project will be copied or created. If that same check box is then unchecked those files will be deleted.</p>
 <h3><a class="anchor" id="configuring-the-blinky-clocks"></a>
 Configuring the Blinky Clocks</h3>
-<p>By selecting the Blinky template, the clocks are configured by e2 studio for the Blinky application. The clock configuration tab (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-clocks">Configuring Clocks</a>) shows the Blinky clock configuration. The Blinky clock configuration is stored in the BSP clock configuration file (see BSP Clock Configuration).</p>
+<p>By selecting the Blinky template, the clocks are configured by e&sup2; studio for the Blinky application. The clock configuration tab (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-clocks">Configuring Clocks</a>) shows the Blinky clock configuration. The Blinky clock configuration is stored in the BSP clock configuration file (see BSP Clock Configuration).</p>
 <h3><a class="anchor" id="configuring-the-blinky-pins"></a>
 Configuring the Blinky Pins</h3>
-<p>By selecting the Blinky template, the GPIO pins used to toggle the LED1 are configured by e2 studio for the Blinky application. The pin configuration tab shows the pin configuration for the Blinky application (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-pins">Configuring Pins</a>). The Blinky pin configuration is stored in the BSP configuration file (see BSP Pin Configuration).</p>
+<p>By selecting the Blinky template, the GPIO pins used to toggle the LED1 are configured by e&sup2; studio for the Blinky application. The pin configuration tab shows the pin configuration for the Blinky application (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-pins">Configuring Pins</a>). The Blinky pin configuration is stored in the BSP configuration file (see BSP Pin Configuration).</p>
 <h3><a class="anchor" id="configuring-the-parameters-for-blinky-components"></a>
 Configuring the Parameters for Blinky Components</h3>
 <p>The Blinky project automatically selects the following HAL components in the Components tab:</p>
@@ -1150,7 +1156,7 @@ Where is main()?</h3>
 <p>The main function is located in <code>&lt; project &gt;/ra_gen/main.c</code>. It is one of the files that are generated during the project creation stage and only contains a call to <code>hal_entry()</code>. For more information on generated files, see <a class="el" href="_s_t_a_r_t__d_e_v.html#adding-and-configuring-hal-drivers">Adding and Configuring HAL Drivers</a>.</p>
 <h3><a class="anchor" id="blinky-example-code"></a>
 Blinky Example Code</h3>
-<p>The blinky application is stored in the <code>hal_entry.c</code> file. This file is generated by e2 studio when you select the Blinky Project template and is located in the project's <code>src/</code> folder.</p>
+<p>The blinky application is stored in the <code>hal_entry.c</code> file. This file is generated by e&sup2; studio when you select the Blinky Project template and is located in the project's <code>src/</code> folder.</p>
 <p>The application performs the following steps:</p>
 <ol type="1">
 <li>Get the LED information for the selected board by bsp_leds_t structure.</li>
@@ -1170,19 +1176,19 @@ Build the Blinky Project</h2>
 <div class="image">
 <img src="sd-proj-explorer.jpg" alt="sd-proj-explorer.jpg"/>
 <div class="caption">
-e2 studio Project Explorer window</div></div>
+e&sup2; studio Project Explorer window</div></div>
 <p> Once the build is complete a message is displayed in the build <b>Console</b> window that displays the final image file name and section sizes in that image.</p>
 <div class="image">
 <img src="sd-proj-build-console.png" alt="sd-proj-build-console.png"/>
 <div class="caption">
-e2 studio Project Build console</div></div>
+e&sup2; studio Project Build console</div></div>
  <h2><a class="anchor" id="debug-the-blinky-project"></a>
 Debug the Blinky Project</h2>
 <h3><a class="anchor" id="debug-prerequisites"></a>
 Debug prerequisites</h3>
 <p>To debug the project on a board, you need</p>
 <ul>
-<li>The board to be connected to e2 studio</li>
+<li>The board to be connected to e&sup2; studio</li>
 <li>The debugger to be configured to talk to the board</li>
 <li>The application to be programmed to the microcontroller</li>
 </ul>
@@ -1192,7 +1198,7 @@ Debug prerequisites</h3>
 <li>Built-in boot-loader via UART or USB</li>
 </ul>
 <p>Some boards have an on-board JTAG debugger and others require an external JTAG debugger connected to a header on the board.</p>
-<p>Refer to your board's user manual to learn how to connect the JTAG debugger to e2 studio.</p>
+<p>Refer to your board's user manual to learn how to connect the JTAG debugger to e&sup2; studio.</p>
 <h3><a class="anchor" id="debug-steps"></a>
 Debug steps</h3>
 <p>To debug the Blinky application, follow these steps:</p>
@@ -1201,18 +1207,18 @@ Debug steps</h3>
 <div class="image">
 <img src="sd-debug-icon.png" alt="sd-debug-icon.png"/>
 <div class="caption">
-e2 studio Debug icon</div></div>
+e&sup2; studio Debug icon</div></div>
 <p> or by selecting the drop-down menu next to the bug icon and selecting <b>Debugger Configurations ...</b></p>
 <div class="image">
 <img src="sd-debug-config-window.jpg" alt="sd-debug-config-window.jpg"/>
 <div class="caption">
-e2 studio Debugger Configurations selection option</div></div>
+e&sup2; studio Debugger Configurations selection option</div></div>
 </li>
 <li><p class="startli">Select your debugger configuration in the window. If it is not visible then it must be created by clicking the <b>New</b> icon in the top left corner of the window. Once selected, the <b>Debug Configuration</b> window displays the Debug configuration for your Blinky project.</p>
 <div class="image">
 <img src="sd-debug-config-with-blinky.jpg" alt="sd-debug-config-with-blinky.jpg"/>
 <div class="caption">
-e2 studio Debugger Configurations window with Blinky project</div></div>
+e&sup2; studio Debugger Configurations window with Blinky project</div></div>
 </li>
 <li>Click <b>Debug</b> to begin debugging the application.</li>
 <li><p class="startli">Extracting RA Debug.</p>
@@ -1223,7 +1229,7 @@ e2 studio Debugger Configurations window with Blinky project</div></div>
 </ol>
 <h3><a class="anchor" id="details-about-the-debug-process"></a>
 Details about the Debug Process</h3>
-<p>In debug mode, e2 studio executes the following tasks:</p>
+<p>In debug mode, e&sup2; studio executes the following tasks:</p>
 <ol type="1">
 <li>Downloading the application image to the microcontroller and programming the image to the internal flash memory.</li>
 <li>Setting a breakpoint at main().</li>
@@ -1234,14 +1240,14 @@ Details about the Debug Process</h3>
 <div class="image">
 <img src="sd-debug-mem-window.png" alt="sd-debug-mem-window.png"/>
 <div class="caption">
-e2 studio Debugger memory window</div></div>
+e&sup2; studio Debugger memory window</div></div>
  <h2><a class="anchor" id="run-the-blinky-project"></a>
 Run the Blinky Project</h2>
 <p>While in Debug mode, click <b>Run &gt; Resume</b> or click on the <b>Play</b> icon twice.</p>
 <div class="image">
 <img src="sd-debug-play-icon.jpg" alt="sd-debug-play-icon.jpg"/>
 <div class="caption">
-e2 studio Debugger Play icon</div></div>
+e&sup2; studio Debugger Play icon</div></div>
 <p> The LEDs on the board marked LED1, LED2, and LED3 should now be blinking.</p>
 <h1><a class="anchor" id="tutorial-using-hal-drivers-programming-the-wdt"></a>
 Tutorial: Using HAL Drivers - Programming the WDT</h1>
@@ -1255,10 +1261,10 @@ Application WDT</h2>
 <li><a class="el" href="group___i_o_p_o_r_t.html">I/O Port (r_ioport)</a></li>
 </ul>
 <h2><a class="anchor" id="creating-a-wdt-application-using-the-ra-fsp-and-e2-studio"></a>
-Creating a WDT Application Using the RA MCU FSP and e2 studio</h2>
+Creating a WDT Application Using the RA MCU FSP and e² studio</h2>
 <h3><a class="anchor" id="using-the-fsp-and-e2-studio"></a>
-Using the FSP and e2 studio</h3>
-<p>The Flexible Software Package (FSP) from Renesas provides a complete driver library for developing RA MCU applications. The FSP provides Hardware Abstraction Layer (HAL) drivers, Board Support Package (BSP) drivers for the developer to use to create applications. The FSP is integrated into Renesas e2 studio based on eclipse providing build (editor, compiler and linker) and debug phases with an extended GNU Debug (GDB) interface.</p>
+Using FSP and e² studio</h3>
+<p>The Flexible Software Package (FSP) from Renesas provides a complete driver library for developing RA MCU applications. FSP provides Hardware Abstraction Layer (HAL) drivers, Board Support Package (BSP) drivers for the developer to use to create applications. FSP is integrated into Renesas e&sup2; studio based on eclipse providing build (editor, compiler and linker) and debug phases with an extended GNU Debug (GDB) interface.</p>
 <h3><a class="anchor" id="the-wdt-application"></a>
 The WDT Application</h3>
 <p>The flowchart for the WDT application is shown below.</p>
@@ -1271,15 +1277,15 @@ WDT Application flow</h3>
 <p>The main sections of the WDT application are:</p>
 <ol type="1">
 <li>The BSP initializes the clocks, pins and other elements of the MCU readying the application to run.</li>
-<li><code>main()</code> calls <code>hal_entry()</code>. The function <code>hal_entry()</code> is created by the FSP with a placeholder for user code. The code for the WDT is added to this function.</li>
+<li><code>main()</code> calls <code>hal_entry()</code>. The function <code>hal_entry()</code> is created by FSP with a placeholder for user code. The code for the WDT is added to this function.</li>
 <li>Initialize the WDT, but do not start it.</li>
 <li>Start the WDT by refreshing it.</li>
 <li>In the first loop the red LED flashes 30 times and refreshes the watchdog each time the LED state is changed.</li>
 <li>In the second loop, the green LED flashes, but the program DOES NOT refresh the watchdog. After the watchdog timeout period the device will reset which can be observed by the red LED flashing again as the sequence repeats.</li>
 </ol>
 <h2><a class="anchor" id="creating-the-project-with-e2-studio"></a>
-Creating the Project with e2 studio</h2>
-<p>Start e2 studio and choose a workspace folder in the Workspace Launcher. Configure a new RA MCU project as follows.</p>
+Creating the Project with e² studio</h2>
+<p>Start e&sup2; studio and choose a workspace folder in the Workspace Launcher. Configure a new RA MCU project as follows.</p>
 <ol type="1">
 <li><p class="startli">Select <b>File &gt; New &gt; RA C/C++ Project</b>. Then select the template for the project.</p>
 <div class="image">
@@ -1290,7 +1296,7 @@ Creating the Project with e2 studio</h2>
 <div class="caption">
 Creating a new project</div></div>
 </li>
-<li><p class="startli">In the e2 studio Project <b>Configuration (RA Project)</b> window enter a project name, for example, WDT_Application. In addition, select the toolchain. If you want to choose new locations for the project unselect <b>Use default location</b>. Click <b>Next</b>.</p>
+<li><p class="startli">In the e&sup2; studio Project <b>Configuration (RA Project)</b> window enter a project name, for example, WDT_Application. In addition, select the toolchain. If you want to choose new locations for the project unselect <b>Use default location</b>. Click <b>Next</b>.</p>
 <div class="image">
 <img src="sd-proj-config-1.png" alt="sd-proj-config-1.png"/>
 <div class="caption">
@@ -1309,13 +1315,13 @@ Project configuration (part 2)</div></div>
 Project configuration (part 3)</div></div>
 </li>
 <li><p class="startli">Click <b>Finish</b>.</p>
-<p class="startli">e2 studio creates the project and opens the <b>Project Explorer</b> and <b>Project Configuration Settings</b> views with the <b>Summary</b> page showing a summary of the project configuration.</p>
+<p class="startli">e&sup2; studio creates the project and opens the <b>Project Explorer</b> and <b>Project Configuration Settings</b> views with the <b>Summary</b> page showing a summary of the project configuration.</p>
 </li>
 </ol>
 <h2><a class="anchor" id="configuring-the-project-with-e2-studio"></a>
-Configuring the Project with e2 studio</h2>
-<p>e2 studio simplifies and accelerates the project configuration process by providing a GUI interface for selecting the options to configure the project.</p>
-<p>e2 studio offers a selection of perspectives presenting different windows to the user depending on the operation in progress. The default perspectives are <b>C/C++</b>, <b>FSP Configuration</b> and <b>Debug</b>. The perspective can be changed by selecting a new one from the buttons at the top right.</p>
+Configuring the Project with e² studio</h2>
+<p>e&sup2; studio simplifies and accelerates the project configuration process by providing a GUI interface for selecting the options to configure the project.</p>
+<p>e&sup2; studio offers a selection of perspectives presenting different windows to the user depending on the operation in progress. The default perspectives are <b>C/C++</b>, <b>FSP Configuration</b> and <b>Debug</b>. The perspective can be changed by selecting a new one from the buttons at the top right.</p>
 <div class="image">
 <img src="sd-select-param.jpg" alt="sd-select-param.jpg"/>
 <div class="caption">
@@ -1323,7 +1329,7 @@ Selecting a perspective</div></div>
 <p> The <b>C/C++</b> perspective provides a layout selected for code editing. The <b>FSP Configuration</b> perspective provides elements for configuring a RA MCU project, and the <b>Debug</b> perspective provides a view suited for debugging.</p>
 <ol type="1">
 <li>In order to configure the project settings ensure the <b>FSP Configuration</b> perspective is selected.</li>
-<li>Ensure the <b>Project Configuration [WDT Application]</b> is open. It is already open if the Summary information is visible. To open the Project Configuration now or at any time make sure the <b>RA Configuration</b> perspective is selected and double-click on the <code>configuration.xml</code> file in the Project Explorer pane on the right side of e2 studio.</li>
+<li>Ensure the <b>Project Configuration [WDT Application]</b> is open. It is already open if the Summary information is visible. To open the Project Configuration now or at any time make sure the <b>RA Configuration</b> perspective is selected and double-click on the <code>configuration.xml</code> file in the Project Explorer pane on the right side of e&sup2; studio.</li>
 </ol>
 <div class="image">
 <img src="sd-ra-proj-config.jpg" alt="sd-ra-proj-config.jpg"/>
@@ -1355,14 +1361,14 @@ Pins Tab</h3>
 <p>The <b>Pins</b> tab provides a graphical tool for configuring the functionality of the pins of the device. For the WDT project no pin configuration is required. Although the project uses two LEDs connected to pins on the device, these pins are pre-configured as output GPIO pins by the BSP.</p>
 <h3><a class="anchor" id="stacks-tab"></a>
 Stacks Tab</h3>
-<p>You can add any driver to the project using the <b>Stacks</b> tab. The HAL driver IO port pins are added automatically by e2 studio when the project is configured. The WDT application uses no RTOS Resources, so you only need to add the HAL WDT driver.</p>
+<p>You can add any driver to the project using the <b>Stacks</b> tab. The HAL driver IO port pins are added automatically by e&sup2; studio when the project is configured. The WDT application uses no RTOS Resources, so you only need to add the HAL WDT driver.</p>
 <div class="image">
 <img src="sd-stacks-tab.jpg" alt="sd-stacks-tab.jpg"/>
 <div class="caption">
 Stacks tab</div></div>
 <ol type="1">
 <li><p class="startli">Click on the <b>HAL/Common Panel</b> in the Threads Window as indicated in the figure above.</p>
-<p class="startli">The Stacks Panel becomes a <b>HAL/Common Stacks</b> panel and is populated with the modules preselected by e2 studio.</p>
+<p class="startli">The Stacks Panel becomes a <b>HAL/Common Stacks</b> panel and is populated with the modules preselected by e&sup2; studio.</p>
 </li>
 <li>Click on <b>New Stack</b> to find a pop-up window with the available HAL level drivers.</li>
 <li>Select <b>WATCHDOG Driver on r_wdt</b>.</li>
@@ -1390,7 +1396,7 @@ g_wdt WATCHDOG Driver on WDT properties</div></div>
 <img src="gen-proj-content.png" alt="gen-proj-content.png"/>
 <div class="caption">
 Generate Project Content button</div></div>
-<p> e2 studio generates the project files.</p>
+<p> e&sup2; studio generates the project files.</p>
 <h3><a class="anchor" id="components-tab"></a>
 Components Tab</h3>
 <p>The components tab is included for reference to see which modules are included in the project. Modules are selected automatically in the Components view after they are added in the Stacks Tab.</p>
@@ -1428,7 +1434,7 @@ WDT Generated Project Files</h2>
 r_wdt_cfg.h contents</div></div>
  <dl class="section warning"><dt>Warning</dt><dd>Do not edit any of these files as they are recreated every time the Generate Project Content button is clicked and so any changes will be overwritten.</dd></dl>
 <p>The <code>r_ioport</code> folder is not created at <code>ra/fsp/src</code> as this module is required by the BSP and so already exists. It is included in the WDT project in order to include the correct header file in <code>ra_gen/hal_data.c</code>&ndash;see later in this document for further details. For the same reason the other IOPORT header files&ndash; <code>ra/fsp/inc/api/r_ioport_api.h</code>and<code>ra/fsp/inc/instances/r_ioport.h</code>&ndash;are not created as they already exist.</p>
-<p>In addition to generating the HAL driver files for the WDT and IOPORT files e2 studio also generates files containing configuration data for the WDT and a file where user code can safely be added. These files are shown below.</p>
+<p>In addition to generating the HAL driver files for the WDT and IOPORT files e&sup2; studio also generates files containing configuration data for the WDT and a file where user code can safely be added. These files are shown below.</p>
 <div class="image">
 <img src="sd-wdt-proj-files.png" alt="sd-wdt-proj-files.png"/>
 <div class="caption">
@@ -1458,11 +1464,11 @@ WDT hal_entry.c</h3>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div></div><!-- fragment --><p> Again the first (and only in this case) parameter passed to this API is the pointer to the control structure of this instance of the driver.</p>
 <h2><a class="anchor" id="building-and-testing-the-project"></a>
 Building and Testing the Project</h2>
-<p>Build the project in e2 studio by clicking <b>Build &gt; Build Project</b> or by clicking the build icon. The project should build without errors.</p>
+<p>Build the project in e&sup2; studio by clicking <b>Build &gt; Build Project</b> or by clicking the build icon. The project should build without errors.</p>
 <p>To debug the project</p>
 <ol type="1">
 <li>Connect the USB cable between the target board debug port and host PC.</li>
-<li>In the <b>Project Explorer</b> pane on the left side of e2 studio, right-click on the WDT project <b>WDT_Application</b> and select <b>Debug As &gt; Debug Configurations</b>.</li>
+<li>In the <b>Project Explorer</b> pane on the left side of e&sup2; studio, right-click on the WDT project <b>WDT_Application</b> and select <b>Debug As &gt; Debug Configurations</b>.</li>
 <li><p class="startli">Under <b>Renesas GDB Hardware Debugging</b> select <b>WDT_Application Debug</b> as shown below.</p>
 <div class="image">
 <img src="sd-debug-config.jpg" alt="sd-debug-config.jpg"/>
@@ -1481,30 +1487,39 @@ Debug configuration</div></div>
 <p>The red LED should start flashing. After 30 flashes the green LED will start flashing and the red LED will stop flashing.</p>
 <p>While the green LED is flashing the WDT will underflow and reset the device resulting in the red LED to flash again as the sequence repeats.</p>
 <ol type="1">
-<li>Stop the debugger in e2 studio via <b>Run &gt; Terminate</b>.</li>
+<li>Stop the debugger in e&sup2; studio via <b>Run &gt; Terminate</b>.</li>
 <li>Click the reset button on the target board. The LEDs begin flashing.</li>
 </ol>
 <h1><a class="anchor" id="primer-trustzone-project-development"></a>
-Primer: ARM® TrustZone® Project Development</h1>
-<p>This section will introduce the user to the tools supporting ARM® TrustZone® configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA ARM® TrustZone® projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first ARM® TrustZone® development. A background knowledge of e<sup>2</sup> studio and RA device hardware is expected.</p>
+Primer: Arm TrustZone Project Development</h1>
+<p>This section will introduce the user to the tools supporting Arm® TrustZone® technology configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA Arm TrustZone projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first Arm TrustZone development. A background knowledge of e&sup2; studio and RA device hardware is expected.</p>
 <h2>Target Device</h2>
-<p>RA Cortex®-M33 or Cortex®-M23 devices with ARM® TrustZone® security extension.</p>
+<p>RA Cortex®-M33 devices with Arm TrustZone security extension. As shown in the following table, most RA devices that include TrustZone support also support Device Lifecycle Management (DLM).</p>
+<table class="doxtable">
+<tr>
+<th>MCU Groups with TrustZone and DLM </th><th>MCU Groups with TrustZone and no DLM  </th></tr>
+<tr>
+<td>RA4M2, RA4M3, RA6M4, RA6M5, RA4E1, RA6E1, RA6T2 </td><td>RA4E2, RA6E2, RA4T1, RA6T3 </td></tr>
+</table>
 <h2><a class="anchor" id="renesas-implementation-of-arm-trustzone-technology"></a>
-Renesas Implementation of ARM® TrustZone® Technology</h2>
-<p>For brevity, ARM® TrustZone® will be abbreviated to TZ in this document.</p>
-<p>The following section is supplied for reference only. For full details of TZ implementation, refer to Arm documentation (<a href="https://developer.arm.com/ip-products/security-ip/trustzone">https://developer.arm.com/ip-products/security-ip/trustzone</a>) and the RA6M4 device manual.</p>
-<p>Arm TZ technology divides the MCU and therefore the application into Secure and Non-Secure partitions. Secure applications can access both Secure and Non-Secure memory and resources. Non-Secure code can access Non-Secure memory and resources as well as Secure resources through a set of so-called veneers located in the Non-Secure Callable (NSC) region. This ensures a single access point for Secure code when called from the Non-Secure partition. The MCU starts up in the Secure partition by default. The security state of the CPU can be either Secure or Non-Secure.</p>
-<p>The MCU code flash, data flash, and SRAM are divided into Secure (S) and Non-Secure (NS) regions. Code flash and SRAM include a further region known as Non-Secure Callable (NSC). These memory security attributes are set into the non-volatile memory via SCI or USB boot mode commands when the device lifecycle is Secure Software Debug (SSD) state. The memory security attributes are loaded into the Implementation Defined Attribution Unit (IDAU) peripheral and the memory controller before application execution and cannot be updated by application code.</p>
+Renesas Implementation of Arm TrustZone Technology</h2>
+<p>The following section is supplied for reference only. For full details of TrustZone implementation, refer to Arm documentation (<a href="https://developer.arm.com/ip-products/security-ip/trustzone">https://developer.arm.com/ip-products/security-ip/trustzone</a>) and the MCU user manual.</p>
+<p>Arm TrustZone technology divides the MCU and therefore the application into Secure and Non-Secure partitions. Secure applications can access both Secure and Non-Secure memory and resources. Non-Secure code can access Non-Secure memory and resources as well as Secure resources through a set of so-called veneers located in the Non-Secure Callable (NSC) region. This ensures a single access point for Secure code when called from the Non-Secure partition. The MCU starts up in the Secure partition by default. The security state of the CPU can be either Secure or Non-Secure.</p>
+<p>The MCU code flash, data flash, and SRAM are divided into Secure (S) and Non-Secure (NS) regions. Code flash and SRAM include a further region known as Non-Secure Callable (NSC). The method to set these memory security attributes depends on whether the device supports DLM:</p>
+<ul>
+<li>For devices that support DLM, memory security attributes are set into the non-volatile memory through SCI or USB boot mode commands when the device lifecycle is Secure Software Debug (SSD) state. The memory security attributes are loaded into the Implementation Defined Attribution Unit (IDAU) peripheral and the memory controller before application execution and cannot be updated by application code.</li>
+<li>For devices that do not support DLM, memory security attributes are written to IDAU registers at startup by application code using secure accesses.</li>
+</ul>
 <div class="image">
 <img src="tz-secure-nonsecure.png" alt="tz-secure-nonsecure.png"/>
 <div class="caption">
 Secure and Non-Secure Regions</div></div>
 <p> Note: All external memory accesses are considered to be Non-Secure.</p>
-<p>Code Flash and SRAM can be divided into Secure, Non-Secure, and Non-Secure Callable. All secure memory accesses from the Non-Secure region MUST go through the Non-Secure Callable gateway and target a specific Secure Gateway (SG) assembler instruction. This forces access to Secure APIs at a fixed location and prevents calls to sub-functions and so on. Failing to target an SG instruction will generate a TZ exception.</p>
-<p>TZ enabled compilers will manage generation of the NSC veneer automatically using CMSE extensions.</p>
+<p>Code Flash and SRAM can be divided into Secure, Non-Secure, and Non-Secure Callable. All secure memory accesses from the Non-Secure region MUST go through the Non-Secure Callable gateway and target a specific Secure Gateway (SG) assembler instruction. This forces access to Secure APIs at a fixed location and prevents calls to sub-functions and so on. Failing to target an SG instruction will generate a TrustZone exception.</p>
+<p>TrustZone enabled compilers will manage generation of the NSC veneer automatically using CMSE extensions.</p>
 <h3><a class="anchor" id="calling-from-non-secure-to-secure"></a>
 Calling from Non-Secure to Secure</h3>
-<p>A new instruction SG (Secure Gateway) has been added to the Armv8-M architecture. This MUST be the destination instruction for any branch within the Non-Secure Callable region. If an attempt is made to branch to any other instruction from the Non-Secure partition, a TZ exception will be thrown.</p>
+<p>A new instruction SG (Secure Gateway) has been added to the Armv8-M architecture. This MUST be the destination instruction for any branch within the Non-Secure Callable region. If an attempt is made to branch to any other instruction from the Non-Secure partition, a TrustZone exception will be thrown.</p>
 <div class="image">
 <img src="tz-non-secure-to-secure-calling.png" alt="tz-non-secure-to-secure-calling.png"/>
 <div class="caption">
@@ -1519,11 +1534,11 @@ Calling from Secure to Non-Secure</h3>
 Calling from Secure to Non-Secure Functions</div></div>
  <h2><a class="anchor" id="workflow"></a>
 Workflow</h2>
-<p>ARM® TrustZone® MCU development normally consists of two projects within a workspace, Secure and Non-Secure. General project workflows are described in the following sections. The Renesas project generator also supports development with "Flat project" model with no ARM® TrustZone® awareness.</p>
+<p>Arm TrustZone MCU development normally consists of two projects within a workspace, Secure and Non-Secure. General project workflows are described in the following sections. The Renesas project generator also supports development with "Flat project" model with no Arm TrustZone awareness.</p>
 <h3><a class="anchor" id="secure-project"></a>
 Secure Project</h3>
 <ol type="1">
-<li>Start a new Secure project in e<sup>2</sup> studio.</li>
+<li>Start a new Secure project in e&sup2; studio.</li>
 <li>Select and configure pins and drivers/stacks that need to be initialized and used in Secure mode. This should be kept to a minimum to reduce the security attack surface.</li>
 <li>Expose top of stacks as Non-Secure Callable (NSC) <em><b>if</b></em> they need to be accessed from Non-Secure partition. Again, this should be kept to a minimum.</li>
 <li>Generate project content and write Secure code such as key handling and opening drives as needed.</li>
@@ -1544,7 +1559,7 @@ Non-Secure Project</h3>
 </ol>
 <h3><a class="anchor" id="flat-project"></a>
 Flat Project</h3>
-<p>A flat project does not technically use ARM® TrustZone® as the developer has made a decision to place the entire application in Secure partition from restart.</p>
+<p>A flat project does not technically use Arm TrustZone as the developer has made a decision to place the entire application in Secure partition from restart.</p>
 <p>Notes:</p>
 <ul>
 <li>Any code placed in external memory (such as OSPI or QSPI) will be Non-Secure.</li>
@@ -1559,7 +1574,7 @@ Flat Project</h3>
 </ol>
 <h2><a class="anchor" id="ra-project-generator-pg"></a>
 RA Project Generator (PG)</h2>
-<p>The RA project generators have been created to help users through setting up new TZ enabled projects. User will be prompted for project settings such as Project Type (Secure, Non-Secure, or Flat), compiler, RTOS and debugger. Care is needed when setting up a TZ project to ensure that the connection between Secure and Non-Secure partitions are managed correctly.</p>
+<p>The RA project generators have been created to help users through setting up new TrustZone enabled projects. User will be prompted for project settings such as Project Type (Secure, Non-Secure, or Flat), compiler, RTOS and debugger. Care is needed when setting up a TrustZone project to ensure that the connection between Secure and Non-Secure partitions are managed correctly.</p>
 <div class="image">
 <img src="tz-secure-proj.png" alt="tz-secure-proj.png"/>
 <div class="caption">
@@ -1575,14 +1590,14 @@ Flat Project</div></div>
  <h3><a class="anchor" id="secure-project-set-up"></a>
 Secure Project Set Up</h3>
 <p>All code, data, and peripherals in this project will be configured as Secure using the device Peripheral Security Attribution (PSA) registers. Although it is very application specific, we recommend keeping the Secure project code as small as possible to reduce the attack surface. For example, secure key handling may be the only application code in the secure project.</p>
-<p>Necessary values to set up the TZ memory partition (IDAU registers) will be automatically calculated after the project is built to ensure they match the code and data size, keeping the attack surface as small as possible.</p>
+<p>Necessary values to set up the TrustZone memory partition (IDAU registers) will be automatically calculated after the project is built to ensure they match the code and data size, keeping the attack surface as small as possible.</p>
 <p>Typically, ANSI C start up code (clearing of RAM, variable initialisation, etc) , clock, and secure peripheral initialisation will occur in this project.</p>
 <p>At the end of the Secure code, a call will be made to <code>R_BSP_NonSecureEnter();</code> to pass control to the Non-Secure partition.</p>
 <p>Non-Secure Callable (NSC) "Guard" functions are added to the project and expose selected modules to Non-Secure projects. User can add application-specific access checks as needed in these functions.</p>
 <p>Output of this project type will be an elf file that must be either pre-programmed (provisioned) into a device or referenced by a Non-Secure project (via Secure bundle <code>*.SBD</code>) to build a final image.</p>
 <p>This project type will NOT typically be debugged in isolation and will normally require a Non-Secure project such as a call to a <code>R_BSP_NonSecureEnter()</code> to be made. This can be replaced with <code>while(1);</code> if needed.</p>
 <h3><a class="anchor" id="rtos-support-in-tz-project"></a>
-RTOS Support in TZ Project</h3>
+RTOS Support in TrustZone Project</h3>
 <p>Although the RTOS kernel and user tasks will reside in the Non-Secure partition, the Secure partition needs to allocate stack space and so on. It is essential when starting a new RTOS project that the TrustZone Secure RTOS-Minimal template is selected. This will add the Arm TrustZone Context RA Port as below.</p>
 <div class="image">
 <img src="tz-secure-rtos-min-a.png" alt="tz-secure-rtos-min-a.png"/>
@@ -1613,7 +1628,7 @@ Non-Secure</h3>
 <p>All code, data, and peripherals in this project will be configured as Non-Secure. This project type must be associated with a Secure project to enable access to secure code, peripherals, linker scripts and others.</p>
 <h3><a class="anchor" id="flat-project-type"></a>
 Flat Project Type</h3>
-<p>All code, data, and peripherals are configured in a Secure single partition except for the EDMAC RAM buffers that will remain in the Non-Secure partition. Effectively, TZ is disabled.</p>
+<p>All code, data, and peripherals are configured in a Secure single partition except for the EDMAC RAM buffers that will remain in the Non-Secure partition. Effectively, TrustZone is disabled.</p>
 <h3><a class="anchor" id="secure-connection-to-non-secure-project"></a>
 Secure Connection to Non-Secure Project</h3>
 <p>When starting a new Non-Secure Project, the user will be prompted for either a Secure Project or Secure Bundle. In each case, details of the linker settings, Non-Secure Callable functions, and Secure peripherals will be read to enable the Non-Secure project setup.</p>
@@ -1631,7 +1646,7 @@ Secure Bundle (Split)</h4>
 <p>A Secure Bundle will ONLY include linker memory ranges, symbol references, and details of locked Secure peripheral configuration settings but no access to Secure source code (API header files will be included as necessary).</p>
 <p>The Secure bundle file (*.SBD) must be supplied to the Non-Secure developer by the Secure project developer.</p>
 <p>The development engineer will typically not have access to the Secure project or <code>.elf</code> file which MUST be pre-programmed or provisioned into the target MCU.</p>
-<p>The DLM state of target device should then be switched to NSECSD (see section 6.2) before the device is provided to the non-secure developer.</p>
+<p>For devices that support DLM, the DLM state of target device should then be switched to NSECSD (see section 6.2) before the device is provided to the non-secure developer.</p>
 <p>This is often referred to as "Split model" where a basic security set up is developed by a Secure team and then passed to the Non-Secure team in the same facility or at a third party. The Non-Secure team has no access to the Secure source code and cannot directly access Secure peripherals, data, or APIs.</p>
 <h3><a class="anchor" id="debug-configurations"></a>
 Debug Configurations</h3>
@@ -1675,7 +1690,7 @@ Generate NSC Veneers</div></div>
 Guard Functions</h3>
 <p>Access to NSC drivers from a Non-Secure project is possible through the Guard APIs. FSP will automatically generate Guard functions for all the top of stack/driver APIs added to the project as Non-Secure Callable.</p>
 <p>User can choose to add further levels of access control or delete guard function if they wish to only expose a limited range of APIs to a Non-Secure developer.</p>
-<div class="fragment"><div class="line">BSP_CMSE_NONSECURE_ENTRY fsp_err_t g_uart0_open_guard(</div><div class="line">        uart_ctrl_t *const p_api_ctrl, uart_cfg_t const *const p_cfg) {</div><div class="line">    /* TODO: add your own security checks here */</div><div class="line"></div><div class="line">    FSP_PARAMETER_NOT_USED(p_api_ctrl);</div><div class="line">    FSP_PARAMETER_NOT_USED(p_cfg);</div><div class="line"></div><div class="line">    return R_SCI_UART_Open(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line">}</div></div><!-- fragment --><p>For example, an SCI channel may be opened and configured for a desired baud rate by the Secure developer, but only enable the Write API to the Non-Secure developer. In which case, all but <code>g_uart0_write_guard()</code> could be deleted. CTRL structures are not required as they will be added on the Secure side.</p>
+<div class="fragment"><div class="line">BSP_CMSE_NONSECURE_ENTRY fsp_err_t g_uart0_open_guard(</div><div class="line">        uart_ctrl_t *const p_api_ctrl, uart_cfg_t const *const p_cfg) {</div><div class="line">    /* User can add security checks here */</div><div class="line"></div><div class="line">    FSP_PARAMETER_NOT_USED(p_api_ctrl);</div><div class="line">    FSP_PARAMETER_NOT_USED(p_cfg);</div><div class="line"></div><div class="line">    return R_SCI_UART_Open(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line">}</div></div><!-- fragment --><p>For example, an SCI channel may be opened and configured for a desired baud rate by the Secure developer, but only enable the Write API to the Non-Secure developer. In which case, all but <code>g_uart0_write_guard()</code> could be deleted. CTRL structures are not required as they will be added on the Secure side.</p>
 <p>For example, the call from the Non-Secure partition would be as follows:</p>
 <div class="fragment"><div class="line">err = g_uart0_open_guard(0,0);</div></div><!-- fragment --><h2><a class="anchor" id="non-secure-projects"></a>
 Non-Secure projects</h2>
@@ -1718,13 +1733,14 @@ Locked Channels</h3>
 Error Message when Selecting a Secure Channel</div></div>
  <h2><a class="anchor" id="idau-registers"></a>
 IDAU registers</h2>
-<p>Renesas RA TZ-enabled devices include a set of registers known as Implementation Defined Attribution Unit (IDAU) that are used to set up partitions between Secure, Non-Secure Callable, and Non-Secure regions. The IDAU registers can only be programmed during MCU <em><b>boot mode</b></em> and NOT through the debug interfaces. Because of this, special debugger firmware has been developed to manage bringing the device up in SCI boot mode to set up the IDAU registers (automatically drives MD pin) and then switch back to debug mode as needed.</p>
+<p>Renesas RA TrustZone-enabled devices include a set of registers known as Implementation Defined Attribution Unit (IDAU) that are used to set up partitions between Secure, Non-Secure Callable, and Non-Secure regions.</p>
+<p>For devices that use DLM, the IDAU registers can only be programmed during MCU <em><b>boot mode</b></em> and NOT through the debug interfaces. Because of this, special debugger firmware has been developed to manage bringing the device up in SCI boot mode to set up the IDAU registers (automatically drives MD pin) and then switch back to debug mode as needed.</p>
 <p><b>Note:</b> Please be aware of the extra signal connection (MD pin) needed on the debug interface connector. The Renesas Evaluation Kit (EK) for your selected device is a good reference.</p>
 <div class="image">
 <img src="tz-debug-iface-connector.png" alt="tz-debug-iface-connector.png"/>
 </div>
-<p> The e<sup>2</sup> studio build phase automatically extracts the IDAU partition register settings from the Secure <code>.elf</code> file and programs them into the device during debug connection, which can be observed in the console.</p>
-<p>This is an important phase of TZ development as the Secure partitions should be set as small as possible to ensure that the security attack surface is as small as possible.</p>
+<p> The e&sup2; studio build phase automatically extracts the IDAU partition register settings from the Secure <code>.elf</code> file and programs them into the device during debug connection, which can be observed in the console.</p>
+<p>This is an important phase of TrustZone development as the Secure partitions should be set as small as possible to ensure that the security attack surface is as small as possible.</p>
 <p>However, should the developer wish to make these partitions larger to accommodate, for example during field firmware updates, const or data arrays should be placed in the Secure project as needed.</p>
 <div class="image">
 <img src="tz-ra-current-status.png" alt="tz-ra-current-status.png"/>
@@ -1752,7 +1768,7 @@ DLM States</h3>
 <img src="tz-lifecycle-stages.png" alt="tz-lifecycle-stages.png"/>
 <div class="caption">
 Lifecycle Stages</div></div>
-<p> Note: All authentication key exchange and transitioning to LCK_DBG, LCK_BOOT, RMA_REQ is only managed by Renesas Flash Programmer (RFP) and NOT within e<sup>2</sup> studio.</p>
+<p> Note: All authentication key exchange and transitioning to LCK_DBG, LCK_BOOT, RMA_REQ is only managed by Renesas Flash Programmer (RFP) or other production programming tools, and NOT within e&sup2; studio.</p>
 <div class="image">
 <img src="tz-lifecycle-stages-debug-levels.png" alt="tz-lifecycle-stages-debug-levels.png"/>
 <div class="caption">
@@ -1764,9 +1780,12 @@ Lifecycle Stages and Debug Levels</div></div>
 <li>DBG0: The debugger connection is not allowed</li>
 </ul>
 <p>Transitions for one state to another can be performed using the Renesas Flash Programmer (RFP, see section below) or using the Renesas Device Partition Manager (limited number of states possible). It is possible to secure transitions between states using authentication keys. For more information on DLM states and transitions (device specific), please refer to device user manual.</p>
+<h3><a class="anchor" id="non-dlm-devices"></a>
+Non-DLM Devices</h3>
+<p>For devices that do not use DLM, the IDAU registers are programmed by secure application code at startup. Devices that do not use DLM do not support IDAU register programming using boot mode commands.</p>
 <h2><a class="anchor" id="debug"></a>
 Debug</h2>
-<p>By default, the device will be in SSD mode and so allow access to Secure and Non-Secure partitions. In this mode both Secure and Non-Secure <code>.elf</code> files will be downloaded.</p>
+<p>By default, devices supporting DLM will be in SSD mode and so allow access to Secure and Non-Secure partitions. In this mode both Secure and Non-Secure <code>.elf</code> files will be downloaded.</p>
 <p>The current debugger status is displayed in the lower left corner and includes the DLM state (SSD or NSECSD) and current partition (Secure, Non-Secure, or Non-Secure Callable) when the debugger is stopped, for example.</p>
 <div class="image">
 <img src="tz-current-debugger-status-a.png" alt="tz-current-debugger-status-a.png"/>
@@ -1796,11 +1815,11 @@ Memory Display in NSECSD Debug Mode</div></div>
 Disassembly Display in NSECSD Debug Mode</div></div>
  <h2><a class="anchor" id="debugger-support"></a>
 Debugger support</h2>
-<p>Renesas E2, E2 Lite, and SEGGER J-Link are supported in e<sup>2</sup> studio for TZ projects.</p>
-<p><b>Debugger Support for TZ Projects</b></p>
+<p>Renesas E2, E2 Lite, and SEGGER J-Link are supported in e&sup2; studio for TrustZone projects.</p>
+<p><b>Debugger Support for TrustZone Projects</b></p>
 <table class="doxtable">
 <tr>
-<th>Feature </th><th>E2 Lite </th><th>E2 </th><th>J-Link </th><th>J-Link OB </th><th>ULINK </th><th>IAR i-Jet  </th></tr>
+<th>Feature </th><th>E2 Lite </th><th>E2 </th><th>J-Link </th><th>J-Link OB </th><th>ULINK </th><th>IAR I-jet  </th></tr>
 <tr>
 <td>JTAG </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td><td>Yes </td></tr>
 <tr>
@@ -1810,20 +1829,20 @@ Debugger support</h2>
 <tr>
 <td>ETM trace </td><td>No </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td><td>Yes </td></tr>
 <tr>
-<td>TZ partition programming </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>No </td></tr>
+<td>TrustZone partition programming </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td></tr>
 <tr>
-<td>Non secure debug </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<td>Non secure debug </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td></tr>
 <tr>
-<td>e<sup>2</sup> studio </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>TBC </td></tr>
+<td>e&sup2; studio </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>No </td></tr>
 <tr>
-<td>IAR EW Arm </td><td>Under consideration </td><td>Under consideration </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td></tr>
+<td>IAR EW Arm </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td></tr>
 <tr>
 <td>Keil MDK </td><td>Under consideration </td><td>Under consideration </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td></tr>
 </table>
 <h2><a class="anchor" id="third-party-ides"></a>
 Third-Party IDEs</h2>
 <p>Third-party IDEs such as IAR Systems EWARM and Keil MDK (uVision) are supported by the RA Smart Configurator (RASC).</p>
-<p>In general, RASC offers the same configurator functionality as e<sup>2</sup> studio documented above. Project generators are available to initialise workspaces in the target IDEs as well as setting up debug configurations and so forth. However, there are some limitations that need to be noted especially with regards to IDAU TZ partition register programming. See the specific RASC documentation for usage details.</p>
+<p>In general, RASC offers the same configurator functionality as e&sup2; studio documented above. Project generators are available to initialise workspaces in the target IDEs as well as setting up debug configurations and so forth. However, there are some limitations that need to be noted especially with regards to IDAU TrustZone partition register programming. See the specific RASC documentation for usage details.</p>
 <h2><a class="anchor" id="renesas-flash-programmer-rfp"></a>
 Renesas Flash Programmer (RFP)</h2>
 <p>Updated versions of Renesas Flash Programmer (RFP) are available to support setting of partitions, DLM state and Authentication keys.</p>
@@ -1847,7 +1866,7 @@ RFP DLM State, Authentication Keys, and Security Settings</div></div>
 <h2><a class="anchor" id="glossary"></a>
 Glossary</h2>
 <p><b>IDAU</b></p>
-<p>Implementation Defined Attribute Unit. Used to program TZ partitions in SCI book mode.</p>
+<p>Implementation Defined Attribute Unit. Used to program TrustZone partitions.</p>
 <p><b>NSECSD</b></p>
 <p>Non-Secure Software Development mode</p>
 <p><b>SSD</b></p>
@@ -1882,7 +1901,7 @@ What is RASC?</h2>
 <li>Keil MDK and the Arm compiler toolchain.</li>
 <li>IAR EWARM with IAR toolchain for Arm</li>
 </ol>
-<p>Projects can be configured and the project content generated in the same way as in e2 studio. Please refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> section for more details.</p>
+<p>Projects can be configured and the project content generated in the same way as in e&sup2; studio. Please refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> section for more details.</p>
 <h2><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk"></a>
 Using RA Smart Configurator with Keil MDK</h2>
 <h3><a class="anchor" id="RASC-MDK-prerequisites"></a>
@@ -1911,8 +1930,8 @@ RASC project settings</div></div>
 <div class="caption">
 Target device and IDE selection</div></div>
 </li>
-<li>The rest of the project generator and FSP configuration is the same as e2 studio. Please refer to the previous sections for details.</li>
-<li>On completion of the FSP configuration, press "Generate Project Content"</li>
+<li>The rest of the project generator and FSP configuration is the same as e&sup2; studio. Please refer to the previous sections for details.</li>
+<li>On completion of FSP configuration, press "Generate Project Content"</li>
 <li><p class="startli">A new Keil MDK project file will be generated in the project path. Double click this file to open MDK and continue development as usual.</p>
 <div class="image">
 <img src="uVision-imported-data.png" alt="uVision-imported-data.png"/>
@@ -1998,8 +2017,8 @@ RASC project settings</div></div>
 <div class="caption">
 Target device and IDE selection</div></div>
 </li>
-<li>The rest of the project generator and FSP configuration operates the same as e2 studio. Refer to the previous sections for details.</li>
-<li>On completion of the FSP configuration, press <b>Generate Project Content</b>.</li>
+<li>The rest of the project generator and FSP configuration operates the same as e&sup2; studio. Refer to the previous sections for details.</li>
+<li>On completion of FSP configuration, press <b>Generate Project Content</b>.</li>
 <li>A new IAR EWARM project file will be generated in the project path. Double click this file to open IAR EWARM and continue development as usual.</li>
 <li>To Use RASC with EWARM, RASC needs to configured as a tool in EWARM by selecting the menu item <b>Tools &gt; Configure Tools...</b>. Select <b>New</b> to create a new tool in the dialog shown and add the following information:<ul>
 <li>Menu Text: <b>RA Smart Configurator</b><ol type="a">
@@ -2038,7 +2057,7 @@ Notes and Restrictions</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -191,6 +191,7 @@ var group___a_d_c___a_p_i =
     ] ],
     [ "adc_state_t", "group___a_d_c___a_p_i.html#ga2783ab2e29809bf0a50bc66c6fa8d3c6", [
       [ "ADC_STATE_IDLE", "group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6a618306d7336575e80aa3d79865a52c2d", null ],
-      [ "ADC_STATE_SCAN_IN_PROGRESS", "group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7", null ]
+      [ "ADC_STATE_SCAN_IN_PROGRESS", "group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7", null ],
+      [ "ADC_STATE_CALIBRATION_IN_PROGRESS", "group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6a4766863227ec2104751a15e3eb148d86", null ]
     ] ]
 ];

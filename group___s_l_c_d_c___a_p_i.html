@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -193,6 +193,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gae154771b569829820da66c8b4abd2f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga037e31e41268c02cf1f407000cfca96e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_l_c_d_c___a_p_i.html#ga037e31e41268c02cf1f407000cfca96e">slcdc_drive_volt_gen_t</a> </td></tr>
 <tr class="separator:ga037e31e41268c02cf1f407000cfca96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d7f2a41f0aa4477b90caf1daa6fee20"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_l_c_d_c___a_p_i.html#ga9d7f2a41f0aa4477b90caf1daa6fee20">slcdc_ref_volt_sel_t</a> </td></tr>
+<tr class="separator:ga9d7f2a41f0aa4477b90caf1daa6fee20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07dc6af75cf73b4784f1c15ef3a11e03"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_l_c_d_c___a_p_i.html#ga07dc6af75cf73b4784f1c15ef3a11e03">slcdc_display_area_control_blink_t</a> </td></tr>
 <tr class="separator:ga07dc6af75cf73b4784f1c15ef3a11e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga78a7cb1be89b6b370513ef5eb0782a0f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_l_c_d_c___a_p_i.html#ga78a7cb1be89b6b370513ef5eb0782a0f">slcdc_display_area_t</a> </td></tr>
@@ -265,6 +267,12 @@ LCD Drive Voltage Generator Select (MDSET bit) </td></tr>
 contrast</td>
 <td class="fielddoc">
 LCD Boost Level (contrast setting) </td></tr>
+<tr><td class="fieldtype">
+<a id="a4ef60649506f295c0bfffd41df0d98b2"></a><a class="el" href="group___s_l_c_d_c___a_p_i.html#ga9d7f2a41f0aa4477b90caf1daa6fee20">slcdc_ref_volt_sel_t</a></td>
+<td class="fieldname">
+ref_volt_sel</td>
+<td class="fielddoc">
+LCD reference voltage selection (MDSET2 bit) </td></tr>
 </table>
 
 </div>
@@ -606,6 +614,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga815102a0851c7bd13f565173ec8039a1a3b04ab10b0e59fa556559d5465078043"></a>SLCDC_SLICE_4&#160;</td><td class="fielddoc"><p>4-time slice </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga815102a0851c7bd13f565173ec8039a1aa62227cc118ce40b206924712cf91a9b"></a>SLCDC_SLICE_6&#160;</td><td class="fielddoc"><p>6-time slice </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga815102a0851c7bd13f565173ec8039a1aa3a5f14f403fc2ecf522a63bff141cc8"></a>SLCDC_SLICE_8&#160;</td><td class="fielddoc"><p>8-time slice </p>
 </td></tr>
 </table>
@@ -651,6 +661,26 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga037e31e41268c02cf1f407000cfca96ea84ec920082fae314e17f3ff7cd75c2c0"></a>SLCDC_VOLT_INTERNAL&#160;</td><td class="fielddoc"><p>Internal voltage boosting method. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga037e31e41268c02cf1f407000cfca96eafc66791f6cf9de2385ac360cb452d92b"></a>SLCDC_VOLT_CAPACITOR&#160;</td><td class="fielddoc"><p>Capacitor split method. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga9d7f2a41f0aa4477b90caf1daa6fee20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d7f2a41f0aa4477b90caf1daa6fee20">&#9670;&nbsp;</a></span>slcdc_ref_volt_sel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_l_c_d_c___a_p_i.html#ga9d7f2a41f0aa4477b90caf1daa6fee20">slcdc_ref_volt_sel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LCD Reference Voltage Selection. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9d7f2a41f0aa4477b90caf1daa6fee20a8f5778801a94a0718ff33871a5402dc0"></a>SLCDC_REF_INTERNAL_VL1_CAPACITOR_VCC_EXTERNAL&#160;</td><td class="fielddoc"><p>Select VL1 reference for internal voltage or VCC reference for capacitor split or external division. </p>
+<p>Select VL2 reference for internal voltage or VL4 reference for capacitor split </p>
 </td></tr>
 </table>
 
@@ -745,6 +775,20 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fba454b1f2d9f47b4465b3e85da924e65ac"></a>SLCDC_CONTRAST_15&#160;</td><td class="fielddoc"><p>Contrast level 15. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fba2468693837cb42bc01ac487d92cd780b"></a>SLCDC_CONTRAST_16&#160;</td><td class="fielddoc"><p>Contrast level 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fbaaccf3f20cb34eba9feabd770dd14f713"></a>SLCDC_CONTRAST_17&#160;</td><td class="fielddoc"><p>Contrast level 17. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fbae06c8f32a78f547d18c3a5d580f049df"></a>SLCDC_CONTRAST_18&#160;</td><td class="fielddoc"><p>Contrast level 18. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fba843353a7e936ff5349d1ddbe3a8f24ba"></a>SLCDC_CONTRAST_19&#160;</td><td class="fielddoc"><p>Contrast level 19. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fbab6e7689f70f80d1d2c52680763f8eb87"></a>SLCDC_CONTRAST_20&#160;</td><td class="fielddoc"><p>Contrast level 20. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fba98427c1cf3e0d7229160b6e5f58a2fbe"></a>SLCDC_CONTRAST_21&#160;</td><td class="fielddoc"><p>Contrast level 21. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e306c03a7dc9caeff436fe58ab1a7fba95fa35f9f0502bf090f1418e66441951"></a>SLCDC_CONTRAST_22&#160;</td><td class="fielddoc"><p>Contrast level 22. </p>
+</td></tr>
 </table>
 
 </div>
@@ -812,6 +856,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga523bcce722f0cd96e3e02a2ee3650182a54ab7b6831d12efba429e55c8c73ace5"></a>SLCDC_CLOCK_HOCO&#160;</td><td class="fielddoc"><p>Display clock source HOCO. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga523bcce722f0cd96e3e02a2ee3650182ae6e2f4b15129add6feecbcd1ab0c8cb8"></a>SLCDC_CLOCK_MOCO&#160;</td><td class="fielddoc"><p>Display clock source MOCO. </p>
+</td></tr>
 </table>
 
 </div>
@@ -871,6 +917,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga0e3ba070cac938eacf3fafe14607aac3a921c8c93ee61f0dce94b15f47bf91535"></a>SLCDC_CLK_DIVISOR_HOCO_524288&#160;</td><td class="fielddoc"><p>HOCO Clock/524288. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga0e3ba070cac938eacf3fafe14607aac3a44ba6b177ed89c0a4156a55f8f6e0ff4"></a>SLCDC_CLK_DIVISOR_HOCO_1048576&#160;</td><td class="fielddoc"><p>HOCO Clock/1048576. </p>
+</td></tr>
 </table>
 
 </div>
@@ -881,7 +929,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -7,7 +7,8 @@ var group___s_l_c_d_c___a_p_i =
       [ "time_slice", "group___s_l_c_d_c___a_p_i.html#a51842d86a83dce72b65dbb24cc0fab42", null ],
       [ "waveform", "group___s_l_c_d_c___a_p_i.html#adda9ae477524da8bab1a09185795d709", null ],
       [ "drive_volt_gen", "group___s_l_c_d_c___a_p_i.html#a175274a05a50ae9b46f0c6aa6797ba09", null ],
-      [ "contrast", "group___s_l_c_d_c___a_p_i.html#a5a2071037bc5cdfd6c7291a806c27b4b", null ]
+      [ "contrast", "group___s_l_c_d_c___a_p_i.html#a5a2071037bc5cdfd6c7291a806c27b4b", null ],
+      [ "ref_volt_sel", "group___s_l_c_d_c___a_p_i.html#a4ef60649506f295c0bfffd41df0d98b2", null ]
     ] ],
     [ "slcdc_api_t", "group___s_l_c_d_c___a_p_i.html#structslcdc__api__t", [
       [ "open", "group___s_l_c_d_c___a_p_i.html#a9e7ec4cb32af8e522714ab12413df127", null ],
@@ -35,6 +36,7 @@ var group___s_l_c_d_c___a_p_i =
       [ "SLCDC_SLICE_2", "group___s_l_c_d_c___a_p_i.html#gga815102a0851c7bd13f565173ec8039a1ae0df842db5950359e61f3ee34cf79453", null ],
       [ "SLCDC_SLICE_3", "group___s_l_c_d_c___a_p_i.html#gga815102a0851c7bd13f565173ec8039a1af1806346ffccf8bdf30fb980cb2a19c8", null ],
       [ "SLCDC_SLICE_4", "group___s_l_c_d_c___a_p_i.html#gga815102a0851c7bd13f565173ec8039a1a3b04ab10b0e59fa556559d5465078043", null ],
+      [ "SLCDC_SLICE_6", "group___s_l_c_d_c___a_p_i.html#gga815102a0851c7bd13f565173ec8039a1aa62227cc118ce40b206924712cf91a9b", null ],
       [ "SLCDC_SLICE_8", "group___s_l_c_d_c___a_p_i.html#gga815102a0851c7bd13f565173ec8039a1aa3a5f14f403fc2ecf522a63bff141cc8", null ]
     ] ],
     [ "slcdc_waveform_t", "group___s_l_c_d_c___a_p_i.html#gae154771b569829820da66c8b4abd2f3c", [
@@ -45,6 +47,9 @@ var group___s_l_c_d_c___a_p_i =
       [ "SLCDC_VOLT_EXTERNAL", "group___s_l_c_d_c___a_p_i.html#gga037e31e41268c02cf1f407000cfca96ea9487e7218d089868e3deca87712555ec", null ],
       [ "SLCDC_VOLT_INTERNAL", "group___s_l_c_d_c___a_p_i.html#gga037e31e41268c02cf1f407000cfca96ea84ec920082fae314e17f3ff7cd75c2c0", null ],
       [ "SLCDC_VOLT_CAPACITOR", "group___s_l_c_d_c___a_p_i.html#gga037e31e41268c02cf1f407000cfca96eafc66791f6cf9de2385ac360cb452d92b", null ]
+    ] ],
+    [ "slcdc_ref_volt_sel_t", "group___s_l_c_d_c___a_p_i.html#ga9d7f2a41f0aa4477b90caf1daa6fee20", [
+      [ "SLCDC_REF_INTERNAL_VL1_CAPACITOR_VCC_EXTERNAL", "group___s_l_c_d_c___a_p_i.html#gga9d7f2a41f0aa4477b90caf1daa6fee20a8f5778801a94a0718ff33871a5402dc0", null ]
     ] ],
     [ "slcdc_display_area_control_blink_t", "group___s_l_c_d_c___a_p_i.html#ga07dc6af75cf73b4784f1c15ef3a11e03", [
       [ "SLCDC_NOT_BLINKING", "group___s_l_c_d_c___a_p_i.html#gga07dc6af75cf73b4784f1c15ef3a11e03affe483cad2b8e8023b7c1d3f5b3a9ca9", null ],
@@ -71,7 +76,14 @@ var group___s_l_c_d_c___a_p_i =
       [ "SLCDC_CONTRAST_12", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba9120fc7eb47bbc91b554b68089a873a7", null ],
       [ "SLCDC_CONTRAST_13", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fbadc3d3191880b6795d30b2979a0bd6188", null ],
       [ "SLCDC_CONTRAST_14", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba8ef55cbcca00eb033fd62029c8d997cf", null ],
-      [ "SLCDC_CONTRAST_15", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba454b1f2d9f47b4465b3e85da924e65ac", null ]
+      [ "SLCDC_CONTRAST_15", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba454b1f2d9f47b4465b3e85da924e65ac", null ],
+      [ "SLCDC_CONTRAST_16", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba2468693837cb42bc01ac487d92cd780b", null ],
+      [ "SLCDC_CONTRAST_17", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fbaaccf3f20cb34eba9feabd770dd14f713", null ],
+      [ "SLCDC_CONTRAST_18", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fbae06c8f32a78f547d18c3a5d580f049df", null ],
+      [ "SLCDC_CONTRAST_19", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba843353a7e936ff5349d1ddbe3a8f24ba", null ],
+      [ "SLCDC_CONTRAST_20", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fbab6e7689f70f80d1d2c52680763f8eb87", null ],
+      [ "SLCDC_CONTRAST_21", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba98427c1cf3e0d7229160b6e5f58a2fbe", null ],
+      [ "SLCDC_CONTRAST_22", "group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba95fa35f9f0502bf090f1418e66441951", null ]
     ] ],
     [ "slcdc_display_on_off_t", "group___s_l_c_d_c___a_p_i.html#gaa6c542a9ad52c15ae55a417f6edcaa8f", [
       [ "SLCDC_DISP_OFF", "group___s_l_c_d_c___a_p_i.html#ggaa6c542a9ad52c15ae55a417f6edcaa8fa4257f685e831ac76fad15068147f6122", null ],
@@ -85,7 +97,8 @@ var group___s_l_c_d_c___a_p_i =
       [ "SLCDC_CLOCK_LOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182aa88846667ea9e23c466eb42aa10b8d80", null ],
       [ "SLCDC_CLOCK_SOSC", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182abaa07e88bf54e9d01886959c3efff60a", null ],
       [ "SLCDC_CLOCK_MOSC", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182a952aa70dfb403ca8f649fe1250419d32", null ],
-      [ "SLCDC_CLOCK_HOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182a54ab7b6831d12efba429e55c8c73ace5", null ]
+      [ "SLCDC_CLOCK_HOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182a54ab7b6831d12efba429e55c8c73ace5", null ],
+      [ "SLCDC_CLOCK_MOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182ae6e2f4b15129add6feecbcd1ab0c8cb8", null ]
     ] ],
     [ "slcdc_clk_div_t", "group___s_l_c_d_c___a_p_i.html#ga0e3ba070cac938eacf3fafe14607aac3", [
       [ "SLCDC_CLK_DIVISOR_LOCO_4", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3a753f3cb16bf0b020ec4877fda8494cbe", null ],
@@ -108,6 +121,7 @@ var group___s_l_c_d_c___a_p_i =
       [ "SLCDC_CLK_DIVISOR_HOCO_65536", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3ae52bdd314b443dcfe2f8b5ad92967ec9", null ],
       [ "SLCDC_CLK_DIVISOR_HOCO_131072", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3afe8a2a80d611734e32292d1555d152b6", null ],
       [ "SLCDC_CLK_DIVISOR_HOCO_262144", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3a9bca7c8e3b198555bc37c8d6f1693c48", null ],
-      [ "SLCDC_CLK_DIVISOR_HOCO_524288", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3a921c8c93ee61f0dce94b15f47bf91535", null ]
+      [ "SLCDC_CLK_DIVISOR_HOCO_524288", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3a921c8c93ee61f0dce94b15f47bf91535", null ],
+      [ "SLCDC_CLK_DIVISOR_HOCO_1048576", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3a44ba6b177ed89c0a4156a55f8f6e0ff4", null ]
     ] ]
 ];

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -1224,6 +1224,7 @@ Remote Mailbox</li>
 <h2><a class="anchor" id="r-can-clock-configuration"></a>
 Clock Configuration</h2>
 <p>The CAN peripheral uses the CANMCLK (main-clock oscillator) or PCLKB as its clock source (fCAN, CAN System Clock.) The default CAN configuration will provide a CAN bit rate of 500 Kbit using CANMCLK as the clock source. To set the PCLKB frequency, use the <b>Clocks</b> tab of the RA Configuration editor. To change the clock frequency at run-time, use the CGC Interface. Refer to the CGC module guide for more information on configuring clocks.</p>
+<dl class="section warning"><dt>Warning</dt><dd>RA2 devices only support CANMCLK (MOSC/XTAL) for the CAN clock source. If MOSC is not used as the main clock source it will not be started automatically. In this case, be sure to start it before opening the CAN driver.</dd></dl>
 <h2><a class="anchor" id="r-can-clock-limitations"></a>
 Clock Limitations</h2>
 <p>The following clock limitations apply when using the CAN peripheral:</p>
@@ -1960,7 +1961,7 @@ Pointer to RX FIFO configuration. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -272,6 +272,8 @@ This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Timer,
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
 <tr>
+<td>General &gt; Counter Bit Width</td><td>MCU Specific Options</td><td></td><td>Counter register bit width (16-bit or 32-bit)) </td></tr>
+<tr>
 <td>General &gt; Channel</td><td>Channel number must be a non-negative integer</td><td>0 </td><td>Physical hardware channel. </td></tr>
 <tr>
 <td>General &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -286,7 +288,7 @@ PWM</li>
 <tr>
 <td>General &gt; Period</td><td>Value must be non-negative</td><td>0x10000 </td><td>Specify the timer period based on the selected unit.<br />
 <br />
-When the unit is set to 'Raw Counts', setting the period to 0x10000 results in the maximum period at the lowest divisor (fastest timer tick). Set the period to 0x10000 for a free running timer, pulse width measurement or pulse period measurement. Setting the period higher will automatically select a higher divider; the period can be set up to 0x80000 when counting from PCLKB or 0x800000 when counting from LOCO/subclock, which will use a divider of 8 or 128 respectively with the maximum period.<br />
+When the unit is set to 'Raw Counts', setting the period to 0x100000000 (32-bit) or 0x10000 (16-bit) results in the maximum period at the lowest divisor (fastest timer tick). Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) for a free running timer, pulse width measurement or pulse period measurement. Setting the period higher will automatically select a higher divider; the period can be set up to 0x800000000 (32-bit) or 0x80000 (16-bit) when counting from PCLKB or 0x8000000000 (32-bit) or 0x800000 (16-bit) when counting from LOCO/subclock, which will use a divider of 8 or 128 respectively with the maximum period.<br />
 <br />
 If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
 <tr>
@@ -405,13 +407,13 @@ Timer Period</h2>
 <p>When the selected unit is "Raw counts", the maximum allowed period setting varies depending on the selected clock source:</p>
 <table class="doxtable">
 <tr>
-<th>Clock source </th><th>Maximum period (counts)  </th></tr>
+<th>Clock source </th><th>16-bit Timer Maximum period (counts) </th><th>32-bit Timer Maximum period (counts)  </th></tr>
 <tr>
-<td>LOCO/Subclock </td><td>0x800000 </td></tr>
+<td>LOCO/Subclock </td><td>0x800000 </td><td>0x8000000000 </td></tr>
 <tr>
-<td>PCLKB </td><td>0x80000 </td></tr>
+<td>PCLKB </td><td>0x80000 </td><td>0x800000000 </td></tr>
 <tr>
-<td>All other sources </td><td>0x10000 </td></tr>
+<td>All other sources </td><td>0x10000 </td><td>0x100000000 </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>Though the AGT is a 16-bit timer, because the period interrupt occurs when the counter underflows, setting the period register to 0 results in an effective period of 1 count. For this reason all user-provided raw count values reflect the actual number of period counts (not the raw register values).</dd></dl>
 <h1><a class="anchor" id="r-agt-usage_notes"></a>
@@ -454,7 +456,7 @@ Examples</h1>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> agt_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46">R_AGT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d">R_AGT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AGT Callback Example</h2>
 <p>This is an example of a timer callback.</p>
 <p><a class="anchor" id="um_timer_user_notification_of_events"></a> </p><div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when timer expires. */</span></div><div class="line"><span class="keywordtype">void</span> timer_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called periodically here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AGT Free Running Counter Example</h2>
-<p><a class="anchor" id="um_timer_reset"></a><a class="anchor" id="um_timer_start"></a><a class="anchor" id="um_timer_stop"></a><a class="anchor" id="um_timer_counter"></a> To use the AGT as a free running counter, select periodic mode and set the the Period to 0xFFFF.</p>
+<p><a class="anchor" id="um_timer_reset"></a><a class="anchor" id="um_timer_start"></a><a class="anchor" id="um_timer_stop"></a><a class="anchor" id="um_timer_counter"></a> To use the AGT as a free running counter, select periodic mode and set the the Period to 0xFFFFFFFF for a 32-bit timer or 0xFFFF for a 16-bit timer.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> agt_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46">R_AGT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d">R_AGT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0">R_AGT_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd">R_AGT_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AGT Input Capture Example</h2>
 <p><a class="anchor" id="um_timer_capture_pulse_width"></a><a class="anchor" id="um_timer_capture_pulse_period"></a><a class="anchor" id="um_timer_enable_disable"></a> This is an example of using the AGT to capture pulse width or pulse period measurements.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a capture occurs. */</span></div><div class="line">uint64_t g_captured_time     = 0U;</div><div class="line">uint32_t g_capture_overflows = 0U;</div><div class="line"><span class="keywordtype">void</span> timer_capture_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba4bc1252f63147f4a01f7b7ba88afac1d">TIMER_EVENT_CAPTURE_A</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) Get the current period if not known. */</span></div><div class="line">        <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">        (void) <a class="code" href="group___a_g_t.html#ga91174b9feb94088512b85d2f020d3fe2">R_AGT_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">        uint32_t period = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Process capture from AGTIO. */</span></div><div class="line">        g_captured_time     = ((uint64_t) period * g_capture_overflows) + p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a8abd12cdf1a993cf8054be6ba9d96a6f">capture</a>;</div><div class="line">        g_capture_overflows = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* An overflow occurred during capture. This must be accounted for at the application layer. */</span></div><div class="line">        g_capture_overflows++;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> agt_capture_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46">R_AGT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable captures. Captured values arrive in the interrupt. */</span></div><div class="line">    (void) <a class="code" href="group___a_g_t.html#ga548babc3a9f803374e70ba027935a086">R_AGT_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Disable captures. */</span></div><div class="line">    (void) <a class="code" href="group___a_g_t.html#gae27f425278e24c45345242a78a10d649">R_AGT_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AGT Period Update Example</h2>
@@ -487,6 +489,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gab3f3aa0cc9a2951751e76f493dd429eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb88a55a2156cdd322947f71189da627"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#gabb88a55a2156cdd322947f71189da627">agt_pin_cfg_t</a> </td></tr>
 <tr class="separator:gabb88a55a2156cdd322947f71189da627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f8ff3a9f2e9e5316dbd8e57f7dbe923"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#ga5f8ff3a9f2e9e5316dbd8e57f7dbe923">agt_counter_bit_width_t</a> </td></tr>
+<tr class="separator:ga5f8ff3a9f2e9e5316dbd8e57f7dbe923"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structagt__instance__ctrl__t" id="structagt__instance__ctrl__t"></a>
@@ -525,7 +529,7 @@ count_source</td>
 <td class="fielddoc">
 AGT channel clock source. Valid values are: AGT_CLOCK_PCLKB, AGT_CLOCK_LOCO, AGT_CLOCK_FSUB. </td></tr>
 <tr><td class="fieldtype">
-<a id="ad7e505bd527a9050132e3272085df869"></a>union <a class="el" href="group___a_g_t.html#unionagt__extended__cfg__t_8____unnamed____">agt_extended_cfg_t</a></td>
+<a id="a15298afd4c97133aa721a481f0a6c7ce"></a>union <a class="el" href="group___a_g_t.html#unionagt__extended__cfg__t_8____unnamed____">agt_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -561,6 +565,12 @@ Enable pin (event counting only) </td></tr>
 trigger_edge</td>
 <td class="fielddoc">
 Trigger edge to start pulse period measurement or count external event. </td></tr>
+<tr><td class="fieldtype">
+<a id="a09cb8f9a3ba35a6c10b9c8d7292337ea"></a><a class="el" href="group___a_g_t.html#ga5f8ff3a9f2e9e5316dbd8e57f7dbe923">agt_counter_bit_width_t</a></td>
+<td class="fieldname">
+counter_bit_width</td>
+<td class="fielddoc">
+Counter bit width. </td></tr>
 </table>
 
 </div>
@@ -732,6 +742,29 @@ Trigger edge to start pulse period measurement or count external event. </td></t
 <tr><td class="fieldname"><a id="ggabb88a55a2156cdd322947f71189da627a3fab671eb8f52a392eeb9bb91896f5f5"></a>AGT_PIN_CFG_START_LEVEL_LOW&#160;</td><td class="fielddoc"><p>Pin level low. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggabb88a55a2156cdd322947f71189da627a49e8e6f466efe14a756d1f684b7c01bb"></a>AGT_PIN_CFG_START_LEVEL_HIGH&#160;</td><td class="fielddoc"><p>Pin level high. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5f8ff3a9f2e9e5316dbd8e57f7dbe923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f8ff3a9f2e9e5316dbd8e57f7dbe923">&#9670;&nbsp;</a></span>agt_counter_bit_width_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_g_t.html#ga5f8ff3a9f2e9e5316dbd8e57f7dbe923">agt_counter_bit_width_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Counter type to determine regsiter size </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5f8ff3a9f2e9e5316dbd8e57f7dbe923a7aeba293d0af43fe0a5c1875221dbc3b"></a>AGT_COUNTER_BIT_WIDTH_DEFAULT&#160;</td><td class="fielddoc"><p>Legacy. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f8ff3a9f2e9e5316dbd8e57f7dbe923a3eefc8570114f14ea3bb3c3ccc3acb2d"></a>AGT_COUNTER_BIT_WIDTH_16&#160;</td><td class="fielddoc"><p>AGT. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f8ff3a9f2e9e5316dbd8e57f7dbe923a0c40a808ec40c17d16ab51a139a183fe"></a>AGT_COUNTER_BIT_WIDTH_32&#160;</td><td class="fielddoc"><p>AGTW. </p>
 </td></tr>
 </table>
 
@@ -1156,7 +1189,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

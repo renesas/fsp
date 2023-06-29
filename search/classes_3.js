@@ -1,7 +1,7 @@
 var searchData=
 [
   ['d1_5fdevice_5fflex',['d1_device_flex',['../structd1__device__flex.html',1,'']]],
-  ['da16200_5fsocket_5ft',['da16200_socket_t',['../group___w_i_f_i___o_n_c_h_i_p___d_a16200.html#structda16200__socket__t',1,'']]],
+  ['da16xxx_5fsocket_5ft',['da16xxx_socket_t',['../group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html#structda16xxx__socket__t',1,'']]],
   ['dac8_5fextended_5fcfg_5ft',['dac8_extended_cfg_t',['../group___d_a_c8.html#structdac8__extended__cfg__t',1,'']]],
   ['dac8_5finstance_5fctrl_5ft',['dac8_instance_ctrl_t',['../group___d_a_c8.html#structdac8__instance__ctrl__t',1,'']]],
   ['dac_5fapi_5ft',['dac_api_t',['../group___d_a_c___a_p_i.html#structdac__api__t',1,'']]],

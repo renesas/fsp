@@ -1,6 +1,7 @@
 var group___r_e_n_e_s_a_s___m_o_d_u_l_e_s =
 [
     [ "Analog", "group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s" ],
+    [ "Artifical Intelligence", "group___r_e_n_e_s_a_s___a_r_t_i_f_i_c_i_a_l___i_n_t_e_l_l_i_g_e_n_c_e.html", "group___r_e_n_e_s_a_s___a_r_t_i_f_i_c_i_a_l___i_n_t_e_l_l_i_g_e_n_c_e" ],
     [ "Audio", "group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s" ],
     [ "Bootloader", "group___r_e_n_e_s_a_s___b_o_o_t_l_o_a_d_e_r___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___b_o_o_t_l_o_a_d_e_r___m_o_d_u_l_e_s" ],
     [ "CapTouch", "group___r_e_n_e_s_a_s___c_a_p_t_o_u_c_h___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___c_a_p_t_o_u_c_h___m_o_d_u_l_e_s" ],

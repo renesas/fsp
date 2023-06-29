@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,6 +203,8 @@ Typedefs</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:gad2e192ed9a33b6c005c2c19ccbd6a21b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#gad2e192ed9a33b6c005c2c19ccbd6a21b">rtc_event_t</a> </td></tr>
 <tr class="separator:gad2e192ed9a33b6c005c2c19ccbd6a21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga023e9e2043784cf17e3d3bf056ce14f1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1">rtc_alarm_channel_t</a> </td></tr>
+<tr class="separator:ga023e9e2043784cf17e3d3bf056ce14f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8eef26a825fa4a0c5a417f8be08ccc6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#gad8eef26a825fa4a0c5a417f8be08ccc6">rtc_clock_source_t</a> </td></tr>
 <tr class="separator:gad8eef26a825fa4a0c5a417f8be08ccc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1079685ed8a9d30f32062b3bfedd041"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#gab1079685ed8a9d30f32062b3bfedd041">rtc_status_t</a> </td></tr>
@@ -351,6 +353,12 @@ Enable the alarm based on a match of the years field. </td></tr>
 dayofweek_match</td>
 <td class="fielddoc">
 Enable the alarm based on a match of the dayofweek field. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae9bd30168ad8a2932e542beaed85b2e1"></a><a class="el" href="group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1">rtc_alarm_channel_t</a></td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Select alarm 0 or alarm 1. </td></tr>
 </table>
 
 </div>
@@ -855,11 +863,28 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Events that can trigger a callback function </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad2e192ed9a33b6c005c2c19ccbd6a21bab2d201ffa3ef8219d41fec7009c5a3d4"></a>RTC_EVENT_ALARM_IRQ&#160;</td><td class="fielddoc"><p>Real Time Clock ALARM IRQ. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad2e192ed9a33b6c005c2c19ccbd6a21bab2d201ffa3ef8219d41fec7009c5a3d4"></a>RTC_EVENT_ALARM_IRQ&#160;</td><td class="fielddoc"><p>Real Time Clock ALARM 0 IRQ. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad2e192ed9a33b6c005c2c19ccbd6a21bad269f3ac02b4c6a8cd6b0be90b62ba30"></a>RTC_EVENT_ALARM1_IRQ&#160;</td><td class="fielddoc"><p>Real Time Clock ALARM 1 IRQ. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad2e192ed9a33b6c005c2c19ccbd6a21ba32818d089c15c50d17a13dce861db7d8"></a>RTC_EVENT_PERIODIC_IRQ&#160;</td><td class="fielddoc"><p>Real Time Clock PERIODIC IRQ. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a id="ga023e9e2043784cf17e3d3bf056ce14f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga023e9e2043784cf17e3d3bf056ce14f1">&#9670;&nbsp;</a></span>rtc_alarm_channel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1">rtc_alarm_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RTC alarm channel </p>
 
 </div>
 </div>
@@ -1015,7 +1040,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

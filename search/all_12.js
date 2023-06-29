@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['qos',['qos',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#aeff696bd3230e510a66c61dc6a1866de',1,'mqtt_onchip_da16xxx_sub_info_t::qos()'],['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a306d5665a121c42f5a945acade6baae3',1,'mqtt_onchip_da16xxx_pub_info_t::qos()']]],
   ['qspi_20_28r_5fqspi_29',['QSPI (r_qspi)',['../group___q_s_p_i.html',1,'']]],
   ['qspi_5finstance_5fctrl_5ft',['qspi_instance_ctrl_t',['../group___q_s_p_i.html#structqspi__instance__ctrl__t',1,'']]],
   ['qspi_5fqspclk_5fdiv_5f10',['QSPI_QSPCLK_DIV_10',['../group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a17fdaf615e46b1eeaa773136692a928c',1,'r_qspi.h']]],

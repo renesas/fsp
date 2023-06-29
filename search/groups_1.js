@@ -13,6 +13,7 @@ var searchData=
   ['adc_20and_20pwm_20modulation_20_28rm_5fmotor_5f120_5fdriver_29',['ADC and PWM modulation (rm_motor_120_driver)',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html',1,'']]],
   ['adc_20and_20pwm_20modulation_20_28rm_5fmotor_5fdriver_29',['ADC and PWM Modulation (rm_motor_driver)',['../group___m_o_t_o_r___d_r_i_v_e_r.html',1,'']]],
   ['analog',['Analog',['../group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html',1,'']]],
+  ['artifical_20intelligence',['Artifical Intelligence',['../group___r_e_n_e_s_a_s___a_r_t_i_f_i_c_i_a_l___i_n_t_e_l_l_i_g_e_n_c_e.html',1,'']]],
   ['audio',['Audio',['../group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s.html',1,'']]],
   ['adpcm_20decoder_20_28rm_5fadpcm_5fdecoder_29',['ADPCM Decoder (rm_adpcm_decoder)',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r.html',1,'']]],
   ['adpcm_20decoder_20interface',['ADPCM Decoder Interface',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html',1,'']]],
@@ -22,6 +23,6 @@ var searchData=
   ['azure_20rtos_20guix_20port_20_28rm_5fguix_5fport_29',['Azure RTOS GUIX Port (rm_guix_port)',['../group___r_m___g_u_i_x___p_o_r_t.html',1,'']]],
   ['azure_20rtos_20netx_20crypto_20hw_20acceleration_20_28rm_5fnetx_5fsecure_5fcrypto_29',['Azure RTOS NetX Crypto HW Acceleration (rm_netx_secure_crypto)',['../group___r_m___n_e_t_x___s_e_c_u_r_e___c_r_y_p_t_o.html',1,'']]],
   ['azure_20rtos_20threadx_20port_20_28rm_5fthreadx_5fport_29',['Azure RTOS ThreadX Port (rm_threadx_port)',['../group___r_m___t_h_r_e_a_d_x___p_o_r_t.html',1,'']]],
-  ['arm_20trustzone_20context_20ra_20port_20_28rm_5ftz_5fcontext_29',['ARM TrustZone Context RA Port (rm_tz_context)',['../group___r_m___t_z___c_o_n_t_e_x_t.html',1,'']]],
+  ['arm_20trustzone_20context_20ra_20port_20_28rm_5ftz_5fcontext_29',['Arm TrustZone Context RA Port (rm_tz_context)',['../group___r_m___t_z___c_o_n_t_e_x_t.html',1,'']]],
   ['azure_20rtos_20usbx_20port_20_28rm_5fusbx_5fport_29',['Azure RTOS USBX Port (rm_usbx_port)',['../group___u_s_b_x.html',1,'']]]
 ];

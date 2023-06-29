@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -220,13 +220,13 @@ FSP Architecture Overview</h1>
 <p>This guide describes the Renesas Flexible Software Package (FSP) architecture and how to use the FSP Application Programming Interface (API).</p>
 <h2><a class="anchor" id="c99-use"></a>
 C99 Use</h2>
-<p>The FSP uses the ISO/IEC 9899:1999 (C99) C programming language standard. Specific features introduced in C99 that are used include standard integer types (stdint.h), booleans (stdbool.h), designated initializers, and the ability to intermingle declarations and code.</p>
+<p>FSP uses the ISO/IEC 9899:1999 (C99) C programming language standard. Specific features introduced in C99 that are used include standard integer types (stdint.h), booleans (stdbool.h), designated initializers, and the ability to intermingle declarations and code.</p>
 <h2><a class="anchor" id="doxygen"></a>
 Doxygen</h2>
 <p>Doxygen is the default documentation tool used by FSP. You can find Doxygen comments throughout the FSP source.</p>
 <h2><a class="anchor" id="weak-symbols"></a>
 Weak Symbols</h2>
-<p>Weak symbols are used occasionally in the FSP. They are used to ensure that a project builds even when the user has not defined an optional function.</p>
+<p>Weak symbols are used occasionally in FSP. They are used to ensure that a project builds even when the user has not defined an optional function.</p>
 <h2><a class="anchor" id="memory-allocation"></a>
 Memory Allocation</h2>
 <p>Dynamic memory allocation through use of the malloc() and free() functions are not used in FSP modules; all memory required by FSP modules is allocated in the application and passed to the module in a pointer. Exceptions are considered only for ports of 3rd party code that require dynamic memory.</p>
@@ -236,7 +236,7 @@ FSP Terms</h2>
 <tr>
 <th>Term </th><th>Description </th><th>Reference  </th></tr>
 <tr>
-<td>BSP </td><td>Short for Board Support Package. In the FSP the BSP provides just enough foundation to allow other FSP modules to work together without issue. </td><td><a class="el" href="group___b_s_p___m_c_u.html">MCU Board Support Package</a> </td></tr>
+<td>BSP </td><td>Short for Board Support Package. In FSP, the BSP provides just enough foundation to allow other FSP modules to work together without issue. </td><td><a class="el" href="group___b_s_p___m_c_u.html">MCU Board Support Package</a> </td></tr>
 <tr>
 <td>Module </td><td>Modules can be peripheral drivers, purely software, or anything in between. Each module consists of a folder with source code, documentation, and anything else that the customer needs to use the code effectively. Modules are independent units, but they may depend on other modules. Applications can be built by combining multiple modules to provide the user with the features they need. </td><td><a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> </td></tr>
 <tr>
@@ -271,7 +271,7 @@ Module Sources</h2>
 <p>Some modules distributed alongside FSP originate from outside sources. A full list of sources for FSP modules, including versions and hyperlinks, can be found in the Third Party Software section of the release notes for each release.</p>
 <h2><a class="anchor" id="module-distribution"></a>
 Module Distribution</h2>
-<p>All modules distributed with FSP are packaged as CMSIS components in CMSIS packs. Each module consists of source files and a tooling support file used to integrate the module with e2 studio or RASC. The tooling support file defines the configurations used to generate code in the ra_gen and ra_cfg folders.</p>
+<p>All modules distributed with FSP are packaged as CMSIS components in CMSIS packs. Each module consists of source files and a tooling support file used to integrate the module with e&sup2; studio or RASC. The tooling support file defines the configurations used to generate code in the ra_gen and ra_cfg folders.</p>
 <h2><a class="anchor" id="module-versioning"></a>
 Module Versioning</h2>
 <p>Module versions can be seen on the Components tab of the FSP Configuration editor. The FSP Configuration editor automatically selects compatible components.</p>
@@ -299,7 +299,7 @@ FSP Interfaces</h1>
 FSP Interface Enumerations</h2>
 <p>Whenever possible, interfaces use typed enumerations for function parameters and structure members.</p>
  <div class="fragment"><div class="line">typedef enum e_i2c_master_addr_mode</div><div class="line">{</div><div class="line">    I2C_MASTER_ADDR_MODE_7BIT  = 1,    ///&lt; Use 7-bit addressing mode</div><div class="line">    I2C_MASTER_ADDR_MODE_10BIT = 2,    ///&lt; Use 10-bit addressing mode</div><div class="line">} i2c_master_addr_mode_t;</div></div><!-- fragment --></p>
-<p>Enumerations remove uncertainty when deciding what values are available for a parameter. FSP enumeration options follow a strict naming convention where the name of the type is prefixed on the available options. Combining the naming convention with the autocomplete feature available in e2 studio (Ctrl + Space) provides the benefits of rapid coding while maintaining high readability.</p>
+<p>Enumerations remove uncertainty when deciding what values are available for a parameter. FSP enumeration options follow a strict naming convention where the name of the type is prefixed on the available options. Combining the naming convention with the autocomplete feature available in e&sup2; studio (Ctrl + Space) provides the benefits of rapid coding while maintaining high readability.</p>
 <h2><a class="anchor" id="fsp-interface-callback-functions"></a>
 FSP Interface Callback Functions</h2>
 <p>Callback functions allow modules to asynchronously alert the user application when an event has occurred, such as when a byte has been received over a UART channel or an IRQ pin is toggled. FSP driver modules define and handle the interrupt service routines for RA MCU peripherals to ensure any required hardware procedures are implemented. The interrupt service routines in FSP modules then call the user-defined callbacks to allow the application to respond.</p>
@@ -319,7 +319,7 @@ FSP Interface Configuration Structure</h3>
 <p>When FSP stacks are used, it is also important to understand that configuration structures only have members that apply to the current interface. If multiple layers in the same stack define the same configuration parameters then it becomes difficult to know where to modify the option. For example, the baud rate for a UART is only defined in the UART module instance. Any modules that use the UART interface rely on the baud rate being provided in the UART module instance and do not offer it in their own configuration structures.</p>
 <h3><a class="anchor" id="fsp-interface-api-structure"></a>
 FSP Interface API Structure</h3>
-<p>All interfaces include an API structure which contains function pointers for all the supported interface functions. An example structure for the <a class="el" href="group___d_a_c.html">DAC (r_dac)</a> is shown below.</p>
+<p>All interfaces include an API structure which contains function pointers for all the supported interface functions. An example structure for the DAC is shown below.</p>
  <div class="fragment"><div class="line">typedef struct st_dac_api</div><div class="line">{</div><div class="line">    /** Initial configuration.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Open()</div><div class="line">     * - @ref R_DAC8_Open()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.</div><div class="line">     * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.</div><div class="line">     */</div><div class="line">    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);</div><div class="line"></div><div class="line">    /** Close the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Close()</div><div class="line">     * - @ref R_DAC8_Close()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Write sample value to the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Write()</div><div class="line">     * - @ref R_DAC8_Write()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     * @param[in]   value      Sample value to be written to the D/A Converter.</div><div class="line">     */</div><div class="line">    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);</div><div class="line"></div><div class="line">    /** Start the D/A Converter if it has not been started yet.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Start()</div><div class="line">     * - @ref R_DAC8_Start()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Stop the D/A Converter if the converter is running.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Stop()</div><div class="line">     * - @ref R_DAC8_Stop()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);</div><div class="line">} dac_api_t;</div></div><!-- fragment --></p>
 <p>The API structure is what allows for modules to easily be swapped in and out for other modules that are instances of the same interface. Let's look at an example application using the DAC interface above.</p>
 <p>RA MCUs have an internal DAC peripheral. If the DAC API structure in the DAC interface is not used the application can make calls directly into the module. In the example below the application is making calls to the <a class="el" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write()</a> function which is provided in the r_dac module.</p>
@@ -470,7 +470,7 @@ Using FSP Modules in an Application</h2>
 <p>The typical use of an FSP module involves generating required module data then using the API in the application.</p>
 <h3><a class="anchor" id="create-a-module-instance"></a>
 Create a Module Instance in the RA Configuration Editor</h3>
-<p>The RA Configuration editor (available both in the Renesas e2 studio IDE as well as through the standalone RA Smart Configurator) provides a graphical user interface for setting the parameters of the interface and instance configuration structures. It also automatically includes those structures (once they are configured in the GUI) in application-specific header files that can be included in application code.</p>
+<p>The RA Configuration editor (available both in the Renesas e&sup2; studio IDE as well as through the standalone RA Smart Configurator) provides a graphical user interface for setting the parameters of the interface and instance configuration structures. It also automatically includes those structures (once they are configured in the GUI) in application-specific header files that can be included in application code.</p>
 <p>The RA Configuration editor allocates storage for the control structures, all required configuration structures, and the instance structure in generated files in the <code>ra_gen</code> folder. Use the <b>Properties</b> window to set the values for the members of the configuration structures as needed. Refer to the Configuration section of the module usage notes for documentation about the configuration options.</p>
 <p>If the interface has a callback function option then the application must declare and define the function. The return value is always of type <code>void</code> and the parameter to the function is a typed structure of name <code>&lt;interface&gt;_callback_args_t</code>. Once the function has been defined, assign its name to the <code>p_callback</code> member of the configuration structure. Callback function names can be assigned through the <b>Properties</b> window for the selected module.</p>
 <h3><a class="anchor" id="use-the-instance-api"></a>
@@ -484,7 +484,7 @@ Use the Instance API in the Application</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

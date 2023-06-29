@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.4.0</span>
+   &#160;<span id="projectnumber">Release v4.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -507,7 +507,7 @@ ADC Operational Modes</h2>
 <h3>Sample States for Temperature Sensor and Internal Voltage Reference</h3>
 <p>Sample states for the temperature sensor and the internal reference voltage are calculated during <a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg()</a> based on the ADCLK frequency at the time. The sample states for the temperature sensor and internal voltage reference cannot be updated with <a class="el" href="group___a_d_c.html#gaf0701bf45818dee071cb12e979017bce">R_ADC_SampleStateCountSet()</a>. If the ADCLK frequency changes, call <a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg()</a> before using the temperature sensor or internal reference voltage again to ensure the sampling time for the temperature sensor and internal voltage reference is optimal.</p>
 <h3>Selecting Reference Voltage</h3>
-<p>The ADC high-potential and low-potential reference voltages may be configured for selected MCU's. Please refer to the RA Configuration editor in e2 studio for further details.</p>
+<p>The ADC high-potential and low-potential reference voltages may be configured for selected MCU's. Please refer to the RA Configuration editor in e&sup2; studio for further details.</p>
 <dl class="section note"><dt>Note</dt><dd>When using VREFADC, a stabilization time of 1500us is required after call for <a class="el" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open()</a>. Consult Section 32.6 "Selecting Reference Voltage" in the RA2A1 User's Manual (R01UH0888EJ0100) for details. </dd>
 <dd>
 When the internal reference voltage is selected as the high-potential reference voltage, the Low-power A/D Conversion mode will automatically be selected. Consult Section 29.6 "Selecting Reference Voltage" in the RA2E1 User's Manual (R01UH0852EJ0110) for details.</dd></dl>
@@ -916,6 +916,8 @@ Number of states to be used for sample and hold. Affects channels 0-2. </td></tr
 <tr><td class="fieldname"><a id="ggada437c4b88ed24eb8b9c94c0b45d76eaaebec3e24f9142260a7c06b7c70e49a74"></a>ADC_MASK_CHANNEL_26&#160;</td><td class="fielddoc"><p>Channel 26 mask. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggada437c4b88ed24eb8b9c94c0b45d76eaa1114ae29dc12afc9748bdbfe1586f60a"></a>ADC_MASK_CHANNEL_27&#160;</td><td class="fielddoc"><p>Channel 27 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada437c4b88ed24eb8b9c94c0b45d76eaaf945b5f44424c9d6fb0f4fcc0c50b217"></a>ADC_MASK_CHANNEL_28&#160;</td><td class="fielddoc"><p>Channel 28 mask. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggada437c4b88ed24eb8b9c94c0b45d76eaac1ac20cd379e67bf23b34d826a49dc1a"></a>ADC_MASK_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor channel mask. </p>
 </td></tr>
@@ -1714,7 +1716,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.4.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
