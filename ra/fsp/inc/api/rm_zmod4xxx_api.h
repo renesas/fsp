@@ -160,6 +160,25 @@ typedef struct st_rm_zmod4xxx_raq_data
     float raq;                         ///< Concentration ratio for raq lib.
 } rm_zmod4xxx_raq_data_t;
 
+/** ZMOD4XXX Relative IAQ data structure */
+typedef struct st_rm_zmod4xxx_rel_iaq_data
+{
+    float rmox[13];                    ///< MOx resistances.
+    float rhtr;                        ///< heater resistance.
+    float rel_iaq;                     ///< relative IAQ index.
+} rm_zmod4xxx_rel_iaq_data_t;
+
+/** ZMOD4XXX PBAQ data structure */
+typedef struct st_rm_zmod4xxx_pbaq_data
+{
+    float rmox[13];                    ///< MOx resistance.
+    float log_rcda;                    ///< log10 of CDA resistance.
+    float rhtr;                        ///< heater resistance.
+    float temperature;                 ///< ambient temperature (degC).
+    float tvoc;                        ///< TVOC concentration (mg/m^3).
+    float etoh;                        ///< EtOH concentration (ppm).
+} rm_zmod4xxx_pbaq_data_t;
+
 /** ZMOD4XXX configuration block */
 typedef struct st_rm_zmod4xxx_cfg
 {
@@ -303,6 +322,28 @@ typedef struct st_rm_zmod4xxx_api
      */
     fsp_err_t (* raqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                    rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data);
+
+    /** Calculate Relative IAQ values from ADC data.
+     * @par Implemented as
+     * - @ref RM_ZMOD4XXX_RelIaqDataCalculate()
+     *
+     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_raw_data           Pointer to raw data.
+     * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
+     */
+    fsp_err_t (* relIaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                      rm_zmod4xxx_rel_iaq_data_t * const p_zmod4xxx_data);
+
+    /** Calculate PBAQ values from ADC data.
+     * @par Implemented as
+     * - @ref RM_ZMOD4XXX_PbaqDataCalculate()
+     *
+     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_raw_data           Pointer to raw data.
+     * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
+     */
+    fsp_err_t (* pbaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                    rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data);
 
     /** Set temperature and humidity.
      * @par Implemented as

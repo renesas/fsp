@@ -591,6 +591,28 @@ fsp_err_t HW_SCE_Aes256CcmDecryptInitSub(uint32_t *InData_KeyIndex, uint32_t *In
 void HW_SCE_Aes256CcmDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT);
 fsp_err_t HW_SCE_Aes256CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InData_TextLen, uint32_t *InData_MAC,
         uint32_t *InData_MACLength, uint32_t *OutData_Text);
+fsp_err_t HW_SCE_Aes128CcmEncryptInitSubGeneral (uint32_t InData_KeyType[], uint32_t InData_DataType[],
+        uint32_t InData_Cmd[], uint32_t InData_TextLen[], uint32_t InData_KeyIndex[], uint32_t InData_IV[],
+        uint32_t InData_Header[], uint32_t InData_SeqNum[], uint32_t Header_Len);
+fsp_err_t HW_SCE_Aes192CcmEncryptInitSubGeneral (uint32_t InData_KeyType[], uint32_t InData_DataType[],
+        uint32_t InData_Cmd[],uint32_t InData_TextLen[], uint32_t InData_KeyIndex[],uint32_t InData_IV[],
+        uint32_t InData_Header[], uint32_t InData_SeqNum[],uint32_t Header_Len);
+fsp_err_t HW_SCE_Aes256CcmEncryptInitSubGeneral (uint32_t InData_KeyType[], uint32_t InData_DataType[],
+        uint32_t InData_Cmd[],uint32_t InData_TextLen[], uint32_t InData_KeyIndex[],uint32_t InData_IV[],
+        uint32_t InData_Header[], uint32_t InData_SeqNum[],uint32_t Header_Len);
+fsp_err_t HW_SCE_Aes128CcmDecryptInitSubGeneral (uint32_t InData_KeyType[], uint32_t InData_DataType[],
+        uint32_t InData_Cmd[], uint32_t InData_TextLen[], uint32_t InData_MACLength[], uint32_t InData_KeyIndex[],
+        uint32_t InData_IV[], uint32_t InData_Header[], uint32_t InData_SeqNum[], uint32_t Header_Len);
+fsp_err_t HW_SCE_Aes192CcmDecryptInitSubGeneral (uint32_t InData_KeyType[], uint32_t InData_DataType[],
+        uint32_t InData_Cmd[], uint32_t InData_TextLen[], uint32_t InData_MACLength[], uint32_t InData_KeyIndex[],
+        uint32_t InData_IV[], uint32_t InData_Header[], uint32_t InData_SeqNum[], uint32_t Header_Len);
+fsp_err_t HW_SCE_Aes256CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],uint32_t InData_DataType[],
+        uint32_t InData_Cmd[],uint32_t InData_TextLen[],uint32_t InData_MACLength[],uint32_t InData_KeyIndex[],
+        uint32_t InData_IV[],uint32_t InData_Header[],uint32_t InData_SeqNum[],uint32_t Header_Len);
+fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (uint32_t *InData_TextLen, uint32_t *InData_Text,
+        uint32_t *OutData_Text, uint32_t *OutData_MAC);
+fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(uint32_t *InData_Text, uint32_t *InData_TextLen, 
+        uint32_t *InData_MAC, uint32_t *InData_MACLength, uint32_t *OutData_Text);
 
 fsp_err_t HW_SCE_Aes128CmacInitSub(uint32_t *InData_KeyIndex);
 void         HW_SCE_Aes128CmacUpdateSub(uint32_t *InData_Text, uint32_t MAX_CNT);
@@ -754,12 +776,12 @@ void HW_SCE_p_func207(void);
 void HW_SCE_p_func300(void);
 void HW_SCE_p_func301(void);
 void HW_SCE_p_func302(void);
-void HW_SCE_p_func304(void);
-void HW_SCE_p_func307(void);
+void HW_SCE_p_func304_r1(void);
+void HW_SCE_p_func307_r1(void);
 void HW_SCE_p_func308(void);
-void HW_SCE_p_func309(void);
+void HW_SCE_p_func309_r1(void);
 void HW_SCE_p_func310(void);
-void HW_SCE_p_func311(void);
+void HW_SCE_p_func311_r1(void);
 void HW_SCE_p_func312(uint32_t ARG1);
 void HW_SCE_p_func313(uint32_t ARG1);
 void HW_SCE_p_func314(uint32_t ARG1);
@@ -773,7 +795,7 @@ void HW_SCE_p_func321(uint32_t ARG1);
 void HW_SCE_p_func322(uint32_t ARG1);
 void HW_SCE_p_func323(void);
 void HW_SCE_p_func324(void);
-void HW_SCE_p_func325(void);
+void HW_SCE_p_func325_r1(void);
 
 
 void firm_mac_read(uint32_t *InData_Program);

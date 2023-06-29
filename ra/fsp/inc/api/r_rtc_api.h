@@ -61,9 +61,17 @@ FSP_HEADER
 /** Events that can trigger a callback function */
 typedef enum e_rtc_event
 {
-    RTC_EVENT_ALARM_IRQ,               ///< Real Time Clock ALARM IRQ
+    RTC_EVENT_ALARM_IRQ,               ///< Real Time Clock ALARM 0 IRQ
+    RTC_EVENT_ALARM1_IRQ,              ///< Real Time Clock ALARM 1 IRQ
     RTC_EVENT_PERIODIC_IRQ,            ///< Real Time Clock PERIODIC IRQ
 } rtc_event_t;
+
+/** RTC alarm channel */
+typedef enum e_rtc_alarm_channel
+{
+    RTC_ALARM_CHANNEL_0,
+    RTC_ALARM_CHANNEL_1,
+} rtc_alarm_channel_t;
 
 /** Callback function parameter data */
 typedef struct st_rtc_callback_args
@@ -139,14 +147,15 @@ typedef struct tm rtc_time_t;
 /** Alarm time setting structure */
 typedef struct st_rtc_alarm_time
 {
-    rtc_time_t time;                   ///< Time structure
-    bool       sec_match;              ///< Enable the alarm based on a match of the seconds field
-    bool       min_match;              ///< Enable the alarm based on a match of the minutes field
-    bool       hour_match;             ///< Enable the alarm based on a match of the hours field
-    bool       mday_match;             ///< Enable the alarm based on a match of the days field
-    bool       mon_match;              ///< Enable the alarm based on a match of the months field
-    bool       year_match;             ///< Enable the alarm based on a match of the years field
-    bool       dayofweek_match;        ///< Enable the alarm based on a match of the dayofweek field
+    rtc_time_t          time;            ///< Time structure
+    bool                sec_match;       ///< Enable the alarm based on a match of the seconds field
+    bool                min_match;       ///< Enable the alarm based on a match of the minutes field
+    bool                hour_match;      ///< Enable the alarm based on a match of the hours field
+    bool                mday_match;      ///< Enable the alarm based on a match of the days field
+    bool                mon_match;       ///< Enable the alarm based on a match of the months field
+    bool                year_match;      ///< Enable the alarm based on a match of the years field
+    bool                dayofweek_match; ///< Enable the alarm based on a match of the dayofweek field
+    rtc_alarm_channel_t channel;         ///< Select alarm 0 or alarm 1
 } rtc_alarm_time_t;
 
 /** RTC Information Structure for information returned by  infoGet() */

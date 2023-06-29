@@ -112,7 +112,7 @@ const spi_flash_api_t g_ospi_on_spi_flash =
  * @retval FSP_ERR_CALIBRATE_FAILED Failed to perform auto-calibrate.
  * @retval FSP_ERR_INVALID_ARGUMENT Attempting to open the driver with an invalid SPI protocol for OctaRAM.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const p_cfg)
+fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const * const p_cfg)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 
@@ -220,10 +220,10 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
  *
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_DirectWrite (spi_flash_ctrl_t    * p_ctrl,
-                              uint8_t const * const p_src,
-                              uint32_t const        bytes,
-                              bool const            read_after_write)
+fsp_err_t R_OSPI_DirectWrite (spi_flash_ctrl_t * const p_ctrl,
+                              uint8_t const * const    p_src,
+                              uint32_t const           bytes,
+                              bool const               read_after_write)
 {
     FSP_PARAMETER_NOT_USED(p_ctrl);
     FSP_PARAMETER_NOT_USED(p_src);
@@ -240,7 +240,7 @@ fsp_err_t R_OSPI_DirectWrite (spi_flash_ctrl_t    * p_ctrl,
  *
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_DirectRead (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_dest, uint32_t const bytes)
+fsp_err_t R_OSPI_DirectRead (spi_flash_ctrl_t * const p_ctrl, uint8_t * const p_dest, uint32_t const bytes)
 {
     FSP_PARAMETER_NOT_USED(p_ctrl);
     FSP_PARAMETER_NOT_USED(p_dest);
@@ -261,7 +261,7 @@ fsp_err_t R_OSPI_DirectRead (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_dest, 
  * @retval FSP_ERR_ASSERTION           A required pointer is NULL.
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_DirectTransfer (spi_flash_ctrl_t                  * p_ctrl,
+fsp_err_t R_OSPI_DirectTransfer (spi_flash_ctrl_t * const            p_ctrl,
                                  spi_flash_direct_transfer_t * const p_transfer,
                                  spi_flash_direct_transfer_dir_t     direction)
 {
@@ -287,7 +287,7 @@ fsp_err_t R_OSPI_DirectTransfer (spi_flash_ctrl_t                  * p_ctrl,
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_XipEnter (spi_flash_ctrl_t * p_ctrl)
+fsp_err_t R_OSPI_XipEnter (spi_flash_ctrl_t * const p_ctrl)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
@@ -319,7 +319,7 @@ fsp_err_t R_OSPI_XipEnter (spi_flash_ctrl_t * p_ctrl)
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * p_ctrl)
+fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * const p_ctrl)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
@@ -353,10 +353,10 @@ fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * p_ctrl)
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  * @retval FSP_ERR_WRITE_FAILED        The write enable bit was not set.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
-                        uint8_t const * const p_src,
-                        uint8_t * const       p_dest,
-                        uint32_t              byte_count)
+fsp_err_t R_OSPI_Write (spi_flash_ctrl_t * const p_ctrl,
+                        uint8_t const * const    p_src,
+                        uint8_t * const          p_dest,
+                        uint32_t                 byte_count)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
@@ -484,7 +484,7 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  * @retval FSP_ERR_WRITE_FAILED        The write enable bit was not set.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_address, uint32_t byte_count)
+fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * const p_ctrl, uint8_t * const p_device_address, uint32_t byte_count)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 
@@ -556,7 +556,7 @@ fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_StatusGet (spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * const p_status)
+fsp_err_t R_OSPI_StatusGet (spi_flash_ctrl_t * const p_ctrl, spi_flash_status_t * const p_status)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 
@@ -583,7 +583,7 @@ fsp_err_t R_OSPI_StatusGet (spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * cons
  *
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_BankSet (spi_flash_ctrl_t * p_ctrl, uint32_t bank)
+fsp_err_t R_OSPI_BankSet (spi_flash_ctrl_t * const p_ctrl, uint32_t bank)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 
@@ -604,7 +604,7 @@ fsp_err_t R_OSPI_BankSet (spi_flash_ctrl_t * p_ctrl, uint32_t bank)
  * @retval FSP_ERR_CALIBRATE_FAILED   Failed to perform auto-calibrate.
  * @retval FSP_ERR_INVALID_ARGUMENT   Attempting to set an invalid SPI protocol for OctaRAM.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t spi_protocol)
+fsp_err_t R_OSPI_SpiProtocolSet (spi_flash_ctrl_t * const p_ctrl, spi_flash_protocol_t spi_protocol)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 
@@ -634,7 +634,7 @@ fsp_err_t R_OSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t
  * @retval FSP_ERR_CALIBRATE_FAILED   Failed to perform auto-calibrate.
  * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaFlash.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_AutoCalibrate (spi_flash_ctrl_t * p_ctrl)
+fsp_err_t R_OSPI_AutoCalibrate (spi_flash_ctrl_t * const p_ctrl)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 
@@ -661,7 +661,7 @@ fsp_err_t R_OSPI_AutoCalibrate (spi_flash_ctrl_t * p_ctrl)
  * @retval FSP_ERR_ASSERTION       p_instance_ctrl is NULL.
  * @retval FSP_ERR_NOT_OPEN        Driver is not opened.
  **********************************************************************************************************************/
-fsp_err_t R_OSPI_Close (spi_flash_ctrl_t * p_ctrl)
+fsp_err_t R_OSPI_Close (spi_flash_ctrl_t * const p_ctrl)
 {
     ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
 

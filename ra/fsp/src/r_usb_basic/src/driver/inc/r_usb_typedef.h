@@ -67,13 +67,18 @@ typedef void        (* usb_cb_t)(struct usb_utr *, uint16_t, uint16_t);
 
 typedef struct usb_utr
 {
-    usb_mh_t     msghead;                      /* Message header (for SH-solution) */
-    usb_cb_t     complete;                     /* Call Back Function Info */
-    void const * p_tranadr;                    /* Transfer data Start address */
-    uint32_t     read_req_len;                 /* Read Request Length */
-    uint32_t     tranlen;                      /* Transfer data length */
-    uint16_t   * p_setup;                      /* Setup packet(for control only) */
-    void       * p_usr_data;
+    usb_mh_t     msghead;              /* Message header (for SH-solution) */
+    usb_cb_t     complete;             /* Call Back Function Info */
+    void const * p_tranadr;            /* Transfer data Start address */
+#if (BSP_CFG_RTOS == 1)                /* Azure RTOS */
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    void const * p_tranadr_hold;
+ #endif /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+#endif /* (BSP_CFG_RTOS == 1) */
+    uint32_t   read_req_len;                   /* Read Request Length */
+    uint32_t   tranlen;                        /* Transfer data length */
+    uint16_t * p_setup;                        /* Setup packet(for control only) */
+    void     * p_usr_data;
 #if (BSP_CFG_RTOS != 0)
     usb_hdl_t cur_task_hdl;                    /* Task Handle */
 #endif /* #if (BSP_CFG_RTOS != 0) */

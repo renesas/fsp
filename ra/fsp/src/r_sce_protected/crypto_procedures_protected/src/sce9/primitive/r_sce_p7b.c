@@ -636,7 +636,7 @@ fsp_err_t R_SCE_Rsa4096ModularExponentEncryptSub(const uint32_t *InData_KeyIndex
             SCE->REG_ECH = 0x0000b400U;
             SCE->REG_ECH = 0x0000007bU;
             R_SCE_func101(0x6d2f8001U, 0x84e44900U, 0xefad9bb2U, 0x7eae5acdU);
-            R_SCE_func307();
+            R_SCE_func307_r1();
             R_SCE_func100(0xc9dbdeffU, 0x9dc1302aU, 0x9293827eU, 0xa2d5d039U);
             SCE->REG_2CH = 0x00000020U;
             SCE->REG_04H = 0x00000302U;
@@ -794,5 +794,5 @@ fsp_err_t R_SCE_Rsa4096ModularExponentEncryptSub(const uint32_t *InData_KeyIndex
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p7b_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p7b_r3.prc
 ***********************************************************************************************************************/

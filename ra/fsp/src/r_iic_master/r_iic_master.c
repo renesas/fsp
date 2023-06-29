@@ -945,7 +945,7 @@ static void iic_master_rxi_master (iic_master_instance_ctrl_t * p_ctrl)
     if (false == p_ctrl->dummy_read_completed)
     {
         /* Enable WAIT for 1 or 2 byte read */
-        if (2U <= p_ctrl->total)
+        if (2U >= p_ctrl->total)
         {
             p_ctrl->p_reg->ICMR3_b.WAIT = 1;
         }

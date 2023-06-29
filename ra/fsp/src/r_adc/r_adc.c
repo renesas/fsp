@@ -623,7 +623,7 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
          * 2 bits. */
         uint32_t adc_mask_in_order = adc_mask & ~(uint32_t) ADC_MASK_SENSORS;
         adc_mask_in_order <<= 3U;
-        adc_mask_in_order  |= adc_mask >> 28U;
+        adc_mask_in_order  |= adc_mask >> 29U;
         int32_t lowest_channel = r_adc_lowest_channel_get(adc_mask_in_order);
         p_adc_info->p_address = &p_instance_ctrl->p_reg->ADDR[lowest_channel - 3];
 
@@ -1514,12 +1514,12 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
             /* Set Window A channel mask */
             p_instance_ctrl->p_reg->ADCMPANSR[0] = p_window_cfg->compare_mask & UINT16_MAX;
             p_instance_ctrl->p_reg->ADCMPANSR[1] = (uint16_t) ((p_window_cfg->compare_mask << 4) >> 20);
-            p_instance_ctrl->p_reg->ADCMPANSER   = (uint8_t) (p_window_cfg->compare_mask >> 28);
+            p_instance_ctrl->p_reg->ADCMPANSER   = (uint8_t) (p_window_cfg->compare_mask >> 29);
 
             /* Set Window A channel inequality mode mask */
             p_instance_ctrl->p_reg->ADCMPLR[0] = p_window_cfg->compare_mode_mask & UINT16_MAX;
             p_instance_ctrl->p_reg->ADCMPLR[1] = (uint16_t) ((p_window_cfg->compare_mode_mask << 4) >> 20);
-            p_instance_ctrl->p_reg->ADCMPLER   = (uint8_t) (p_window_cfg->compare_mode_mask >> 28);
+            p_instance_ctrl->p_reg->ADCMPLER   = (uint8_t) (p_window_cfg->compare_mode_mask >> 29);
         }
 
         if (p_window_cfg->compare_cfg & R_ADC0_ADCMPCR_CMPBE_Msk)
@@ -1756,28 +1756,28 @@ void adc_window_compare_isr (void)
         uint8_t  adcmpser = p_reg->ADCMPSER;
 
         /* Get the lowest channel that meets Window A criteria */
-        uint32_t lowest_channel = __CLZ(__RBIT(adcmpsr0 + (uint32_t) (adcmpsr1 << 16) + (uint32_t) (adcmpser << 28)));
+        uint32_t lowest_channel = __CLZ(__RBIT(adcmpsr0 + (uint32_t) (adcmpsr1 << 16) + (uint32_t) (adcmpser << 29)));
 
         /* Clear the status flag corresponding to the lowest channel */
         if (lowest_channel < 16)
         {
             p_reg->ADCMPSR[0] = (uint16_t) (adcmpsr0 & ~(1 << (lowest_channel & 0xF)));
         }
-        else if (lowest_channel < 28)
+        else if (lowest_channel < 29)
         {
             p_reg->ADCMPSR[1] = (uint16_t) (adcmpsr1 & ~(1 << (lowest_channel & 0xF)));
         }
         else
         {
-            p_reg->ADCMPSER = (uint8_t) (adcmpser & ~(1 << (lowest_channel & 0x3)));
+            p_reg->ADCMPSER = (uint8_t) (adcmpser & ~(lowest_channel & 0x3));
         }
 
         args.channel = (adc_channel_t) lowest_channel;
 
-        if (args.channel > 28)
+        if (args.channel > 29)
         {
             /* Adjust sensor channels to align with the adc_channel_t enumeration */
-            args.channel = (adc_channel_t) (ADC_CHANNEL_TEMPERATURE + (args.channel - 28));
+            args.channel = (adc_channel_t) (ADC_CHANNEL_TEMPERATURE + (args.channel - 29));
         }
     }
     else

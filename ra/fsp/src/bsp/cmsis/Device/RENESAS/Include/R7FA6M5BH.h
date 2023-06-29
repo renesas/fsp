@@ -10471,67 +10471,85 @@ typedef struct                          /*!< (@ 0x40084000) R_MSTP Structure    
 
     union
     {
-        __IOM uint32_t MSTPCRE;         /*!< (@ 0x00000010) Module Stop Control Register E                             */
-
-        struct
+        union
         {
-            __IOM uint32_t MSTPE0  : 1; /*!< [0..0] Module stop bit 0. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE1  : 1; /*!< [1..1] Module stop bit 1. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE2  : 1; /*!< [2..2] Module stop bit 2. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE3  : 1; /*!< [3..3] Module stop bit 3. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE4  : 1; /*!< [4..4] Module stop bit 4. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE5  : 1; /*!< [5..5] Module stop bit 5. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE6  : 1; /*!< [6..6] Module stop bit 6. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE7  : 1; /*!< [7..7] Module stop bit 7. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE8  : 1; /*!< [8..8] Module stop bit 8. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE9  : 1; /*!< [9..9] Module stop bit 9. See device hardware manual for usage.           */
-            __IOM uint32_t MSTPE10 : 1; /*!< [10..10] Module stop bit 10. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE11 : 1; /*!< [11..11] Module stop bit 11. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE12 : 1; /*!< [12..12] Module stop bit 12. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE13 : 1; /*!< [13..13] Module stop bit 13. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE14 : 1; /*!< [14..14] Module stop bit 14. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE15 : 1; /*!< [15..15] Module stop bit 15. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE16 : 1; /*!< [16..16] Module stop bit 16. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE17 : 1; /*!< [17..17] Module stop bit 17. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE18 : 1; /*!< [18..18] Module stop bit 18. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE19 : 1; /*!< [19..19] Module stop bit 19. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE20 : 1; /*!< [20..20] Module stop bit 20. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE21 : 1; /*!< [21..21] Module stop bit 21. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE22 : 1; /*!< [22..22] Module stop bit 22. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE23 : 1; /*!< [23..23] Module stop bit 23. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE24 : 1; /*!< [24..24] Module stop bit 24. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE25 : 1; /*!< [25..25] Module stop bit 25. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE26 : 1; /*!< [26..26] Module stop bit 26. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE27 : 1; /*!< [27..27] Module stop bit 27. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE28 : 1; /*!< [28..28] Module stop bit 28. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE29 : 1; /*!< [29..29] Module stop bit 29. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE30 : 1; /*!< [30..30] Module stop bit 30. See device hardware manual for
-                                         *   usage.                                                                    */
-            __IOM uint32_t MSTPE31 : 1; /*!< [31..31] Module stop bit 31. See device hardware manual for
-                                         *   usage.                                                                    */
-        } MSTPCRE_b;
+            __IOM uint32_t MSTPCRE;         /*!< (@ 0x00000010) Module Stop Control Register E                             */
+
+            struct
+            {
+                __IOM uint32_t MSTPE0  : 1; /*!< [0..0] Module stop bit 0. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE1  : 1; /*!< [1..1] Module stop bit 1. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE2  : 1; /*!< [2..2] Module stop bit 2. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE3  : 1; /*!< [3..3] Module stop bit 3. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE4  : 1; /*!< [4..4] Module stop bit 4. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE5  : 1; /*!< [5..5] Module stop bit 5. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE6  : 1; /*!< [6..6] Module stop bit 6. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE7  : 1; /*!< [7..7] Module stop bit 7. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE8  : 1; /*!< [8..8] Module stop bit 8. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE9  : 1; /*!< [9..9] Module stop bit 9. See device hardware manual for usage.           */
+                __IOM uint32_t MSTPE10 : 1; /*!< [10..10] Module stop bit 10. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE11 : 1; /*!< [11..11] Module stop bit 11. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE12 : 1; /*!< [12..12] Module stop bit 12. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE13 : 1; /*!< [13..13] Module stop bit 13. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE14 : 1; /*!< [14..14] Module stop bit 14. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE15 : 1; /*!< [15..15] Module stop bit 15. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE16 : 1; /*!< [16..16] Module stop bit 16. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE17 : 1; /*!< [17..17] Module stop bit 17. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE18 : 1; /*!< [18..18] Module stop bit 18. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE19 : 1; /*!< [19..19] Module stop bit 19. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE20 : 1; /*!< [20..20] Module stop bit 20. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE21 : 1; /*!< [21..21] Module stop bit 21. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE22 : 1; /*!< [22..22] Module stop bit 22. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE23 : 1; /*!< [23..23] Module stop bit 23. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE24 : 1; /*!< [24..24] Module stop bit 24. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE25 : 1; /*!< [25..25] Module stop bit 25. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE26 : 1; /*!< [26..26] Module stop bit 26. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE27 : 1; /*!< [27..27] Module stop bit 27. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE28 : 1; /*!< [28..28] Module stop bit 28. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE29 : 1; /*!< [29..29] Module stop bit 29. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE30 : 1; /*!< [30..30] Module stop bit 30. See device hardware manual for
+                                             *   usage.                                                                    */
+                __IOM uint32_t MSTPE31 : 1; /*!< [31..31] Module stop bit 31. See device hardware manual for
+                                             *   usage.                                                                    */
+            } MSTPCRE_b;
+        };
+
+        union
+        {
+            __IOM uint16_t LSMRWDIS;         /*!< (@ 0x00000010) Low Speed Module R/W Disable Control Register              */
+
+            struct
+            {
+                __IOM uint16_t RTCRWDIS : 1; /*!< [0..0] RTC Register R/W Enable Control                                    */
+                __IOM uint16_t WDTDIS   : 1; /*!< [1..1] WDT Operate Clock Control                                          */
+                __IOM uint16_t IWDTIDS  : 1; /*!< [2..2] IWDT Register Clock Control                                        */
+                uint16_t                : 4;
+                __IOM uint16_t WREN     : 1; /*!< [7..7] Write Enable for bits [2:0]                                        */
+                __OM uint16_t  PRKEY    : 8; /*!< [15..8] LSMRWDIS Key Code                                                 */
+            } LSMRWDIS_b;
+        };
     };
-} R_MSTP_Type;                          /*!< Size = 20 (0x14)                                                          */
+} R_MSTP_Type;                               /*!< Size = 20 (0x14)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_PORT0                                          ================ */
@@ -10873,11 +10891,23 @@ typedef struct                         /*!< (@ 0x40080D00) R_PMISC Structure    
         struct
         {
             uint8_t             : 6;
-            __IOM uint8_t PFSWE : 1;    /*!< [6..6] PmnPFS Register Write                                              */
-            __IOM uint8_t B0WI  : 1;    /*!< [7..7] PFSWE Bit Write Disable                                            */
+            __IOM uint8_t PFSWE : 1;   /*!< [6..6] PmnPFS Register Write                                              */
+            __IOM uint8_t B0WI  : 1;   /*!< [7..7] PFSWE Bit Write Disable                                            */
         } PWPRS_b;
     };
-    __IM uint16_t            RESERVED2[5];
+    __IM uint16_t RESERVED2[4];
+    __IM uint8_t  RESERVED3;
+
+    union
+    {
+        __IOM uint8_t PRWCNTR;          /*!< (@ 0x0000000F) Port Read Wait Control Register                            */
+
+        struct
+        {
+            __IOM uint8_t WAIT : 2;     /*!< [1..0] Wait Cycle Control                                                 */
+            uint8_t            : 6;
+        } PRWCNTR_b;
+    };
     __IOM R_PMISC_PMSAR_Type PMSAR[12]; /*!< (@ 0x00000010) Port Security Attribution Register                         */
 } R_PMISC_Type;                         /*!< Size = 40 (0x28)                                                          */
 
@@ -19210,16 +19240,16 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_CEC             ((R_CEC_Type *) R_CEC_BASE)
  #define R_OSPI            ((R_OSPI_Type *) R_OSPI_BASE)
  #define R_USB_HS0         ((R_USB_HS0_Type *) R_USB_HS0_BASE)
- #define R_AGTX0           ((R_AGTX0_Type *) R_AGTX0_BASE)
- #define R_AGTX1           ((R_AGTX0_Type *) R_AGTX1_BASE)
- #define R_AGTX2           ((R_AGTX0_Type *) R_AGTX2_BASE)
- #define R_AGTX3           ((R_AGTX0_Type *) R_AGTX3_BASE)
- #define R_AGTX4           ((R_AGTX0_Type *) R_AGTX4_BASE)
- #define R_AGTX5           ((R_AGTX0_Type *) R_AGTX5_BASE)
- #define R_AGTX6           ((R_AGTX0_Type *) R_AGTX6_BASE)
- #define R_AGTX7           ((R_AGTX0_Type *) R_AGTX7_BASE)
- #define R_AGTX8           ((R_AGTX0_Type *) R_AGTX8_BASE)
- #define R_AGTX9           ((R_AGTX0_Type *) R_AGTX9_BASE)
+ #define R_AGT0            ((R_AGTX0_Type *) R_AGTX0_BASE)
+ #define R_AGT1            ((R_AGTX0_Type *) R_AGTX1_BASE)
+ #define R_AGT2            ((R_AGTX0_Type *) R_AGTX2_BASE)
+ #define R_AGT3            ((R_AGTX0_Type *) R_AGTX3_BASE)
+ #define R_AGT4            ((R_AGTX0_Type *) R_AGTX4_BASE)
+ #define R_AGT5            ((R_AGTX0_Type *) R_AGTX5_BASE)
+ #define R_AGT6            ((R_AGTX0_Type *) R_AGTX6_BASE)
+ #define R_AGT7            ((R_AGTX0_Type *) R_AGTX7_BASE)
+ #define R_AGT8            ((R_AGTX0_Type *) R_AGTX8_BASE)
+ #define R_AGT9            ((R_AGTX0_Type *) R_AGTX9_BASE)
  #define R_FLAD            ((R_FLAD_Type *) R_FLAD_BASE)
 
 /** @} */ /* End of group Device_Peripheral_declaration */
@@ -24193,20 +24223,31 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
 /* =========================================================================================================================== */
 
 /* ========================================================  MSTPCRA  ======================================================== */
- #define R_MSTP_MSTPCRA_MSTPA_Pos    (0UL)   /*!< MSTPA (Bit 0)                                         */
- #define R_MSTP_MSTPCRA_MSTPA_Msk    (0x1UL) /*!< MSTPA (Bitfield-Mask: 0x01)                           */
+ #define R_MSTP_MSTPCRA_MSTPA_Pos        (0UL)      /*!< MSTPA (Bit 0)                                         */
+ #define R_MSTP_MSTPCRA_MSTPA_Msk        (0x1UL)    /*!< MSTPA (Bitfield-Mask: 0x01)                           */
 /* ========================================================  MSTPCRB  ======================================================== */
- #define R_MSTP_MSTPCRB_MSTPB_Pos    (0UL)   /*!< MSTPB (Bit 0)                                         */
- #define R_MSTP_MSTPCRB_MSTPB_Msk    (0x1UL) /*!< MSTPB (Bitfield-Mask: 0x01)                           */
+ #define R_MSTP_MSTPCRB_MSTPB_Pos        (0UL)      /*!< MSTPB (Bit 0)                                         */
+ #define R_MSTP_MSTPCRB_MSTPB_Msk        (0x1UL)    /*!< MSTPB (Bitfield-Mask: 0x01)                           */
 /* ========================================================  MSTPCRC  ======================================================== */
- #define R_MSTP_MSTPCRC_MSTPC_Pos    (0UL)   /*!< MSTPC (Bit 0)                                         */
- #define R_MSTP_MSTPCRC_MSTPC_Msk    (0x1UL) /*!< MSTPC (Bitfield-Mask: 0x01)                           */
+ #define R_MSTP_MSTPCRC_MSTPC_Pos        (0UL)      /*!< MSTPC (Bit 0)                                         */
+ #define R_MSTP_MSTPCRC_MSTPC_Msk        (0x1UL)    /*!< MSTPC (Bitfield-Mask: 0x01)                           */
 /* ========================================================  MSTPCRD  ======================================================== */
- #define R_MSTP_MSTPCRD_MSTPD_Pos    (0UL)   /*!< MSTPD (Bit 0)                                         */
- #define R_MSTP_MSTPCRD_MSTPD_Msk    (0x1UL) /*!< MSTPD (Bitfield-Mask: 0x01)                           */
+ #define R_MSTP_MSTPCRD_MSTPD_Pos        (0UL)      /*!< MSTPD (Bit 0)                                         */
+ #define R_MSTP_MSTPCRD_MSTPD_Msk        (0x1UL)    /*!< MSTPD (Bitfield-Mask: 0x01)                           */
 /* ========================================================  MSTPCRE  ======================================================== */
- #define R_MSTP_MSTPCRE_MSTPE_Pos    (0UL)   /*!< MSTPE (Bit 0)                                         */
- #define R_MSTP_MSTPCRE_MSTPE_Msk    (0x1UL) /*!< MSTPE (Bitfield-Mask: 0x01)                           */
+ #define R_MSTP_MSTPCRE_MSTPE_Pos        (0UL)      /*!< MSTPE (Bit 0)                                         */
+ #define R_MSTP_MSTPCRE_MSTPE_Msk        (0x1UL)    /*!< MSTPE (Bitfield-Mask: 0x01)                           */
+/* =======================================================  LSMRWDIS  ======================================================== */
+ #define R_MSTP_LSMRWDIS_RTCRWDIS_Pos    (0UL)      /*!< RTCRWDIS (Bit 0)                                      */
+ #define R_MSTP_LSMRWDIS_RTCRWDIS_Msk    (0x1UL)    /*!< RTCRWDIS (Bitfield-Mask: 0x01)                        */
+ #define R_MSTP_LSMRWDIS_WDTDIS_Pos      (1UL)      /*!< WDTDIS (Bit 1)                                        */
+ #define R_MSTP_LSMRWDIS_WDTDIS_Msk      (0x2UL)    /*!< WDTDIS (Bitfield-Mask: 0x01)                          */
+ #define R_MSTP_LSMRWDIS_IWDTIDS_Pos     (2UL)      /*!< IWDTIDS (Bit 2)                                       */
+ #define R_MSTP_LSMRWDIS_IWDTIDS_Msk     (0x4UL)    /*!< IWDTIDS (Bitfield-Mask: 0x01)                         */
+ #define R_MSTP_LSMRWDIS_WREN_Pos        (7UL)      /*!< WREN (Bit 7)                                          */
+ #define R_MSTP_LSMRWDIS_WREN_Msk        (0x80UL)   /*!< WREN (Bitfield-Mask: 0x01)                            */
+ #define R_MSTP_LSMRWDIS_PRKEY_Pos       (8UL)      /*!< PRKEY (Bit 8)                                         */
+ #define R_MSTP_LSMRWDIS_PRKEY_Msk       (0xff00UL) /*!< PRKEY (Bitfield-Mask: 0xff)                           */
 
 /* =========================================================================================================================== */
 /* ================                                          R_PORT0                                          ================ */
@@ -24280,6 +24321,9 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_PMISC_PWPRS_PFSWE_Msk        (0x40UL) /*!< PFSWE (Bitfield-Mask: 0x01)                           */
  #define R_PMISC_PWPRS_B0WI_Pos         (7UL)    /*!< B0WI (Bit 7)                                          */
  #define R_PMISC_PWPRS_B0WI_Msk         (0x80UL) /*!< B0WI (Bitfield-Mask: 0x01)                            */
+/* ========================================================  PRWCNTR  ======================================================== */
+ #define R_PMISC_PRWCNTR_WAIT_Pos       (0UL)    /*!< WAIT (Bit 0)                                          */
+ #define R_PMISC_PRWCNTR_WAIT_Msk       (0x3UL)  /*!< WAIT (Bitfield-Mask: 0x03)                            */
 
 /* =========================================================================================================================== */
 /* ================                                          R_QSPI                                           ================ */

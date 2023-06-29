@@ -120,6 +120,8 @@ UINT sce_nx_crypto_gcm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
     length_remaining = additional_len % NX_CRYPTO_GCM_BLOCK_SIZE;
     input_length    -= length_remaining;
 
+    NX_CRYPTO_MEMSET(&(aes_ctx->nx_crypto_aes_mode_context.gcm.nx_crypto_gcm_counter), 0U,  NX_CRYPTO_GCM_BLOCK_SIZE_INT);
+
     if (SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes128GcmEncryptInitSub(key_type,

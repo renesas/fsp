@@ -69,6 +69,8 @@ FSP_HEADER
 typedef enum e_rm_comms_event
 {
     RM_COMMS_EVENT_OPERATION_COMPLETE = 0,
+    RM_COMMS_EVENT_TX_OPERATION_COMPLETE,
+    RM_COMMS_EVENT_RX_OPERATION_COMPLETE,
     RM_COMMS_EVENT_ERROR,
 } rm_comms_event_t;
 
@@ -91,11 +93,13 @@ typedef struct st_rm_comms_callback_args
 /** Communications middleware configuration block */
 typedef struct st_rm_comms_cfg
 {
-    uint32_t semaphore_timeout;                             ///< timeout for callback.
-    void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback function, mostly used if using non-blocking functionality.
-    void const * p_lower_level_cfg;                         ///< Pointer to lower level driver configuration structure.
+    uint32_t semaphore_timeout;                             ///< Timeout for read/write.
+
     void const * p_extend;                                  ///< Pointer to extended configuration by instance of interface.
+    void const * p_lower_level_cfg;                         ///< Pointer to lower level driver configuration structure.
+
     void const * p_context;                                 ///< Pointer to the user-provided context
+    void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback function, mostly used if using non-blocking functionality.
 } rm_comms_cfg_t;
 
 /** Communications control block.  Allocate an instance specific control block to pass into the Communications API calls.
@@ -110,6 +114,7 @@ typedef struct st_rm_comms_api
     /** Open driver.
      * @par Implemented as
      * - @ref RM_COMMS_I2C_Open()
+     * - @ref RM_COMMS_UART_Open()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  p_cfg    Pointer to configuration structure.
@@ -119,6 +124,7 @@ typedef struct st_rm_comms_api
     /** Close driver.
      * @par Implemented as
      * - @ref RM_COMMS_I2C_Close()
+     * - @ref RM_COMMS_UART_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -127,6 +133,7 @@ typedef struct st_rm_comms_api
     /** Read data.
      * @par Implemented as
      * - @ref RM_COMMS_I2C_Read()
+     * - @ref RM_COMMS_UART_Read()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in] 　p_dest   Pointer to the location to store read data.
@@ -137,6 +144,7 @@ typedef struct st_rm_comms_api
     /** Write data.
      * @par Implemented as
      * - @ref RM_COMMS_I2C_Write()
+     * - @ref RM_COMMS_UART_Write()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  p_src    Pointer to the location to get write data from.
@@ -147,11 +155,23 @@ typedef struct st_rm_comms_api
     /** Write bytes over comms followed by a read, will have a struct for params.
      * @par Implemented as
      * - @ref RM_COMMS_I2C_WriteRead()
+     * - @ref RM_COMMS_UART_WriteRead()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  write_read_params    Parameters structure.
      */
     fsp_err_t (* writeRead)(rm_comms_ctrl_t * const p_ctrl, rm_comms_write_read_params_t write_read_params);
+
+    /**
+     * Specify callback function and optional context pointer.
+     * @par Implemented as
+     * - RM_COMMS_UART_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     */
+    fsp_err_t (* callbackSet)(rm_comms_ctrl_t * const p_api_ctrl, void (* p_callback)(rm_comms_callback_args_t *), void const * const p_context);
 } rm_comms_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -64,10 +64,13 @@
 
 /* Calculate value to write to MOMCR (MODRV controls main clock drive strength and MOSEL determines the source of the
  * main oscillator). */
-#define BSP_PRV_MOMCR_MOSEL_BIT                 (6)
-#define BSP_PRV_MODRV                           ((CGC_MAINCLOCK_DRIVE << BSP_FEATURE_CGC_MODRV_SHIFT) & \
+#if BSP_FEATURE_CGC_MODRV_MASK
+ #define BSP_PRV_MODRV                          ((CGC_MAINCLOCK_DRIVE << BSP_FEATURE_CGC_MODRV_SHIFT) & \
                                                  BSP_FEATURE_CGC_MODRV_MASK)
-#define BSP_PRV_MOSEL                           (BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE << BSP_PRV_MOMCR_MOSEL_BIT)
+#else
+ #define BSP_PRV_MODRV                          (0x1AU)
+#endif
+#define BSP_PRV_MOSEL                           (BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE << R_SYSTEM_MOMCR_MOSEL_Pos)
 #define BSP_PRV_MOMCR                           (BSP_PRV_MODRV | BSP_PRV_MOSEL)
 
 /* Locations of bitfields used to configure CLKOUT. */
@@ -364,15 +367,13 @@
  #define BSP_PRV_MAIN_OSC_USED                    (1)
 #elif defined(BSP_CFG_I3CCLK_SOURCE) && (BSP_CFG_I3CCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
-#elif defined(BSP_CFG_ADCCLK_SOURCE) && (BSP_CFG_ADCCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
- #define BSP_PRV_MAIN_OSC_USED                    (1)
 #elif defined(BSP_CFG_LCDCLK_SOURCE) && (BSP_CFG_LCDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
 #elif defined(BSP_CFG_U60CLK_SOURCE) && (BSP_CFG_U60CLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
 #elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
-#elif defined(BSP_CFG_SDADC_CLOCK_SOURCE) && (BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_MAIN_OSC)
+#elif defined(BSP_CFG_SDADC_CLOCK_SOURCE) && (BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
 #else
  #define BSP_PRV_MAIN_OSC_USED                    (0)
@@ -404,8 +405,6 @@
 #elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
  #define BSP_PRV_HOCO_USED                        (1)
 #elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
- #define BSP_PRV_HOCO_USED                        (1)
-#elif defined(BSP_CFG_ADCCLK_SOURCE) && (BSP_CFG_ADCCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
  #define BSP_PRV_HOCO_USED                        (1)
 #elif defined(BSP_CFG_LCDCLK_SOURCE) && (BSP_CFG_LCDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
  #define BSP_PRV_HOCO_USED                        (1)
@@ -442,8 +441,6 @@
  #define BSP_PRV_MOCO_USED                        (1)
 #elif defined(BSP_CFG_I3CCLK_SOURCE) && (BSP_CFG_I3CCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
  #define BSP_PRV_MOCO_USED                        (1)
-#elif defined(BSP_CFG_ADCCLK_SOURCE) && (BSP_CFG_ADCCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
- #define BSP_PRV_MOCO_USED                        (1)
 #elif defined(BSP_CFG_LCDCLK_SOURCE) && (BSP_CFG_LCDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
  #define BSP_PRV_MOCO_USED                        (1)
 #elif defined(BSP_CFG_U60CLK_SOURCE) && (BSP_CFG_U60CLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
@@ -471,8 +468,6 @@
 #elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
  #define BSP_PRV_LOCO_USED                        (1)
 #elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
- #define BSP_PRV_LOCO_USED                        (1)
-#elif defined(BSP_CFG_ADCCLK_SOURCE) && (BSP_CFG_ADCCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
  #define BSP_PRV_LOCO_USED                        (1)
 #elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
  #define BSP_PRV_LOCO_USED                        (1)
@@ -506,7 +501,6 @@
     (BSP_FEATURE_BSP_HAS_IIC_CLOCK && (BSP_CFG_IICCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)) ||       \
     (BSP_FEATURE_BSP_HAS_CEC_CLOCK && (BSP_CFG_CECCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)) ||       \
     (BSP_FEATURE_BSP_HAS_I3C_CLOCK && (BSP_CFG_I3CCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)) ||       \
-    (BSP_FEATURE_BSP_HAS_ADC_CLOCK && (BSP_CFG_ADCCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)) ||       \
     (BSP_FEATURE_BSP_HAS_USB60_CLOCK_REQ && (BSP_CFG_U60CK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)) ||  \
     (BSP_FEATURE_BSP_HAS_LCD_CLOCK && (BSP_CFG_LCDCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED))
 
@@ -1630,11 +1624,6 @@ void bsp_clock_init (void)
     bsp_peripheral_clock_set(&R_SYSTEM->I3CCKCR, &R_SYSTEM->I3CCKDIVCR, BSP_CFG_I3CCLK_DIV, BSP_CFG_I3CCLK_SOURCE);
 #endif
 
-    /* Set the ADC clock if it exists on the MCU */
-#if BSP_FEATURE_BSP_HAS_ADC_CLOCK && (BSP_CFG_ADCCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
-    bsp_peripheral_clock_set(&R_SYSTEM->ADCCKCR, &R_SYSTEM->ADCCKDIVCR, BSP_CFG_ADCCLK_DIV, BSP_CFG_ADCCLK_SOURCE);
-#endif
-
     /* Set the LCD clock if it exists on the MCU */
 #if BSP_FEATURE_BSP_HAS_LCD_CLOCK && (BSP_CFG_LCDCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
     bsp_peripheral_clock_set(&R_SYSTEM->LCDCKCR, &R_SYSTEM->LCDCKDIVCR, BSP_CFG_LCDCLK_DIV, BSP_CFG_LCDCLK_SOURCE);
@@ -2005,7 +1994,7 @@ void R_BSP_Init_RTC (void)
     /* RCKSEL bit is not initialized after reset. Use LOCO as the default
      * clock source if it is available. Note RCR4.ROPSEL is also cleared.
      */
- #if BSP_PRV_LOCO_USED
+ #if BSP_PRV_LOCO_USED && !BSP_FEATURE_RTC_IS_IRTC
     R_RTC->RCR4 = 1 << R_RTC_RCR4_RCKSEL_Pos;
  #else
 

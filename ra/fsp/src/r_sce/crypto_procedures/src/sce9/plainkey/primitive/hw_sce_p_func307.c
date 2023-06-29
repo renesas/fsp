@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void HW_SCE_p_func307(void)
+void HW_SCE_p_func307_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -81,7 +81,7 @@ void HW_SCE_p_func307(void)
     SCE->REG_ECH = 0x0000b400U;
     SCE->REG_ECH = 0x00000080U;
     HW_SCE_p_func101(0x46765f77U, 0x5749f546U, 0xffae0ff7U, 0x8b2d018eU);
-    HW_SCE_p_func311();
+    HW_SCE_p_func311_r1();
     SCE->REG_ECH = 0x00000a73U;
     SCE->REG_ECH = 0x00000a31U;
     for(jLoop = 0; jLoop < 32; jLoop = jLoop + 1)
@@ -192,7 +192,7 @@ void HW_SCE_p_func307(void)
             SCE->REG_ECH = 0x0000b400U;
             SCE->REG_ECH = 0x00000081U;
             HW_SCE_p_func101(0xca53192fU, 0x211abfddU, 0xa870386fU, 0xb8e79d3eU);
-            HW_SCE_p_func309();
+            HW_SCE_p_func309_r1();
             HW_SCE_p_func100(0xcd35d372U, 0x54dbdbceU, 0xb0afbbdbU, 0xf796fc29U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -358,7 +358,7 @@ void HW_SCE_p_func307(void)
             SCE->REG_ECH = 0x0000b400U;
             SCE->REG_ECH = 0x00000082U;
             HW_SCE_p_func101(0x8389d01fU, 0xe6c6ffddU, 0x142d5ccfU, 0x7a0e9c6dU);
-            HW_SCE_p_func309();
+            HW_SCE_p_func309_r1();
             HW_SCE_p_func100(0xdee3518fU, 0xb273ad82U, 0x9fe71ee7U, 0x2edf8f2cU);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -519,7 +519,7 @@ void HW_SCE_p_func307(void)
     SCE->REG_ECH = 0x0000b400U;
     SCE->REG_ECH = 0x00000083U;
     HW_SCE_p_func101(0x24e91976U, 0x418be7b2U, 0x2aeeec01U, 0x65afa0b3U);
-    HW_SCE_p_func309();
+    HW_SCE_p_func309_r1();
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x00000090U;
     SCE->REG_ECH = 0x0000381eU;
@@ -528,5 +528,5 @@ void HW_SCE_p_func307(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_func307.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCEp_func307_r1.prc
 ***********************************************************************************************************************/

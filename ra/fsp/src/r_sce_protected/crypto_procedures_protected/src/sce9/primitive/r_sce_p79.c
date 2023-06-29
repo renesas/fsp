@@ -710,9 +710,9 @@ fsp_err_t R_SCE_Rsa3072ModularExponentEncryptSub(uint32_t *InData_KeyIndex, uint
             SCE->REG_ECH = 0x0000b7a0U;
             SCE->REG_ECH = 0x00000079U;
             R_SCE_func101(0xf53c859fU, 0x88e5bcc8U, 0x4a2d21a2U, 0xb21edb0aU);
-            R_SCE_func325();
+            R_SCE_func325_r1();
             SCE->REG_28H = 0x009f0001U;
-            R_SCE_func100(0xbb65f7f3U, 0xd08c83a1U, 0x3a33f9eaU, 0x28c13174U);
+            R_SCE_func100(0xa2e7d0afU, 0xbd515886U, 0x04c2396aU, 0xf20f30eaU);
             SCE->REG_2CH = 0x00000020U;
             SCE->REG_04H = 0x00000382U;
             /* WAIT_LOOP */
@@ -753,7 +753,7 @@ fsp_err_t R_SCE_Rsa3072ModularExponentEncryptSub(uint32_t *InData_KeyIndex, uint
             OutData_Text[30] = SCE->REG_100H;
             OutData_Text[31] = SCE->REG_100H;
             SCE->REG_28H = 0x00bf0001U;
-            R_SCE_func100(0x3832473fU, 0x9f8a2731U, 0x2b7f0621U, 0x044e8a0dU);
+            R_SCE_func100(0xdebd9710U, 0x790c4a14U, 0x530cf67fU, 0x69c3affaU);
             SCE->REG_2CH = 0x00000022U;
             SCE->REG_04H = 0x00000302U;
             /* WAIT_LOOP */
@@ -825,7 +825,7 @@ fsp_err_t R_SCE_Rsa3072ModularExponentEncryptSub(uint32_t *InData_KeyIndex, uint
             OutData_Text[93] = SCE->REG_100H;
             OutData_Text[94] = SCE->REG_100H;
             OutData_Text[95] = SCE->REG_100H;
-            R_SCE_func102(0x150da20dU, 0xa1749a49U, 0x21ab47b6U, 0x7af769c3U);
+            R_SCE_func102(0x49e2f88cU, 0x05b4f64eU, 0xec164a7bU, 0x0f11324eU);
             SCE->REG_1B8H = 0x00000040U;
             /* WAIT_LOOP */
             while (0U != SCE->REG_18H_b.B12)
@@ -838,5 +838,5 @@ fsp_err_t R_SCE_Rsa3072ModularExponentEncryptSub(uint32_t *InData_KeyIndex, uint
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p79_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p79_r3.prc
 ***********************************************************************************************************************/

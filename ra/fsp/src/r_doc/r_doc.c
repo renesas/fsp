@@ -126,7 +126,6 @@ fsp_err_t R_DOC_Open (doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_c
     uint32_t docr = R_DOC_B_DOCR_OMS_Msk & p_cfg->event;
     docr         |= (uint32_t) (p_cfg->event << (R_DOC_B_DOCR_DCSEL_Pos - 2U)) & R_DOC_B_DOCR_DCSEL_Msk;
     docr         |= (uint32_t) (p_cfg->bit_width << R_DOC_B_DOCR_DOBW_Pos) & R_DOC_B_DOCR_DOBW_Msk;
-    docr         |= R_DOC_B_DOCR_DOPCIE_Msk;
     R_DOC_B->DOCR = (uint8_t) docr & UINT8_MAX;
 
     /* Clear the hardware status flag. */

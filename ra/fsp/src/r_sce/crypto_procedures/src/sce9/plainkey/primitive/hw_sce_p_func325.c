@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void HW_SCE_p_func325(void)
+void HW_SCE_p_func325_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -236,10 +236,10 @@ void HW_SCE_p_func325(void)
             HW_SCE_p_func100(0xb8afe95dU, 0xf0a676a8U, 0x278ca2e7U, 0xd432ab29U);
             HW_SCE_p_func314(616+32);
             SCE->REG_ECH = 0x0000b7a0U;
-            SCE->REG_ECH = 0x000000f0U;
-            HW_SCE_p_func101(0x4b583ae7U, 0x56d78152U, 0xd8cd207fU, 0x9097cbb4U);
+            SCE->REG_ECH = 0x000000f4U;
+            HW_SCE_p_func101(0x9db26816U, 0x580414a7U, 0xd9ca64dfU, 0x92bde1e2U);
             HW_SCE_p_func318();
-            HW_SCE_p_func100(0xa29f08daU, 0x8b21226dU, 0xba1aa171U, 0x8c03bd6bU);
+            HW_SCE_p_func100(0x44a0ca14U, 0x4d979e4fU, 0xfbee0bd6U, 0x9345c810U);
             SCE->REG_28H = 0x009f0001U;
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -250,13 +250,13 @@ void HW_SCE_p_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x01ef2f1cU);
             HW_SCE_p_func080();
-            HW_SCE_p_func100(0x3e09f796U, 0x1f5513baU, 0xf2906a3aU, 0xf6a264a1U);
+            HW_SCE_p_func100(0xb954f024U, 0x7851d4d1U, 0x8047587aU, 0x5d6d0f8cU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000022U;
             HW_SCE_p_func319(136);
-            HW_SCE_p_func100(0x83f2f5c5U, 0xdb4b3aa1U, 0xacb5ab71U, 0xe7159fd6U);
+            HW_SCE_p_func100(0xb4570d2aU, 0xb4dde668U, 0x71a8e6cdU, 0xf3f1a820U);
             HW_SCE_p_func314(136+32);
-            HW_SCE_p_func100(0xc6cc13adU, 0x22bf318cU, 0xd52ea535U, 0x0bfda6bcU);
+            HW_SCE_p_func100(0x237eef91U, 0xda59697dU, 0xa4eb0859U, 0x1ccbde57U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -266,13 +266,13 @@ void HW_SCE_p_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x012e06e6U);
             HW_SCE_p_func080();
-            HW_SCE_p_func100(0x4434b13aU, 0x76d201adU, 0x198d4932U, 0xd9a8e8c6U);
+            HW_SCE_p_func100(0xebf5c34bU, 0x4a1f0b74U, 0x087a146fU, 0xc062284bU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000023U;
             HW_SCE_p_func319(172);
-            HW_SCE_p_func100(0x2034127aU, 0x60179772U, 0x9d4f2692U, 0xf359f550U);
+            HW_SCE_p_func100(0x0b29ed31U, 0x15bc55dbU, 0x05b50a90U, 0xe989c69bU);
             HW_SCE_p_func314(172+32);
-            HW_SCE_p_func100(0x03be931eU, 0x9b569d30U, 0xf39d0140U, 0x2f929436U);
+            HW_SCE_p_func100(0x720a6ae8U, 0x68450d1bU, 0x0db485e6U, 0x36d04b94U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -282,13 +282,13 @@ void HW_SCE_p_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x0100abe1U);
             HW_SCE_p_func080();
-            HW_SCE_p_func100(0xd22044a4U, 0x1911ee48U, 0x559c468eU, 0x6062e4e5U);
+            HW_SCE_p_func100(0xc8b750e8U, 0x2793fffbU, 0xfe12fbdaU, 0x766955d4U);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000020U;
             HW_SCE_p_func319(208);
-            HW_SCE_p_func100(0xf4dc0b69U, 0xee39d2a1U, 0x3638a4f4U, 0x87ad8cf6U);
+            HW_SCE_p_func100(0xe0cd750bU, 0x5a01adacU, 0x7aab12edU, 0x108d270aU);
             HW_SCE_p_func314(208+32);
-            HW_SCE_p_func101(0x48c6011cU, 0x2d1d0c0eU, 0x3ad508d0U, 0x1863f5c7U);
+            HW_SCE_p_func101(0x8320ae07U, 0x9ec01e29U, 0x20e024c6U, 0x210b2ed0U);
         }
         SCE->REG_ECH = 0x3800da9fU;
         SCE->REG_E0H = 0x00000080U;
@@ -478,10 +478,10 @@ void HW_SCE_p_func325(void)
             HW_SCE_p_func100(0x58ee5ddbU, 0x9061965bU, 0xfdbfec79U, 0xab87a7f8U);
             HW_SCE_p_func314(616+32);
             SCE->REG_ECH = 0x0000b7a0U;
-            SCE->REG_ECH = 0x000000f1U;
-            HW_SCE_p_func101(0x55a0f782U, 0xc388d766U, 0xc11aff3bU, 0x804653c6U);
+            SCE->REG_ECH = 0x000000f5U;
+            HW_SCE_p_func101(0x05b6651dU, 0x48026b34U, 0x58ac622fU, 0x14f9c9f5U);
             HW_SCE_p_func318();
-            HW_SCE_p_func100(0x8f95701eU, 0x150383aaU, 0x313ca36dU, 0x62f31989U);
+            HW_SCE_p_func100(0x6e700f7dU, 0x2298cb4bU, 0x32e82298U, 0x484d8424U);
             SCE->REG_28H = 0x009f0001U;
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -492,13 +492,13 @@ void HW_SCE_p_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x01ef2f1cU);
             HW_SCE_p_func080();
-            HW_SCE_p_func100(0x27b6018dU, 0xc2d58137U, 0xdaca4f73U, 0xa52f81c8U);
+            HW_SCE_p_func100(0x4a3a5487U, 0xa5840bb3U, 0xc732bae8U, 0xa2ad21fcU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000022U;
             HW_SCE_p_func319(136);
-            HW_SCE_p_func100(0x7431f476U, 0x94a93defU, 0x3ba1ad1dU, 0x21d00227U);
+            HW_SCE_p_func100(0xcc9ac09dU, 0x0081ac03U, 0x4ab916edU, 0x9d913812U);
             HW_SCE_p_func314(136+32);
-            HW_SCE_p_func100(0x25a731a2U, 0x4a77f567U, 0xe605568cU, 0x0e3a4862U);
+            HW_SCE_p_func100(0xbc6549c2U, 0xd9456641U, 0xb34e86e6U, 0xe288c583U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -508,13 +508,13 @@ void HW_SCE_p_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x012e06e6U);
             HW_SCE_p_func080();
-            HW_SCE_p_func100(0x4d9ad891U, 0x883ad05fU, 0x12dd6651U, 0x691f5aafU);
+            HW_SCE_p_func100(0x16113b33U, 0x794e7aecU, 0x3cea8c45U, 0x075c5a35U);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000023U;
             HW_SCE_p_func319(172);
-            HW_SCE_p_func100(0x0e617478U, 0xaec9a0f7U, 0xab6c622bU, 0xc06428feU);
+            HW_SCE_p_func100(0x2b248b83U, 0xa35118afU, 0xd2039341U, 0x88e2a7caU);
             HW_SCE_p_func314(172+32);
-            HW_SCE_p_func100(0x8c9380feU, 0x7636013aU, 0x4796f2c7U, 0xb9a6e0b0U);
+            HW_SCE_p_func100(0xe2d50f2eU, 0xa24a6f89U, 0x54e55185U, 0x3e958e8cU);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -524,14 +524,14 @@ void HW_SCE_p_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x0100abe1U);
             HW_SCE_p_func080();
-            HW_SCE_p_func100(0xe3018af1U, 0x5ca863f5U, 0xc01f235dU, 0xd337275fU);
+            HW_SCE_p_func100(0x5a52d3d2U, 0x714fcb0eU, 0x4ebf21a2U, 0x64792c7dU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000020U;
             HW_SCE_p_func319(208);
-            HW_SCE_p_func100(0xb42aa5c7U, 0xde19d9caU, 0x018b5d65U, 0xef529d6fU);
+            HW_SCE_p_func100(0xb1242de9U, 0x181a13e5U, 0x5a2970e3U, 0x03564c58U);
             HW_SCE_p_func314(208+32);
             SCE->REG_ECH = 0x0000d260U;
-            HW_SCE_p_func101(0x96bd80abU, 0xe755313eU, 0x61b1ac43U, 0xfe71c8cfU);
+            HW_SCE_p_func101(0x19f26e8cU, 0x8e32d1ccU, 0x201b6801U, 0x24d584e1U);
         }
         SCE->REG_ECH = 0x01816e94U;
         HW_SCE_p_func101(0xa7c7f7dfU, 0x2e444bafU, 0x34990ba4U, 0x0ce22f12U);
@@ -706,8 +706,8 @@ void HW_SCE_p_func325(void)
     HW_SCE_p_func100(0x6a8a5afdU, 0x62926c28U, 0x8e1be5b5U, 0x89cbfff9U);
     HW_SCE_p_func314(580+32);
     SCE->REG_ECH = 0x0000b7a0U;
-    SCE->REG_ECH = 0x000000f2U;
-    HW_SCE_p_func101(0xe3857bc5U, 0x0bf35aafU, 0xe3f75101U, 0x83c810b1U);
+    SCE->REG_ECH = 0x000000f6U;
+    HW_SCE_p_func101(0xb4164b6fU, 0x32459ef0U, 0x26b1ec51U, 0x36eee209U);
     HW_SCE_p_func318();
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x00000000U;
@@ -717,5 +717,5 @@ void HW_SCE_p_func325(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_func325.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCEp_func325_r1.prc
 ***********************************************************************************************************************/

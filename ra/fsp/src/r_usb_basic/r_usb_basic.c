@@ -3457,6 +3457,8 @@ fsp_err_t R_USB_ClassTypeGet (usb_ctrl_t * const p_api_ctrl, usb_class_t * class
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
+    p_ctrl->type = (usb_class_t) (p_ctrl->type | USB_VALUE_80H);
+
     *class_type = p_ctrl->type;
 
     return FSP_SUCCESS;

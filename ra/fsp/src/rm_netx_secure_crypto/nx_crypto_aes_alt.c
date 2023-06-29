@@ -2307,7 +2307,36 @@ UINT    status;
                 status = NX_CRYPTO_INVALID_BUFFER_SIZE;
                 break;
             }
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+            status = sce_nx_crypto_ccm_decrypt_init(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
+                                                    ctx -> nx_crypto_aes_mode_context.ccm.nx_crypto_ccm_additional_data,
+                                                    ctx -> nx_crypto_aes_mode_context.ccm.nx_crypto_ccm_additional_data_len,
+                                                    input_length_in_byte - (method -> nx_crypto_ICV_size_in_bits >> 3), iv_ptr, 
+                                                    (UCHAR)(method -> nx_crypto_ICV_size_in_bits >> 3),
+                                                    NX_CRYPTO_AES_BLOCK_SIZE);
+            if (status)
+            {
+                break;
+            }
 
+            status = sce_nx_crypto_ccm_decrypt_update(ctx, input, output,
+            		                                  input_length_in_byte - (method -> nx_crypto_ICV_size_in_bits >> 3),
+                                                      NX_CRYPTO_AES_BLOCK_SIZE);
+            if (status)
+            {
+                break; 
+            }
+
+            status = sce_nx_crypto_ccm_decrypt_final(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
+                                                     input + input_length_in_byte - (method -> nx_crypto_ICV_size_in_bits >> 3),
+                                                     NX_CRYPTO_AES_BLOCK_SIZE);
+            if (status)
+            {
+                break;
+            }
+#else
             status = _nx_crypto_ccm_decrypt_init(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                  (UINT (*)(VOID *, UCHAR *, UCHAR *, UINT))_nx_crypto_aes_encrypt,
                                                  ctx -> nx_crypto_aes_mode_context.ccm.nx_crypto_ccm_additional_data,
@@ -2335,10 +2364,12 @@ UINT    status;
                                                       (UINT (*)(VOID *, UCHAR *, UCHAR *, UINT))_nx_crypto_aes_encrypt,
                                                       input + input_length_in_byte - (method -> nx_crypto_ICV_size_in_bits >> 3),
                                                       NX_CRYPTO_AES_BLOCK_SIZE);
+
             if (status)
             {
                 break;
             }
+#endif
         } break;
 
         case NX_CRYPTO_ENCRYPT:
@@ -2409,7 +2440,17 @@ UINT    status;
                 status = NX_CRYPTO_PTR_ERROR;
                 break;
             }
-
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+            status = sce_nx_crypto_ccm_decrypt_init(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
+                                                    input, /* pointers to AAD */
+                                                    input_length_in_byte, /* length of AAD */
+                                                    output_length_in_byte, /* total length of message */
+                                                    iv_ptr, 
+                                                    (UCHAR)(method -> nx_crypto_ICV_size_in_bits >> 3),
+                                                    NX_CRYPTO_AES_BLOCK_SIZE);
+#else
             status = _nx_crypto_ccm_decrypt_init(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                  (UINT (*)(VOID *, UCHAR *, UCHAR *, UINT))_nx_crypto_aes_encrypt,
                                                  input, /* pointers to AAD */
@@ -2418,23 +2459,37 @@ UINT    status;
                                                  iv_ptr, 
                                                  (UCHAR)(method -> nx_crypto_ICV_size_in_bits >> 3),
                                                  NX_CRYPTO_AES_BLOCK_SIZE);
+#endif
         } break;
 
         case NX_CRYPTO_DECRYPT_UPDATE:
         {
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+            status = sce_nx_crypto_ccm_decrypt_update(ctx, input, output, input_length_in_byte,
+                                                      NX_CRYPTO_AES_BLOCK_SIZE);
+#else
             status = _nx_crypto_ccm_decrypt_update(NX_CRYPTO_DECRYPT_UPDATE,
                                                    ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                    (UINT (*)(VOID *, UCHAR *, UCHAR *, UINT))_nx_crypto_aes_encrypt,
                                                    input, output, input_length_in_byte,
                                                    NX_CRYPTO_AES_BLOCK_SIZE);
-
+#endif
         } break;
 
         case NX_CRYPTO_DECRYPT_CALCULATE:
         {
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+            status = sce_nx_crypto_ccm_decrypt_final(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
+                                                     input, NX_CRYPTO_AES_BLOCK_SIZE);
+#else
             status = _nx_crypto_ccm_decrypt_calculate(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                       (UINT (*)(VOID *, UCHAR *, UCHAR *, UINT))_nx_crypto_aes_encrypt,
                                                       input, NX_CRYPTO_AES_BLOCK_SIZE);
+#endif
         } break;
 
         case NX_CRYPTO_ENCRYPT_INITIALIZE:

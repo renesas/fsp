@@ -436,6 +436,7 @@ static fsp_err_t iic_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
     /* Set the response as ACK */
     p_ctrl->p_reg->ICMR3_b.ACKWP = 1;  /* Write Enable */
     p_ctrl->p_reg->ICMR3_b.ACKBT = 0;  /* Write */
+    p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
 
     /* Timeouts are enabled by the driver code at the end of an IIC Slave callback.
      * Do not enable them here to prevent time restricting the application code.
@@ -1013,6 +1014,14 @@ static void iic_err_slave (iic_slave_instance_ctrl_t * p_ctrl)
         if (IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ == p_ctrl->direction)
         {
             i2c_event = I2C_SLAVE_EVENT_RX_COMPLETE;
+
+            /*
+             * This is to fix the issue that after sending NACK, slave application won't be able to get any events until call read API again.
+             * It is preferred to clear NACK bit in the driver to allow more granular ACK control from the slave side.
+             */
+            p_ctrl->p_reg->ICMR3_b.ACKWP = 1; /* Write Enable */
+            p_ctrl->p_reg->ICMR3_b.ACKBT = 0; /* Write */
+            p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
         }
         else
         {

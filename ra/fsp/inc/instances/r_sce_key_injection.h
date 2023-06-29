@@ -116,18 +116,6 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap(const uint8_t * const             
                                               const uint8_t * const                     encrypted_key,
                                               sce_rsa2048_private_wrapped_key_t * const wrapped_key);
 
-fsp_err_t R_SCE_RSA3072_InitialPrivateKeyWrap(const uint8_t * const                     key_type,
-                                              const uint8_t * const                     wrapped_user_factory_programming_key,
-                                              const uint8_t * const                     initial_vector,
-                                              const uint8_t * const                     encrypted_key,
-                                              sce_rsa3072_private_wrapped_key_t * const wrapped_key);
-
-fsp_err_t R_SCE_RSA4096_InitialPrivateKeyWrap(const uint8_t * const                     key_type,
-                                              const uint8_t * const                     wrapped_user_factory_programming_key,
-                                              const uint8_t * const                     initial_vector,
-                                              const uint8_t * const                     encrypted_key,
-                                              sce_rsa4096_private_wrapped_key_t * const wrapped_key);
-
 fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap(const uint8_t * const                    initial_vector,
                                                const uint8_t * const                    encrypted_key,
                                                const sce_key_update_key_t * const       key_update_key,

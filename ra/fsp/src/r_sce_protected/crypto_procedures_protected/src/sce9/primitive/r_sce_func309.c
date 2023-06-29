@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void R_SCE_func309(void)
+void R_SCE_func309_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -869,7 +869,7 @@ void R_SCE_func309(void)
     SCE->REG_ECH = 0x0000b400U;
     SCE->REG_ECH = 0x00000092U;
     R_SCE_func101(0x6b69288eU, 0xd1ecfcbaU, 0x82e19566U, 0x6b62af3aU);
-    R_SCE_func304();
+    R_SCE_func304_r1();
     R_SCE_func100(0x368d2f14U, 0x93f1d277U, 0x8ccd8026U, 0x3381bbe1U);
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x000000a0U;
@@ -1674,7 +1674,7 @@ void R_SCE_func309(void)
     SCE->REG_ECH = 0x0000b400U;
     SCE->REG_ECH = 0x00000094U;
     R_SCE_func101(0x76e2fda6U, 0x0de14033U, 0xe3bbccb0U, 0x6cdee050U);
-    R_SCE_func304();
+    R_SCE_func304_r1();
     R_SCE_func100(0xe49c519cU, 0x97153a06U, 0xcb96ad65U, 0x2fd3f2a8U);
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x000000a0U;
@@ -3073,5 +3073,5 @@ void R_SCE_func309(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_func309.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_func309_r1.prc
 ***********************************************************************************************************************/

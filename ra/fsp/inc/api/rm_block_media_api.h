@@ -34,6 +34,7 @@
  * - @ref RM_BLOCK_MEDIA_SDMMC
  * - @ref RM_BLOCK_MEDIA_SPI
  * - @ref RM_BLOCK_MEDIA_USB
+ * - @ref RM_BLOCK_MEDIA_RAM
  *
  * @{
  **********************************************************************************************************************/

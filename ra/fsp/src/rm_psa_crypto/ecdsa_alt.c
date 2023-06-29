@@ -36,24 +36,12 @@
   #include "mbedtls/hmac_drbg.h"
  #endif
 
- #if defined(MBEDTLS_PLATFORM_C)
-  #include "mbedtls/platform.h"
- #else
-  #include <stdlib.h>
-  #define mbedtls_calloc    calloc
-  #define mbedtls_free       free
- #endif
+#include "mbedtls/platform.h"
 
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
 #include "psa/crypto.h"
 #include "hw_sce_private.h"
-
-/* Parameter validation macros based on platform_util.h */
-#define ECDSA_VALIDATE_RET( cond )    \
-    MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_ECP_BAD_INPUT_DATA )
-#define ECDSA_VALIDATE( cond )        \
-    MBEDTLS_INTERNAL_VALIDATE( cond )
 
 uint32_t ecp_load_key_size(bool wrapped_mode_ctx, mbedtls_ecp_group * grp);
 
@@ -389,30 +377,16 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp, uint32_t * p_c
  #endif                                // (defined(MBEDTLS_ECDSA_SIGN_ALT) || defined(MBEDTLS_ECDSA_VERIFY_ALT) || defined(MBEDTLS_ECP_ALT))
 
  #if defined(MBEDTLS_ECDSA_SIGN_ALT)
-
 /*
  * Compute ECDSA signature of a hashed message
  */
-
-int mbedtls_ecdsa_sign (mbedtls_ecp_group * grp,
-                        mbedtls_mpi * r,
-                        mbedtls_mpi * s,
-                        const mbedtls_mpi * d,
-                        const unsigned char * buf,
-                        size_t blen,
-                        int (* f_rng)(void *, unsigned char *, size_t),
-                        void * p_rng)
+int mbedtls_ecdsa_sign(mbedtls_ecp_group *grp, mbedtls_mpi *r, mbedtls_mpi *s,
+                       const mbedtls_mpi *d, const unsigned char *buf, size_t blen,
+                       int (*f_rng)(void *, unsigned char *, size_t), void *p_rng)
 {
     (void) blen;
     (void) f_rng;
     (void) p_rng;
-
-    ECDSA_VALIDATE_RET(grp != NULL);
-    ECDSA_VALIDATE_RET(r != NULL);
-    ECDSA_VALIDATE_RET(s != NULL);
-    ECDSA_VALIDATE_RET(d != NULL);
-    ECDSA_VALIDATE_RET(f_rng != NULL);
-    ECDSA_VALIDATE_RET(buf != NULL || blen == 0);
 
     int ret = 0;
     hw_sce_ecc_generatesign_t p_hw_sce_ecc_generatesign = NULL;
@@ -514,20 +488,13 @@ int mbedtls_ecdsa_sign (mbedtls_ecp_group * grp,
 /*
  * Verify ECDSA signature of hashed message
  */
-int mbedtls_ecdsa_verify (mbedtls_ecp_group       * grp,
-                          const unsigned char     * buf,
-                          size_t                    blen,
-                          const mbedtls_ecp_point * Q,
-                          const mbedtls_mpi       * r,
-                          const mbedtls_mpi       * s)
+int mbedtls_ecdsa_verify(mbedtls_ecp_group *grp,
+                         const unsigned char *buf, size_t blen,
+                         const mbedtls_ecp_point *Q,
+                         const mbedtls_mpi *r,
+                         const mbedtls_mpi *s)
 {
     (void) blen;
-
-    ECDSA_VALIDATE_RET(grp != NULL);
-    ECDSA_VALIDATE_RET(Q != NULL);
-    ECDSA_VALIDATE_RET(r != NULL);
-    ECDSA_VALIDATE_RET(s != NULL);
-    ECDSA_VALIDATE_RET(buf != NULL || blen == 0);
 
     int        ret;
     uint32_t * p_public_key_buff_32;

@@ -21,24 +21,24 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include "rm_wifi_onchip_da16200.h"
+#include "rm_wifi_onchip_da16xxx.h"
 
 #if (BSP_FEATURE_SCI_VERSION == 2U)
  #include "r_sci_b_uart.h"
-typedef sci_b_uart_instance_ctrl_t rm_wifi_onchip_da16200_uart_instance_ctrl_t;
-typedef sci_b_uart_extended_cfg_t  rm_wifi_onchip_da16200_uart_extended_cfg_t;
-typedef sci_b_baud_setting_t       rm_wifi_onchip_da16200_baud_setting_t;
- #define RM_WIFI_ONCHIP_DA16200_SCI_UART_FLOW_CONTROL_RTS                SCI_B_UART_FLOW_CONTROL_RTS
- #define RM_WIFI_ONCHIP_DA16200_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_B_UART_FLOW_CONTROL_HARDWARE_CTSRTS
+typedef sci_b_uart_instance_ctrl_t rm_wifi_onchip_da16xxx_uart_instance_ctrl_t;
+typedef sci_b_uart_extended_cfg_t  rm_wifi_onchip_da16xxx_uart_extended_cfg_t;
+typedef sci_b_baud_setting_t       rm_wifi_onchip_da16xxx_baud_setting_t;
+ #define RM_WIFI_ONCHIP_DA16XXX_SCI_UART_FLOW_CONTROL_RTS                SCI_B_UART_FLOW_CONTROL_RTS
+ #define RM_WIFI_ONCHIP_DA16XXX_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_B_UART_FLOW_CONTROL_HARDWARE_CTSRTS
 static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
                                                struct st_sci_b_baud_setting_t * const) = &R_SCI_B_UART_BaudCalculate;
 #else
  #include "r_sci_uart.h"
-typedef sci_uart_instance_ctrl_t rm_wifi_onchip_da16200_uart_instance_ctrl_t;
-typedef sci_uart_extended_cfg_t  rm_wifi_onchip_da16200_uart_extended_cfg_t;
-typedef baud_setting_t           rm_wifi_onchip_da16200_baud_setting_t;
- #define RM_WIFI_ONCHIP_DA16200_SCI_UART_FLOW_CONTROL_RTS                SCI_UART_FLOW_CONTROL_RTS
- #define RM_WIFI_ONCHIP_DA16200_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS
+typedef sci_uart_instance_ctrl_t rm_wifi_onchip_da16xxx_uart_instance_ctrl_t;
+typedef sci_uart_extended_cfg_t  rm_wifi_onchip_da16xxx_uart_extended_cfg_t;
+typedef baud_setting_t           rm_wifi_onchip_da16xxx_baud_setting_t;
+ #define RM_WIFI_ONCHIP_DA16XXX_SCI_UART_FLOW_CONTROL_RTS                SCI_UART_FLOW_CONTROL_RTS
+ #define RM_WIFI_ONCHIP_DA16XXX_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS
 static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
                                                baud_setting_t * const) = &R_SCI_UART_BaudCalculate;
 #endif
@@ -48,89 +48,89 @@ static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
 /***********************************************************************************************************************
  * Defines
  **********************************************************************************************************************/
-#define WIFI_ONCHIP_DA16200_TEMP_BUFFER_SIZE          (256)
+#define WIFI_ONCHIP_DA16XXX_TEMP_BUFFER_SIZE          (256)
 
 /* Text full versions of AT command returns */
-#define WIFI_ONCHIP_DA16200_RETURN_TEXT_OK            "OK"
-#define WIFI_ONCHIP_DA16200_RETURN_CONN_TEXT          "+WFJAP:1"
+#define WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK            "OK"
+#define WIFI_ONCHIP_DA16XXX_RETURN_CONN_TEXT          "+WFJAP:1"
 
-/* DA16200 UART port defines */
-#define WIFI_ONCHIP_DA16200_UART_INITIAL_PORT         (0)
-#define WIFI_ONCHIP_DA16200_UART_SECOND_PORT          (1)
+/* DA16XXX UART port defines */
+#define WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT         (0)
+#define WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT          (1)
 
-/* Initial DA16200 Wifi module UART settings */
-#define WIFI_ONCHIP_DA16200_DEFAULT_BAUDRATE          (115200)
-#define WIFI_ONCHIP_DA16200_DEFAULT_MODULATION        false
-#define WIFI_ONCHIP_DA16200_DEFAULT_ERROR             (9000)
+/* Initial DA16XXX Wifi module UART settings */
+#define WIFI_ONCHIP_DA16XXX_DEFAULT_BAUDRATE          (115200)
+#define WIFI_ONCHIP_DA16XXX_DEFAULT_MODULATION        false
+#define WIFI_ONCHIP_DA16XXX_DEFAULT_ERROR             (9000)
 
 /* Pin or port invalid definition */
-#define WIFI_ONCHIP_DA16200_BSP_PIN_PORT_INVALID      (UINT16_MAX)
+#define WIFI_ONCHIP_DA16XXX_BSP_PIN_PORT_INVALID      (UINT16_MAX)
 
-#define WIFI_ONCHIP_DA16200_TEMP_BUFF_SIZE            (30)
+#define WIFI_ONCHIP_DA16XXX_TEMP_BUFF_SIZE            (30)
 
 /* Mutex give/take defines */
-#define WIFI_ONCHIP_DA16200_MUTEX_TX                  (1 << 0)
-#define WIFI_ONCHIP_DA16200_MUTEX_RX                  (1 << 1)
+#define WIFI_ONCHIP_DA16XXX_MUTEX_TX                  (1 << 0)
+#define WIFI_ONCHIP_DA16XXX_MUTEX_RX                  (1 << 1)
 
 /* Predefined timeout values */
-#define WIFI_ONCHIP_DA16200_TIMEOUT_1MS               (1)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_3MS               (3)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_5MS               (5)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_10MS              (10)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_20MS              (20)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_30MS              (30)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_100MS             (100)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_200MS             (200)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_300MS             (300)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_400MS             (400)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_500MS             (500)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_1SEC              (1000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_2SEC              (2000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_3SEC              (3000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_4SEC              (4000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_5SEC              (5000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_8SEC              (8000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_15SEC             (15000)
-#define WIFI_ONCHIP_DA16200_TIMEOUT_20SEC             (20000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_1MS               (1)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_3MS               (3)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_5MS               (5)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_10MS              (10)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_20MS              (20)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_30MS              (30)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_100MS             (100)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_200MS             (200)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_300MS             (300)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_400MS             (400)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_500MS             (500)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_1SEC              (1000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_2SEC              (2000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_3SEC              (3000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_4SEC              (4000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_5SEC              (5000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_8SEC              (8000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_15SEC             (15000)
+#define WIFI_ONCHIP_DA16XXX_TIMEOUT_20SEC             (20000)
 
-/* DA16200 AT command retry delay in milliseconds */
-#define WIFI_ONCHIP_DA16200_DELAY_20MS                (20)
-#define WIFI_ONCHIP_DA16200_DELAY_50MS                (50)
-#define WIFI_ONCHIP_DA16200_DELAY_100MS               (100)
-#define WIFI_ONCHIP_DA16200_DELAY_200MS               (200)
-#define WIFI_ONCHIP_DA16200_DELAY_300MS               (300)
-#define WIFI_ONCHIP_DA16200_DELAY_500MS               (500)
-#define WIFI_ONCHIP_DA16200_DELAY_1000MS              (1000)
-#define WIFI_ONCHIP_DA16200_DELAY_2000MS              (2000)
-#define WIFI_ONCHIP_DA16200_DELAY_5000MS              (5000)
-#define WIFI_ONCHIP_DA16200_DELAY_8000MS              (8000)
-#define WIFI_ONCHIP_DA16200_DELAY_15SEC               (15000)
+/* DA16XXX AT command retry delay in milliseconds */
+#define WIFI_ONCHIP_DA16XXX_DELAY_20MS                (20)
+#define WIFI_ONCHIP_DA16XXX_DELAY_50MS                (50)
+#define WIFI_ONCHIP_DA16XXX_DELAY_100MS               (100)
+#define WIFI_ONCHIP_DA16XXX_DELAY_200MS               (200)
+#define WIFI_ONCHIP_DA16XXX_DELAY_300MS               (300)
+#define WIFI_ONCHIP_DA16XXX_DELAY_500MS               (500)
+#define WIFI_ONCHIP_DA16XXX_DELAY_1000MS              (1000)
+#define WIFI_ONCHIP_DA16XXX_DELAY_2000MS              (2000)
+#define WIFI_ONCHIP_DA16XXX_DELAY_5000MS              (5000)
+#define WIFI_ONCHIP_DA16XXX_DELAY_8000MS              (8000)
+#define WIFI_ONCHIP_DA16XXX_DELAY_15SEC               (15000)
 
 /* Minimum string size for getting local time string */
-#define WIFI_ONCHIP_DA16200_LOCAL_TIME_STR_SIZE       (25)
+#define WIFI_ONCHIP_DA16XXX_LOCAL_TIME_STR_SIZE       (25)
 
 #define HOURS_IN_SECONDS                              (3600)
 
 /* Socket Types supported */
-#define WIFI_ONCHIP_DA16200_SOCKET_TYPE_TCP_SERVER    (0)
-#define WIFI_ONCHIP_DA16200_SOCKET_TYPE_TCP_CLIENT    (1)
-#define WIFI_ONCHIP_DA16200_SOCKET_TYPE_UDP           (2)
-#define WIFI_ONCHIP_DA16200_SOCKET_TYPE_MAX           (3)
+#define WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_TCP_SERVER    (0)
+#define WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_TCP_CLIENT    (1)
+#define WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_UDP           (2)
+#define WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_MAX           (3)
 
 /* Error Response Codes */
-#define WIFI_ONCHIP_DA16200_ERR_UNKNOWN_CMD           (-1)
-#define WIFI_ONCHIP_DA16200_ERR_INSUF_PARAMS          (-2)
-#define WIFI_ONCHIP_DA16200_ERR_TOO_MANY_PARAMS       (-3)
-#define WIFI_ONCHIP_DA16200_ERR_INVALID_PARAM         (-4)
-#define WIFI_ONCHIP_DA16200_ERR_UNSUPPORTED_FUN       (-5)
-#define WIFI_ONCHIP_DA16200_ERR_NOT_CONNECTED_AP      (-6)
-#define WIFI_ONCHIP_DA16200_ERR_NO_RESULT             (-7)
-#define WIFI_ONCHIP_DA16200_ERR_RESP_BUF_OVERFLOW     (-8)
-#define WIFI_ONCHIP_DA16200_ERR_FUNC_NOT_CONFIG       (-9)
-#define WIFI_ONCHIP_DA16200_ERR_CMD_TIMEOUT           (-10)
-#define WIFI_ONCHIP_DA16200_ERR_NVRAM_WR_FAIL         (-11)
-#define WIFI_ONCHIP_DA16200_ERR_RETEN_MEM_WR_FAIL     (-12)
-#define WIFI_ONCHIP_DA16200_ERR_UNKNOWN               (-99)
+#define WIFI_ONCHIP_DA16XXX_ERR_UNKNOWN_CMD           (-1)
+#define WIFI_ONCHIP_DA16XXX_ERR_INSUF_PARAMS          (-2)
+#define WIFI_ONCHIP_DA16XXX_ERR_TOO_MANY_PARAMS       (-3)
+#define WIFI_ONCHIP_DA16XXX_ERR_INVALID_PARAM         (-4)
+#define WIFI_ONCHIP_DA16XXX_ERR_UNSUPPORTED_FUN       (-5)
+#define WIFI_ONCHIP_DA16XXX_ERR_NOT_CONNECTED_AP      (-6)
+#define WIFI_ONCHIP_DA16XXX_ERR_NO_RESULT             (-7)
+#define WIFI_ONCHIP_DA16XXX_ERR_RESP_BUF_OVERFLOW     (-8)
+#define WIFI_ONCHIP_DA16XXX_ERR_FUNC_NOT_CONFIG       (-9)
+#define WIFI_ONCHIP_DA16XXX_ERR_CMD_TIMEOUT           (-10)
+#define WIFI_ONCHIP_DA16XXX_ERR_NVRAM_WR_FAIL         (-11)
+#define WIFI_ONCHIP_DA16XXX_ERR_RETEN_MEM_WR_FAIL     (-12)
+#define WIFI_ONCHIP_DA16XXX_ERR_UNKNOWN               (-99)
 
 #define sbFLAGS_IS_MESSAGE_BUFFER                     ((uint8_t) 1)   /* Set if the stream buffer was created as a message buffer, in which case it holds discrete messages rather than a stream. */
 #define sbBYTES_TO_STORE_MESSAGE_LENGTH               (sizeof(configMESSAGE_BUFFER_LENGTH_TYPE))
@@ -165,19 +165,19 @@ extern const ioport_instance_t g_ioport;
 /* Numeric return types for AT basic function commands */
 typedef enum
 {
-    WIFI_ONCHIP_DA16200_RETURN_OK = 0,       ///< WIFI_ONCHIP_DA16200_RETURN_OK
-    WIFI_ONCHIP_DA16200_RETURN_INIT_OK,      ///< WIFI_ONCHIP_DA16200_RETURN_INIT_OK
-    WIFI_ONCHIP_DA16200_RETURN_CONNECT,      ///< WIFI_ONCHIP_DA16200_RETURN_CONNECT
-    WIFI_ONCHIP_DA16200_RETURN_CONNECT_FAIL, ///< WIFI_ONCHIP_DA16200_RETURN_CONNECT_FAIL
-    WIFI_ONCHIP_DA16200_RETURN_ERROR_CODES,
-    WIFI_ONCHIP_DA16200_RETURN_PROVISION_IDLE,
-    WIFI_ONCHIP_DA16200_RETURN_PROVISION_START
-} da16200_return_code_t;
+    WIFI_ONCHIP_DA16XXX_RETURN_OK = 0,       ///< WIFI_ONCHIP_DA16XXX_RETURN_OK
+    WIFI_ONCHIP_DA16XXX_RETURN_INIT_OK,      ///< WIFI_ONCHIP_DA16XXX_RETURN_INIT_OK
+    WIFI_ONCHIP_DA16XXX_RETURN_CONNECT,      ///< WIFI_ONCHIP_DA16XXX_RETURN_CONNECT
+    WIFI_ONCHIP_DA16XXX_RETURN_CONNECT_FAIL, ///< WIFI_ONCHIP_DA16XXX_RETURN_CONNECT_FAIL
+    WIFI_ONCHIP_DA16XXX_RETURN_ERROR_CODES,
+    WIFI_ONCHIP_DA16XXX_RETURN_PROVISION_IDLE,
+    WIFI_ONCHIP_DA16XXX_RETURN_PROVISION_START
+} da16xxx_return_code_t;
 
 /***********************************************************************************************************************
  * Static Globals
  **********************************************************************************************************************/
-static rm_wifi_onchip_da16200_baud_setting_t g_baud_setting =
+static rm_wifi_onchip_da16xxx_baud_setting_t g_baud_setting =
 {
 #if (2U == BSP_FEATURE_SCI_VERSION)
     .baudrate_bits_b.brme  = 0,
@@ -196,8 +196,8 @@ static rm_wifi_onchip_da16200_baud_setting_t g_baud_setting =
 #endif
 };
 
-/* Control instance for the da16200 wifi module */
-static wifi_onchip_da16200_instance_ctrl_t g_rm_wifi_onchip_da16200_instance;
+/* Control instance for the da16xxx wifi module */
+static wifi_onchip_da16xxx_instance_ctrl_t g_rm_wifi_onchip_da16xxx_instance;
 
 /* Transmit and receive mutexes for UARTs */
 static StaticSemaphore_t g_socket_mutexes[2];
@@ -206,10 +206,10 @@ static StaticSemaphore_t g_uart_tei_mutex[2];
 /**
  *  Maximum time in ticks to wait for obtaining a semaphore.
  */
-static const TickType_t wifi_sx_wifi_onchip_da16200_sem_block_timeout = pdMS_TO_TICKS(
-    WIFI_ONCHIP_DA16200_CFG_SEM_MAX_TIMEOUT);
+static const TickType_t wifi_sx_wifi_onchip_da16xxx_sem_block_timeout = pdMS_TO_TICKS(
+    WIFI_ONCHIP_DA16XXX_CFG_SEM_MAX_TIMEOUT);
 
-static uint8_t rx_buffer[WIFI_ONCHIP_DA16200_TEMP_BUFFER_SIZE] = {0};
+static uint8_t rx_buffer[WIFI_ONCHIP_DA16XXX_TEMP_BUFFER_SIZE] = {0};
 static uint8_t rx_data_index = 0;
 
 /* Structure that hold state information on the buffer. */
@@ -244,10 +244,10 @@ typedef struct StreamBufferDef_t                 /*lint !e9058 Style convention 
 /***********************************************************************************************************************
  * Local function prototypes
  **********************************************************************************************************************/
-static void      rm_wifi_onchip_da16200_cleanup_open(wifi_onchip_da16200_instance_ctrl_t * const p_instance_ctrl);
-static void      rm_wifi_onchip_da16200_wifi_module_reset(wifi_onchip_da16200_instance_ctrl_t * const p_instance_ctrl);
-static fsp_err_t rm_wifi_onchip_da16200_error_lookup(char * resp);
-static fsp_err_t rm_wifi_onchip_da16200_send_basic(wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl,
+static void      rm_wifi_onchip_da16xxx_cleanup_open(wifi_onchip_da16xxx_instance_ctrl_t * const p_instance_ctrl);
+static void      rm_wifi_onchip_da16xxx_wifi_module_reset(wifi_onchip_da16xxx_instance_ctrl_t * const p_instance_ctrl);
+static fsp_err_t rm_wifi_onchip_da16xxx_error_lookup(char * resp);
+static fsp_err_t rm_wifi_onchip_da16xxx_send_basic(wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl,
                                                    uint32_t                              serial_ch_id,
                                                    const char                          * p_textstring,
                                                    uint32_t                              length,
@@ -255,20 +255,20 @@ static fsp_err_t rm_wifi_onchip_da16200_send_basic(wifi_onchip_da16200_instance_
                                                    uint32_t                              retry_delay,
                                                    const char                          * p_expect_code);
 
-static BaseType_t rm_wifi_onchip_da16200_send_basic_take_mutex(wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl,
+static BaseType_t rm_wifi_onchip_da16xxx_send_basic_take_mutex(wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl,
                                                                uint32_t                              mutex_flag);
-static BaseType_t rm_wifi_onchip_da16200_send_basic_give_mutex(wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl,
+static BaseType_t rm_wifi_onchip_da16xxx_send_basic_give_mutex(wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl,
                                                                uint32_t                              mutex_flag);
 
-static void rm_wifi_da16200_handle_incoming_socket_data(da16200_socket_t * pSocket, uint8_t data_byte);
+static void rm_wifi_da16xxx_handle_incoming_socket_data(da16xxx_socket_t * pSocket, uint8_t data_byte);
 
 static size_t xStreamBufferReceiveAlt(StreamBufferHandle_t xStreamBuffer,
                                       void               * pvRxData,
                                       size_t               xBufferLengthBytes,
                                       TickType_t           xTicksToWait);
 
-#if (1 == WIFI_ONCHIP_DA16200_CFG_SNTP_ENABLE)
-static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init(wifi_onchip_da16200_instance_ctrl_t * const p_instance_ctrl);
+#if (1 == WIFI_ONCHIP_DA16XXX_CFG_SNTP_ENABLE)
+static fsp_err_t rm_wifi_onchip_da16xxx_sntp_service_init(wifi_onchip_da16xxx_instance_ctrl_t * const p_instance_ctrl);
 
 #endif
 
@@ -277,25 +277,25 @@ static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init(wifi_onchip_da16200_in
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- *  Opens and configures the WIFI_ONCHIP_DA16200 Middleware module.
+ *  Opens and configures the WIFI_ONCHIP_DA16XXX Middleware module.
  *
  *  @param[in]  p_cfg        Pointer to pin configuration structure.
  *
- *  @retval FSP_SUCCESS              WIFI_ONCHIP_DA16200 successfully configured.
+ *  @retval FSP_SUCCESS              WIFI_ONCHIP_DA16XXX successfully configured.
  *  @retval FSP_ERR_ASSERTION        The parameter p_cfg or p_instance_ctrl is NULL.
  *  @retval FSP_ERR_OUT_OF_MEMORY    There is no more heap memory available.
  *  @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
  *  @retval FSP_ERR_ALREADY_OPEN     Module is already open.  This module can only be opened once.
  *  @retval FSP_ERR_WIFI_INIT_FAILED WiFi module initialization failed.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p_cfg)
+fsp_err_t rm_wifi_onchip_da16xxx_open (wifi_onchip_da16xxx_cfg_t const * const p_cfg)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
     fsp_err_t         err    = FSP_SUCCESS;
     uart_instance_t * p_uart = NULL;
-    rm_wifi_onchip_da16200_uart_extended_cfg_t uart0_cfg_extended;
+    rm_wifi_onchip_da16xxx_uart_extended_cfg_t uart0_cfg_extended;
     uart_cfg_t uart0_cfg;
-    uint8_t    temp_buff[WIFI_ONCHIP_DA16200_TEMP_BUFF_SIZE] = {0};
+    uint8_t    temp_buff[WIFI_ONCHIP_DA16XXX_TEMP_BUFF_SIZE] = {0};
     uint8_t  * p_temp_buff = temp_buff;
     uint32_t   uart_baud_rates[UART_BAUD_MAX_CNT] =
     {
@@ -304,17 +304,19 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
     uint32_t curr_uart_baud = 0;
     int      index          = 0;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_cfg);
     FSP_ERROR_RETURN(WIFI_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
     /* Clear the control structure */
-    memset(p_instance_ctrl, 0, sizeof(wifi_onchip_da16200_instance_ctrl_t));
+    memset(p_instance_ctrl, 0, sizeof(wifi_onchip_da16xxx_instance_ctrl_t));
 
     /* Update control structure from configuration values */
-    p_instance_ctrl->p_wifi_onchip_da16200_cfg = p_cfg;
-    p_instance_ctrl->num_uarts                 = p_cfg->num_uarts;
+    p_instance_ctrl->p_wifi_onchip_da16xxx_cfg  = p_cfg;
+    p_instance_ctrl->num_uarts                  = p_cfg->num_uarts;
+    p_instance_ctrl->p_current_cmd_rx_buffer    = p_instance_ctrl->cmd_rx_buff;
+    p_instance_ctrl->current_cmd_rx_buffer_size = sizeof(p_instance_ctrl->cmd_rx_buff);
 
     for (uint32_t i = 0; i < p_instance_ctrl->num_uarts; i++)
     {
@@ -323,7 +325,7 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
         p_instance_ctrl->uart_tei_sem[i] = xSemaphoreCreateBinaryStatic(&g_uart_tei_mutex[i]);
         if (NULL == p_instance_ctrl->uart_tei_sem[i])
         {
-            rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+            rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
         }
 
         FSP_ERROR_RETURN(NULL != p_instance_ctrl->uart_tei_sem[i], FSP_ERR_OUT_OF_MEMORY);
@@ -333,10 +335,10 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
 
     p_instance_ctrl->reset_pin             = p_cfg->reset_pin;
     p_instance_ctrl->num_creatable_sockets = p_cfg->num_sockets;
-    p_instance_ctrl->curr_cmd_port         = WIFI_ONCHIP_DA16200_UART_INITIAL_PORT;
+    p_instance_ctrl->curr_cmd_port         = WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT;
 
     /* Reset the wi-fi module to a known state */
-    rm_wifi_onchip_da16200_wifi_module_reset(p_instance_ctrl);
+    rm_wifi_onchip_da16xxx_wifi_module_reset(p_instance_ctrl);
 
     /* Create the Tx/Rx mutexes */
     if (p_instance_ctrl->tx_sem != NULL)
@@ -347,7 +349,7 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
     p_instance_ctrl->tx_sem = xSemaphoreCreateMutexStatic(&g_socket_mutexes[0]);
     if (NULL == p_instance_ctrl->tx_sem)
     {
-        rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+        rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
     }
 
     FSP_ERROR_RETURN(NULL != p_instance_ctrl->tx_sem, FSP_ERR_OUT_OF_MEMORY);
@@ -360,7 +362,7 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
     p_instance_ctrl->rx_sem = xSemaphoreCreateMutexStatic(&g_socket_mutexes[1]);
     if (NULL == p_instance_ctrl->rx_sem)
     {
-        rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+        rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
     }
 
     FSP_ERROR_RETURN(NULL != p_instance_ctrl->rx_sem, FSP_ERR_OUT_OF_MEMORY);
@@ -372,14 +374,14 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
                                                                   &p_instance_ctrl->socket_byteq_struct);
     if (NULL == p_instance_ctrl->socket_byteq_hdl)
     {
-        rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+        rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
     }
 
     FSP_ERROR_RETURN(NULL != p_instance_ctrl->socket_byteq_hdl, FSP_ERR_OUT_OF_MEMORY);
 
     /* Create memory copy of uart extended configuration and then copy new configuration values in. */
     memcpy((void *) &uart0_cfg_extended, (void *) p_instance_ctrl->uart_instance_objects[0]->p_cfg->p_extend,
-           sizeof(rm_wifi_onchip_da16200_uart_extended_cfg_t));
+           sizeof(rm_wifi_onchip_da16xxx_uart_extended_cfg_t));
 
     /* Create memory copy of uart configuration and update with new extended configuration structure. */
     memcpy((void *) &uart0_cfg, p_instance_ctrl->uart_instance_objects[0]->p_cfg, sizeof(uart_cfg_t));
@@ -388,64 +390,64 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
     {
         curr_uart_baud = uart_baud_rates[index];
 
-        (*p_sci_uart_baud_calculate)(curr_uart_baud, WIFI_ONCHIP_DA16200_DEFAULT_MODULATION,
-                                     WIFI_ONCHIP_DA16200_DEFAULT_ERROR, &g_baud_setting);
+        (*p_sci_uart_baud_calculate)(curr_uart_baud, WIFI_ONCHIP_DA16XXX_DEFAULT_MODULATION,
+                                     WIFI_ONCHIP_DA16XXX_DEFAULT_ERROR, &g_baud_setting);
 
         uart0_cfg_extended.p_baud_setting   = &g_baud_setting;
-        uart0_cfg_extended.flow_control     = RM_WIFI_ONCHIP_DA16200_SCI_UART_FLOW_CONTROL_RTS;
-        uart0_cfg_extended.flow_control_pin = (bsp_io_port_pin_t) WIFI_ONCHIP_DA16200_BSP_PIN_PORT_INVALID;
+        uart0_cfg_extended.flow_control     = RM_WIFI_ONCHIP_DA16XXX_SCI_UART_FLOW_CONTROL_RTS;
+        uart0_cfg_extended.flow_control_pin = (bsp_io_port_pin_t) WIFI_ONCHIP_DA16XXX_BSP_PIN_PORT_INVALID;
 
         uart0_cfg.p_extend   = (void *) &uart0_cfg_extended;
-        uart0_cfg.p_callback = rm_wifi_onchip_da16200_uart_callback;
+        uart0_cfg.p_callback = rm_wifi_onchip_da16xxx_uart_callback;
 
         /* Open UART */
-        p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT];
+        p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT];
         err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
 
         if (FSP_SUCCESS != err)
         {
-            rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+            rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
         }
 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
         /* Delay after open */
-        vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_10MS));
+        vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_10MS));
 
         /* Test basic communications with an AT command. */
-        err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 "ATZ\r",
                                                 0,
-                                                WIFI_ONCHIP_DA16200_TIMEOUT_20MS,
-                                                WIFI_ONCHIP_DA16200_DELAY_20MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_TIMEOUT_20MS,
+                                                WIFI_ONCHIP_DA16XXX_DELAY_20MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
         if (FSP_SUCCESS != err)
         {
-            vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_10MS));
+            vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_10MS));
 
             /* Test basic communications with an AT command. */
-            err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+            err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                     p_instance_ctrl->curr_cmd_port,
                                                     "ATZ\r",
                                                     0,
-                                                    WIFI_ONCHIP_DA16200_TIMEOUT_20MS,
-                                                    WIFI_ONCHIP_DA16200_DELAY_20MS,
-                                                    WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                    WIFI_ONCHIP_DA16XXX_TIMEOUT_20MS,
+                                                    WIFI_ONCHIP_DA16XXX_DELAY_20MS,
+                                                    WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
             if (FSP_SUCCESS != err)
             {
                 /* Close the UART port */
-                err = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT]->p_api->close(
-                    p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT]->p_ctrl);
+                err = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT]->p_api->close(
+                    p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT]->p_ctrl);
 
                 if (FSP_SUCCESS != err)
                 {
-                    rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+                    rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
                     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
                 }
 
                 /* Delay after close */
-                vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_10MS));
+                vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_10MS));
             }
             else
             {
@@ -461,73 +463,73 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
     FSP_ERROR_RETURN(UART_BAUD_MAX_CNT != (index), FSP_ERR_WIFI_FAILED);
 
     /* Update the module baud rate in case if it doesn't match with user configured baud rate */
-    if (curr_uart_baud != (uint32_t) strtol((char *) g_wifi_onchip_da16200_uart_cmd_baud, NULL, 10))
+    if (curr_uart_baud != (uint32_t) strtol((char *) g_wifi_onchip_da16xxx_uart_cmd_baud, NULL, 10))
     {
         strncpy((char *) p_temp_buff, "ATB=", 5);
-        strncat((char *) p_temp_buff, g_wifi_onchip_da16200_uart_cmd_baud, 10);
+        strncat((char *) p_temp_buff, g_wifi_onchip_da16xxx_uart_cmd_baud, 10);
         strncat((char *) p_temp_buff, "\r", 3);
 
         /* Send UART Baud rate reconfiguration AT command to wifi module */
-        err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 (char *) p_temp_buff,
                                                 0,
-                                                WIFI_ONCHIP_DA16200_TIMEOUT_20MS,
-                                                WIFI_ONCHIP_DA16200_DELAY_20MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_TIMEOUT_20MS,
+                                                WIFI_ONCHIP_DA16XXX_DELAY_20MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
         if (FSP_SUCCESS != err)
         {
-            rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+            rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
         }
 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
     }
 
     /* Close the UART port */
-    err = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT]->p_api->close(
-        p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT]->p_ctrl);
+    err = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT]->p_api->close(
+        p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT]->p_ctrl);
 
     if (FSP_SUCCESS != err)
     {
-        rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+        rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
     }
 
     /* Delay after close */
-    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_10MS));
+    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_10MS));
 
     /* Open uart port with config values from the configurator */
-    p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT];
+    p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT];
     err    = p_uart->p_api->open(p_uart->p_ctrl, p_uart->p_cfg);
     if (FSP_SUCCESS != err)
     {
-        rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+        rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
     }
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
     /* Delay after open */
-    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_100MS));
+    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_100MS));
 
     /* Test basic communications with an AT command. */
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "ATZ\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_500MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_20MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_500MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_20MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
     /* Set AP mode */
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "AT+WFMODE=0\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_500MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_20MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_500MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_20MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
@@ -537,23 +539,23 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
              "AT+WFCC=%s\r",
              p_cfg->country_code);
 
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             (char *) p_instance_ctrl->cmd_tx_buff,
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_500MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_20MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_500MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_20MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
-#if (1 == WIFI_ONCHIP_DA16200_CFG_SNTP_ENABLE)
+#if (1 == WIFI_ONCHIP_DA16XXX_CFG_SNTP_ENABLE)
     p_instance_ctrl->open = WIFI_OPEN; // Allows interface calls to complete for SNTP init.
-    err = rm_wifi_onchip_da16200_sntp_service_init(p_instance_ctrl);
+    err = rm_wifi_onchip_da16xxx_sntp_service_init(p_instance_ctrl);
     p_instance_ctrl->open = 0;
     if (FSP_SUCCESS != err)
     {
-        rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+        rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
     }
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 #endif
@@ -565,42 +567,42 @@ fsp_err_t rm_wifi_onchip_da16200_open (wifi_onchip_da16200_cfg_t const * const p
 }
 
 /*******************************************************************************************************************//**
- *  Disables WIFI_ONCHIP_DA16200.
+ *  Disables WIFI_ONCHIP_DA16XXX.
  *
- *  @retval FSP_SUCCESS              WIFI_ONCHIP_DA16200 closed successfully.
+ *  @retval FSP_SUCCESS              WIFI_ONCHIP_DA16XXX closed successfully.
  *  @retval FSP_ERR_ASSERTION        The parameter p_instance_ctrl is NULL.
  *  @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
  *  @retval FSP_ERR_NOT_OPEN         Module is not open.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_close (void)
+fsp_err_t rm_wifi_onchip_da16xxx_close (void)
 {
     uint32_t  mutex_flag;
     fsp_err_t err = FSP_SUCCESS;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
     /* Take mutexes */
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     /* Tell wifi module to disconnect from the current AP */
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "AT+WFQAP\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_20MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_50MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_20MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_50MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     p_instance_ctrl->open = 0;
 
-    rm_wifi_onchip_da16200_cleanup_open(p_instance_ctrl);
+    rm_wifi_onchip_da16xxx_cleanup_open(p_instance_ctrl);
 
     return err;
 }
@@ -608,34 +610,34 @@ fsp_err_t rm_wifi_onchip_da16200_close (void)
 /*******************************************************************************************************************//**
  *  Disconnects from connected AP.
  *
- *  @retval FSP_SUCCESS              WIFI_ONCHIP_DA16200 disconnected successfully.
+ *  @retval FSP_SUCCESS              WIFI_ONCHIP_DA16XXX disconnected successfully.
  *  @retval FSP_ERR_ASSERTION        The parameter p_instance_ctrl is NULL.
  *  @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
  *  @retval FSP_ERR_NOT_OPEN         Module is not open.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_disconnect (void)
+fsp_err_t rm_wifi_onchip_da16xxx_disconnect (void)
 {
     fsp_err_t err = FSP_SUCCESS;
     uint32_t  mutex_flag;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
     /* Take mutexes */
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     /* Tell wifi module to disconnect from the current AP */
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "AT+WFQAP\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_3SEC,
-                                            WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_3SEC,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
     if (FSP_SUCCESS == err)
     {
         memset(p_instance_ctrl->curr_ipaddr, 0, 4);
@@ -643,13 +645,13 @@ fsp_err_t rm_wifi_onchip_da16200_disconnect (void)
         memset(p_instance_ctrl->curr_gateway, 0, 4);
     }
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return err;
 }
 
 /*******************************************************************************************************************//**
- *  Check if DA16200 module is connected to an Access point.
+ *  Check if DA16XXX module is connected to an Access point.
  *
  * @param[out]  p_status                    Pointer to integer holding the socket connection status.
  *
@@ -657,11 +659,11 @@ fsp_err_t rm_wifi_onchip_da16200_disconnect (void)
  * @retval FSP_ERR_WIFI_AP_NOT_CONNECTED    WiFi module is not connected to access point.
  * @retval FSP_ERR_NOT_OPEN                 The instance has not been opened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_connected (fsp_err_t * p_status)
+fsp_err_t rm_wifi_onchip_da16xxx_connected (fsp_err_t * p_status)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_status);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
@@ -691,11 +693,11 @@ fsp_err_t rm_wifi_onchip_da16200_connected (fsp_err_t * p_status)
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_WIFI_AP_NOT_CONNECTED      No connection to access point has happened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_network_info_get (uint32_t * p_ip_addr, uint32_t * p_subnet_mask, uint32_t * p_gateway)
+fsp_err_t rm_wifi_onchip_da16xxx_network_info_get (uint32_t * p_ip_addr, uint32_t * p_subnet_mask, uint32_t * p_gateway)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_ip_addr);
     FSP_ASSERT(NULL != p_subnet_mask);
     FSP_ASSERT(NULL != p_gateway);
@@ -730,7 +732,7 @@ fsp_err_t rm_wifi_onchip_da16200_network_info_get (uint32_t * p_ip_addr, uint32_
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_INVALID_ARGUMENT No commas are accepted in the SSID or Passphrase.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
+fsp_err_t rm_wifi_onchip_da16xxx_connect (const char   * p_ssid,
                                           WIFISecurity_t security,
                                           const char   * p_passphrase,
                                           uint8_t        enc_type)
@@ -743,10 +745,10 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
     int       subnetmask[4] = {0, 0, 0, 0};
     int       gateway[4]    = {0, 0, 0, 0};
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
     char * ptr = (char *) (p_instance_ctrl->cmd_rx_buff);
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_ssid);
     FSP_ASSERT(NULL != p_passphrase);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -755,16 +757,16 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
     /* Commas are not accepted by the WiFi module in the SSID or Passphrase */
     FSP_ERROR_RETURN((NULL == strchr(p_ssid, ',') && NULL == strchr(p_passphrase, ',')), FSP_ERR_INVALID_ARGUMENT);
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    rm_wifi_onchip_da16200_connected(&status);
+    rm_wifi_onchip_da16xxx_connected(&status);
 
     if (FSP_SUCCESS == status)
     {
         /* If Wifi is already connected, do nothing and return fail. */
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
     }
@@ -796,19 +798,19 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
 
         switch (enc_type)
         {
-            case WIFI_ONCHIP_DA16200_TKIP_ENC_TYPE:
+            case WIFI_ONCHIP_DA16XXX_TKIP_ENC_TYPE:
             {
                 strncat((char *) p_instance_ctrl->cmd_tx_buff, "0,", 3);
                 break;
             }
 
-            case WIFI_ONCHIP_DA16200_AES_ENC_TYPE:
+            case WIFI_ONCHIP_DA16XXX_AES_ENC_TYPE:
             {
                 strncat((char *) p_instance_ctrl->cmd_tx_buff, "1,", 3);
                 break;
             }
 
-            case WIFI_ONCHIP_DA16200_TKIP_AES_ENC_TYPE:
+            case WIFI_ONCHIP_DA16XXX_TKIP_AES_ENC_TYPE:
             {
                 strncat((char *) p_instance_ctrl->cmd_tx_buff, "2,", 3);
                 break;
@@ -824,7 +826,7 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
     else
     {
         /* Return with error for unsupported secuirty types */
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
     }
@@ -832,15 +834,15 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
     strncat((char *) p_instance_ctrl->cmd_tx_buff, p_passphrase, wificonfigMAX_PASSPHRASE_LEN);
     strncat((char *) p_instance_ctrl->cmd_tx_buff, "\r", 2);
 
-    ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             (char *) p_instance_ctrl->cmd_tx_buff,
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_5SEC,
-                                            WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_CONN_TEXT);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_5SEC,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_CONN_TEXT);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     if (FSP_SUCCESS == ret)
     {
@@ -848,46 +850,46 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
         ptr = strstr(ptr, "ERROR:");
         if (NULL != ptr)
         {
-            ret = rm_wifi_onchip_da16200_error_lookup(ptr);
+            ret = rm_wifi_onchip_da16xxx_error_lookup(ptr);
         }
         else
         {
             /* Parsing the response */
-            rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag);
+            rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag);
 
             /* Enable DHCP */
-            ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+            ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                     p_instance_ctrl->curr_cmd_port,
                                                     "AT+NWDHC=1\r",
                                                     0,
-                                                    WIFI_ONCHIP_DA16200_TIMEOUT_200MS,
-                                                    WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                                    WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                    WIFI_ONCHIP_DA16XXX_TIMEOUT_200MS,
+                                                    WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                                    WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-            rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+            rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
             FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
 
             ptr = (char *) (p_instance_ctrl->cmd_rx_buff);
 
-            R_BSP_SoftwareDelay(WIFI_ONCHIP_DA16200_TIMEOUT_3SEC, BSP_DELAY_UNITS_MILLISECONDS);
+            R_BSP_SoftwareDelay(WIFI_ONCHIP_DA16XXX_TIMEOUT_3SEC, BSP_DELAY_UNITS_MILLISECONDS);
 
             /* Call to get IP address does not always work the first time */
-            for (int index = 0; index < WIFI_ONCHIP_DA16200_CFG_MAX_RETRIES_UART_COMMS; index++)
+            for (int index = 0; index < WIFI_ONCHIP_DA16XXX_CFG_MAX_RETRIES_UART_COMMS; index++)
             {
-                FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+                FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                                  FSP_ERR_WIFI_FAILED);
 
                 /* Query the IP address from the current AP */
-                ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+                ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                         p_instance_ctrl->curr_cmd_port,
                                                         "AT+NWIP=?\r",
                                                         0,
-                                                        WIFI_ONCHIP_DA16200_TIMEOUT_5SEC,
-                                                        WIFI_ONCHIP_DA16200_DELAY_200MS,
-                                                        WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                        WIFI_ONCHIP_DA16XXX_TIMEOUT_5SEC,
+                                                        WIFI_ONCHIP_DA16XXX_DELAY_200MS,
+                                                        WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-                rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+                rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
                 FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
 
@@ -895,7 +897,7 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
                 ptr = strstr(ptr, "+NWIP:");
                 if (ptr == NULL)
                 {
-                    R_BSP_SoftwareDelay(WIFI_ONCHIP_DA16200_TIMEOUT_3SEC, BSP_DELAY_UNITS_MILLISECONDS);
+                    R_BSP_SoftwareDelay(WIFI_ONCHIP_DA16XXX_TIMEOUT_3SEC, BSP_DELAY_UNITS_MILLISECONDS);
                 }
                 else
                 {
@@ -946,35 +948,35 @@ fsp_err_t rm_wifi_onchip_da16200_connect (const char   * p_ssid,
  * @retval FSP_ERR_ASSERTION        The parameter p_macaddr is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_mac_addr_get (uint8_t * p_macaddr)
+fsp_err_t rm_wifi_onchip_da16xxx_mac_addr_get (uint8_t * p_macaddr)
 {
     fsp_err_t    ret;
     int32_t      err;
     unsigned int macaddr[6];
     uint32_t     mutex_flag;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
     char * ptr = (char *) (p_instance_ctrl->cmd_rx_buff);
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_macaddr);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
     memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "AT+WFMAC=?\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_400MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_200MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_400MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_200MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
 
@@ -1023,7 +1025,7 @@ fsp_err_t rm_wifi_onchip_da16200_mac_addr_get (uint8_t * p_macaddr)
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_WIFI_SCAN_COMPLETE Wifi scan has completed.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_scan (WIFIScanResult_t * p_results, uint32_t maxNetworks)
+fsp_err_t rm_wifi_onchip_da16xxx_scan (WIFIScanResult_t * p_results, uint32_t maxNetworks)
 {
     fsp_err_t ret = FSP_ERR_INTERNAL;
     int32_t   err;
@@ -1031,9 +1033,9 @@ fsp_err_t rm_wifi_onchip_da16200_scan (WIFIScanResult_t * p_results, uint32_t ma
     uint8_t * bssid;
     uint32_t  mutex_flag;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_results);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
@@ -1044,19 +1046,19 @@ fsp_err_t rm_wifi_onchip_da16200_scan (WIFIScanResult_t * p_results, uint32_t ma
 
     memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "AT+WFSCAN\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_8SEC,
-                                            WIFI_ONCHIP_DA16200_DELAY_1000MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_8SEC,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_1000MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
 
@@ -1206,7 +1208,7 @@ fsp_err_t rm_wifi_onchip_da16200_scan (WIFIScanResult_t * p_results, uint32_t ma
  * @retval FSP_ERR_ASSERTION        The parameter p_ip_addr is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_ping (uint8_t * p_ip_addr, int count, uint32_t interval_ms)
+fsp_err_t rm_wifi_onchip_da16xxx_ping (uint8_t * p_ip_addr, int count, uint32_t interval_ms)
 {
     FSP_PARAMETER_NOT_USED(interval_ms);
     fsp_err_t func_ret = FSP_ERR_WIFI_FAILED;
@@ -1214,9 +1216,9 @@ fsp_err_t rm_wifi_onchip_da16200_ping (uint8_t * p_ip_addr, int count, uint32_t 
     int       sent_cnt = 0;
     int       recv_cnt = 0;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_ip_addr);
     FSP_ERROR_RETURN(0 != count, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -1225,8 +1227,8 @@ fsp_err_t rm_wifi_onchip_da16200_ping (uint8_t * p_ip_addr, int count, uint32_t 
     memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
     char * ptr = (char *) (p_instance_ctrl->cmd_rx_buff);
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN((pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag)),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN((pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag)),
                      FSP_ERR_WIFI_FAILED);
 
     snprintf((char *) p_instance_ctrl->cmd_tx_buff,
@@ -1238,15 +1240,15 @@ fsp_err_t rm_wifi_onchip_da16200_ping (uint8_t * p_ip_addr, int count, uint32_t 
              p_ip_addr[3],
              count);
 
-    func_ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    func_ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                  p_instance_ctrl->curr_cmd_port,
                                                  (char *) p_instance_ctrl->cmd_tx_buff,
                                                  0,
-                                                 WIFI_ONCHIP_DA16200_TIMEOUT_2SEC,
-                                                 WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                                 WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                 WIFI_ONCHIP_DA16XXX_TIMEOUT_2SEC,
+                                                 WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                                 WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     /* Parsing the response */
     ptr = strstr(ptr, "+NWPING:");
@@ -1287,7 +1289,7 @@ fsp_err_t rm_wifi_onchip_da16200_ping (uint8_t * p_ip_addr, int count, uint32_t 
  * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_ipaddr_get (uint32_t * p_ip_addr)
+fsp_err_t rm_wifi_onchip_da16xxx_ipaddr_get (uint32_t * p_ip_addr)
 {
     fsp_err_t err = FSP_SUCCESS;
     uint32_t  mutex_flag;
@@ -1297,9 +1299,9 @@ fsp_err_t rm_wifi_onchip_da16200_ipaddr_get (uint32_t * p_ip_addr)
     int       subnetmask[4] = {0, 0, 0, 0};
     int       gateway[4]    = {0, 0, 0, 0};
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
@@ -1307,24 +1309,24 @@ fsp_err_t rm_wifi_onchip_da16200_ipaddr_get (uint32_t * p_ip_addr)
     memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
     /* Take mutexes */
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
 
     /* Call to get IP address does not always work the first time */
-    for (index = 0; index < WIFI_ONCHIP_DA16200_CFG_MAX_RETRIES_UART_COMMS; index++)
+    for (index = 0; index < WIFI_ONCHIP_DA16XXX_CFG_MAX_RETRIES_UART_COMMS; index++)
     {
-        FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+        FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                          FSP_ERR_WIFI_FAILED);
 
         /* Query the IP address from the current AP */
-        err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 "AT+NWIP=?\r",
                                                 0,
-                                                WIFI_ONCHIP_DA16200_TIMEOUT_5SEC,
-                                                WIFI_ONCHIP_DA16200_DELAY_200MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_TIMEOUT_5SEC,
+                                                WIFI_ONCHIP_DA16XXX_DELAY_200MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
@@ -1332,7 +1334,7 @@ fsp_err_t rm_wifi_onchip_da16200_ipaddr_get (uint32_t * p_ip_addr)
         ptr = strstr(ptr, "+NWIP:");
         if (ptr == NULL)
         {
-            R_BSP_SoftwareDelay(WIFI_ONCHIP_DA16200_TIMEOUT_3SEC, BSP_DELAY_UNITS_MILLISECONDS);
+            R_BSP_SoftwareDelay(WIFI_ONCHIP_DA16XXX_TIMEOUT_3SEC, BSP_DELAY_UNITS_MILLISECONDS);
         }
         else
         {
@@ -1369,7 +1371,7 @@ fsp_err_t rm_wifi_onchip_da16200_ipaddr_get (uint32_t * p_ip_addr)
         }
     }
 
-    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16200_CFG_MAX_RETRIES_UART_COMMS != (index), FSP_ERR_WIFI_FAILED);
+    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16XXX_CFG_MAX_RETRIES_UART_COMMS != (index), FSP_ERR_WIFI_FAILED);
 
     return FSP_SUCCESS;
 }
@@ -1386,7 +1388,7 @@ fsp_err_t rm_wifi_onchip_da16200_ipaddr_get (uint32_t * p_ip_addr)
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_INVALID_ARGUMENT The URL passed in is to long.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_dns_query (const char * p_textstring, uint8_t * p_ip_addr)
+fsp_err_t rm_wifi_onchip_da16xxx_dns_query (const char * p_textstring, uint8_t * p_ip_addr)
 {
     fsp_err_t func_ret;
     int32_t   scanf_ret;
@@ -1394,10 +1396,10 @@ fsp_err_t rm_wifi_onchip_da16200_dns_query (const char * p_textstring, uint8_t *
     int32_t   i            = 0;
     uint32_t  mutex_flag;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
     char * buff = (char *) p_instance_ctrl->cmd_rx_buff;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_textstring);
     FSP_ASSERT(NULL != p_ip_addr);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -1406,23 +1408,23 @@ fsp_err_t rm_wifi_onchip_da16200_dns_query (const char * p_textstring, uint8_t *
 
     memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     strncpy((char *) p_instance_ctrl->cmd_tx_buff, "AT+NWHOST=", sizeof(p_instance_ctrl->cmd_tx_buff));
     snprintf((char *) p_instance_ctrl->cmd_tx_buff + strlen((char *) p_instance_ctrl->cmd_tx_buff),
              sizeof(p_instance_ctrl->cmd_tx_buff), "%s\r\n", p_textstring);
 
-    func_ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    func_ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                  p_instance_ctrl->curr_cmd_port,
                                                  (char *) p_instance_ctrl->cmd_tx_buff,
                                                  0,
-                                                 WIFI_ONCHIP_DA16200_TIMEOUT_8SEC,
-                                                 WIFI_ONCHIP_DA16200_DELAY_1000MS,
-                                                 WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                 WIFI_ONCHIP_DA16XXX_TIMEOUT_8SEC,
+                                                 WIFI_ONCHIP_DA16XXX_DELAY_1000MS,
+                                                 WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     if (FSP_SUCCESS == func_ret)
     {
@@ -1469,11 +1471,11 @@ fsp_err_t rm_wifi_onchip_da16200_dns_query (const char * p_textstring, uint8_t *
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_WIFI_FAILED      Error occured in the execution of this function
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_avail_socket_get (uint32_t * p_socket_id)
+fsp_err_t rm_wifi_onchip_da16xxx_avail_socket_get (uint32_t * p_socket_id)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_socket_id);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
@@ -1504,11 +1506,11 @@ fsp_err_t rm_wifi_onchip_da16200_avail_socket_get (uint32_t * p_socket_id)
  *                                  is greater than/equal num_creatable_sockets.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_socket_status_get (uint32_t socket_no, uint32_t * p_socket_status)
+fsp_err_t rm_wifi_onchip_da16xxx_socket_status_get (uint32_t socket_no, uint32_t * p_socket_status)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_socket_status);
     FSP_ASSERT(socket_no < p_instance_ctrl->num_creatable_sockets);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -1532,13 +1534,13 @@ fsp_err_t rm_wifi_onchip_da16200_socket_status_get (uint32_t socket_no, uint32_t
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_UNSUPPORTED      Selected mode not supported by this API
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_socket_create (uint32_t socket_no, uint32_t type, uint32_t ipversion)
+fsp_err_t rm_wifi_onchip_da16xxx_socket_create (uint32_t socket_no, uint32_t type, uint32_t ipversion)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ASSERT(type <= WIFI_ONCHIP_DA16200_SOCKET_TYPE_MAX);
+    FSP_ASSERT(type <= WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_MAX);
 #endif
 
     if ((1 == p_instance_ctrl->sockets[socket_no].socket_create_flag) || (1 < p_instance_ctrl->num_creatable_sockets))
@@ -1546,9 +1548,9 @@ fsp_err_t rm_wifi_onchip_da16200_socket_create (uint32_t socket_no, uint32_t typ
         return FSP_ERR_WIFI_FAILED;
     }
 
-    if (WIFI_ONCHIP_DA16200_SOCKET_TYPE_TCP_CLIENT == type)
+    if (WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_TCP_CLIENT == type)
     {
-        p_instance_ctrl->sockets[socket_no].socket_type = WIFI_ONCHIP_DA16200_SOCKET_TYPE_TCP_CLIENT;
+        p_instance_ctrl->sockets[socket_no].socket_type = WIFI_ONCHIP_DA16XXX_SOCKET_TYPE_TCP_CLIENT;
     }
     else
     {
@@ -1595,19 +1597,19 @@ fsp_err_t rm_wifi_onchip_da16200_socket_create (uint32_t socket_no, uint32_t typ
  * @retval FSP_ERR_ASSERTION        The p_instance_ctrl is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_tcp_connect (uint32_t socket_no, uint32_t ipaddr, uint32_t port)
+fsp_err_t rm_wifi_onchip_da16xxx_tcp_connect (uint32_t socket_no, uint32_t ipaddr, uint32_t port)
 {
     fsp_err_t ret = FSP_SUCCESS;
     uint32_t  mutex_flag;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     memset(p_instance_ctrl->cmd_tx_buff, 0, sizeof(p_instance_ctrl->cmd_tx_buff));
@@ -1620,15 +1622,15 @@ fsp_err_t rm_wifi_onchip_da16200_tcp_connect (uint32_t socket_no, uint32_t ipadd
              (uint8_t) (ipaddr >> 16),
              (uint8_t) (ipaddr >> 8), (uint8_t) (ipaddr), (int) port);
 
-    ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             (char *) p_instance_ctrl->cmd_tx_buff,
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_5SEC,
-                                            WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_5SEC,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
 
@@ -1637,10 +1639,10 @@ fsp_err_t rm_wifi_onchip_da16200_tcp_connect (uint32_t socket_no, uint32_t ipadd
     p_instance_ctrl->sockets[socket_no].remote_ipaddr[2]       = (uint8_t) (ipaddr >> 8);
     p_instance_ctrl->sockets[socket_no].remote_ipaddr[3]       = (uint8_t) (ipaddr);
     p_instance_ctrl->sockets[socket_no].remote_port            = (int) port;
-    p_instance_ctrl->sockets[socket_no].socket_status          = WIFI_ONCHIP_DA16200_SOCKET_STATUS_CONNECTED;
-    p_instance_ctrl->sockets[socket_no].socket_read_write_flag = WIFI_ONCHIP_DA16200_SOCKET_READ |
-                                                                 WIFI_ONCHIP_DA16200_SOCKET_WRITE;
-    p_instance_ctrl->sockets[socket_no].socket_recv_state  = WIFI_ONCHIP_DA16200_RECV_PREFIX;
+    p_instance_ctrl->sockets[socket_no].socket_status          = WIFI_ONCHIP_DA16XXX_SOCKET_STATUS_CONNECTED;
+    p_instance_ctrl->sockets[socket_no].socket_read_write_flag = WIFI_ONCHIP_DA16XXX_SOCKET_READ |
+                                                                 WIFI_ONCHIP_DA16XXX_SOCKET_WRITE;
+    p_instance_ctrl->sockets[socket_no].socket_recv_state  = WIFI_ONCHIP_DA16XXX_RECV_PREFIX;
     p_instance_ctrl->sockets[socket_no].socket_create_flag = 1;
 
     return ret;
@@ -1658,7 +1660,7 @@ fsp_err_t rm_wifi_onchip_da16200_tcp_connect (uint32_t socket_no, uint32_t ipadd
  * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
+int32_t rm_wifi_onchip_da16xxx_send (uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
 {
     uint32_t  sent_count = 0;
     uint32_t  tx_length;
@@ -1666,33 +1668,33 @@ int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data,
     uint32_t  mutex_flag;
     int       header_len;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16200_CFG_CMD_TX_BUF_SIZE > length, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE > length, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
     /* If socket write has been disabled by shutdown call then return 0 bytes sent */
-    if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_DA16200_SOCKET_WRITE))
+    if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_DA16XXX_SOCKET_WRITE))
     {
         return 0;
     }
 
     if ((0 == p_instance_ctrl->sockets[socket_no].socket_create_flag) ||
-        (WIFI_ONCHIP_DA16200_SOCKET_STATUS_CONNECTED != p_instance_ctrl->sockets[socket_no].socket_status))
+        (WIFI_ONCHIP_DA16XXX_SOCKET_STATUS_CONNECTED != p_instance_ctrl->sockets[socket_no].socket_status))
     {
         return FSP_ERR_WIFI_FAILED;
     }
 
-    mutex_flag = WIFI_ONCHIP_DA16200_MUTEX_TX;
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = WIFI_ONCHIP_DA16XXX_MUTEX_TX;
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     if (socket_no != p_instance_ctrl->curr_socket_index)
     {
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
     }
@@ -1703,7 +1705,7 @@ int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data,
 
     while (sent_count < length)
     {
-        /* Put the DA16200 module into data input mode */
+        /* Put the DA16XXX module into data input mode */
         header_len = snprintf((char *) p_instance_ctrl->cmd_tx_buff,
                               sizeof(p_instance_ctrl->cmd_tx_buff),
                               "%s%s%d%d,%d.%d.%d.%d,%d,%s,",
@@ -1718,9 +1720,9 @@ int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data,
                               p_instance_ctrl->sockets[socket_no].remote_port,
                               "r");
 
-        if (length - sent_count > (uint32_t) (WIFI_ONCHIP_DA16200_CFG_CMD_TX_BUF_SIZE - header_len))
+        if (length - sent_count > (uint32_t) (WIFI_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE - header_len))
         {
-            tx_length = (uint32_t) (WIFI_ONCHIP_DA16200_CFG_CMD_TX_BUF_SIZE - header_len);
+            tx_length = (uint32_t) (WIFI_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE - header_len);
         }
         else
         {
@@ -1732,16 +1734,16 @@ int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data,
                (char *) p_data,
                tx_length);
 
-        ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 (char *) p_instance_ctrl->cmd_tx_buff,
                                                 tx_length + (uint32_t) header_len,
                                                 timeout_ms,
-                                                WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
         if (FSP_SUCCESS != ret)
         {
-            rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+            rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
         }
 
         FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
@@ -1750,7 +1752,7 @@ int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data,
         p_data      = p_data + sent_count;
     }
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return (int32_t) sent_count;
 }
@@ -1768,22 +1770,22 @@ int32_t rm_wifi_onchip_da16200_send (uint32_t socket_no, const uint8_t * p_data,
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
  **********************************************************************************************************************/
-int32_t rm_wifi_onchip_da16200_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
+int32_t rm_wifi_onchip_da16xxx_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
 {
     uint32_t mutex_flag;
     uint32_t recvcnt = 0;
     int32_t  ret     = 0;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(0 != length, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    /* if socket read has been disabled by shutdown call then return any bytes left in the stream buffer. 
-       However if 0 bytes left, return error. */
-    if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_DA16200_SOCKET_READ))
+    /* if socket read has been disabled by shutdown call then return any bytes left in the stream buffer.
+     * However if 0 bytes left, return error. */
+    if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_DA16XXX_SOCKET_READ))
     {
         size_t xReceivedBytes = xStreamBufferReceiveAlt(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl,
                                                         p_data,
@@ -1791,29 +1793,29 @@ int32_t rm_wifi_onchip_da16200_recv (uint32_t socket_no, uint8_t * p_data, uint3
                                                         0); /* No wait needed as data is already in stream buffer*/
         if (0 < xReceivedBytes)
         {
-            return (int32_t)xReceivedBytes;
+            return (int32_t) xReceivedBytes;
         }
-        
-        return -FSP_ERR_WIFI_FAILED;                
+
+        return -FSP_ERR_WIFI_FAILED;
     }
 
     /* Take the receive mutex */
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      -FSP_ERR_WIFI_FAILED);
 
     if (0 == p_instance_ctrl->sockets[socket_no].socket_create_flag)
     {
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return -FSP_ERR_WIFI_FAILED;
     }
 
     if (socket_no != p_instance_ctrl->curr_socket_index)
     {
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
-        return WIFI_ONCHIP_DA16200_ERR_UNKNOWN;
+        return WIFI_ONCHIP_DA16XXX_ERR_UNKNOWN;
     }
 
     volatile size_t xReceivedBytes =
@@ -1841,7 +1843,7 @@ int32_t rm_wifi_onchip_da16200_recv (uint32_t socket_no, uint8_t * p_data, uint3
                 xStreamBufferReceiveAlt(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl,
                                         (p_data + recvcnt),
                                         num_bytes_left,
-                                        pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_500MS));
+                                        pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_500MS));
             if (xReceivedBytes > 0)
             {
                 recvcnt += xReceivedBytes;
@@ -1860,7 +1862,7 @@ int32_t rm_wifi_onchip_da16200_recv (uint32_t socket_no, uint8_t * p_data, uint3
 
     /* Reset the trigger level for socket stream buffer */
     xStreamBufferSetTriggerLevel(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl, 1);
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return ret;
 }
@@ -1876,22 +1878,22 @@ int32_t rm_wifi_onchip_da16200_recv (uint32_t socket_no, uint8_t * p_data, uint3
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_INVALID_ARGUMENT Bad parameter value was passed into function.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_da16200_socket_disconnect (uint32_t socket_no)
+fsp_err_t rm_wifi_onchip_da16xxx_socket_disconnect (uint32_t socket_no)
 {
     fsp_err_t ret = FSP_ERR_WIFI_FAILED;
     uint32_t  mutex_flag;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
     /* Test if socket has been created for socket index passed in to function */
     if (1 == p_instance_ctrl->sockets[socket_no].socket_create_flag)
     {
-        mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-        FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+        mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+        FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                          FSP_ERR_WIFI_FAILED);
 
         // NOLINT(clang-analyzer-security.insecureAPI.strchr) Disable warning about use of strcpy
@@ -1899,15 +1901,15 @@ fsp_err_t rm_wifi_onchip_da16200_socket_disconnect (uint32_t socket_no)
         snprintf((char *) p_instance_ctrl->cmd_tx_buff + strlen((char *) p_instance_ctrl->cmd_tx_buff),
                  sizeof(p_instance_ctrl->cmd_tx_buff), "%d\r", p_instance_ctrl->sockets[socket_no].socket_type);
 
-        ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 (char *) p_instance_ctrl->cmd_tx_buff,
                                                 0,
-                                                WIFI_ONCHIP_DA16200_TIMEOUT_2SEC,
-                                                WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_TIMEOUT_2SEC,
+                                                WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-        rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+        rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
 
@@ -1915,7 +1917,7 @@ fsp_err_t rm_wifi_onchip_da16200_socket_disconnect (uint32_t socket_no)
         if (FSP_SUCCESS == ret)
         {
             p_instance_ctrl->sockets[socket_no].socket_create_flag     = 0;
-            p_instance_ctrl->sockets[socket_no].socket_status          = WIFI_ONCHIP_DA16200_SOCKET_STATUS_CLOSED;
+            p_instance_ctrl->sockets[socket_no].socket_status          = WIFI_ONCHIP_DA16XXX_SOCKET_STATUS_CLOSED;
             p_instance_ctrl->sockets[socket_no].socket_read_write_flag = 0;
 
             BaseType_t rst_status = xStreamBufferReset(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl);
@@ -1929,10 +1931,10 @@ fsp_err_t rm_wifi_onchip_da16200_socket_disconnect (uint32_t socket_no)
     return ret;
 }
 
-#if (1 == WIFI_ONCHIP_DA16200_CFG_SNTP_ENABLE)
+#if (1 == WIFI_ONCHIP_DA16XXX_CFG_SNTP_ENABLE)
 
 /*******************************************************************************************************************//**
- *  Initialize DA16200 module SNTP client service.
+ *  Initialize DA16XXX module SNTP client service.
  *
  * @param[in]  p_instance_ctrl      Pointer to array holding URL to query from DNS.
  *
@@ -1942,7 +1944,7 @@ fsp_err_t rm_wifi_onchip_da16200_socket_disconnect (uint32_t socket_no)
  * @retval FSP_ERR_INVALID_ARGUMENT Parameter passed into function was invalid.
  * @retval FSP_ERR_NOT_OPEN         Module is not open.
  **********************************************************************************************************************/
-static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init (wifi_onchip_da16200_instance_ctrl_t * const p_instance_ctrl)
+static fsp_err_t rm_wifi_onchip_da16xxx_sntp_service_init (wifi_onchip_da16xxx_instance_ctrl_t * const p_instance_ctrl)
 {
     fsp_err_t err = FSP_ERR_INTERNAL;
     uint8_t   ip_address_sntp_server[4] = {0, 0, 0, 0};
@@ -1952,7 +1954,7 @@ static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init (wifi_onchip_da16200_i
     err_scan =
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-        sscanf((const char *) p_instance_ctrl->p_wifi_onchip_da16200_cfg->sntp_server_ip,
+        sscanf((const char *) p_instance_ctrl->p_wifi_onchip_da16xxx_cfg->sntp_server_ip,
                "%u.%u.%u.%u,",
                (unsigned int *) &ip_address_sntp_server[0],
                (unsigned int *) &ip_address_sntp_server[1],
@@ -1961,22 +1963,22 @@ static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init (wifi_onchip_da16200_i
     if (4 == err_scan)
     {
         /* Configure the SNTP Server Address */
-        err = RM_WIFI_ONCHIP_DA16200_SntpServerIpAddressSet((uint8_t *) ip_address_sntp_server);
+        err = RM_WIFI_ONCHIP_DA16XXX_SntpServerIpAddressSet((uint8_t *) ip_address_sntp_server);
     }
 
     if (FSP_SUCCESS == err)
     {
         /* Enable/disable the SNTP clinet */
-        err = RM_WIFI_ONCHIP_DA16200_SntpEnableSet(WIFI_ONCHIP_DA16200_SNTP_ENABLE);
+        err = RM_WIFI_ONCHIP_DA16XXX_SntpEnableSet(WIFI_ONCHIP_DA16XXX_SNTP_ENABLE);
     }
 
     /* Set the SNTP Timezone configuration string */
     if (FSP_SUCCESS == err)
     {
-        err = RM_WIFI_ONCHIP_DA16200_SntpTimeZoneSet(
-            p_instance_ctrl->p_wifi_onchip_da16200_cfg->sntp_utc_offset_in_hours,
+        err = RM_WIFI_ONCHIP_DA16XXX_SntpTimeZoneSet(
+            p_instance_ctrl->p_wifi_onchip_da16xxx_cfg->sntp_utc_offset_in_hours,
             0,
-            WIFI_ONCHIP_DA16200_SNTP_DAYLIGHT_SAVINGS_DISABLE);
+            WIFI_ONCHIP_DA16XXX_SNTP_DAYLIGHT_SAVINGS_DISABLE);
     }
 
     return err;
@@ -1987,7 +1989,7 @@ static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init (wifi_onchip_da16200_i
 /*! \endcond */
 
 /*******************************************************************************************************************//**
- * @addtogroup WIFI_ONCHIP_DA16200 WIFI_ONCHIP_DA16200
+ * @addtogroup WIFI_ONCHIP_DA16XXX WIFI_ONCHIP_DA16XXX
  * @{
  **********************************************************************************************************************/
 
@@ -2001,19 +2003,19 @@ static fsp_err_t rm_wifi_onchip_da16200_sntp_service_init (wifi_onchip_da16200_i
  *  @retval FSP_ERR_NOT_OPEN         Module is not open.
  *  @retval FSP_ERR_ASSERTION        The parameter p_server_ip_addr is NULL.
  **********************************************************************************************************************/
-fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpServerIpAddressSet (uint8_t * p_server_ip_addr)
+fsp_err_t RM_WIFI_ONCHIP_DA16XXX_SntpServerIpAddressSet (uint8_t * p_server_ip_addr)
 {
     fsp_err_t err = FSP_SUCCESS;
     uint32_t  mutex_flag;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_server_ip_addr);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     // NOLINT(clang-analyzer-security.insecureAPI.strchr) Disable warning about use of strcpy
@@ -2023,15 +2025,15 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpServerIpAddressSet (uint8_t * p_server_ip_a
              sizeof(p_instance_ctrl->cmd_tx_buff), "%u.%u.%u.%u\r\n", p_server_ip_addr[0], p_server_ip_addr[1],
              p_server_ip_addr[2], p_server_ip_addr[3]);
 
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             (char *) p_instance_ctrl->cmd_tx_buff,
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_400MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_400MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return err;
 }
@@ -2045,32 +2047,32 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpServerIpAddressSet (uint8_t * p_server_ip_a
  *  @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
  *  @retval FSP_ERR_NOT_OPEN         Module is not open.
  **********************************************************************************************************************/
-fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpEnableSet (wifi_onchip_da16200_sntp_enable_t enable)
+fsp_err_t RM_WIFI_ONCHIP_DA16XXX_SntpEnableSet (wifi_onchip_da16xxx_sntp_enable_t enable)
 {
     fsp_err_t err = FSP_SUCCESS;
     uint32_t  mutex_flag;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    if (WIFI_ONCHIP_DA16200_SNTP_ENABLE == enable)
+    if (WIFI_ONCHIP_DA16XXX_SNTP_ENABLE == enable)
     {
         // NOLINT(clang-analyzer-security.insecureAPI.strchr) Disable warning about use of strcpy
         strncpy((char *) p_instance_ctrl->cmd_tx_buff, "AT+NWSNTP=1\r\n", sizeof(p_instance_ctrl->cmd_tx_buff));
 
-        err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 (char *) p_instance_ctrl->cmd_tx_buff,
                                                 0,
-                                                WIFI_ONCHIP_DA16200_TIMEOUT_400MS,
-                                                WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_TIMEOUT_400MS,
+                                                WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
         p_instance_ctrl->is_sntp_enabled = true;
     }
@@ -2078,18 +2080,18 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpEnableSet (wifi_onchip_da16200_sntp_enable_
     {
         // NOLINT(clang-analyzer-security.insecureAPI.strchr) Disable warning about use of strcpy
         strncpy((char *) p_instance_ctrl->cmd_tx_buff, "AT+NWSNTP=0\r\n", sizeof(p_instance_ctrl->cmd_tx_buff));
-        err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+        err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                                 p_instance_ctrl->curr_cmd_port,
                                                 (char *) p_instance_ctrl->cmd_tx_buff,
                                                 0,
-                                                WIFI_ONCHIP_DA16200_TIMEOUT_400MS,
-                                                WIFI_ONCHIP_DA16200_DELAY_500MS,
-                                                WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                                WIFI_ONCHIP_DA16XXX_TIMEOUT_400MS,
+                                                WIFI_ONCHIP_DA16XXX_DELAY_500MS,
+                                                WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
         p_instance_ctrl->is_sntp_enabled = false;
     }
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return err;
 }
@@ -2106,23 +2108,23 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpEnableSet (wifi_onchip_da16200_sntp_enable_
  *  @retval FSP_ERR_NOT_OPEN         Module is not open.
  *  @retval FSP_ERR_INVALID_ARGUMENT Parameter passed into function was invalid.
  **********************************************************************************************************************/
-fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpTimeZoneSet (
+fsp_err_t RM_WIFI_ONCHIP_DA16XXX_SntpTimeZoneSet (
     int                                                utc_offset_in_hours,
     uint32_t                                           minutes,
-    wifi_onchip_da16200_sntp_daylight_savings_enable_t daylightSavingsEnable)
+    wifi_onchip_da16xxx_sntp_daylight_savings_enable_t daylightSavingsEnable)
 {
     fsp_err_t err = FSP_SUCCESS;
     uint32_t  mutex_flag;
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(((utc_offset_in_hours >= -12) && (utc_offset_in_hours <= 12)), FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN((0 == minutes) && (0 == daylightSavingsEnable), FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     int utc_offset_in_secs = (utc_offset_in_hours * HOURS_IN_SECONDS);
@@ -2131,15 +2133,15 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpTimeZoneSet (
              "AT+TZONE=%d\r",
              utc_offset_in_secs);
 
-    err = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             (char *) p_instance_ctrl->cmd_tx_buff,
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_400MS,
-                                            WIFI_ONCHIP_DA16200_DELAY_200MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_400MS,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_200MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     FSP_PARAMETER_NOT_USED(minutes);
     FSP_PARAMETER_NOT_USED(daylightSavingsEnable);
@@ -2159,36 +2161,36 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_SntpTimeZoneSet (
  *  @retval FSP_ERR_NOT_OPEN         Module is not open.
  *  @retval FSP_ERR_INVALID_SIZE     String size value passed in exceeds maximum.
  **********************************************************************************************************************/
-fsp_err_t RM_WIFI_ONCHIP_DA16200_LocalTimeGet (uint8_t * p_local_time, uint32_t size_string)
+fsp_err_t RM_WIFI_ONCHIP_DA16XXX_LocalTimeGet (uint8_t * p_local_time, uint32_t size_string)
 {
     uint32_t  mutex_flag;
     fsp_err_t ret;
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
     char * p_str = (char *) p_instance_ctrl->cmd_rx_buff;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_local_time);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16200_LOCAL_TIME_STR_SIZE <= size_string, FSP_ERR_INVALID_SIZE);
+    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16XXX_LOCAL_TIME_STR_SIZE <= size_string, FSP_ERR_INVALID_SIZE);
     FSP_ERROR_RETURN(p_instance_ctrl->is_sntp_enabled == true, FSP_ERR_WIFI_FAILED);
 #endif
 
     /* Take mutexes */
-    mutex_flag = (WIFI_ONCHIP_DA16200_MUTEX_TX | WIFI_ONCHIP_DA16200_MUTEX_RX);
-    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16200_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
     memset(p_local_time, 0, size_string);
     memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
-    ret = rm_wifi_onchip_da16200_send_basic(p_instance_ctrl,
+    ret = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "AT+TIME=?\r",
                                             0,
-                                            WIFI_ONCHIP_DA16200_TIMEOUT_2SEC,
-                                            WIFI_ONCHIP_DA16200_DELAY_1000MS,
-                                            WIFI_ONCHIP_DA16200_RETURN_TEXT_OK);
+                                            WIFI_ONCHIP_DA16XXX_TIMEOUT_2SEC,
+                                            WIFI_ONCHIP_DA16XXX_DELAY_1000MS,
+                                            WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
     if (FSP_SUCCESS == ret)
     {
         /* Parse the response */
@@ -2206,13 +2208,13 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_LocalTimeGet (uint8_t * p_local_time, uint32_t 
         }
     }
 
-    rm_wifi_onchip_da16200_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return ret;
 }
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup WIFI_ONCHIP_DA16200)
+ * @} (end addtogroup WIFI_ONCHIP_DA16XXX)
  **********************************************************************************************************************/
 
 /*! \cond PRIVATE */
@@ -2228,19 +2230,19 @@ fsp_err_t RM_WIFI_ONCHIP_DA16200_LocalTimeGet (uint8_t * p_local_time, uint32_t 
  *  @param[in]  data_byte           Incoming data in byte
  *
  **********************************************************************************************************************/
-static void rm_wifi_da16200_handle_incoming_socket_data (da16200_socket_t * pSocket, uint8_t data_byte)
+static void rm_wifi_da16xxx_handle_incoming_socket_data (da16xxx_socket_t * pSocket, uint8_t data_byte)
 {
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
-    da16200_socket_t * p_socket                 = pSocket;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
+    da16xxx_socket_t * p_socket                 = pSocket;
     BaseType_t         xHigherPriorityTaskWoken = pdFALSE; // Initialized to pdFALSE.
 
     switch (p_socket->socket_recv_state)
     {
-        case WIFI_ONCHIP_DA16200_RECV_PREFIX:
+        case WIFI_ONCHIP_DA16XXX_RECV_PREFIX:
         {
             if ('+' == data_byte)
             {
-                p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_CMD;
+                p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_CMD;
                 rx_data_index               = 0;
             }
             else
@@ -2251,99 +2253,99 @@ static void rm_wifi_da16200_handle_incoming_socket_data (da16200_socket_t * pSoc
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_CMD:
+        case WIFI_ONCHIP_DA16XXX_RECV_CMD:
         {
             rx_buffer[rx_data_index++] = data_byte;
-            rx_data_index              = (rx_data_index) % WIFI_ONCHIP_DA16200_TEMP_BUFFER_SIZE;
+            rx_data_index              = (rx_data_index) % WIFI_ONCHIP_DA16XXX_TEMP_BUFFER_SIZE;
 
             if (5 == rx_data_index)
             {
                 /* Check for incoming data through socket */
                 if (0 == strncmp("TRDTC", (char *) rx_buffer, strlen("TRDTC")))
                 {
-                    p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_SUFFIX;
+                    p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_SUFFIX;
                 }
                 /* Check for TCP socket disconnect notification */
                 else if (0 == strncmp("TRXTC", (char *) rx_buffer, strlen("TRXTC")))
                 {
-                    p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PREFIX;
+                    p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PREFIX;
 
                     /* Socket disconnect event received */
                     p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_create_flag = 0;
                     p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status      =
-                        WIFI_ONCHIP_DA16200_SOCKET_STATUS_CLOSED;
+                        WIFI_ONCHIP_DA16XXX_SOCKET_STATUS_CLOSED;
                     p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_read_write_flag = 0;
                 }
                 else
                 {
-                    p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PREFIX;
+                    p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PREFIX;
                 }
             }
 
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_SUFFIX:
+        case WIFI_ONCHIP_DA16XXX_RECV_SUFFIX:
         {
             if (':' == data_byte)
             {
-                p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PARAM_CID;
+                p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PARAM_CID;
             }
 
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_PARAM_CID:
+        case WIFI_ONCHIP_DA16XXX_RECV_PARAM_CID:
         {
             if (',' == data_byte)
             {
-                p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PARAM_IP;
+                p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PARAM_IP;
                 rx_data_index               = 0;
             }
 
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_PARAM_IP:
+        case WIFI_ONCHIP_DA16XXX_RECV_PARAM_IP:
         {
             if (',' == data_byte)
             {
-                p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PARAM_PORT;
+                p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PARAM_PORT;
                 rx_data_index               = 0;
             }
 
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_PARAM_PORT:
+        case WIFI_ONCHIP_DA16XXX_RECV_PARAM_PORT:
         {
             if (',' == data_byte)
             {
-                p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PARAM_LEN;
+                p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PARAM_LEN;
                 rx_data_index               = 0;
             }
 
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_PARAM_LEN:
+        case WIFI_ONCHIP_DA16XXX_RECV_PARAM_LEN:
         {
             if (',' == data_byte)
             {
                 p_socket->socket_recv_data_len = strtol((char *) rx_buffer, NULL, 10);
-                p_socket->socket_recv_state    = WIFI_ONCHIP_DA16200_RECV_DATA;
+                p_socket->socket_recv_state    = WIFI_ONCHIP_DA16XXX_RECV_DATA;
                 rx_data_index = 0;
             }
             else
             {
                 rx_buffer[rx_data_index++] = data_byte;
-                rx_data_index              = (rx_data_index) % WIFI_ONCHIP_DA16200_TEMP_BUFFER_SIZE;
+                rx_data_index              = (rx_data_index) % WIFI_ONCHIP_DA16XXX_TEMP_BUFFER_SIZE;
             }
 
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_RECV_DATA:
+        case WIFI_ONCHIP_DA16XXX_RECV_DATA:
         {
             if (0 < p_socket->socket_recv_data_len--)
             {
@@ -2355,7 +2357,7 @@ static void rm_wifi_da16200_handle_incoming_socket_data (da16200_socket_t * pSoc
 
             if (0 >= p_socket->socket_recv_data_len)
             {
-                p_socket->socket_recv_state = WIFI_ONCHIP_DA16200_RECV_PREFIX;
+                p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PREFIX;
             }
 
             break;
@@ -2369,23 +2371,23 @@ static void rm_wifi_da16200_handle_incoming_socket_data (da16200_socket_t * pSoc
  *  @param[in]  p_args              Pointer to uart callback structure.
  *
  **********************************************************************************************************************/
-void rm_wifi_onchip_da16200_uart_callback (uart_callback_args_t * p_args)
+void rm_wifi_onchip_da16xxx_uart_callback (uart_callback_args_t * p_args)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE; // Initialized to pdFALSE.
 
-    wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16200_instance;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
     volatile uint32_t uart_context_index = 0;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     if (NULL == p_args)
     {
         return;
     }
 #endif
 
-    if ((NULL != p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_SECOND_PORT]) &&
+    if ((NULL != p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT]) &&
         (p_args->channel ==
-         p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_SECOND_PORT]->p_cfg->channel))
+         p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT]->p_cfg->channel))
     {
         uart_context_index = 1;
     }
@@ -2396,7 +2398,7 @@ void rm_wifi_onchip_da16200_uart_callback (uart_callback_args_t * p_args)
         {
             uint8_t data_byte = (uint8_t) p_args->data;
 
-            if (uart_context_index == WIFI_ONCHIP_DA16200_UART_INITIAL_PORT)
+            if (uart_context_index == WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT)
             {
                 if (0 == p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_create_flag)
                 {
@@ -2405,12 +2407,12 @@ void rm_wifi_onchip_da16200_uart_callback (uart_callback_args_t * p_args)
                 }
                 else                   // socket data mode
                 {
-                    rm_wifi_da16200_handle_incoming_socket_data(&p_instance_ctrl->sockets[p_instance_ctrl->
+                    rm_wifi_da16xxx_handle_incoming_socket_data(&p_instance_ctrl->sockets[p_instance_ctrl->
                                                                                           curr_socket_index],
                                                                 data_byte);
                 }
             }
-            else if (uart_context_index == WIFI_ONCHIP_DA16200_UART_SECOND_PORT)
+            else if (uart_context_index == WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT)
             {
                 xStreamBufferSendFromISR(p_instance_ctrl->socket_byteq_hdl, &data_byte, 1, &xHigherPriorityTaskWoken);
             }
@@ -2442,12 +2444,12 @@ void rm_wifi_onchip_da16200_uart_callback (uart_callback_args_t * p_args)
 }
 
 /*******************************************************************************************************************//**
- *  Clean up the DA16200 instance.
+ *  Clean up the DA16XXX instance.
  *
- *  @param[in]  p_instance_ctrl              Pointer to DA16200 instance structure.
+ *  @param[in]  p_instance_ctrl              Pointer to DA16XXX instance structure.
  *
  **********************************************************************************************************************/
-static void rm_wifi_onchip_da16200_cleanup_open (wifi_onchip_da16200_instance_ctrl_t * const p_instance_ctrl)
+static void rm_wifi_onchip_da16xxx_cleanup_open (wifi_onchip_da16xxx_instance_ctrl_t * const p_instance_ctrl)
 {
     /* Delete the semaphores */
     if (NULL != p_instance_ctrl->tx_sem)
@@ -2469,50 +2471,50 @@ static void rm_wifi_onchip_da16200_cleanup_open (wifi_onchip_da16200_instance_ct
         p_instance_ctrl->socket_byteq_hdl = NULL;
     }
 
-    if (NULL != p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT])
+    if (NULL != p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT])
     {
-        vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT]);
-        p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT] = NULL;
+        vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT]);
+        p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT] = NULL;
     }
 
     if (p_instance_ctrl->num_uarts > 1)
     {
-        if (NULL != p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16200_UART_SECOND_PORT])
+        if (NULL != p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT])
         {
-            vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16200_UART_SECOND_PORT]);
-            p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16200_UART_SECOND_PORT] = NULL;
+            vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT]);
+            p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT] = NULL;
         }
     }
 
-    uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_INITIAL_PORT];
-    if (SCIU_OPEN == ((rm_wifi_onchip_da16200_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+    uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_INITIAL_PORT];
+    if (SCIU_OPEN == ((rm_wifi_onchip_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
 
-    p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16200_UART_SECOND_PORT];
-    if (SCIU_OPEN == ((rm_wifi_onchip_da16200_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+    p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_DA16XXX_UART_SECOND_PORT];
+    if (SCIU_OPEN == ((rm_wifi_onchip_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
 }
 
 /*******************************************************************************************************************//**
- *  Resets the DA16200 module.
+ *  Resets the DA16XXX module.
  *
- *  @param[in]  p_instance_ctrl              Pointer to DA16200 instance structure.
+ *  @param[in]  p_instance_ctrl              Pointer to DA16XXX instance structure.
  *
  **********************************************************************************************************************/
-static void rm_wifi_onchip_da16200_wifi_module_reset (wifi_onchip_da16200_instance_ctrl_t * const p_instance_ctrl)
+static void rm_wifi_onchip_da16xxx_wifi_module_reset (wifi_onchip_da16xxx_instance_ctrl_t * const p_instance_ctrl)
 {
     /* Reset the wifi module */
     g_ioport.p_api->pinWrite(g_ioport.p_ctrl, p_instance_ctrl->reset_pin, BSP_IO_LEVEL_LOW);
 
-    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_20MS));
+    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_20MS));
 
     g_ioport.p_api->pinWrite(g_ioport.p_ctrl, p_instance_ctrl->reset_pin, BSP_IO_LEVEL_HIGH);
 
-    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16200_TIMEOUT_1MS));
+    vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_1MS));
 }
 
 /*******************************************************************************************************************//**
@@ -2523,12 +2525,12 @@ static void rm_wifi_onchip_da16200_wifi_module_reset (wifi_onchip_da16200_instan
  *
  *  @retval pdTrue             Function completed successfully.
  **********************************************************************************************************************/
-static BaseType_t rm_wifi_onchip_da16200_send_basic_give_mutex (wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl,
+static BaseType_t rm_wifi_onchip_da16xxx_send_basic_give_mutex (wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl,
                                                                 uint32_t                              mutex_flag)
 {
     BaseType_t volatile xSemRet = pdFALSE;
 
-    if (0 != (mutex_flag & WIFI_ONCHIP_DA16200_MUTEX_RX))
+    if (0 != (mutex_flag & WIFI_ONCHIP_DA16XXX_MUTEX_RX))
     {
         xSemRet = xSemaphoreGive(p_instance_ctrl->rx_sem);
         if (xSemRet != pdTRUE)
@@ -2537,7 +2539,7 @@ static BaseType_t rm_wifi_onchip_da16200_send_basic_give_mutex (wifi_onchip_da16
         }
     }
 
-    if (0 != (mutex_flag & WIFI_ONCHIP_DA16200_MUTEX_TX))
+    if (0 != (mutex_flag & WIFI_ONCHIP_DA16XXX_MUTEX_TX))
     {
         xSemRet = xSemaphoreGive(p_instance_ctrl->tx_sem);
         if (xSemRet != pdTRUE)
@@ -2557,18 +2559,18 @@ static BaseType_t rm_wifi_onchip_da16200_send_basic_give_mutex (wifi_onchip_da16
  *
  *  @retval pdTrue             Function completed successfully.
  **********************************************************************************************************************/
-static BaseType_t rm_wifi_onchip_da16200_send_basic_take_mutex (wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl,
+static BaseType_t rm_wifi_onchip_da16xxx_send_basic_take_mutex (wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl,
                                                                 uint32_t                              mutex_flag)
 {
     BaseType_t volatile xSemRet = pdFALSE;
 
-    if (0 != (mutex_flag & WIFI_ONCHIP_DA16200_MUTEX_TX))
+    if (0 != (mutex_flag & WIFI_ONCHIP_DA16XXX_MUTEX_TX))
     {
         if (NULL != p_instance_ctrl->tx_sem)
         {
             xSemRet =
                 xSemaphoreTake(p_instance_ctrl->tx_sem,
-                               (wifi_sx_wifi_onchip_da16200_sem_block_timeout / portTICK_PERIOD_MS));
+                               (wifi_sx_wifi_onchip_da16xxx_sem_block_timeout / portTICK_PERIOD_MS));
             if (xSemRet != pdTRUE)
             {
                 return pdFALSE;
@@ -2576,16 +2578,16 @@ static BaseType_t rm_wifi_onchip_da16200_send_basic_take_mutex (wifi_onchip_da16
         }
     }
 
-    if (0 != (mutex_flag & WIFI_ONCHIP_DA16200_MUTEX_RX))
+    if (0 != (mutex_flag & WIFI_ONCHIP_DA16XXX_MUTEX_RX))
     {
         if (NULL != p_instance_ctrl->rx_sem)
         {
             xSemRet =
                 xSemaphoreTake(p_instance_ctrl->rx_sem,
-                               (wifi_sx_wifi_onchip_da16200_sem_block_timeout / portTICK_PERIOD_MS));
+                               (wifi_sx_wifi_onchip_da16xxx_sem_block_timeout / portTICK_PERIOD_MS));
             if (xSemRet != pdTRUE)
             {
-                if (0 != (mutex_flag & WIFI_ONCHIP_DA16200_MUTEX_TX))
+                if (0 != (mutex_flag & WIFI_ONCHIP_DA16XXX_MUTEX_TX))
                 {
                     xSemaphoreGive(p_instance_ctrl->tx_sem);
                 }
@@ -2614,7 +2616,7 @@ static BaseType_t rm_wifi_onchip_da16200_send_basic_take_mutex (wifi_onchip_da16
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
  * @retval FSP_ERR_INVALID_DATA     Accuracy of data is not guaranteed
  **********************************************************************************************************************/
-static fsp_err_t rm_wifi_onchip_da16200_send_basic (wifi_onchip_da16200_instance_ctrl_t * p_instance_ctrl,
+static fsp_err_t rm_wifi_onchip_da16xxx_send_basic (wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl,
                                                     uint32_t                              serial_ch_id,
                                                     const char                          * p_textstring,
                                                     uint32_t                              length,
@@ -2624,19 +2626,16 @@ static fsp_err_t rm_wifi_onchip_da16200_send_basic (wifi_onchip_da16200_instance
 {
     fsp_err_t        err         = FSP_SUCCESS;
     volatile uint8_t retry_count = 0U;
-    uint32_t         recvcnt     = 0;
     char           * ret         = NULL;
 
-#if (WIFI_ONCHIP_DA16200_CFG_PARAM_CHECKING_ENABLED == 1)
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_textstring);
 #endif
 
-    memset(p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
+    memset(p_instance_ctrl->p_current_cmd_rx_buffer, 0, p_instance_ctrl->current_cmd_rx_buffer_size);
 
     if (p_textstring != NULL)
     {
-        recvcnt = 0;
-
         if (uxQueueMessagesWaiting((QueueHandle_t) p_instance_ctrl->uart_tei_sem[serial_ch_id]) != 0)
         {
             return FSP_ERR_WIFI_FAILED;
@@ -2667,22 +2666,23 @@ static fsp_err_t rm_wifi_onchip_da16200_send_basic (wifi_onchip_da16200_instance
                          FSP_ERR_WIFI_FAILED);
     }
 
-    for (retry_count = 0; retry_count < WIFI_ONCHIP_DA16200_CFG_MAX_RETRIES_UART_COMMS; retry_count++)
+    for (retry_count = 0; retry_count < WIFI_ONCHIP_DA16XXX_CFG_MAX_RETRIES_UART_COMMS; retry_count++)
     {
         if (NULL != p_expect_code)
         {
             /* Get the transmitted message from the stream buffer */
-            xStreamBufferSetTriggerLevel(p_instance_ctrl->socket_byteq_hdl, sizeof(p_instance_ctrl->cmd_rx_buff));
+            xStreamBufferSetTriggerLevel(p_instance_ctrl->socket_byteq_hdl,
+                                         p_instance_ctrl->current_cmd_rx_buffer_size);
 
             size_t xReceivedBytes = xStreamBufferReceiveAlt(p_instance_ctrl->socket_byteq_hdl,
-                                                            &p_instance_ctrl->cmd_rx_buff[recvcnt],
-                                                            (int) sizeof(p_instance_ctrl->cmd_rx_buff),
+                                                            p_instance_ctrl->p_current_cmd_rx_buffer,
+                                                            p_instance_ctrl->current_cmd_rx_buffer_size,
                                                             pdMS_TO_TICKS(timeout_ms));
 
             /* Response data check */
             if (xReceivedBytes > 0)
             {
-                ret = strstr((char *) &p_instance_ctrl->cmd_rx_buff[0], p_expect_code);
+                ret = strstr((char *) p_instance_ctrl->p_current_cmd_rx_buffer, p_expect_code);
                 if (ret == NULL)
                 {
                     R_BSP_SoftwareDelay(retry_delay, BSP_DELAY_UNITS_MILLISECONDS);
@@ -2703,12 +2703,12 @@ static fsp_err_t rm_wifi_onchip_da16200_send_basic (wifi_onchip_da16200_instance
         }
     }
 
-    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16200_CFG_MAX_RETRIES_UART_COMMS != (retry_count), FSP_ERR_WIFI_FAILED);
+    FSP_ERROR_RETURN(WIFI_ONCHIP_DA16XXX_CFG_MAX_RETRIES_UART_COMMS != (retry_count), FSP_ERR_WIFI_FAILED);
     if (ret == NULL)
     {
-        if (p_instance_ctrl->cmd_rx_buff[0] != 0)
+        if (p_instance_ctrl->p_current_cmd_rx_buffer[0] != 0)
         {
-            err = rm_wifi_onchip_da16200_error_lookup((char *) p_instance_ctrl->cmd_rx_buff);
+            err = rm_wifi_onchip_da16xxx_error_lookup((char *) p_instance_ctrl->p_current_cmd_rx_buffer);
         }
     }
 
@@ -2716,27 +2716,27 @@ static fsp_err_t rm_wifi_onchip_da16200_send_basic (wifi_onchip_da16200_instance
 }
 
 /*******************************************************************************************************************//**
- *  Parse the incoming DA16200 error code and translates into FSP error.
+ *  Parse the incoming DA16XXX error code and translates into FSP error.
  *
  * @param[in]  p_resp                        Pointer to response string.
  *
- * @retval FSP_ERR_WIFI_UNKNOWN_AT_CMD       DA16200 Unknown AT command Error.
- * @retval FSP_ERR_WIFI_INSUF_PARAM          DA16200 Insufficient parameter.
- * @retval FSP_ERR_WIFI_TOO_MANY_PARAMS      DA16200 Too many parameters.
- * @retval FSP_ERR_WIFI_INV_PARAM_VAL        DA16200 Wrong parameter value.
+ * @retval FSP_ERR_WIFI_UNKNOWN_AT_CMD       DA16XXX Unknown AT command Error.
+ * @retval FSP_ERR_WIFI_INSUF_PARAM          DA16XXX Insufficient parameter.
+ * @retval FSP_ERR_WIFI_TOO_MANY_PARAMS      DA16XXX Too many parameters.
+ * @retval FSP_ERR_WIFI_INV_PARAM_VAL        DA16XXX Wrong parameter value.
  * @retval FSP_ERR_UNSUPPORTED               Selected mode not supported by this API.
- * @retval FSP_ERR_WIFI_AP_NOT_CONNECTED     DA16200 Not connected to an AP or Communication peer.
- * @retval FSP_ERR_WIFI_NO_RESULT            DA16200 No result.
- * @retval FSP_ERR_WIFI_RSP_BUF_OVFLW        DA16200 Response buffer overflow.
- * @retval FSP_ERR_WIFI_FUNC_NOT_CONFIG      DA16200 Function is not configured.
+ * @retval FSP_ERR_WIFI_AP_NOT_CONNECTED     DA16XXX Not connected to an AP or Communication peer.
+ * @retval FSP_ERR_WIFI_NO_RESULT            DA16XXX No result.
+ * @retval FSP_ERR_WIFI_RSP_BUF_OVFLW        DA16XXX Response buffer overflow.
+ * @retval FSP_ERR_WIFI_FUNC_NOT_CONFIG      DA16XXX Function is not configured.
  * @retval FSP_ERR_TIMEOUT                   Timeout error
- * @retval FSP_ERR_WIFI_NVRAM_WR_FAIL        DA16200 NVRAM write failure
- * @retval FSP_ERR_WIFI_RET_MEM_WR_FAIL      DA16200 Retention memory write failure
- * @retval FSP_ERR_WIFI_UNKNOWN_ERR          DA16200 unknown error
+ * @retval FSP_ERR_WIFI_NVRAM_WR_FAIL        DA16XXX NVRAM write failure
+ * @retval FSP_ERR_WIFI_RET_MEM_WR_FAIL      DA16XXX Retention memory write failure
+ * @retval FSP_ERR_WIFI_UNKNOWN_ERR          DA16XXX unknown error
  * @retval FSP_ERR_INVALID_DATA              Accuracy of data is not guaranteed
  * @retval FSP_ERR_INTERNAL                  Internal error
  **********************************************************************************************************************/
-static fsp_err_t rm_wifi_onchip_da16200_error_lookup (char * p_resp)
+static fsp_err_t rm_wifi_onchip_da16xxx_error_lookup (char * p_resp)
 {
     int8_t    err_code;
     int32_t   scanf_ret;
@@ -2751,79 +2751,79 @@ static fsp_err_t rm_wifi_onchip_da16200_error_lookup (char * p_resp)
 
     switch (err_code)
     {
-        case WIFI_ONCHIP_DA16200_ERR_UNKNOWN_CMD:
+        case WIFI_ONCHIP_DA16XXX_ERR_UNKNOWN_CMD:
         {
             err = FSP_ERR_WIFI_UNKNOWN_AT_CMD;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_INSUF_PARAMS:
+        case WIFI_ONCHIP_DA16XXX_ERR_INSUF_PARAMS:
         {
             err = FSP_ERR_WIFI_INSUF_PARAM;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_TOO_MANY_PARAMS:
+        case WIFI_ONCHIP_DA16XXX_ERR_TOO_MANY_PARAMS:
         {
             err = FSP_ERR_WIFI_TOO_MANY_PARAMS;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_INVALID_PARAM:
+        case WIFI_ONCHIP_DA16XXX_ERR_INVALID_PARAM:
         {
             err = FSP_ERR_WIFI_INV_PARAM_VAL;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_UNSUPPORTED_FUN:
+        case WIFI_ONCHIP_DA16XXX_ERR_UNSUPPORTED_FUN:
         {
             err = FSP_ERR_UNSUPPORTED;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_NOT_CONNECTED_AP:
+        case WIFI_ONCHIP_DA16XXX_ERR_NOT_CONNECTED_AP:
         {
             err = FSP_ERR_WIFI_AP_NOT_CONNECTED;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_NO_RESULT:
+        case WIFI_ONCHIP_DA16XXX_ERR_NO_RESULT:
         {
             err = FSP_ERR_WIFI_NO_RESULT;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_RESP_BUF_OVERFLOW:
+        case WIFI_ONCHIP_DA16XXX_ERR_RESP_BUF_OVERFLOW:
         {
             err = FSP_ERR_WIFI_RSP_BUF_OVFLW;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_FUNC_NOT_CONFIG:
+        case WIFI_ONCHIP_DA16XXX_ERR_FUNC_NOT_CONFIG:
         {
             err = FSP_ERR_WIFI_FUNC_NOT_CONFIG;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_CMD_TIMEOUT:
+        case WIFI_ONCHIP_DA16XXX_ERR_CMD_TIMEOUT:
         {
             err = FSP_ERR_TIMEOUT;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_NVRAM_WR_FAIL:
+        case WIFI_ONCHIP_DA16XXX_ERR_NVRAM_WR_FAIL:
         {
             err = FSP_ERR_WIFI_NVRAM_WR_FAIL;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_RETEN_MEM_WR_FAIL:
+        case WIFI_ONCHIP_DA16XXX_ERR_RETEN_MEM_WR_FAIL:
         {
             err = FSP_ERR_WIFI_RET_MEM_WR_FAIL;
             break;
         }
 
-        case WIFI_ONCHIP_DA16200_ERR_UNKNOWN:
+        case WIFI_ONCHIP_DA16XXX_ERR_UNKNOWN:
         {
             err = FSP_ERR_WIFI_UNKNOWN_ERR;
             break;
@@ -3092,6 +3092,102 @@ static size_t xStreamBufferReceiveAlt (StreamBufferHandle_t xStreamBuffer,
     }
 
     return xReceivedLength;
+}
+
+/*******************************************************************************************************************//**
+ *  Send an AT command with testing for return response.
+ *
+ * @param[in]  timeout_ms           Timeout in milliseconds.
+ * @param[in]  delay_ms             Delay in milliseconds.
+ * @param[in]  response             Expected response from the module
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_INVALID_DATA     Accuracy of data is not guaranteed
+ **********************************************************************************************************************/
+fsp_err_t rm_wifi_onchip_da16xxx_at_command_send (const char    * p_textstring,
+                                                  uint8_t * const p_response_buffer,
+                                                  uint32_t        response_buffer_size,
+                                                  uint32_t        timeout_ms,
+                                                  uint32_t        delay_ms,
+                                                  char          * response)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
+    uint32_t mutex_flag;
+
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+    FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_TX | WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+
+    FSP_ERROR_RETURN(pdTRUE == rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+                     FSP_ERR_WIFI_FAILED);
+
+    /* After taking the mutex set the response buffer to the one passed in. */
+    p_instance_ctrl->p_current_cmd_rx_buffer    = p_response_buffer;
+    p_instance_ctrl->current_cmd_rx_buffer_size = response_buffer_size;
+
+    err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
+                                            p_instance_ctrl->curr_cmd_port,
+                                            p_textstring,
+                                            0,
+                                            timeout_ms,
+                                            delay_ms,
+                                            response);
+
+    /* Restore back to the original WiFi buffer after getting the response */
+    p_instance_ctrl->p_current_cmd_rx_buffer    = p_instance_ctrl->cmd_rx_buff;
+    p_instance_ctrl->current_cmd_rx_buffer_size = sizeof(p_instance_ctrl->cmd_rx_buff);
+
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+    /* Check response for 'OK' */
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Receive data from stream buffer.
+ *
+ * @param[in]  trigger_level        Trigger level for stream buffer
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_INVALID_DATA     Accuracy of data is not guaranteed
+ **********************************************************************************************************************/
+size_t rm_wifi_onchip_da16xxx_buffer_recv (const char * p_data,
+                                           uint32_t     length,
+                                           uint32_t     rx_timeout,
+                                           size_t       trigger_level)
+{
+    wifi_onchip_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
+    size_t   xReceivedBytes;
+    uint32_t mutex_flag;
+
+#if (WIFI_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+    FSP_ASSERT(NULL != p_data);
+    FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+    FSP_ERROR_RETURN(trigger_level > length, FSP_ERR_INVALID_DATA);
+
+    mutex_flag = (WIFI_ONCHIP_DA16XXX_MUTEX_RX);
+
+    rm_wifi_onchip_da16xxx_send_basic_take_mutex(p_instance_ctrl, mutex_flag);
+
+    /* Get the transmitted message from the stream buffer */
+    xStreamBufferSetTriggerLevel(p_instance_ctrl->socket_byteq_hdl, trigger_level);
+
+    xReceivedBytes =
+        xStreamBufferReceiveAlt(p_instance_ctrl->socket_byteq_hdl, (char *) p_data, length, pdMS_TO_TICKS(rx_timeout));
+
+    rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+    return xReceivedBytes;
 }
 
 /*! \endcond */

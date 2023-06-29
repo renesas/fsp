@@ -101,6 +101,8 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4xxx =
     .oaq1stGenDataCalculate    = RM_ZMOD4XXX_Oaq1stGenDataCalculate,
     .oaq2ndGenDataCalculate    = RM_ZMOD4XXX_Oaq2ndGenDataCalculate,
     .raqDataCalculate          = RM_ZMOD4XXX_RaqDataCalculate,
+    .relIaqDataCalculate       = RM_ZMOD4XXX_RelIaqDataCalculate,
+    .pbaqDataCalculate         = RM_ZMOD4XXX_PbaqDataCalculate,
     .temperatureAndHumiditySet = RM_ZMOD4XXX_TemperatureAndHumiditySet,
     .deviceErrorCheck          = RM_ZMOD4XXX_DeviceErrorCheck,
 };
@@ -611,6 +613,74 @@ fsp_err_t RM_ZMOD4XXX_RaqDataCalculate (rm_zmod4xxx_ctrl_t * const     p_api_ctr
 
     /* Calculate RAQ data */
     err = p_lib->p_api->raqDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @brief  This function should be called when measurement finishes. To check measurement status either polling or
+ * busy/interrupt pin can be used.
+ * Implements @ref rm_zmod4xxx_api_t::relIaqDataCalculate
+ *
+ * @retval FSP_SUCCESS                            Successfully results are read.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
+ **********************************************************************************************************************/
+fsp_err_t RM_ZMOD4XXX_RelIaqDataCalculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
+                                           rm_zmod4xxx_raw_data_t * const     p_raw_data,
+                                           rm_zmod4xxx_rel_iaq_data_t * const p_zmod4xxx_data)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_raw_data);
+    FSP_ASSERT(NULL != p_zmod4xxx_data);
+    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
+
+    /* Calculate Relative IAQ data */
+    err = p_lib->p_api->relIaqDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @brief  This function should be called when measurement finishes. To check measurement status either polling or
+ * busy/interrupt pin can be used.
+ * Implements @ref rm_zmod4xxx_api_t::pbaqDataCalculate
+ *
+ * @retval FSP_SUCCESS                            Successfully results are read.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
+ **********************************************************************************************************************/
+fsp_err_t RM_ZMOD4XXX_PbaqDataCalculate (rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
+                                         rm_zmod4xxx_raw_data_t * const  p_raw_data,
+                                         rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_raw_data);
+    FSP_ASSERT(NULL != p_zmod4xxx_data);
+    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
+
+    /* Calculate PBAQ data */
+    err = p_lib->p_api->pbaqDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;

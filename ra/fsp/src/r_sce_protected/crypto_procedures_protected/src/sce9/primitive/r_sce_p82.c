@@ -378,10 +378,10 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
         {
             /* waiting */
         }
-        S_RAM[20] = change_endian_long(SCE->REG_100H);
-        S_RAM[21] = change_endian_long(SCE->REG_100H);
-        S_RAM[22] = change_endian_long(SCE->REG_100H);
-        S_RAM[23] = change_endian_long(SCE->REG_100H);
+        S_RAM[20] = SCE->REG_100H;
+        S_RAM[21] = SCE->REG_100H;
+        S_RAM[22] = SCE->REG_100H;
+        S_RAM[23] = SCE->REG_100H;
         SCE->REG_13CH = 0x00000202U;
         R_SCE_func102(0x1d57682dU, 0xfd419ecbU, 0xe66c4158U, 0x102b1470U);
         SCE->REG_1BCH = 0x00000040U;

@@ -98,10 +98,10 @@ typedef enum e_adc_b_conversion_method
 /** ADC_B data data format definitions */
 typedef enum e_adc_b_data_format
 {
-    ADC_B_DATA_FORMAT_16_BIT = 0,       ///< 16 bit adc_b data format
-    ADC_B_DATA_FORMAT_14_BIT = 1,       ///< 14 bit adc_b data format
-    ADC_B_DATA_FORMAT_12_BIT = 2,       ///< 12 bit adc_b data format
-    ADC_B_DATA_FORMAT_10_BIT = 3,       ///< 10 bit adc_b data format
+    ADC_B_DATA_FORMAT_16_BIT = 0,      ///< 16 bit adc_b data format
+    ADC_B_DATA_FORMAT_14_BIT = 1,      ///< 14 bit adc_b data format
+    ADC_B_DATA_FORMAT_12_BIT = 2,      ///< 12 bit adc_b data format
+    ADC_B_DATA_FORMAT_10_BIT = 3,      ///< 10 bit adc_b data format
 } adc_b_data_format_t;
 
 /** ADC channels */
@@ -377,6 +377,18 @@ typedef enum e_adc_b_user_offset_table_selection_id
     ADC_B_USER_OFFSET_TABLE_SELECTION_7        = 8, ///< User Offset table 7
 } adc_b_user_offset_table_selection_id_t;
 
+/* ADC_B Calibration Status */
+typedef enum e_adc_b_converter_state
+{
+    ADC_B_CONVERTER_STATE_NONE               = 0,
+    ADC_B_CONVERTER_STATE_ADC_0_CALIBRATING  = 1,
+    ADC_B_CONVERTER_STATE_ADC_1_CALIBRATING  = 2,
+    ADC_B_CONVERTER_STATE_SH_0_2_CALIBRATING = 3,
+    ADC_B_CONVERTER_STATE_SH_4_6_CALIBRATING = 4,
+    ADC_B_CONVERTER_STATE_READY              = 5,
+    ADC_B_CONVERTER_STATE_CALIBRATION_FAIL   = 6,
+} adc_b_converter_state_t;
+
 /** ADC FIFO data type */
 typedef struct st_adc_b_fifo_data
 {
@@ -416,16 +428,16 @@ typedef struct st_adc_b_virtual_channel_cfg
 
     union
     {
-        uint32_t channel_control_a;       ///< A/D conversion data operation control a
+        uint32_t channel_control_a;         ///< A/D conversion data operation control a
         struct
         {
             uint32_t digital_filter_id : 3; ///< Digital filter table index selection
             uint32_t                   : 13;
-            uint32_t gain_table_id   : 4; ///< User gain table selection
-            uint32_t                 : 4;
-            uint32_t offset_table_id : 4; ///< User offset table selection
-            uint32_t                 : 4;
-        } channel_control_a_bits;         ///< A/D conversion data operation control a bits
+            uint32_t gain_table_id     : 4; ///< User gain table selection
+            uint32_t                   : 4;
+            uint32_t offset_table_id   : 4; ///< User offset table selection
+            uint32_t                   : 4;
+        } channel_control_a_bits;           ///< A/D conversion data operation control a bits
     };
 
     union
@@ -584,7 +596,7 @@ typedef __PACKED_STRUCT st_adc_b_extended_cfg
             uint8_t                          : 4;
         } adc_b_converter_mode[2];
     };
-    uint32_t scan_group_enable;        ///< Scan Group enable register data
+    uint32_t scan_group_enable;                   ///< Scan Group enable register data
     union
     {
         __PACKED_STRUCT
@@ -617,19 +629,26 @@ typedef __PACKED_STRUCT st_adc_b_extended_cfg
     {
         __PACKED_STRUCT
         {
-            uint32_t fifo_interrupt_level0;              ///< FIFO data threshold interrupt level register data for Group 0 and 1
-            uint32_t fifo_interrupt_level1;              ///< FIFO data threshold interrupt level register data for Group 2 and 3
-            uint32_t fifo_interrupt_level2;              ///< FIFO data threshold interrupt level register data for Group 4 and 5
-            uint32_t fifo_interrupt_level3;              ///< FIFO data threshold interrupt level register data for Group 6 and 7
-            uint32_t fifo_interrupt_level4;              ///< FIFO data threshold interrupt level register data for Group 8
+            uint32_t fifo_interrupt_level0; ///< FIFO data threshold interrupt level register data for Group 0 and 1
+            uint32_t fifo_interrupt_level1; ///< FIFO data threshold interrupt level register data for Group 2 and 3
+            uint32_t fifo_interrupt_level2; ///< FIFO data threshold interrupt level register data for Group 4 and 5
+            uint32_t fifo_interrupt_level3; ///< FIFO data threshold interrupt level register data for Group 6 and 7
+            uint32_t fifo_interrupt_level4; ///< FIFO data threshold interrupt level register data for Group 8
         };
-        uint16_t fifo_interrupt_level[9];                ///< FIFO data threshold interrupt level
+        uint16_t fifo_interrupt_level[9];   ///< FIFO data threshold interrupt level
     };
-    uint32_t                start_trigger_delay_0;       ///< Start trigger delay register data for group 0 and 1
-    uint32_t                start_trigger_delay_1;       ///< Start trigger delay register data for group 2 and 3
-    uint32_t                start_trigger_delay_2;       ///< Start trigger delay register data for group 4 and 5
-    uint32_t                start_trigger_delay_3;       ///< Start trigger delay register data for group 6 and 7
-    uint32_t                start_trigger_delay_4;       ///< Start trigger delay register data for group 8
+    union
+    {
+        uint16_t start_trigger_delay_table[9];
+        __PACKED_STRUCT
+        {
+            uint32_t start_trigger_delay_0;              ///< Start trigger delay register data for group 0 and 1
+            uint32_t start_trigger_delay_1;              ///< Start trigger delay register data for group 2 and 3
+            uint32_t start_trigger_delay_2;              ///< Start trigger delay register data for group 4 and 5
+            uint32_t start_trigger_delay_3;              ///< Start trigger delay register data for group 6 and 7
+            uint32_t start_trigger_delay_4;              ///< Start trigger delay register data for group 8
+        };
+    };
     uint32_t                calibration_adc_state;       ///< Calibration State register data
     uint32_t                calibration_sample_and_hold; ///< Calibration Sample and Hold register data
     const adc_b_isr_cfg_t * p_isr_cfg;                   ///< Pointer to ISR configuration
@@ -648,21 +667,20 @@ typedef __PACKED_STRUCT st_adc_b_extended_cfg
     uint32_t limiter_clip_tables[8];                     ///< Limiter clip Table register data
 } adc_b_extended_cfg_t;
 
-/***********************************************************************************************************************
- * Typedef definitions
- **********************************************************************************************************************/
-
 /** ADC instance control block. DO NOT INITIALIZE.  Initialized in @ref adc_api_t::open(). */
 typedef struct st_adc_b_instance_ctrl
 {
-    uint32_t          cached_adtrgenr;          // Cached conversion peripheral trigger bits, used when starting and stopping scans.
-    uint32_t          cached_adsystr;           // Cached conversion software start bits, used when starting and stopping scans.
-    adc_cfg_t const * p_cfg;                    // Boolean to verify that the Unit has been initialized
-    void (* p_callback)(adc_callback_args_t *); // Pointer to callback that is called when an adc_b_event_t occurs.
-    adc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
-    void const          * p_context;            // User defined context passed into callback function.
-    uint32_t              initialized;          // Initialized status of ADC_B.
-    uint32_t              opened;               // Open status of ADC_B.
+    adc_b_converter_state_t adc_state;                   ///< ADC 0 converter State
+    uint32_t                cached_adtrgenr;             ///< Cached conversion peripheral trigger bits, used when starting and stopping scans.
+    uint32_t                cached_adsystr;              ///< Cached conversion software start bits, used when starting and stopping scans.
+    uint32_t                trigger_disable_wait_cycles; ///< ADC clock cycles required to wait after disabling trigger input
+
+    adc_cfg_t const * p_cfg;                             ///< Boolean to verify that the Unit has been initialized
+    void (* p_callback)(adc_callback_args_t *);          ///< Pointer to callback that is called when an adc_b_event_t occurs.
+    adc_callback_args_t * p_callback_memory;             ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+    void const          * p_context;                     ///< User defined context passed into callback function.
+    uint32_t              initialized;                   ///< Initialized status of ADC_B.
+    uint32_t              opened;                        ///< Open status of ADC_B.
 } adc_b_instance_ctrl_t;
 
 /**********************************************************************************************************************

@@ -62,6 +62,7 @@ typedef enum e_slcd_time_slice
     SLCDC_SLICE_2 = 1,                 ///< 2-time slice
     SLCDC_SLICE_3 = 2,                 ///< 3-time slice
     SLCDC_SLICE_4 = 3,                 ///< 4-time slice
+    SLCDC_SLICE_6 = 4,                 ///< 6-time slice
     SLCDC_SLICE_8 = 5,                 ///< 8-time slice
 } slcdc_time_slice_t;
 
@@ -79,6 +80,16 @@ typedef enum e_slcd_drive_volt_gen
     SLCDC_VOLT_INTERNAL,               ///< Internal voltage boosting method
     SLCDC_VOLT_CAPACITOR,              ///< Capacitor split method
 } slcdc_drive_volt_gen_t;
+
+/** LCD Reference Voltage Selection.*/
+typedef enum e_slcd_ref_volt_sel
+{
+    ///< Select VL1 reference for internal voltage or VCC reference for capacitor split or external division
+    SLCDC_REF_INTERNAL_VL1_CAPACITOR_VCC_EXTERNAL = 0,
+
+    ///< Select VL2 reference for internal voltage or VL4 reference for capacitor split
+    SLCDC_REF_INTERNAL_VL2_CAPACITOR_VL4 = 1,
+} slcdc_ref_volt_sel_t;
 
 /** Display Data Area Control*/
 typedef enum e_slcd_display_area_control_blink
@@ -113,7 +124,14 @@ typedef enum e_slcd_contrast
     SLCDC_CONTRAST_12,                 ///< Contrast level 12
     SLCDC_CONTRAST_13,                 ///< Contrast level 13
     SLCDC_CONTRAST_14,                 ///< Contrast level 14
-    SLCDC_CONTRAST_15                  ///< Contrast level 15
+    SLCDC_CONTRAST_15,                 ///< Contrast level 15
+    SLCDC_CONTRAST_16,                 ///< Contrast level 16
+    SLCDC_CONTRAST_17,                 ///< Contrast level 17
+    SLCDC_CONTRAST_18,                 ///< Contrast level 18
+    SLCDC_CONTRAST_19,                 ///< Contrast level 19
+    SLCDC_CONTRAST_20,                 ///< Contrast level 20
+    SLCDC_CONTRAST_21,                 ///< Contrast level 21
+    SLCDC_CONTRAST_22,                  ///< Contrast level 22
 } slcdc_contrast_t;
 
 /** LCD Display Enable/Disable*/
@@ -137,6 +155,7 @@ typedef enum e_slcd_display_clock
     SLCDC_CLOCK_SOSC = 0x01,           ///< Display clock source SOSC
     SLCDC_CLOCK_MOSC = 0x02,           ///< Display clock source MOSC
     SLCDC_CLOCK_HOCO = 0x03,           ///< Display clock source HOCO
+    SLCDC_CLOCK_MOCO = 0x04,           ///< Display clock source MOCO
 } slcdc_display_clock_t;
 
 /** LCD clock settings */
@@ -165,6 +184,7 @@ typedef enum e_slcdc_clk_div
     SLCDC_CLK_DIVISOR_HOCO_262144,        ///< HOCO Clock/262144
 
     SLCDC_CLK_DIVISOR_HOCO_524288 = 0x2B, ///< HOCO Clock/524288
+    SLCDC_CLK_DIVISOR_HOCO_1048576 = 0x3B, ///< HOCO Clock/1048576
 } slcdc_clk_div_t;
 
 /** SLCDC configuration block */
@@ -177,6 +197,7 @@ typedef struct st_slcdc_cfg
     slcdc_waveform_t       waveform;            ///< LCD display waveform select (LWAVE bit)
     slcdc_drive_volt_gen_t drive_volt_gen;      ///< LCD Drive Voltage Generator Select (MDSET bit)
     slcdc_contrast_t       contrast;            ///< LCD Boost Level (contrast setting)
+    slcdc_ref_volt_sel_t   ref_volt_sel;        ///< LCD reference voltage selection (MDSET2 bit)
 } slcdc_cfg_t;
 
 /** SLCDC control block.  Allocate an instance specific control block to pass into the SLCDC API calls.

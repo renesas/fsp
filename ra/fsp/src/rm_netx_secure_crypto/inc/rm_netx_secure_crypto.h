@@ -149,6 +149,23 @@ UINT sce_nx_crypto_gcm_decrypt_update(NX_CRYPTO_AES * aes_ctx, UCHAR * input, UC
 UINT sce_nx_crypto_gcm_encrypt_calculate(NX_CRYPTO_AES * aes_ctx, UCHAR * bit_size, UINT icv_len, UCHAR * tag);
 UINT sce_nx_crypto_gcm_decrypt_calculate(NX_CRYPTO_AES * aes_ctx, UCHAR * bit_size, UINT icv_len, UCHAR * tag);
 
+UINT sce_nx_crypto_ccm_encrypt_init (NX_CRYPTO_AES * aes_ctx, 
+                                     VOID          * additional_data, 
+                                     UINT            additional_len,
+                                     UINT            length, 
+                                     UCHAR         * iv, 
+                                     USHORT          icv_len, 
+                                     USHORT          block_size);
+UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, UCHAR * output, UINT length);
+UINT sce_nx_crypto_ccm_encrypt_final (NX_CRYPTO_AES * aes_ctx, UCHAR * output);
+UINT sce_nx_crypto_ccm_decrypt_init (NX_CRYPTO_AES * crypto_metadata, NX_CRYPTO_CCM * ccm_metadata,
+                                     VOID * additional_data, UINT additional_len,
+                                     UINT length, UCHAR * iv, USHORT icv_len, USHORT block_size);
+UINT sce_nx_crypto_ccm_decrypt_update (NX_CRYPTO_AES * crypto_metadata, UCHAR * input, UCHAR * output,
+                                       UINT length, UINT block_size);
+UINT sce_nx_crypto_ccm_decrypt_final (NX_CRYPTO_AES * crypto_metadata, NX_CRYPTO_CCM * ccm_metadata,
+                                      UCHAR * icv, UINT block_size);
+
 /* TRNG */
 int  rand(void);
 void srand(unsigned int seed);

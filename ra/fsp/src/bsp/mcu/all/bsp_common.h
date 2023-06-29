@@ -33,7 +33,7 @@
 #include <string.h>
 
 /* Different compiler support. */
-#include "../../inc/fsp_common_api.h"
+#include "../../inc/api/fsp_common_api.h"
 #include "bsp_compiler_support.h"
 #include "bsp_cfg.h"
 
@@ -256,6 +256,7 @@ typedef struct st_bsp_unique_id
  * Exported global variables
  **********************************************************************************************************************/
 uint32_t R_BSP_SourceClockHzGet(fsp_priv_source_clock_t clock);
+
 /***********************************************************************************************************************
  * Global variables (defined in other files)
  **********************************************************************************************************************/
@@ -327,7 +328,7 @@ __STATIC_INLINE uint32_t R_FSP_ClockDividerGet (uint32_t ckdivcr)
          * - Clock Divided by 2: 1
          * - Clock Divided by 4: 2
          */
-        return 1 << ckdivcr;
+        return 1U << ckdivcr;
     }
     else if (3U == ckdivcr)
     {

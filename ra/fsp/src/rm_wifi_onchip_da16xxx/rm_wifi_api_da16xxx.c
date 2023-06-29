@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "rm_wifi_onchip_da16200.h"
+#include "rm_wifi_onchip_da16xxx.h"
 
 #if (BSP_CFG_RTOS == 2)
 
@@ -50,7 +50,7 @@ WIFIReturnCode_t WIFI_On (void)
     WIFIReturnCode_t xRetVal = eWiFiFailure;
     fsp_err_t        ret     = FSP_ERR_WIFI_FAILED;
 
-    ret = rm_wifi_onchip_da16200_open(&g_wifi_onchip_da16200_cfg);
+    ret = rm_wifi_onchip_da16xxx_open(&g_wifi_onchip_da16xxx_cfg);
     if (!ret)
     {
         xRetVal = eWiFiSuccess;
@@ -72,7 +72,7 @@ WIFIReturnCode_t WIFI_Off (void)
     WIFIReturnCode_t xRetVal = eWiFiFailure;
     int32_t          ret     = FSP_ERR_WIFI_FAILED;
 
-    ret = (int32_t) rm_wifi_onchip_da16200_close();
+    ret = (int32_t) rm_wifi_onchip_da16xxx_close();
     if (!ret)
     {
         xRetVal = eWiFiSuccess;
@@ -143,10 +143,10 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
         return eWiFiFailure;
     }
 
-    ret = (int32_t) rm_wifi_onchip_da16200_connect((char *) pxNetworkParams->ucSSID,
+    ret = (int32_t) rm_wifi_onchip_da16xxx_connect((char *) pxNetworkParams->ucSSID,
                                                    pxNetworkParams->xSecurity,
                                                    pxNetworkParams->xPassword.xWPA.cPassphrase,
-                                                   WIFI_ONCHIP_DA16200_TKIP_AES_ENC_TYPE);
+                                                   WIFI_ONCHIP_DA16XXX_TKIP_AES_ENC_TYPE);
     if (!ret)
     {
         xRetVal = eWiFiSuccess;
@@ -165,7 +165,7 @@ WIFIReturnCode_t WIFI_Disconnect (void) {
     WIFIReturnCode_t xRetVal = eWiFiFailure;
     int32_t          ret     = -1;
 
-    ret = (int32_t) rm_wifi_onchip_da16200_disconnect();
+    ret = (int32_t) rm_wifi_onchip_da16xxx_disconnect();
     if (!ret)
     {
         xRetVal = eWiFiSuccess;
@@ -218,7 +218,7 @@ WIFIReturnCode_t WIFI_Scan (WIFIScanResult_t * pxBuffer, uint8_t ucNumNetworks)
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    err = rm_wifi_onchip_da16200_scan(pxBuffer, ucNumNetworks);
+    err = rm_wifi_onchip_da16xxx_scan(pxBuffer, ucNumNetworks);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, eWiFiFailure);
 
@@ -252,7 +252,7 @@ WIFIReturnCode_t WIFI_Ping (uint8_t * pucIPAddr, uint16_t usCount, uint32_t ulIn
 {
     int32_t ret = -1;
 
-    ret = (int32_t) rm_wifi_onchip_da16200_ping(pucIPAddr, usCount, ulIntervalMS);
+    ret = (int32_t) rm_wifi_onchip_da16xxx_ping(pucIPAddr, usCount, ulIntervalMS);
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, eWiFiFailure);
 
     return eWiFiSuccess;
@@ -276,7 +276,7 @@ WIFIReturnCode_t WIFI_Ping (uint8_t * pucIPAddr, uint16_t usCount, uint32_t ulIn
 WIFIReturnCode_t WIFI_GetIPInfo (WIFIIPConfiguration_t * pxIPInfo) {
     int32_t ret = -1;
 
-    ret = (int32_t) rm_wifi_onchip_da16200_network_info_get(pxIPInfo->xIPAddress.ulAddress,
+    ret = (int32_t) rm_wifi_onchip_da16xxx_network_info_get(pxIPInfo->xIPAddress.ulAddress,
                                                             pxIPInfo->xNetMask.ulAddress,
                                                             pxIPInfo->xGateway.ulAddress);
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, eWiFiFailure);
@@ -300,7 +300,7 @@ WIFIReturnCode_t WIFI_GetIPInfo (WIFIIPConfiguration_t * pxIPInfo) {
 WIFIReturnCode_t WIFI_GetMAC (uint8_t * pucMac) {
     int32_t ret = -1;
 
-    ret = (int32_t) rm_wifi_onchip_da16200_mac_addr_get(pucMac);
+    ret = (int32_t) rm_wifi_onchip_da16xxx_mac_addr_get(pucMac);
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, eWiFiFailure);
 
     return eWiFiSuccess;
@@ -328,7 +328,7 @@ WIFIReturnCode_t WIFI_GetHostIP (char * pcHost, uint8_t * pucIPAddr) {
         return eWiFiFailure;
     }
 
-    ret = (int32_t) rm_wifi_onchip_da16200_dns_query(pcHost, pucIPAddr);
+    ret = (int32_t) rm_wifi_onchip_da16xxx_dns_query(pcHost, pucIPAddr);
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, eWiFiFailure);
 
     return eWiFiSuccess;
@@ -347,7 +347,7 @@ BaseType_t WIFI_IsConnected (const WIFINetworkParams_t * pxNetworkParams) {
 
     FSP_PARAMETER_NOT_USED(pxNetworkParams);
 
-    rm_wifi_onchip_da16200_connected(&status);
+    rm_wifi_onchip_da16xxx_connected(&status);
     if (0 == status)
     {
         xIsConnected = pdTRUE;

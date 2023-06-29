@@ -780,13 +780,13 @@ void R_SCE_func300(void);
 void R_SCE_func301(void);
 void R_SCE_func302(void);
 void R_SCE_func303(void);
-void R_SCE_func304(void);
+void R_SCE_func304_r1(void);
 void R_SCE_func305(void);
-void R_SCE_func307(void);
+void R_SCE_func307_r1(void);
 void R_SCE_func308(void);
-void R_SCE_func309(void);
+void R_SCE_func309_r1(void);
 void R_SCE_func310(void);
-void R_SCE_func311(void);
+void R_SCE_func311_r1(void);
 void R_SCE_func312(uint32_t ARG1);
 void R_SCE_func313(uint32_t ARG1);
 void R_SCE_func314(uint32_t ARG1);
@@ -800,7 +800,7 @@ void R_SCE_func321(uint32_t ARG1);
 void R_SCE_func322(uint32_t ARG1);
 void R_SCE_func323(void);
 void R_SCE_func324(void);
-void R_SCE_func325(void);
+void R_SCE_func325_r1(void);
 
 uint32_t change_endian_long(uint32_t data);
 

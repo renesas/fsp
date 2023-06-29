@@ -710,9 +710,9 @@ fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSub(const uint32_t *InData_KeyInde
             SCE->REG_ECH = 0x0000b7a0U;
             SCE->REG_ECH = 0x00000079U;
             HW_SCE_p_func101(0xee77e57cU, 0x9533b284U, 0x8d1c3bc5U, 0x7dafdaabU);
-            HW_SCE_p_func325();
+            HW_SCE_p_func325_r1();
             SCE->REG_28H = 0x009f0001U;
-            HW_SCE_p_func100(0x89f73d3fU, 0x7ca8dee1U, 0x9173e011U, 0x633d40e3U);
+            HW_SCE_p_func100(0xad4e3029U, 0x051ef4dfU, 0xf5ba502aU, 0x0f985354U);
             SCE->REG_2CH = 0x00000020U;
             SCE->REG_04H = 0x00000382U;
             /* WAIT_LOOP */
@@ -753,7 +753,7 @@ fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSub(const uint32_t *InData_KeyInde
             OutData_Text[30] = SCE->REG_100H;
             OutData_Text[31] = SCE->REG_100H;
             SCE->REG_28H = 0x00bf0001U;
-            HW_SCE_p_func100(0xa42466f5U, 0x57bd3bb3U, 0xb6f415b2U, 0xe32c0359U);
+            HW_SCE_p_func100(0x1ecc620bU, 0x57edb624U, 0x96cb0511U, 0x89d05b36U);
             SCE->REG_2CH = 0x00000022U;
             SCE->REG_04H = 0x00000302U;
             /* WAIT_LOOP */
@@ -825,7 +825,7 @@ fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSub(const uint32_t *InData_KeyInde
             OutData_Text[93] = SCE->REG_100H;
             OutData_Text[94] = SCE->REG_100H;
             OutData_Text[95] = SCE->REG_100H;
-            HW_SCE_p_func102(0xfeb44e6eU, 0x7548637dU, 0x57cf5ec8U, 0xef21b7b0U);
+            HW_SCE_p_func102(0x0bd7bf02U, 0xee336e55U, 0xbb83a9edU, 0x0c98b241U);
             SCE->REG_1B8H = 0x00000040U;
             /* WAIT_LOOP */
             while (0U != SCE->REG_18H_b.B12)
@@ -838,5 +838,5 @@ fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSub(const uint32_t *InData_KeyInde
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p79_r2.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCEp_p79_r3.prc
 ***********************************************************************************************************************/

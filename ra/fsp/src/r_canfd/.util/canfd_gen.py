@@ -10,4 +10,4 @@ if __name__ == "__main__":
         with open('Renesas##HAL Drivers##all##r_canfd####x.xx.xx.xml.j2') as temp:
             t = Template(temp.read())
             with open(os.path.join(output_dir, 'Renesas##HAL Drivers##all##{}####x.xx.xx.xml').format(c), 'w+') as f:
-                f.write(re.sub(r' *\r?\n', r'\r\n', t.render(module_variant=c).strip(),flags=re.M))
+                f.write(re.sub(r' *\r', '\r\n', t.render(module_variant=c).strip(),flags=re.M))

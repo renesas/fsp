@@ -172,7 +172,6 @@ void HW_SCE_Aes128EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
                                      &InputData_IV[0]);
             break;
         }
-
     }
 }
 

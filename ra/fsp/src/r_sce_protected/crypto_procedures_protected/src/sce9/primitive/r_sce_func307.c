@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void R_SCE_func307(void)
+void R_SCE_func307_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -81,7 +81,7 @@ void R_SCE_func307(void)
     SCE->REG_ECH = 0x0000b400U;
     SCE->REG_ECH = 0x00000080U;
     R_SCE_func101(0x89e510feU, 0x394c1c77U, 0xd552f2e2U, 0x6ac5d5aaU);
-    R_SCE_func311();
+    R_SCE_func311_r1();
     SCE->REG_ECH = 0x00000a73U;
     SCE->REG_ECH = 0x00000a31U;
     for(jLoop = 0; jLoop < 32; jLoop = jLoop + 1)
@@ -192,7 +192,7 @@ void R_SCE_func307(void)
             SCE->REG_ECH = 0x0000b400U;
             SCE->REG_ECH = 0x00000081U;
             R_SCE_func101(0x59e2797cU, 0x9b3a97d6U, 0x0d8cad4cU, 0xccf47f58U);
-            R_SCE_func309();
+            R_SCE_func309_r1();
             R_SCE_func100(0x4d425083U, 0xab1bd6e2U, 0x32f75dc3U, 0x0a0d3f01U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -358,7 +358,7 @@ void R_SCE_func307(void)
             SCE->REG_ECH = 0x0000b400U;
             SCE->REG_ECH = 0x00000082U;
             R_SCE_func101(0xb813cd50U, 0xaa5a905cU, 0x8b4a9838U, 0x864d3a8fU);
-            R_SCE_func309();
+            R_SCE_func309_r1();
             R_SCE_func100(0xe86ac439U, 0x52299c20U, 0x34cb67a5U, 0x9406a945U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -519,7 +519,7 @@ void R_SCE_func307(void)
     SCE->REG_ECH = 0x0000b400U;
     SCE->REG_ECH = 0x00000083U;
     R_SCE_func101(0x0a8b5e81U, 0x3381ec5fU, 0x8db9ae0bU, 0x3ee54ba8U);
-    R_SCE_func309();
+    R_SCE_func309_r1();
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x00000090U;
     SCE->REG_ECH = 0x0000381eU;
@@ -528,5 +528,5 @@ void R_SCE_func307(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_func307.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_func307_r1.prc
 ***********************************************************************************************************************/

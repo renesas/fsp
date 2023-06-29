@@ -47,6 +47,13 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** RTC extend configuration */
+typedef struct st_rtc_extended_cfg
+{
+    uint8_t   alarm1_ipl;              ///< Alarm 1 interrupt priority
+    IRQn_Type alarm1_irq;              ///< Alarm 1 interrupt vector
+} rtc_extended_cfg_t;
+
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref rtc_api_t::open is called */
 typedef struct st_rtc_ctrl
 {

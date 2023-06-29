@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void R_SCE_func304(void)
+void R_SCE_func304_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -1802,8 +1802,8 @@ void R_SCE_func304(void)
     SCE->REG_ECH = 0x00000080U;
     SCE->REG_ECH = 0x000037daU;
     SCE->REG_ECH = 0x0000b400U;
-    SCE->REG_ECH = 0x00000097U;
-    R_SCE_func101(0xb5beeb77U, 0x639a74ceU, 0xaa351464U, 0x56c04524U);
+    SCE->REG_ECH = 0x00000094U;
+    R_SCE_func101(0xd829182cU, 0xc047fe4aU, 0xb8f1178eU, 0x311c4301U);
     R_SCE_func310();
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x000000a0U;
@@ -1824,10 +1824,10 @@ void R_SCE_func304(void)
     SCE->REG_ECH = 0x00000080U;
     SCE->REG_ECH = 0x000037d9U;
     SCE->REG_ECH = 0x0000b400U;
-    SCE->REG_ECH = 0x00000098U;
-    R_SCE_func101(0x7b385a43U, 0x9c412010U, 0x9a0462d1U, 0xfff8fa33U);
+    SCE->REG_ECH = 0x00000095U;
+    R_SCE_func101(0xe0b1214eU, 0x643ced42U, 0xd081e694U, 0x4ff3b264U);
     R_SCE_func310();
-    R_SCE_func100(0xbbd74204U, 0xba55a969U, 0x0a288a89U, 0x4e58bd07U);
+    R_SCE_func100(0x1edc8c2bU, 0xa331f7c6U, 0xfe78ce71U, 0xc98d8c82U);
     SCE->REG_104H = 0x00000058U;
     SCE->REG_E0H = 0x80010020U;
     /* WAIT_LOOP */
@@ -1848,10 +1848,10 @@ void R_SCE_func304(void)
     SCE->REG_ECH = 0x00000080U;
     SCE->REG_ECH = 0x000037d8U;
     SCE->REG_ECH = 0x0000b400U;
-    SCE->REG_ECH = 0x00000099U;
-    R_SCE_func101(0xe9f4d766U, 0xc60e2d03U, 0x1fa7a830U, 0xed3e60ddU);
+    SCE->REG_ECH = 0x00000096U;
+    R_SCE_func101(0x274cdf79U, 0x168d2df4U, 0x70dbae58U, 0x1fc0b450U);
     R_SCE_func310();
-    R_SCE_func100(0x751b1264U, 0xe2a38d23U, 0x0052a8a3U, 0xf6e02c2eU);
+    R_SCE_func100(0x79509467U, 0x157a6536U, 0x0f364fdeU, 0x331f1e3eU);
     SCE->REG_104H = 0x00000058U;
     SCE->REG_E0H = 0x80010020U;
     /* WAIT_LOOP */
@@ -1867,7 +1867,7 @@ void R_SCE_func304(void)
     SCE->REG_ECH = 0x3800db78U;
     SCE->REG_E0H = 0x00000080U;
     SCE->REG_1CH = 0x00A60000U;
-    R_SCE_func100(0x7a2639a9U, 0xb43e18a0U, 0x350f43f8U, 0xe16b9a92U);
+    R_SCE_func100(0x765323ebU, 0x5f07d838U, 0x08a60b85U, 0x97010f18U);
     SCE->REG_1CH = 0x00400000U;
     SCE->REG_1D0H = 0x00000000U;
     if (1U == (SCE->REG_1CH_b.B22))
@@ -1896,11 +1896,11 @@ void R_SCE_func304(void)
         }
         SCE->REG_100H = change_endian_long(0x00000000U);
         SCE->REG_28H = 0x00bf0001U;
-        R_SCE_func101(0xa354f5b9U, 0xd19e8d7aU, 0xa9ad322dU, 0x023d5281U);
+        R_SCE_func101(0x383e941aU, 0x8cb6cb0fU, 0xd6cd380eU, 0xa92c012eU);
     }
     else
     {
-        R_SCE_func101(0xf17c2d3bU, 0x4df9c4c4U, 0x9e3a4a88U, 0x8c116bf4U);
+        R_SCE_func101(0xdbcdfe3aU, 0xb3df35d7U, 0xe8ce3c87U, 0x4632da37U);
     }
     SCE->REG_24H = 0x000009c0U;
     /* WAIT_LOOP */
@@ -2180,5 +2180,5 @@ void R_SCE_func304(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_func304.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_func304_r1.prc
 ***********************************************************************************************************************/

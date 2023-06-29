@@ -339,8 +339,8 @@ fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t *InData_KeyIndexType, uint32_t
             {
                 /* waiting */
             }
-            SCE->REG_100H = change_endian_long(0x0000005dU);
-            R_SCE_func101(0xd3b63ebaU, 0xdf40eb06U, 0x5ccf9b8eU, 0x18586887U);
+            SCE->REG_100H = change_endian_long(0x00000014U);
+            R_SCE_func101(0x21bd3ba3U, 0xace59435U, 0x2144095fU, 0xcbed6a94U);
             R_SCE_func044();
             SCE->REG_104H = 0x00000762U;
             SCE->REG_D0H = 0x40000100U;
@@ -391,14 +391,14 @@ fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t *InData_KeyIndexType, uint32_t
                 /* waiting */
             }
             SCE->REG_1CH = 0x00001800U;
-            R_SCE_func100(0x0bd04d21U, 0xf801c559U, 0x95c29e91U, 0x8eb78d6aU);
+            R_SCE_func100(0x6ef83b2eU, 0xdff7fc1eU, 0x626672f8U, 0x06755467U);
             SCE->REG_1CH = 0x00400000U;
             SCE->REG_1D0H = 0x00000000U;
             if (1U == (SCE->REG_1CH_b.B22))
             {
                 SCE->REG_ECH = 0x0000b780U;
                 SCE->REG_ECH = 0x00000001U;
-                R_SCE_func101(0x95c00417U, 0x3e17da91U, 0xd4e707f5U, 0x507b8334U);
+                R_SCE_func101(0x257e9a39U, 0xa8410bdaU, 0xa184d788U, 0xec6ce470U);
             }
             else
             {
@@ -534,7 +534,7 @@ fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t *InData_KeyIndexType, uint32_t
                 }
                 SCE->REG_74H = 0x00000000U;
                 SCE->REG_1CH = 0x00001600U;
-                R_SCE_func101(0xf99572cfU, 0x5ac43682U, 0x4fb9fccbU, 0xf028997eU);
+                R_SCE_func101(0xd45fbaa4U, 0xd6b6a7dbU, 0xcb09a1fbU, 0x26188556U);
             }
         }
         SCE->REG_ECH = 0x38000f9cU;
@@ -756,5 +756,5 @@ fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t *InData_KeyIndexType, uint32_t
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p5d_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p5d_r3.prc
 ***********************************************************************************************************************/

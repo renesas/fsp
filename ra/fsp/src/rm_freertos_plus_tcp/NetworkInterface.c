@@ -103,6 +103,8 @@ BaseType_t xNetworkInterfaceInitialise (void)
     fsp_err_t  err;
     BaseType_t xReturn = pdFAIL;
 
+    configASSERT(NULL != gp_freertos_ether);
+
     if (ETHER_ZEROCOPY_ENABLE == gp_freertos_ether->p_cfg->zerocopy)
     {
         /*NOTE:Currently does not support zero copy mode*/

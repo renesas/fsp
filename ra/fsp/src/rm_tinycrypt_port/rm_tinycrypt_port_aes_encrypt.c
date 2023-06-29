@@ -39,7 +39,42 @@ int tc_aes128_set_encrypt_key (TCAesKeySched_t s, const uint8_t * k)
     }
     else
     {
-        memcpy(&(s->words[0]), k, TC_AES_KEY_SIZE);
+        memcpy(&(s->words[0]), k, SIZE_AES_128BIT_KEYLEN_BYTES);
+        s->key_size = SIZE_AES_128BIT_KEYLEN_BITS;
+    }
+
+    return ret;
+}
+
+int tc_aes192_set_encrypt_key (TCAesKeySched_t s, const uint8_t * k)
+{
+    int ret = TC_CRYPTO_SUCCESS;
+
+    if ((s == (TCAesKeySched_t) 0) || (k == NULL))
+    {
+        ret = TC_CRYPTO_FAIL;
+    }
+    else
+    {
+        memcpy(&(s->words[0]), k, SIZE_AES_192BIT_KEYLEN_BYTES);
+        s->key_size = SIZE_AES_192BIT_KEYLEN_BITS;
+    }
+
+    return ret;
+}
+
+int tc_aes256_set_encrypt_key (TCAesKeySched_t s, const uint8_t * k)
+{
+    int ret = TC_CRYPTO_SUCCESS;
+
+    if ((s == (TCAesKeySched_t) 0) || (k == NULL))
+    {
+        ret = TC_CRYPTO_FAIL;
+    }
+    else
+    {
+        memcpy(&(s->words[0]), k, SIZE_AES_256BIT_KEYLEN_BYTES);
+        s->key_size = SIZE_AES_256BIT_KEYLEN_BITS;
     }
 
     return ret;
@@ -54,7 +89,7 @@ int tc_aes_encrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
     uint32_t   local_out[TC_AES_BLOCK_SIZE / 4U] = {0U};
     uint32_t   local_in[TC_AES_BLOCK_SIZE / 4U]  = {0U};
     uint32_t   dummy_iv[4]     = {0};
-    uint32_t   indata_cmd      = change_endian_long((uint32_t)SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION);
+    uint32_t   indata_cmd      = change_endian_long((uint32_t) SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION);
     uint32_t   indata_key_type = 0;
 
 #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
@@ -88,13 +123,38 @@ int tc_aes_encrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
             p_out = (uint32_t *) out;
         }
 
-        err = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &s->words[0], dummy_iv);
-        if (err == FSP_SUCCESS)
+        if (SIZE_AES_192BIT_KEYLEN_BITS == (*s).key_size)
         {
-            HW_SCE_Aes128EncryptDecryptUpdateSub(p_in, p_out, TC_AES_BLOCK_SIZE / 4U);
-        }
+            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) &s->words[0], dummy_iv);
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes192EncryptDecryptUpdateSub(p_in, p_out, TC_AES_BLOCK_SIZE / 4U);
+            }
 
-        err = HW_SCE_Aes128EncryptDecryptFinalSub();
+            err = HW_SCE_Aes192EncryptDecryptFinalSub();
+        }
+        else if (SIZE_AES_256BIT_KEYLEN_BITS == (*s).key_size)
+        {
+            err =
+                HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &s->words[0], dummy_iv);
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes256EncryptDecryptUpdateSub(p_in, p_out, TC_AES_BLOCK_SIZE / 4U);
+            }
+
+            err = HW_SCE_Aes256EncryptDecryptFinalSub();
+        }
+        else
+        {
+            err =
+                HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &s->words[0], dummy_iv);
+            if (err == FSP_SUCCESS)
+            {
+                HW_SCE_Aes128EncryptDecryptUpdateSub(p_in, p_out, TC_AES_BLOCK_SIZE / 4U);
+            }
+
+            err = HW_SCE_Aes128EncryptDecryptFinalSub();
+        }
 
         if (FSP_SUCCESS == err)
         {

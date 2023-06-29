@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void HW_SCE_p_func304(void)
+void HW_SCE_p_func304_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -1802,8 +1802,8 @@ void HW_SCE_p_func304(void)
     SCE->REG_ECH = 0x00000080U;
     SCE->REG_ECH = 0x000037daU;
     SCE->REG_ECH = 0x0000b400U;
-    SCE->REG_ECH = 0x00000097U;
-    HW_SCE_p_func101(0x3f40f3f7U, 0xbcae5503U, 0xa1e66292U, 0x25e9989cU);
+    SCE->REG_ECH = 0x00000094U;
+    HW_SCE_p_func101(0xbffe9b14U, 0xa3660d87U, 0x6afbfd85U, 0x60ee86c1U);
     HW_SCE_p_func310();
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x000000a0U;
@@ -1824,10 +1824,10 @@ void HW_SCE_p_func304(void)
     SCE->REG_ECH = 0x00000080U;
     SCE->REG_ECH = 0x000037d9U;
     SCE->REG_ECH = 0x0000b400U;
-    SCE->REG_ECH = 0x00000098U;
-    HW_SCE_p_func101(0x2549e4eaU, 0xa0d3cc6fU, 0x23a5edaaU, 0xd5bffedaU);
+    SCE->REG_ECH = 0x00000095U;
+    HW_SCE_p_func101(0xd1f5d657U, 0xe314d678U, 0x376c88dcU, 0x75df4615U);
     HW_SCE_p_func310();
-    HW_SCE_p_func100(0xe6e2105fU, 0xf966fefeU, 0x430a3701U, 0x6a1b7bcbU);
+    HW_SCE_p_func100(0x4aa63900U, 0xc38d6a07U, 0xb3fe94bcU, 0x286da68cU);
     SCE->REG_104H = 0x00000058U;
     SCE->REG_E0H = 0x80010020U;
     /* WAIT_LOOP */
@@ -1848,10 +1848,10 @@ void HW_SCE_p_func304(void)
     SCE->REG_ECH = 0x00000080U;
     SCE->REG_ECH = 0x000037d8U;
     SCE->REG_ECH = 0x0000b400U;
-    SCE->REG_ECH = 0x00000099U;
-    HW_SCE_p_func101(0xfa5ebe91U, 0x608dd2a2U, 0x703e6190U, 0xe345f97aU);
+    SCE->REG_ECH = 0x00000096U;
+    HW_SCE_p_func101(0x5a216a36U, 0x6416411bU, 0xc2a7f063U, 0x4bca700bU);
     HW_SCE_p_func310();
-    HW_SCE_p_func100(0x7098f4e1U, 0x755029a7U, 0xcf086487U, 0x3a769432U);
+    HW_SCE_p_func100(0xd59a05dbU, 0x8ad34186U, 0x98e6f9a9U, 0x07ded72dU);
     SCE->REG_104H = 0x00000058U;
     SCE->REG_E0H = 0x80010020U;
     /* WAIT_LOOP */
@@ -1867,7 +1867,7 @@ void HW_SCE_p_func304(void)
     SCE->REG_ECH = 0x3800db78U;
     SCE->REG_E0H = 0x00000080U;
     SCE->REG_1CH = 0x00A60000U;
-    HW_SCE_p_func100(0xb5e88869U, 0x47d1e807U, 0x1f8e358dU, 0x13c8289fU);
+    HW_SCE_p_func100(0xf2afe4e5U, 0x068a0897U, 0x1c1fdb88U, 0x10ebfab5U);
     SCE->REG_1CH = 0x00400000U;
     SCE->REG_1D0H = 0x00000000U;
     if (1U == (SCE->REG_1CH_b.B22))
@@ -1896,11 +1896,11 @@ void HW_SCE_p_func304(void)
         }
         SCE->REG_100H = change_endian_long(0x00000000U);
         SCE->REG_28H = 0x00bf0001U;
-        HW_SCE_p_func101(0x1e90575aU, 0x6f9e8914U, 0x56924477U, 0x20dfd07dU);
+        HW_SCE_p_func101(0x91c25c8fU, 0xeb55526cU, 0xbd5b2addU, 0x3054a131U);
     }
     else
     {
-        HW_SCE_p_func101(0xee9e77e3U, 0x6eae0791U, 0x4ab75099U, 0x0a8da033U);
+        HW_SCE_p_func101(0x7286ef8fU, 0x826423faU, 0x7d02c7d2U, 0xa490a0b7U);
     }
     SCE->REG_24H = 0x000009c0U;
     /* WAIT_LOOP */
@@ -2180,5 +2180,5 @@ void HW_SCE_p_func304(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_func304.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCEp_func304_r1.prc
 ***********************************************************************************************************************/

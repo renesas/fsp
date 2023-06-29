@@ -165,12 +165,12 @@ fsp_err_t R_SCE_Aes256CcmEncryptInitSub(uint32_t *InData_KeyType, uint32_t *InDa
             {
                 /* waiting */
             }
-            SCE->REG_100H = change_endian_long(0x00000041U);
-            R_SCE_func101(0xcbac6198U, 0x8ebbe462U, 0xcedd92ffU, 0x4aa67becU);
+            SCE->REG_100H = change_endian_long(0x000000a1U);
+            R_SCE_func101(0x3c04eaf7U, 0xfc9bc703U, 0xf1b9b14aU, 0x850bdd81U);
             R_SCE_func068();
             SCE->REG_ECH = 0x0000b4e0U;
             SCE->REG_ECH = 0x85d04999U;
-            R_SCE_func101(0xbd5fb9a7U, 0xdda0e121U, 0x9cdf3d11U, 0x428c52f0U);
+            R_SCE_func101(0xc1c43a08U, 0x0d921fc5U, 0xdd7cab74U, 0x7095efa7U);
         }
         SCE->REG_104H = 0x00000058U;
         SCE->REG_E0H = 0x800103a0U;
@@ -331,5 +331,5 @@ fsp_err_t R_SCE_Aes256CcmEncryptInitSub(uint32_t *InData_KeyType, uint32_t *InDa
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_pa1i_r1.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_pa1i_r2.prc
 ***********************************************************************************************************************/

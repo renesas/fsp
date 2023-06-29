@@ -1680,10 +1680,10 @@ fsp_err_t R_SCE_TlsCertificateVerificationSub(uint32_t *InData_Sel_PubKeyType, u
                                 {
                                     /* waiting */
                                 }
-                                SCE->REG_100H = change_endian_long(0x00000032U);
-                                R_SCE_func101(0x4760d501U, 0x6b43073cU, 0xee8dcf28U, 0xd45cfbc6U);
+                                SCE->REG_100H = change_endian_long(0x00000020U);
+                                R_SCE_func101(0x5bd5fab7U, 0xeb5a38c5U, 0x80588e35U, 0x68f7839cU);
                                 R_SCE_func059();
-                                R_SCE_func100(0x535465c0U, 0x9e2f5419U, 0xc0fe56c9U, 0xa1fac8f0U);
+                                R_SCE_func100(0xb3222b07U, 0x1a52c9a6U, 0xe0c5fb33U, 0xed989deeU);
                                 SCE->REG_00H = 0x00002343U;
                                 SCE->REG_2CH = 0x00000020U;
                                 SCE->REG_D0H = 0x40000300U;
@@ -1707,7 +1707,7 @@ fsp_err_t R_SCE_TlsCertificateVerificationSub(uint32_t *InData_Sel_PubKeyType, u
                                     /* waiting */
                                 }
                                 SCE->REG_1CH = 0x00001800U;
-                                R_SCE_func100(0x513c1e16U, 0xfac98e31U, 0xf6689673U, 0x6a120cb0U);
+                                R_SCE_func100(0x596ef83eU, 0x91ba2375U, 0xcc25c61cU, 0x73d04be2U);
                                 SCE->REG_104H = 0x00000052U;
                                 SCE->REG_C4H = 0x00000c84U;
                                 /* WAIT_LOOP */
@@ -1735,7 +1735,7 @@ fsp_err_t R_SCE_TlsCertificateVerificationSub(uint32_t *InData_Sel_PubKeyType, u
                                 OutData_PubKey[iLoop + 1] = SCE->REG_100H;
                                 OutData_PubKey[iLoop + 2] = SCE->REG_100H;
                                 OutData_PubKey[iLoop + 3] = SCE->REG_100H;
-                                R_SCE_func100(0xc464e8c7U, 0xb500ad01U, 0xde08bb5cU, 0xe30e1e33U);
+                                R_SCE_func100(0xb4dbcc80U, 0xe818c300U, 0x5d8f4fcaU, 0x7ef22a85U);
                                 SCE->REG_E0H = 0x81040000U;
                                 SCE->REG_04H = 0x00000612U;
                                 /* WAIT_LOOP */
@@ -1762,7 +1762,7 @@ fsp_err_t R_SCE_TlsCertificateVerificationSub(uint32_t *InData_Sel_PubKeyType, u
                                     /* waiting */
                                 }
                                 OutData_PubKey[3] = SCE->REG_100H;
-                                R_SCE_func102(0xf7df9bd1U, 0x002f88b6U, 0x618e9838U, 0x5b36a4fcU);
+                                R_SCE_func102(0x90855fa8U, 0xe3f70507U, 0xd9811172U, 0x4b728c9dU);
                                 SCE->REG_1B8H = 0x00000040U;
                                 /* WAIT_LOOP */
                                 while (0U != SCE->REG_18H_b.B12)
@@ -1780,5 +1780,5 @@ fsp_err_t R_SCE_TlsCertificateVerificationSub(uint32_t *InData_Sel_PubKeyType, u
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe1_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe1_r3.prc
 ***********************************************************************************************************************/

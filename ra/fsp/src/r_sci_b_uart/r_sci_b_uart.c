@@ -966,7 +966,11 @@ fsp_err_t R_SCI_B_UART_BaudCalculate (uint32_t                     baudrate,
     uint32_t hit_mddr    = 0U;
     uint32_t divisor     = 0U;
 
+#if (BSP_FEATURE_BSP_HAS_SCISPI_CLOCK)
     uint32_t freq_hz = R_FSP_SciSpiClockHzGet();
+#else
+    uint32_t freq_hz = R_FSP_SciClockHzGet();
+#endif
 
     for (uint32_t select_16_base_clk_cycles = 0U;
          select_16_base_clk_cycles <= 1U && (hit_bit_err > ((int32_t) baud_rate_error_x_1000));

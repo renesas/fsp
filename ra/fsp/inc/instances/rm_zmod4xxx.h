@@ -64,6 +64,9 @@ typedef enum e_rm_zmod4xxx_lib_type
     RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN_ULP,
     RM_ZMOD4410_LIB_TYPE_ODOR,
     RM_ZMOD4410_LIB_TYPE_SULFUR_ODOR,
+    RM_ZMOD4410_LIB_TYPE_REL_IAQ,
+    RM_ZMOD4410_LIB_TYPE_REL_IAQ_ULP,
+    RM_ZMOD4410_LIB_TYPE_PBAQ,
     RM_ZMOD4510_LIB_TYPE_OAQ_1ST_GEN,
     RM_ZMOD4510_LIB_TYPE_OAQ_2ND_GEN,
     RM_ZMOD4450_LIB_TYPE_RAQ,
@@ -163,6 +166,12 @@ fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate(rm_zmod4xxx_ctrl_t * const         
 fsp_err_t RM_ZMOD4XXX_RaqDataCalculate(rm_zmod4xxx_ctrl_t * const     p_api_ctrl,
                                        rm_zmod4xxx_raw_data_t * const p_raw_data,
                                        rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data);
+fsp_err_t RM_ZMOD4XXX_RelIaqDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
+                                          rm_zmod4xxx_raw_data_t * const     p_raw_data,
+                                          rm_zmod4xxx_rel_iaq_data_t * const p_zmod4xxx_data);
+fsp_err_t RM_ZMOD4XXX_PbaqDataCalculate(rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
+                                        rm_zmod4xxx_raw_data_t * const  p_raw_data,
+                                        rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data);
 fsp_err_t RM_ZMOD4XXX_Close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)

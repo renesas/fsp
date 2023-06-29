@@ -62,7 +62,6 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub(uint32_t *InData_KeyIndex, uint32_t *In
     uint32_t KEY_ADR  = 0U;
     uint32_t OFS_ADR  = 0U;
     uint32_t MAX_CNT2 = 0U;
-    uint32_t InData_KeyType[1] = {0};
     (void)iLoop;
     (void)iLoop1;
     (void)iLoop2;
@@ -75,6 +74,7 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub(uint32_t *InData_KeyIndex, uint32_t *In
     (void)KEY_ADR;
     (void)OFS_ADR;
     (void)MAX_CNT2;
+    uint32_t InData_KeyType[1] = {0};
     if (0x0U != (SCE->REG_1BCH & 0x1fU))
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
@@ -166,12 +166,12 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub(uint32_t *InData_KeyIndex, uint32_t *In
             {
                 /* waiting */
             }
-            SCE->REG_100H = change_endian_long(0x00000041U);
-            HW_SCE_p_func101(0x99001baaU, 0xbbc90a1bU, 0x2d78cff1U, 0x86c63a14U);
+            SCE->REG_100H = change_endian_long(0x000000a1U);
+            HW_SCE_p_func101(0xd206830aU, 0xb87a4d75U, 0x6583f40eU, 0x6464e8b7U);
             HW_SCE_p_func068();
             SCE->REG_ECH = 0x0000b4e0U;
             SCE->REG_ECH = 0x01d04999U;
-            HW_SCE_p_func101(0xae2770a2U, 0x4aaa0e2cU, 0xd3b80b64U, 0x1eb5ae96U);
+            HW_SCE_p_func101(0x27595344U, 0x35dc3700U, 0x9f30fa1fU, 0xc3288152U);
         }
         SCE->REG_104H = 0x00000058U;
         SCE->REG_E0H = 0x800103a0U;
@@ -332,5 +332,5 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub(uint32_t *InData_KeyIndex, uint32_t *In
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pa1i_r1.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCEp_pa1i_r2.prc
 ***********************************************************************************************************************/

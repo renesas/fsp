@@ -150,9 +150,6 @@ fsp_err_t R_DTC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const *
     FSP_ERROR_RETURN(p_ctrl->open != DTC_OPEN, FSP_ERR_ALREADY_OPEN);
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_extend);
-    FSP_ASSERT(NULL != p_cfg->p_info);
-    fsp_err_t err = r_dtc_length_assert(p_cfg->p_info);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
     /* One time initialization for all DTC instances. */
@@ -170,7 +167,14 @@ fsp_err_t R_DTC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const *
     p_ctrl->irq = irq;
 
     /* Copy p_info into the DTC vector table. */
-    r_dtc_set_info(p_ctrl, p_cfg->p_info);
+    if (p_cfg->p_info)
+    {
+#if DTC_CFG_PARAM_CHECKING_ENABLE
+        fsp_err_t err = r_dtc_length_assert(p_cfg->p_info);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
+        r_dtc_set_info(p_ctrl, p_cfg->p_info);
+    }
 
     /* Mark driver as open by initializing it to "DTC" in its ASCII equivalent. */
     p_ctrl->open = DTC_OPEN;

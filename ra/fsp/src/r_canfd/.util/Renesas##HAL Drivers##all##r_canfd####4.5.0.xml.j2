@@ -71,23 +71,19 @@
                 ((parseInt("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.payload')}}".substring("enum.driver.canfd.fifo.payload.".length)) + 12) * parseInt("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.depth')}}".substring("enum.driver.canfd.fifo.depth.".length)) * ("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.enable')}}" == "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.enable.enabled" ? 1 : 0)) +{% endfor %}
                 ((parseInt("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.payload')}}".substring("enum.driver.canfd.fifo.payload.".length)) + 12) * parseInt("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.depth')}}".substring("enum.driver.canfd.fifo.depth.".length)) * ("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.enable')}}" == "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{ num_fifos - 1 }}.enable.enabled" ? 1 : 0))) &lt;= ${config.bsp.fsp.mcu.canfd.buffer_ram}
         </constraint>
+{%- if 'r_canfd' ==  module_variant %}
         <constraint display="The maximum configurable payload on this MCU is 8 bytes.">
             ("${interface.mcu.feature_set.b}" &gt; "0") ||
             (("{{deref_id(id_prefix,'rxmb.size')}}" === "{{id_prefix}}.driver.{{ id_name() }}.rxmb.size.8") &amp;&amp;{% for fifo_number in range(num_fifos - 1) %}
              ("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.payload')}}" === "enum.driver.canfd.fifo.payload.8") &amp;&amp;{% endfor %}
              ("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.payload')}}" === "enum.driver.canfd.fifo.payload.8"))
         </constraint>
-        <constraint display="A Receive FIFO interrupt is enabled but the priority is set to Disabled.">
-            !(("${config.driver.{{ id_name() }}.rxfifo.ipl}" === "_disabled") &amp;&amp;
-              ({% for fifo_number in range(num_fifos - 1) %}
-               (("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.int_mode')}}" != "enum.driver.canfd.fifo.int_mode.disabled") &amp;&amp; ("{{deref_id(id_prefix,'rxfifo.'~fifo_number~'.enable')}}" === "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{fifo_number}}.enable.enabled")) ||{% endfor %}
-               (("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.int_mode')}}" != "enum.driver.canfd.fifo.int_mode.disabled") &amp;&amp; ("{{deref_id(id_prefix,'rxfifo.'~(num_fifos-1)~'.enable')}}" === "{{id_prefix}}.driver.{{ id_name() }}.rxfifo.{{(num_fifos-1)}}.enable.enabled"))))
-        </constraint>
         <constraint display="The FD Payload Overflow function is not available on MCUs without Flexible Data support.">
             ("${interface.mcu.feature_set.b}" &gt; "0") ||
             (("{{deref_id(id_prefix,'fd.overflow')}}" === "{{id_prefix}}.driver.{{ id_name() }}.fd.overflow.reject") &amp;&amp;
              (!testOption("{{deref_id(id_prefix,'global_err.sources')}}", "{{id_prefix}}.driver.{{ id_name() }}.global_err.sources.overflow")))
         </constraint>
+{%- endif %}
 {% endmacro %}
 <?xml version="1.0" ?>
 <!--
@@ -121,10 +117,10 @@ This file was generated using: ra/fsp/src/r_canfd/.util/canfd_gen.py
         </property>
 {%- if 'r_canfd' == module_variant %}{{ global_config('config',8) }}{%- endif %}
         <property default="{%-if 'r_canfd' == module_variant %}32{%- else %}16{%- endif %}" display="Reception|Acceptance Filtering|Channel 0 Rule Count" id="config.driver.{{ id_name() }}.afl.ch0_num" description="Number of acceptance filter list rules dedicated to Channel 0.">
-            <constraint display="The number of AFL rules must be an integer between 0 and 128.">testInteger("${config.driver.{{ id_name() }}.afl.ch0_num}")  &amp;&amp; (("${config.driver.{{ id_name() }}.afl.ch0_num}" &gt;= 0) &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch0_num}" &lt;= 128))</constraint>
+            <constraint display="The number of AFL rules must be a positive integer.">testInteger("${config.driver.{{ id_name() }}.afl.ch0_num}")  &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch0_num}" &gt;= 0)</constraint>
         </property>
         <property default="{%-if 'r_canfd' == module_variant %}0{%- else %}16{%- endif %}" display="Reception|Acceptance Filtering|Channel 1 Rule Count" id="config.driver.{{ id_name() }}.afl.ch1_num" description="Number of acceptance filter list rules dedicated to Channel 1.">
-            <constraint display="The number of AFL rules must be an integer between 0 and 128.">testInteger("${config.driver.{{ id_name() }}.afl.ch1_num}")  &amp;&amp; (("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt;= 0) &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch1_num}" &lt;= 128))</constraint>
+            <constraint display="The number of AFL rules must be a positive integer.">testInteger("${config.driver.{{ id_name() }}.afl.ch1_num}")  &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt;= 0)</constraint>
         </property>
         <content>
             #ifdef __cplusplus
@@ -194,11 +190,14 @@ This file was generated using: ra/fsp/src/r_canfd/.util/canfd_gen.py
         <constraint display="Only Channel 0 is available on this MCU.">
             ("${config.bsp.fsp.mcu.canfd.num_channels}" === "2") || !(("${module.driver.{{ id_name() }}.channel}" &gt; 0) || ("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt; 0) || ("${config.driver.{{ id_name() }}.global_err.cb_channel}" &gt; 0))
         </constraint>
-        <constraint display="The total number of configured rules across all channels cannot exceed 128 on RA6M5 or 32 on all other MCUs.">
-            ((${config.driver.{{ id_name() }}.afl.ch0_num} + ${config.driver.{{ id_name() }}.afl.ch1_num}) &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules}) || ${config.bsp.fsp.mcu.canfd.afl_rules_independent} == 1
+        <constraint display="The total number of configured rules across all channels exceeds the maximum allowed by the MCU.">
+            ((${config.driver.{{ id_name() }}.afl.ch0_num} + ${config.driver.{{ id_name() }}.afl.ch1_num}) &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules})
         </constraint>
-        <constraint display="The total number of configured rules for each channel cannot exceed 16 on this MCU.">
-            (${config.driver.{{ id_name() }}.afl.ch0_num} &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules} &amp;&amp; ${config.driver.{{ id_name() }}.afl.ch1_num} &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules}) || ${config.bsp.fsp.mcu.canfd.afl_rules_independent} == 0
+        <constraint display="The number of configured AFL rules for channel 0 exceeds the maximum allowed by the MCU.">
+            (${config.driver.{{ id_name() }}.afl.ch0_num} &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules_each_chnl})
+        </constraint>
+        <constraint display="The number of configured AFL rules for channel 1 exceeds the maximum allowed by the MCU.">
+            (${config.driver.{{ id_name() }}.afl.ch1_num} &lt;= ${config.bsp.fsp.mcu.canfd.afl_rules_each_chnl})
         </constraint>
         <constraint display="The number of AFL rules for the configured channel is 0.">
             (("${module.driver.{{ id_name() }}.channel}" === "0") &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch0_num}" &gt; "0")) || (("${module.driver.{{ id_name() }}.channel}" === "1") &amp;&amp; ("${config.driver.{{ id_name() }}.afl.ch1_num}" &gt; "0"))
@@ -249,7 +248,7 @@ This file was generated using: ra/fsp/src/r_canfd/.util/canfd_gen.py
             <constraint display="Must be a valid integer with a minimum of 1MHz.">testInteger("${module.driver.{{ id_name() }}.bitrate.automatic.data_rate}") &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.data_rate}" &gt;= 1000000)</constraint>
         </property>
         <property default="75" display="Bitrate|Automatic|Sample Point (%)" id="module.driver.{{ id_name() }}.bitrate.automatic.sample_point" description="Specify desired sample point.">
-            <constraint display="Must be a valid integer between 60 and 99.">testInteger("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}") &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}" &gt; 60) &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}" &lt;= 99)</constraint>
+            <constraint display="Must be a valid integer between 60 and 99.">testInteger("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}") &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}" &gt;= 60) &amp;&amp; ("${module.driver.{{ id_name() }}.bitrate.automatic.sample_point}" &lt;= 99)</constraint>
         </property>
         <property default="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation.enabled" display="Bitrate|Delay Compensation" id="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation" description="When enabled the CANFD module will automatically compensate for any transceiver or bus delay between transmitted and received bits. When manually supplying bit timing values with delay compensation enabled be sure the data prescaler is 2 or smaller for correct operation.">
             <option display="Enable" id="module.driver.{{ id_name() }}.bitrate.automatic.delay_compensation.enabled" value="(1)"/>
@@ -270,7 +269,7 @@ This file was generated using: ra/fsp/src/r_canfd/.util/canfd_gen.py
             <constraint display="Value must be a non-negative integer between 1 and 128.">testInteger("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.nominal.sync_jump_width}" &lt;= 128))</constraint>
         </property>
         <property default="1" display="Bitrate|Manual|Data|Prescaler (divisor)" id="module.driver.{{ id_name() }}.manual.data.prescaler" description="Specify clock divisor for data bitrate.">
-            <constraint display="Value must be a non-negative integer between 1 and 1024.">testInteger("${module.driver.{{ id_name() }}.manual.data.prescaler}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.prescaler}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.prescaler}" &lt;= 1024))</constraint>
+            <constraint display="Value must be a non-negative integer between 1 and 256.">testInteger("${module.driver.{{ id_name() }}.manual.data.prescaler}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.prescaler}" &gt;= 1) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.prescaler}" &lt;= 256))</constraint>
         </property>
         <property default="5" display="Bitrate|Manual|Data|Time Segment 1 (Tq)" id="module.driver.{{ id_name() }}.manual.data.time_segment_1" description="Select the Time Segment 1 value. Check module usage notes for how to calculate this value.">
             <constraint display="Value must be a non-negative integer between 2 and 32.">testInteger("${module.driver.{{ id_name() }}.manual.data.time_segment_1}")  &amp;&amp; (("${module.driver.{{ id_name() }}.manual.data.time_segment_1}" &gt;= 2) &amp;&amp; ("${module.driver.{{ id_name() }}.manual.data.time_segment_1}" &lt;= 32))</constraint>
@@ -427,7 +426,7 @@ This file was generated using: ra/fsp/src/r_canfd/.util/canfd_gen.py
 '        ' +
 '        if(nominal_better)' +
 '        {' +
-'        	  BitSettingsCopy(nominal_best, nominal);' +
+'            BitSettingsCopy(nominal_best, nominal);' +
 '        }' +
 '        ' +
 '        /* Check to see if all required bitrates are exact */' +

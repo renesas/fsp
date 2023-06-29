@@ -41,7 +41,7 @@
  #include "sockets_wrapper.h"
 
 /* WiFi includes. */
- #include "rm_wifi_onchip_da16200.h"
+ #include "rm_wifi_onchip_da16xxx.h"
 
 /* Configure logs for the functions in this file. */
  #include "logging_levels.h"
@@ -200,9 +200,9 @@ BaseType_t Sockets_Connect (Socket_t   * pTcpSocket,
         }
     }
 
-    rm_wifi_onchip_da16200_avail_socket_get(&socketId);
+    rm_wifi_onchip_da16xxx_avail_socket_get(&socketId);
 
-    if ((g_sockets_num_allocated > WIFI_ONCHIP_DA16200_CFG_NUM_CREATEABLE_SOCKETS) || (socketId == UINT8_MAX))
+    if ((g_sockets_num_allocated > WIFI_ONCHIP_DA16XXX_CFG_NUM_CREATEABLE_SOCKETS) || (socketId == UINT8_MAX))
     {
         retConnect = SOCKETS_ENOSOCKETS;
     }
@@ -211,7 +211,7 @@ BaseType_t Sockets_Connect (Socket_t   * pTcpSocket,
     {
         /* Create the wrapped socket. */
         err =
-            rm_wifi_onchip_da16200_socket_create(socketId, (uint32_t) SOCKETS_SOCK_STREAM, SOCKETS_IPPROTO_V4_DA16200);
+            rm_wifi_onchip_da16xxx_socket_create(socketId, (uint32_t) SOCKETS_SOCK_STREAM, SOCKETS_IPPROTO_V4_DA16XXX);
         if (FSP_SUCCESS != err)
         {
             IotLogError("Failed to create WiFi sockets. %d", err);
@@ -221,7 +221,7 @@ BaseType_t Sockets_Connect (Socket_t   * pTcpSocket,
 
     if (SOCKETS_ERROR_NONE == retConnect)
     {
-        if (g_sockets_num_allocated < WIFI_ONCHIP_DA16200_CFG_NUM_CREATEABLE_SOCKETS)
+        if (g_sockets_num_allocated < WIFI_ONCHIP_DA16XXX_CFG_NUM_CREATEABLE_SOCKETS)
         {
             g_sockets_num_allocated++;
         }
@@ -243,7 +243,7 @@ BaseType_t Sockets_Connect (Socket_t   * pTcpSocket,
     /* Perform a DNS lookup */
     if (retConnect == SOCKETS_ERROR_NONE)
     {
-        err = rm_wifi_onchip_da16200_dns_query(pHostName, ipAddressArray);
+        err = rm_wifi_onchip_da16xxx_dns_query(pHostName, ipAddressArray);
 
         if (FSP_SUCCESS != err)
         {
@@ -258,7 +258,7 @@ BaseType_t Sockets_Connect (Socket_t   * pTcpSocket,
         ipAddress = ((uint32_t) (ipAddressArray[0]) << 24) + ((uint32_t) (ipAddressArray[1]) << 16) +
                     ((uint32_t) (ipAddressArray[2]) << 8) + (uint32_t) (ipAddressArray[3]);
 
-        err = rm_wifi_onchip_da16200_tcp_connect(socketId, ipAddress, port);
+        err = rm_wifi_onchip_da16xxx_tcp_connect(socketId, ipAddress, port);
 
         if (FSP_SUCCESS != err)
         {
@@ -306,7 +306,7 @@ void Sockets_Disconnect (Socket_t xSocket)
             /* Receive all the data before socket close. */
             do
             {
-                recvLength = rm_wifi_onchip_da16200_recv(pWiFiSocketContext->socketId,
+                recvLength = rm_wifi_onchip_da16xxx_recv(pWiFiSocketContext->socketId,
                                                          buf,
                                                          128, // NOLINT
                                                          pWiFiSocketContext->receiveTimeout);
@@ -314,7 +314,7 @@ void Sockets_Disconnect (Socket_t xSocket)
             } while (recvLength > 0);
 
             /* Close sockets. */
-            if (FSP_SUCCESS != rm_wifi_onchip_da16200_socket_disconnect(pWiFiSocketContext->socketId))
+            if (FSP_SUCCESS != rm_wifi_onchip_da16xxx_socket_disconnect(pWiFiSocketContext->socketId))
             {
                 IotLogWarn("Failed to destroy connection.");
                 retClose = SOCKETS_SOCKET_ERROR;
@@ -348,7 +348,7 @@ int32_t Sockets_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength)
         int32_t recvLength = 0;
 
         recvLength =
-            rm_wifi_onchip_da16200_recv(pWiFiSocketContext->socketId,
+            rm_wifi_onchip_da16xxx_recv(pWiFiSocketContext->socketId,
                                         buf,
                                         xBufferLength,
                                         pWiFiSocketContext->receiveTimeout);
@@ -388,7 +388,7 @@ int32_t Sockets_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLengt
     else
     {
         sentLength =
-            rm_wifi_onchip_da16200_send(pWiFiSocketContext->socketId, buf, xDataLength,
+            rm_wifi_onchip_da16xxx_send(pWiFiSocketContext->socketId, buf, xDataLength,
                                         pWiFiSocketContext->sendTimeout);
 
         if (sentLength < 0)

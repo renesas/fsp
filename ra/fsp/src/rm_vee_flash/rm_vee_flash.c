@@ -230,6 +230,24 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
     p_ctrl->p_flash      = ((rm_vee_flash_cfg_t *) p_ctrl->p_cfg->p_extend)->p_flash;
     p_ctrl->segment_size = p_cfg->total_size / p_cfg->num_segments;
 
+    p_ctrl->rec_hdr.length = 0;
+    p_ctrl->rec_hdr.offset = 0;
+    p_ctrl->p_rec_data     = NULL;
+
+    p_ctrl->seg_hdr.refresh_cnt = 0;
+    p_ctrl->seg_hdr.pad         = 0;
+    p_ctrl->seg_hdr.valid_code  = RM_VEE_FLASH_VALID_CODE;
+
+    p_ctrl->rec_end.id         = (uint16_t) RM_VEE_FLASH_ID_INVALID;
+    p_ctrl->rec_end.valid_code = RM_VEE_FLASH_VALID_CODE;
+
+    p_ctrl->ref_hdr.pad        = 0;
+    p_ctrl->ref_hdr.valid_code = RM_VEE_FLASH_VALID_CODE;
+
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
+
     /* Open flash */
     err = p_ctrl->p_flash->p_api->open(p_ctrl->p_flash->p_ctrl, p_ctrl->p_flash->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -284,22 +302,6 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
     else
     {
         p_ctrl->seg_hdr.refresh_cnt = ((rm_vee_seg_hdr_t *) p_ctrl->active_seg_addr)->refresh_cnt;
-        p_ctrl->seg_hdr.pad         = 0;
-        p_ctrl->seg_hdr.valid_code  = RM_VEE_FLASH_VALID_CODE;
-
-        p_ctrl->rec_hdr.length = 0;
-        p_ctrl->rec_hdr.offset = 0;
-        p_ctrl->p_rec_data     = NULL;
-
-        p_ctrl->rec_end.id         = (uint16_t) RM_VEE_FLASH_ID_INVALID;
-        p_ctrl->rec_end.valid_code = RM_VEE_FLASH_VALID_CODE;
-
-        p_ctrl->ref_hdr.pad        = 0;
-        p_ctrl->ref_hdr.valid_code = RM_VEE_FLASH_VALID_CODE;
-
-        p_ctrl->p_callback        = p_cfg->p_callback;
-        p_ctrl->p_context         = p_cfg->p_context;
-        p_ctrl->p_callback_memory = NULL;
 
         p_ctrl->mode = RM_VEE_FLASH_PRV_MODE_NORMAL;
 
@@ -752,6 +754,7 @@ fsp_err_t RM_VEE_FLASH_Close (rm_vee_ctrl_t * const p_api_ctrl)
 static fsp_err_t rm_vee_internal_open (rm_vee_flash_instance_ctrl_t * const p_ctrl)
 {
     fsp_err_t err;
+    bool      err_not_initialized = false;
 
     /* Clear record offset cache */
     memset((void *) &p_ctrl->p_cfg->rec_offset[0], 0,
@@ -762,14 +765,32 @@ static fsp_err_t rm_vee_internal_open (rm_vee_flash_instance_ctrl_t * const p_ct
 
     /* Determine active segment and erase incomplete segments if any (refresh or erase interrupted). */
     err = rm_vee_inspect_segments(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    /* Get latest record location for each ID and determine next write location. */
-    err = rm_vee_load_record_table(p_ctrl, true);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Catch FSP_ERR_NOT_INITIALIZED but continue checking records and refdata so that refresh is done properly. */
+    if (FSP_ERR_NOT_INITIALIZED == err)
+    {
+        err_not_initialized = true;
+    }
+    else
+    {
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
 
     p_ctrl->new_refdata_valid = false;
     p_ctrl->factory_refdata   = false;
+
+    /* Get latest record location for each ID and determine next write location. */
+    err = rm_vee_load_record_table(p_ctrl, true);
+
+    /* Catch FSP_ERR_NOT_INITIALIZED but continue checking refdata so that refresh is done properly. */
+    if (FSP_ERR_NOT_INITIALIZED == err)
+    {
+        err_not_initialized = true;
+    }
+    else
+    {
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
 
 #if RM_VEE_FLASH_CFG_REF_DATA_SUPPORT
     if (0 != p_ctrl->p_cfg->ref_data_size)
@@ -780,9 +801,15 @@ static fsp_err_t rm_vee_internal_open (rm_vee_flash_instance_ctrl_t * const p_ct
     }
 #endif
 
+    /* If FSP_ERR_NOT_INITIALIZED was caught then return FSP_ERR_NOT_INITIALIZED so that a refresh happens. */
+    if (err_not_initialized)
+    {
+        return FSP_ERR_NOT_INITIALIZED;
+    }
+
     p_ctrl->state = RM_VEE_FLASH_PRV_STATES_READY;
 
-    return err;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

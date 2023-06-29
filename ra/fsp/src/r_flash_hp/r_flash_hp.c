@@ -589,12 +589,28 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
         }
 
   #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
-        uint32_t rom_end =
-            (FLASH_HP_PRV_DUALSEL_BANKMD_MASK ==
-             (*flash_hp_dualsel & FLASH_HP_PRV_DUALSEL_BANKMD_MASK)) ? BSP_ROM_SIZE_BYTES : (BSP_ROM_SIZE_BYTES &
-                                                                                             ~UINT16_MAX) / 2;
+        uint32_t rom_end = 0;
 
-        FSP_ERROR_RETURN((start_address & FLASH_HP_PRV_BANK1_MASK) + num_bytes <= rom_end, FSP_ERR_INVALID_BLOCKS);
+        if ((FLASH_HP_PRV_DUALSEL_BANKMD_MASK != (*flash_hp_dualsel & FLASH_HP_PRV_DUALSEL_BANKMD_MASK)))
+        {
+            /* Start address out of range  */
+            rom_end = BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START + ((BSP_ROM_SIZE_BYTES & ~UINT16_MAX) / 2);
+            FSP_ERROR_RETURN(start_address < rom_end, FSP_ERR_INVALID_ADDRESS);
+
+            /* Region to erase must fall within bank */
+            rom_end = (BSP_ROM_SIZE_BYTES & ~UINT16_MAX) / 2;
+            FSP_ERROR_RETURN((start_address & FLASH_HP_PRV_BANK1_MASK) + num_bytes <= rom_end, FSP_ERR_INVALID_BLOCKS);
+        }
+        else
+        {
+            /* Start address out of range  */
+            rom_end = BSP_FEATURE_FLASH_CODE_FLASH_START + BSP_ROM_SIZE_BYTES;
+            FSP_ERROR_RETURN(start_address < rom_end, FSP_ERR_INVALID_ADDRESS);
+
+            /* Requested region to erase out of range  */
+            FSP_ERROR_RETURN(start_address + num_bytes <= rom_end, FSP_ERR_INVALID_BLOCKS);
+        }
+
   #else
         FSP_ERROR_RETURN(start_address + num_bytes <= (BSP_FEATURE_FLASH_CODE_FLASH_START + BSP_ROM_SIZE_BYTES),
                          FSP_ERR_INVALID_BLOCKS);

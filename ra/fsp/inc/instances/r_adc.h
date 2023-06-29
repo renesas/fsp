@@ -97,8 +97,9 @@ typedef enum e_adc_mask
     ADC_MASK_CHANNEL_25  = (1U << 25U),                            ///< Channel 25 mask
     ADC_MASK_CHANNEL_26  = (1U << 26U),                            ///< Channel 26 mask
     ADC_MASK_CHANNEL_27  = (1U << 27U),                            ///< Channel 27 mask
-    ADC_MASK_TEMPERATURE = (1U << 28UL),                           ///< Temperature sensor channel mask
-    ADC_MASK_VOLT        = (1U << 29UL),                           ///< Voltage reference channel mask
+    ADC_MASK_CHANNEL_28  = (1U << 28U),                            ///< Channel 28 mask
+    ADC_MASK_TEMPERATURE = (1U << 29UL),                           ///< Temperature sensor channel mask
+    ADC_MASK_VOLT        = (1U << 30UL),                           ///< Voltage reference channel mask
     ADC_MASK_SENSORS     = (ADC_MASK_TEMPERATURE | ADC_MASK_VOLT), ///< All sensor channel mask
 } adc_mask_t;
 
@@ -217,6 +218,7 @@ typedef enum e_adc_window_b_channel
     ADC_WINDOW_B_CHANNEL_25,
     ADC_WINDOW_B_CHANNEL_26,
     ADC_WINDOW_B_CHANNEL_27,
+    ADC_WINDOW_B_CHANNEL_28,
     ADC_WINDOW_B_CHANNEL_TEMPERATURE = 32,
     ADC_WINDOW_B_CHANNEL_VOLT        = 33,
 } adc_window_b_channel_t;

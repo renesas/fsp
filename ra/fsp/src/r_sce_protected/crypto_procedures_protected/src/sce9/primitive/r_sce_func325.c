@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void R_SCE_func325(void)
+void R_SCE_func325_r1(void)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;
@@ -236,10 +236,10 @@ void R_SCE_func325(void)
             R_SCE_func100(0x5e070d2bU, 0x2861ec9cU, 0xddebfea5U, 0x5e6be40aU);
             R_SCE_func314(616+32);
             SCE->REG_ECH = 0x0000b7a0U;
-            SCE->REG_ECH = 0x000000f0U;
-            R_SCE_func101(0x8504baf0U, 0x98c213a7U, 0x7ba693a6U, 0xbe05b697U);
+            SCE->REG_ECH = 0x000000f4U;
+            R_SCE_func101(0xff70890fU, 0x42bf2db5U, 0x47f3d876U, 0x15efdd95U);
             R_SCE_func318();
-            R_SCE_func100(0xc97a2978U, 0x949d76fcU, 0x49120e25U, 0xfb5ec39aU);
+            R_SCE_func100(0x33b2c103U, 0x35cb8539U, 0x56b06866U, 0x4496966fU);
             SCE->REG_28H = 0x009f0001U;
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -250,13 +250,13 @@ void R_SCE_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x01ef2f1cU);
             R_SCE_func080();
-            R_SCE_func100(0xc9848707U, 0x732fe66bU, 0xa4c3e64aU, 0x0ab5e387U);
+            R_SCE_func100(0xea115848U, 0xc136437aU, 0x04fe56c0U, 0xd48d25ddU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000022U;
             R_SCE_func319(136);
-            R_SCE_func100(0x7a59ac3cU, 0xab0ae38aU, 0xd0306db7U, 0x8c5feb38U);
+            R_SCE_func100(0xbc4c710eU, 0xc7de105dU, 0xc8d43f55U, 0x27945787U);
             R_SCE_func314(136+32);
-            R_SCE_func100(0xf3a0d3c7U, 0x0dec92b0U, 0xd17099d7U, 0x06a2d285U);
+            R_SCE_func100(0x65d1858eU, 0x03b01766U, 0x42993855U, 0x94615f05U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -266,13 +266,13 @@ void R_SCE_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x012e06e6U);
             R_SCE_func080();
-            R_SCE_func100(0x0cef17afU, 0x00de804eU, 0xd14e112aU, 0x797d9bdeU);
+            R_SCE_func100(0x9e9a7975U, 0xdc725576U, 0xef02d451U, 0xa467d07bU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000023U;
             R_SCE_func319(172);
-            R_SCE_func100(0x9ca71154U, 0x37bd596bU, 0x21278a1eU, 0x551d02f1U);
+            R_SCE_func100(0x6a7e51c7U, 0x0eb23b27U, 0x03540e70U, 0xe742d295U);
             R_SCE_func314(172+32);
-            R_SCE_func100(0xea715054U, 0x50f39232U, 0x606179a9U, 0xaa3c0311U);
+            R_SCE_func100(0x317f2bafU, 0xb085e6b7U, 0x9f0747f6U, 0x64a609a5U);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -282,13 +282,13 @@ void R_SCE_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x0100abe1U);
             R_SCE_func080();
-            R_SCE_func100(0xa687f8dbU, 0x5cb7e174U, 0x0e863223U, 0x911f200bU);
+            R_SCE_func100(0xd3e19b21U, 0xb41fa8a9U, 0x435dd6abU, 0xbe11660eU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000020U;
             R_SCE_func319(208);
-            R_SCE_func100(0x909ebb52U, 0x60af5848U, 0x6997f317U, 0xf434ba3fU);
+            R_SCE_func100(0x5576a380U, 0x6246414cU, 0xad16a8caU, 0x4339e99eU);
             R_SCE_func314(208+32);
-            R_SCE_func101(0x45c1f242U, 0x313d5619U, 0x3572a9ecU, 0xf5a37769U);
+            R_SCE_func101(0xbb2ae5dfU, 0x7a22b126U, 0xac410c1cU, 0x20aeb880U);
         }
         SCE->REG_ECH = 0x3800da9fU;
         SCE->REG_E0H = 0x00000080U;
@@ -478,10 +478,10 @@ void R_SCE_func325(void)
             R_SCE_func100(0x0b5d830eU, 0x25e4e603U, 0xddf8cacdU, 0x8cc7eea0U);
             R_SCE_func314(616+32);
             SCE->REG_ECH = 0x0000b7a0U;
-            SCE->REG_ECH = 0x000000f1U;
-            R_SCE_func101(0x9e2fe872U, 0xe3fe8487U, 0xe8e3d1c3U, 0x3600421cU);
+            SCE->REG_ECH = 0x000000f5U;
+            R_SCE_func101(0x5e20bf36U, 0x3430e9e4U, 0x748595e5U, 0x1fa1c9d6U);
             R_SCE_func318();
-            R_SCE_func100(0x9993f00bU, 0xd43b20d5U, 0x8ccd0186U, 0x169b9b48U);
+            R_SCE_func100(0xc2ba1825U, 0x298bad26U, 0x9071d1a1U, 0x66e7b5dcU);
             SCE->REG_28H = 0x009f0001U;
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
@@ -492,13 +492,13 @@ void R_SCE_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x01ef2f1cU);
             R_SCE_func080();
-            R_SCE_func100(0xa0044513U, 0x02c142f2U, 0xb083d6b6U, 0xf436a715U);
+            R_SCE_func100(0x996c6c24U, 0x58ae383bU, 0xcae34a0dU, 0x11cb0722U);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000022U;
             R_SCE_func319(136);
-            R_SCE_func100(0xdd3473c5U, 0x5c56b339U, 0x44be53d2U, 0xdec4eae4U);
+            R_SCE_func100(0x16da167aU, 0x70428448U, 0x883bc530U, 0x348535edU);
             R_SCE_func314(136+32);
-            R_SCE_func100(0xe3c006cdU, 0x4a3d24b9U, 0x35583656U, 0x7e1c7f89U);
+            R_SCE_func100(0x0282e010U, 0xaf6c444aU, 0xce5dfdc8U, 0x973108adU);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -508,13 +508,13 @@ void R_SCE_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x012e06e6U);
             R_SCE_func080();
-            R_SCE_func100(0xf05de98dU, 0x1a5391c5U, 0x250f290cU, 0x9b2cc401U);
+            R_SCE_func100(0x5a2de7abU, 0x358ae496U, 0xe8681248U, 0xe641ba7bU);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000023U;
             R_SCE_func319(172);
-            R_SCE_func100(0x83c9a339U, 0xc45bf34eU, 0x3fe26839U, 0x15bad4b9U);
+            R_SCE_func100(0xaa0cd971U, 0x6f2b0338U, 0x56b40b8eU, 0xcb3e497dU);
             R_SCE_func314(172+32);
-            R_SCE_func100(0x51dc2d74U, 0xb77c6ffbU, 0x4c087d2cU, 0x3451a641U);
+            R_SCE_func100(0x7fdf44c1U, 0x759c90c9U, 0x2b088811U, 0x79fa617fU);
             SCE->REG_104H = 0x00000058U;
             SCE->REG_E0H = 0x80010020U;
             /* WAIT_LOOP */
@@ -524,14 +524,14 @@ void R_SCE_func325(void)
             }
             SCE->REG_100H = change_endian_long(0x0100abe1U);
             R_SCE_func080();
-            R_SCE_func100(0x1a63ef1aU, 0x5c00b85eU, 0xf01ab08aU, 0xc5d4d7a5U);
+            R_SCE_func100(0x7574fb68U, 0xade5f513U, 0x46a83200U, 0xb32cac21U);
             SCE->REG_00H = 0x00002383U;
             SCE->REG_2CH = 0x00000020U;
             R_SCE_func319(208);
-            R_SCE_func100(0x3c2dd259U, 0x4ac8966aU, 0x27321effU, 0x915b8750U);
+            R_SCE_func100(0x5fd23420U, 0x31d8cb19U, 0x253a683bU, 0x2e50909dU);
             R_SCE_func314(208+32);
             SCE->REG_ECH = 0x0000d260U;
-            R_SCE_func101(0x406287bdU, 0x8532f418U, 0xd7387695U, 0x41798135U);
+            R_SCE_func101(0xaf15ab61U, 0xd69547d4U, 0x1b1dfc32U, 0x1f03a066U);
         }
         SCE->REG_ECH = 0x01816e94U;
         R_SCE_func101(0x359452aaU, 0x98453f58U, 0x1fd0e35dU, 0x137f3a69U);
@@ -706,8 +706,8 @@ void R_SCE_func325(void)
     R_SCE_func100(0x88f4a784U, 0x630c5a7aU, 0x26cbe993U, 0xf47e6630U);
     R_SCE_func314(580+32);
     SCE->REG_ECH = 0x0000b7a0U;
-    SCE->REG_ECH = 0x000000f2U;
-    R_SCE_func101(0x655c5497U, 0xae524564U, 0x2b01826cU, 0x6a8cb6a5U);
+    SCE->REG_ECH = 0x000000f6U;
+    R_SCE_func101(0xaa073ed7U, 0x47dc9a56U, 0xc4576573U, 0xa0389521U);
     R_SCE_func318();
     SCE->REG_ECH = 0x0000b7c0U;
     SCE->REG_ECH = 0x00000000U;
@@ -717,5 +717,5 @@ void R_SCE_func325(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_func325.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_func325_r1.prc
 ***********************************************************************************************************************/

@@ -166,11 +166,11 @@ FSP_HEADER
 /* USB clock divider options. */
 #define BSP_CLOCKS_USB_CLOCK_DIV_1       (0)  // Divide USB source clock by 1
 #define BSP_CLOCKS_USB_CLOCK_DIV_2       (1)  // Divide USB source clock by 2
-#define BSP_CLOCKS_USB_CLOCK_DIV_3       (5)  // Divide USB source clock by 3
-#define BSP_CLOCKS_USB_CLOCK_DIV_4       (2)  // Divide USB source clock by 4
-#define BSP_CLOCKS_USB_CLOCK_DIV_5       (6)  // Divide USB source clock by 5
-#define BSP_CLOCKS_USB_CLOCK_DIV_6       (3)  // Divide USB source clock by 6
-#define BSP_CLOCKS_USB_CLOCK_DIV_8       (4)  // Divide USB source clock by 8
+#define BSP_CLOCKS_USB_CLOCK_DIV_3       (2)  // Divide USB source clock by 3
+#define BSP_CLOCKS_USB_CLOCK_DIV_4       (3)  // Divide USB source clock by 4
+#define BSP_CLOCKS_USB_CLOCK_DIV_5       (4)  // Divide USB source clock by 5
+#define BSP_CLOCKS_USB_CLOCK_DIV_6       (5)  // Divide USB source clock by 6
+#define BSP_CLOCKS_USB_CLOCK_DIV_8       (7)  // Divide USB source clock by 8
 
 /* USB60 clock divider options. */
 #define BSP_CLOCKS_USB60_CLOCK_DIV_1     (0)  // Divide USB60 source clock by 1
@@ -259,15 +259,6 @@ FSP_HEADER
 #define BSP_CLOCKS_I3C_CLOCK_DIV_5       (6)  // Divide I3C source clock by 5
 #define BSP_CLOCKS_I3C_CLOCK_DIV_6       (3)  // Divide I3C source clock by 6
 #define BSP_CLOCKS_I3C_CLOCK_DIV_8       (4)  // Divide I3C source clock by 8
-
-/* ADC clock divider options. */
-#define BSP_CLOCKS_ADC_CLOCK_DIV_1       (0)  // Divide ADC source clock by 1
-#define BSP_CLOCKS_ADC_CLOCK_DIV_2       (1)  // Divide ADC source clock by 2
-#define BSP_CLOCKS_ADC_CLOCK_DIV_3       (5)  // Divide ADC source clock by 3
-#define BSP_CLOCKS_ADC_CLOCK_DIV_4       (2)  // Divide ADC source clock by 4
-#define BSP_CLOCKS_ADC_CLOCK_DIV_5       (6)  // Divide ADC source clock by 5
-#define BSP_CLOCKS_ADC_CLOCK_DIV_6       (3)  // Divide ADC source clock by 6
-#define BSP_CLOCKS_ADC_CLOCK_DIV_8       (4)  // Divide ADC source clock by 8
 
 /* PLL divider options. */
 #define BSP_CLOCKS_PLL_DIV_1             (0)

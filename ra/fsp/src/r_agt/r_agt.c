@@ -54,19 +54,30 @@
 
 #define AGT_PRV_MIN_CLOCK_FREQ                  (0U)
 
-#if (BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT > 0)
- #if (BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT < (BSP_FEATURE_AGT_MAX_CHANNEL_NUM + 1))
-  #define AGT_PRV_IS_AGTW(p_instance_ctrl)    ((p_instance_ctrl)->p_cfg->channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT)
+#define AGT_PRV_CHANNEL_SIZE                    ((uint32_t) R_AGTX1_BASE - (uint32_t) R_AGTX0_BASE)
+
+#if BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT
+ #if BSP_FEATURE_AGT_AGT_CHANNEL_COUNT
+  #define AGT_PRV_DETERMINE_IS_AGTW(p_cfg)          (((agt_extended_cfg_t const *) (p_cfg)->p_extend)-> \
+                                                     counter_bit_width == AGT_COUNTER_BIT_WIDTH_32)
  #else
-  #define AGT_PRV_IS_AGTW(p_instance_ctrl)    (true)
+  #define AGT_PRV_DETERMINE_IS_AGTW(p_cfg)          (true)
  #endif
 #else
- #define AGT_PRV_IS_AGTW(p_instance_ctrl)     (false)
+ #define AGT_PRV_DETERMINE_IS_AGTW(p_cfg)           (false)
 #endif
 
-#define AGT_PRV_CTRL_PTR(p_instance_ctrl)     ((agt_prv_reg_ctrl_ptr_t) (AGT_PRV_IS_AGTW((p_instance_ctrl))      \
-                                                                         ? &(p_instance_ctrl)->p_reg->AGT32.CTRL \
-                                                                         : &(p_instance_ctrl)->p_reg->AGT16.CTRL))
+#define AGT_PRV_IS_AGTW(p_instance_ctrl)            ((p_instance_ctrl)->is_agtw)
+
+#define AGT_PRV_CHANNEL_OFFSET_AGT_AGTW(p_instance_ctrl,                                                                       \
+                                        channel)    ((uint8_t) ((AGT_PRV_IS_AGTW(p_instance_ctrl)) ? (channel) : ((            \
+                                                                                                                      channel) \
+                                                                                                                  +            \
+                                                                                                                  BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT)))
+
+#define AGT_PRV_CTRL_PTR(p_instance_ctrl)           ((agt_prv_reg_ctrl_ptr_t) (AGT_PRV_IS_AGTW((p_instance_ctrl))      \
+                                                                               ? &(p_instance_ctrl)->p_reg->AGT32.CTRL \
+                                                                               : &(p_instance_ctrl)->p_reg->AGT16.CTRL))
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -104,7 +115,7 @@ void agt_int_isr(void);
 
 /* The period for even channels must be known to calculate the frequency of odd channels if the count source is AGT
  * underflow. */
-static uint32_t gp_prv_agt_periods[BSP_FEATURE_AGT_MAX_CHANNEL_NUM + 1];
+static uint32_t gp_prv_agt_periods[BSP_FEATURE_AGT_AGT_CHANNEL_COUNT + BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT];
 
 /***********************************************************************************************************************
  * Global Variables
@@ -163,17 +174,25 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
 #if AGT_CFG_PARAM_CHECKING_ENABLE
     fsp_err_t err = r_agt_open_param_checking(p_instance_ctrl, p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#else
+    p_instance_ctrl->p_cfg   = p_cfg;
+    p_instance_ctrl->is_agtw = AGT_PRV_DETERMINE_IS_AGTW(p_cfg);
 #endif
 
-    uint32_t base_address = (uint32_t) R_AGTX0 + (p_cfg->channel * ((uint32_t) R_AGTX1 - (uint32_t) R_AGTX0));
-    p_instance_ctrl->p_reg = (R_AGTX0_Type *) base_address;
-
-    p_instance_ctrl->p_cfg = p_cfg;
+#if BSP_FEATURE_AGT_AGT_CHANNEL_COUNT && BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT
+    uint32_t base_address = (uint32_t) ((AGT_PRV_IS_AGTW(p_instance_ctrl)) ? R_AGTW0 : R_AGT0);
+#elif BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT
+    uint32_t base_address = (uint32_t) R_AGTW0;
+#else
+    uint32_t base_address = (uint32_t) R_AGT0;
+#endif
+    uint32_t channel_base_address = base_address + (p_cfg->channel * AGT_PRV_CHANNEL_SIZE);
+    p_instance_ctrl->p_reg = (R_AGTX0_Type *) channel_base_address;
 
     agt_prv_reg_ctrl_ptr_t p_reg_ctrl = AGT_PRV_CTRL_PTR(p_instance_ctrl);
 
     /* Power on the AGT channel. */
-    R_BSP_MODULE_START(FSP_IP_AGT, p_cfg->channel);
+    R_BSP_MODULE_START(FSP_IP_AGT, AGT_PRV_CHANNEL_OFFSET_AGT_AGTW(p_instance_ctrl, p_cfg->channel));
 
     /* Clear AGTCR. This stops the timer if it is running and clears the flags. */
     p_reg_ctrl->AGTCR = 0U;
@@ -501,17 +520,19 @@ fsp_err_t R_AGT_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_inf
         /* Clock frequency of this channel is the clock frequency divided by the timer period of the source channel. */
 
         /* Source instance is the channel immediately preceding this one. */
-        if (0U == gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel - 1])
+        if (0U ==
+            gp_prv_agt_periods[AGT_PRV_CHANNEL_OFFSET_AGT_AGTW(p_instance_ctrl, p_instance_ctrl->p_cfg->channel - 1)])
         {
             p_info->clock_frequency = AGT_PRV_MIN_CLOCK_FREQ;
         }
         else
         {
-            R_AGTX0_Type * p_source_channel_reg = (R_AGTX0_Type *) ((uint32_t) p_instance_ctrl->p_reg -
-                                                                    ((uint32_t) R_AGTX1 - (uint32_t) R_AGTX0));
+            R_AGTX0_Type * p_source_channel_reg =
+                (R_AGTX0_Type *) ((uint32_t) p_instance_ctrl->p_reg - AGT_PRV_CHANNEL_SIZE);
             p_info->clock_frequency =
                 r_agt_clock_frequency_get(p_source_channel_reg, AGT_PRV_IS_AGTW(p_instance_ctrl)) /
-                gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel - 1];
+                gp_prv_agt_periods[AGT_PRV_CHANNEL_OFFSET_AGT_AGTW(p_instance_ctrl,
+                                                                   p_instance_ctrl->p_cfg->channel - 1)];
         }
     }
     else
@@ -682,6 +703,10 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
         /* Return error if IRQ is required and not in the vector table. */
         FSP_ERROR_RETURN(p_cfg->cycle_end_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
+
+    /* Save pointer to config struct */
+    p_instance_ctrl->p_cfg   = p_cfg;
+    p_instance_ctrl->is_agtw = AGT_PRV_DETERMINE_IS_AGTW(p_cfg);
 
     if (!AGT_PRV_IS_AGTW(p_instance_ctrl))
     {
@@ -909,7 +934,8 @@ static void r_agt_period_register_set (agt_instance_ctrl_t * p_instance_ctrl, ui
 {
     /* Store the period value so it can be retrieved later. */
     p_instance_ctrl->period = period_counts;
-    gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel] = period_counts;
+    gp_prv_agt_periods[AGT_PRV_CHANNEL_OFFSET_AGT_AGTW(p_instance_ctrl,
+                                                       p_instance_ctrl->p_cfg->channel)] = period_counts;
 
     uint32_t period_reg = (period_counts - 1U);
 

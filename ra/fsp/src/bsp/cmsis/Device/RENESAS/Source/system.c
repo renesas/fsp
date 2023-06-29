@@ -69,10 +69,17 @@ extern uint32_t Image$$DATA$$Base;
 extern uint32_t Image$$DATA$$Length;
 extern uint32_t Image$$STACK$$ZI$$Base;
 extern uint32_t Image$$STACK$$ZI$$Length;
- #if BSP_FEATURE_BSP_HAS_DTCM == 1
-extern uint32_t Load$$DTCM_DATA_INIT$$Base;
-extern uint32_t Image$$DTCM_DATA_INIT$$Base;
-extern uint32_t Image$$DTCM_DATA_INIT$$Length;
+ #if BSP_FEATURE_BSP_HAS_ITCM
+extern uint32_t Load$$ITCM_DATA$$Base;
+extern uint32_t Load$$ITCM_PAD$$Limit;
+extern uint32_t Image$$ITCM_DATA$$Base;
+ #endif
+ #if BSP_FEATURE_BSP_HAS_DTCM
+extern uint32_t Load$$DTCM_DATA$$Base;
+extern uint32_t Load$$DTCM_PAD$$Limit;
+extern uint32_t Image$$DTCM_DATA$$Base;
+extern uint32_t Image$$DTCM_BSS$$Base;
+extern uint32_t Image$$DTCM_BSS_PAD$$ZI$$Limit;
  #endif
 #elif defined(__GNUC__)
 
@@ -84,19 +91,34 @@ extern uint32_t __bss_start__;
 extern uint32_t __bss_end__;
 extern uint32_t __StackLimit;
 extern uint32_t __StackTop;
- #if BSP_FEATURE_BSP_HAS_DTCM == 1
+ #if BSP_FEATURE_BSP_HAS_ITCM
+extern uint32_t __itcm_data_init_start;
+extern uint32_t __itcm_data_init_end;
+extern uint32_t __itcm_data_start;
+ #endif
+ #if BSP_FEATURE_BSP_HAS_DTCM
 extern uint32_t __dtcm_data_init_start;
-extern uint32_t __dtcm_data_start__;
-extern uint32_t __dtcm_data_end__;
+extern uint32_t __dtcm_data_init_end;
+extern uint32_t __dtcm_data_start;
+extern uint32_t __dtcm_bss_start;
+extern uint32_t __dtcm_bss_end;
  #endif
 #elif defined(__ICCARM__)
  #pragma section=".bss"
  #pragma section=".data"
  #pragma section=".data_init"
  #pragma section=".stack"
- #if BSP_FEATURE_BSP_HAS_DTCM == 1
-  #pragma section=".dtcm_data"
-  #pragma section=".dtcm_data_init"
+ #if BSP_FEATURE_BSP_HAS_ITCM
+extern uint32_t ITCM_DATA_INIT$$Base;
+extern uint32_t ITCM_DATA_INIT$$Limit;
+extern uint32_t ITCM_DATA$$Base;
+ #endif
+ #if BSP_FEATURE_BSP_HAS_DTCM
+extern uint32_t DTCM_DATA_INIT$$Base;
+extern uint32_t DTCM_DATA_INIT$$Limit;
+extern uint32_t DTCM_DATA$$Base;
+extern uint32_t DTCM_BSS$$Base;
+extern uint32_t DTCM_BSS$$Limit;
  #endif
 #endif
 
@@ -144,6 +166,28 @@ void R_BSP_WarmStart(bsp_warm_start_event_t event) __attribute__((weak));
 #if BSP_CFG_EARLY_INIT
 static void bsp_init_uninitialized_vars(void);
 
+#endif
+
+#if BSP_CFG_C_RUNTIME_INIT
+ #if BSP_FEATURE_BSP_HAS_ITCM || BSP_FEATURE_BSP_HAS_DTCM
+static void memcpy_64(uint64_t * destination, const uint64_t * source, size_t count);
+
+ #endif
+ #if BSP_FEATURE_BSP_HAS_DTCM
+static void memset_64(uint64_t * destination, const uint64_t value, size_t count);
+
+ #endif
+#endif
+
+#if BSP_CFG_C_RUNTIME_INIT
+ #if BSP_FEATURE_BSP_HAS_ITCM
+static void bsp_init_itcm(void);
+
+ #endif
+ #if BSP_FEATURE_BSP_HAS_DTCM
+static void bsp_init_dtcm(void);
+
+ #endif
 #endif
 
 /*******************************************************************************************************************//**
@@ -297,21 +341,10 @@ void SystemInit (void)
     /* Copy initialized RAM data from ROM to RAM. */
  #if defined(__ARMCC_VERSION)
     memcpy((uint8_t *) &Image$$DATA$$Base, (uint8_t *) &Load$$DATA$$Base, (uint32_t) &Image$$DATA$$Length);
-  #if BSP_FEATURE_BSP_HAS_DTCM == 1
-    memcpy((uint8_t *) &Image$$DTCM_DATA_INIT$$Base,
-           (uint8_t *) &Load$$DTCM_DATA_INIT$$Base,
-           (uint32_t) &Image$$DTCM_DATA_INIT$$Length);
-  #endif
  #elif defined(__GNUC__)
     memcpy(&__data_start__, &__etext, ((uint32_t) &__data_end__ - (uint32_t) &__data_start__));
-  #if BSP_FEATURE_BSP_HAS_DTCM == 1
-    memcpy(&__dtcm_data_start__,
-           &__dtcm_data_init_start,
-           ((uint32_t) &__dtcm_data_end__ - (uint32_t) &__dtcm_data_start__));
-  #endif
  #elif defined(__ICCARM__)
-    memcpy((uint32_t *) __section_begin(".data"),
-           (uint32_t *) __section_begin(".data_init"),
+    memcpy((uint32_t *) __section_begin(".data"), (uint32_t *) __section_begin(".data_init"),
            (uint32_t) __section_size(".data"));
 
     /* Copy functions to be executed from RAM. */
@@ -324,14 +357,16 @@ void SystemInit (void)
     /* Copy main thread TLS to RAM. */
   #pragma section="__DLIB_PERTHREAD_init"
   #pragma section="__DLIB_PERTHREAD"
-    memcpy((uint32_t *) __section_begin("__DLIB_PERTHREAD"),
-           (uint32_t *) __section_begin("__DLIB_PERTHREAD_init"),
+    memcpy((uint32_t *) __section_begin("__DLIB_PERTHREAD"), (uint32_t *) __section_begin("__DLIB_PERTHREAD_init"),
            (uint32_t) __section_size("__DLIB_PERTHREAD_init"));
-  #if BSP_FEATURE_BSP_HAS_DTCM == 1
-    memcpy((uint32_t *) __section_begin(".dtcm_data"),
-           (uint32_t *) __section_begin(".dtcm_data_init"),
-           (uint32_t) __section_size(".dtcm_data"));
-  #endif
+ #endif
+
+    /* Initialize TCM memory. */
+ #if BSP_FEATURE_BSP_HAS_ITCM
+    bsp_init_itcm();
+ #endif
+ #if BSP_FEATURE_BSP_HAS_DTCM
+    bsp_init_dtcm();
  #endif
 
     /* Initialize static constructors */
@@ -343,12 +378,14 @@ void SystemInit (void)
             (void (*)(void))((uint32_t) &Image$$INIT_ARRAY$$Base + (uint32_t) Image$$INIT_ARRAY$$Base[i]);
         p_init_func();
     }
+
  #elif defined(__GNUC__)
     int32_t count = __init_array_end - __init_array_start;
     for (int32_t i = 0; i < count; i++)
     {
         __init_array_start[i]();
     }
+
  #elif defined(__ICCARM__)
     void const * pibase = __section_begin("SHT$$PREINIT_ARRAY");
     void const * ilimit = __section_end("SHT$$INIT_ARRAY");
@@ -507,6 +544,152 @@ static void bsp_init_uninitialized_vars (void)
     SystemCoreClock = BSP_MOCO_HZ;
  #endif
 }
+
+#endif
+
+#if BSP_CFG_C_RUNTIME_INIT
+
+ #if (BSP_FEATURE_BSP_HAS_ITCM || BSP_FEATURE_BSP_HAS_DTCM)
+
+/*******************************************************************************************************************//**
+ * 64-bit memory copy for Armv8.1-M using low overhead loop instructions.
+ *
+ * @param[in] destination copy destination start address, word aligned
+ * @param[in] source copy source start address, word aligned
+ * @param[in] count number of doublewords to copy
+ **********************************************************************************************************************/
+static void memcpy_64 (uint64_t * destination, const uint64_t * source, size_t count)
+{
+    uint64_t temp;
+    __asm volatile (
+        "wls lr, %[count], memcpy_64_loop_end_%=\n"
+  #if (defined(__ARMCC_VERSION) || defined(__GNUC__))
+
+        /* Align the branch target to a 64-bit boundary, a CM85 specific optimization. */
+        /* IAR does not support alignment control within inline assembly. */
+        ".balign 8\n"
+  #endif
+        "memcpy_64_loop_start_%=:\n"
+        "ldrd %Q[temp], %R[temp], [%[source]], #+8\n"
+        "strd %Q[temp], %R[temp], [%[destination]], #+8\n"
+        "le lr, memcpy_64_loop_start_%=\n"
+        "memcpy_64_loop_end_%=:"
+        :[destination] "+&r" (destination), [source] "+&r" (source), [temp] "=r" (temp)
+        :[count] "r" (count)
+        : "lr", "memory"
+        );
+
+    /* Suppress IAR warning: "Error[Pe550]: variable "temp" was set but never used" */
+    /* "temp" triggers this warning when it lacks an early-clobber modifier, which was removed to allow register reuse with "count". */
+    (void) temp;
+}
+
+ #endif
+
+ #if BSP_FEATURE_BSP_HAS_DTCM
+
+/*******************************************************************************************************************//**
+ * 64-bit memory set for Armv8.1-M using low overhead loop instructions.
+ *
+ * @param[in] destination set destination start address, word aligned
+ * @param[in] value value to set
+ * @param[in] count number of doublewords to set
+ **********************************************************************************************************************/
+static void memset_64 (uint64_t * destination, const uint64_t value, size_t count)
+{
+    __asm volatile (
+        "wls lr, %[count], memset_64_loop_end_%=\n"
+  #if (defined(__ARMCC_VERSION) || defined(__GNUC__))
+
+        /* Align the branch target to a 64-bit boundary, a CM85 specific optimization. */
+        /* IAR does not support alignment control within inline assembly. */
+        ".balign 8\n"
+  #endif
+        "memset_64_loop_start_%=:\n"
+        "strd %Q[value], %R[value], [%[destination]], #+8\n"
+        "le lr, memset_64_loop_start_%=\n"
+        "memset_64_loop_end_%=:"
+        :[destination] "+&r" (destination)
+        :[count] "r" (count), [value] "r" (value)
+        : "lr", "memory"
+        );
+}
+
+ #endif
+
+#endif
+
+#if BSP_CFG_C_RUNTIME_INIT
+
+ #if BSP_FEATURE_BSP_HAS_ITCM
+
+/*******************************************************************************************************************//**
+ * Initialize ITCM RAM from ROM image.
+ **********************************************************************************************************************/
+static void bsp_init_itcm (void)
+{
+    uint64_t       * itcm_destination;
+    const uint64_t * itcm_source;
+    size_t           count;
+
+  #if defined(__ARMCC_VERSION)
+    itcm_destination = (uint64_t *) &Image$$ITCM_DATA$$Base;
+    itcm_source      = (uint64_t *) &Load$$ITCM_DATA$$Base;
+    count            = ((uint32_t) &Load$$ITCM_PAD$$Limit - (uint32_t) &Load$$ITCM_DATA$$Base) / sizeof(uint64_t);
+  #elif defined(__GNUC__)
+    itcm_destination = (uint64_t *) &__itcm_data_start;
+    itcm_source      = (uint64_t *) &__itcm_data_init_start;
+    count            = ((uint32_t) &__itcm_data_init_end - (uint32_t) &__itcm_data_init_start) / sizeof(uint64_t);
+  #elif defined(__ICCARM__)
+    itcm_destination = (uint64_t *) &ITCM_DATA$$Base;
+    itcm_source      = (uint64_t *) &ITCM_DATA_INIT$$Base;
+    count            = ((uint32_t) &ITCM_DATA_INIT$$Limit - (uint32_t) &ITCM_DATA_INIT$$Base) / sizeof(uint64_t);
+  #endif
+
+    memcpy_64(itcm_destination, itcm_source, count);
+}
+
+ #endif
+
+ #if BSP_FEATURE_BSP_HAS_DTCM
+
+/*******************************************************************************************************************//**
+ * Initialize DTCM RAM from ROM image and zero initialize DTCM RAM BSS section.
+ **********************************************************************************************************************/
+static void bsp_init_dtcm (void)
+{
+    uint64_t       * dtcm_destination;
+    const uint64_t * dtcm_source;
+    size_t           count;
+    uint64_t       * dtcm_zero_destination;
+    size_t           count_zero;
+
+  #if defined(__ARMCC_VERSION)
+    dtcm_destination      = (uint64_t *) &Image$$DTCM_DATA$$Base;
+    dtcm_source           = (uint64_t *) &Load$$DTCM_DATA$$Base;
+    count                 = ((uint32_t) &Load$$DTCM_PAD$$Limit - (uint32_t) &Load$$DTCM_DATA$$Base) / sizeof(uint64_t);
+    dtcm_zero_destination = (uint64_t *) &Image$$DTCM_BSS$$Base;
+    count_zero            = ((uint32_t) &Image$$DTCM_BSS_PAD$$ZI$$Limit - (uint32_t) &Image$$DTCM_BSS$$Base) /
+                            sizeof(uint64_t);
+  #elif defined(__GNUC__)
+    dtcm_destination      = (uint64_t *) &__dtcm_data_start;
+    dtcm_source           = (uint64_t *) &__dtcm_data_init_start;
+    count                 = ((uint32_t) &__dtcm_data_init_end - (uint32_t) &__dtcm_data_init_start) / sizeof(uint64_t);
+    dtcm_zero_destination = (uint64_t *) &__dtcm_bss_start;
+    count_zero            = ((uint32_t) &__dtcm_bss_end - (uint32_t) &__dtcm_bss_start) / sizeof(uint64_t);
+  #elif defined(__ICCARM__)
+    dtcm_destination      = (uint64_t *) &DTCM_DATA$$Base;
+    dtcm_source           = (uint64_t *) &DTCM_DATA_INIT$$Base;
+    count                 = ((uint32_t) &DTCM_DATA_INIT$$Limit - (uint32_t) &DTCM_DATA_INIT$$Base) / sizeof(uint64_t);
+    dtcm_zero_destination = (uint64_t *) &DTCM_BSS$$Base;
+    count_zero            = ((uint32_t) &DTCM_BSS$$Limit - (uint32_t) &DTCM_BSS$$Base) / sizeof(uint64_t);
+  #endif
+
+    memcpy_64(dtcm_destination, dtcm_source, count);
+    memset_64(dtcm_zero_destination, 0, count_zero);
+}
+
+ #endif
 
 #endif
 

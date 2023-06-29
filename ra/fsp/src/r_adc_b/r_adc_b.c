@@ -75,6 +75,9 @@ static void      adc_b_call_callback(adc_b_instance_ctrl_t * p_ctrl, adc_callbac
 static void      adc_b_disable_interrupts(adc_b_instance_ctrl_t * p_instance_ctrl);
 static void      adc_b_enable_interrupts(adc_b_instance_ctrl_t * p_instance_ctrl);
 static void      adc_b_open_pga(adc_b_extended_cfg_t * p_extend);
+static void      adc_b_calculate_wait_time(adc_b_instance_ctrl_t * p_instance_ctrl, adc_b_scan_cfg_t * p_scan_data);
+static uint32_t  adc_b_update_calibrate_state(adc_b_instance_ctrl_t * p_instance_ctrl);
+static void      adc_b_force_stop(adc_b_instance_ctrl_t * p_instance_ctrl);
 static void      adc_b_isr_enable(adc_b_instance_ctrl_t * p_instance_ctrl, IRQn_Type irq, uint8_t ipl);
 static IRQn_Type adc_b_isr_handler(adc_event_t          event,
                                    adc_group_mask_t     group_mask,
@@ -165,11 +168,17 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
+    p_instance_ctrl->adc_state         = ADC_B_CONVERTER_STATE_NONE;
 
     adc_b_extended_cfg_t * p_extend = (adc_b_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
     /* Module Stop release: ADC */
     R_BSP_MODULE_START(FSP_IP_ADC, 0);
+
+    if (ADC_B_CLOCK_SOURCE_GPT == p_extend->clock_control_bits.source_selection)
+    {
+        R_BSP_MODULE_START(FSP_IP_GPT, 0);
+    }
 
     /*  Set synchronous operation period and Enable/Disable for ADC 0/1 */
     R_ADC_B->ADSYCR = p_extend->sync_operation_control;
@@ -291,6 +300,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
     adc_b_extended_cfg_t * p_extend = (adc_b_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
     /* Clear any previous channel configuration, specifically group selections */
+    p_instance_ctrl->adc_state = ADC_B_CONVERTER_STATE_NONE;
     for (uint8_t channel = 0; channel <= ADC_B_VIRTUAL_CHANNEL_36; channel++)
     {
         *ADC_B_REG_ADDRESS(R_ADC_B->ADCHCR0, channel, 0x10) = 0;
@@ -342,36 +352,37 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
 #endif
     p_instance_ctrl->cached_adsystr  = ADC_GROUP_MASK_NONE;
     p_instance_ctrl->cached_adtrgenr = ADC_GROUP_MASK_NONE;
+
     for (uint8_t group = 0; group < p_scan_data->group_count; group++)
     {
         const adc_b_group_cfg_t * p_adc_group = p_scan_data->p_adc_groups[group];
 #if ADC_B_CFG_PARAM_CHECKING_ENABLE
-        adc_b_unit_id_t converter_selection = p_adc_group->converter_selection;
 
         /*============================================================================================================
          *  Constraints to check while Synchronous Mode is enabled
          *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
          *============================================================================================================*/
-        uint32_t cst = (p_adc_group->converter_selection ? cst0 : cst1);
+        adc_b_unit_id_t converter_selection = p_adc_group->converter_selection;
+        uint32_t        cst                 = (converter_selection ? cst0 : cst1);
         if (sync_operation_enabled)
         {
             /* Set the Synchronous Operation Period to a value larger than successive approximation time of ADCm (m = 0, 1) */
             FSP_ERROR_RETURN(adsycyc >= cst + 1, FSP_ERR_INVALID_STATE);
         }
 #endif
-
-        scan_group_enable_mask    |= (uint32_t) (1 << p_adc_group->scan_group_id);
+        adc_group_mask_t adc_group_mask = (adc_group_mask_t) (1 << p_adc_group->scan_group_id);
+        scan_group_enable_mask    |= (uint32_t) adc_group_mask;
         scan_group_end_interrupts |= (uint32_t) (p_adc_group->scan_end_interrupt_enable << p_adc_group->scan_group_id);
 
         if (p_adc_group->external_trigger_enable_mask ||
             p_adc_group->elc_trigger_enable_mask ||
             p_adc_group->gpt_trigger_enable_mask)
         {
-            p_instance_ctrl->cached_adtrgenr |= (adc_group_mask_t) (1 << p_adc_group->scan_group_id);
+            p_instance_ctrl->cached_adtrgenr |= adc_group_mask;
         }
         else
         {
-            p_instance_ctrl->cached_adsystr |= (adc_group_mask_t) (1 << p_adc_group->scan_group_id);
+            p_instance_ctrl->cached_adsystr |= adc_group_mask;
         }
 
         /* Configure External Triggers, ELC Triggers, GPT Triggers, Self-diagnosis / Disconnect detect */
@@ -483,6 +494,9 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
         }
     }
 
+    /* Recalculate ADC Stop wait time */
+    adc_b_calculate_wait_time(p_instance_ctrl, p_scan_data);
+
     /* Enable/Disable scan groups according to configuration */
     R_ADC_B->ADSGER = scan_group_enable_mask;
 
@@ -561,6 +575,7 @@ fsp_err_t R_ADC_B_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
  * @retval FSP_ERR_INVALID_ARGUMENT    No hardware triggers configured for groups.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  * @retval FSP_ERR_NOT_INITIALIZED     Unit not initialized.
+ * @retval FSP_ERR_INVALID_STATE       Calibration required.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_ScanStart (adc_ctrl_t * p_ctrl)
 {
@@ -574,6 +589,7 @@ fsp_err_t R_ADC_B_ScanStart (adc_ctrl_t * p_ctrl)
     adc_group_mask_t configured_channels =
         (adc_group_mask_t) (p_instance_ctrl->cached_adtrgenr | p_instance_ctrl->cached_adsystr);
     FSP_ERROR_RETURN(configured_channels, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((ADC_B_CONVERTER_STATE_READY == p_instance_ctrl->adc_state), FSP_ERR_INVALID_STATE);
 #endif
 
     R_ADC_B->ADTRGENR = p_instance_ctrl->cached_adtrgenr;
@@ -601,6 +617,7 @@ fsp_err_t R_ADC_B_ScanStart (adc_ctrl_t * p_ctrl)
  * @retval FSP_ERR_INVALID_ARGUMENT    An invalid group has been provided.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  * @retval FSP_ERR_NOT_INITIALIZED     Unit not initialized.
+ * @retval FSP_ERR_INVALID_STATE       Calibration required.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_mask)
 {
@@ -614,6 +631,7 @@ fsp_err_t R_ADC_B_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_ma
     adc_group_mask_t configured_groups =
         (adc_group_mask_t) (p_instance_ctrl->cached_adtrgenr | p_instance_ctrl->cached_adsystr);
     FSP_ERROR_RETURN(0 != (configured_groups & group_mask), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((ADC_B_CONVERTER_STATE_READY == p_instance_ctrl->adc_state), FSP_ERR_INVALID_STATE);
 #endif
 
     R_ADC_B->ADTRGENR |= (group_mask & p_instance_ctrl->cached_adtrgenr);
@@ -634,28 +652,17 @@ fsp_err_t R_ADC_B_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_ma
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_ScanStop (adc_ctrl_t * p_ctrl)
 {
-#if ADC_B_CFG_PARAM_CHECKING_ENABLE
     adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) p_ctrl;
+#if ADC_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(ADC_B_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(ADC_B_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 
     uint32_t configured_channels = (p_instance_ctrl->cached_adtrgenr | p_instance_ctrl->cached_adsystr);
     FSP_ERROR_RETURN(configured_channels, FSP_ERR_INVALID_ARGUMENT);
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    /* Disable peripheral hardware triggers */
-    R_ADC_B->ADTRGENR = 0U;
-
-    /* Force stop ADC converters*/
-    R_ADC_B->ADSTOPR = R_ADC_B0_ADSTOPR_ADSTOP0_Msk | R_ADC_B0_ADSTOPR_ADSTOP1_Pos;
-
-    /* Wait for converter to stop
-     *  - See table 36.26 of the RA6T2 User Manual, R01UH0951EJ0100 */
-    FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADSR_b.ADACT0, 0)
-    FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADSR_b.ADACT1, 0)
+    adc_b_force_stop(p_instance_ctrl);
 
     return FSP_SUCCESS;
 }
@@ -670,17 +677,24 @@ fsp_err_t R_ADC_B_ScanStop (adc_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_StatusGet (adc_ctrl_t * p_ctrl, adc_status_t * p_status)
 {
-#if ADC_B_CFG_PARAM_CHECKING_ENABLE
     adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) p_ctrl;
+
+#if ADC_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_status);
     FSP_ERROR_RETURN(ADC_B_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
+    /* Calibration status is based on the internal state machine.
+     * CALACTn cannot be used because the ADC will enter and exit calibration several times before completing */
+    bool calibration_in_progress = ((p_instance_ctrl->adc_state > ADC_B_CONVERTER_STATE_NONE) &&
+                                    (p_instance_ctrl->adc_state < ADC_B_CONVERTER_STATE_READY));
+
     /* A scan is active if any scan group is being processed */
-    p_status->state = (R_ADC_B->ADSR ? ADC_STATE_SCAN_IN_PROGRESS : ADC_STATE_IDLE);
+    bool scan_in_progress = (bool) R_ADC_B->ADSR;
+
+    p_status->state = (calibration_in_progress ? ADC_STATE_CALIBRATION_IN_PROGRESS :
+                       scan_in_progress ? ADC_STATE_SCAN_IN_PROGRESS : ADC_STATE_IDLE);
 
     return FSP_SUCCESS;
 }
@@ -863,7 +877,7 @@ fsp_err_t R_ADC_B_Close (adc_ctrl_t * p_ctrl)
 #endif
 
     /* Force stop any active scans */
-    (void) R_ADC_B_ScanStop(p_ctrl);
+    adc_b_force_stop(p_instance_ctrl);
 
     /* Mark driver as closed   */
     p_instance_ctrl->opened          = 0U;
@@ -901,72 +915,34 @@ fsp_err_t R_ADC_B_Close (adc_ctrl_t * p_ctrl)
  * Initiates calibration of the ADC_B.  This function must be called before starting a scan and again whenever ADC_B
  * configuration or state is changed.
  *
+ * @note Self-calibration is a non-blocking operation. The application should wait for an ADC_EVENT_CALIBRATION_COMPLETE
+ * callback before using other ADC_B functionality.
+ *
+ * @note The self-calibration process will disable hardware triggers that were previously enabled.
+ *
  * @param[in]  p_ctrl    Pointer to the instance control structure
  * @param[in]  p_extend  Unused argument.
  *
  * @retval FSP_SUCCESS                     Calibration successfully initiated.
  * @retval FSP_ERR_ASSERTION               An input argument is invalid.
- * @retval FSP_ERR_INVALID_HW_CONDITION    Error occurred during calibration.
  * @retval FSP_ERR_NOT_OPEN                Unit is not open.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_Calibrate (adc_ctrl_t * const p_ctrl, void const * p_extend)
 {
-#if ADC_B_CFG_PARAM_CHECKING_ENABLE
     adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) p_ctrl;
+#if ADC_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(ADC_B_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
     FSP_PARAMETER_NOT_USED(p_extend);
 
-    /* Store and Clear ADC Start Trigger Enable */
-    uint32_t adtrgenr = R_ADC_B->ADTRGENR;
-    R_ADC_B->ADTRGENR = 0;
+    p_instance_ctrl->adc_state = ADC_B_CONVERTER_STATE_NONE;
 
-    /* Wait for converter to stop
-     *  - See table 36.26 of the RA6T2 User Manual, R01UH0951EJ0100 */
-    FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADSR_b.ADACT0, 0)
-    FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADSR_b.ADACT1, 0)
+    adc_b_force_stop(p_instance_ctrl);
+    uint32_t adccalsr = adc_b_update_calibrate_state(p_instance_ctrl);
+    R_ADC_B->ADCALSTR = adccalsr;      // Initiate calibration
 
-    /* Clear the error status flags */
-    R_ADC_B->ADERSCR     = R_ADC_B0_ADERSCR_ADERCLR0_Msk | R_ADC_B0_ADERSCR_ADERCLR1_Msk;
-    R_ADC_B->ADOVFERSCR  = R_ADC_B0_ADOVFERSCR_ADOVFEC0_Msk | R_ADC_B0_ADOVFERSCR_ADOVFEC1_Msk;
-    R_ADC_B->ADOVFCHSCR0 = R_ADC_B0_ADOVFCHSCR0_OVFCHCn_Msk;
-    R_ADC_B->ADOVFEXSCR  = R_ADC_B0_ADOVFEXSCR_OVFEXC0_Msk | R_ADC_B0_ADOVFEXSCR_OVFEXC1_Msk |
-                           R_ADC_B0_ADOVFEXSCR_OVFEXC2_Msk | R_ADC_B0_ADOVFEXSCR_OVFEXC5_Msk |
-                           R_ADC_B0_ADOVFEXSCR_OVFEXC6_Msk | R_ADC_B0_ADOVFEXSCR_OVFEXC7_Msk |
-                           R_ADC_B0_ADOVFEXSCR_OVFEXC8_Msk;
-
-    /* Self-Calibration bits for ADC0 */
-    bool pga_enabled = R_ADC_B->ADPGACR_b[0].PGAENAMP || R_ADC_B->ADPGACR_b[1].PGAENAMP ||
-                       R_ADC_B->ADPGACR_b[2].PGAENAMP;
-
-    uint32_t adc_cal0 = (uint32_t) (R_ADC_B_ADPGACR_ADC_0_CAL_Msk |
-                                    (pga_enabled ? R_ADC_B_ADPGACR_GAIN_OFFSET_0_CAL_Msk : 0x0) |
-                                    (R_ADC_B->ADSHCR0 ? R_ADC_B_ADPGACR_SAMPLE_HOLD_0_CAL_Msk : 0x0));
-
-    /* Self-Calibration bits for ADC1 */
-    pga_enabled = R_ADC_B->ADPGACR_b[3].PGAENAMP;
-    uint32_t adc_cal1 = (uint32_t) (R_ADC_B_ADPGACR_ADC_1_CAL_Msk |
-                                    (pga_enabled ? R_ADC_B_ADPGACR_GAIN_OFFSET_1_CAL_Msk : 0x0) |
-                                    (R_ADC_B->ADSHCR1 ? R_ADC_B_ADPGACR_SAMPLE_HOLD_1_CAL_Msk : 0x0));
-
-    R_ADC_B->ADCALSTR = adc_cal0 | adc_cal1;
-
-    /* Error Status Check */
-    uint32_t read_err = R_ADC_B->ADERSR ||
-                        R_ADC_B->ADOVFERSR ||
-                        R_ADC_B->ADOVFCHSR0 ||
-                        R_ADC_B->ADOVFEXSR;
-
-    /* Reset ADC Start Trigger Enable */
-    R_ADC_B->ADTRGENR = adtrgenr;
-
-    fsp_err_t fsp_err = (read_err ? FSP_ERR_INVALID_HW_CONDITION : FSP_SUCCESS);
-    FSP_ERROR_LOG(fsp_err);
-
-    return fsp_err;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -991,6 +967,144 @@ fsp_err_t R_ADC_B_OffsetSet (adc_ctrl_t * const p_ctrl, adc_channel_t const reg_
 /***********************************************************************************************************************
  * Private Functions
  **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * @brief Helper function - Pre-calculate wait time for use when stopping ADC
+ * @param p_instance_ctrl - Pointer to adc_b instance configuration
+ * @return None
+ **********************************************************************************************************************/
+static void adc_b_calculate_wait_time (adc_b_instance_ctrl_t * p_instance_ctrl, adc_b_scan_cfg_t * p_scan_data)
+{
+    adc_b_extended_cfg_t * p_extend = (adc_b_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    bool sync_enabled_lut[]         =
+    {
+        !p_extend->sync_operation_control_bits.adc_0_disable_sync,
+        !p_extend->sync_operation_control_bits.adc_1_disable_sync
+    };
+    uint16_t sync_cycles = p_extend->sync_operation_control_bits.period_cycle;
+
+    uint32_t wait_cycles = 0;
+    for (uint8_t group = 0; (group < p_scan_data->group_count) && p_instance_ctrl->cached_adtrgenr; group++)
+    {
+        const adc_b_group_cfg_t * p_adc_group = p_scan_data->p_adc_groups[group];
+        bool     sync_enabled                 = sync_enabled_lut[p_adc_group->converter_selection];
+        uint32_t trigger_delay                = p_extend->start_trigger_delay_table[group];
+
+        uint32_t caclulated_cycles = 0;
+        if (sync_enabled)
+        {
+            caclulated_cycles = trigger_delay + sync_cycles * 2;
+        }
+        else
+        {
+            caclulated_cycles = trigger_delay + 4;
+        }
+
+        if (wait_cycles < caclulated_cycles)
+        {
+            wait_cycles = caclulated_cycles;
+        }
+    }
+
+    p_instance_ctrl->trigger_disable_wait_cycles = wait_cycles + 1;
+}
+
+/***********************************************************************************************************************
+ * @brief Helper function - Perform ADC calibration according to Table 36.15 of the RA6T2 User Manual, R01UH0951EJ0100
+ * @param p_instance_ctrl - Pointer to adc_b instance configuration
+ * @return uint32_t       - Next ADCCALSR register bits
+ **********************************************************************************************************************/
+static uint32_t adc_b_update_calibrate_state (adc_b_instance_ctrl_t * p_instance_ctrl)
+{
+    /* Clear the error status flags */
+    R_ADC_B->ADERSCR     = R_ADC_B0_ADERSCR_ADERCLR0_Msk | R_ADC_B0_ADERSCR_ADERCLR1_Msk;
+    R_ADC_B->ADOVFERSCR  = R_ADC_B0_ADOVFERSCR_ADOVFEC0_Msk | R_ADC_B0_ADOVFERSCR_ADOVFEC1_Msk;
+    R_ADC_B->ADOVFCHSCR0 = R_ADC_B0_ADOVFCHSCR0_OVFCHCn_Msk;
+    R_ADC_B->ADOVFEXSCR  = R_ADC_B0_ADOVFEXSCR_OVFEXC0_Msk | R_ADC_B0_ADOVFEXSCR_OVFEXC1_Msk |
+                           R_ADC_B0_ADOVFEXSCR_OVFEXC2_Msk | R_ADC_B0_ADOVFEXSCR_OVFEXC5_Msk |
+                           R_ADC_B0_ADOVFEXSCR_OVFEXC6_Msk | R_ADC_B0_ADOVFEXSCR_OVFEXC7_Msk |
+                           R_ADC_B0_ADOVFEXSCR_OVFEXC8_Msk;
+
+    adc_b_converter_state_t current_state = p_instance_ctrl->adc_state;
+
+    /* Converters must be calibrated sequentially.
+     * Converter calibration must be performed before Sample-and-Hold calibration. */
+    uint32_t adccalsr = 0;
+    switch (current_state)
+    {
+        case ADC_B_CONVERTER_STATE_NONE:
+        {
+            current_state = ADC_B_CONVERTER_STATE_ADC_0_CALIBRATING;
+            adccalsr      = (uint32_t) (R_ADC_B_ADPGACR_ADC_0_CAL_Msk | R_ADC_B_ADPGACR_GAIN_OFFSET_0_CAL_Msk);
+            break;
+        }
+
+        case ADC_B_CONVERTER_STATE_ADC_0_CALIBRATING:
+        {
+            current_state = ADC_B_CONVERTER_STATE_ADC_1_CALIBRATING;
+            adccalsr      = (uint32_t) (R_ADC_B_ADPGACR_ADC_1_CAL_Msk | R_ADC_B_ADPGACR_GAIN_OFFSET_1_CAL_Msk);
+            break;
+        }
+
+        case ADC_B_CONVERTER_STATE_ADC_1_CALIBRATING:
+        {
+            current_state = ADC_B_CONVERTER_STATE_SH_0_2_CALIBRATING;
+            adccalsr      = R_ADC_B_ADPGACR_SAMPLE_HOLD_0_CAL_Msk;
+            break;
+        }
+
+        case ADC_B_CONVERTER_STATE_SH_0_2_CALIBRATING:
+        {
+            current_state = ADC_B_CONVERTER_STATE_SH_4_6_CALIBRATING;
+            adccalsr      = R_ADC_B_ADPGACR_SAMPLE_HOLD_1_CAL_Msk;
+            break;
+        }
+
+        /* Do nothing. Calibration is complete */
+        case ADC_B_CONVERTER_STATE_SH_4_6_CALIBRATING:
+        case ADC_B_CONVERTER_STATE_READY:
+        {
+            current_state = ADC_B_CONVERTER_STATE_READY;
+            break;
+        }
+
+        default:
+        case ADC_B_CONVERTER_STATE_CALIBRATION_FAIL:
+        {
+            break;                     // Do nothing
+        }
+    }
+
+    p_instance_ctrl->adc_state = current_state;
+
+    return adccalsr;
+}
+
+/***********************************************************************************************************************
+ * @brief Helper function - Force stop ADC operation
+ * @param p_instance_ctrl - Pointer to adc_b instance configuration
+ * @return None
+ **********************************************************************************************************************/
+static void adc_b_force_stop (adc_b_instance_ctrl_t * p_instance_ctrl)
+{
+    /* Clear ADC Start Trigger Enable */
+    R_ADC_B->ADTRGENR = 0;
+
+    /* Perform delay according to section 36.5.4.2 of the RA6T2 User Manual, R01UH0951EJ0100 */
+    for (uint32_t i = p_instance_ctrl->trigger_disable_wait_cycles; i > 0; i--)
+    {
+        FSP_REGISTER_READ(R_ADC_B->ADSR);
+    }
+
+    /* Force stop if ADC is still running */
+    if (R_ADC_B->ADSR)
+    {
+        R_ADC_B->ADSTOPR = R_ADC_B0_ADSTOPR_ADSTOP0_Msk | R_ADC_B0_ADSTOPR_ADSTOP1_Msk;
+
+        /* Wait for converter to stop */
+        FSP_HARDWARE_REGISTER_WAIT((R_ADC_B->ADSR_b.ADACT0 | R_ADC_B->ADSR_b.ADACT1), 0)
+    }
+}
 
 /***********************************************************************************************************************
  * @brief Helper function - Initialize PGA settings during call to open
@@ -1189,13 +1303,43 @@ void adc_b_calend0_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
-    IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_CALIBRATION_COMPLETE,
-                                      ADC_GROUP_MASK_NONE,
-                                      ADC_B_CHANNEL_MASK_NONE,
-                                      ADC_B_UNIT_MASK_0);
+    adc_event_t          event        = ADC_EVENT_CALIBRATION_COMPLETE;
+    adc_b_channel_mask_t channel_mask = ADC_B_CHANNEL_MASK_NONE;
+
+    if (R_ADC_B->ADERSR_b.ADERF0)
+    {
+        event |= ADC_EVENT_CONVERSION_ERROR;
+    }
+
+    if (R_ADC_B->ADOVFERSR_b.ADOVFEF0)
+    {
+        event |= ADC_EVENT_OVERFLOW;
+        uint32_t physical_channels = R_ADC_B->ADOVFCHSR0;
+        uint32_t extended_channels = R_ADC_B->ADOVFEXSR;
+        uint64_t extended_mask     = ((uint64_t) extended_channels) << ADC_B_CHANNEL_MASK_EXT_OFFSET;
+        channel_mask |= (adc_b_channel_mask_t) (physical_channels | extended_mask);
+    }
+
+    IRQn_Type               irq             = R_FSP_CurrentIrqGet();
+    adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    uint32_t                adccalsr        = adc_b_update_calibrate_state(p_instance_ctrl);
+    if (event & (adc_event_t) ~ADC_EVENT_CALIBRATION_COMPLETE)
+    {
+        p_instance_ctrl->adc_state = ADC_B_CONVERTER_STATE_CALIBRATION_FAIL;
+        adccalsr = 0;
+    }
+
+    /* End calibration sequence if complete or failed */
+    if (ADC_B_CONVERTER_STATE_READY <= p_instance_ctrl->adc_state)
+    {
+        adc_b_isr_handler(event, ADC_GROUP_MASK_NONE, channel_mask, ADC_B_UNIT_MASK_UNDEFINED);
+    }
 
     R_ADC_B->ADCALENDSCR = R_ADC_B0_ADCALENDSCR_CALENDC0_Msk;
     R_BSP_IrqStatusClear(irq);
+
+    /* Initiate next calibration step*/
+    R_ADC_B->ADCALSTR = adccalsr;
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
@@ -1211,13 +1355,42 @@ void adc_b_calend1_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
-    IRQn_Type irq = adc_b_isr_handler(ADC_EVENT_CALIBRATION_COMPLETE,
-                                      ADC_GROUP_MASK_NONE,
-                                      ADC_B_CHANNEL_MASK_NONE,
-                                      ADC_B_UNIT_MASK_1);
+    adc_event_t          event        = ADC_EVENT_CALIBRATION_COMPLETE;
+    adc_b_channel_mask_t channel_mask = ADC_B_CHANNEL_MASK_NONE;
+
+    if (R_ADC_B->ADERSR_b.ADERF1)
+    {
+        event |= ADC_EVENT_CONVERSION_ERROR;
+    }
+
+    if (R_ADC_B->ADOVFERSR_b.ADOVFEF1)
+    {
+        event |= ADC_EVENT_OVERFLOW;
+        uint32_t physical_channels = R_ADC_B->ADOVFCHSR0;
+        uint32_t extended_channels = R_ADC_B->ADOVFEXSR;
+        uint64_t extended_mask     = ((uint64_t) extended_channels) << ADC_B_CHANNEL_MASK_EXT_OFFSET;
+        channel_mask |= (adc_b_channel_mask_t) (physical_channels | extended_mask);
+    }
+
+    IRQn_Type               irq             = R_FSP_CurrentIrqGet();
+    adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    uint32_t                adccalsr        = adc_b_update_calibrate_state(p_instance_ctrl);
+    if (event & (adc_event_t) ~ADC_EVENT_CALIBRATION_COMPLETE)
+    {
+        p_instance_ctrl->adc_state = ADC_B_CONVERTER_STATE_CALIBRATION_FAIL;
+        adccalsr = 0;
+    }
+
+    /* End calibration sequence if complete or failed */
+    if (ADC_B_CONVERTER_STATE_READY <= p_instance_ctrl->adc_state)
+    {
+        adc_b_isr_handler(event, ADC_GROUP_MASK_NONE, channel_mask, ADC_B_UNIT_MASK_UNDEFINED);
+    }
 
     R_ADC_B->ADCALENDSCR = R_ADC_B0_ADCALENDSCR_CALENDC1_Msk;
     R_BSP_IrqStatusClear(irq);
+
+    R_ADC_B->ADCALSTR = adccalsr;
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
@@ -1312,7 +1485,7 @@ void adc_b_resovf0_isr (void)
 
     R_ADC_B->ADOVFCHSCR0 = physical_channels;
     R_ADC_B->ADOVFEXSCR  = extended_channels;
-    R_ADC_B->ADOVFERSCR  = ADC_B_UNIT_MASK_0;
+    R_ADC_B->ADOVFERSCR  = R_ADC_B0_ADOVFERSCR_ADOVFEC0_Msk;
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */
@@ -1338,7 +1511,7 @@ void adc_b_resovf1_isr (void)
 
     R_ADC_B->ADOVFCHSCR0 = physical_channels;
     R_ADC_B->ADOVFEXSCR  = extended_channels;
-    R_ADC_B->ADOVFERSCR  = ADC_B_UNIT_MASK_1;
+    R_ADC_B->ADOVFERSCR  = R_ADC_B0_ADOVFERSCR_ADOVFEC1_Msk;
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */

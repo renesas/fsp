@@ -500,7 +500,9 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     uint32_t ccr2 = 0U;
     uint32_t ccr3 = R_SCI_B0_CCR3_CPHA_Msk | R_SCI_B0_CCR3_CPOL_Msk | R_SCI_B0_CCR3_LSBF_Msk |
                     SCI_B_SPI_PRV_CHR_RST_VALUE;
-    uint32_t ccr4  = 0U;
+
+    /* CCR4.SCKSEL selects the master receive clock used in simple spi mode on supported MCUs. */
+    uint32_t ccr4  = (BSP_FEATURE_SCI_SPI_SCKSEL_VALUE << R_SCI_B0_CCR4_SCKSEL_Pos);
     uint32_t cfclr = 0U;
     uint32_t ffclr = 0U;
 

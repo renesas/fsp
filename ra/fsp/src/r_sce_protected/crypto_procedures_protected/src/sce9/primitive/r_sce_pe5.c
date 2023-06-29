@@ -2124,10 +2124,10 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                 {
                     /* waiting */
                 }
-                SCE->REG_100H = change_endian_long(0x00000047U);
-                R_SCE_func101(0x391f2b72U, 0x604c828eU, 0xf02151fcU, 0xb6f57c6eU);
+                SCE->REG_100H = change_endian_long(0x00000021U);
+                R_SCE_func101(0x4a7d177eU, 0x10298af1U, 0xe458f86fU, 0x9b69d476U);
                 R_SCE_func059();
-                R_SCE_func100(0x6a995976U, 0x1e17ac48U, 0xa362ceaeU, 0x2b99a636U);
+                R_SCE_func100(0x01db4253U, 0xb764e5afU, 0x8f022087U, 0x097eb48dU);
                 SCE->REG_D0H = 0x40000100U;
                 SCE->REG_C4H = 0x02e087b7U;
                 SCE->REG_00H = 0x00002323U;
@@ -2157,7 +2157,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                 OutData_ClientMACKeyOperationCode[9] = SCE->REG_100H;
                 OutData_ClientMACKeyOperationCode[10] = SCE->REG_100H;
                 OutData_ClientMACKeyOperationCode[11] = SCE->REG_100H;
-                R_SCE_func100(0x2528ed6aU, 0xee5508efU, 0x041256d4U, 0x135e931bU);
+                R_SCE_func100(0x39ce140cU, 0x8fee909aU, 0x6bc1034eU, 0xd7025579U);
                 SCE->REG_104H = 0x00000052U;
                 SCE->REG_C4H = 0x00000c84U;
                 /* WAIT_LOOP */
@@ -2185,7 +2185,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                 OutData_ClientMACKeyOperationCode[13] = SCE->REG_100H;
                 OutData_ClientMACKeyOperationCode[14] = SCE->REG_100H;
                 OutData_ClientMACKeyOperationCode[15] = SCE->REG_100H;
-                R_SCE_func100(0x2611fb28U, 0x7120c9b9U, 0x3ff28142U, 0x5ab80dc5U);
+                R_SCE_func100(0x9f885f43U, 0x631a0a16U, 0x008b60c1U, 0xfcd16548U);
                 SCE->REG_E0H = 0x81040040U;
                 SCE->REG_04H = 0x00000612U;
                 /* WAIT_LOOP */
@@ -2212,7 +2212,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                     /* waiting */
                 }
                 OutData_ClientMACKeyOperationCode[3] = SCE->REG_100H;
-                R_SCE_func100(0x2ad1ea05U, 0xfeb9daccU, 0xfa7d8258U, 0x313d7b50U);
+                R_SCE_func100(0x772d5fe5U, 0x00d1bd61U, 0x5e123603U, 0x75cba3f1U);
                 SCE->REG_104H = 0x00000058U;
                 SCE->REG_E0H = 0x80010040U;
                 /* WAIT_LOOP */
@@ -2257,7 +2257,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                     /* waiting */
                 }
                 SCE->REG_100H = change_endian_long(0x00000048U);
-                R_SCE_func101(0xa052679eU, 0xc9463cadU, 0x7a7723c0U, 0x571da606U);
+                R_SCE_func101(0x07a7255fU, 0x1aea69bbU, 0x8640ceccU, 0x986ee422U);
                 R_SCE_func059();
                 R_SCE_func100(0xe4a6b9e8U, 0x2a75331eU, 0x381cf253U, 0xc5fcdda5U);
                 SCE->REG_D0H = 0x40000100U;
@@ -2518,10 +2518,10 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                 {
                     /* waiting */
                 }
-                SCE->REG_100H = change_endian_long(0x00000050U);
-                R_SCE_func101(0xbd549649U, 0x68718587U, 0xd9dee92dU, 0x6d7b4a07U);
+                SCE->REG_100H = change_endian_long(0x00000026U);
+                R_SCE_func101(0x40f3b61dU, 0x2e645724U, 0xcd2ad425U, 0x0837effcU);
                 R_SCE_func059();
-                R_SCE_func100(0x76cda59bU, 0xa9d4ec46U, 0xed7c6ddcU, 0x29ae654aU);
+                R_SCE_func100(0x0e96be0eU, 0xc535cd0dU, 0x9b19720cU, 0x45fcc98aU);
                 SCE->REG_D0H = 0x40000100U;
                 SCE->REG_C4H = 0x02e087b7U;
                 SCE->REG_00H = 0x00002323U;
@@ -2550,7 +2550,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                 OutData_ServerEncKeyOperationCode[9] = SCE->REG_100H;
                 OutData_ServerEncKeyOperationCode[10] = SCE->REG_100H;
                 OutData_ServerEncKeyOperationCode[11] = SCE->REG_100H;
-                R_SCE_func100(0xd8a6c459U, 0x9f202e30U, 0x90d41d36U, 0xc37f6af4U);
+                R_SCE_func100(0xe6e8a154U, 0x9ac149b6U, 0x97fb6450U, 0x18d20914U);
                 SCE->REG_104H = 0x00000052U;
                 SCE->REG_C4H = 0x00000c84U;
                 /* WAIT_LOOP */
@@ -2578,7 +2578,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                 OutData_ServerEncKeyOperationCode[13] = SCE->REG_100H;
                 OutData_ServerEncKeyOperationCode[14] = SCE->REG_100H;
                 OutData_ServerEncKeyOperationCode[15] = SCE->REG_100H;
-                R_SCE_func100(0xaa972a2dU, 0x4cdd43a0U, 0x3d4924e7U, 0xf0394f8cU);
+                R_SCE_func100(0x135cf8e9U, 0x22e34a6fU, 0xd538c9b6U, 0x8860e6fdU);
                 SCE->REG_E0H = 0x81040040U;
                 SCE->REG_04H = 0x00000612U;
                 /* WAIT_LOOP */
@@ -2605,7 +2605,7 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
                     /* waiting */
                 }
                 OutData_ServerEncKeyOperationCode[3] = SCE->REG_100H;
-                R_SCE_func101(0xdda209e2U, 0xb9558724U, 0x765e3d19U, 0x7dd04af1U);
+                R_SCE_func101(0xb8a02f80U, 0x6869578bU, 0x0d019f50U, 0x0a081d23U);
             }
             else if (0x06000000U == (SCE->REG_1CH & 0xff000000U))
             {
@@ -3004,5 +3004,5 @@ fsp_err_t R_SCE_TlsGenerateSessionKeySub(uint32_t *InData_Sel_CipherSuite, uint3
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe5_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe5_r3.prc
 ***********************************************************************************************************************/

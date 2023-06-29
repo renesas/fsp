@@ -984,6 +984,12 @@ static void iic_b_err_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
         if (IIC_B_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ == p_ctrl->direction)
         {
             i2c_event = I2C_SLAVE_EVENT_RX_COMPLETE;
+
+            /*
+             * This is to fix the issue that after sending NACK, slave application won't be able to get any events until call read API again.
+             * It is preferred to clear NACK bit in the driver to allow more granular ACK control from the slave side.
+             */
+            p_ctrl->p_reg->ACKCTL = R_I3C0_ACKCTL_ACKTWP_Msk;
         }
         else
         {
