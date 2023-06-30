@@ -35,6 +35,7 @@
 
 /* CMSIS-CORE currently generates 2 warnings when compiling with GCC. One in core_cmInstr.h and one in core_cm4_simd.h.
  * We are not modifying these files so we will ignore these warnings temporarily. */
+ #pragma GCC diagnostic push
  #pragma GCC diagnostic ignored "-Wconversion"
  #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
