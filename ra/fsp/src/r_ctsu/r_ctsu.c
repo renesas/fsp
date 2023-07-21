@@ -1154,6 +1154,12 @@ fsp_err_t R_CTSU_ScanStart (ctsu_ctrl_t * const p_ctrl)
         R_CTSU->CTSUCHTRC4 = p_instance_ctrl->ctsuchtrc4;
     }
 
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+    if (CTSU_MODE_MUTUAL_CFC_SCAN == p_instance_ctrl->md) {
+        R_CTSU->CTSUSR2 = 0x00;
+    }
+#endif
+
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
     if (CTSU_MODE_DIAGNOSIS_SCAN == p_instance_ctrl->md)
     {
