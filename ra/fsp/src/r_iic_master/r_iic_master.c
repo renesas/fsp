@@ -958,6 +958,7 @@ static void iic_master_rxi_master (iic_master_instance_ctrl_t * p_ctrl)
              */
             p_ctrl->p_reg->ICMR3_b.ACKWP = 1; /* Write enable ACKBT */
             p_ctrl->p_reg->ICMR3_b.ACKBT = 1;
+	    p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
         }
 
 #if IIC_MASTER_CFG_DTC_ENABLE
@@ -1260,6 +1261,7 @@ static void iic_master_rxi_read_data (iic_master_instance_ctrl_t * const p_ctrl)
          */
         p_ctrl->p_reg->ICMR3_b.ACKWP = 1; /* Write enable ACKBT */
         p_ctrl->p_reg->ICMR3_b.ACKBT = 1;
+	p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
     }
     /* If next data = final byte, send STOP or RESTART */
     else if (1U == p_ctrl->remain)
@@ -1278,6 +1280,7 @@ static void iic_master_rxi_read_data (iic_master_instance_ctrl_t * const p_ctrl)
              * For restart condition, clear bit by software.
              */
             p_ctrl->p_reg->ICMR3_b.ACKBT = 0;
+	    p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
 
             /* Request IIC to issue the restart condition */
             p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_RS_BIT_MASK;
