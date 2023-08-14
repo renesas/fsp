@@ -391,15 +391,12 @@ fsp_err_t R_RTC_CalendarTimeSet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
 
 /*******************************************************************************************************************//**
  * Get the calendar time.
- * @warning Do not call this function from a critical section or from an interrupt with higher priority than the carry
- * interrupt, or the time returned may be inaccurate.
  *
  * Implements @ref rtc_api_t::calendarTimeGet
  *
  * @retval FSP_SUCCESS              Calendar time get operation was successful.
  * @retval FSP_ERR_ASSERTION        Invalid input argument.
  * @retval FSP_ERR_NOT_OPEN         Driver not open already for operation.
- * @retval FSP_ERR_IRQ_BSP_DISABLED User IRQ parameter not valid
  **********************************************************************************************************************/
 fsp_err_t R_RTC_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p_time)
 {
@@ -408,47 +405,59 @@ fsp_err_t R_RTC_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(p_time);
     FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->carry_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
 
     fsp_err_t err = FSP_SUCCESS;
 
-    uint32_t carry_irq_status = NVIC_GetEnableIRQ(p_instance_ctrl->p_cfg->carry_irq);
+    /* Read R_RTC->RSECCNT first, then read it again after reading all other time registers,
+     * if the seconds register value has changed read all time registers again as at least one other 
+     * time register has changed, if seconds did not change no other time registers will have
+     * changed and all the time values belong to the same second, so are valid */
 
-    if ((uint32_t) 0U == carry_irq_status)
-    {
-        r_rtc_irq_set(true, R_RTC_RCR1_CIE_Msk);
-        R_BSP_IrqEnable(p_instance_ctrl->p_cfg->carry_irq);
-    }
-
-    /* If a carry occurs while the 64-Hz counter and time are being read, the correct time is not obtained,
-     * therefore they must be read again. 26.3.5 "Reading 64-Hz Counter and Time" of the RA6M3 manual R01UH0886EJ0100)*/
+    uint8_t sec, min, hour, wday, mday, mon, year;
+    /* read raw register values, seconds first */
     do
-    {
-        p_instance_ctrl->carry_isr_triggered = false; /** This flag will be set to 'true' in the carry ISR */
-        p_time->tm_sec  = (int32_t) rtc_bcd_to_dec(R_RTC->RSECCNT);
-        p_time->tm_min  = (int32_t) rtc_bcd_to_dec(R_RTC->RMINCNT);
-        p_time->tm_hour = (int32_t) rtc_bcd_to_dec(R_RTC->RHRCNT & RTC_RHRCNT_HOUR_MASK);
-        p_time->tm_wday = (int32_t) rtc_bcd_to_dec(R_RTC->RWKCNT);
-        p_time->tm_mday = (int32_t) rtc_bcd_to_dec(R_RTC->RDAYCNT);
+    {   
+        sec  = R_RTC->RSECCNT;
+        min  = R_RTC->RMINCNT;
+        hour = R_RTC->RHRCNT;
+        wday = R_RTC->RWKCNT;
+        mday = R_RTC->RDAYCNT;
+        mon  = R_RTC->RMONCNT;
+        year = (uint8_t)R_RTC->RYRCNT; /* 16bit register, only bits 0-7 used */
+    } while (R_RTC->RSECCNT != sec);   /* if seconds changed, re-read time */
 
-        /* Subtract one to match with C time.h standards */
-        p_time->tm_mon = (int32_t) rtc_bcd_to_dec(R_RTC->RMONCNT) - 1;
+    /* convert time register raw bcd values to decimal values and add to the time struct */
+    p_time->tm_sec  = (int32_t) rtc_bcd_to_dec(sec);
+    p_time->tm_min  = (int32_t) rtc_bcd_to_dec(min);
+    p_time->tm_hour = (int32_t) rtc_bcd_to_dec(hour & RTC_RHRCNT_HOUR_MASK);
+    p_time->tm_wday = (int32_t) rtc_bcd_to_dec(wday);
+    p_time->tm_mday = (int32_t) rtc_bcd_to_dec(mday);
 
-        /* Add 100 to match with C time.h standards */
-        p_time->tm_year = (int32_t) rtc_bcd_to_dec((uint8_t) R_RTC->RYRCNT) + RTC_C_TIME_OFFSET;
-    } while (p_instance_ctrl->carry_isr_triggered);
+    /* Subtract one to match with C time.h standards */
+    p_time->tm_mon = (int32_t) rtc_bcd_to_dec(mon) - 1;
 
-    /** Restore the state of carry IRQ. */
-    if ((uint32_t) 0U == carry_irq_status)
-    {
-        r_rtc_irq_set(false, R_RTC_RCR1_CIE_Msk);
+    /* Add 100 to match with C time.h standards */
+    p_time->tm_year = (int32_t) rtc_bcd_to_dec(year) + RTC_C_TIME_OFFSET;
 
-        /* Disable this interrupt in the NVIC */
-        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->carry_irq);
-    }
+    /* compute time struct member tm_yday- days since January 1 (0-364, 0-365 in leap years) 
+     * RA rtc hardware valid years are 2000-2099 (0-99)
+     * tm_year is 1900 based, so tm_year values will be 100-199
+     * leap year is true if the year is divisable by 4 (in the limited range of 2000-2099,
+     * which is a tm_year value of 100-199 which can be leap year tested as-is) */
+    bool is_leap = p_time->tm_year % 4 == 0;
+
+    /* sum of days using current month (0-11) as index, array value is the sum of days for all 
+     * previous months in the year */
+    static const int16_t ydays[12] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+
+    int yday = ydays[p_time->tm_mon];   /* sum of days for the year, up to current month */
+    if (is_leap && p_time->tm_mon > 1) yday++; /* if a leap year, add an extra day when month is after February */
+    yday += (p_time->tm_mday-1);        /* add this month days (1 based tm_mday to 0 based) */
+    p_time->tm_yday = yday;             /* add to time struct */
+    p_time->tm_isdst = -1;              /* tm_isdst negative value = not defined */
 
     return err;
 }
