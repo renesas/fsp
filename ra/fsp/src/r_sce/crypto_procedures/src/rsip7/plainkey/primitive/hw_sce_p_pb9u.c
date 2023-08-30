@@ -24,7 +24,7 @@ void HW_SCE_Aes256XtsEncryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
 {
     uint32_t iLoop = 0U;
 
-    HW_SCE_p_func100(0x78e7f2ffU, 0xeb04c4b5U, 0x5753e2e6U, 0x86c1697eU);
+    HW_SCE_p_func100(0xe7490aeaU, 0x6d8e86deU, 0xcb82bd97U, 0x8f04bbd6U);
 
     WR1_PROG(REG_1444H, 0x00020061U);
     WR1_PROG(REG_182CH, 0x40000020U);
@@ -42,11 +42,11 @@ void HW_SCE_Aes256XtsEncryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
         iLoop = iLoop + 4U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1408H, 30, 1);
     RD4_ADDR(REG_1420H, &OutData_Text[iLoop - 4]);
 
     HW_SCE_p_func214();
 
-    HW_SCE_p_func101(0xdc26b10fU, 0x11df9189U, 0x2ba3f778U, 0xbcb5d957U);
+    HW_SCE_p_func101(0x500050f2U, 0x03d1d67aU, 0x1f24c823U, 0xf4eb0e6dU);
 }
-

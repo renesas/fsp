@@ -32,11 +32,7 @@
  ***********************************************************************************************************************/
 #include "bsp_api.h"
 #include "hw_sce_common.h"
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-    BSP_FEATURE_CRYPTO_HAS_SCE7
- #include "r_sce_if.h"
- #include "hw_sce_ra_private.h"
-#endif
+#include "hw_sce_ra_private.h"
 
 /**********************************************************************************************************************
  * Macro definitions

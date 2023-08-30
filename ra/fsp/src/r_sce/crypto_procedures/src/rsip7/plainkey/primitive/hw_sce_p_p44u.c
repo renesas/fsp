@@ -35,8 +35,9 @@ void HW_SCE_Aes256CmacUpdateSub (const uint32_t InData_Text[], const uint32_t MA
         iLoop = iLoop + 4U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
+
     HW_SCE_p_func216();
 
-    HW_SCE_p_func101(0x9d1cd063U, 0x46774709U, 0x997bf5b8U, 0x6b86f641U);
+    HW_SCE_p_func101(0x23f24892U, 0xd3dd1458U, 0xb7916428U, 0x7489f518U);
 }
-

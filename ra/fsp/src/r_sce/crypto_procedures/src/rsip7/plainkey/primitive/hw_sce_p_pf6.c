@@ -23,10 +23,10 @@
 fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveType[],
                                                     const uint32_t InData_KeyIndex[],
                                                     const uint32_t InData_MsgDgst[],
-                                                    const uint32_t InData_Signature[])
+                                                    const uint32_t InData_Signature[],
+                                                    const uint32_t InData_DomainParam[])
 {
-    uint32_t OFS_ADR = 0U;
-    uint32_t iLoop   = 0U;
+    uint32_t iLoop = 0U;
 
     if (RD1_MASK(REG_14B8H, 0x0000001eU) != 0)
     {
@@ -45,42 +45,37 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x80010340U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_CurveType[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x800100e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_KeyIndex[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x000000f6U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
     HW_SCE_p_func101(0x8e154ae7U, 0x3298eb8dU, 0xe8be6798U, 0x083848b5U);
-    HW_SCE_p_func043();
+    HW_SCE_p_func043_r1();
 
-    HW_SCE_p_func077();
+    HW_SCE_p_func077_r1();
 
     WR1_PROG(REG_1600H, 0x000034feU);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x000000f6U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
-    HW_SCE_p_func101(0x437460f9U, 0x504ba536U, 0xb4362b46U, 0xb38716c3U);
-    HW_SCE_p_func044();
+    HW_SCE_p_func101(0x04c1825fU, 0x29cc8ecaU, 0x53ddc3e4U, 0x61d8e72cU);
+    HW_SCE_p_func044_r1();
 
     WR1_PROG(REG_1444H, 0x000000a2U);
     WR1_PROG(REG_1A24H, 0x08000044U);
@@ -92,11 +87,8 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
     WR1_PROG(REG_1A24H, 0xe8009107U);
 
     WR1_PROG(REG_1600H, 0x0000b420U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000060U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x80980001U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR4_ADDR(REG_1420H, &InData_KeyIndex[1]);
     WAIT_STS(REG_1444H, 31, 1);
@@ -128,13 +120,12 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0xc75cbf96U, 0xb8e1c2dcU, 0x1880d74bU, 0x05c32ce5U);
+    HW_SCE_p_func100(0x9b89ec61U, 0x34347c80U, 0x147566f5U, 0x4f4c99c6U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
-        HW_SCE_p_func102(0xcd3c27a3U, 0xb8b2e571U, 0xe3095351U, 0xf8d78904U);
+        HW_SCE_p_func102(0x72820642U, 0xe7b16a0fU, 0x58eb80c3U, 0xdcf7c547U);
         WR1_PROG(REG_14B8H, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
@@ -144,19 +135,17 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
     {
         WR1_PROG(REG_1444H, 0x00000bc7U);
         WR1_PROG(REG_1600H, 0x00000bffU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x808c001fU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         for (iLoop = 0U; iLoop < 12U; iLoop++)
         {
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, InData_MsgDgst[iLoop]);
-            WR1_PROG(REG_1458H, 0x00000000U);
         }
+
+        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x80010360U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x000000f6U));
         WR1_PROG(REG_1458H, 0x00000000U);
@@ -164,35 +153,8 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
         WR1_PROG(REG_1000H, 0x00010000U);
         WR1_PROG(REG_1024H, 0x000007f0U);
 
-        HW_SCE_p_func100(0x12b341a6U, 0x34b5f214U, 0xc5996329U, 0x4871f9c7U);
-
-        WR1_PROG(REG_1600H, 0x38000f5aU);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x00030020U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x0000b400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x00000158U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x00000060U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x0000b400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x00000208U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x00000080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-
-        WR1_PROG(REG_1608H, 0x81010000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1408H, 0x00005006U);
-        WAIT_STS(REG_1408H, 30, 1);
-        RD1_ADDR(REG_1420H, &S_RAM[0]);
-        S_RAM[0] = change_endian_long(S_RAM[0]);
-        OFS_ADR = S_RAM[0];
-
-        HW_SCE_p_func100(0x075caa26U, 0xad350f03U, 0x03b6da99U, 0x5c48631cU);
-        HW_SCE_p_func027(OFS_ADR);
+        HW_SCE_p_func100(0x4db903d1U, 0x4a6300baU, 0xc43cdb9cU, 0x558a3041U);
+        HW_SCE_p_func027_r2(InData_DomainParam);
 
         WR1_PROG(REG_1010H, 0x00000020U);
         WR1_PROG(REG_101CH, 0x000000c0U);
@@ -297,20 +259,18 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
         WR1_PROG(REG_143CH, 0x00210000U);
 
-        HW_SCE_p_func100(0x27c7f36eU, 0xd8f23dbdU, 0xeb5375bfU, 0xc9ffb9f3U);
+        HW_SCE_p_func100(0xeb182b17U, 0xb94ad9fbU, 0xc9ab74f8U, 0xe0f5a099U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
             WR1_PROG(REG_1600H, 0x00000800U);
-            WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func101(0xd47493bbU, 0x90eb3bc9U, 0x0755340bU, 0x5e3a93f3U);
+            HW_SCE_p_func101(0x4f573327U, 0x7fec9a57U, 0xc75a78dcU, 0x34041cd6U);
         }
         else
         {
-            HW_SCE_p_func100(0x0be27cd5U, 0x42eea78eU, 0xd8def01aU, 0x6d155b6fU);
+            HW_SCE_p_func100(0xb70c0201U, 0x3fc701b3U, 0x7e4d6f74U, 0xe296d7acU);
 
             WR1_PROG(REG_1014H, 0x00000160U);
             WR1_PROG(REG_1018H, 0x00000200U);
@@ -344,9 +304,7 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
             WR1_PROG(REG_1404H, 0x10e00000U);
             WR1_PROG(REG_1600H, 0x00000bffU);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1608H, 0x818c001fU);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1400H, 0x00c90031U);
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
@@ -369,7 +327,8 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
             WR1_PROG(REG_1000H, 0x00010001U);
             WAIT_STS(REG_1000H, 0, 0);
 
-            HW_SCE_p_func100(0x198a94d0U, 0xfc6d5e60U, 0x1867967cU, 0x016a4be6U);
+            HW_SCE_p_func100(0x9d0014e2U, 0x844fe10fU, 0xdbfe5e98U, 0x215457dbU);
+
             WR1_PROG(REG_1010H, 0x00000018U);
 
             WR1_PROG(REG_1404H, 0x11600000U);
@@ -377,7 +336,7 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            HW_SCE_p_func028(OFS_ADR);
+            HW_SCE_p_func028_r2(InData_DomainParam);
 
             WR1_PROG(REG_1014H, 0x00000390U);
             WR1_PROG(REG_101CH, 0x00000070U);
@@ -400,7 +359,6 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
             WR1_PROG(REG_1000H, 0x00010001U);
             WAIT_STS(REG_1000H, 0, 0);
 
-            HW_SCE_p_func100(0x180b0c72U, 0x3acb0bebU, 0xf9b73a00U, 0xe7c956c9U);
             WR1_PROG(REG_1014H, 0x00000070U);
             WR1_PROG(REG_1018H, 0x00000160U);
             WR1_PROG(REG_1020H, 0x000002f0U);
@@ -409,18 +367,7 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
             WR1_PROG(REG_1000H, 0x00010001U);
             WAIT_STS(REG_1000H, 0, 0);
 
-            WR1_PROG(REG_1014H, 0x00000250U);
-            WR1_PROG(REG_1018H, 0x00000340U);
-            WR1_PROG(REG_101CH, 0x000002f0U);
-            WR1_PROG(REG_1020H, 0x00000480U);
-
-            WR1_PROG(REG_1004H, 0x06060015U);
-            WR1_PROG(REG_1408H, 0x00020000U);
-            WR1_PROG(REG_1000H, 0x00010001U);
-            WAIT_STS(REG_1000H, 0, 0);
-            WR1_PROG(REG_143CH, 0x00000d00U);
-
-            WR1_PROG(REG_1404H, 0x11d00000U);
+            WR1_PROG(REG_1404H, 0x13e00000U);
             WR1_PROG(REG_1444H, 0x000000a2U);
             WR1_PROG(REG_1A24H, 0x08000104U);
             WAIT_STS(REG_1444H, 31, 1);
@@ -435,30 +382,95 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            WR1_PROG(REG_1014H, 0x00000480U);
-            WR1_PROG(REG_1018H, 0x00000200U);
+            WR1_PROG(REG_1014H, 0x00000340U);
+            WR1_PROG(REG_1018H, 0x00000400U);
             WR1_PROG(REG_1020H, 0x000001b0U);
 
             WR1_PROG(REG_1004H, 0x0606000aU);
             WR1_PROG(REG_1000H, 0x00010001U);
             WAIT_STS(REG_1000H, 0, 0);
 
-            WR1_PROG(REG_143CH, 0x00210000U);
+            WR1_PROG(REG_143CH, 0x00a10000U);
 
-            HW_SCE_p_func100(0x27ae2ac8U, 0x9b102d65U, 0xd4d65f6bU, 0xc2ecd7f4U);
+            HW_SCE_p_func100(0x928e7144U, 0x93d7b0d2U, 0x3d1e374cU, 0x15ad884fU);
             WR1_PROG(REG_143CH, 0x00400000U);
-            WR1_PROG(REG_1458H, 0x00000000U);
+
+            if (CHCK_STS(REG_143CH, 22, 1))
+            {
+                HW_SCE_p_func100(0x1d9f87a1U, 0xf2b352ccU, 0x6127f9e3U, 0x7c6d1be0U);
+                WR1_PROG(REG_1014H, 0x00000250U);
+                WR1_PROG(REG_1018H, 0x00000340U);
+                WR1_PROG(REG_101CH, 0x000002f0U);
+                WR1_PROG(REG_1020H, 0x00000480U);
+
+                WR1_PROG(REG_1004H, 0x06060015U);
+                WR1_PROG(REG_1408H, 0x00020000U);
+                WR1_PROG(REG_1000H, 0x00010001U);
+                WAIT_STS(REG_1000H, 0, 0);
+                WR1_PROG(REG_143CH, 0x00000d00U);
+
+                WR1_PROG(REG_1404H, 0x11d00000U);
+                WR1_PROG(REG_1444H, 0x000000a2U);
+                WR1_PROG(REG_1A24H, 0x08000104U);
+                WAIT_STS(REG_1444H, 31, 1);
+                WR1_PROG(REG_1420H, change_endian_long(0x00000001U));
+                WR1_PROG(REG_1400H, 0x00c0002dU);
+                WAIT_STS(REG_1404H, 30, 0);
+                WR1_PROG(REG_143CH, 0x00001800U);
+                WR1_PROG(REG_1400H, 0x00c20005U);
+                WAIT_STS(REG_1404H, 30, 0);
+                WR1_PROG(REG_143CH, 0x00001800U);
+                WR1_PROG(REG_1400H, 0x0002000dU);
+                WAIT_STS(REG_1404H, 30, 0);
+                WR1_PROG(REG_143CH, 0x00001800U);
+
+                WR1_PROG(REG_1014H, 0x00000480U);
+                WR1_PROG(REG_1018H, 0x00000200U);
+                WR1_PROG(REG_1020H, 0x000001b0U);
+
+                WR1_PROG(REG_1004H, 0x0606000aU);
+                WR1_PROG(REG_1000H, 0x00010001U);
+                WAIT_STS(REG_1000H, 0, 0);
+
+                WR1_PROG(REG_143CH, 0x00210000U);
+
+                WR1_PROG(REG_1600H, 0x0000b720U);
+                WR1_PROG(REG_1600H, 0x180f25a9U);
+
+                HW_SCE_p_func101(0x6acf1e27U, 0x0c640d42U, 0x7f97f242U, 0x7a94b7b2U);
+            }
+            else
+            {
+                WR1_PROG(REG_1404H, 0x13e00000U);
+                WR1_PROG(REG_1400H, 0x00c00031U);
+                WAIT_STS(REG_1404H, 30, 0);
+                WR1_PROG(REG_143CH, 0x00001800U);
+                WR1_PROG(REG_1404H, 0x14180000U);
+                WR1_PROG(REG_1400H, 0x00c00031U);
+                WAIT_STS(REG_1404H, 30, 0);
+                WR1_PROG(REG_143CH, 0x00001800U);
+                WR1_PROG(REG_1404H, 0x14500000U);
+                WR1_PROG(REG_1400H, 0x00c00031U);
+                WAIT_STS(REG_1404H, 30, 0);
+                WR1_PROG(REG_143CH, 0x00001800U);
+
+                WR1_PROG(REG_1600H, 0x00000b39U);
+
+                HW_SCE_p_func101(0x456633baU, 0x311805afU, 0x6d2bcc91U, 0xe7f2743aU);
+            }
+
+            HW_SCE_p_func100(0x7d31dd45U, 0xcad27170U, 0x786366fbU, 0x7deb9e81U);
+            WR1_PROG(REG_143CH, 0x00400000U);
 
             if (CHCK_STS(REG_143CH, 22, 1))
             {
                 WR1_PROG(REG_1600H, 0x00000800U);
-                WR1_PROG(REG_1458H, 0x00000000U);
 
-                HW_SCE_p_func101(0xffc29c8dU, 0x2fe4bf20U, 0x73be19daU, 0x383eb419U);
+                HW_SCE_p_func101(0x276cbbbaU, 0x26ee043aU, 0x8c7c3cc8U, 0xd13f5656U);
             }
             else
             {
-                HW_SCE_p_func100(0xfd6e5c73U, 0x857a641eU, 0xf0aba45bU, 0x75181e76U);
+                HW_SCE_p_func100(0xcf343d5bU, 0x195f59faU, 0xbb2bbe3dU, 0x408bed6bU);
                 WR1_PROG(REG_1404H, 0x11b00000U);
                 WR1_PROG(REG_1400H, 0x00c00031U);
                 WAIT_STS(REG_1404H, 30, 0);
@@ -474,7 +486,6 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
                 WR1_PROG(REG_1404H, 0x10e00000U);
                 WR1_PROG(REG_1608H, 0x818c0001U);
-                WR1_PROG(REG_1458H, 0x00000000U);
                 WR1_PROG(REG_1400H, 0x00c90031U);
                 WAIT_STS(REG_1404H, 30, 0);
                 WR1_PROG(REG_143CH, 0x00001800U);
@@ -490,13 +501,9 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
                 WR1_PROG(REG_1404H, 0x10e00000U);
                 WR1_PROG(REG_1600H, 0x000037e1U);
-                WR1_PROG(REG_1458H, 0x00000000U);
                 WR1_PROG(REG_1600H, 0x0000a7e0U);
-                WR1_PROG(REG_1458H, 0x00000000U);
                 WR1_PROG(REG_1600H, 0x00000030U);
-                WR1_PROG(REG_1458H, 0x00000000U);
                 WR1_PROG(REG_1608H, 0x818c001fU);
-                WR1_PROG(REG_1458H, 0x00000000U);
                 WR1_PROG(REG_1400H, 0x00c90031U);
                 WAIT_STS(REG_1404H, 30, 0);
                 WR1_PROG(REG_143CH, 0x00001800U);
@@ -546,68 +553,104 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
                 WR1_PROG(REG_143CH, 0x00210000U);
 
-                HW_SCE_p_func100(0xc965548eU, 0x25b8f076U, 0xe75a3112U, 0x19d25e5bU);
+                HW_SCE_p_func100(0x24044449U, 0x995b076eU, 0xc1229c66U, 0x30658e19U);
                 WR1_PROG(REG_143CH, 0x00400000U);
-                WR1_PROG(REG_1458H, 0x00000000U);
 
                 if (CHCK_STS(REG_143CH, 22, 1))
                 {
                     WR1_PROG(REG_1600H, 0x00000800U);
-                    WR1_PROG(REG_1458H, 0x00000000U);
 
-                    HW_SCE_p_func101(0x59f32118U, 0xb890f414U, 0x6bf6e250U, 0x1b9cfa71U);
+                    HW_SCE_p_func101(0xdb1e860dU, 0xad180aceU, 0xb7ce5670U, 0x206dda4cU);
                 }
                 else
                 {
-                    WR1_PROG(REG_1014H, 0x00000480U);
-                    WR1_PROG(REG_1018H, 0x00000570U);
-                    WR1_PROG(REG_101CH, 0x00000070U);
-                    WR1_PROG(REG_1020H, 0x00000250U);
+                    WR1_PROG(REG_1600H, 0x38008b20U);
+                    WR1_PROG(REG_1600H, 0x180f25a9U);
+                    WR1_PROG(REG_1608H, 0x00000080U);
+                    WR1_PROG(REG_143CH, 0x00260000U);
 
-                    WR1_PROG(REG_1004H, 0x06060013U);
-                    WR1_PROG(REG_1000H, 0x00010001U);
-                    WAIT_STS(REG_1000H, 0, 0);
-                    WR1_PROG(REG_143CH, 0x00000d00U);
-
-                    WR1_PROG(REG_1404H, 0x12700000U);
-                    WR1_PROG(REG_1444H, 0x000000a2U);
-                    WR1_PROG(REG_1A24H, 0x08000104U);
-                    WAIT_STS(REG_1444H, 31, 1);
-                    WR1_PROG(REG_1420H, change_endian_long(0x00000001U));
-                    WR1_PROG(REG_1400H, 0x00c0002dU);
-                    WAIT_STS(REG_1404H, 30, 0);
-                    WR1_PROG(REG_143CH, 0x00001800U);
-                    WR1_PROG(REG_1400H, 0x00c20005U);
-                    WAIT_STS(REG_1404H, 30, 0);
-                    WR1_PROG(REG_143CH, 0x00001800U);
-                    WR1_PROG(REG_1400H, 0x0002000dU);
-                    WAIT_STS(REG_1404H, 30, 0);
-                    WR1_PROG(REG_143CH, 0x00001800U);
-
-                    WR1_PROG(REG_1014H, 0x00000480U);
-                    WR1_PROG(REG_1018H, 0x000002a0U);
-                    WR1_PROG(REG_1020H, 0x000002f0U);
-
-                    WR1_PROG(REG_1004H, 0x0606000aU);
-                    WR1_PROG(REG_1000H, 0x00010001U);
-                    WAIT_STS(REG_1000H, 0, 0);
-
-                    WR1_PROG(REG_143CH, 0x00210000U);
-
-                    HW_SCE_p_func100(0x5d58e9f2U, 0x544e6bf8U, 0xa3cf6707U, 0x5527b2d8U);
+                    HW_SCE_p_func100(0xb07c271aU, 0x34f1d691U, 0x04b0f4edU, 0x6471b8e2U);
                     WR1_PROG(REG_143CH, 0x00400000U);
-                    WR1_PROG(REG_1458H, 0x00000000U);
+
+                    if (CHCK_STS(REG_143CH, 22, 1))
+                    {
+                        WR1_PROG(REG_1014H, 0x00000480U);
+                        WR1_PROG(REG_1018H, 0x00000570U);
+                        WR1_PROG(REG_101CH, 0x00000070U);
+                        WR1_PROG(REG_1020H, 0x00000250U);
+
+                        WR1_PROG(REG_1004H, 0x06060013U);
+                        WR1_PROG(REG_1000H, 0x00010001U);
+                        WAIT_STS(REG_1000H, 0, 0);
+                        WR1_PROG(REG_143CH, 0x00000d00U);
+
+                        WR1_PROG(REG_1404H, 0x12700000U);
+                        WR1_PROG(REG_1444H, 0x000000a2U);
+                        WR1_PROG(REG_1A24H, 0x08000104U);
+                        WAIT_STS(REG_1444H, 31, 1);
+                        WR1_PROG(REG_1420H, change_endian_long(0x00000001U));
+                        WR1_PROG(REG_1400H, 0x00c0002dU);
+                        WAIT_STS(REG_1404H, 30, 0);
+                        WR1_PROG(REG_143CH, 0x00001800U);
+                        WR1_PROG(REG_1400H, 0x00c20005U);
+                        WAIT_STS(REG_1404H, 30, 0);
+                        WR1_PROG(REG_143CH, 0x00001800U);
+                        WR1_PROG(REG_1400H, 0x0002000dU);
+                        WAIT_STS(REG_1404H, 30, 0);
+                        WR1_PROG(REG_143CH, 0x00001800U);
+
+                        WR1_PROG(REG_1014H, 0x00000250U);
+                        WR1_PROG(REG_1018H, 0x000002a0U);
+                        WR1_PROG(REG_1020H, 0x000002f0U);
+
+                        WR1_PROG(REG_1004H, 0x0606000aU);
+                        WR1_PROG(REG_1000H, 0x00010001U);
+                        WAIT_STS(REG_1000H, 0, 0);
+
+                        WR1_PROG(REG_143CH, 0x00210000U);
+
+                        HW_SCE_p_func101(0xa17d0265U, 0x0b024724U, 0xe7863b20U, 0x23990461U);
+                    }
+                    else
+                    {
+                        WR1_PROG(REG_1014H, 0x00000500U);
+                        WR1_PROG(REG_1018H, 0x00000160U);
+                        WR1_PROG(REG_1020H, 0x000001e0U);
+
+                        WR1_PROG(REG_1004H, 0x06060009U);
+                        WR1_PROG(REG_1000H, 0x00010001U);
+                        WAIT_STS(REG_1000H, 0, 0);
+                        WR1_PROG(REG_1014H, 0x00000538U);
+                        WR1_PROG(REG_1018H, 0x00000160U);
+                        WR1_PROG(REG_1020H, 0x00000218U);
+
+                        WR1_PROG(REG_1004H, 0x06060009U);
+                        WR1_PROG(REG_1000H, 0x00010001U);
+                        WAIT_STS(REG_1000H, 0, 0);
+
+                        WR1_PROG(REG_1014H, 0x00000570U);
+                        WR1_PROG(REG_1018H, 0x00000160U);
+                        WR1_PROG(REG_1020H, 0x00000250U);
+
+                        WR1_PROG(REG_1004H, 0x06060009U);
+                        WR1_PROG(REG_1000H, 0x00010001U);
+                        WAIT_STS(REG_1000H, 0, 0);
+
+                        HW_SCE_p_func101(0xaf6fa8f4U, 0x8322ec1dU, 0x6df9e809U, 0x51f1f4abU);
+                    }
+
+                    HW_SCE_p_func100(0x340e51e3U, 0xe91bb19fU, 0x346a28adU, 0x776e7832U);
+                    WR1_PROG(REG_143CH, 0x00400000U);
 
                     if (CHCK_STS(REG_143CH, 22, 1))
                     {
                         WR1_PROG(REG_1600H, 0x00000800U);
-                        WR1_PROG(REG_1458H, 0x00000000U);
 
-                        HW_SCE_p_func101(0xdcdea964U, 0xe2497bf3U, 0xdcf54b31U, 0xf889a735U);
+                        HW_SCE_p_func101(0xdb8a9938U, 0xba951e36U, 0x2c1c2e56U, 0xf5bf29b1U);
                     }
                     else
                     {
-                        HW_SCE_p_func100(0x8bd6311cU, 0x19ce5adeU, 0xa236db70U, 0x6d542c23U);
+                        HW_SCE_p_func100(0x9bdfafe8U, 0xcb9a0ea8U, 0x1a60c02eU, 0x8348e243U);
 
                         WR1_PROG(REG_1014H, 0x00000250U);
                         WR1_PROG(REG_101CH, 0x00000070U);
@@ -681,25 +724,21 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
                         WR1_PROG(REG_143CH, 0x00210000U);
 
-                        HW_SCE_p_func100(0xb0f16f8cU, 0xe246becdU, 0x65c78995U, 0x317d8929U);
+                        HW_SCE_p_func100(0x1889147eU, 0x4e953a1aU, 0x80d0ba07U, 0xe839a519U);
                         WR1_PROG(REG_143CH, 0x00400000U);
-                        WR1_PROG(REG_1458H, 0x00000000U);
 
                         if (CHCK_STS(REG_143CH, 22, 1))
                         {
                             WR1_PROG(REG_1600H, 0x00000800U);
-                            WR1_PROG(REG_1458H, 0x00000000U);
 
-                            HW_SCE_p_func101(0x752d1c73U, 0xae8256c3U, 0x605cc9ddU, 0x0c80f8ecU);
+                            HW_SCE_p_func101(0x33a3e7dbU, 0xb822652bU, 0x7c342208U, 0x9c01d427U);
                         }
                         else
                         {
                             WR1_PROG(REG_1600H, 0x0000b400U);
-                            WR1_PROG(REG_1458H, 0x00000000U);
                             WR1_PROG(REG_1600H, 0x797935bbU);
-                            WR1_PROG(REG_1458H, 0x00000000U);
 
-                            HW_SCE_p_func101(0xb9a81c05U, 0x89970b42U, 0x30b6d17aU, 0xc5e9bb78U);
+                            HW_SCE_p_func101(0xe3b7f478U, 0xf04cda2aU, 0x35586be4U, 0x630d561fU);
                         }
                     }
                 }
@@ -707,20 +746,16 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
         }
 
         WR1_PROG(REG_1600H, 0x38008800U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x797935bbU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x00000080U);
         WR1_PROG(REG_143CH, 0x00A60000U);
 
         WR1_PROG(REG_1600H, 0x00007c1bU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_143CH, 0x00602000U);
         WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func100(0x3e6f6a94U, 0x1df59ef0U, 0xd3f24b65U, 0x338a4016U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
@@ -740,4 +775,3 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
         }
     }
 }
-

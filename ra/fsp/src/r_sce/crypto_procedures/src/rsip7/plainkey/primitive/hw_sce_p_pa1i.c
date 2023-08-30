@@ -43,30 +43,24 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub (const uint32_t InData_KeyType[],
     WR1_PROG(REG_1A24H, 0x0a4500e5U);
     WAIT_STS(REG_1444H, 31, 1);
     WR4_ADDR(REG_1420H, &S_RAM[16 + 0]);
-    WAIT_STS(REG_1A28H, 6, 0);
-    WR1_PROG(REG_143CH, 0x00000900U);
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x80010000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_KeyType[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x38008800U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000001U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00260000U);
 
-    HW_SCE_p_func100(0x30f79cefU, 0xb92b4426U, 0xb04efc1dU, 0x914e47b7U);
+    HW_SCE_p_func100(0xa61055edU, 0x3a292bd8U, 0x3ff23862U, 0x0fbdaef1U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
-        HW_SCE_p_func102(0x50cfd29cU, 0xc632df1bU, 0x0a774737U, 0xd4b07d7eU);
+        HW_SCE_p_func102(0x4dc0267fU, 0xbb64e739U, 0x66a85e13U, 0x178d443eU);
         WR1_PROG(REG_14BCH, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
@@ -75,78 +69,67 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub (const uint32_t InData_KeyType[],
     else
     {
         WR1_PROG(REG_1600H, 0x38000c00U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x00000080U);
         WR1_PROG(REG_143CH, 0x00260000U);
 
-        HW_SCE_p_func100(0x529b74beU, 0x7ea3d6bbU, 0x45036679U, 0x1d566e2eU);
+        HW_SCE_p_func100(0xf5b6ec73U, 0x882683beU, 0x8bf04dcdU, 0x6d7b2959U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
             WR1_PROG(REG_1444H, 0x000000c7U);
             WR1_PROG(REG_1608H, 0x800100e0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, InData_KeyIndex[0]);
             WR1_PROG(REG_1458H, 0x00000000U);
 
             WR1_PROG(REG_1444H, 0x000000a7U);
             WR1_PROG(REG_1608H, 0x800103a0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, change_endian_long(0x000000a1U));
             WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func101(0x59e63b7fU, 0x7c65c976U, 0xe1b58568U, 0xa2d856ceU);
-            HW_SCE_p_func043();
+            HW_SCE_p_func101(0x8ec2e424U, 0xf6bca31fU, 0x4a261cefU, 0xf10a8353U);
+            HW_SCE_p_func043_r1();
 
             WR1_PROG(REG_1600H, 0x0000b4e0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x00000007U);
-            WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func101(0xd9b3bc2bU, 0xd3956d18U, 0x4360ce5aU, 0x9248c198U);
+            HW_SCE_p_func101(0xd6045cd6U, 0x5fb2d070U, 0x5f566e75U, 0x875aa29fU);
         }
         else
         {
             WR1_PROG(REG_1444H, 0x000000c7U);
             WR1_PROG(REG_1608H, 0x80010140U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, InData_KeyIndex[0]);
             WR1_PROG(REG_1458H, 0x00000000U);
 
             WR1_PROG(REG_1444H, 0x000000a7U);
             WR1_PROG(REG_1608H, 0x800103a0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, change_endian_long(0x00000041U));
             WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func101(0x12083853U, 0x1d926552U, 0x9794e252U, 0x6c880176U);
-            HW_SCE_p_func068();
+            HW_SCE_p_func101(0x0589ec80U, 0xf7eedfe7U, 0x31e4d86dU, 0x401cecf9U);
+            HW_SCE_p_func068_r1();
 
             WR1_PROG(REG_1600H, 0x0000b4e0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x85d04999U);
-            WR1_PROG(REG_1458H, 0x00000000U);
 
             HW_SCE_p_func101(0x1f77a5e2U, 0xedf30d91U, 0x93fb0c9bU, 0xd01870a7U);
         }
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x000000a1U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func101(0x4077f4cdU, 0x59179728U, 0xd8ece703U, 0x08ad7e74U);
-        HW_SCE_p_func044();
+        HW_SCE_p_func044_r1();
 
-        HW_SCE_p_func100(0x924e4ca3U, 0xf82af642U, 0x2df9aa0cU, 0x1f4f90cfU);
+        HW_SCE_p_func100(0xd3a5e8ebU, 0x9bea34d4U, 0xe0eab7f8U, 0x03e07939U);
         WR1_PROG(REG_1444H, 0x000007c2U);
         WR1_PROG(REG_1A2CH, 0x40000100U);
         WR1_PROG(REG_1A24H, 0xf7009d07U);
@@ -160,7 +143,7 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub (const uint32_t InData_KeyType[],
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
 
-        HW_SCE_p_func100(0xd674db57U, 0xb0778208U, 0xb7e130fcU, 0x3602aba0U);
+        HW_SCE_p_func100(0xe137ce94U, 0xd5c56502U, 0x46d6886aU, 0x3ce5faf0U);
         WR1_PROG(REG_1824H, 0x08000095U);
         WR1_PROG(REG_1400H, 0x00420011U);
         WAIT_STS(REG_1404H, 30, 0);
@@ -177,13 +160,12 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub (const uint32_t InData_KeyType[],
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
 
-        HW_SCE_p_func100(0xd084a795U, 0xaf9776ecU, 0xa69028a8U, 0xe73c23b7U);
+        HW_SCE_p_func100(0x4f2733d2U, 0x1cf2a57bU, 0x323057b3U, 0xddf77dd8U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
-            HW_SCE_p_func102(0xc1eefc88U, 0x539bb343U, 0xbf0e281eU, 0x2bc00116U);
+            HW_SCE_p_func102(0x4481214aU, 0xce56c63aU, 0xc346003cU, 0xbae3a9bcU);
             WR1_PROG(REG_14BCH, 0x00000040U);
             WAIT_STS(REG_142CH, 12, 0);
 
@@ -222,10 +204,11 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSub (const uint32_t InData_KeyType[],
                 iLoop = iLoop + 4U;
             }
 
+            WR1_PROG(REG_1458H, 0x00000000U);
+
             HW_SCE_p_func216();
 
             return FSP_SUCCESS;
         }
     }
 }
-

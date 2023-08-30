@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @addtogroup CTSU 
+ * @addtogroup CTSU
  * @{
  **********************************************************************************************************************/
 
@@ -35,7 +35,6 @@
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
-
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -270,54 +269,54 @@ typedef struct st_ctsu_diag_info
 /** CTSU private control block. DO NOT MODIFY. Initialization occurs when R_CTSU_Open() is called. */
 typedef struct st_ctsu_instance_ctrl
 {
-    uint32_t                 open;               ///< Whether or not driver is open.
-    volatile ctsu_state_t    state;              ///< CTSU run state.
-    ctsu_cap_t               cap;                ///< CTSU Scan Start Trigger Select
-    ctsu_md_t                md;                 ///< CTSU Measurement Mode Select(copy to cfg)
-    ctsu_tuning_t            tuning;             ///< CTSU Initial offset tuning status.
-    uint16_t                 num_elements;       ///< Number of elements to scan
-    uint16_t                 wr_index;           ///< Word index into ctsuwr register array.
-    uint16_t                 rd_index;           ///< Word index into scan data buffer.
-    uint8_t * p_element_complete_flag;           ///< Pointer to complete flag of each element. g_ctsu_element_complete_flag[] is set by Open API.
+    uint32_t              open;                    ///< Whether or not driver is open.
+    volatile ctsu_state_t state;                   ///< CTSU run state.
+    ctsu_cap_t            cap;                     ///< CTSU Scan Start Trigger Select
+    ctsu_md_t             md;                      ///< CTSU Measurement Mode Select(copy to cfg)
+    ctsu_tuning_t         tuning;                  ///< CTSU Initial offset tuning status.
+    uint16_t              num_elements;            ///< Number of elements to scan
+    uint16_t              wr_index;                ///< Word index into ctsuwr register array.
+    uint16_t              rd_index;                ///< Word index into scan data buffer.
+    uint8_t             * p_element_complete_flag; ///< Pointer to complete flag of each element. g_ctsu_element_complete_flag[] is set by Open API.
 #if (BSP_FEATURE_CTSU_VERSION == 2)
-    uint8_t * p_frequency_complete_flag;         ///< Pointer to complete flag of each frequency. g_ctsu_frequency_complete_flag[] is set by Open API.
+    uint8_t * p_frequency_complete_flag;           ///< Pointer to complete flag of each frequency. g_ctsu_frequency_complete_flag[] is set by Open API.
 #endif
-    int32_t                * p_tuning_diff;      ///< Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API.
-    uint16_t                 average;            ///< CTSU Moving average counter.
-    uint16_t                 num_moving_average; ///< Copy from config by Open API.
-    uint8_t                  ctsucr1;            ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
-    ctsu_ctsuwr_t          * p_ctsuwr;           ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
-    ctsu_self_buf_t        * p_self_raw;         ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
-    uint16_t               * p_self_corr;        ///< Pointer to Self correction data. g_ctsu_self_corr[] is set by Open API.
-    ctsu_data_t            * p_self_data;        ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
-    ctsu_mutual_buf_t      * p_mutual_raw;       ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
-    uint16_t               * p_mutual_pri_corr;  ///< Pointer to Mutual primary correction data. g_ctsu_self_corr[] is set by Open API.
-    uint16_t               * p_mutual_snd_corr;  ///< Pointer to Mutual secondary correction data. g_ctsu_self_corr[] is set by Open API.
-    ctsu_data_t            * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
-    ctsu_data_t            * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
-    ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info
-    ctsu_txvsel_t            txvsel;             ///< CTSU Transmission Power Supply Select
-    ctsu_txvsel2_t           txvsel2;            ///< CTSU Transmission Power Supply Select 2 (CTSU2 Only)
-    uint8_t                  ctsuchac0;          ///< TS00-TS07 enable mask
-    uint8_t                  ctsuchac1;          ///< TS08-TS15 enable mask
-    uint8_t                  ctsuchac2;          ///< TS16-TS23 enable mask
-    uint8_t                  ctsuchac3;          ///< TS24-TS31 enable mask
-    uint8_t                  ctsuchac4;          ///< TS32-TS39 enable mask
-    uint8_t                  ctsuchtrc0;         ///< TS00-TS07 mutual-tx mask
-    uint8_t                  ctsuchtrc1;         ///< TS08-TS15 mutual-tx mask
-    uint8_t                  ctsuchtrc2;         ///< TS16-TS23 mutual-tx mask
-    uint8_t                  ctsuchtrc3;         ///< TS24-TS31 mutual-tx mask
-    uint8_t                  ctsuchtrc4;         ///< TS32-TS39 mutual-tx mask
-    uint16_t                 self_elem_index;    ///< self element index number for Current instance.
-    uint16_t                 mutual_elem_index;  ///< mutual element index number for Current instance.
-    uint16_t                 ctsu_elem_index;    ///< CTSU element index number for Current instance.
+    int32_t                * p_tuning_diff;        ///< Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API.
+    uint16_t                 average;              ///< CTSU Moving average counter.
+    uint16_t                 num_moving_average;   ///< Copy from config by Open API.
+    uint8_t                  ctsucr1;              ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
+    ctsu_ctsuwr_t          * p_ctsuwr;             ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
+    ctsu_self_buf_t        * p_self_raw;           ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
+    uint16_t               * p_self_corr;          ///< Pointer to Self correction data. g_ctsu_self_corr[] is set by Open API.
+    ctsu_data_t            * p_self_data;          ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
+    ctsu_mutual_buf_t      * p_mutual_raw;         ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
+    uint16_t               * p_mutual_pri_corr;    ///< Pointer to Mutual primary correction data. g_ctsu_self_corr[] is set by Open API.
+    uint16_t               * p_mutual_snd_corr;    ///< Pointer to Mutual secondary correction data. g_ctsu_self_corr[] is set by Open API.
+    ctsu_data_t            * p_mutual_pri_data;    ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
+    ctsu_data_t            * p_mutual_snd_data;    ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
+    ctsu_correction_info_t * p_correction_info;    ///< Pointer to correction info
+    ctsu_txvsel_t            txvsel;               ///< CTSU Transmission Power Supply Select
+    ctsu_txvsel2_t           txvsel2;              ///< CTSU Transmission Power Supply Select 2 (CTSU2 Only)
+    uint8_t                  ctsuchac0;            ///< TS00-TS07 enable mask
+    uint8_t                  ctsuchac1;            ///< TS08-TS15 enable mask
+    uint8_t                  ctsuchac2;            ///< TS16-TS23 enable mask
+    uint8_t                  ctsuchac3;            ///< TS24-TS31 enable mask
+    uint8_t                  ctsuchac4;            ///< TS32-TS39 enable mask
+    uint8_t                  ctsuchtrc0;           ///< TS00-TS07 mutual-tx mask
+    uint8_t                  ctsuchtrc1;           ///< TS08-TS15 mutual-tx mask
+    uint8_t                  ctsuchtrc2;           ///< TS16-TS23 mutual-tx mask
+    uint8_t                  ctsuchtrc3;           ///< TS24-TS31 mutual-tx mask
+    uint8_t                  ctsuchtrc4;           ///< TS32-TS39 mutual-tx mask
+    uint16_t                 self_elem_index;      ///< self element index number for Current instance.
+    uint16_t                 mutual_elem_index;    ///< mutual element index number for Current instance.
+    uint16_t                 ctsu_elem_index;      ///< CTSU element index number for Current instance.
 #if (BSP_FEATURE_CTSU_VERSION == 2)
-    uint8_t * p_selected_freq_self;              ///< Frequency selected by self-capacity
-    uint8_t * p_selected_freq_mutual;            ///< Frequency selected by mutual-capacity
+    uint8_t * p_selected_freq_self;                ///< Frequency selected by self-capacity
+    uint8_t * p_selected_freq_mutual;              ///< Frequency selected by mutual-capacity
 #endif
 #if (BSP_FEATURE_CTSU_VERSION == 1)
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
-    ctsu_diag_info_t * p_diag_info;              ///< pointer to diagnosis info
+    ctsu_diag_info_t * p_diag_info;                ///< pointer to diagnosis info
  #endif
 #endif
 
@@ -374,7 +373,7 @@ fsp_err_t R_CTSU_SpecificDataGet(ctsu_ctrl_t * const       p_ctrl,
                                  uint16_t                * p_specific_data,
                                  ctsu_specific_data_type_t specific_data_type);
 fsp_err_t R_CTSU_DataInsert(ctsu_ctrl_t * const p_ctrl, uint16_t * p_insert_data);
-fsp_err_t R_CTSU_OffsetTuning (ctsu_ctrl_t * const p_ctrl);
+fsp_err_t R_CTSU_OffsetTuning(ctsu_ctrl_t * const p_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

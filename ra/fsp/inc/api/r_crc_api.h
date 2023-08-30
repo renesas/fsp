@@ -148,11 +148,12 @@ typedef void crc_ctrl_t;
 /** User configuration structure, used in open function */
 typedef struct st_crc_cfg
 {
-    crc_polynomial_t    polynomial;    ///< CRC Generating Polynomial Switching (GPS)
-    crc_bit_order_t     bit_order;     ///< CRC Calculation Switching (LMS)
+    crc_polynomial_t polynomial;       ///< CRC Generating Polynomial Switching (GPS)
+    crc_bit_order_t  bit_order;        ///< CRC Calculation Switching (LMS)
+
     /* crc_snoop_address_t is to be deprecated. */
-    int32_t             snoop_address; ///< Register Snoop Address (CRCSA)
-    void const        * p_extend;      ///< CRC Hardware Dependent Configuration
+    int32_t      snoop_address;        ///< Register Snoop Address (CRCSA)
+    void const * p_extend;             ///< CRC Hardware Dependent Configuration
 } crc_cfg_t;
 
 /** CRC driver structure. General CRC functions implemented at the HAL layer will follow this API. */

@@ -91,6 +91,7 @@ void HW_SCE_Aes256EncryptDecryptUpdateSub (const uint32_t InData_Text[], uint32_
         iLoop = iLoop + 4U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1408H, 30, 1);
     RD4_ADDR(REG_1420H, &OutData_Text[MAX_CNT - 4]);
 
@@ -129,4 +130,3 @@ void HW_SCE_Aes256EncryptDecryptUpdateSub (const uint32_t InData_Text[], uint32_
         ;
     }
 }
-

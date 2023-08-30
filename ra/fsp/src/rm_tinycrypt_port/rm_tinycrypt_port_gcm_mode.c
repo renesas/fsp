@@ -125,7 +125,7 @@ int tc_gcm_encryption_init (const TCAesKeySched_t sched, uint8_t * iv, uint8_t *
     return tc_return;
 }
 
-int tc_gcm_encryption_update (const TCAesKeySched_t sched, const uint8_t * input, uint8_t * output, uint8_t length)
+int tc_gcm_encryption_update (const TCAesKeySched_t sched, const uint8_t * input, uint8_t * output, uint32_t length)
 {
     int tc_return = TC_CRYPTO_SUCCESS;
   #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
@@ -167,8 +167,8 @@ int tc_gcm_encryption_update (const TCAesKeySched_t sched, const uint8_t * input
 
 int tc_gcm_encryption_final (const TCAesKeySched_t sched,
                              uint8_t             * input,
-                             uint8_t               input_len,
-                             uint8_t               aad_len,
+                             uint32_t              input_len,
+                             uint32_t              aad_len,
                              uint8_t             * output,
                              uint8_t             * tag)
 {
@@ -198,20 +198,20 @@ int tc_gcm_encryption_final (const TCAesKeySched_t sched,
         if (SIZE_AES_192BIT_KEYLEN_BITS == (*sched).key_size)
         {
             err =
-                HW_SCE_Aes192GcmEncryptFinalSub((uint32_t *) input, (uint32_t *) &aad_len, (uint32_t *) &input_len,
-                                                (uint32_t *) output, (uint32_t *) tag);
+                HW_SCE_Aes192GcmEncryptFinalSub((uint32_t *) input, &aad_len, &input_len, (uint32_t *) output,
+                                                (uint32_t *) tag);
         }
         else if (SIZE_AES_256BIT_KEYLEN_BITS == (*sched).key_size)
         {
             err =
-                HW_SCE_Aes256GcmEncryptFinalSub((uint32_t *) input, (uint32_t *) &aad_len, (uint32_t *) &input_len,
-                                                (uint32_t *) output, (uint32_t *) tag);
+                HW_SCE_Aes256GcmEncryptFinalSub((uint32_t *) input, &aad_len, &input_len, (uint32_t *) output,
+                                                (uint32_t *) tag);
         }
         else
         {
             err =
-                HW_SCE_Aes128GcmEncryptFinalSub((uint32_t *) input, (uint32_t *) &aad_len, (uint32_t *) &input_len,
-                                                (uint32_t *) output, (uint32_t *) tag);
+                HW_SCE_Aes128GcmEncryptFinalSub((uint32_t *) input, &aad_len, &input_len, (uint32_t *) output,
+                                                (uint32_t *) tag);
         }
     }
 
@@ -282,7 +282,7 @@ int tc_gcm_decryption_init (const TCAesKeySched_t sched, uint8_t * iv, uint8_t *
     return tc_return;
 }
 
-int tc_gcm_decryption_update (const TCAesKeySched_t sched, const uint8_t * input, uint8_t * output, uint8_t length)
+int tc_gcm_decryption_update (const TCAesKeySched_t sched, const uint8_t * input, uint8_t * output, uint32_t length)
 {
     int tc_return = TC_CRYPTO_SUCCESS;
   #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
@@ -325,8 +325,8 @@ int tc_gcm_decryption_update (const TCAesKeySched_t sched, const uint8_t * input
 int tc_gcm_decryption_final (const TCAesKeySched_t sched,
                              uint8_t             * input,
                              uint8_t             * tag,
-                             uint8_t               aad_len,
-                             uint8_t               input_len,
+                             uint32_t              aad_len,
+                             uint32_t              input_len,
                              uint8_t               tag_len,
                              uint8_t             * output)
 
@@ -358,8 +358,8 @@ int tc_gcm_decryption_final (const TCAesKeySched_t sched,
             err =
                 HW_SCE_Aes192GcmDecryptFinalSub((uint32_t *) input,
                                                 (uint32_t *) tag,
-                                                (uint32_t *) &aad_len,
-                                                (uint32_t *) &input_len,
+                                                &aad_len,
+                                                &input_len,
                                                 (uint32_t *) &tag_len,
                                                 (uint32_t *) output);
         }
@@ -368,8 +368,8 @@ int tc_gcm_decryption_final (const TCAesKeySched_t sched,
             err =
                 HW_SCE_Aes256GcmDecryptFinalSub((uint32_t *) input,
                                                 (uint32_t *) tag,
-                                                (uint32_t *) &aad_len,
-                                                (uint32_t *) &input_len,
+                                                &aad_len,
+                                                &input_len,
                                                 (uint32_t *) &tag_len,
                                                 (uint32_t *) output);
         }
@@ -378,8 +378,8 @@ int tc_gcm_decryption_final (const TCAesKeySched_t sched,
             err =
                 HW_SCE_Aes128GcmDecryptFinalSub((uint32_t *) input,
                                                 (uint32_t *) tag,
-                                                (uint32_t *) &aad_len,
-                                                (uint32_t *) &input_len,
+                                                &aad_len,
+                                                &input_len,
                                                 (uint32_t *) &tag_len,
                                                 (uint32_t *) output);
         }
@@ -423,18 +423,18 @@ int tc_gcm_generation_encryption (uint8_t       * out,
     FSP_PARAMETER_NOT_USED(ivlen);
     if (TC_CRYPTO_FAIL != tc_return)
     {
-        tc_return = tc_gcm_encryption_init(g->sched, (uint8_t *) iv, (uint8_t *) aad, (uint8_t) alen);
+        tc_return = tc_gcm_encryption_init(g->sched, (uint8_t *) iv, (uint8_t *) aad, (uint32_t) alen);
     }
 
     if (TC_CRYPTO_FAIL != tc_return)
     {
-        tc_return = tc_gcm_encryption_update(g->sched, payload, out, (uint8_t) olen);
+        tc_return = tc_gcm_encryption_update(g->sched, payload, out, (uint32_t) olen);
     }
 
     if (TC_CRYPTO_FAIL != tc_return)
     {
         tc_return =
-            tc_gcm_encryption_final(g->sched, (uint8_t *) payload, (uint8_t) plen, (uint8_t) alen, out, temp_tag);
+            tc_gcm_encryption_final(g->sched, (uint8_t *) payload, (uint32_t) plen, (uint32_t) alen, out, temp_tag);
     }
 
     if (TC_CRYPTO_FAIL != tc_return)
@@ -474,23 +474,24 @@ int tc_gcm_decryption_verification (uint8_t       * out,
     FSP_PARAMETER_NOT_USED(ivlen);
     if (TC_CRYPTO_FAIL != tc_return)
     {
-        tc_return = tc_gcm_decryption_init(g->sched, (uint8_t *) iv, (uint8_t *) aad, (uint8_t) alen);
+        tc_return = tc_gcm_decryption_init(g->sched, (uint8_t *) iv, (uint8_t *) aad, (uint32_t) alen);
     }
 
     if (TC_CRYPTO_FAIL != tc_return)
     {
-        tc_return = tc_gcm_decryption_update(g->sched, payload, out, (uint8_t) olen);
+        tc_return = tc_gcm_decryption_update(g->sched, payload, out, (uint32_t) olen);
     }
 
     if (TC_CRYPTO_FAIL != tc_return)
     {
-        tc_return = tc_gcm_decryption_final(g->sched,
-                                            (uint8_t *) payload,
-                                            tag,
-                                            (uint8_t) alen,
-                                            (uint8_t) plen,
-                                            (uint8_t) g->tlen,
-                                            out);
+        tc_return =
+            tc_gcm_decryption_final(g->sched,
+                                    (uint8_t *) payload,
+                                    tag,
+                                    (uint32_t) alen,
+                                    (uint32_t) plen,
+                                    (uint8_t) g->tlen,
+                                    out);
     }
     else
     {

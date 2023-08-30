@@ -56,7 +56,7 @@ FSP_HEADER
 /** Audio Decoder general configuration  */
 typedef struct st_adpcm_decoder_cfg
 {
-    void const * p_extend;              // Placeholder for implementation specific configuration
+    void const * p_extend;             // Placeholder for implementation specific configuration
 } adpcm_decoder_cfg_t;
 
 /** Audio Decoder control block.  Allocate an instance specific control block to pass into the Audio Decoder API calls.
@@ -89,8 +89,8 @@ typedef struct st_adpcm_decoder_api
      * @param[in] p_dest    Number of bytes to be decoded.
      *
      */
-    fsp_err_t (* decode)(adpcm_decoder_ctrl_t * const p_ctrl, void const * p_src, void * p_dest, 
-            uint32_t src_len_bytes);
+    fsp_err_t (* decode)(adpcm_decoder_ctrl_t * const p_ctrl, void const * p_src, void * p_dest,
+                         uint32_t src_len_bytes);
 
     /** Resets the ADPCM driver.
      * @par Implemented as
@@ -108,7 +108,6 @@ typedef struct st_adpcm_decoder_api
      * @param[in]  p_ctrl   Pointer to control handle structure
      */
     fsp_err_t (* close)(adpcm_decoder_ctrl_t * const p_ctrl);
-
 } adpcm_decoder_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

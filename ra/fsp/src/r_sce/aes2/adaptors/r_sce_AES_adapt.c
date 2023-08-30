@@ -162,11 +162,6 @@ void tc_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
     uint8_t * ptr_out;
     uint32_t  block_ctr = 0;
 
-    if (block < 1)
-    {
-        return;
-    }
-
     ptr       = input;
     ptr_out   = output;
     block_ctr = 0;
@@ -459,7 +454,7 @@ fsp_err_t HW_SCE_Aes128GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_128_ENC;
     tc_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_128BIT_KEYLEN_BYTES);
     R_AES_B->AESDCNTL = R_AES_AESDCNTL_BIT_2_3_MODE_1;
-    _copy((uint8_t *) &InputData_IV_GCM[0], sizeof(InputData_IV_GCM), (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
+    memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
 
     return FSP_SUCCESS;
 }
@@ -467,7 +462,7 @@ fsp_err_t HW_SCE_Aes128GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
 void HW_SCE_Aes128GcmEncryptUpdateAADSub (uint32_t * InData_DataA, uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(MAX_CNT);
-    _copy((uint8_t *) &InputData_DataA[0], sizeof(InputData_DataA), (uint8_t *) InData_DataA, sizeof(InputData_DataA));
+    memcpy(&InputData_DataA[0], (uint8_t *) InData_DataA, sizeof(InputData_DataA));
 }
 
 void HW_SCE_Aes128GcmEncryptUpdateTransitionSub (void)
@@ -495,7 +490,7 @@ fsp_err_t HW_SCE_Aes128GcmEncryptFinalSub (uint32_t * InData_Text,
                                 &InputData_IV_GCM[0],
                                 16 * 8,
                                 &InputData_DataA[0],
-                                (uint8_t) *InData_DataALen);
+                                *InData_DataALen);
 
     return status;
 }
@@ -507,7 +502,7 @@ fsp_err_t HW_SCE_Aes128GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_128_DEC;
     tc_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_128BIT_KEYLEN_BYTES);
     R_AES_B->AESDCNTL = R_AES_AESDCNTL_BIT_2_3_MODE_1;
-    _copy((uint8_t *) &InputData_IV_GCM[0], sizeof(InputData_IV_GCM), (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
+    memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
 
     return FSP_SUCCESS;
 }
@@ -515,7 +510,7 @@ fsp_err_t HW_SCE_Aes128GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
 void HW_SCE_Aes128GcmDecryptUpdateAADSub (uint32_t * InData_DataA, uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(MAX_CNT);
-    _copy((uint8_t *) &InputData_DataA[0], sizeof(InputData_DataA), (uint8_t *) InData_DataA, sizeof(InputData_DataA));
+    memcpy(&InputData_DataA[0], (uint8_t *) InData_DataA, sizeof(InputData_DataA));
 }
 
 void HW_SCE_Aes128GcmDecryptUpdateTransitionSub (void)
@@ -589,7 +584,7 @@ fsp_err_t HW_SCE_Aes192GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_192_ENC;
     tc_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_192BIT_KEYLEN_BYTES);
     R_AES_B->AESDCNTL = R_AES_AESDCNTL_BIT_2_3_MODE_1;
-    _copy((uint8_t *) &InputData_IV_GCM[0], sizeof(InputData_IV_GCM), (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
+    memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
 
     return FSP_SUCCESS;
 }
@@ -597,7 +592,7 @@ fsp_err_t HW_SCE_Aes192GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
 void HW_SCE_Aes192GcmEncryptUpdateAADSub (uint32_t * InData_DataA, uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(MAX_CNT);
-    _copy((uint8_t *) &InputData_DataA[0], sizeof(InputData_DataA), (uint8_t *) InData_DataA, sizeof(InputData_DataA));
+    memcpy(&InputData_DataA[0], (uint8_t *) InData_DataA, sizeof(InputData_DataA));
 }
 
 void HW_SCE_Aes192GcmEncryptUpdateTransitionSub (void)
@@ -625,7 +620,7 @@ fsp_err_t HW_SCE_Aes192GcmEncryptFinalSub (uint32_t * InData_Text,
                                 &InputData_IV_GCM[0],
                                 16 * 8,
                                 &InputData_DataA[0],
-                                (uint8_t) *InData_DataALen);
+                                *InData_DataALen);
 
     return status;
 }
@@ -637,7 +632,7 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_192_DEC;
     tc_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_192BIT_KEYLEN_BYTES);
     R_AES_B->AESDCNTL = R_AES_AESDCNTL_BIT_2_3_MODE_1;
-    _copy((uint8_t *) &InputData_IV_GCM[0], sizeof(InputData_IV_GCM), (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
+    memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
 
     return FSP_SUCCESS;
 }
@@ -645,7 +640,7 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
 void HW_SCE_Aes192GcmDecryptUpdateAADSub (uint32_t * InData_DataA, uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(MAX_CNT);
-    _copy((uint8_t *) &InputData_DataA[0], sizeof(InputData_DataA), (uint8_t *) InData_DataA, sizeof(InputData_DataA));
+    memcpy(&InputData_DataA[0], (uint8_t *) InData_DataA, sizeof(InputData_DataA));
 }
 
 void HW_SCE_Aes192GcmDecryptUpdateTransitionSub (void)
@@ -674,12 +669,12 @@ fsp_err_t HW_SCE_Aes192GcmDecryptFinalSub (uint32_t * InData_Text,
 
     status = tc_gcm_calculation((uint8_t *) InData_Text,
                                 (uint8_t *) OutData_Text,
-                                (uint8_t) *InData_TextLen,
+                                *InData_TextLen,
                                 &Tag[0],
                                 &InputData_IV_GCM[0],
                                 16 * 8,
                                 &InputData_DataA[0],
-                                (uint8_t) *InData_DataALen);
+                                *InData_DataALen);
     if (status != FSP_SUCCESS)
     {
         return FSP_ERR_CRYPTO_UNKNOWN;
@@ -719,7 +714,7 @@ fsp_err_t HW_SCE_Aes256GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_256_ENC;
     tc_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_256BIT_KEYLEN_BYTES);
     R_AES_B->AESDCNTL = R_AES_AESDCNTL_BIT_2_3_MODE_1;
-    _copy((uint8_t *) &InputData_IV_GCM[0], sizeof(InputData_IV_GCM), (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
+    memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
 
     return FSP_SUCCESS;
 }
@@ -727,7 +722,7 @@ fsp_err_t HW_SCE_Aes256GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
 void HW_SCE_Aes256GcmEncryptUpdateAADSub (uint32_t * InData_DataA, uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(MAX_CNT);
-    _copy((uint8_t *) &InputData_DataA[0], sizeof(InputData_DataA), (uint8_t *) InData_DataA, sizeof(InputData_DataA));
+    memcpy(&InputData_DataA[0], (uint8_t *) InData_DataA, sizeof(InputData_DataA));
 }
 
 void HW_SCE_Aes256GcmEncryptUpdateTransitionSub (void)
@@ -755,7 +750,7 @@ fsp_err_t HW_SCE_Aes256GcmEncryptFinalSub (uint32_t * InData_Text,
                                 &InputData_IV_GCM[0],
                                 16 * 8,
                                 &InputData_DataA[0],
-                                (uint8_t) *InData_DataALen);
+                                *InData_DataALen);
 
     return status;
 }
@@ -767,7 +762,7 @@ fsp_err_t HW_SCE_Aes256GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_256_DEC;
     tc_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_256BIT_KEYLEN_BYTES);
     R_AES_B->AESDCNTL = R_AES_AESDCNTL_BIT_2_3_MODE_1;
-    _copy((uint8_t *) &InputData_IV_GCM[0], sizeof(InputData_IV_GCM), (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
+    memcpy((uint8_t *) &InputData_IV_GCM[0], (uint8_t *) InData_IV, sizeof(InputData_IV_GCM));
 
     return FSP_SUCCESS;
 }
@@ -775,7 +770,7 @@ fsp_err_t HW_SCE_Aes256GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
 void HW_SCE_Aes256GcmDecryptUpdateAADSub (uint32_t * InData_DataA, uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(MAX_CNT);
-    _copy((uint8_t *) &InputData_DataA[0], sizeof(InputData_DataA), (uint8_t *) InData_DataA, sizeof(InputData_DataA));
+    memcpy((uint8_t *) &InputData_DataA[0], (uint8_t *) InData_DataA, sizeof(InputData_DataA));
 }
 
 void HW_SCE_Aes256GcmDecryptUpdateTransitionSub (void)

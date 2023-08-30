@@ -28,16 +28,14 @@ void HW_SCE_Sha224HmacUpdateSub (const uint32_t InData_Msg[], const uint32_t MAX
 
     WR1_PROG(REG_1444H, 0x00020064U);
 
-    for (iLoop = 0U; iLoop < (MAX_CNT & 0xfffffff0U);)
+    for (iLoop = 0U; iLoop < (MAX_CNT & 0xfffffff0U); )
     {
         WAIT_STS(REG_1444H, 31, 1);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop]);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop + 4]);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop + 8]);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop + 12]);
-
+        WR16_ADDR(REG_1420H, &InData_Msg[iLoop]);
         iLoop = iLoop + 16U;
     }
+
+    WR1_PROG(REG_1458H, 0x00000000U);
 
     for (iLoop = (MAX_CNT & 0xfffffff0U); iLoop < MAX_CNT; iLoop++)
     {
@@ -45,10 +43,11 @@ void HW_SCE_Sha224HmacUpdateSub (const uint32_t InData_Msg[], const uint32_t MAX
         WR1_PROG(REG_1420H, InData_Msg[iLoop]);
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
+
     WR1_PROG(REG_1444H, 0x00000000U);
     WAIT_STS(REG_2030H, 8, 0);
     WR1_PROG(REG_143CH, 0x00001600U);
 
     HW_SCE_p_func101(0x1e0a6afeU, 0xa2781091U, 0xd107e3e7U, 0xd365206aU);
 }
-

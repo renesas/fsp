@@ -157,4 +157,15 @@ void dummy_setbuf (void * stream, char * buf)
 
  #endif                                /* MBEDTLS_PLATFORM_SETBUF_MACRO */
 
+#if defined(__ARMCC_VERSION)
+void exit (int x) {
+    FSP_PARAMETER_NOT_USED(x);
+    while (1)
+    {
+        ;
+    }
+}
+
+#endif
+
 #endif                                 /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */

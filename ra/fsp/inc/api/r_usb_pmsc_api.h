@@ -45,10 +45,11 @@ FSP_HEADER
 /* User specific options for USB PMSC API */
 #include "r_usb_basic_cfg.h"
 #if defined(USB_CFG_OTG_USE)
-#include "r_usb_otg_msc_cfg.h"
-#else   /* defined(USB_CFG_OTG_USE) */
-#include "r_usb_pmsc_cfg.h"
+ #include "r_usb_otg_msc_cfg.h"
+#else                                  /* defined(USB_CFG_OTG_USE) */
+ #include "r_usb_pmsc_cfg.h"
 #endif  /* defined(USB_CFG_OTG_USE) */
+
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/

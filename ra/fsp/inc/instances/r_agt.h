@@ -124,8 +124,8 @@ typedef enum e_agt_pin_cfg
 typedef enum e_agt_counter_bit_width
 {
     AGT_COUNTER_BIT_WIDTH_DEFAULT = 0, ///< Legacy
-    AGT_COUNTER_BIT_WIDTH_16 = 1,      ///< AGT
-    AGT_COUNTER_BIT_WIDTH_32 = 2,      ///< AGTW
+    AGT_COUNTER_BIT_WIDTH_16      = 1, ///< AGT
+    AGT_COUNTER_BIT_WIDTH_32      = 2, ///< AGTW
 } agt_counter_bit_width_t;
 
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
@@ -154,18 +154,18 @@ typedef struct st_agt_extended_cfg
 
         struct
         {
-            agt_pin_cfg_t agtoa : 3;     ///< Configure AGTOA/AGTWOA pin
+            agt_pin_cfg_t agtoa : 3;           ///< Configure AGTOA/AGTWOA pin
             uint8_t             : 1;
-            agt_pin_cfg_t agtob : 3;     ///< Configure AGTOB/AGTWOB pin
+            agt_pin_cfg_t agtob : 3;           ///< Configure AGTOB/AGTWOB pin
         } agtoab_settings_b;
     };
-    agt_pin_cfg_t agto : 3;              ///< Configure AGTO pin @note AGTIO polarity is opposite AGTO
+    agt_pin_cfg_t agto : 3;                    ///< Configure AGTO pin @note AGTIO polarity is opposite AGTO
 
     /* Input pin settings. */
-    agt_measure_t      measurement_mode;       ///< Measurement mode
-    agt_agtio_filter_t agtio_filter;           ///< Input filter for AGTIO
-    agt_enable_pin_t   enable_pin;             ///< Enable pin (event counting only)
-    agt_trigger_edge_t trigger_edge;           ///< Trigger edge to start pulse period measurement or count external event
+    agt_measure_t           measurement_mode;  ///< Measurement mode
+    agt_agtio_filter_t      agtio_filter;      ///< Input filter for AGTIO
+    agt_enable_pin_t        enable_pin;        ///< Enable pin (event counting only)
+    agt_trigger_edge_t      trigger_edge;      ///< Trigger edge to start pulse period measurement or count external event
     agt_counter_bit_width_t counter_bit_width; ///< Counter bit width
 } agt_extended_cfg_t;
 

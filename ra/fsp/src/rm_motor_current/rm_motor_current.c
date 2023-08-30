@@ -836,6 +836,10 @@ static void motor_current_angle_cyclic (motor_current_instance_t * p_instance)
     }
     else if (MOTOR_CURRENT_CONTROL_TYPE_HALL == p_extended_cfg->u1_control_type)
     {
+        p_angle->p_api->speedSet(p_angle->p_ctrl,
+                                 p_ctrl->st_input.f_ref_speed_rad_ctrl,
+                                 p_ctrl->st_input.f_damp_comp_speed);
+
         /* Speed & angle detection */
         p_angle->p_api->angleSpeedGet(p_angle->p_ctrl, &(p_ctrl->f_rotor_angle), &(p_ctrl->f_speed_rad),
                                       &(p_ctrl->f_phase_err));

@@ -963,7 +963,7 @@ fsp_err_t R_SCI_B_UART_BaudCalculate (uint32_t                     baudrate,
      *  BRR = (PCLK / (div_coefficient * baud)) - 1
      */
     int32_t  hit_bit_err = SCI_B_UART_100_PERCENT_X_1000;
-    uint32_t hit_mddr    = 0U;
+    uint8_t  hit_mddr    = 0U;
     uint32_t divisor     = 0U;
 
 #if (BSP_FEATURE_BSP_HAS_SCISPI_CLOCK)
@@ -1021,17 +1021,16 @@ fsp_err_t R_SCI_B_UART_BaudCalculate (uint32_t                     baudrate,
                     int32_t bit_err = (int32_t) (((((int64_t) freq_hz) * SCI_B_UART_100_PERCENT_X_1000) /
                                                   err_divisor) - SCI_B_UART_100_PERCENT_X_1000);
 
-                    uint32_t mddr = 0U;
+                    uint8_t mddr = 0U;
                     if (bitrate_modulation)
                     {
                         /* Calculate the MDDR (M) value if bit rate modulation is enabled,
                          * The formula to calculate MBBR (from the M and N relationship given in the hardware manual) is as follows
-                         * and it must be between 128 and 256.
+                         * and it must be between 128 and 255.
                          * MDDR = ((div_coefficient * baud * 256) * (BRR + 1)) / PCLK */
-                        mddr = (uint32_t) err_divisor / (freq_hz / SCI_B_UART_MDDR_MAX);
+                        mddr = (uint8_t) ((uint32_t) err_divisor / (freq_hz / SCI_B_UART_MDDR_MAX));
 
-                        /* The maximum value that could result from the calculation above is 256, which is a valid MDDR
-                         * value, so only the lower bound is checked. */
+                        /* MDDR value must be greater than or equal to SCI_B_UART_MDDR_MIN. */
                         if (mddr < SCI_B_UART_MDDR_MIN)
                         {
                             break;
@@ -1067,7 +1066,7 @@ fsp_err_t R_SCI_B_UART_BaudCalculate (uint32_t                     baudrate,
                     if (bitrate_modulation)
                     {
                         p_baud_setting->baudrate_bits_b.brme = 1U;
-                        p_baud_setting->baudrate_bits_b.mddr = (uint8_t) hit_mddr;
+                        p_baud_setting->baudrate_bits_b.mddr = hit_mddr;
                     }
                     else
                     {

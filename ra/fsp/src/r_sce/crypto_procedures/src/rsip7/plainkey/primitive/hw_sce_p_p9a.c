@@ -24,10 +24,10 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
                                                 const uint32_t InData_Cmd[],
                                                 const uint32_t InData_KeyIndex[],
                                                 const uint32_t InData_PubKey[],
+                                                const uint32_t InData_DomainParam[],
                                                 uint32_t       OutData_R[])
 {
-    uint32_t OFS_ADR = 0U;
-    uint32_t iLoop   = 0U;
+    uint32_t iLoop = 0U;
 
     if (RD1_MASK(REG_14B8H, 0x0000001eU) != 0)
     {
@@ -46,105 +46,74 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x80010340U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_CurveType[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x80010380U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_Cmd[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x00000bdeU);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x00000fc7U);
     WR1_PROG(REG_1608H, 0x8090001eU);
-    WR1_PROG(REG_1458H, 0x00000000U);
     for (iLoop = 0U; iLoop < 16U; iLoop++)
     {
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_PubKey[iLoop]);
-        WR1_PROG(REG_1458H, 0x00000000U);
     }
+
+    WR1_PROG(REG_1458H, 0x00000000U);
 
     for (iLoop = 0U; iLoop < 2U; iLoop++)
     {
         WR1_PROG(REG_1600H, 0x00000bffU);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x30003380U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00070020U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000d3e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00030040U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000381eU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x38000c00U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x1000d3e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00050040U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000381eU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x000037beU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000a7a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000004U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000383dU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x38001001U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x1000d3e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x38000fffU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x00000080U);
         WR1_PROG(REG_143CH, 0x00260000U);
 
         WR1_PROG(REG_1600H, 0x0000a7c0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000020U);
-        WR1_PROG(REG_1458H, 0x00000000U);
     }
 
-    WR1_PROG(REG_1600H, 0x30000f5aU);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x00030020U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x0000d3e1U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x00000060U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x38000f9cU);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x1000d3e1U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x00000080U);
     WR1_PROG(REG_1458H, 0x00000000U);
 
+    WR1_PROG(REG_1600H, 0x30000f5aU);
+    WR1_PROG(REG_1600H, 0x00030020U);
+    WR1_PROG(REG_1600H, 0x0000d3e1U);
+    WR1_PROG(REG_1600H, 0x00000060U);
+    WR1_PROG(REG_1600H, 0x38000f9cU);
+    WR1_PROG(REG_1600H, 0x1000d3e1U);
+    WR1_PROG(REG_1600H, 0x00000080U);
+
     WR1_PROG(REG_1600H, 0x38008be0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000003U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00A60000U);
 
     HW_SCE_p_func100(0x5aa4bbf8U, 0xbc0b49d0U, 0xc9084846U, 0x540a8890U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
@@ -158,35 +127,31 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
     {
         WR1_PROG(REG_1444H, 0x000000c7U);
         WR1_PROG(REG_1608H, 0x800100e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_KeyIndex[0]);
         WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x0000009aU));
         WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func101(0xa5a8873bU, 0xb0326e70U, 0x4649c07bU, 0x35ed2382U);
-        HW_SCE_p_func043();
+        HW_SCE_p_func043_r1();
 
-        HW_SCE_p_func074();
+        HW_SCE_p_func074_r1();
 
         WR1_PROG(REG_1600H, 0x000034feU);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x0000009aU));
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0x5320325fU, 0x035dde1eU, 0xbbab2420U, 0x79dcd198U);
-        HW_SCE_p_func044();
+        HW_SCE_p_func101(0x5e8cba89U, 0x2aa535e6U, 0xf2defdc9U, 0x38883b74U);
+        HW_SCE_p_func044_r1();
 
         WR1_PROG(REG_1444H, 0x000007c2U);
         WR1_PROG(REG_1A2CH, 0x40000100U);
@@ -198,6 +163,8 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
             WR4_ADDR(REG_1420H, &InData_KeyIndex[iLoop + 1]);
             iLoop = iLoop + 4U;
         }
+
+        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1404H, 0x13200000U);
         WR1_PROG(REG_1400H, 0x00c20021U);
@@ -215,13 +182,12 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
 
-        HW_SCE_p_func100(0xc23ed2bcU, 0xff59eec6U, 0x6a419ba8U, 0x19356bc3U);
+        HW_SCE_p_func100(0xa633b195U, 0xa1769e94U, 0x7d0becbdU, 0x9dc80501U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
-            HW_SCE_p_func102(0x6fd0922dU, 0xc44bc19bU, 0x0fafc087U, 0x155743e0U);
+            HW_SCE_p_func102(0x0f31570bU, 0x50a922beU, 0xd5c1de50U, 0x070f45e8U);
             WR1_PROG(REG_14B8H, 0x00000040U);
             WAIT_STS(REG_142CH, 12, 0);
 
@@ -229,58 +195,8 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
         }
         else
         {
-            HW_SCE_p_func100(0xd7ce3dbaU, 0xd8cdae97U, 0x4ea069abU, 0xefa35814U);
-            WR1_PROG(REG_1600H, 0x30003340U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00050020U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x000002F8U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00030040U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x000001C0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00070040U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x30003380U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00070020U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00000080U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00030040U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x000000C8U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00050040U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00000110U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00000080U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1600H, 0x00000080U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-
-            WR1_PROG(REG_1608H, 0x81010000U);
-            WR1_PROG(REG_1458H, 0x00000000U);
-            WR1_PROG(REG_1408H, 0x00005006U);
-            WAIT_STS(REG_1408H, 30, 1);
-            RD1_ADDR(REG_1420H, &S_RAM[0]);
-            S_RAM[0] = change_endian_long(S_RAM[0]);
-            OFS_ADR = S_RAM[0];
-
-            HW_SCE_p_func100(0x484b97acU, 0x84661bafU, 0xd9c2cf27U, 0xa0615ae1U);
-            HW_SCE_p_func070(OFS_ADR);
+            HW_SCE_p_func100(0xc9e5323eU, 0xf1d0f7fdU, 0xe2a57fd4U, 0xb2c4155cU);
+            HW_SCE_p_func070_r2(InData_DomainParam);
 
             WR1_PROG(REG_1010H, 0x00000020U);
             WR1_PROG(REG_101CH, 0x000000c0U);
@@ -297,9 +213,7 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
             WAIT_STS(REG_1000H, 0, 0);
 
             WR1_PROG(REG_1600H, 0x00000bdeU);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1608H, 0x8190001eU);
-            WR1_PROG(REG_1458H, 0x00000000U);
 
             WR1_PROG(REG_1404H, 0x10f00000U);
             WR1_PROG(REG_1400H, 0x00c90021U);
@@ -311,15 +225,14 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            HW_SCE_p_func008();
+            HW_SCE_p_func008_r1();
 
-            HW_SCE_p_func100(0xfb40fe8eU, 0xc1abe4e4U, 0xbf2d2b44U, 0xe45250f1U);
+            HW_SCE_p_func100(0x15d54b2aU, 0xa3f652faU, 0x7fa597feU, 0x564eedaeU);
             WR1_PROG(REG_143CH, 0x00400000U);
-            WR1_PROG(REG_1458H, 0x00000000U);
 
             if (CHCK_STS(REG_143CH, 22, 1))
             {
-                HW_SCE_p_func102(0x998644d8U, 0x02b33d50U, 0x679dfd13U, 0x097f8691U);
+                HW_SCE_p_func102(0xdb7ceb4dU, 0xbc3773a8U, 0x1b01bcd4U, 0x1808b7d3U);
                 WR1_PROG(REG_14B8H, 0x00000040U);
                 WAIT_STS(REG_142CH, 12, 0);
 
@@ -350,17 +263,15 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
 
                 WR1_PROG(REG_1444H, 0x000000a7U);
                 WR1_PROG(REG_1608H, 0x800103a0U);
-                WR1_PROG(REG_1458H, 0x00000000U);
                 WAIT_STS(REG_1444H, 31, 1);
                 WR1_PROG(REG_1420H, change_endian_long(0x0000009aU));
                 WR1_PROG(REG_1458H, 0x00000000U);
 
-                HW_SCE_p_func101(0x09ea783cU, 0x5fd0bfa8U, 0xfa70fe5dU, 0x697a11acU);
-                HW_SCE_p_func088();
+                HW_SCE_p_func101(0x5bc65a3eU, 0x147966d3U, 0xf39bba30U, 0x5ed1feb4U);
+                HW_SCE_p_func088_r1();
 
                 HW_SCE_p_func100(0xed8515b2U, 0x722a7d11U, 0x3652fd90U, 0x1006f47dU);
                 WR1_PROG(REG_143CH, 0x00400000U);
-                WR1_PROG(REG_1458H, 0x00000000U);
 
                 if (CHCK_STS(REG_143CH, 22, 1))
                 {
@@ -410,4 +321,3 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub (const uint32_t InData_CurveType[
         }
     }
 }
-

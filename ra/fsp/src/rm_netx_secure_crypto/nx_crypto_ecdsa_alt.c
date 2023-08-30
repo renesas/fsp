@@ -497,11 +497,6 @@ NX_CRYPTO_KEEP UINT _nx_crypto_ecdsa_verify(NX_CRYPTO_EC *curve, UCHAR *hash, UI
         len_s = signature[1U];
     }
 
-    UINT curve_size = curve->nx_crypto_ec_bits >> 3;
-    if (curve->nx_crypto_ec_bits & 7)
-    {
-        curve_size++;
-    }
     status =
         sce_nx_crypto_ecdsa_verify(curve, hash, hash_length, (UCHAR *) &public_key[1], (UCHAR *) signature_r, len_r,
                                    (UCHAR *) signature_s, len_s);

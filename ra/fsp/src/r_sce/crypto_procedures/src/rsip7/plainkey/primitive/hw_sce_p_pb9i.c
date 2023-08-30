@@ -36,37 +36,32 @@ fsp_err_t HW_SCE_Aes256XtsEncryptInitSub (const uint32_t InData_KeyIndex[], cons
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x800100e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_KeyIndex[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x000000b9U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
     HW_SCE_p_func101(0x6eea8798U, 0x44a75759U, 0x1569683eU, 0x0129996bU);
-    HW_SCE_p_func043();
+    HW_SCE_p_func043_r1();
 
     WR1_PROG(REG_1600H, 0x0000b4e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000009U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x000000b9U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
-    HW_SCE_p_func101(0x0799277dU, 0x3c88442fU, 0xd8be6ed1U, 0xd44daf38U);
-    HW_SCE_p_func044();
+    HW_SCE_p_func101(0x08eb2ec5U, 0x9179e972U, 0x18927a35U, 0x25e3944bU);
+    HW_SCE_p_func044_r1();
 
-    HW_SCE_p_func100(0xa330b9a2U, 0xe1a198b2U, 0xf6dd35d5U, 0x367a69a7U);
+    HW_SCE_p_func100(0x937f5521U, 0x8e2aedcaU, 0xb0714c4aU, 0x3f38076dU);
     WR1_PROG(REG_1444H, 0x000007c2U);
     WR1_PROG(REG_1A2CH, 0x40000100U);
     WR1_PROG(REG_1A24H, 0xf7009d07U);
@@ -80,13 +75,13 @@ fsp_err_t HW_SCE_Aes256XtsEncryptInitSub (const uint32_t InData_KeyIndex[], cons
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x64605020U, 0xdcc2def1U, 0x10b31eccU, 0xf6f31b83U);
+    HW_SCE_p_func100(0x3d0ec0feU, 0xfaa26933U, 0x16c5ac9eU, 0x11b959f3U);
     WR1_PROG(REG_1824H, 0x08000095U);
     WR1_PROG(REG_1400H, 0x00420011U);
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x2b257193U, 0xe3bbc658U, 0x5989cbd6U, 0x927077d1U);
+    HW_SCE_p_func100(0x5417246bU, 0x386cd92dU, 0x8b1c0dc3U, 0xc82a3732U);
     WR1_PROG(REG_1444H, 0x000007c2U);
     WR1_PROG(REG_1A2CH, 0x40000100U);
     WR1_PROG(REG_1A24H, 0xf7008d07U);
@@ -100,7 +95,7 @@ fsp_err_t HW_SCE_Aes256XtsEncryptInitSub (const uint32_t InData_KeyIndex[], cons
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x68f047ccU, 0xf949f365U, 0xa3e8c723U, 0x461eec73U);
+    HW_SCE_p_func100(0xcc743045U, 0x11faa48aU, 0xe0d0ad97U, 0xfcb6baf2U);
     WR1_PROG(REG_1824H, 0x080000b5U);
     WR1_PROG(REG_1400H, 0x00420011U);
     WAIT_STS(REG_1404H, 30, 0);
@@ -117,13 +112,12 @@ fsp_err_t HW_SCE_Aes256XtsEncryptInitSub (const uint32_t InData_KeyIndex[], cons
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x53e904d1U, 0xf4cb5c01U, 0x5df5c17cU, 0xd40ee756U);
+    HW_SCE_p_func100(0x51018b38U, 0x31f1acf5U, 0x61ed76b0U, 0x39efc6f4U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
-        HW_SCE_p_func102(0xcefbd001U, 0x39484998U, 0x46e09deaU, 0x86315211U);
+        HW_SCE_p_func102(0xffa7d873U, 0x9a0abc0bU, 0xed2b3fb4U, 0xb5900dddU);
         WR1_PROG(REG_14BCH, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
@@ -140,4 +134,3 @@ fsp_err_t HW_SCE_Aes256XtsEncryptInitSub (const uint32_t InData_KeyIndex[], cons
         return FSP_SUCCESS;
     }
 }
-

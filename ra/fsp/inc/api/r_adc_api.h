@@ -183,9 +183,9 @@ typedef enum e_adc_group_mask
 /** ADC states. */
 typedef enum e_adc_state
 {
-    ADC_STATE_IDLE             = 0,           ///< ADC is idle
-    ADC_STATE_SCAN_IN_PROGRESS = 1,           ///< ADC scan in progress
-    ADC_STATE_CALIBRATION_IN_PROGRESS = 2,    ///< ADC calibration in progress - Not used by all ADC instances
+    ADC_STATE_IDLE                    = 0, ///< ADC is idle
+    ADC_STATE_SCAN_IN_PROGRESS        = 1, ///< ADC scan in progress
+    ADC_STATE_CALIBRATION_IN_PROGRESS = 2, ///< ADC calibration in progress - Not used by all ADC instances
 } adc_state_t;
 
 /** ADC status. */

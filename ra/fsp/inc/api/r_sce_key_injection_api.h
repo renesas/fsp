@@ -373,7 +373,7 @@ typedef struct st_sce_key_injection_api
                                                 const uint8_t * const                     encrypted_key,
                                                 sce_rsa2048_private_wrapped_key_t * const wrapped_key);
 
-/** This API outputs 2048-bit RSA public wrapped key.
+    /** This API outputs 2048-bit RSA public wrapped key.
      * @par Implemented as
      * - @ref R_SCE_RSA2048_EncryptedPublicKeyWrap "R_SCE_RSA2048_EncryptedPublicKeyWrap()"
      *
@@ -531,7 +531,7 @@ typedef struct st_sce_key_injection_api
                                                        const sce_key_update_key_t * const   key_update_key,
                                                        sce_ecc_public_wrapped_key_t * const wrapped_key);
 
-	/** This API outputs 384-bit ECC public wrapped key.
+    /** This API outputs 384-bit ECC public wrapped key.
      * @par Implemented as
      * - @ref R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap "R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap()"
      *
@@ -637,7 +637,7 @@ typedef struct st_sce_key_injection_api
                                                            const uint8_t * const                initial_vector,
                                                            const uint8_t * const                encrypted_key,
                                                            sce_ecc_public_wrapped_key_t * const wrapped_key);
-    
+
     /** This API outputs 384-bit Brainpool ECC private wrapped key.
      * @par Implemented as
      * - @ref R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap "R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap()"
@@ -710,7 +710,6 @@ typedef struct st_sce_key_injection_api
                                                               const uint8_t * const                 encrypted_key,
                                                               const sce_key_update_key_t * const    key_update_key,
                                                               sce_ecc_private_wrapped_key_t * const wrapped_key);
-
 } sce_key_injection_api_t;
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

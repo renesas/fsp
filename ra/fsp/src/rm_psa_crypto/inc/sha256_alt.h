@@ -21,6 +21,7 @@
  #define MBEDTLS_SHA256_ALT_H
 
  #include "common.h"
+ #include "r_sce_if.h"
 
  #include <stddef.h>
  #include <stdint.h>
@@ -40,11 +41,12 @@ extern "C" {
  */
 typedef struct mbedtls_sha256_context
 {
-    uint32_t      total[2];                                         /*!< The number of Bytes processed.  */
-    uint32_t      state[8];                                         /*!< The intermediate digest state.  */
-    unsigned char buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES]; /*!< The data block being processed. */
-    int           is224;                                            /*!< Determines which function to use:
-                                                                     * 0: Use SHA-256, or 1: Use SHA-224. */
+    uint32_t       total[2];                                         /*!< The number of Bytes processed.  */
+    uint32_t       state[HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE];                                         /*!< The intermediate digest state.  */
+    unsigned char  buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES]; /*!< The data block being processed. */
+    int            is224;                                            /*!< Determines which function to use:
+                                                                      * 0: Use SHA-256, or 1: Use SHA-224. */
+    sce_hash_cmd_t sce_operation_state;
 } mbedtls_sha256_context;
 
 int mbedtls_internal_sha256_process_ext(mbedtls_sha256_context * ctx,

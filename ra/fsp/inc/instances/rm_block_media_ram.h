@@ -72,18 +72,18 @@ extern const rm_block_media_api_t g_rm_block_media_on_ram_media;
 fsp_err_t RM_BLOCK_MEDIA_RAM_Open(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_cfg_t const * const p_cfg);
 fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit(rm_block_media_ctrl_t * const p_ctrl);
 fsp_err_t RM_BLOCK_MEDIA_RAM_Read(rm_block_media_ctrl_t * const p_ctrl,
-                                    uint8_t * const               p_dest_address,
-                                    uint32_t const                block_address,
-                                    uint32_t const                num_blocks);
+                                  uint8_t * const               p_dest_address,
+                                  uint32_t const                block_address,
+                                  uint32_t const                num_blocks);
 fsp_err_t RM_BLOCK_MEDIA_RAM_Write(rm_block_media_ctrl_t * const p_ctrl,
-                                     uint8_t const * const         p_src_address,
-                                     uint32_t const                block_address,
-                                     uint32_t const                num_blocks);
+                                   uint8_t const * const         p_src_address,
+                                   uint32_t const                block_address,
+                                   uint32_t const                num_blocks);
 fsp_err_t RM_BLOCK_MEDIA_RAM_Erase(rm_block_media_ctrl_t * const p_ctrl,
-                                     uint32_t const                block_address,
-                                     uint32_t const                num_blocks);
+                                   uint32_t const                block_address,
+                                   uint32_t const                num_blocks);
 fsp_err_t RM_BLOCK_MEDIA_RAM_StatusGet(rm_block_media_ctrl_t * const   p_api_ctrl,
-                                         rm_block_media_status_t * const p_status);
+                                       rm_block_media_status_t * const p_status);
 fsp_err_t RM_BLOCK_MEDIA_RAM_InfoGet(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_info_t * const p_info);
 fsp_err_t RM_BLOCK_MEDIA_RAM_Close(rm_block_media_ctrl_t * const p_ctrl);
 

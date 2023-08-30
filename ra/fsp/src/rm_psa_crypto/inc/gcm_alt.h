@@ -37,6 +37,8 @@
  #include "common.h"
 
  #include "mbedtls/cipher.h"
+ 
+ #include "psa/crypto_types.h"
 
  #include <stdint.h>
 
@@ -79,5 +81,8 @@ int sce_gcm_crypt_and_tag(mbedtls_gcm_context * ctx,
  #ifdef __cplusplus
 }
  #endif
+ 
+ /* Functions to support vendor defined format */
+psa_status_t vendor_bitlength_to_raw_bitlength(psa_key_type_t type, size_t vendor_bits, size_t * raw_bits);
 
 #endif                                 /* gcm_alt.h */

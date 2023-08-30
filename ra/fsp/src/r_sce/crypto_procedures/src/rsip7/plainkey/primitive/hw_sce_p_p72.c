@@ -48,46 +48,30 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
 
     WR1_PROG(REG_1444H, 0x000001c7U);
     WR1_PROG(REG_1608H, 0x80020000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_HashType[0]);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_Cmd[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x3420a800U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000007U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x2000b400U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000006U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x3420a820U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000004U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x2000b420U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000003U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x000037e1U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00008fe0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000002U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00046fffU);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x000013e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x00007c1fU);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_143CH, 0x00600000U);
     WR1_PROG(REG_1458H, 0x00000000U);
 
@@ -178,15 +162,12 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
     }
 
     WR1_PROG(REG_1600H, 0x38008c20U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000002U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00260000U);
 
     HW_SCE_p_func100(0x7e733a2fU, 0x1c43d408U, 0x48cf0d5dU, 0xc2578cc4U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
@@ -213,12 +194,13 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
         WR1_PROG(REG_1444H, 0x00000040U);
         WR1_PROG(REG_2010H, InData_State[19]);
 
-        for (iLoop = 0U; iLoop < 18; )
+        for (iLoop = 0U; iLoop < 18U; iLoop++)
         {
             WR1_PROG(REG_1444H, 0x00000040U);
             WR1_PROG(REG_2028H, InData_State[iLoop]);
-            iLoop = iLoop + 1U;
         }
+
+        WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func101(0x3548bbb4U, 0x3723cbd6U, 0x5f1d925aU, 0x32561ea2U);
     }
@@ -228,50 +210,45 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
     for (iLoop = 0U; iLoop < (MAX_CNT & 0xfffffff0U); )
     {
         WAIT_STS(REG_1444H, 31, 1);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop]);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop + 4]);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop + 8]);
-        WR4_ADDR(REG_1420H, &InData_Msg[iLoop + 12]);
+        WR16_ADDR(REG_1420H, &InData_Msg[iLoop]);
 
         iLoop = iLoop + 16U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
+
     WAIT_STS(REG_1444H, 31, 1);
-    for (iLoop = (MAX_CNT & 0xfffffff0U); iLoop < MAX_CNT; )
+    for (iLoop = (MAX_CNT & 0xfffffff0U); iLoop < MAX_CNT; iLoop++)
     {
         WR1_PROG(REG_1420H, InData_Msg[iLoop]);
-
-        iLoop = iLoop + 1U;
     }
+
+    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x38008820U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000001U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00260000U);
 
     WR1_PROG(REG_1600H, 0x38008820U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000002U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00260000U);
 
     HW_SCE_p_func100(0x567e410eU, 0x371ac929U, 0xfe0d7c0aU, 0xc213adfcU);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
         WAIT_STS(REG_2030H, 8, 0);
-        for (iLoop = 0U; iLoop < 18; )
+        for (iLoop = 0U; iLoop < 18U; iLoop++)
         {
             RD1_ADDR(REG_202CH, &OutData_State[iLoop]);
-            iLoop = iLoop + 1U;
         }
+
+        WR1_PROG(REG_1458H, 0x00000000U);
 
         RD1_ADDR(REG_2014H, &OutData_State[18]);
         RD1_ADDR(REG_2010H, &OutData_State[19]);
@@ -286,25 +263,16 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
 
         HW_SCE_p_func100(0xb44467ddU, 0x4d8301f1U, 0xad44168aU, 0x3967754cU);
         WR1_PROG(REG_1600H, 0x38008800U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000003U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x1000b400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000001U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x38008800U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000004U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x1000b400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000002U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x00007c00U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_143CH, 0x00600000U);
         WR1_PROG(REG_1458H, 0x00000000U);
 
@@ -312,12 +280,13 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
         {
             HW_SCE_p_func100(0xab266e93U, 0x312561ffU, 0xfb522dbaU, 0x43e512b4U);
             WR1_PROG(REG_1408H, 0x00004016U);
-            for (iLoop = 0U; iLoop < 5; )
+            for (iLoop = 0U; iLoop < 5U; iLoop++)
             {
                 WAIT_STS(REG_1408H, 30, 1);
                 RD1_ADDR(REG_1420H, &OutData_MsgDigest[iLoop]);
-                iLoop = iLoop + 1U;
             }
+
+            WR1_PROG(REG_1458H, 0x00000000U);
 
             HW_SCE_p_func102(0x0038d5aeU, 0x8385b01eU, 0x036509f6U, 0x1e4afdf1U);
             WR1_PROG(REG_14BCH, 0x00000040U);
@@ -328,12 +297,13 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
         {
             HW_SCE_p_func100(0xb7a47235U, 0x7be6565eU, 0xe534067fU, 0x33a2c499U);
             WR1_PROG(REG_1408H, 0x0000401eU);
-            for (iLoop = 0U; iLoop < 7; )
+            for (iLoop = 0U; iLoop < 7U; iLoop++)
             {
                 WAIT_STS(REG_1408H, 30, 1);
                 RD1_ADDR(REG_1420H, &OutData_MsgDigest[iLoop]);
-                iLoop = iLoop + 1U;
             }
+
+            WR1_PROG(REG_1458H, 0x00000000U);
 
             HW_SCE_p_func102(0x34a7120fU, 0xaa6f4261U, 0x68591b80U, 0x8c81cdbbU);
             WR1_PROG(REG_14BCH, 0x00000040U);
@@ -343,12 +313,13 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
         {
             HW_SCE_p_func100(0x2ce178f3U, 0xa1cc3febU, 0xc1949a5aU, 0x21497d09U);
             WR1_PROG(REG_1408H, 0x00004022U);
-            for (iLoop = 0U; iLoop < 8; )
+            for (iLoop = 0U; iLoop < 8U; iLoop++)
             {
                 WAIT_STS(REG_1408H, 30, 1);
                 RD1_ADDR(REG_1420H, &OutData_MsgDigest[iLoop]);
-                iLoop = iLoop + 1U;
             }
+
+            WR1_PROG(REG_1458H, 0x00000000U);
 
             HW_SCE_p_func102(0x172c0899U, 0x95e1cb98U, 0x8dc08fa0U, 0xc8dd378eU);
             WR1_PROG(REG_14BCH, 0x00000040U);
@@ -358,12 +329,13 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
         {
             HW_SCE_p_func100(0x287bea2eU, 0x1df2e96fU, 0x4dbcb393U, 0x4c9d6cccU);
             WR1_PROG(REG_1408H, 0x00004032U);
-            for (iLoop = 0U; iLoop < 12; )
+            for (iLoop = 0U; iLoop < 12U; iLoop++)
             {
                 WAIT_STS(REG_1408H, 30, 1);
                 RD1_ADDR(REG_1420H, &OutData_MsgDigest[iLoop]);
-                iLoop = iLoop + 1U;
             }
+
+            WR1_PROG(REG_1458H, 0x00000000U);
 
             HW_SCE_p_func102(0x0e16e5aaU, 0x050a18f3U, 0x63018b80U, 0x9957231fU);
             WR1_PROG(REG_14BCH, 0x00000040U);
@@ -373,12 +345,13 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
         {
             HW_SCE_p_func100(0x2fa2bc81U, 0xdfaebf75U, 0x92eafb33U, 0x9fceb828U);
             WR1_PROG(REG_1408H, 0x00004042U);
-            for (iLoop = 0U; iLoop < 16; )
+            for (iLoop = 0U; iLoop < 16U; iLoop++)
             {
                 WAIT_STS(REG_1408H, 30, 1);
                 RD1_ADDR(REG_1420H, &OutData_MsgDigest[iLoop]);
-                iLoop = iLoop + 1U;
             }
+
+            WR1_PROG(REG_1458H, 0x00000000U);
 
             HW_SCE_p_func102(0xc4b453dfU, 0x18f97805U, 0x06a53817U, 0x5d2a0d9aU);
             WR1_PROG(REG_14BCH, 0x00000040U);
@@ -388,4 +361,3 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[],
 
     return FSP_SUCCESS;
 }
-

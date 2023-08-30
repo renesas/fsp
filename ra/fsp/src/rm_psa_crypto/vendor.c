@@ -192,10 +192,10 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         }
 
         status = mbedtls_psa_rsa_export_key(slot->attr.type,
-                                    rsa,
-                                    slot->key.data,
-                                    RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES,
-                                    &slot->key.bytes);
+                                            rsa,
+                                            slot->key.data,
+                                            RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES,
+                                            &slot->key.bytes);
         mbedtls_rsa_free(rsa);
         mbedtls_free(rsa);
 
@@ -292,14 +292,12 @@ psa_status_t psa_import_key_into_slot_vendor (const psa_key_attributes_t * attri
                                               bool                         write_to_persistent_memory)
 {
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
-    size_t bits = slot->attr.bits;
+    size_t       bits   = slot->attr.bits;
     (void) slot;
     (void) data;
     (void) data_length;
     (void) key;
-#if ((!defined(MBEDTLS_ECP_ALT)) && (!defined(MBEDTLS_RSA_ALT)))
     FSP_PARAMETER_NOT_USED(attributes);
-#endif
 
 #if defined(MBEDTLS_AES_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
     if (PSA_KEY_TYPE_IS_UNSTRUCTURED(slot->attr.type))
@@ -336,18 +334,20 @@ psa_status_t psa_import_key_into_slot_vendor (const psa_key_attributes_t * attri
     ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
     if (PSA_KEY_TYPE_IS_ECC_KEY_PAIR(slot->attr.type))
     {
-        status = psa_allocate_buffer_to_slot( slot, data_length );
+        status = psa_allocate_buffer_to_slot(slot, data_length);
 
         if (status != PSA_SUCCESS)
         {
             return status;
         }
 
-        status = mbedtls_psa_ecp_import_key( attributes,
-                                             data, data_length,
-                                             slot->key.data, slot->key.bytes,
-                                             &slot->key.bytes,
-                                             &bits );
+        status = mbedtls_psa_ecp_import_key(attributes,
+                                            data,
+                                            data_length,
+                                            slot->key.data,
+                                            slot->key.bytes,
+                                            &slot->key.bytes,
+                                            &bits);
     }
     else
 #endif                                 /* MBEDTLS_ECP_C  && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT))) */
@@ -356,19 +356,20 @@ psa_status_t psa_import_key_into_slot_vendor (const psa_key_attributes_t * attri
     ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)))
     if (PSA_KEY_TYPE_IS_RSA(slot->attr.type))
     {
-        status = psa_allocate_buffer_to_slot( slot, data_length );
+        status = psa_allocate_buffer_to_slot(slot, data_length);
 
         if (status != PSA_SUCCESS)
         {
             return status;
         }
 
-        status = mbedtls_psa_rsa_import_key( attributes,
-                                             data, data_length,
-                                             slot->key.data, slot->key.bytes,
-                                             &slot->key.bytes,
-                                             &bits );
-
+        status = mbedtls_psa_rsa_import_key(attributes,
+                                            data,
+                                            data_length,
+                                            slot->key.data,
+                                            slot->key.bytes,
+                                            &slot->key.bytes,
+                                            &bits);
     }
     else
 #endif                                 /* defined(MBEDTLS_RSA_C) && defined(MBEDTLS_PK_PARSE_C) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT))) */
@@ -380,7 +381,7 @@ psa_status_t psa_import_key_into_slot_vendor (const psa_key_attributes_t * attri
     {
         /* Enforce a size limit, and in particular ensure that the bit
          * size fits in its representation type.*/
-        if( bits > PSA_MAX_KEY_BITS )
+        if (bits > PSA_MAX_KEY_BITS)
         {
             status = PSA_ERROR_NOT_SUPPORTED;
         }
@@ -438,12 +439,11 @@ psa_status_t psa_finish_key_creation_vendor (psa_key_slot_t * slot)
 
     psa_key_type_t type = slot->attr.type;
 
-    if( PSA_KEY_TYPE_IS_UNSTRUCTURED( type ) ||
-        PSA_KEY_TYPE_IS_RSA( type )   ||
-        PSA_KEY_TYPE_IS_ECC( type )      )
+    if (PSA_KEY_TYPE_IS_UNSTRUCTURED(type) ||
+        PSA_KEY_TYPE_IS_RSA(type) ||
+        PSA_KEY_TYPE_IS_ECC(type))
     {
-        status = psa_export_key_buffer_internal(slot->key.data, slot->key.bytes,
-                                                buffer, buffer_size, &length );
+        status = psa_export_key_buffer_internal(slot->key.data, slot->key.bytes, buffer, buffer_size, &length);
 
         if (status == PSA_SUCCESS)
         {

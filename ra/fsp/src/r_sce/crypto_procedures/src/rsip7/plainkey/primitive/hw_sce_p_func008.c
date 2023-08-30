@@ -20,7 +20,7 @@
 
 #include "hw_sce_ra_private.h"
 
-void HW_SCE_p_func008 (void)
+void HW_SCE_p_func008_r1 (void)
 {
     WR1_PROG(REG_1014H, 0x00000110U);
     WR1_PROG(REG_1018H, 0x00000390U);
@@ -103,4 +103,3 @@ void HW_SCE_p_func008 (void)
 
     WR1_PROG(REG_143CH, 0x00210000U);
 }
-

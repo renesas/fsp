@@ -49,21 +49,21 @@
 #define GLCDC_PRV_CLUT_ENTRY_SIZE                      (256U)
 
 /* Panel timing, Maximum threshold */
-#define GLCDC_PRV_BG_PLANE_H_CYC_MAX                   (1024U)         ///< BG_PERI.FH (Max=1024)
-#define GLCDC_PRV_BG_PLANE_V_CYC_MAX                   (1024U)         ///< BG_PERI.FV (Max=1024)
-#define GLCDC_PRV_BG_PLANE_H_CYC_ACTIVE_SIZE_MAX       (1016U)         ///< BG_HSIZE.HW (Max=1016)
-#define GLCDC_PRV_BG_PLANE_V_CYC_ACTIVE_SIZE_MAX       (1020U)         ///< BG_VSIZE.VW (Max=1020)
-#define GLCDC_PRV_BG_PLANE_H_CYC_ACTIVE_POS_MAX        (1006U)         ///< BG_HSIZE.HP (Max=1006, note that this value is 1cycle larger than GRn_AB3.GRCHS)
-#define GLCDC_PRV_BG_PLANE_V_CYC_ACTIVE_POS_MAX        (1007U)         ///< BG_VSIZE.VP (Max=1007, note that this value is 1cycle larger than GRn_AB3.GRCVS)
+#define GLCDC_PRV_BG_PLANE_H_CYC_MAX                   (2047U)         ///< BG_PERI.FH
+#define GLCDC_PRV_BG_PLANE_V_CYC_MAX                   (2047U)         ///< BG_PERI.FV
+#define GLCDC_PRV_BG_PLANE_H_CYC_ACTIVE_SIZE_MAX       (2039U)         ///< BG_HSIZE.HW (Max=2039)
+#define GLCDC_PRV_BG_PLANE_V_CYC_ACTIVE_SIZE_MAX       (2043U)         ///< BG_VSIZE.VW (Max=2043)
+#define GLCDC_PRV_BG_PLANE_H_CYC_ACTIVE_POS_MAX        (2029U)         ///< BG_HSIZE.HP (Max=2029, note that this value is 1cycle larger than GRn_AB3.GRCHS)
+#define GLCDC_PRV_BG_PLANE_V_CYC_ACTIVE_POS_MAX        (2030U)         ///< BG_VSIZE.VP (Max=2030, note that this value is 1cycle larger than GRn_AB3.GRCVS)
 #define GLCDC_PRV_GR_PLANE_TOTAL_TRANSFER_TIMES_MAX    (65536U)        ///< GRn_FLM5.DATANUM (Max=65536)
-#define GLCDC_PRV_GR_PLANE_V_CYC_ACTIVE_SIZE_MAX       (1020U)         ///< GRn_AB2.GRCVW (Max=1020) ; Image Area, GRn_AB4.ARCVW (Max=1020); Rectangular Area
-#define GLCDC_PRV_GR_PLANE_H_CYC_ACTIVE_POS_MAX        (1005U)         ///< GRn_AB3.GRCHS (Max=1005) ; Image Area, GRn_AB5.ARCHS (Max=1005); Rectangular Area
-#define GLCDC_PRV_GR_PLANE_V_CYC_ACTIVE_POS_MAX        (1006U)         ///< GRn_AB2.GRCVS (Max=1006) ; Image Area, GRn_AB4.ARCVS (Max=1006); Rectangular Area
-#define GLCDC_PRV_TCON_SIGNAL_ASSERT_WIDTH_MAX         (1023U)
+#define GLCDC_PRV_GR_PLANE_V_CYC_ACTIVE_SIZE_MAX       (2043U)         ///< GRn_AB2.GRCVW (Max=2043) ; Image Area, GRn_AB4.ARCVW (Max=2043); Rectangular Area
+#define GLCDC_PRV_GR_PLANE_H_CYC_ACTIVE_POS_MAX        (2028U)         ///< GRn_AB3.GRCHS (Max=2028) ; Image Area, GRn_AB5.ARCHS (Max=2028); Rectangular Area
+#define GLCDC_PRV_GR_PLANE_V_CYC_ACTIVE_POS_MAX        (2029U)         ///< GRn_AB2.GRCVS (Max=2029) ; Image Area, GRn_AB4.ARCVS (Max=2029); Rectangular Area
+#define GLCDC_PRV_TCON_SIGNAL_ASSERT_WIDTH_MAX         (2046U)
 
 /* Panel timing, Minimum threshold */
-#define GLCDC_PRV_BG_PLANE_H_CYC_MIN                   ((uint16_t) 24) ///< BG_PERI.FH (Min=24)
-#define GLCDC_PRV_BG_PLANE_V_CYC_MIN                   ((uint16_t) 20) ///< BG_PERI.FV (Min=20)
+#define GLCDC_PRV_BG_PLANE_H_CYC_MIN                   ((uint16_t) 23) ///< BG_PERI.FH
+#define GLCDC_PRV_BG_PLANE_V_CYC_MIN                   ((uint16_t) 19) ///< BG_PERI.FV
 #define GLCDC_PRV_BG_PLANE_HSYNC_POS_MIN               ((uint16_t) 1)  ///< BG_HSYNC.HP (Min=1)
 #define GLCDC_PRV_BG_PLANE_VSYNC_POS_MIN               ((uint16_t) 1)  ///< BG_HSYNC.VP (Min=1)
 #define GLCDC_PRV_BG_PLANE_H_CYC_ACTIVE_SIZE_MIN       ((uint16_t) 16) ///< BG_HSIZE.HW (Min=16)
@@ -463,7 +463,7 @@ fsp_err_t R_GLCDC_Close (display_ctrl_t * const p_api_ctrl)
 #endif
 
     /* Return immediately if the background block register updating is performed. */
-    FSP_ERROR_RETURN(false == (bool) (R_GLCDC->BG.MON_b.EN & 1U), FSP_ERR_INVALID_UPDATE_TIMING);
+    FSP_ERROR_RETURN(false == (bool) (R_GLCDC->BG.MON_b.VEN & 1U), FSP_ERR_INVALID_UPDATE_TIMING);
 
     /* Disable the GLCDC interrupts in the NVIC */
     if (p_ctrl->p_cfg->line_detect_irq >= 0)
@@ -1318,14 +1318,12 @@ static void r_glcdc_background_screen_set (display_cfg_t const * const p_cfg)
                        (GLCDC_PRV_BG_PLANE_HSYNC_POS_MIN & GLCDC_PRV_BG_SYNC_HP_MASK);
 
     /* Set the start position and width of the background screen */
-    R_GLCDC->BG.HSIZE =
-        ((((uint32_t) (p_cfg->output.htiming.back_porch) + GLCDC_PRV_BG_PLANE_HSYNC_POS_MIN) &
-          GLCDC_PRV_BG_HSIZE_HP_MASK) << 16) +
-        (p_cfg->output.htiming.display_cyc & GLCDC_PRV_BG_HSIZE_HW_MASK);
-    R_GLCDC->BG.VSIZE =
-        ((((uint32_t) (p_cfg->output.vtiming.back_porch) + GLCDC_PRV_BG_PLANE_VSYNC_POS_MIN) &
-          GLCDC_PRV_BG_VSIZE_VP_MASK) << 16) +
-        (p_cfg->output.vtiming.display_cyc & GLCDC_PRV_BG_VSIZE_VW_MASK);
+    R_GLCDC->BG.HSIZE = ((((uint32_t) (p_cfg->output.htiming.back_porch) + GLCDC_PRV_BG_PLANE_HSYNC_POS_MIN) &
+                          GLCDC_PRV_BG_HSIZE_HP_MASK) << 16) +
+                        (p_cfg->output.htiming.display_cyc & GLCDC_PRV_BG_HSIZE_HW_MASK);
+    R_GLCDC->BG.VSIZE = ((((uint32_t) (p_cfg->output.vtiming.back_porch) + GLCDC_PRV_BG_PLANE_VSYNC_POS_MIN) &
+                          GLCDC_PRV_BG_VSIZE_VP_MASK) << 16) +
+                        (p_cfg->output.vtiming.display_cyc & GLCDC_PRV_BG_VSIZE_VW_MASK);
 
     /* Set the background color */
     R_GLCDC->BG.BGC = ((uint32_t) (p_cfg->output.bg_color.byte.r) << 16) +

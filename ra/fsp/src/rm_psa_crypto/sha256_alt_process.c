@@ -62,11 +62,19 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
 {
     SHA256_VALIDATE_RET(ctx != NULL);
     SHA256_VALIDATE_RET((const unsigned char *) data != NULL);
-    uint32_t out_data[8] = {0};
+    uint32_t   out_data[HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE] = {0};
+    uint32_t * outbuff_digest_ptr = out_data;
+    uint32_t   sce_hash_type[1]   = {SCE_OEM_CMD_HASH_TYPE_SHA256};
+    uint32_t   sce_hash_cmd[1]    = {0};
+    uint32_t   InDataMsgLen[2]    = {0};
+
+    InDataMsgLen[0] = BYTES_TO_WORDS(len);
+
+    sce_hash_cmd[0] = ctx->sce_operation_state;
 
     if (FSP_SUCCESS !=
-        HW_SCE_Sha224256GenerateMessageDigestSub(&ctx->state[0], (const uint32_t *) &data[0], BYTES_TO_WORDS(len),
-                                                 out_data))
+        HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], InDataMsgLen,
+                                           &ctx->state[0], outbuff_digest_ptr, NULL, InDataMsgLen[0]))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }

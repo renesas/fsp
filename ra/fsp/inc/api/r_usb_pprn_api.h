@@ -51,7 +51,7 @@ FSP_HEADER
 #define USB_PPRN_SOFT_RESET                 (0x0200U) ///< Soft Reset
 
 #define USB_PPRN_PORT_STATUS_PAPER_EMPTY    (1U << 5) ///< 1: Paper Empty, 0: Paper Not Empty
-#define USB_PPRN_PORT STATUS_SELECT         (1U << 4) ///< 1: Selected, 0: Not Selected
+#define USB_PPRN_PORT_STATUS_SELECT         (1U << 4) ///< 1: Selected, 0: Not Selected
 #define USB_PPRN_PORT_STATUS_NOT_ERROR      (1U << 3) ///< 1: No Error, 0; Error
 
 /*******************************************************************************

@@ -22,8 +22,8 @@
 
 fsp_err_t HW_SCE_SelfCheck1Sub (void)
 {
-    WR1_PROG(REG_1D04H, 0x00043cb3U);
-    WR1_PROG(REG_1D08H, 0x000d5151U);
+    WR1_PROG(REG_1D04H, 0x000dec05U);
+    WR1_PROG(REG_1D08H, 0x000f3c90U);
 
     WR1_PROG(REG_1D00H, 0x00000001U);
 
@@ -36,7 +36,6 @@ fsp_err_t HW_SCE_SelfCheck1Sub (void)
     else
     {
         WR1_PROG(REG_140CH, 0x38c60eedU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1448H, 0x00000000U);
 
         WR1_PROG(REG_1408H, 0x00000001U);
@@ -66,17 +65,13 @@ fsp_err_t HW_SCE_SelfCheck1Sub (void)
         WR1_PROG(REG_1444H, 0x000003a2U);
         WR1_PROG(REG_1A24H, 0x0a0700f5U);
         WAIT_STS(REG_1444H, 31, 1);
-        WR4_PROG(REG_1420H, 0xb45a1978U, 0x5a5a637bU, 0xe29d7bddU, 0x6d004e9bU);
-        WAIT_STS(REG_1A28H, 6, 0);
-        WR1_PROG(REG_143CH, 0x00000900U);
+        WR4_PROG(REG_1420H, 0xfa628a35U, 0x28f9dcb2U, 0x6bf927b0U, 0x111b9709U);
 
-        HW_SCE_p_func101(change_endian_long(0xf9e62180U), change_endian_long(0x81a998d0U), change_endian_long(0x19561115U), change_endian_long(0x985f70c1U));
+        HW_SCE_p_func101(change_endian_long(0x4462fc48U), change_endian_long(0x45c20005U), change_endian_long(0x382dac30U), change_endian_long(0x820498b6U));
 
         HW_SCE_p_func100(change_endian_long(0x0c85360bU), change_endian_long(0x8794147aU), change_endian_long(0x9fe177e4U), change_endian_long(0x38d62ae4U));
 
         WR1_PROG(REG_1408H, 0x00020000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_142CH, 13, 0))
         {
@@ -98,4 +93,3 @@ fsp_err_t HW_SCE_SelfCheck1Sub (void)
         }
     }
 }
-

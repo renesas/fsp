@@ -31,6 +31,12 @@
 
 #define LVD_PRV_NUMBER_OF_MONITORS          (5U)
 
+#define LVD_MONITOR_LVD1                    (1U)
+#define LVD_MONITOR_LVD2                    (2U)
+#define LVD_MONITOR_LVD_VBAT                (3U)
+#define LVD_MONITOR_LVD_VRTC                (4U)
+#define LVD_MONITOR_EXLVD                   (5U)
+
 #define LVD_PRV_FIRST_MONITOR_NUMBER        (1U)
 #define LVD_PRV_NUMBER_OF_NMI               (2U)
 #define LVD_PRV_NUMBER_OF_VCC_MONITOR       (2U)
@@ -547,7 +553,17 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     }
 
     /* Amount of time to wait before enabling output of voltage monitor comparison results. */
-    uint32_t delay = BSP_FEATURE_LVD_STABILIZATION_TIME_US;
+    uint32_t delay;
+    if (LVD_MONITOR_LVD1 == p_ctrl->p_cfg->monitor_number)
+    {
+        /** LVD monitor is LVD1 */
+        delay = BSP_FEATURE_LVD_MONITOR_1_STABILIZATION_TIME_US;
+    }
+    else
+    {
+        /** LVD monitor is LVD2 */
+        delay = BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US;
+    }
 
 #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
     if (LVD_SAMPLE_CLOCK_DISABLED != p_ctrl->p_cfg->sample_clock_divisor)
@@ -838,7 +854,21 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     *g_ext_lvdcr_lut[monitor_index] |= (uint8_t) LVD_PRV_EXT_LVDCR_LVDE_ENABLE;
 
     /* Waiting for the comparator operation stabilization time */
-    R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+    if (LVD_MONITOR_LVD_VBAT == p_ctrl->p_cfg->monitor_number)
+    {
+        /** LVD monitor is LVD VBAT */
+        R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_VBAT_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+    else if (LVD_MONITOR_LVD_VRTC == p_ctrl->p_cfg->monitor_number)
+    {
+        /** LVD monitor is LVD VRTC */
+        R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_VRTC_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+    else
+    {
+        /** LVD monitor is EXLVD */
+        R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_EXLVD_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+    }
 
     /* Set the nCMPCR.CMPE bit to 1 to enable pin voltage detect circuit */
     *g_ext_lvdcmpcr_lut[monitor_index] = (uint8_t) LVD_PRV_EXT_CMPCR_CMPE_MASK;

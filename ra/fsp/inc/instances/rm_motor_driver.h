@@ -45,6 +45,13 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** Support two ADC instance valid for adc */
+typedef enum e_motor_driver_select_adc_instance
+{
+    MOTOR_DRIVER_SELECT_ADC_INSTANCE_FIRST = 0, ///< Use first ADC instance
+    MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND,    ///< Use second ADC instanse
+} motor_driver_select_adc_instance_t;
+
 /* Modulation type selection */
 typedef enum  e_motor_driver_modulation_method
 {
@@ -71,36 +78,67 @@ typedef struct st_motor_driver_modulation
     uint8_t u1_sat_flag;               ///< Saturation flag
 } motor_driver_modulation_t;
 
+/** For multiple motor */
+typedef struct st_motor_driver_shared_instance_ctrl
+{
+    uint32_t     open;
+    uint8_t      registered_motor_count; ///< Registered motor counts
+    void const * p_context[MOTOR_DRIVER_CFG_SUPPORT_MOTOR_NUM];
+} motor_driver_shared_instance_ctrl_t;
+
+/** For multiple motor */
+typedef struct st_motor_driver_extended_shared_cfg
+{
+    adc_instance_t const * p_adc_instance_first;  ///< first ADC instance
+    adc_instance_t const * p_adc_instance_second; ///< second ADC instance
+
+    motor_driver_shared_instance_ctrl_t * const p_shared_instance_ctrl;
+} motor_driver_extended_shared_cfg_t;
+
 typedef struct st_motor_driver_extended_cfg
 {
-    uint16_t u2_pwm_timer_freq;                         ///< PWM timer frequency [MHz]
-    uint16_t u2_pwm_carrier_freq;                       ///< PWM carrier frequency [kHz]
-    uint16_t u2_deadtime;                               ///< PWM deadtime [usec]
+    uint16_t u2_pwm_timer_freq;                               ///< PWM timer frequency [MHz]
+    uint16_t u2_pwm_carrier_freq;                             ///< PWM carrier frequency [kHz]
+    uint16_t u2_deadtime;                                     ///< PWM deadtime [usec]
 
-    float f_current_range;                              ///< A/D current measure range (max current) [A]
-    float f_vdc_range;                                  ///< A/D main line voltage measure range (max voltage) [V]
-    float f_ad_resolution;                              ///< A/D resolution
-    float f_ad_current_offset;                          ///< A/D offset (Center value)
-    float f_ad_voltage_conversion;                      ///< A/D conversion level
+    float f_current_range;                                    ///< A/D current measure range (max current) [A]
+    float f_vdc_range;                                        ///< A/D main line voltage measure range (max voltage) [V]
+    float f_ad_resolution;                                    ///< A/D resolution
+    float f_ad_current_offset;                                ///< A/D offset (Center value)
+    float f_ad_voltage_conversion;                            ///< A/D conversion level
 
-    uint16_t u2_offset_calc_count;                      ///< Calculation counts for current offset
+    uint16_t u2_offset_calc_count;                            ///< Calculation counts for current offset
 
-    motor_driver_modulation_method_t modulation_method; ///< Modulation method
+    motor_driver_modulation_method_t modulation_method;       ///< Modulation method
 
     /* PWM output port */
-    bsp_io_port_pin_t port_up;                          ///< PWM output port UP
-    bsp_io_port_pin_t port_un;                          ///< PWM output port UN
-    bsp_io_port_pin_t port_vp;                          ///< PWM output port VP
-    bsp_io_port_pin_t port_vn;                          ///< PWM output port VN
-    bsp_io_port_pin_t port_wp;                          ///< PWM output port WP
-    bsp_io_port_pin_t port_wn;                          ///< PWM output port WN
+    bsp_io_port_pin_t port_up;                                ///< PWM output port UP
+    bsp_io_port_pin_t port_un;                                ///< PWM output port UN
+    bsp_io_port_pin_t port_vp;                                ///< PWM output port VP
+    bsp_io_port_pin_t port_vn;                                ///< PWM output port VN
+    bsp_io_port_pin_t port_wp;                                ///< PWM output port WP
+    bsp_io_port_pin_t port_wn;                                ///< PWM output port WN
 
     /* For 1shunt */
-    float   f_ad_current_adjust;                        ///< Adjustment value for 1shunt A/D current
-    int32_t s4_difference_minimum;                      ///< Minimum difference of PWM duty
-    int32_t s4_adjust_adc_delay;                        ///< Adjustment delay for A/D conversion
+    float   f_ad_current_adjust;                              ///< Adjustment value for 1shunt A/D current
+    int32_t s4_difference_minimum;                            ///< Minimum difference of PWM duty
+    int32_t s4_adjust_adc_delay;                              ///< Adjustment delay for A/D conversion
+
+    /* For multiple motor */
+    adc_group_mask_t adc_group;                               ///< Used ADC scan group only valid for adc_b
+
+    /* Channel assignment */
+    uint8_t iu_ad_unit;                                       ///< Used A/D unit number for U phase current
+    uint8_t iv_ad_unit;                                       ///< Used A/D unit number for V phase current
+    uint8_t iw_ad_unit;                                       ///< Used A/D unit number for W phase current
+    uint8_t vdc_ad_unit;                                      ///< Used A/D unit number for main line voltage
+    uint8_t sin_ad_unit;                                      ///< Used A/D unit number for sin signal of induction sensor
+    uint8_t cos_ad_unit;                                      ///< Used A/D unit number for cos signal of induction sensor
 
     motor_driver_modulation_t mod_param;
+
+    motor_driver_select_adc_instance_t         interrupt_adc; ///< Select which interrupt to use
+    motor_driver_extended_shared_cfg_t const * p_shared_cfg;  ///< Shared extended config
 } motor_driver_extended_cfg_t;
 
 typedef struct st_motor_driver_instance_ctrl
@@ -148,6 +186,9 @@ typedef struct st_motor_driver_instance_ctrl
 
     /* For GPT(Timer) callback */
     timer_callback_args_t timer_callback_args; ///< For call GPT(Timer) callbackSet function
+
+    /* Shared ADC */
+    motor_driver_shared_instance_ctrl_t * p_shared_instance_ctrl;
 } motor_driver_instance_ctrl_t;
 
 /**********************************************************************************************************************

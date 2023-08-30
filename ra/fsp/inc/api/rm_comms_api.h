@@ -171,7 +171,8 @@ typedef struct st_rm_comms_api
      * @param[in]   p_callback               Callback function
      * @param[in]   p_context                Pointer to send to callback function
      */
-    fsp_err_t (* callbackSet)(rm_comms_ctrl_t * const p_api_ctrl, void (* p_callback)(rm_comms_callback_args_t *), void const * const p_context);
+    fsp_err_t (* callbackSet)(rm_comms_ctrl_t * const p_api_ctrl, void (* p_callback)(rm_comms_callback_args_t *),
+                              void const * const p_context);
 } rm_comms_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

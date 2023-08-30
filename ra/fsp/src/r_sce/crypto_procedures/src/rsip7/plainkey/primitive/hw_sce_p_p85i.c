@@ -36,35 +36,30 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (const uint32_t InData_KeyIndex[], cons
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x800100e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_KeyIndex[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x00000085U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
     HW_SCE_p_func101(0x363656d3U, 0x2cdb129cU, 0xda1c10c4U, 0x44b1013dU);
-    HW_SCE_p_func043();
+    HW_SCE_p_func043_r1();
 
     WR1_PROG(REG_1600H, 0x0000b4e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000006U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x00000085U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
-    HW_SCE_p_func101(0x941519ecU, 0x28844452U, 0xa8d3a243U, 0xa538cf82U);
-    HW_SCE_p_func044();
+    HW_SCE_p_func101(0x7d7dad55U, 0x38e8e917U, 0xcda8327cU, 0xd4ffc7d4U);
+    HW_SCE_p_func044_r1();
 
     WR1_PROG(REG_1444H, 0x000007c2U);
     WR1_PROG(REG_1A2CH, 0x40000100U);
@@ -75,7 +70,6 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (const uint32_t InData_KeyIndex[], cons
     WR4_ADDR(REG_1420H, &InData_KeyIndex[5]);
 
     WR1_PROG(REG_1608H, 0x80080000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1400H, 0x03420021U);
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
@@ -91,13 +85,12 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (const uint32_t InData_KeyIndex[], cons
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x77f313a0U, 0xc7d41f3eU, 0x8452656cU, 0x81da047fU);
+    HW_SCE_p_func100(0x64eaa592U, 0xf816ebb3U, 0xaeff4874U, 0xfacd375eU);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
-        HW_SCE_p_func102(0x7ccc082dU, 0xb1684a21U, 0x2673d7c6U, 0xdfe9fbc9U);
+        HW_SCE_p_func102(0x91c60719U, 0x6a9674b1U, 0x1b3ef0e6U, 0x57d01cd2U);
         WR1_PROG(REG_14BCH, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
@@ -105,15 +98,14 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (const uint32_t InData_KeyIndex[], cons
     }
     else
     {
-        HW_SCE_p_func100(0x42152549U, 0x3aa0e973U, 0x2d18ac66U, 0x7a587c79U);
+        HW_SCE_p_func100(0x821d3d02U, 0xdc0b1426U, 0x56d94d4eU, 0x01dcf8e1U);
         WR1_PROG(REG_1608H, 0x81080000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1824H, 0x08000085U);
         WR1_PROG(REG_1400H, 0x00490011U);
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
 
-        HW_SCE_p_func100(0x3608b489U, 0xac04a021U, 0x2b3a23b4U, 0xac85a3fcU);
+        HW_SCE_p_func100(0x41d27737U, 0x70ea5b47U, 0x35ac5f70U, 0xedaf2396U);
         WR1_PROG(REG_1824H, 0x08000095U);
         WR1_PROG(REG_1400H, 0x00490011U);
         WAIT_STS(REG_1404H, 30, 0);
@@ -121,16 +113,12 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (const uint32_t InData_KeyIndex[], cons
 
         WR1_PROG(REG_1444H, 0x000003c7U);
         WR1_PROG(REG_1608H, 0x80040080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_IV[0]);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_IV[1]);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_IV[2]);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_IV[3]);
         WR1_PROG(REG_1458H, 0x00000000U);
@@ -149,4 +137,3 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (const uint32_t InData_KeyIndex[], cons
         return FSP_SUCCESS;
     }
 }
-

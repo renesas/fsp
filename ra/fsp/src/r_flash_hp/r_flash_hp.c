@@ -103,6 +103,8 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
  #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0300A110U)
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0300A130U)
  #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE            (0x1300A190U)
+ #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE_SEC        (0x0300A210U)
+ #define FLASH_HP_BANK_MODE_SECURITY_ATTRIBUTION      (0x0300A290U)
 #else
  #if BSP_FEATURE_FLASH_SUPPORTS_ACCESS_WINDOW
   #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP      (0x0000A160U)
@@ -113,6 +115,8 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
  #endif
  #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0100A110U)
  #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE            (0x0100A190U)
+ #define FLASH_HP_FCU_CONFIG_SET_BANK_MODE_SEC        (0x0100A210U)
+ #define FLASH_HP_BANK_MODE_SECURITY_ATTRIBUTION      (0x0100A290U)
 #endif
 
 /* Zero based offset into g_configuration_area_data[] for FAWS */
@@ -241,11 +245,9 @@ static flash_regions_t g_flash_data_region =
     .p_block_array = &g_data_flash_macro_info
 };
 
-#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK == 1)
-static volatile uint32_t * const flash_hp_banksel = (uint32_t *) FLASH_HP_FCU_CONFIG_SET_BANK_MODE;
- #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK == 1) && \
+    (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
 static volatile uint32_t * const flash_hp_dualsel = (uint32_t *) FLASH_HP_FCU_CONFIG_SET_DUAL_MODE;
- #endif
 #endif
 
 /***********************************************************************************************************************
@@ -304,6 +306,7 @@ static fsp_err_t flash_hp_cf_write(flash_hp_instance_ctrl_t * const p_ctrl) PLAC
 
  #if (BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK == 1)
 static fsp_err_t flash_hp_bank_swap(flash_hp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
+static uint32_t  flash_hp_banksel_bankswp_addr_get(void);
 
  #endif
 
@@ -1377,6 +1380,30 @@ static fsp_err_t flash_hp_cf_write (flash_hp_instance_ctrl_t * const p_ctrl)
  #if (BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK == 1)
 
 /*******************************************************************************************************************//**
+ * This function checks the security attribution of the Bank Select Register BANKSWP bits and returns the appropriate
+ * register address according to the configured attribution: BANKSEL for nonsecure attribution
+ * and BANKSEL_SEC for secure attribution.
+ *
+ * The security attribution of the BANKSWP bits must be read from the BANKSEL_SEL register rather than determined
+ * from compile time macros in case another program (eg. a bootloader) has modified the configuration area.
+ *
+ * @retval     uint32_t       Address of bank select register bankswap setting
+ **********************************************************************************************************************/
+static uint32_t flash_hp_banksel_bankswp_addr_get (void)
+{
+    volatile uint32_t * const flash_hp_banksel_sel = (uint32_t *) FLASH_HP_BANK_MODE_SECURITY_ATTRIBUTION;
+
+    /* Check if non-secure attribution is selected */
+    if ((*flash_hp_banksel_sel & FLASH_HP_PRV_BANKSEL_BANKSWP_MASK) == FLASH_HP_PRV_BANKSEL_BANKSWP_MASK)
+    {
+        return FLASH_HP_FCU_CONFIG_SET_BANK_MODE;
+    }
+
+    /* Secure attribution selected, return address of secure register */
+    return FLASH_HP_FCU_CONFIG_SET_BANK_MODE_SEC;
+}
+
+/*******************************************************************************************************************//**
  * This function swaps which flash bank will be used to boot from after the next reset.
  * @param[in]  p_ctrl                Flash control block
  * @retval     FSP_SUCCESS           The write started successfully.
@@ -1389,16 +1416,19 @@ static fsp_err_t flash_hp_bank_swap (flash_hp_instance_ctrl_t * const p_ctrl)
 {
     fsp_err_t err = FSP_SUCCESS;
 
+    uint32_t const flash_hp_banksel = flash_hp_banksel_bankswp_addr_get();
+
     /* Unused bits should be written as 1. */
     g_configuration_area_data[0] =
-        (uint16_t) ((~FLASH_HP_PRV_BANKSEL_BANKSWP_MASK) | (~(FLASH_HP_PRV_BANKSEL_BANKSWP_MASK & *flash_hp_banksel)));
+        (uint16_t) ((~FLASH_HP_PRV_BANKSEL_BANKSWP_MASK) |
+                    (~(FLASH_HP_PRV_BANKSEL_BANKSWP_MASK & *((volatile uint32_t *) flash_hp_banksel))));
 
     memset(&g_configuration_area_data[1], UINT8_MAX, 7 * sizeof(uint16_t));
 
     flash_hp_enter_pe_cf_mode(p_ctrl);
 
     /* Write the configuration area to the access/startup region. */
-    err = flash_hp_configuration_area_write(p_ctrl, FLASH_HP_FCU_CONFIG_SET_BANK_MODE);
+    err = flash_hp_configuration_area_write(p_ctrl, flash_hp_banksel);
 
     err = flash_hp_check_errors(err, 0, FSP_ERR_WRITE_FAILED);
 

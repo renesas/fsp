@@ -472,7 +472,6 @@ const rm_block_media_api_t g_rm_block_media_on_ram_media =
  *                                             structure.
  *
  * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
- *         This function calls:
  **********************************************************************************************************************/
 fsp_err_t RM_BLOCK_MEDIA_RAM_Open (rm_block_media_ctrl_t * const p_ctrl, rm_block_media_cfg_t const * const p_cfg)
 {
@@ -553,7 +552,8 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
 
 /*******************************************************************************************************************//**
  * Reads data from RAM media.
- * @ref rm_block_media_api_t::read().
+ *
+ * Implements @ref rm_block_media_api_t::read().
  *
  * This function blocks until the data is read into the destination buffer.
  *
@@ -598,7 +598,8 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Read (rm_block_media_ctrl_t * const p_ctrl,
 
 /*******************************************************************************************************************//**
  * Writes data to RAM media.
- * @ref rm_block_media_api_t::write().
+ *
+ * Implements @ref rm_block_media_api_t::write().
  *
  * This function blocks until the write operation completes.
  *
@@ -643,7 +644,8 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Write (rm_block_media_ctrl_t * const p_ctrl,
 
 /*******************************************************************************************************************//**
  * Erases sectors of RAM media.
- * @ref rm_block_media_api_t::erase().
+ *
+ * Implements @ref rm_block_media_api_t::erase().
  *
  * This function blocks until erase is complete.
  *
@@ -686,7 +688,8 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Erase (rm_block_media_ctrl_t * const p_ctrl,
 
 /*******************************************************************************************************************//**
  * Provides driver status.
- * @ref rm_block_media_api_t::statusGet().
+ *
+ * Implements @ref rm_block_media_api_t::statusGet().
  *
  * @retval     FSP_SUCCESS                   Status stored in p_status.
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
@@ -712,7 +715,8 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_StatusGet (rm_block_media_ctrl_t * const   p_api_ct
 
 /*******************************************************************************************************************//**
  * Retrieves module information.
- * @ref rm_block_media_api_t::infoGet().
+ *
+ * Implements @ref rm_block_media_api_t::infoGet().
  *
  * @retval     FSP_SUCCESS                   Erase operation requested.
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
@@ -739,7 +743,9 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_InfoGet (rm_block_media_ctrl_t * const p_ctrl, rm_b
 }
 
 /*******************************************************************************************************************//**
- * Closes an open SD/MMC device.  Implements @ref rm_block_media_api_t::close().
+ * Closes the module.  
+ *
+ * Implements @ref rm_block_media_api_t::close().
  *
  * @retval     FSP_SUCCESS                   Successful close.
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.

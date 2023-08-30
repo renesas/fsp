@@ -41,9 +41,6 @@
 #define MQTT_ONCHIP_DA16XXX_MAX_PUBTOPICMSG_LEN     (2063) ///< Maximum total length for message + topic supported by DA16XXX.
 #define MQTT_ONCHIP_DA16XXX_SUBTOPIC_MAX_CNT        (32)   ///< Maximum number of subscription topics allowed.
 
-#define MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE     (2048) ///< Size of the transmit buffer for the MQTT client.
-#define MQTT_ONCHIP_DA16XXX_CFG_CMD_RX_BUF_SIZE     (3000) ///< Size of the receive buffer for the MQTT client.
-
 /** MQTT Quality-of-service (QoS) levels */
 typedef enum e_mqtt_onchip_da16xxx_qos
 {

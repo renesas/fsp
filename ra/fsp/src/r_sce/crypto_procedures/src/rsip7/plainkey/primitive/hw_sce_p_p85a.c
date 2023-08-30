@@ -35,8 +35,9 @@ void HW_SCE_Aes192GcmDecryptUpdateAADSub (const uint32_t InData_DataA[], const u
         iLoop = iLoop + 4U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
+
     HW_SCE_p_func216();
 
-    HW_SCE_p_func101(0x948d33ecU, 0x287acf7cU, 0xaef93ad5U, 0xccf604a0U);
+    HW_SCE_p_func101(0x1fe3be4cU, 0x78c501c9U, 0x2b7f5a01U, 0x9fb8db09U);
 }
-

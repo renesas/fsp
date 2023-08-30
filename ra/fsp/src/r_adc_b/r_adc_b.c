@@ -210,10 +210,9 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     R_ADC_B->ADSHSTR0 = p_extend->sample_and_hold_config_012;
     R_ADC_B->ADSHSTR1 = p_extend->sample_and_hold_config_456;
 
-    /* Configure Digital filters - DFSEL1 is Sync3 and DFSEL2 is 'Phase', for both ADC 0 and 1. These settings are
-     * configured once and groups are updated to use the desired filter. */
-    R_ADC_B->ADDFSR0 = ADC_B_DIGITAL_FILTER_SELECTION;
-    R_ADC_B->ADDFSR1 = ADC_B_DIGITAL_FILTER_SELECTION;
+    /* Configure Digital filters */
+    R_ADC_B->ADDFSR0 = p_extend->adc_filter_selection[0].bits;
+    R_ADC_B->ADDFSR1 = p_extend->adc_filter_selection[1].bits;
 
     adc_b_open_pga(p_extend);
 

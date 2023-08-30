@@ -55,6 +55,9 @@
 
 /* PLLMUL in PLLCCR is 8 bits wide. */
  #define CGC_PRV_PLLCCR_PLLMUL_MASK           (0xFFU)
+
+/* BIT 2 in PLLCCR is 1 by default */
+ #define CGC_PRV_PLLCCR_PLLMUL_DEFAULT_BIT    (0x04U)
 #else
 
 /* PLLMUL in PLLCCR is 6 bits wide. */
@@ -610,22 +613,24 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         R_SYSTEM->PLLCCR2 = (uint16_t) outdiv;
  #endif
 
+ #if 4U != BSP_FEATURE_CGC_PLLCCR_TYPE
         if (CGC_CLOCK_CHANGE_START == options[p_clock_cfg->pll_cfg.source_clock])
         {
             /* Need to start PLL source clock and let it stabilize before starting PLL. */
             r_cgc_clock_change(p_clock_cfg->pll_cfg.source_clock, CGC_CLOCK_CHANGE_START);
 
- #if BSP_PRV_HOCO_USE_FLL
+  #if BSP_PRV_HOCO_USE_FLL
             if (CGC_CLOCK_HOCO == p_clock_cfg->pll_cfg.source_clock)
             {
                 /* If FLL is enabled and HOCO is turned on an additional stabilization wait is required before
                  * checking the flag and starting the PLL. */
                 R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
             }
- #endif
+  #endif
 
             FSP_HARDWARE_REGISTER_WAIT(r_cgc_clock_check(p_clock_cfg->pll_cfg.source_clock), FSP_SUCCESS);
         }
+ #endif
     }
 #endif
 #if BSP_PRV_PLL2_SUPPORTED
@@ -1834,9 +1839,8 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
     /* Divider of 2 is the only supported value for PLLCCR. */
     FSP_ASSERT(CGC_PLL_DIV_2 == p_pll_cfg->divider);
 
-    /* PLLCCR multiplier must be between 732 and 781. */
-    FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_732_0);
-    FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_781_0);
+    /* PLLCCR multiplier must be 732 or 781. */
+    FSP_ASSERT((p_pll_cfg->multiplier == CGC_PLL_MUL_732_0) || (p_pll_cfg->multiplier == CGC_PLL_MUL_781_0));
   #else
 
     /* Ensure PLL configuration is supported on this MCU (see Section 8.2.3 "PLL Clock Control Register 2 (PLLCCR2)" in
@@ -2100,9 +2104,10 @@ static uint32_t r_cgc_pllccr_calculate (cgc_pll_cfg_t const * const p_pll_cfg)
 
     return register_value;
  #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
-    uint8_t pllmul = (uint8_t) ((p_pll_cfg->multiplier >> 1) - CGC_PRV_PLLCCR_TYPE4_PLLMUL_OFFSET);
+    uint8_t pllmul = (uint8_t) (p_pll_cfg->multiplier);
 
-    uint32_t register_value = ((pllmul & CGC_PRV_PLLCCR_PLLMUL_MASK) << CGC_PRV_PLLCCR_PLLMUL_BIT);
+    uint32_t register_value = ((pllmul & CGC_PRV_PLLCCR_PLLMUL_MASK) << CGC_PRV_PLLCCR_PLLMUL_BIT) |
+                              CGC_PRV_PLLCCR_PLLMUL_DEFAULT_BIT;
 
     return register_value;
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE

@@ -73,9 +73,7 @@ typedef enum e_smci_event
     SMCI_EVENT_RX_CHAR        = (1UL << 2), ///< Character transfer is completed
     SMCI_EVENT_ERR_PARITY     = (1UL << 3), ///< Parity error event
     SMCI_EVENT_ERR_LOW_SIGNAL = (1UL << 4), ///< Low error signal response occurred event
-    SMCI_EVENT_ERR_OVERRUN    = (1UL << 5), ///< Overrun error event
-    SMCI_EVENT_BREAK_DETECT   = (1UL << 6), ///< Character received
-    SMCI_EVENT_TX_DATA_EMPTY  = (1UL << 7), ///< Last byte is transmitting, ready for more data
+    SMCI_EVENT_ERR_OVERRUN    = (1UL << 5)  ///< Overrun error event
 } smci_event_t;
 
 typedef enum e_smci_convention_type
@@ -84,7 +82,7 @@ typedef enum e_smci_convention_type
     SMCI_CONVENTION_TYPE_INVERSE = 1U, ///< Inverse convention type (MSB First, Low=1)
 } smci_convention_type_t;
 
-/* This table matches Table 7 from ISO/IEC7816-3 Third edition 2006-11-01 */
+/* This table matches Table 8 from ISO/IEC7816-3 Third edition 2006-11-01 */
 typedef enum e_smci_clock_conversion_integer
 {
     SMCI_CLOCK_CONVERSION_INTEGER_372_4         = 0U,  ///< 372 base cycles for 1-bit period, max freq = 4Mhz

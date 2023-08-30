@@ -281,7 +281,7 @@ FSP_HEADER
  * X=Integer portion of the multiplier.
  * Y=Fractional portion of the multiplier. (not used for this PLLCCR type)
  */
- #define BSP_CLOCKS_PLL_MUL(X, Y)    ((X) -BSP_PRV_CLOCKS_PLL_MUL_INT_OFFSET)
+ #define BSP_CLOCKS_PLL_MUL(X, Y)    (X - BSP_PRV_CLOCKS_PLL_MUL_INT_OFFSET)
 
 #elif (3U != BSP_FEATURE_CGC_PLLCCR_TYPE)
 

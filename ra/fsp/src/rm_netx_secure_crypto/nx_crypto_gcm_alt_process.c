@@ -74,12 +74,12 @@ UINT sce_nx_crypto_gcm_ghash_update (UCHAR * hkey, UCHAR * input, UINT input_len
     {
         /* Generate GHASH for all complete blocks within input_length */
         err =
-            HW_SCE_Ghash((uint32_t *) hkey,
-                         (uint32_t *) output,
-                         (uint32_t *) input,
-                         (uint32_t *) output,
-                         (input_length / NX_CRYPTO_GCM_BLOCK_SIZE) *
-                         RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_GCM_BLOCK_SIZE));
+            HW_SCE_GhashSub((uint32_t *) hkey,
+                            (uint32_t *) output,
+                            (uint32_t *) input,
+                            (uint32_t *) output,
+                            (input_length / NX_CRYPTO_GCM_BLOCK_SIZE) *
+                            RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_GCM_BLOCK_SIZE));
     }
 
     /* Generate GHASH for all remaining partial IV block. Pad with 0 to create complete block. */
@@ -88,11 +88,11 @@ UINT sce_nx_crypto_gcm_ghash_update (UCHAR * hkey, UCHAR * input, UINT input_len
         uint32_t tmp[4] = {0};
         NX_CRYPTO_MEMCPY(tmp, input + (input_length - length_rest), length_rest);
         err =
-            HW_SCE_Ghash((uint32_t *) hkey,
-                         (uint32_t *) output,
-                         tmp,
-                         (uint32_t *) output,
-                         RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_GCM_BLOCK_SIZE));
+            HW_SCE_GhashSub((uint32_t *) hkey,
+                            (uint32_t *) output,
+                            tmp,
+                            (uint32_t *) output,
+                            RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_GCM_BLOCK_SIZE));
     }
 
     FSP_ERROR_RETURN((FSP_SUCCESS == err), NX_CRYPTO_NOT_SUCCESSFUL);
@@ -334,18 +334,18 @@ static UINT sce_nx_crypto_gcm_encrypt_final (NX_CRYPTO_AES * aes_ctx,
                      RM_NETX_SECURE_CRYPTO_BIT_FIELD_SIZE_BYTES);
     if (SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
-        err = HW_SCE_Aes128GcmEncryptFinalSub(input, aad_bit_size, data_bit_size, output, tag);
+        err = HW_SCE_Aes128GcmEncryptFinalSub(input, data_bit_size, aad_bit_size, output, tag);
     }
 
  #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
-        err = HW_SCE_Aes192GcmEncryptFinalSub(input, aad_bit_size, data_bit_size, output, tag);
+        err = HW_SCE_Aes192GcmEncryptFinalSub(input, data_bit_size, aad_bit_size, output, tag);
     }
  #endif
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
-        err = HW_SCE_Aes256GcmEncryptFinalSub(input, aad_bit_size, data_bit_size, output, tag);
+        err = HW_SCE_Aes256GcmEncryptFinalSub(input, data_bit_size, aad_bit_size, output, tag);
     }
     else
     {

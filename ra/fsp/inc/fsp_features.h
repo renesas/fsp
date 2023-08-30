@@ -288,7 +288,7 @@ typedef enum e_fsp_signal
     FSP_SIGNAL_USB_INT,                           ///< USB INT
     FSP_SIGNAL_USB_RESUME,                        ///< USB RESUME
     FSP_SIGNAL_USB_USB_INT_RESUME,                ///< USB USB INT RESUME
-    FSP_SIGNAL_WDT_UNDERFLOW = 0,                 ///< WDT UNDERFLOW
+    FSP_SIGNAL_WDT_UNDERFLOW  = 0,                ///< WDT UNDERFLOW
     FSP_SIGNAL_ULPT_COMPARE_A = 0,                ///< ULPT COMPARE A
     FSP_SIGNAL_ULPT_COMPARE_B,                    ///< ULPT COMPARE B
     FSP_SIGNAL_ULPT_INT,                          ///< ULPT INT

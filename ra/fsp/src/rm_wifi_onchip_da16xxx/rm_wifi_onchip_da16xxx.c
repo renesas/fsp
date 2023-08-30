@@ -424,7 +424,11 @@ fsp_err_t rm_wifi_onchip_da16xxx_open (wifi_onchip_da16xxx_cfg_t const * const p
                                                 WIFI_ONCHIP_DA16XXX_RETURN_TEXT_OK);
         if (FSP_SUCCESS != err)
         {
+#if (WIFI_ONCHIP_DA16XXX_CFG_DA16600_SUPPORT)
+            vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_5SEC));
+#else
             vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_DA16XXX_TIMEOUT_10MS));
+#endif
 
             /* Test basic communications with an AT command. */
             err = rm_wifi_onchip_da16xxx_send_basic(p_instance_ctrl,
@@ -2271,8 +2275,7 @@ static void rm_wifi_da16xxx_handle_incoming_socket_data (da16xxx_socket_t * pSoc
                     p_socket->socket_recv_state = WIFI_ONCHIP_DA16XXX_RECV_PREFIX;
 
                     /* Socket disconnect event received */
-                    p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_create_flag = 0;
-                    p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status      =
+                    p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status =
                         WIFI_ONCHIP_DA16XXX_SOCKET_STATUS_CLOSED;
                     p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_read_write_flag = 0;
                 }

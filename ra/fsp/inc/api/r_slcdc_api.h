@@ -131,7 +131,7 @@ typedef enum e_slcd_contrast
     SLCDC_CONTRAST_19,                 ///< Contrast level 19
     SLCDC_CONTRAST_20,                 ///< Contrast level 20
     SLCDC_CONTRAST_21,                 ///< Contrast level 21
-    SLCDC_CONTRAST_22,                  ///< Contrast level 22
+    SLCDC_CONTRAST_22,                 ///< Contrast level 22
 } slcdc_contrast_t;
 
 /** LCD Display Enable/Disable*/
@@ -161,29 +161,29 @@ typedef enum e_slcd_display_clock
 /** LCD clock settings */
 typedef enum e_slcdc_clk_div
 {
-    SLCDC_CLK_DIVISOR_LOCO_4 = 1,         ///< LOCO Clock/4
-    SLCDC_CLK_DIVISOR_LOCO_8,             ///< LOCO Clock/8
-    SLCDC_CLK_DIVISOR_LOCO_16,            ///< LOCO Clock/16
-    SLCDC_CLK_DIVISOR_LOCO_32,            ///< LOCO Clock/32
-    SLCDC_CLK_DIVISOR_LOCO_64,            ///< LOCO Clock/64
-    SLCDC_CLK_DIVISOR_LOCO_128,           ///< LOCO Clock/128
-    SLCDC_CLK_DIVISOR_LOCO_256,           ///< LOCO Clock/256
-    SLCDC_CLK_DIVISOR_LOCO_512,           ///< LOCO Clock/512
-    SLCDC_CLK_DIVISOR_LOCO_1024,          ///< LOCO Clock/1024
+    SLCDC_CLK_DIVISOR_LOCO_4 = 1,          ///< LOCO Clock/4
+    SLCDC_CLK_DIVISOR_LOCO_8,              ///< LOCO Clock/8
+    SLCDC_CLK_DIVISOR_LOCO_16,             ///< LOCO Clock/16
+    SLCDC_CLK_DIVISOR_LOCO_32,             ///< LOCO Clock/32
+    SLCDC_CLK_DIVISOR_LOCO_64,             ///< LOCO Clock/64
+    SLCDC_CLK_DIVISOR_LOCO_128,            ///< LOCO Clock/128
+    SLCDC_CLK_DIVISOR_LOCO_256,            ///< LOCO Clock/256
+    SLCDC_CLK_DIVISOR_LOCO_512,            ///< LOCO Clock/512
+    SLCDC_CLK_DIVISOR_LOCO_1024,           ///< LOCO Clock/1024
 
-    SLCDC_CLK_DIVISOR_HOCO_256 = 0x11,    ///< HOCO Clock/256
-    SLCDC_CLK_DIVISOR_HOCO_512,           ///< HOCO Clock/512
-    SLCDC_CLK_DIVISOR_HOCO_1024,          ///< HOCO Clock/1024
-    SLCDC_CLK_DIVISOR_HOCO_2048,          ///< HOCO Clock/2048
-    SLCDC_CLK_DIVISOR_HOCO_4096,          ///< HOCO Clock/4096
-    SLCDC_CLK_DIVISOR_HOCO_8192,          ///< HOCO Clock/8192
-    SLCDC_CLK_DIVISOR_HOCO_16384,         ///< HOCO Clock/16384
-    SLCDC_CLK_DIVISOR_HOCO_32768,         ///< HOCO Clock/32768
-    SLCDC_CLK_DIVISOR_HOCO_65536,         ///< HOCO Clock/65536
-    SLCDC_CLK_DIVISOR_HOCO_131072,        ///< HOCO Clock/131072
-    SLCDC_CLK_DIVISOR_HOCO_262144,        ///< HOCO Clock/262144
+    SLCDC_CLK_DIVISOR_HOCO_256 = 0x11,     ///< HOCO Clock/256
+    SLCDC_CLK_DIVISOR_HOCO_512,            ///< HOCO Clock/512
+    SLCDC_CLK_DIVISOR_HOCO_1024,           ///< HOCO Clock/1024
+    SLCDC_CLK_DIVISOR_HOCO_2048,           ///< HOCO Clock/2048
+    SLCDC_CLK_DIVISOR_HOCO_4096,           ///< HOCO Clock/4096
+    SLCDC_CLK_DIVISOR_HOCO_8192,           ///< HOCO Clock/8192
+    SLCDC_CLK_DIVISOR_HOCO_16384,          ///< HOCO Clock/16384
+    SLCDC_CLK_DIVISOR_HOCO_32768,          ///< HOCO Clock/32768
+    SLCDC_CLK_DIVISOR_HOCO_65536,          ///< HOCO Clock/65536
+    SLCDC_CLK_DIVISOR_HOCO_131072,         ///< HOCO Clock/131072
+    SLCDC_CLK_DIVISOR_HOCO_262144,         ///< HOCO Clock/262144
 
-    SLCDC_CLK_DIVISOR_HOCO_524288 = 0x2B, ///< HOCO Clock/524288
+    SLCDC_CLK_DIVISOR_HOCO_524288  = 0x2B, ///< HOCO Clock/524288
     SLCDC_CLK_DIVISOR_HOCO_1048576 = 0x3B, ///< HOCO Clock/1048576
 } slcdc_clk_div_t;
 

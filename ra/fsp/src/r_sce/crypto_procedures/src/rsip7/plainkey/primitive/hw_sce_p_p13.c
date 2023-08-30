@@ -20,11 +20,12 @@
 
 #include "hw_sce_ra_private.h"
 
-fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[])
+fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (const uint32_t InData_DomainParam[],
+                                                   uint32_t       OutData_PubKeyIndex[],
+                                                   uint32_t       OutData_PrivKeyIndex[])
 {
-    uint32_t OFS_ADR = 0U;
-    uint32_t iLoop   = 0U;
-    uint32_t jLoop   = 0U;
+    uint32_t iLoop = 0U;
+    uint32_t jLoop = 0U;
 
     if (RD1_MASK(REG_14B8H, 0x0000001eU) != 0)
     {
@@ -38,27 +39,13 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_1B00H, 0x007f0001U);
     WR1_PROG(REG_144CH, 0x00000000U);
 
-    HW_SCE_p_func100(0x8bdf5198U, 0x9a4e2a55U, 0xb46001aaU, 0x6fd4d15aU);
     WR1_PROG(REG_1000H, 0x00010000U);
     WR1_PROG(REG_1024H, 0x000007f0U);
 
-    WR1_PROG(REG_1600H, 0x0000b400U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x00000340U);
-    WR1_PROG(REG_1458H, 0x00000000U);
+    HW_SCE_p_func100(0x9cf2cf41U, 0xbb7410bcU, 0x1992c8d8U, 0x0ac48751U);
+    HW_SCE_p_func086_r2(InData_DomainParam);
 
-    WR1_PROG(REG_1608H, 0x81010000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1408H, 0x00005006U);
-    WAIT_STS(REG_1408H, 30, 1);
-    RD1_ADDR(REG_1420H, &S_RAM[0]);
-    S_RAM[0] = change_endian_long(S_RAM[0]);
-    OFS_ADR = S_RAM[0];
-
-    HW_SCE_p_func100(0xedf9bbf0U, 0x0b6cfc9bU, 0xbcc184f3U, 0xe64112d1U);
-    HW_SCE_p_func086(OFS_ADR);
-
-    HW_SCE_p_func100(0x6eaf1608U, 0x3fe68451U, 0x06e3c513U, 0x544dcb20U);
+    HW_SCE_p_func100(0x7e140e0dU, 0x90ebb15dU, 0x2b034b20U, 0x4cc23191U);
     WR1_PROG(REG_1010H, 0x00000020U);
     WR1_PROG(REG_101CH, 0x000000c0U);
 
@@ -75,24 +62,19 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
 
     WR1_PROG(REG_1404H, 0x12a00000U);
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0xb7375aadU, 0x1732cf60U, 0x69a6de37U, 0x662ffe05U);
+    HW_SCE_p_func100(0xe39f82d9U, 0xab16713aU, 0xd6d0beb3U, 0x4fc64928U);
     WR1_PROG(REG_1444H, 0x000000a2U);
     WR1_PROG(REG_1A24H, 0x0c200104U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x00000000U));
     WR1_PROG(REG_1608H, 0x80020000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1400H, 0x03420009U);
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
     WR1_PROG(REG_1600H, 0x00000800U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00008c20U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x000001ffU);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x81020000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1400H, 0x00c90009U);
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
@@ -101,7 +83,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_143CH, 0x00001800U);
 
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0xfad4788eU, 0x26b5ddaeU, 0x6fa92ffeU, 0x3f3aee05U);
+    HW_SCE_p_func100(0xf8baf67eU, 0x89adcda6U, 0x386f7291U, 0x4d6304d5U);
     WR1_PROG(REG_1444H, 0x000000a2U);
     WR1_PROG(REG_1A24H, 0x0c200104U);
     WAIT_STS(REG_1444H, 31, 1);
@@ -111,7 +93,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_143CH, 0x00001800U);
 
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0x79890f5bU, 0xc0b08978U, 0xd983bff3U, 0xbd0e27e8U);
+    HW_SCE_p_func100(0xc0879eceU, 0x50e562e5U, 0xd72df998U, 0xa0656f74U);
     WR1_PROG(REG_1444H, 0x000000a2U);
     WR1_PROG(REG_1A24H, 0x0c200104U);
     WAIT_STS(REG_1444H, 31, 1);
@@ -121,7 +103,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_143CH, 0x00001800U);
 
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0xfb6349b7U, 0x92c9a98eU, 0xa5d0cdcdU, 0x161d364fU);
+    HW_SCE_p_func100(0xb720c9e9U, 0x834c9aeeU, 0x1e874c42U, 0xe25f68a0U);
     WR1_PROG(REG_1444H, 0x000000a2U);
     WR1_PROG(REG_1A24H, 0x0c200104U);
     WAIT_STS(REG_1444H, 31, 1);
@@ -188,17 +170,13 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_1000H, 0x00010001U);
     WAIT_STS(REG_1000H, 0, 0);
 
-    HW_SCE_p_func100(0x7b5cf435U, 0x816520d5U, 0x0c484482U, 0x7f65dc67U);
+    HW_SCE_p_func100(0xe0e5f1f9U, 0x60207e9fU, 0x123f4120U, 0x85ef1678U);
     WR1_PROG(REG_1600H, 0x00000800U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000821U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000863U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1404H, 0x12000000U);
     WR1_PROG(REG_1608H, 0x80940001U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1400H, 0x03430051U);
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
@@ -206,36 +184,27 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     for (iLoop = 0U; iLoop < 20U; iLoop++)
     {
         WR1_PROG(REG_1600H, 0x38000c63U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x20000842U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x10003841U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x0000b7c0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000001fU);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         for (jLoop = 0U; jLoop < 32U; jLoop++)
         {
             WR1_PROG(REG_1600H, 0x3800585eU);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x20003460U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x20002c60U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x10002c00U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x100033c0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
         }
 
+        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x0000a420U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000004U);
-        WR1_PROG(REG_1458H, 0x00000000U);
     }
+
+    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1404H, 0x14300000U);
     WR1_PROG(REG_1400H, 0x00c00051U);
@@ -266,13 +235,10 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_143CH, 0x00001800U);
 
     WR1_PROG(REG_1600H, 0x00003403U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x00003060U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1608H, 0x81010060U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1408H, 0x00005006U);
     WAIT_STS(REG_1408H, 30, 1);
     RD1_ADDR(REG_1420H, &S_RAM[0]);
@@ -297,13 +263,13 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WAIT_STS(REG_1000H, 0, 0);
 
         WR1_PROG(REG_1600H, 0x00003060U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0xe88d8134U, 0x63a40da9U, 0x0c296f32U, 0xc9925b74U);
+        HW_SCE_p_func101(0x77c1ad8cU, 0x8c94a9b0U, 0xbf59d729U, 0x3f28802bU);
     }
 
-    WR1_PROG(REG_1600H, 0x00007c03U);
     WR1_PROG(REG_1458H, 0x00000000U);
+
+    WR1_PROG(REG_1600H, 0x00007c03U);
     WR1_PROG(REG_143CH, 0x00602000U);
     WR1_PROG(REG_1458H, 0x00000000U);
 
@@ -312,14 +278,11 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x7600e764U, 0x5f42bc8aU, 0xb4f9f309U, 0x14f285fbU);
+    HW_SCE_p_func100(0xb2318abeU, 0x95670734U, 0xf65e404bU, 0x75951182U);
     WR1_PROG(REG_1600H, 0x0000a400U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000040U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1608H, 0x81010000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1408H, 0x00005006U);
     WAIT_STS(REG_1408H, 30, 1);
     RD1_ADDR(REG_1420H, &S_RAM[0]);
@@ -337,9 +300,8 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
 
         WR1_PROG(REG_143CH, 0x00a10000U);
 
-        HW_SCE_p_func100(0xc0294141U, 0xe8913182U, 0xa28f0b1bU, 0x9ee3c9a3U);
+        HW_SCE_p_func100(0xcca3abd3U, 0x38473c87U, 0x89651f8fU, 0xe8e1c8dcU);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
@@ -351,7 +313,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
             WR1_PROG(REG_1000H, 0x00010001U);
             WAIT_STS(REG_1000H, 0, 0);
 
-            HW_SCE_p_func101(0x21992a22U, 0x59bb65dcU, 0x6a235b60U, 0x2781295fU);
+            HW_SCE_p_func101(0x78f5d82aU, 0xe355eda4U, 0x7a0b62d4U, 0xf7729bcdU);
         }
 
         WR1_PROG(REG_1014H, 0x000001b0U);
@@ -369,13 +331,13 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WR1_PROG(REG_1000H, 0x00010001U);
         WAIT_STS(REG_1000H, 0, 0);
         WR1_PROG(REG_1600H, 0x00003000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0x55db461fU, 0xf9a92663U, 0xe2dff381U, 0xc7633c9bU);
+        HW_SCE_p_func101(0x6aab6deeU, 0x0e92516cU, 0xaab429c0U, 0x627c782dU);
     }
 
-    WR1_PROG(REG_1600H, 0x00007c00U);
     WR1_PROG(REG_1458H, 0x00000000U);
+
+    WR1_PROG(REG_1600H, 0x00007c00U);
     WR1_PROG(REG_143CH, 0x00602000U);
     WR1_PROG(REG_1458H, 0x00000000U);
 
@@ -402,23 +364,21 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
     WR1_PROG(REG_1000H, 0x00010001U);
     WAIT_STS(REG_1000H, 0, 0);
 
-    HW_SCE_p_func100(0x23f1f377U, 0x17a727f2U, 0x5fe8df61U, 0x6481697dU);
+    HW_SCE_p_func100(0xa4df9aafU, 0x2250a5e1U, 0x544f821dU, 0x62ba2c34U);
 
-    HW_SCE_p_func087(OFS_ADR);
+    HW_SCE_p_func087_r2(InData_DomainParam);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x00000013U));
     WR1_PROG(REG_1458H, 0x00000000U);
 
-    HW_SCE_p_func101(0xb39e420aU, 0xadbff639U, 0x30527fe5U, 0xbc39e66eU);
-    HW_SCE_p_func091();
+    HW_SCE_p_func101(0x8f8b6271U, 0xe439ce5dU, 0x0054b519U, 0x9a95f22dU);
+    HW_SCE_p_func091_r1();
 
     HW_SCE_p_func100(0x5161bfa7U, 0xfdd54d7bU, 0xc7bfefddU, 0x8b03faa2U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
@@ -439,7 +399,6 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WR1_PROG(REG_1420H, change_endian_long(0x00000000U));
 
         WR1_PROG(REG_1608H, 0x80010000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1400H, 0x03420005U);
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
@@ -448,34 +407,29 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1600H, 0x000034e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000013U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func101(0x99a74a06U, 0x8ae14976U, 0xb5d0bca7U, 0x651674f6U);
-        HW_SCE_p_func043();
+        HW_SCE_p_func043_r1();
 
         WR1_PROG(REG_1600H, 0x0000b4e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000025U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000013U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0x1afd7321U, 0xcad64c3aU, 0x04e03ecbU, 0x18e21d06U);
-        HW_SCE_p_func044();
+        HW_SCE_p_func101(0xe3c3e234U, 0xae9727fdU, 0xa54cc872U, 0x534d20a9U);
+        HW_SCE_p_func044_r1();
 
-        HW_SCE_p_func100(0x573c3c2bU, 0x0eb8b4efU, 0x6871f7ebU, 0xf9453bddU);
+        HW_SCE_p_func100(0xb77cc115U, 0x25e64b8eU, 0x3f021b8eU, 0x3db3299eU);
         WR1_PROG(REG_1A2CH, 0x40000200U);
         WR1_PROG(REG_1A24H, 0xe7009d07U);
         WR1_PROG(REG_1404H, 0x12f80000U);
@@ -494,7 +448,9 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
             iLoop = iLoop + 4U;
         }
 
-        HW_SCE_p_func100(0xfe45bfbcU, 0x176eebb4U, 0x371a9225U, 0x12c8d6eeU);
+        WR1_PROG(REG_1458H, 0x00000000U);
+
+        HW_SCE_p_func100(0x8b12aec0U, 0x3ab75e4cU, 0x9a114927U, 0xc88619b0U);
         WR1_PROG(REG_1A2CH, 0x40000100U);
         WR1_PROG(REG_1A24H, 0xe7008d07U);
         WR1_PROG(REG_1400H, 0x00830021U);
@@ -507,7 +463,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WAIT_STS(REG_1408H, 30, 1);
         RD4_ADDR(REG_1420H, &OutData_PrivKeyIndex[iLoop + 5]);
 
-        HW_SCE_p_func100(0x21de683eU, 0xe30a75dfU, 0x161294ebU, 0xde1a059aU);
+        HW_SCE_p_func100(0xc813c9d5U, 0x4c3b0a63U, 0x8219d5aaU, 0xb729f59bU);
         WR1_PROG(REG_1444H, 0x000000a2U);
         WR1_PROG(REG_1A24H, 0x0c000104U);
         WAIT_STS(REG_1444H, 31, 1);
@@ -523,14 +479,13 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WAIT_STS(REG_1408H, 30, 1);
         RD4_ADDR(REG_1420H, &OutData_PrivKeyIndex[iLoop + 9]);
 
-        HW_SCE_p_func100(0x93c7ef26U, 0xbe63fe45U, 0x10b91501U, 0x0e12ac20U);
+        HW_SCE_p_func100(0x894f009aU, 0xab95145bU, 0xd33ad3e6U, 0x52e4423dU);
         WR1_PROG(REG_1608H, 0x81010000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1408H, 0x00005006U);
         WAIT_STS(REG_1408H, 30, 1);
         RD1_ADDR(REG_1420H, &OutData_PrivKeyIndex[0]);
 
-        HW_SCE_p_func100(0xd12aa79dU, 0x2c0a4149U, 0x46cd9ea5U, 0xef18f15dU);
+        HW_SCE_p_func100(0xf83e3e30U, 0x3d310b7cU, 0x47d1674fU, 0x95797f5eU);
         HW_SCE_p_func103();
 
         WR1_PROG(REG_1444H, 0x000000a2U);
@@ -539,7 +494,6 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WR1_PROG(REG_1420H, change_endian_long(0x00000000U));
 
         WR1_PROG(REG_1608H, 0x80010000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1400H, 0x03420005U);
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
@@ -548,34 +502,29 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1600H, 0x000034e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000113U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0x5384b58dU, 0xfe97d280U, 0x9634ee9fU, 0x03fc24e6U);
-        HW_SCE_p_func043();
+        HW_SCE_p_func101(0xa3dce9c1U, 0x29991cdaU, 0x5d027b8eU, 0xbf516b46U);
+        HW_SCE_p_func043_r1();
 
         WR1_PROG(REG_1600H, 0x0000b4e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000024U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000113U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0x18eae45cU, 0x4569f5f0U, 0x3f77bb3eU, 0x046031b7U);
-        HW_SCE_p_func044();
+        HW_SCE_p_func101(0x945499bdU, 0xb6a943a8U, 0xc0f1d68fU, 0x9170b264U);
+        HW_SCE_p_func044_r1();
 
-        HW_SCE_p_func100(0xfdf8c860U, 0xd403e07eU, 0xdeb67024U, 0x582666e9U);
+        HW_SCE_p_func100(0x2facec47U, 0x123dfd4cU, 0xb43a2f01U, 0xf922a6c2U);
         WR1_PROG(REG_1A2CH, 0x40000200U);
         WR1_PROG(REG_1A24H, 0xe8009107U);
         WR1_PROG(REG_1404H, 0x12580000U);
@@ -594,7 +543,9 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
             iLoop = iLoop + 4U;
         }
 
-        HW_SCE_p_func100(0x93053703U, 0xc7b64904U, 0x3e295b75U, 0x1a0640efU);
+        WR1_PROG(REG_1458H, 0x00000000U);
+
+        HW_SCE_p_func100(0xc51740b8U, 0x3bb5c4a5U, 0xa631400fU, 0xa9bccc79U);
         WR1_PROG(REG_1A2CH, 0x40000200U);
         WR1_PROG(REG_1A24H, 0xe8008107U);
         WR1_PROG(REG_1400H, 0x00830021U);
@@ -616,7 +567,9 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
             iLoop = iLoop + 4U;
         }
 
-        HW_SCE_p_func100(0x8be7234aU, 0x740d1796U, 0x9851b370U, 0xccb889aeU);
+        WR1_PROG(REG_1458H, 0x00000000U);
+
+        HW_SCE_p_func100(0x6c4aaa28U, 0x95109af5U, 0xa1b31433U, 0x9aabba63U);
         WR1_PROG(REG_1A2CH, 0x40000200U);
         WR1_PROG(REG_1A24H, 0xe8008107U);
         WR1_PROG(REG_1400H, 0x00830031U);
@@ -631,7 +584,9 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
             iLoop = iLoop + 4U;
         }
 
-        HW_SCE_p_func100(0xe27eb68aU, 0xf84522cfU, 0x66d55b79U, 0x58a7ee08U);
+        WR1_PROG(REG_1458H, 0x00000000U);
+
+        HW_SCE_p_func100(0x6d5d106dU, 0x4da97518U, 0xed8f91e3U, 0x4d69ba8aU);
         WR1_PROG(REG_1A2CH, 0x40000000U);
         WR1_PROG(REG_1A24H, 0xe8008105U);
         WR1_PROG(REG_1400H, 0x00830011U);
@@ -642,7 +597,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WAIT_STS(REG_1408H, 30, 1);
         RD4_ADDR(REG_1420H, &OutData_PubKeyIndex[iLoop + 1]);
 
-        HW_SCE_p_func100(0x9986d06cU, 0x4bdc6d92U, 0xcebe0074U, 0xfe0152d9U);
+        HW_SCE_p_func100(0xfb3c1c23U, 0x86e56f99U, 0xf3dfda79U, 0x4b48d1c2U);
         WR1_PROG(REG_1444H, 0x000000a2U);
         WR1_PROG(REG_1A2CH, 0x40000000U);
         WR1_PROG(REG_1A24H, 0x09108104U);
@@ -653,18 +608,16 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (uint32_t OutData_PubKeyIndex[
         WAIT_STS(REG_1408H, 30, 1);
         RD4_ADDR(REG_1420H, &OutData_PubKeyIndex[iLoop + 5]);
 
-        HW_SCE_p_func100(0xcc4c41ebU, 0xd0825671U, 0x6c0c0ffaU, 0x1da9bd18U);
+        HW_SCE_p_func100(0xd2873416U, 0xc2aa3d80U, 0x5f2ba33eU, 0x578f5e19U);
         WR1_PROG(REG_1608H, 0x81010000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1408H, 0x00005006U);
         WAIT_STS(REG_1408H, 30, 1);
         RD1_ADDR(REG_1420H, &OutData_PubKeyIndex[0]);
 
-        HW_SCE_p_func102(0x810f7e0dU, 0xd728649fU, 0x909a63ffU, 0xcd7c7ba5U);
+        HW_SCE_p_func102(0x2916e20aU, 0x0d48c0bdU, 0x3dae143bU, 0x95469868U);
         WR1_PROG(REG_14B8H, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
         return FSP_SUCCESS;
     }
 }
-

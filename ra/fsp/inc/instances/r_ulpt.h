@@ -55,17 +55,16 @@ typedef enum e_ulpt_clock
 /** Counter mode for event enable. */
 typedef enum e_ulpt_enable_function
 {
-   // R_ULPT0_ULPTIOC_TIOGT0_Msk    0X00 0000 0=Always count, 1 count external events (Not to be mized with nonzero TEECTL)
-   // R_ULPT0_ULPTISR_RCCPSEL2_Msk  0000 0X00 0=count low level, 1 count high level, only valid when TIOGT0=1 (Not to be mized with nonzero TEECTL)
-   // R_ULPT0_ULPTMR3_TEECTL_Msk    00XX 0000
-    //0100 0000 Count external high,
-    //0100 0100 Count external low
+    // R_ULPT0_ULPTIOC_TIOGT0_Msk    0X00 0000 0=Always count, 1 count external events (Not to be mized with nonzero TEECTL)
+    // R_ULPT0_ULPTISR_RCCPSEL2_Msk  0000 0X00 0=count low level, 1 count high level, only valid when TIOGT0=1 (Not to be mized with nonzero TEECTL)
+    // R_ULPT0_ULPTMR3_TEECTL_Msk    00XX 0000
+    // 0100 0000 Count external high,
+    // 0100 0100 Count external low
     ULPT_ENABLE_FUNCTION_IGNORED     = 0x00U, ///< Always count external events, ignore ULPTEE.
     ULPT_ENABLE_FUNCTION_ENABLE_LOW  = 0x40U, ///< Event counting is enabled while ULPTEE is low (event counting only).
     ULPT_ENABLE_FUNCTION_ENABLE_HIGH = 0x44U, ///< Event counting is enabled while ULPTEE is high (event counting only).
     ULPT_ENABLE_FUNCTION_START       = 0x20U, ///< Counting is started after ULPTEE.
     ULPT_ENABLE_FUNCTION_RESTART     = 0x30U, ///< Counting is restarted after ULPTEE.
-
 } ulpt_enable_function_t;
 
 /** Enable signal trigger edge for start and restart functions. */
@@ -94,9 +93,9 @@ typedef enum e_ulpt_output_pin
 /** ULPTO pulse output pin. */
 typedef enum e_ulpt_pulse_pin_cfg
 {
-    ULPT_PULSE_PIN_CFG_DISABLED = 0x00U, ///< Output pin disabled.
+    ULPT_PULSE_PIN_CFG_DISABLED                 = 0x00U, ///< Output pin disabled.
     ULPT_PULSE_PIN_CFG_ENABLED_START_LEVEL_LOW  = 0x01U, ///< Output pin Enabled Start Low
-    ULPT_PULSE_PIN_CFG_ENABLED_START_LEVEL_HIGH  = 0x02U, ///< Output pin enabled Start Hig
+    ULPT_PULSE_PIN_CFG_ENABLED_START_LEVEL_HIGH = 0x02U, ///< Output pin enabled Start Hig
 } ulpt_pulse_pin_cfg_t;
 
 /** ULPT match output pin. */

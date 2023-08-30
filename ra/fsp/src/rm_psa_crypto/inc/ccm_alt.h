@@ -52,6 +52,8 @@
 
 #include "mbedtls/cipher.h"
 
+#include "psa/crypto_types.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -104,5 +106,8 @@ int sce_ccm_crypt_and_tag(mbedtls_ccm_context * ctx,
 #ifdef __cplusplus
 }
 #endif
+
+/* Functions to support vendor defined format */
+psa_status_t vendor_bitlength_to_raw_bitlength(psa_key_type_t type, size_t vendor_bits, size_t * raw_bits);
 
 #endif /* MBEDTLS_CCM_ALT_H */

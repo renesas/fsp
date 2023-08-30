@@ -43,6 +43,8 @@
 #define MQTT_ONCHIP_DA16XXX_DELAY_500MS       (500)
 #define MQTT_ONCHIP_DA16XXX_DELAY_1000MS      (1000)
 
+#define MQTT_ONCHIP_DA16XXX_MAX_CERT_SIZE     (2045)
+
 #define MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK    "OK"
 #define MQTT_OPEN                             (0x4d515454ULL)
 #define MQTT_CLOSED                           (0)
@@ -81,7 +83,6 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init(mqtt_onchip_da16xxx_instance_ctrl
  * @retval FSP_ERR_ASSERTION        The p_cfg instance is NULL.
  * @retval FSP_ERR_INVALID_ARGUMENT Data size is too large or NULL.
  * @retval FSP_ERR_ALREADY_OPEN     The instance has already been opened.
- * @retval FSP_ERR_OUT_OF_MEMORY    Certificates are too large for buffer.
  **********************************************************************************************************************/
 fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                                 mqtt_onchip_da16xxx_cfg_t const * const p_cfg)
@@ -182,11 +183,11 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
         if ((NULL != p_cfg->p_root_ca) && (NULL != p_cfg->p_client_cert) &&
             (NULL != p_cfg->p_client_private_key))
         {
-            /* Check the certificates/keys provided to ensure the TX buffer is large enough (-3 for command string e.g. "C1,") */
-            FSP_ERROR_RETURN((p_cfg->root_ca_size <= (MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE - 3)) ||
-                             (p_cfg->client_cert_size <= (MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE - 3)) ||
-                             (p_cfg->private_key_size <= (MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE - 3)),
-                             FSP_ERR_OUT_OF_MEMORY);
+            /* Check the certificates/keys provided to ensure they are smaller than the maximum size */
+            FSP_ERROR_RETURN((p_cfg->root_ca_size <= MQTT_ONCHIP_DA16XXX_MAX_CERT_SIZE) ||
+                             (p_cfg->client_cert_size <= MQTT_ONCHIP_DA16XXX_MAX_CERT_SIZE) ||
+                             (p_cfg->private_key_size <= MQTT_ONCHIP_DA16XXX_MAX_CERT_SIZE),
+                             FSP_ERR_INVALID_ARGUMENT);
 
             /* Enable TLS with AT+NWMQTLS */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQTLS=1\r");
@@ -202,7 +203,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
             /* Program the root CA Certificate */
 
             /* Put the DA16XXX module into certificate/key input mode */
-            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%s", MQTT_ONCHIP_DA16XXX_CERT_START);
+            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%sC0,",
+                     MQTT_ONCHIP_DA16XXX_CERT_START);
 
             FSP_ERROR_RETURN(FSP_SUCCESS ==
                              rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
@@ -212,10 +214,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                              FSP_ERR_WIFI_FAILED);
 
             /* Send certificate/key ascii text */
-            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "C0,%s", (char *) p_cfg->p_root_ca);
-
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
+                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_cfg->p_root_ca, p_ctrl->cmd_rx_buff,
                                                                     sizeof(p_ctrl->cmd_rx_buff),
                                                                     MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
                                                                     MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
@@ -233,7 +233,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                              FSP_ERR_WIFI_FAILED);
 
             /* Put the DA16XXX module into certificate/key input mode */
-            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%s", MQTT_ONCHIP_DA16XXX_CERT_START);
+            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%sC1,",
+                     MQTT_ONCHIP_DA16XXX_CERT_START);
 
             FSP_ERROR_RETURN(FSP_SUCCESS ==
                              rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
@@ -243,10 +244,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                              FSP_ERR_WIFI_FAILED);
 
             /* Send certificate/key ascii text */
-            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "C1,%s", (char *) p_cfg->p_client_cert);
-
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
+                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_cfg->p_client_cert, p_ctrl->cmd_rx_buff,
                                                                     sizeof(p_ctrl->cmd_rx_buff),
                                                                     MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
                                                                     MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
@@ -266,7 +265,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
             /* Program the private key */
 
             /* Put the DA16XXX module into certificate/key input mode */
-            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%s", MQTT_ONCHIP_DA16XXX_CERT_START);
+            snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%sC2,",
+                     MQTT_ONCHIP_DA16XXX_CERT_START);
 
             FSP_ERROR_RETURN(FSP_SUCCESS ==
                              rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
@@ -276,14 +276,9 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                              FSP_ERR_WIFI_FAILED);
 
             /* Send certificate/key ascii text */
-            snprintf((char *) p_ctrl->cmd_tx_buff,
-                     sizeof(p_ctrl->cmd_tx_buff),
-                     "C2,%s",
-                     (char *) p_cfg->p_client_private_key);
-
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
+                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_cfg->p_client_private_key,
+                                                                    p_ctrl->cmd_rx_buff, sizeof(p_ctrl->cmd_rx_buff),
                                                                     MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
                                                                     MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
                              FSP_ERR_WIFI_FAILED);

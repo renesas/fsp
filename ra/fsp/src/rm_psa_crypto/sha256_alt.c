@@ -311,6 +311,8 @@ int mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
     ctx->is224 = is224;
 #endif
 
+    ctx->sce_operation_state = SCE_OEM_CMD_HASH_INIT_TO_SUSPEND;
+
     return 0;
 }
 
@@ -680,6 +682,9 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
     ctx->total[0] += (uint32_t) ilen;
     ctx->total[0] &= 0xFFFFFFFF;
 
+    /* Update the HW sce operation status/rsip command */
+    ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND;
+
     if (ctx->total[0] < (uint32_t) ilen) {
         ctx->total[1]++;
     }
@@ -753,6 +758,9 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx,
 
     MBEDTLS_PUT_UINT32_BE(high, ctx->buffer, 56);
     MBEDTLS_PUT_UINT32_BE(low,  ctx->buffer, 60);
+
+    /* Update the HW sce operation status/rsip command */
+    ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_FINAL;
 
     if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0) {
         return ret;

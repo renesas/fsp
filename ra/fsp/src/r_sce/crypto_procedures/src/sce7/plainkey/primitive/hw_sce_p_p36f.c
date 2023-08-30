@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-fsp_err_t HW_SCE_Aes256GcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InData_DataT, uint32_t *InData_DataALen, uint32_t *InData_TextLen, uint32_t *InData_DataTLen, uint32_t *OutData_Text)
+fsp_err_t HW_SCE_Aes256GcmDecryptFinalSub(const uint32_t *InData_Text, const uint32_t *InData_TextLen, const uint32_t *InData_DataALen, const uint32_t *InData_DataT, const uint32_t *InData_DataTLen, uint32_t *OutData_Text)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;

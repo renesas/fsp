@@ -36,74 +36,49 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
     WR1_PROG(REG_1B00H, 0x00700001U);
     WR1_PROG(REG_144CH, 0x00000000U);
 
-    HW_SCE_p_func049(InData_Cmd);
+    HW_SCE_p_func049_r1(InData_Cmd);
 
     WR1_PROG(REG_1600H, 0x0000094aU);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x000037e4U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x3000a880U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000005U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00010020U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x3000a880U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x00000027U);
-    WR1_PROG(REG_1458H, 0x00000000U);
+    WR1_PROG(REG_1600H, 0x0000002bU);
     WR1_PROG(REG_1600H, 0x00040020U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x0000b480U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000005U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000080U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000080U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x38008880U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x000000ffU);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x1000b480U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000005U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x38008880U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x000000feU);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x1000b480U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000005U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x3420a880U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000005U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00260000U);
 
     WR1_PROG(REG_1600H, 0x3420a880U);
-    WR1_PROG(REG_1458H, 0x00000000U);
-    WR1_PROG(REG_1600H, 0x00000028U);
-    WR1_PROG(REG_1458H, 0x00000000U);
+    WR1_PROG(REG_1600H, 0x0000002cU);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00A60000U);
 
-    HW_SCE_p_func100(0x0d68e83fU, 0xb2e2696eU, 0x264d2195U, 0xfcdce7adU);
+    HW_SCE_p_func100(0xfd9fe1ddU, 0x4245941eU, 0x104227ccU, 0x69be7712U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
-        HW_SCE_p_func102(0xdfa53e99U, 0xc8d4ea09U, 0x00570085U, 0xf631213cU);
+        HW_SCE_p_func102(0x0d673b43U, 0xc2fe7febU, 0x6fa99eabU, 0xb0a1384cU);
         WR1_PROG(REG_14BCH, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
@@ -112,49 +87,43 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
     else
     {
         WR1_PROG(REG_1600H, 0x0000349fU);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000c7U);
         WR1_PROG(REG_1608H, 0x800100e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, InData_KeyIndex[0]);
         WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000070U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0xe9bc5f86U, 0x6e6f14b0U, 0xea9c5f38U, 0x6ae063fdU);
-        HW_SCE_p_func043();
+        HW_SCE_p_func101(0xfb783a8dU, 0x81f94318U, 0xeab67be2U, 0x31922395U);
+        HW_SCE_p_func043_r1();
 
         WR1_PROG(REG_1600H, 0x000034e4U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x000000a7U);
         WR1_PROG(REG_1608H, 0x800103a0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000070U));
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        HW_SCE_p_func101(0x413394fbU, 0x902f3acaU, 0xaabc9135U, 0x888c1d81U);
-        HW_SCE_p_func044();
+        HW_SCE_p_func101(0xbfd726f2U, 0x5398bd75U, 0x701cf153U, 0x01e73d80U);
+        HW_SCE_p_func044_r1();
 
-        HW_SCE_p_func100(0x1624914aU, 0xcc48fd3dU, 0xa4678fb4U, 0x125844daU);
+        HW_SCE_p_func100(0x7686ce70U, 0xf92ec09eU, 0xd6c3afbaU, 0xe9b669bbU);
 
         WR1_PROG(REG_1444H, 0x000000a2U);
         WR1_PROG(REG_1A24H, 0x08000044U);
         WAIT_STS(REG_1444H, 31, 1);
         WR1_PROG(REG_1420H, change_endian_long(0x00000000U));
 
-        HW_SCE_p_func081();
+        HW_SCE_p_func081_r1();
 
         WR1_PROG(REG_1600H, 0x00007c01U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_143CH, 0x00600000U);
         WR1_PROG(REG_1458H, 0x00000000U);
 
@@ -171,9 +140,11 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
                 iLoop = iLoop + 4U;
             }
 
+            WR1_PROG(REG_1458H, 0x00000000U);
+
             HW_SCE_p_func209();
 
-            HW_SCE_p_func101(0x2412a5bcU, 0x7632e858U, 0x1c4a7f40U, 0xc438f315U);
+            HW_SCE_p_func101(0x90146eeeU, 0xae9d2d26U, 0x68232710U, 0xc8bdc12aU);
         }
         else if (RD1_MASK(REG_1440H, 0xffffffffU) == 0x0000000aU)
         {
@@ -188,44 +159,26 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
                 iLoop = iLoop + 4U;
             }
 
-            WR1_PROG(REG_1444H, 0x00001fc2U);
-            WR1_PROG(REG_1A2CH, 0x40000700U);
-            WR1_PROG(REG_1A24H, 0xf7008c07U);
+            WR1_PROG(REG_1458H, 0x00000000U);
 
-            for (iLoop = 36U; iLoop < 68U; )
-            {
-                WAIT_STS(REG_1444H, 31, 1);
-                WR4_ADDR(REG_1420H, &InData_KeyIndex[1 + iLoop]);
-                iLoop = iLoop + 4U;
-            }
-
-            HW_SCE_p_func101(0x4507e9d2U, 0x2c6bb3f6U, 0x6b5d4166U, 0xc04fc143U);
+            HW_SCE_p_func101(0x71be3000U, 0xa2fecf8dU, 0xa8cb8337U, 0xac419607U);
         }
         else if (RD1_MASK(REG_1440H, 0xffffffffU) == 0x0000000bU)
         {
-            WR1_PROG(REG_1444H, 0x00001fc2U);
-            WR1_PROG(REG_1A2CH, 0x40000700U);
-            WR1_PROG(REG_1A24H, 0xf7009c07U);
-
-            for (iLoop = 0U; iLoop < 32U; )
-            {
-                WAIT_STS(REG_1444H, 31, 1);
-                WR4_ADDR(REG_1420H, &InData_KeyIndex[1 + iLoop]);
-                iLoop = iLoop + 4U;
-            }
-
             WR1_PROG(REG_1444H, 0x00003fc2U);
             WR1_PROG(REG_1A2CH, 0x40000f00U);
-            WR1_PROG(REG_1A24H, 0xf7008c07U);
+            WR1_PROG(REG_1A24H, 0xf7009c07U);
 
-            for (iLoop = 32U; iLoop < 96U; )
+            for (iLoop = 0U; iLoop < 64U; )
             {
                 WAIT_STS(REG_1444H, 31, 1);
                 WR4_ADDR(REG_1420H, &InData_KeyIndex[1 + iLoop]);
                 iLoop = iLoop + 4U;
             }
 
-            HW_SCE_p_func101(0x86bf6087U, 0x380f4308U, 0xabbe01c4U, 0xbe7f8f14U);
+            WR1_PROG(REG_1458H, 0x00000000U);
+
+            HW_SCE_p_func101(0x971f2b53U, 0xdb13a644U, 0x11990ea1U, 0x4c5ee279U);
         }
         else if (RD1_MASK(REG_1440H, 0xffffffffU) == 0x0000000cU)
         {
@@ -240,44 +193,26 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
                 iLoop = iLoop + 4U;
             }
 
-            WR1_PROG(REG_1444H, 0x00003fc2U);
-            WR1_PROG(REG_1A2CH, 0x40000f00U);
-            WR1_PROG(REG_1A24H, 0xf7008c07U);
+            WR1_PROG(REG_1458H, 0x00000000U);
 
-            for (iLoop = 68U; iLoop < 132U; )
-            {
-                WAIT_STS(REG_1444H, 31, 1);
-                WR4_ADDR(REG_1420H, &InData_KeyIndex[1 + iLoop]);
-                iLoop = iLoop + 4U;
-            }
-
-            HW_SCE_p_func101(0x806c0a7eU, 0xda9f2525U, 0x183989cdU, 0x6cc4cfd7U);
+            HW_SCE_p_func101(0x8015f9cbU, 0x727e7d33U, 0xf434dce7U, 0xc8473e32U);
         }
         else if (RD1_MASK(REG_1440H, 0xffffffffU) == 0x0000000dU)
         {
-            WR1_PROG(REG_1444H, 0x00003fc2U);
-            WR1_PROG(REG_1A2CH, 0x40000f00U);
-            WR1_PROG(REG_1A24H, 0xf7009c07U);
-
-            for (iLoop = 0U; iLoop < 64U; )
-            {
-                WAIT_STS(REG_1444H, 31, 1);
-                WR4_ADDR(REG_1420H, &InData_KeyIndex[1 + iLoop]);
-                iLoop = iLoop + 4U;
-            }
-
             WR1_PROG(REG_1444H, 0x00007fc2U);
             WR1_PROG(REG_1A2CH, 0x40001f00U);
-            WR1_PROG(REG_1A24H, 0xf7008c07U);
+            WR1_PROG(REG_1A24H, 0xf7009c07U);
 
-            for (iLoop = 64U; iLoop < 192U; )
+            for (iLoop = 0U; iLoop < 128U; )
             {
                 WAIT_STS(REG_1444H, 31, 1);
                 WR4_ADDR(REG_1420H, &InData_KeyIndex[1 + iLoop]);
                 iLoop = iLoop + 4U;
             }
 
-            HW_SCE_p_func101(0xa0451e9cU, 0xe8e012fbU, 0xcadc55c3U, 0xdad8a2efU);
+            WR1_PROG(REG_1458H, 0x00000000U);
+
+            HW_SCE_p_func101(0x16781e42U, 0xd6148deeU, 0x5ccf876eU, 0xea6b563dU);
         }
         else if (RD1_MASK(REG_1440H, 0xffffffffU) == 0x00000012U)
         {
@@ -292,9 +227,11 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
                 iLoop = iLoop + 4U;
             }
 
+            WR1_PROG(REG_1458H, 0x00000000U);
+
             HW_SCE_p_func209();
 
-            HW_SCE_p_func101(0x6a40712bU, 0x2ac99247U, 0x50a74dd6U, 0x8874f964U);
+            HW_SCE_p_func101(0x7f05e1baU, 0xeaae3e55U, 0x17d5c524U, 0xeb6f998cU);
         }
 
         WR1_PROG(REG_1444H, 0x000003c2U);
@@ -310,7 +247,6 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
 
         HW_SCE_p_func100(0x7adcd9bcU, 0x5487c2a5U, 0x97e3cd7fU, 0x5b141035U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
@@ -330,4 +266,3 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
         }
     }
 }
-

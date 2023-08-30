@@ -95,7 +95,7 @@ void ether_phy_target_ksz8091rnb_initialize (ether_phy_instance_ctrl_t * p_insta
  #endif
 
     /* b9=0:Interrupt pin active low */
-    reg &= (uint16_t) ~ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET;
+    reg &= (uint16_t) ~(0x01 << ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET);
     ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, reg);
 }                                      /* End of function ether_phy_targets_initialize() */
 

@@ -29,26 +29,20 @@ fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub (const uint32_t InData_Text[],
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x80010000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_TextLen[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x00008c00U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x0000000fU);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1600H, 0x38008800U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00A60000U);
 
-    HW_SCE_p_func100(0x11b0efbdU, 0x32a9ad80U, 0xbc2fb0beU, 0xe90e0ceeU);
+    HW_SCE_p_func100(0x034e60d1U, 0x8a673a88U, 0x06919f82U, 0x6261d98eU);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
@@ -59,45 +53,33 @@ fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub (const uint32_t InData_Text[],
         WR4_ADDR(REG_1420H, &InData_Text[0]);
 
         WR1_PROG(REG_1600H, 0x0000b420U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x80840001U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1400H, 0x03410011U);
         WAIT_STS(REG_1404H, 30, 0);
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1600H, 0x00000821U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x0000a400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1600H, 0x0000b7e0U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         for (iLoop = 0U; iLoop < 16U; iLoop++)
         {
             WR1_PROG(REG_1600H, 0x3c002be0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x12003c3fU);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WR1_PROG(REG_1600H, 0x00002fe0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
         }
 
-        HW_SCE_p_func100(0xb4fe4515U, 0xdf0a5d11U, 0x86585885U, 0x0205b12fU);
+        WR1_PROG(REG_1458H, 0x00000000U);
+
+        HW_SCE_p_func100(0x4fc201e1U, 0x656c6cffU, 0x6929a601U, 0x46e7d6f6U);
         WR1_PROG(REG_1600H, 0x0000b420U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x00000080U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x81840001U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1408H, 0x00005012U);
         WAIT_STS(REG_1408H, 30, 1);
         RD1_ADDR(REG_1420H, &OutData_Text[0]);
@@ -108,11 +90,11 @@ fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub (const uint32_t InData_Text[],
         WAIT_STS(REG_1408H, 30, 1);
         RD1_ADDR(REG_1420H, &OutData_Text[3]);
 
-        HW_SCE_p_func101(0x6d482a8cU, 0x606b1407U, 0x06caf142U, 0x503dbcddU);
+        HW_SCE_p_func101(0x8facfb63U, 0x2329ca85U, 0x4b3744e7U, 0x06473041U);
     }
     else
     {
-        HW_SCE_p_func101(0xc65c2c4fU, 0x496cbfd8U, 0xecbdf466U, 0x7e778e4eU);
+        HW_SCE_p_func101(0x98ab77f5U, 0xc2897eeeU, 0xeb1abcafU, 0xf79eda28U);
     }
 
     WR1_PROG(REG_1444H, 0x000000a1U);
@@ -137,4 +119,3 @@ fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub (const uint32_t InData_Text[],
 
     return FSP_SUCCESS;
 }
-

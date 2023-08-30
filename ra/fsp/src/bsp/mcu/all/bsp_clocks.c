@@ -79,7 +79,7 @@
 
 /* Stop interval of at least 5 SOSC clock cycles between stop and restart of SOSC.
  * Calculated based on 8Mhz of MOCO clock. */
-#define BSP_PRV_SUBCLOCK_STOP_INTERVAL_US       (1220U)
+#define BSP_PRV_SUBCLOCK_STOP_INTERVAL_US       (200U)
 
 /* Locations of bitfields used to configure Peripheral Clocks. */
 #define BSP_PRV_PERIPHERAL_CLK_REQ_BIT_POS      (6U)
@@ -248,8 +248,8 @@
   #define BSP_PRV_PLLCCR2_PLODIV_BIT               (6)    // PLODIV in PLLCCR2 starts at bit 6
 
   #define BSP_PRV_PLLCCR2_PLLMUL                   (BSP_CFG_PLL_MUL >> 1)
-  #define BSP_PRV_PLLCCR                           (BSP_PRV_PLLCCR2_PLLMUL & BSP_PRV_PLLCCR2_PLLMUL_MASK) | \
-    (BSP_CFG_PLL_DIV << BSP_PRV_PLLCCR2_PLODIV_BIT)
+  #define BSP_PRV_PLLCCR                           ((BSP_PRV_PLLCCR2_PLLMUL & BSP_PRV_PLLCCR2_PLLMUL_MASK) | \
+                                                    (BSP_CFG_PLL_DIV << BSP_PRV_PLLCCR2_PLODIV_BIT))
  #endif
  #if (3U == BSP_FEATURE_CGC_PLLCCR_TYPE)
   #if BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_PLL_SOURCE
@@ -527,12 +527,15 @@ static void    bsp_clock_set_postchange(uint32_t updated_freq_hz, uint8_t new_ro
  #if defined(__ICCARM__)
 
 void R_BSP_SubClockStabilizeWait(uint32_t delay_ms);
+void R_BSP_SubClockStabilizeWaitAfterReset(uint32_t delay_ms);
 
   #pragma weak R_BSP_SubClockStabilizeWait
+  #pragma weak R_BSP_SubClockStabilizeWaitAfterReset
 
  #elif defined(__GNUC__) || defined(__ARMCC_VERSION)
 
 void R_BSP_SubClockStabilizeWait(uint32_t delay_ms) __attribute__((weak));
+void R_BSP_SubClockStabilizeWaitAfterReset(uint32_t delay_ms) __attribute__((weak));
 
  #endif
 #endif
@@ -552,6 +555,9 @@ static void bsp_prv_operating_mode_opccr_set(uint8_t operating_mode);
 
 #if !BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 static void bsp_prv_clock_set_hard_reset(void);
+
+#else
+void bsp_soft_reset_prepare(void);
 
 #endif
 
@@ -1189,6 +1195,147 @@ static void bsp_clock_freq_var_init (void)
     SystemCoreClockUpdate();
 }
 
+#if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
+
+/*
+ * If the clock registers are not guaranteed to be set to their value after reset (Ie. the application is executing after a bootloader),
+ * then the current state of the registers must be taken into consideration before writing the clock configuration.
+ *
+ * The HOCO must be stopped in the following situations:
+ *  - The application configures the HOCO to be stopped.
+ *  - The application enables the FLL, but the HOCO is already running. In order to enable the FLL, the HOCO must be stopped.
+ * The PLL must be stopped in the following situations:
+ *  - The application configures the PLL to be stopped.
+ *  - The application configures settings that are different than the current settings, but the PLL is already running. In order to
+ *    write new PLL settings, the PLL must be stopped.
+ *  - The HOCO is the PLL source clock and the HOCO is being stopped.
+ * The PLL2 must be stopped in the following situations:
+ *  - The application configures the PLL2 to be stopped.
+ *  - The application configures settings that are different than the current settings, but the PLL2 is already running. In order to
+ *    write new PLL2 settings, the PLL2 must be stopped.
+ *  - The HOCO is the PLL2 source clock and the HOCO is being stopped.
+ *
+ * If the HOCO or PLL are being used as the system clock source and they need to be stopped, then the system clock source needs to be switched
+ * to the default system clock source before the current system clock source is disabled.
+ */
+void bsp_soft_reset_prepare (void)
+{
+    bool stop_hoco = false;
+ #if BSP_PRV_PLL_SUPPORTED
+    bool stop_pll = false;
+ #endif
+ #if BSP_PRV_PLL2_SUPPORTED
+    bool stop_pll2 = false;
+ #endif
+
+ #if BSP_PRV_HOCO_USE_FLL || !BSP_PRV_HOCO_USED
+  #if BSP_PRV_HOCO_USE_FLL
+
+    /* Determine if the FLL needs to be enabled. */
+    bool enable_fll = (0 == R_SYSTEM->FLLCR1 && BSP_PRV_HOCO_USE_FLL);
+  #else
+    bool enable_fll = false;
+  #endif
+
+    /* If the HOCO is already enabled and either the FLL needs to be enabled or the HOCO is not used, then stop the HOCO. */
+    if ((0 == R_SYSTEM->HOCOCR) && (enable_fll || !BSP_PRV_HOCO_USED))
+    {
+        stop_hoco = true;
+    }
+ #endif
+
+ #if BSP_PRV_PLL_SUPPORTED
+    if (0 == R_SYSTEM->PLLCR)
+    {
+        /*
+         * If any of the following conditions are true, then the PLL needs to be stopped:
+         * - The PLL is not used
+         * - The PLL settings need to be changed
+         * - The HOCO is selected as the PLL clock source and the HOCO needs to be stopped
+         *   - Note that PLL type 2 does not support running off of the HOCO
+         */
+  #if BSP_PRV_PLL_USED
+   #if 3 == BSP_FEATURE_CGC_PLLCCR_TYPE
+        if ((BSP_PRV_PLLCCR != R_SYSTEM->PLLCCR) || (BSP_PRV_PLLCCR2 != R_SYSTEM->PLLCCR2) ||
+            (stop_hoco && (1 == R_SYSTEM->PLLCCR_b.PLSRCSEL)))
+   #elif 2 == BSP_FEATURE_CGC_PLLCCR_TYPE
+        if (BSP_PRV_PLLCCR != R_SYSTEM->PLLCCR2)
+   #else
+        if ((BSP_PRV_PLLCCR != R_SYSTEM->PLLCCR) || (stop_hoco && (1 == R_SYSTEM->PLLCCR_b.PLSRCSEL)))
+   #endif
+  #endif
+        {
+            stop_pll = true;
+        }
+    }
+ #endif
+
+ #if BSP_PRV_PLL2_SUPPORTED
+    if (0 == R_SYSTEM->PLL2CR)
+    {
+        /*
+         * If any of the following conditions are true, then the PLL2 needs to be stopped:
+         * - The PLL2 is not used
+         * - The PLL2 settings need to be changed
+         * - The HOCO is selected as the PLL2 clock source and the HOCO needs to be stopped
+         *   - Note that PLL type 2 does not support running off of the HOCO
+         */
+  #if BSP_PRV_PLL2_USED
+   #if 3 == BSP_FEATURE_CGC_PLLCCR_TYPE
+        if ((BSP_PRV_PLL2CCR != R_SYSTEM->PLL2CCR) || (BSP_PRV_PLL2CCR2 != R_SYSTEM->PLL2CCR2) ||
+            (stop_hoco && (1 == R_SYSTEM->PLL2CCR_b.PL2SRCSEL)))
+   #else
+        if ((BSP_PRV_PLL2CCR != R_SYSTEM->PLL2CCR) || (stop_hoco && (1 == R_SYSTEM->PLL2CCR_b.PL2SRCSEL)))
+   #endif
+  #endif
+        {
+            stop_pll2 = true;
+        }
+    }
+ #endif
+
+    uint8_t sckscr = R_SYSTEM->SCKSCR;
+
+    /* If the System Clock source needs to be stopped, then switch to the MOCO. */
+ #if BSP_PRV_PLL_SUPPORTED
+    if ((stop_hoco && (BSP_CLOCKS_SOURCE_CLOCK_HOCO == sckscr)) ||
+        (stop_pll && (BSP_CLOCKS_SOURCE_CLOCK_PLL == sckscr)))
+ #else
+    if (stop_hoco && (BSP_CLOCKS_SOURCE_CLOCK_HOCO == sckscr))
+ #endif
+    {
+        bsp_prv_clock_set(BSP_FEATURE_CGC_STARTUP_SCKSCR,
+                          BSP_FEATURE_CGC_STARTUP_SCKDIVCR,
+                          BSP_FEATURE_CGC_STARTUP_SCKDIVCR2);
+    }
+
+    /* Disable the oscillators so that the application can write the new clock configuration. */
+
+ #if BSP_PRV_PLL_SUPPORTED
+    if (stop_pll)
+    {
+        R_SYSTEM->PLLCR = 1;
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLLSF, 0);
+    }
+ #endif
+
+ #if BSP_PRV_PLL2_SUPPORTED
+    if (stop_pll2)
+    {
+        R_SYSTEM->PLL2CR = 1;
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLL2SF, 0);
+    }
+ #endif
+
+    if (stop_hoco)
+    {
+        R_SYSTEM->HOCOCR = 1;
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 0);
+    }
+}
+
+#endif
+
 /*******************************************************************************************************************//**
  * Initializes system clocks.  Makes no assumptions about current register settings.
  **********************************************************************************************************************/
@@ -1217,6 +1364,12 @@ void bsp_clock_init (void)
 #endif
 
     bsp_clock_freq_var_init();
+
+#if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
+
+    /* Transition to an intermediate clock configuration in order to prepare for writing the new clock configuraiton. */
+    bsp_soft_reset_prepare();
+#endif
 
 #if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
  #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
@@ -1247,28 +1400,50 @@ void bsp_clock_init (void)
 
 #if BSP_FEATURE_CGC_HAS_SOSC
  #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
-
-    /* If Sub-Clock Oscillator is started at reset, stop it before configuring the subclock drive. */
-    if (0U == R_SYSTEM->SOSCCR)
+    if (R_SYSTEM->SOSCCR || (BSP_CLOCK_CFG_SUBCLOCK_DRIVE != R_SYSTEM->SOMCR_b.SODRV))
     {
-        /* Stop the Sub-Clock Oscillator to update the SOMCR register. */
-        R_SYSTEM->SOSCCR = 1U;
+        /* If Sub-Clock Oscillator is started at reset, stop it before configuring the subclock drive. */
+        if (0U == R_SYSTEM->SOSCCR)
+        {
+            /* Stop the Sub-Clock Oscillator to update the SOMCR register. */
+            R_SYSTEM->SOSCCR = 1U;
 
-        /* Allow a stop interval of at least 5 SOSC clock cycles before configuring the drive capacity
-         * and restarting Sub-Clock Oscillator. */
-        R_BSP_SoftwareDelay(BSP_PRV_SUBCLOCK_STOP_INTERVAL_US, BSP_DELAY_UNITS_MICROSECONDS);
+            /* Allow a stop interval of at least 5 SOSC clock cycles before configuring the drive capacity
+             * and restarting Sub-Clock Oscillator. */
+            R_BSP_SoftwareDelay(BSP_PRV_SUBCLOCK_STOP_INTERVAL_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+            /*
+             * r01uh0893ej0120-ra4m3 8.2.9 SOSCCR : Sub-Clock Oscillator Control Register:
+             * When changing the value of the SOSTP bit, execute subsequent instructions
+             * only after reading the bit to check that the value is updated.
+             */
+            FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SOSCCR, 1U);
+        }
+
+        /* Configure the subclock drive as subclock is not running. */
+        R_SYSTEM->SOMCR = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
+
+        R_SYSTEM->SOSCCR = 0U;
+
+        /* r01uh0893ej0120-ra4m3 8.2.9 SOSCCR : Sub-Clock Oscillator Control Register:
+         * After setting the SOSTP bit to 0, use the sub-clock only after the sub-clock
+         * oscillation stabilization time has elapsed.
+         */
+  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
+        R_BSP_SubClockStabilizeWait(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
+  #endif
+    }
+    else
+    {
+        /*
+         * RA MCUs like RA6M5 requires to use sub-clock after oscillation stabilization time
+         * has elapsed on Power-On-Reset. But, POR is not well supported on EK boards, so BSP
+         * has to wait on any reset. Please override this function in application if waiting
+         * for stabilization is not required.
+         */
+        R_BSP_SubClockStabilizeWaitAfterReset(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
     }
 
-    /* Configure the subclock drive as subclock is not running. */
-    R_SYSTEM->SOMCR = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
-
-    /* Restart the Sub-Clock Oscillator. */
-    R_SYSTEM->SOSCCR = 0U;
-  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
-
-    /* If the subclock is the system clock source OR if FLL is used, wait for stabilization. */
-    R_BSP_SubClockStabilizeWait(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
-  #endif
  #else
     R_SYSTEM->SOSCCR = 1U;
  #endif
@@ -1378,59 +1553,71 @@ void bsp_clock_init (void)
  #endif
 #endif
 #if BSP_PRV_MAIN_OSC_USED
-    R_SYSTEM->MOSCCR = 0U;
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
+    if (R_SYSTEM->MOSCCR)
+ #endif
+    {
+        R_SYSTEM->MOSCCR = 0U;
 
  #if BSP_PRV_STABILIZE_MAIN_OSC
 
-    /* Wait for main oscillator to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
+        /* Wait for main oscillator to stabilize. */
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
  #endif
+    }
 #endif
 
     /* Start clocks that require other clocks. At this point, all dependent clocks are running and stable if needed. */
 
 #if BSP_PRV_STARTUP_OPERATING_MODE != BSP_PRV_OPERATING_MODE_LOW_SPEED
  #if BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
-    R_SYSTEM->PLL2CCR = BSP_PRV_PLL2CCR;
+  #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
+    if (R_SYSTEM->PLL2CR)
+  #endif
+    {
+        R_SYSTEM->PLL2CCR = BSP_PRV_PLL2CCR;
   #if (3U == BSP_FEATURE_CGC_PLLCCR_TYPE)
-    R_SYSTEM->PLL2CCR2 = BSP_PRV_PLL2CCR2;
+        R_SYSTEM->PLL2CCR2 = BSP_PRV_PLL2CCR2;
   #endif
 
-    /* Start PLL2. */
-    R_SYSTEM->PLL2CR = 0U;
+        /* Start PLL2. */
+        R_SYSTEM->PLL2CR = 0U;
+    }
  #endif                                /* BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_ENABLE */
 #endif
 
 #if BSP_PRV_PLL_SUPPORTED && BSP_PRV_PLL_USED
-
-    /* Configure the PLL registers. */
+ #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
+    if (R_SYSTEM->PLLCR)
+ #endif
+    {
  #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (4U == BSP_FEATURE_CGC_PLLCCR_TYPE)
-    R_SYSTEM->PLLCCR = (uint16_t) BSP_PRV_PLLCCR;
+        R_SYSTEM->PLLCCR = (uint16_t) BSP_PRV_PLLCCR;
  #elif 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
-    R_SYSTEM->PLLCCR2 = (uint8_t) BSP_PRV_PLLCCR;
+        R_SYSTEM->PLLCCR2 = (uint8_t) BSP_PRV_PLLCCR;
  #elif 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
-    R_SYSTEM->PLLCCR  = (uint16_t) BSP_PRV_PLLCCR;
-    R_SYSTEM->PLLCCR2 = (uint16_t) BSP_PRV_PLLCCR2;
+        R_SYSTEM->PLLCCR  = (uint16_t) BSP_PRV_PLLCCR;
+        R_SYSTEM->PLLCCR2 = (uint16_t) BSP_PRV_PLLCCR2;
  #endif
 
  #if BSP_FEATURE_CGC_PLLCCR_WAIT_US > 0
 
-    /* This loop is provided to ensure at least 1 us passes between setting PLLMUL and clearing PLLSTP on some
-     * MCUs (see PLLSTP notes in Section 8.2.4 "PLL Control Register (PLLCR)" of the RA4M1 manual R01UH0887EJ0100).
-     * Five loops are needed here to ensure the most efficient path takes at least 1 us from the setting of
-     * PLLMUL to the clearing of PLLSTP. HOCO is the fastest clock we can be using here since PLL cannot be running
-     * while setting PLLCCR. */
-    bsp_prv_software_delay_loop(BSP_DELAY_LOOPS_CALCULATE(BSP_PRV_MAX_HOCO_CYCLES_PER_US));
+        /* This loop is provided to ensure at least 1 us passes between setting PLLMUL and clearing PLLSTP on some
+         * MCUs (see PLLSTP notes in Section 8.2.4 "PLL Control Register (PLLCR)" of the RA4M1 manual R01UH0887EJ0100).
+         * Five loops are needed here to ensure the most efficient path takes at least 1 us from the setting of
+         * PLLMUL to the clearing of PLLSTP. HOCO is the fastest clock we can be using here since PLL cannot be running
+         * while setting PLLCCR. */
+        bsp_prv_software_delay_loop(BSP_DELAY_LOOPS_CALCULATE(BSP_PRV_MAX_HOCO_CYCLES_PER_US));
  #endif
 
-    /* Start the PLL. */
-    R_SYSTEM->PLLCR = 0U;
+        R_SYSTEM->PLLCR = 0U;
 
  #if BSP_PRV_STABILIZE_PLL
 
-    /* Wait for PLL to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLLSF, 1U);
+        /* Wait for PLL to stabilize. */
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLLSF, 1U);
  #endif
+    }
 #endif
 
     /* Set source clock and dividers. */
@@ -1453,27 +1640,6 @@ void bsp_clock_init (void)
     /* If the MCU can run in a lower power mode, apply the optimal operating speed mode. */
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
  #if BSP_PRV_STARTUP_OPERATING_MODE != BSP_PRV_OPERATING_MODE_HIGH_SPEED
-  #if BSP_PRV_PLL_SUPPORTED
-   #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
-    if (BSP_PRV_OPERATING_MODE_LOW_SPEED == BSP_PRV_STARTUP_OPERATING_MODE)
-    {
-        /* If the MCU has a PLL, ensure PLL is stopped and stable before entering low speed mode. */
-        R_SYSTEM->PLLCR = 1U;
-
-        /* Wait for PLL to stabilize. */
-        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLLSF, 0U);
-
-    #if BSP_FEATURE_CGC_HAS_PLL2
-
-        /* If the MCU has a PLL2, ensure PLL2 is stopped and stable before entering low speed mode. */
-        R_SYSTEM->PLL2CR = 1U;
-
-        /* Wait for PLL to stabilize. */
-        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLL2SF, 0U);
-    #endif
-    }
-   #endif
-  #endif
     bsp_prv_operating_mode_set(BSP_PRV_STARTUP_OPERATING_MODE);
  #endif
 #endif
@@ -1522,7 +1688,7 @@ void bsp_clock_init (void)
     R_SYSTEM->SCKDIVCR2 = BSP_PRV_UCK_DIV << BSP_PRV_SCKDIVCR2_UCK_BIT;
   #endif                               /* BSP_FEATURE_BSP_HAS_USB_CLOCK_DIV && !BSP_FEATURE_BSP_HAS_USBCKDIVCR */
 
-    /* If there is a REQ bit in USBCKCR than follow sequence from section 8.2.29 in RA6M4 hardware manual R01UH0890EJ0050. */
+    /* If there is a REQ bit in USBCKCR, then follow sequence from section 8.2.29 in RA6M4 hardware manual R01UH0890EJ0050. */
   #if BSP_FEATURE_BSP_HAS_USB_CLOCK_REQ
 
     /* Request to change the USB Clock. */
@@ -1668,6 +1834,25 @@ void R_BSP_SubClockStabilizeWait (uint32_t delay_ms)
 {
     /* Wait for clock to stabilize. */
     R_BSP_SoftwareDelay(delay_ms, BSP_DELAY_UNITS_MILLISECONDS);
+}
+
+/*******************************************************************************************************************//**
+ * This function is called during SOSC registers initialization when Sub-Clock oscillator is populated.
+ * This function is declared as a weak symbol higher up in this file because it is meant to be overridden by a user
+ * implemented version. One of the main uses for this function is to skip waiting for stabilization time after reset.
+ * To use this function just copy this function into your own code and modify it to meet your needs.
+ *
+ * @param[in]  delay_ms    Stabilization Time for the clock.
+ **********************************************************************************************************************/
+void R_BSP_SubClockStabilizeWaitAfterReset (uint32_t delay_ms)
+{
+ #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
+
+    /* Wait for clock to stabilize after reset. */
+    R_BSP_SoftwareDelay(delay_ms, BSP_DELAY_UNITS_MILLISECONDS);
+ #else
+    FSP_PARAMETER_NOT_USED(delay_ms);
+ #endif
 }
 
 #endif
@@ -2016,6 +2201,10 @@ void R_BSP_Init_RTC (void)
 
     /* Disable RTC interrupts */
     R_RTC->RCR1 = 0;
+
+    /* When the RCR1 register is modified, check that all the bits are updated before proceeding
+     * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1, 0);
 
    #if BSP_FEATURE_RTC_HAS_TCEN
     for (uint8_t index = 0U; index < BSP_FEATURE_RTC_RTCCR_CHANNELS; index++)

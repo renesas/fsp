@@ -85,6 +85,7 @@
 #define HW_SCE_SHA1_HASH_LENGTH_BYTE_SIZE      (20U)
 #define HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE    (32U)
 #define HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE    (48U)
+#define HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE   (8U)
 
 /* For MD5 operation. */
 #define HW_SCE_MD5_HASH_LENGTH_BYTE_SIZE       (16U)
@@ -383,6 +384,31 @@ typedef enum e_sce_oem_cmd
     SCE_OEM_CMD_ECC_SECP256K1_PRIVATE,
     SCE_OEM_CMD_NUM
 } sce_oem_cmd_t;
+
+typedef enum e_sce_hash_type
+{
+    SCE_OEM_CMD_HASH_TYPE_SHA1 = 0,
+    SCE_OEM_CMD_HASH_TYPE_SHA224 = 1,
+    SCE_OEM_CMD_HASH_TYPE_SHA256 = 2,
+    SCE_OEM_CMD_HASH_TYPE_SHA512_224 = 3,
+    SCE_OEM_CMD_HASH_TYPE_SHA512_256 = 4,
+    SCE_OEM_CMD_HASH_TYPE_SHA384 = 5,
+    SCE_OEM_CMD_HASH_TYPE_SHA512 = 6
+} sce_hash_type_t;
+
+typedef enum e_sce_hash_cmd
+{
+    SCE_OEM_CMD_HASH_ONESHOT = 0,
+    SCE_OEM_CMD_HASH_INIT_TO_SUSPEND = 1,
+    SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND = 2,
+    SCE_OEM_CMD_HASH_RESUME_TO_FINAL = 3
+} sce_hash_cmd_t;
+
+typedef struct sce_hash_user_ctx
+{
+    uint32_t hash_data_state[HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE];
+    sce_hash_cmd_t operation_cmd;
+}sce_hash_user_ctx_t;
 
 typedef enum e_sce_oem_key_type
 {

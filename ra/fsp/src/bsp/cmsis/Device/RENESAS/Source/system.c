@@ -280,16 +280,6 @@ void SystemInit (void)
  #endif
 #endif
 
-#if BSP_FEATURE_BSP_HAS_GRAPHICS_DOMAIN
-
-    /* Turn on graphics power domain.
-     * This requires MOCO to be enabled, but MOCO is always enabled after bsp_clock_init(). */
-    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
-    R_SYSTEM->PDCTRGD = 0;
-    (void) R_SYSTEM->PDCTRGD;
-    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
-#endif
-
     /* Call post clock initialization hook. */
     R_BSP_WarmStart(BSP_WARM_START_POST_CLOCK);
 
@@ -432,6 +422,18 @@ void SystemInit (void)
 
     /* Initialize security features. */
     R_BSP_SecurityInit();
+#endif
+
+#if BSP_FEATURE_BSP_HAS_GRAPHICS_DOMAIN
+
+    /* Turn on graphics power domain.
+     * This requires MOCO to be enabled, but MOCO is always enabled after bsp_clock_init(). */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+    FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRGD & (R_SYSTEM_PDCTRGD_PDCSF_Msk | R_SYSTEM_PDCTRGD_PDPGSF_Msk)),
+                               R_SYSTEM_PDCTRGD_PDPGSF_Msk);
+    R_SYSTEM->PDCTRGD = 0;
+    FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRGD & (R_SYSTEM_PDCTRGD_PDCSF_Msk | R_SYSTEM_PDCTRGD_PDPGSF_Msk)), 0);
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
 #endif
 
     /* Call Post C runtime initialization hook. */

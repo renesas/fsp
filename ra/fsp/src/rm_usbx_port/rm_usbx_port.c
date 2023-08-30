@@ -882,7 +882,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                 /* Notify the application to switch (reinitialize) from normal mode to DFU mode in the application. */
                 if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
                 {
-                    _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_REMOVED);
+                    _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_FORCE_DISCONNECT);
                 }
 
                 /* "D+ Pullup On" is done by the application. */

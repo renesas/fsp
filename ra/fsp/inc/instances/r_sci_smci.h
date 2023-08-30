@@ -143,10 +143,6 @@ fsp_err_t R_SCI_SMCI_CallbackSet(smci_ctrl_t * const          p_api_ctrl,
                                  smci_callback_args_t * const p_callback_memory);
 fsp_err_t R_SCI_SMCI_Close(smci_ctrl_t * const p_api_ctrl);
 
-void sci_smci_rxi_isr(void);
-void sci_smci_txi_isr(void);
-void sci_smci_eri_isr(void);
-
 /*******************************************************************************************************************//**
  * @} (end addtogroup SCI_SMCI)
  **********************************************************************************************************************/

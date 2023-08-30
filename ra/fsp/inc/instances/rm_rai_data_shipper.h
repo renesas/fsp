@@ -33,6 +33,7 @@
 #include <stdbool.h>
 
 #include "bsp_api.h"
+#include "rm_rai_data_collector_cfg.h"
 #include "rm_rai_data_shipper_cfg.h"
 #include "rm_rai_data_shipper_api.h"
 
@@ -49,11 +50,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Max number of data channels (including CRC) to be sent */
-#ifdef RM_RAI_DATA_COLLECTOR_CFG_MAX_CHANNELS
- #define RM_RAI_DATA_SHIPPER_CFG_MAX_CHANNELS    (RM_RAI_DATA_COLLECTOR_CFG_MAX_CHANNELS + 1) // Sensor data from Data collector + 1 channel for CRC
-#else
- #define RM_RAI_DATA_SHIPPER_CFG_MAX_CHANNELS    (16)
-#endif
+#define RM_RAI_DATA_SHIPPER_CFG_MAX_CHANNELS    (RM_RAI_DATA_COLLECTOR_CFG_MAX_CHANNELS + 1) // Sensor data from Data collector + 1 channel for CRC
 
 /* Header buffer structure */
 typedef __PACKED_STRUCT st_rai_data_shipper_header_buffer_type

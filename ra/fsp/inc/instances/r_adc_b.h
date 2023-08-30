@@ -565,6 +565,22 @@ typedef __PACKED_STRUCT st_adc_b_extended_cfg
     /* Register Data */
     union
     {
+        uint32_t bits;                                  // Digital filter slection mask bits
+        __PACKED_STRUCT
+        {
+            adc_b_digital_filter_selection_t idx_0 : 2; // Digital filter selection 0
+            uint32_t                               : 6;
+            adc_b_digital_filter_selection_t idx_1 : 2; // Digital filter selection 1
+            uint32_t                               : 6;
+            adc_b_digital_filter_selection_t idx_2 : 2; // Digital filter selection 2
+            uint32_t                               : 6;
+            adc_b_digital_filter_selection_t idx_3 : 2; // Digital filter selection 3
+            uint32_t                               : 6;
+        } settings;
+    } adc_filter_selection[2];
+
+    union
+    {
         uint32_t clock_control_data;       ///< Clock control register data
         __PACKED_STRUCT
         {

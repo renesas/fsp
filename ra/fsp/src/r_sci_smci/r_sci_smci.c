@@ -94,6 +94,10 @@ static fsp_err_t r_sci_smci_brr_calculate(smci_speed_params_t const * const p_sp
                                           smci_baud_setting_t * const       p_baud_setting);
 static void r_sci_smci_baud_set(R_SCI0_Type * p_sci_reg, smci_baud_setting_t const * const p_baud_setting);
 
+void sci_smci_rxi_isr(void);
+void sci_smci_txi_isr(void);
+void sci_smci_eri_isr(void);
+
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
@@ -252,7 +256,7 @@ fsp_err_t R_SCI_SMCI_Open (smci_ctrl_t * const p_api_ctrl, smci_cfg_t const * co
 
     comm_params.protocol   = SMCI_PROTOCOL_TYPE_T0;
     comm_params.convention = SMCI_CONVENTION_TYPE_DIRECT;
-    comm_params.gsm_mode   = true;
+    comm_params.gsm_mode   = false;
 
     /* Configure the interrupts. */
     r_sci_irqs_cfg(p_ctrl, p_cfg);

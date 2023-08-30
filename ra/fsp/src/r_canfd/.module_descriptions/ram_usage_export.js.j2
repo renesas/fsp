@@ -1,0 +1,10 @@
+var payload_nominal = [8, 12, 16, 20, 24, 32, 48, 64];
+var fifo_nominal = [0, 4, 8, 16, 32, 48, 64, 128];
+var rxmb_nominal = [8, 12, 16, 20, 24, 32, 48, 64];
+((rxmb_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.size{{ '}' }}] + 12) * ${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxmb.number{{ '}' }}) +
+{% for fifo_number in range(num_fifos) -%}
+    ((payload_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.payload{{ '}' }}] + 12) * fifo_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.depth{{ '}' }}] * ${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.rxfifo.{{ fifo_number }}.enable{{ '}' }}) +
+{% endfor -%}
+{% for fifo_number in range(num_common_fifos) -%}
+    ((payload_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.commonfifo.{{ fifo_number }}.payload{{ '}' }}] + 12) * fifo_nominal[${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.commonfifo.{{ fifo_number }}.depth{{ '}' }}] * ${{ '{' }}{{ id_prefix }}.driver.{{ id_name() }}.commonfifo.{{ fifo_number }}.enable{{ '}' }}) {%- if not loop.last %} +{% endif %}
+{% endfor -%}

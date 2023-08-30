@@ -110,6 +110,7 @@
     * [Motor inertia estimation (rm_motor_inertia_estimate)](https://renesas.github.io/fsp/group___m_o_t_o_r___i_n_e_r_t_i_a___e_s_t_i_m_a_t_e.html)
     * [Motor return origin function (rm_motor_return_origin)](https://renesas.github.io/fsp/group___m_o_t_o_r___r_e_t_u_r_n___o_r_i_g_i_n.html)
     * [Motor vector control with induction sensor (rm_motor_induction)](https://renesas.github.io/fsp/group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html)
+    * [Shared ADC module (on rm_motor_driver)](https://renesas.github.io/fsp/group___m_o_t_o_r___d_r_i_v_e_r.html)
   * Networking
     * Bluetooth Low Energy Mesh Network modules
       * [BLE Mesh (rm_ble_mesh)](https://renesas.github.io/fsp/group___r_m___b_l_e___m_e_s_h.html)
@@ -359,7 +360,7 @@
     * [RYZ012 SPP Driver Layer](https://renesas.github.io/fsp/group___b_l_e___a_b_s___s_p_p.html)
     * [TinyCBOR](https://github.com/intel/tinycbor/)
     * [WiFi Common](https://docs.aws.amazon.com/freertos/latest/userguide/freertos-wifi.html)
-    * [WiFi Onchip DA16xxx Driver using r_sci_uart (rm_wifi_onchip_da16xxx)](https://renesas.github.io/fsp/group___w_i_f_i___o_n_c_h_i_p___d_a16200.html)
+    * [WiFi Onchip DA16xxx Driver using r_sci_uart (rm_wifi_onchip_da16xxx)](https://renesas.github.io/fsp/group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html)
     * [WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)](https://renesas.github.io/fsp/group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html)
   * Security
     * [Azure RTOS NetX Crypto HW Acceleration (rm_netx_secure_crypto)](https://renesas.github.io/fsp/group___r_m___n_e_t_x___s_e_c_u_r_e___c_r_y_p_t_o.html)

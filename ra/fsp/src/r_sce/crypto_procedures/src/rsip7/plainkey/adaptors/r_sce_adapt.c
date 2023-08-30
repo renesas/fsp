@@ -30,7 +30,8 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define SCE_RSIP7_LITTLE_ENDIAN_MODE    (0x00CF00CF)
+#define SCE_RSIP7_LITTLE_ENDIAN_MODE    (0x00010001)
+#define OEM_KEY_MAX_SIZE_WORDS          SCE_OEM_KEY_SIZE_RSA4096_PRIVATE_KEY_INST_DATA_WORD
 
 uint32_t S_RAM[HW_SCE_SRAM_WORD_SIZE];
 uint32_t S_HEAP[HW_SCE_SHEAP_WORD_SIZE];
@@ -161,14 +162,15 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
                                              const uint8_t          * encrypted_oem_key,
                                              uint32_t               * key_index)
 {
-    uint32_t indata_key_type[1]        = {0};
-    uint32_t indata_cmd[1]             = {0};
-    uint32_t install_key_ring_index[1] = {0};
-    indata_key_type[0]        = key_type;
-    indata_cmd[0]             = (cmd);
-    install_key_ring_index[0] = 0U;
+    uint32_t   indata_key_type[1]                     = {0};
+    uint32_t   indata_cmd[1]                          = {0};
+    uint32_t   install_key_ring_index[1]              = {0};
+
+    indata_key_type[0]        = change_endian_long((uint32_t)key_type); /* Plaintext OEM. */
+    indata_cmd[0]             = change_endian_long((uint32_t)cmd);
 
     INST_DATA_SIZE = sce_oem_key_size[cmd] - 4U;
+    KEY_INDEX_SIZE = sce_oem_key_size[cmd] + 1U;
 
     /* Casting uint32_t pointer is used for address. */
     return HW_SCE_GenerateOemKeyIndexSub(indata_key_type,
@@ -176,7 +178,7 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
                                          install_key_ring_index,
                                          (uint32_t *) encrypted_provisioning_key,
                                          (uint32_t *) iv,
-                                         (uint32_t *) encrypted_oem_key,
+										 (uint32_t *) encrypted_oem_key,
                                          key_index);
 }
 
@@ -237,3 +239,26 @@ fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
 {
     return HW_SCE_Aes256CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
+
+fsp_err_t HW_SCE_Aes128GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType, 
+                                                 uint32_t * InData_Cmd, 
+                                                 uint32_t * InData_KeyIndex, 
+                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_SeqNum)
+{
+    return (HW_SCE_Aes128GcmEncryptInitSub (InData_KeyType, InData_DataType, InData_Cmd, InData_KeyIndex, InData_IV, InData_SeqNum));
+}
+
+fsp_err_t HW_SCE_Aes128GcmDecryptInitSubGeneral (uint32_t * InData_KeyType, 
+                                                 uint32_t * InData_DataType, 
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex, 
+                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_SeqNum)
+{
+    return (HW_SCE_Aes128GcmDecryptInitSub (InData_KeyType, InData_DataType, InData_Cmd, InData_KeyIndex, InData_IV, InData_SeqNum));
+    
+
+}
+

@@ -212,8 +212,11 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs3
     BSP_CFG_ROM_REG_OFS3_SEL;
 
    #endif
+   #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_banksel_sel") g_bsp_rom_banksel_sel =
-    0xFFFFFFFF;
+    BSP_CFG_ROM_REG_BANKSEL_SEL;
+
+   #endif
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sel0") g_bsp_rom_bps_sel0 =
     BSP_CFG_ROM_REG_BPS_SEL0;
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sel1") g_bsp_rom_bps_sel1 =

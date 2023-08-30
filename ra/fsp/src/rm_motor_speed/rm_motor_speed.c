@@ -356,6 +356,10 @@ fsp_err_t RM_MOTOR_SPEED_Reset (motor_speed_ctrl_t * const p_ctrl)
     p_instance_ctrl->st_speed_lpf.f_pre_output = 0.0F;
     p_instance_ctrl->st_speed_lpf.f_pre_input  = 0.0F;
 
+    /* Reset PI parameters */
+    p_instance_ctrl->pi_param.f_err  = 0.0F;
+    p_instance_ctrl->pi_param.f_refi = 0.0F;
+
     p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
     rm_motor_speed_fluxwkn_reset(&(p_instance_ctrl->st_flxwkn));
 
@@ -1647,12 +1651,7 @@ static float rm_motor_speed_set_id_ref_hall (motor_speed_instance_ctrl_t * p_ctr
     {
         case MOTOR_SPEED_ID_UP:
         {
-            f4_id_ref_buff = p_ctrl->f_id_ref + p_extended_cfg->ol_param.f4_ol_id_up_step;
-            if (f4_id_ref_buff >= p_extended_cfg->ol_param.f4_ol_id_ref)
-            {
-                f4_id_ref_buff          = p_extended_cfg->ol_param.f4_ol_id_ref;
-                p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_CONST;
-            }
+            p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_ZERO_CONST;
 
             break;
         }

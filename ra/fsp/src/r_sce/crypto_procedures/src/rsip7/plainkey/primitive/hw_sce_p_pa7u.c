@@ -24,7 +24,7 @@ void HW_SCE_Aes192CcmEncryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
 {
     uint32_t iLoop = 0U;
 
-    HW_SCE_p_func100(0x62908716U, 0xa135b7f2U, 0x421b0e69U, 0x39fa03dcU);
+    HW_SCE_p_func100(0x01fd34d1U, 0xc23e05b5U, 0x48bfdd08U, 0x0041d8b7U);
     WR1_PROG(REG_1444H, 0x00020061U);
 
     WR1_PROG(REG_182CH, 0x40000010U);
@@ -42,11 +42,11 @@ void HW_SCE_Aes192CcmEncryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
         iLoop = iLoop + 4U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1408H, 30, 1);
     RD4_ADDR(REG_1420H, &OutData_Text[MAX_CNT - 4]);
 
     HW_SCE_p_func215();
 
-    HW_SCE_p_func101(0xb2156043U, 0xe7cec7d6U, 0x7ca84ed2U, 0x45ce4563U);
+    HW_SCE_p_func101(0x6c7359f1U, 0x17dbec41U, 0x3ea401a8U, 0xcf15ae82U);
 }
-

@@ -4627,17 +4627,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t              : 22;
         } CFDGFDCFG_b;
     };
-
-    union
-    {
-        __IOM uint32_t CFDGCRCCFG;     /*!< (@ 0x00001318) Global FD CRC Configuration register                       */
-
-        struct
-        {
-            __IOM uint32_t NIE : 1;    /*!< [0..0] Non ISO enable                                                     */
-            uint32_t           : 31;
-        } CFDGCRCCFG_b;
-    };
+    __IM uint32_t RESERVED34;
 
     union
     {
@@ -4691,7 +4681,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t            : 16;
         } CFDGAFLIGNCTR_b;
     };
-    __IM uint32_t RESERVED34;
+    __IM uint32_t RESERVED35;
 
     union
     {
@@ -4734,7 +4724,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t : 22;
         } CFDCDTSTS_b;
     };
-    __IM uint32_t RESERVED35[2];
+    __IM uint32_t RESERVED36[2];
 
     union
     {
@@ -4775,7 +4765,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t : 14;
         } CFDCDTTSTS_b;
     };
-    __IM uint32_t RESERVED36[2];
+    __IM uint32_t RESERVED37[2];
 
     union
     {
@@ -4795,7 +4785,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t              : 1;
         } CFDGRINTSTS_b[2];
     };
-    __IM uint32_t RESERVED37[10];
+    __IM uint32_t RESERVED38[10];
 
     union
     {
@@ -4809,18 +4799,18 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             uint32_t            : 16;
         } CFDGRSTC_b;
     };
-    __IM uint32_t              RESERVED38[31];
+    __IM uint32_t              RESERVED39[31];
     __IOM R_CANFD_CFDC2_Type   CFDC2[2];    /*!< (@ 0x00001400) Channel Configuration Registers                            */
-    __IM uint32_t              RESERVED39[240];
+    __IM uint32_t              RESERVED40[240];
     __IOM R_CANFD_CFDGAFL_Type CFDGAFL[16]; /*!< (@ 0x00001800) Global Acceptance Filter List Registers                    */
-    __IM uint32_t              RESERVED40[448];
+    __IM uint32_t              RESERVED41[448];
     __IOM R_CANFD_CFDRM_Type   CFDRM[32];   /*!< (@ 0x00002000) RX Message Buffer Access Registers                         */
-    __IM uint32_t              RESERVED41[3072];
+    __IM uint32_t              RESERVED42[3072];
     __IOM R_CANFD_CFDRF_Type   CFDRF[8];    /*!< (@ 0x00006000) RX FIFO Access Registers                                   */
     __IOM R_CANFD_CFDCF_Type   CFDCF[6];    /*!< (@ 0x00006400) Common FIFO Access Registers                               */
-    __IM uint32_t              RESERVED42[1600];
+    __IM uint32_t              RESERVED43[1600];
     __IOM R_CANFD_CFDTHL_Type  CFDTHL[2];   /*!< (@ 0x00008000) Channel TX History List                                    */
-    __IM uint32_t              RESERVED43[252];
+    __IM uint32_t              RESERVED44[252];
 
     union
     {
@@ -4831,7 +4821,7 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
             __IOM uint32_t RDTA : 32;    /*!< [31..0] RAM Data Test Access                                              */
         } CFDRPGACC_b[64];
     };
-    __IM uint32_t            RESERVED44[7872];
+    __IM uint32_t            RESERVED45[7872];
     __IOM R_CANFD_CFDTM_Type CFDTM[128]; /*!< (@ 0x00010000) TX Message Buffer Access Registers                         */
 } R_CANFD_Type;                          /*!< Size = 81920 (0x14000)                                                    */
 
@@ -21504,9 +21494,6 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_CANFD_CFDGFDCFG_RPED_Msk              (0x1UL)        /*!< RPED (Bitfield-Mask: 0x01)                            */
  #define R_CANFD_CFDGFDCFG_TSCCFG_Pos            (8UL)          /*!< TSCCFG (Bit 8)                                        */
  #define R_CANFD_CFDGFDCFG_TSCCFG_Msk            (0x300UL)      /*!< TSCCFG (Bitfield-Mask: 0x03)                          */
-/* ======================================================  CFDGCRCCFG  ======================================================= */
- #define R_CANFD_CFDGCRCCFG_NIE_Pos              (0UL)          /*!< NIE (Bit 0)                                           */
- #define R_CANFD_CFDGCRCCFG_NIE_Msk              (0x1UL)        /*!< NIE (Bitfield-Mask: 0x01)                             */
 /* =======================================================  CFDGLOCKK  ======================================================= */
  #define R_CANFD_CFDGLOCKK_LOCK_Pos              (0UL)          /*!< LOCK (Bit 0)                                          */
  #define R_CANFD_CFDGLOCKK_LOCK_Msk              (0xffffUL)     /*!< LOCK (Bitfield-Mask: 0xffff)                          */

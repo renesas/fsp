@@ -56,9 +56,9 @@ FSP_HEADER
  * Initialized in @ref adpcm_decoder_api_t::open(). */
 typedef struct st_adpcm_decoder_instance_ctrl
 {
-    int8_t    id;                        // Step size
-    int16_t   vp;                        // Variable to hold last PCM sample value
-    uint32_t    opened;                  // Flag to determine if the device is open
+    int8_t   id;                       // Step size
+    int16_t  vp;                       // Variable to hold last PCM sample value
+    uint32_t opened;                   // Flag to determine if the device is open
 } adpcm_decoder_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -75,8 +75,10 @@ extern const adpcm_decoder_api_t g_adpcm_decoder_on_adpcm_decoder;
  * Public APIs
  **********************************************************************************************************************/
 fsp_err_t RM_ADPCM_DECODER_Open(adpcm_decoder_ctrl_t * p_ctrl, adpcm_decoder_cfg_t const * const p_cfg);
-fsp_err_t RM_ADPCM_DECODER_Decode(adpcm_decoder_ctrl_t * const p_ctrl, void const * p_src, void * p_dest,
-        uint32_t src_len_bytes);
+fsp_err_t RM_ADPCM_DECODER_Decode(adpcm_decoder_ctrl_t * const p_ctrl,
+                                  void const                 * p_src,
+                                  void                       * p_dest,
+                                  uint32_t                     src_len_bytes);
 fsp_err_t RM_ADPCM_DECODER_Reset(adpcm_decoder_ctrl_t * p_ctrl);
 fsp_err_t RM_ADPCM_DECODER_Close(adpcm_decoder_ctrl_t * p_ctrl);
 

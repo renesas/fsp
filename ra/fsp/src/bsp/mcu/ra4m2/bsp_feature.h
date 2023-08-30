@@ -217,7 +217,9 @@
 #define BSP_FEATURE_CGC_SRAMPRCR_KW_OFFSET                   (1)
 #define BSP_FEATURE_CGC_SRAMPRCR_KW_VALUE                    (0x78)
 #define BSP_FEATURE_CGC_STARTUP_OPCCR_MODE                   (0) // Feature not available on this MCU
-
+#define BSP_FEATURE_CGC_STARTUP_SCKDIVCR                     (0x22022222)
+#define BSP_FEATURE_CGC_STARTUP_SCKDIVCR2                    (0x00)
+#define BSP_FEATURE_CGC_STARTUP_SCKSCR                       (0x01)
 #define BSP_FEATURE_CRYPTO_HAS_AES                           (1)
 #define BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED                   (1)
 #define BSP_FEATURE_CRYPTO_HAS_CTR_DRBG                      (1)
@@ -361,7 +363,8 @@
 #define BSP_FEATURE_LVD_MONITOR_1_LOW_THRESHOLD              (LVD_THRESHOLD_MONITOR_1_LEVEL_2_85V) // 2.85V
 #define BSP_FEATURE_LVD_MONITOR_2_HI_THRESHOLD               (LVD_THRESHOLD_MONITOR_2_LEVEL_2_99V) // 2.99V
 #define BSP_FEATURE_LVD_MONITOR_2_LOW_THRESHOLD              (LVD_THRESHOLD_MONITOR_2_LEVEL_2_85V) // 2.85V
-#define BSP_FEATURE_LVD_STABILIZATION_TIME_US                (10U)                                 // Time in microseconds required for LVD to stabilize
+#define BSP_FEATURE_LVD_MONITOR_1_STABILIZATION_TIME_US      (10U)                                 // Time in microseconds required for LVD1 to stabilize
+#define BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US      (10U)                                 // Time in microseconds required for LVD2 to stabilize
 
 #define BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS                   (0U)
 #define BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS                   (0U)

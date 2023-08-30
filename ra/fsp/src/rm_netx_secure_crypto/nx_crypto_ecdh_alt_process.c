@@ -84,12 +84,15 @@ UINT sce_nx_crypto_ecdh_key_pair_import (NX_CRYPTO_ECDH * ecdh_ptr,
      * This additional key info is 20 bytes in size.
      */
     uint32_t public_key_len = 1 + (curve_size_bytes << 1);
-    if ((local_public_key_len != public_key_len) &&
-        (local_public_key_len != (public_key_len - RM_NETX_SECURE_CRYPTO_FORMATTED_ECC_PUBLIC_KEY_ADJUST)))
+    if(local_public_key_len != 0U)
     {
+        if ((local_public_key_len != public_key_len) &&
+                (local_public_key_len != (public_key_len - RM_NETX_SECURE_CRYPTO_FORMATTED_ECC_PUBLIC_KEY_ADJUST)))
+        {
 
-        /* The key length passed neither matches the standard ECC public key nor the SCE9/7 formatted key length */
-        return NX_CRYPTO_SIZE_ERROR;
+            /* The key length passed neither matches the standard ECC public key nor the SCE9/7 formatted key length */
+            return NX_CRYPTO_SIZE_ERROR;
+        }
     }
 
     /* Clear the private key buffer. */

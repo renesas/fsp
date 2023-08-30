@@ -117,7 +117,15 @@ typedef struct mbedtls_rsa_context
   #endif
 } mbedtls_rsa_context;
 
- #endif /* MBEDTLS_RSA_ALT */
+/* This declaration is here as well as in constant_time_internal.h but is excluded
+ * if MBEDTLS_RSA_ALT is defined. */
+int mbedtls_ct_rsaes_pkcs1_v15_unpadding(unsigned char * input,
+                                         size_t          ilen,
+                                         unsigned char * output,
+                                         size_t          output_max_len,
+                                         size_t        * olen);
+
+ #endif                                /* MBEDTLS_RSA_ALT */
 
  #ifdef __cplusplus
 }

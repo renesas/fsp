@@ -20,7 +20,7 @@
 
 #include "hw_sce_ra_private.h"
 
-void HW_SCE_p_func090 (void)
+void HW_SCE_p_func090_r1 (void)
 {
     WR1_PROG(REG_1014H, 0x00000390U);
     WR1_PROG(REG_101CH, 0x00000070U);
@@ -91,12 +91,10 @@ void HW_SCE_p_func090 (void)
 
     HW_SCE_p_func100(0x0b0c9e4fU, 0x7cdde83eU, 0x9fab7db2U, 0x56baa29aU);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
         WR1_PROG(REG_1600H, 0x00000800U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func101(0x7a5d4290U, 0x67f5f466U, 0x6abae8d6U, 0x1c75e2a4U);
     }
@@ -164,23 +162,17 @@ void HW_SCE_p_func090 (void)
         WAIT_STS(REG_1000H, 0, 0);
 
         WR1_PROG(REG_1600H, 0x0000b400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1600H, 0x1b8be139U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         HW_SCE_p_func101(0xe532ea92U, 0x3bf36fceU, 0x8fbe6ac4U, 0xea94ae20U);
     }
 
     WR1_PROG(REG_1600H, 0x38008800U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x1b8be139U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1608H, 0x00000080U);
     WR1_PROG(REG_143CH, 0x00A60000U);
 
     WR1_PROG(REG_1600H, 0x00007c1dU);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_143CH, 0x00602000U);
     WR1_PROG(REG_1458H, 0x00000000U);
 }
-

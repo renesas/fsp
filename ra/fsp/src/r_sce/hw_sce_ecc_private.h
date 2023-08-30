@@ -60,7 +60,7 @@
 #define HW_SCE_ECC_WRAPPED_KEY_ADJUST(x)          ((x) + ((HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE) * 4))
 
 /* Function pointer declarations */
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
  #define ECC_PUBLIC_KEY_SIZE_BYTES(curve_size)    (curve_size * 2 + 20U)
 typedef fsp_err_t (* hw_sce_ecc_scalarmultiplication_t)(const uint32_t * InData_CurveType, const uint32_t * InData_Cmd,
                                                         const uint32_t * InData_K, const uint32_t * InData_P,

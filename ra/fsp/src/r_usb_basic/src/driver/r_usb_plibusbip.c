@@ -76,7 +76,11 @@
   #if defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE) || defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PAUD_USE)
    #define USB_COMPOSITE_DEVICE
   #else
-   #define USB_NO_COMPOSITE_DEVICE
+   #if ((USB_NULL != USB_CFG_PCDC_BULK_IN2) || (USB_NULL != USB_CFG_PCDC_BULK_OUT2))
+    #define USB_COMPOSITE_DEVICE
+   #else
+    #define USB_NO_COMPOSITE_DEVICE
+   #endif
   #endif
  #elif defined(USB_CFG_PMSC_USE)
   #if defined(USB_CFG_PVND_USE) || defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PAUD_USE)
@@ -1624,7 +1628,7 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
         case USB_CFG_PCDC_BULK_OUT:
         {
     #if USB_CFG_DTC == USB_CFG_ENABLE
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
     #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
             pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
     #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
@@ -1646,7 +1650,7 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
         case USB_CFG_PPRN_BULK_OUT:
         {
     #if USB_CFG_DTC == USB_CFG_ENABLE
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
     #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
             pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
     #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
@@ -1668,7 +1672,7 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
         case USB_CFG_PMSC_BULK_OUT:
         {
     #if USB_CFG_DTC == USB_CFG_ENABLE
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
     #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
             pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
     #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */

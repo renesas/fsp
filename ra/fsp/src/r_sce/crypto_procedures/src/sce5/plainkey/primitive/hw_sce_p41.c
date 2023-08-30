@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-void HW_SCE_Aes256GcmEncryptUpdateAADSub(uint32_t *InData_DataA, uint32_t MAX_CNT)
+void HW_SCE_Aes256GcmEncryptUpdateAADSub(const uint32_t *InData_DataA, const uint32_t MAX_CNT)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;

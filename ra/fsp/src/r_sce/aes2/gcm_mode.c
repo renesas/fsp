@@ -27,6 +27,8 @@
 #include "hw_sce_aes_private.h"
 #include "hw_sce_ra_private.h"
 
+#define TC_32BIT_ALIGNED(x)    !(x & 0x03)
+
 /***********************************************************************************************************************
  * Global variables and functions
  ***********************************************************************************************************************/
@@ -40,19 +42,37 @@ fsp_err_t tc_gcm_calculation (uint8_t * input,
                               uint8_t * aad,
                               uint32_t  aad_len)
 {
-    uint8_t   Jn[16]   = {0};
-    uint8_t   J0[16]   = {0};
-    uint8_t   data[16] = {0};
+    uint8_t   Jn[16];
+    uint8_t   J0[16];
+    uint8_t   data[16];
     uint8_t   temp;
-    uint64_t  temp_len;
-    uint16_t  temp1;
-    int16_t   len;
+    uint32_t  temp_len;
+    uint32_t  temp1;
+    uint32_t  len;
     uint8_t * ptr;
     uint8_t * ptr_out_temp;
     uint8_t * ptr_out;
     fsp_err_t status = FSP_SUCCESS;
-    uint8_t   temp_tag[TC_AES_BLOCK_SIZE];
     uint8_t   temp_output[TC_AES_BLOCK_SIZE];
+    bool      src_unaligned = !TC_32BIT_ALIGNED((uint32_t) &input[0]);
+    bool      dst_unaligned = !TC_32BIT_ALIGNED((uint32_t) &output[0]);
+    uint8_t * buf_in        = input;
+    uint8_t * buf_out       = output;
+    uint8_t * p_in          = input;
+    uint8_t * p_out         = output;
+    uint8_t   local_in[TC_AES_BLOCK_SIZE];
+    uint8_t   local_out[TC_AES_BLOCK_SIZE];
+
+    if (src_unaligned)
+    {
+        memset(local_in, 0, (size_t) sizeof(local_in));
+        p_in = &local_in[0];
+    }
+
+    if (dst_unaligned)
+    {
+        p_out = &local_out[0];
+    }
 
     if ((uint8_t) iv_len == 12)
     {
@@ -62,19 +82,18 @@ fsp_err_t tc_gcm_calculation (uint8_t * input,
     else
     {
         ptr                = initial_vector;
-        temp_len           = (uint8_t) iv_len;
+        temp_len           = iv_len;
         R_AES_B->AESDCNTL |= R_AES_AESDCNTL_ASSIGN_DATA_DISABLE;
         do
         {
             len = 16;
             if (temp_len < 16)
             {
-                len = (int16_t) temp_len;
+                len = temp_len;
             }
 
-            temp_len -= (uint64_t) len;
-            memcpy(data, ptr, (size_t) len);
-            tc_aes_start(&data[0], &J0[0], 1);
+            temp_len -= len;
+            tc_aes_start(ptr, &J0[0], 1);
             ptr += len;
         } while (temp_len > 0);
 
@@ -85,7 +104,7 @@ fsp_err_t tc_gcm_calculation (uint8_t * input,
 
         for (int16_t iLoop = 0; iLoop < 8; iLoop++)
         {
-            temp_len         = (uint64_t) ((uint8_t) iv_len * 8);
+            temp_len         = (uint32_t) ((uint8_t) iv_len * 8);
             temp_len       >>= (8 * iLoop);
             data[15 - iLoop] = (uint8_t) temp_len;
         }
@@ -113,67 +132,100 @@ fsp_err_t tc_gcm_calculation (uint8_t * input,
     tc_aes_set_iv(Jn);
 
     /* Athentication Tag Creation Start */
-    if ((uint8_t) aad_len != 0)
+    if (aad_len != 0)
     {
         /* Flow to Obtain AAD Hash Value Start */
         ptr                = aad;
         R_AES_B->AESDCNTL |= R_AES_AESDCNTL_BIT_2;
-        temp_len           = (uint8_t) aad_len;
+        temp_len           = aad_len;
 
         do
         {
             len = 16;
             if (temp_len < 16)
             {
-                len = (int16_t) temp_len;
+                len = temp_len;
+                memset(data, 0, (size_t) sizeof(data));
+                memcpy(data, ptr, (size_t) len);
+                tc_aes_start(&data[0], &data[0], 1);
+            }
+            else
+            {
+                tc_aes_start(ptr, &data[0], 1);
             }
 
-            temp_len -= (uint64_t) len;
-            memset(data, 0, (size_t) sizeof(data));
-            memcpy(data, ptr, (size_t) len);
-            tc_aes_start(&data[0], &data[0], 1);
-            ptr += len;
+            ptr      += len;
+            temp_len -= len;
         } while (temp_len > 0);
 
         /* Flow to Obtain AAD Hash Value End */
     }
 
     /* Encryption Flow Start */
-    if ((uint8_t) data_len != 0)
+    if (data_len != 0)
     {
         ptr      = input;
         ptr_out  = output;
-        temp_len = (uint8_t) data_len;
+        temp_len = data_len;
         do
         {
+            if (src_unaligned)
+            {
+                memcpy(&local_in[0], &buf_in[0], TC_AES_BLOCK_SIZE);
+            }
+
             ptr_out_temp = &temp_output[0];
             temp1        = 0;
             len          = 16;
             if (temp_len < 16)
             {
-                len     = (int16_t) temp_len;
-                temp1   = ((uint16_t) temp_len) * 8;
+                len     = temp_len;
+                temp1   = temp_len * 8;
                 temp1 <<= 8;
                 temp1  |= R_AES_AESDCNTL_BIT_4;
             }
 
-            temp_len -= (uint64_t) len;
-            memset(data, 0, sizeof(data));
-            memcpy(data, ptr, (size_t) len);
-            R_AES_B->AESDCNTL = (temp1 | R_AES_AESDCNTL_BIT_5);
-            tc_aes_start(&data[0], ptr_out_temp, 1);
-            if (temp_len > 0)
+            temp_len         -= len;
+            R_AES_B->AESDCNTL = ((uint16_t) temp1 | R_AES_AESDCNTL_BIT_5);
+            if ((src_unaligned || dst_unaligned) && (temp_len > 0)) // unaligned data in normal block
             {
-                memcpy(ptr_out, &temp_output[0], TC_AES_BLOCK_SIZE);
+                tc_aes_start(p_in, p_out, 1);
+                ptr_out += TC_AES_BLOCK_SIZE;
+                if (dst_unaligned)
+                {
+                    memcpy(&buf_out[0], &p_out[0], TC_AES_BLOCK_SIZE);
+                    buf_out += TC_AES_BLOCK_SIZE;
+                }
+                else
+                {
+                    p_out += TC_AES_BLOCK_SIZE;
+                }
+
+                if (src_unaligned)
+                {
+                    buf_in += TC_AES_BLOCK_SIZE;
+                }
+                else
+                {
+                    p_in += TC_AES_BLOCK_SIZE;
+                }
+            }
+            else if (temp_len > 0)
+            {
+                tc_aes_start(ptr, ptr_out, 1);
                 ptr_out += TC_AES_BLOCK_SIZE;
             }
             else
             {
+                memset(data, 0, sizeof(data));
+                memcpy(data, ptr, (size_t) len);
+                tc_aes_start(&data[0], ptr_out_temp, 1);
                 memcpy(ptr_out, &temp_output[0], (size_t) len);
+                ptr_out_temp += TC_AES_BLOCK_SIZE;
+                ptr_out      += TC_AES_BLOCK_SIZE;
             }
 
-            ptr_out_temp += 16;
-            ptr          += len;
+            ptr += len;
             for (int16_t iLoop = 0; iLoop < 4; iLoop++)
             {
                 temp = Jn[15 - iLoop];
@@ -194,22 +246,21 @@ fsp_err_t tc_gcm_calculation (uint8_t * input,
 
     /* Encryption Flow End */
 
-    if ((uint8_t) aad_len != 0)
+    if (aad_len != 0)
     {
         tc_aes_set_iv(J0);
         for (int16_t iLoop = 0; iLoop < 8; iLoop++)
         {
-            temp_len       = (uint64_t) ((uint8_t) aad_len * 8);
+            temp_len       = aad_len * 8;
             temp_len     >>= (8 * iLoop);
             Jn[7 - iLoop]  = (uint8_t) temp_len;
-            temp_len       = (uint64_t) ((uint8_t) data_len * 8);
+            temp_len       = data_len * 8;
             temp_len     >>= (8 * iLoop);
             Jn[15 - iLoop] = (uint8_t) temp_len;
         }
 
         R_AES_B->AESDCNTL |= R_AES_AESDCNTL_BIT_6;
-        tc_aes_start(&Jn[0], &temp_tag[0], 1);
-        memcpy(atag, &temp_tag[0], sizeof(temp_tag));
+        tc_aes_start(&Jn[0], atag, 1);
     }
 
     /* Athentication Tag Creation End*/

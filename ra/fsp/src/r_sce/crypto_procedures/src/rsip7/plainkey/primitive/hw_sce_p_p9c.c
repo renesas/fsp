@@ -22,10 +22,10 @@
 
 fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[],
                                                 const uint32_t InData_PubKey[],
+                                                const uint32_t InData_DomainParam[],
                                                 uint32_t       OutData_R[])
 {
-    uint32_t OFS_ADR = 0U;
-    uint32_t iLoop   = 0U;
+    uint32_t iLoop = 0U;
 
     if (RD1_MASK(REG_14B8H, 0x0000001eU) != 0)
     {
@@ -44,35 +44,30 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
 
     WR1_PROG(REG_1444H, 0x000000c7U);
     WR1_PROG(REG_1608H, 0x800100e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, InData_KeyIndex[0]);
     WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x0000009cU));
     WR1_PROG(REG_1458H, 0x00000000U);
 
     HW_SCE_p_func101(0xda368b45U, 0xf52a4b70U, 0x8099d3d9U, 0x6a980112U);
-    HW_SCE_p_func043();
+    HW_SCE_p_func043_r1();
 
     WR1_PROG(REG_1600H, 0x0000b4e0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WR1_PROG(REG_1600H, 0x00000021U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     WR1_PROG(REG_1444H, 0x000000a7U);
     WR1_PROG(REG_1608H, 0x800103a0U);
-    WR1_PROG(REG_1458H, 0x00000000U);
     WAIT_STS(REG_1444H, 31, 1);
     WR1_PROG(REG_1420H, change_endian_long(0x0000009cU));
     WR1_PROG(REG_1458H, 0x00000000U);
 
-    HW_SCE_p_func101(0x3e0b13b3U, 0x28c41d56U, 0x5ad054bdU, 0xb0fc1228U);
-    HW_SCE_p_func044();
+    HW_SCE_p_func101(0xa8aed984U, 0x696a4a0eU, 0x9a9e47b6U, 0x818e2b0cU);
+    HW_SCE_p_func044_r1();
 
     WR1_PROG(REG_1444H, 0x00000fc2U);
     WR1_PROG(REG_1A2CH, 0x40000300U);
@@ -92,6 +87,8 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
         iLoop = iLoop + 8U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
+
     WR1_PROG(REG_1444H, 0x000003c2U);
     WR1_PROG(REG_1A2CH, 0x40000000U);
     WR1_PROG(REG_1A24H, 0x07008d05U);
@@ -103,13 +100,12 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
     WAIT_STS(REG_1404H, 30, 0);
     WR1_PROG(REG_143CH, 0x00001800U);
 
-    HW_SCE_p_func100(0x7edc919dU, 0xca6f5b7eU, 0x56ceac96U, 0xcd52bd3eU);
+    HW_SCE_p_func100(0xa26a7e5dU, 0x750f6b23U, 0xb96af52dU, 0xf66437a0U);
     WR1_PROG(REG_143CH, 0x00400000U);
-    WR1_PROG(REG_1458H, 0x00000000U);
 
     if (CHCK_STS(REG_143CH, 22, 1))
     {
-        HW_SCE_p_func102(0x9f733c98U, 0x34a821cfU, 0xed647778U, 0xd3cbe9deU);
+        HW_SCE_p_func102(0xf2b68cc2U, 0xf6d7cee5U, 0xc69ef4eeU, 0xc064c7b2U);
         WR1_PROG(REG_14B8H, 0x00000040U);
         WAIT_STS(REG_142CH, 12, 0);
 
@@ -117,35 +113,20 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
     }
     else
     {
-        HW_SCE_p_func100(0x5a771ffeU, 0xa06e199cU, 0x9ff1acbaU, 0x7e2630b9U);
         WR1_PROG(REG_1600H, 0x00000bdeU);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1444H, 0x00001fc7U);
         WR1_PROG(REG_1608H, 0x80a0001eU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         for (iLoop = 0U; iLoop < 32U; iLoop++)
         {
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, InData_PubKey[iLoop]);
-            WR1_PROG(REG_1458H, 0x00000000U);
         }
 
-        WR1_PROG(REG_1600H, 0x0000b400U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1600H, 0x00000270U);
         WR1_PROG(REG_1458H, 0x00000000U);
 
-        WR1_PROG(REG_1608H, 0x81010000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
-        WR1_PROG(REG_1408H, 0x00005006U);
-        WAIT_STS(REG_1408H, 30, 1);
-        RD1_ADDR(REG_1420H, &S_RAM[0]);
-         S_RAM[0] = change_endian_long(S_RAM[0]);
-        OFS_ADR = S_RAM[0];
-
-        HW_SCE_p_func100(0xf168cfabU, 0x94e6ec29U, 0x6f4f7719U, 0xa0798b7cU);
-        HW_SCE_p_func078(OFS_ADR);
+        HW_SCE_p_func100(0x65037203U, 0x7677dc6aU, 0xda887f4bU, 0x945f2266U);
+        HW_SCE_p_func078_r2(InData_DomainParam);
 
         WR1_PROG(REG_1010H, 0x00000020U);
         WR1_PROG(REG_101CH, 0x000000c0U);
@@ -162,9 +143,7 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
         WAIT_STS(REG_1000H, 0, 0);
 
         WR1_PROG(REG_1600H, 0x00000bdeU);
-        WR1_PROG(REG_1458H, 0x00000000U);
         WR1_PROG(REG_1608H, 0x81a0001eU);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         WR1_PROG(REG_1404H, 0x10d00000U);
         WR1_PROG(REG_1400H, 0x00c90041U);
@@ -257,13 +236,12 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
 
         WR1_PROG(REG_143CH, 0x00210000U);
 
-        HW_SCE_p_func100(0xa9b35604U, 0x4ba20032U, 0xc414fdf1U, 0xdeb8ebddU);
+        HW_SCE_p_func100(0xbf8f281cU, 0x47e4227fU, 0xc6c7578eU, 0x657ab714U);
         WR1_PROG(REG_143CH, 0x00400000U);
-        WR1_PROG(REG_1458H, 0x00000000U);
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
-            HW_SCE_p_func102(0x57dabd43U, 0xd59eed2dU, 0xb42c0115U, 0x29f46f1bU);
+            HW_SCE_p_func102(0x2f263168U, 0x78080a57U, 0xd9a1f681U, 0x2f269dadU);
             WR1_PROG(REG_14B8H, 0x00000040U);
             WAIT_STS(REG_142CH, 12, 0);
 
@@ -294,17 +272,15 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
 
             WR1_PROG(REG_1444H, 0x000000a7U);
             WR1_PROG(REG_1608H, 0x800103a0U);
-            WR1_PROG(REG_1458H, 0x00000000U);
             WAIT_STS(REG_1444H, 31, 1);
             WR1_PROG(REG_1420H, change_endian_long(0x0000009cU));
             WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func101(0x94dd00c0U, 0x85056105U, 0x556ef1c5U, 0x6f58b5a3U);
-            HW_SCE_p_func090();
+            HW_SCE_p_func101(0x2260a9e3U, 0x3aa01fa1U, 0x5aad2064U, 0xc3bb397fU);
+            HW_SCE_p_func090_r1();
 
             HW_SCE_p_func100(0x965a70feU, 0xae3a771dU, 0xafeed9a0U, 0x456adf9eU);
             WR1_PROG(REG_143CH, 0x00400000U);
-            WR1_PROG(REG_1458H, 0x00000000U);
 
             if (CHCK_STS(REG_143CH, 22, 1))
             {
@@ -377,4 +353,3 @@ fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub (const uint32_t InData_KeyIndex[]
         }
     }
 }
-

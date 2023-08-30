@@ -267,6 +267,10 @@ fsp_err_t R_RTC_Close (rtc_ctrl_t * const p_ctrl)
     /* Clear PIE, AIE, CIE*/
     R_RTC->RCR1 = 0U;
 
+    /* When the RCR1 register is modified, check that all the bits are updated before proceeding
+     * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1, 0);
+
     /* Set the START bit to 0 */
     r_rtc_start_bit_update(0U);
 
@@ -909,6 +913,10 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
 
     /* Disable RTC interrupts */
     R_RTC->RCR1 = 0;
+
+    /* When the RCR1 register is modified, check that all the bits are updated before proceeding
+     * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1, 0);
 
     /* Force RTC to 24 hour mode. Set HR24 bit in the RCR2 register */
     R_RTC->RCR2_b.HR24 = 1U;

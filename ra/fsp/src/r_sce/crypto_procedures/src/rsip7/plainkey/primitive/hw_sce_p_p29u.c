@@ -50,6 +50,8 @@ void HW_SCE_Aes128GcmEncryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
         iLoop = iLoop + 4U;
     }
 
+    WR1_PROG(REG_1458H, 0x00000000U);
+
     HW_SCE_p_func202();
 
     WR1_PROG(REG_1444H, 0x000000a1U);
@@ -60,4 +62,3 @@ void HW_SCE_Aes128GcmEncryptUpdateSub (const uint32_t InData_Text[], uint32_t Ou
 
     HW_SCE_p_func101(0x957d163fU, 0xc80bbcacU, 0x34087b11U, 0x49e6a8f0U);
 }
-
