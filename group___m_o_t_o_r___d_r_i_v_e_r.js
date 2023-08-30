@@ -1,5 +1,16 @@
 var group___m_o_t_o_r___d_r_i_v_e_r =
 [
+    [ "motor_driver_shared_instance_ctrl_t", "group___m_o_t_o_r___d_r_i_v_e_r.html#structmotor__driver__shared__instance__ctrl__t", [
+      [ "registered_motor_count", "group___m_o_t_o_r___d_r_i_v_e_r.html#a93f6074a29726d2b72f4ff35374f8af2", null ]
+    ] ],
+    [ "motor_driver_extended_shared_cfg_t", "group___m_o_t_o_r___d_r_i_v_e_r.html#structmotor__driver__extended__shared__cfg__t", [
+      [ "p_adc_instance_first", "group___m_o_t_o_r___d_r_i_v_e_r.html#a59529ab8460d078cd3a52f05674b9502", null ],
+      [ "p_adc_instance_second", "group___m_o_t_o_r___d_r_i_v_e_r.html#acb7b65adb00209898206b31a7221653c", null ]
+    ] ],
+    [ "motor_driver_select_adc_instance_t", "group___m_o_t_o_r___d_r_i_v_e_r.html#ga0234d0c0182b2579413a3694dcf95aec", [
+      [ "MOTOR_DRIVER_SELECT_ADC_INSTANCE_FIRST", "group___m_o_t_o_r___d_r_i_v_e_r.html#gga0234d0c0182b2579413a3694dcf95aecab0734ca06711594aa1b3a2a935aa99f4", null ],
+      [ "MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND", "group___m_o_t_o_r___d_r_i_v_e_r.html#gga0234d0c0182b2579413a3694dcf95aecabb6832cf3af1e108aa838098484d9542", null ]
+    ] ],
     [ "motor_driver_modulation_method_t", "group___m_o_t_o_r___d_r_i_v_e_r.html#ga838f55612e0a7eaa8ecb9f8c836b943d", [
       [ "MOTOR_DRIVER_MODULATION_METHOD_SPWM", "group___m_o_t_o_r___d_r_i_v_e_r.html#gga838f55612e0a7eaa8ecb9f8c836b943da1d720f25a026bd9d664494544264204c", null ],
       [ "MOTOR_DRIVER_MODULATION_METHOD_SVPWM", "group___m_o_t_o_r___d_r_i_v_e_r.html#gga838f55612e0a7eaa8ecb9f8c836b943dacafa57f3fa4f25e8b0ef3c42f30c58ac", null ]

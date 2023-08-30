@@ -98,7 +98,7 @@ var searchData=
   ['errors',['errors',['../group___c_e_c___a_p_i.html#a8d47a5c904588fdfe710047279e97e18',1,'cec_callback_args_t']]],
   ['errorset',['errorSet',['../group___m_o_t_o_r___a_p_i.html#a1f302c2b7f82f4aa52b44be05a575eaf',1,'motor_api_t']]],
   ['estimatedcomponentget',['estimatedComponentGet',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a02b9994b5d96935df89d463f66dbe5a3',1,'motor_angle_api_t']]],
-  ['ether',['ether',['../group___p_t_p___a_p_i.html#abc2a4ef9e309e92eb2fc5996ba1ea63b',1,'ptp_synfp_cfg_t']]],
+  ['ether',['ether',['../group___p_t_p___a_p_i.html#ab24a4e8b1409d1d01719c7fa61f86703',1,'ptp_synfp_cfg_t']]],
   ['ether_5fbuffer_5fsize',['ether_buffer_size',['../group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256',1,'ether_cfg_t']]],
   ['ethernet_5fphy_5finterface',['ethernet_phy_interface',['../group___p_t_p___a_p_i.html#a08a1a771170cfe1396f3275a3f9be994',1,'ptp_synfp_cfg_t']]],
   ['etoh',['etoh',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#affea8dbc2bf312f939b04a070ba9a16d',1,'rm_zmod4xxx_iaq_1st_data_t::etoh()'],['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92ce32ead1c82ad9b1c355827fe027a9',1,'rm_zmod4xxx_iaq_2nd_data_t::etoh()'],['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5bcd90e4eb1d705a71453a5c35229719',1,'rm_zmod4xxx_pbaq_data_t::etoh()']]],

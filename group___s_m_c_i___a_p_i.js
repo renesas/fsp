@@ -61,9 +61,7 @@ var group___s_m_c_i___a_p_i =
       [ "SMCI_EVENT_RX_CHAR", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0afeede5c8b61e49e217a9cd3650d753b5", null ],
       [ "SMCI_EVENT_ERR_PARITY", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0ac537c124171d3ba58d573760088bac83", null ],
       [ "SMCI_EVENT_ERR_LOW_SIGNAL", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0aaac5513977accebc1a9c1304a5c6d4aa", null ],
-      [ "SMCI_EVENT_ERR_OVERRUN", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0a8f41051489e66db600e6fa8b825ef8c0", null ],
-      [ "SMCI_EVENT_BREAK_DETECT", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0ab40dc060f68c7b8f2b158b6e67fd9fc2", null ],
-      [ "SMCI_EVENT_TX_DATA_EMPTY", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0a1b2aa02ac470b45d55239553e8d4db01", null ]
+      [ "SMCI_EVENT_ERR_OVERRUN", "group___s_m_c_i___a_p_i.html#ggaa4182189b3196a6fd900d0498837ffe0a8f41051489e66db600e6fa8b825ef8c0", null ]
     ] ],
     [ "smci_convention_type_t", "group___s_m_c_i___a_p_i.html#gade8fe003b06ee6f7a3ada7ea785b66b7", [
       [ "SMCI_CONVENTION_TYPE_DIRECT", "group___s_m_c_i___a_p_i.html#ggade8fe003b06ee6f7a3ada7ea785b66b7ab4f35100428cbae7328530a534f4b0d0", null ],

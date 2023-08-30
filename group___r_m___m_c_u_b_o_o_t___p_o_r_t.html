@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -289,7 +289,11 @@ Encryption Disabled</li>
 </p>
 <h2><a class="anchor" id="r-mcuboot-port-clock-configuration"></a>
 Clock Configuration</h2>
-<p>This module does not use peripheral clocks.</p>
+<ul>
+<li>This module does not use peripheral clocks.</li>
+<li>For best performance it is recommended to use the fastest clock settings supported by the device in order to reduce boot times.</li>
+<li><b>The bootloader must not disable the MOCO prior to calling the application. If the bootloader disables the MOCO, then operation cannot be guaranteed.</b></li>
+</ul>
 <h2><a class="anchor" id="r-mcuboot-port-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
@@ -442,7 +446,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

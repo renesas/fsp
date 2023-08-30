@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -188,12 +188,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga2dd22a1d0b7720dbe84a888897320c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59cb52f2d340fddc4abfdda54e0f660f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga59cb52f2d340fddc4abfdda54e0f660f">R_SCI_SMCI_BaudCalculate</a> (<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__speed__params__t">smci_speed_params_t</a> const *const p_speed_params, uint32_t baud_rate_error_x_1000, void *const p_baud_setting)</td></tr>
 <tr class="separator:ga59cb52f2d340fddc4abfdda54e0f660f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a9ce35b811b04542d8051fcbf684ced"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga4a9ce35b811b04542d8051fcbf684ced">sci_smci_rxi_isr</a> (void)</td></tr>
-<tr class="separator:ga4a9ce35b811b04542d8051fcbf684ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82776b5f6e6b4473658ae678a1d267d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga82776b5f6e6b4473658ae678a1d267d5">sci_smci_txi_isr</a> (void)</td></tr>
-<tr class="separator:ga82776b5f6e6b4473658ae678a1d267d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga463786dd440c505761f8373cedb3c230"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga463786dd440c505761f8373cedb3c230">sci_smci_eri_isr</a> (void)</td></tr>
-<tr class="separator:ga463786dd440c505761f8373cedb3c230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SCI peripheral on RA MCUs. This module implements the <a class="el" href="group___s_m_c_i___a_p_i.html">SMCI Interface</a>. </p>
@@ -343,7 +337,7 @@ computed_baud_rate</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a806f929304e552b8d9af85d686c80c49"></a>union <a class="el" href="group___s_c_i___s_m_c_i.html#unionsmci__baud__setting__t_8____unnamed____">smci_baud_setting_t</a></td>
+<a id="a5e0180c3e7814e62adb1b49cd13c6b23"></a>union <a class="el" href="group___s_c_i___s_m_c_i.html#unionsmci__baud__setting__t_8____unnamed____">smci_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -858,70 +852,13 @@ Register settings for a desired baud rate. </td></tr>
 
 </div>
 </div>
-<a id="ga4a9ce35b811b04542d8051fcbf684ced"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4a9ce35b811b04542d8051fcbf684ced">&#9670;&nbsp;</a></span>sci_smci_rxi_isr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sci_smci_rxi_isr </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Receiver ISR receives data into the receive buffer or initiates user callback. </p>
-
-</div>
-</div>
-<a id="ga82776b5f6e6b4473658ae678a1d267d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga82776b5f6e6b4473658ae678a1d267d5">&#9670;&nbsp;</a></span>sci_smci_txi_isr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sci_smci_txi_isr </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Transmit ISR, loads the transmit register from the transmit buffer, until all data is sent after which callback is initiated </p>
-
-</div>
-</div>
-<a id="ga463786dd440c505761f8373cedb3c230"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga463786dd440c505761f8373cedb3c230">&#9670;&nbsp;</a></span>sci_smci_eri_isr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sci_smci_eri_isr </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error ISR, clears all three error Error Signal Status, Parity Error Flag, and Overrun Error Flag, then initiates the callback with an event code </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

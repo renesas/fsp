@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -198,7 +198,7 @@ Overview</h1>
 <h2><a class="anchor" id="r-glcdc-features"></a>
 Features</h2>
 <p>The following features are available:</p>
-<p><a class="anchor" id="um_glcdc_rgb565_color_format_support"></a><a class="anchor" id="um_glcdc_argb888_color_format_support"></a><a class="anchor" id="um_glcdc_argb8888_support"></a><a class="anchor" id="um_glcdc_argb1555_color_format_support"></a><a class="anchor" id="um_glcdc_argb4444_color_format_support"></a><a class="anchor" id="um_glcdc_clut8_support"></a><a class="anchor" id="um_glcdc_clut4_support"></a><a class="anchor" id="um_glcdc_clut1_support"></a><a class="anchor" id="um_glcdc_rgb888_support"></a><a class="anchor" id="um_glcdc_rgb666_support"></a><a class="anchor" id="um_glcdc_rgb565_support"></a><a class="anchor" id="um_glcdc_serial_rgb_signal_support"></a> <a class="anchor" id="um_glcdc_hardware_accelerated_fade_inout_blending"></a><a class="anchor" id="um_glcdc_alpha_blending"></a><a class="anchor" id="um_glcdc_rectangle_blending"></a><a class="anchor" id="um_glcdc_superimpose_graphic_data"></a><a class="anchor" id="um_glcdc_two_graphic_layers_with_different_pixel_size"></a><a class="anchor" id="um_glcdc_generate_data_enable_signal_to_lcd_panel"></a><a class="anchor" id="um_glcdc_clut_entries_load_or_change"></a><a class="anchor" id="um_glcdc_clut_entries_change_single"></a><a class="anchor" id="um_glcdc_clut_memory"></a><a class="anchor" id="um_glcdc_dither_effect"></a><a class="anchor" id="um_glcdc_brightness_and_contrast_adjustment"></a><a class="anchor" id="um_glcdc_gamma_correction"></a><a class="anchor" id="um_glcdc_color_correction_order"></a> <a class="anchor" id="um_glcdc_generate_vsynchsync_to_lcd_panel"></a><a class="anchor" id="um_glcdc_tcon_edge_selection"></a> <a class="anchor" id="um_glcdc_max_line_number"></a><a class="anchor" id="um_glcdc_max_pixel_size"></a> <a class="anchor" id="um_glcdc_control_events"></a> <a class="anchor" id="um_glcdc_line_repeat_function"></a><a class="anchor" id="um_glcdc_data_order_swapping"></a> </p><table class="doxtable">
+<p><a class="anchor" id="um_glcdc_rgb565_color_format_support"></a><a class="anchor" id="um_glcdc_argb888_color_format_support"></a><a class="anchor" id="um_glcdc_argb8888_support"></a><a class="anchor" id="um_glcdc_argb1555_color_format_support"></a><a class="anchor" id="um_glcdc_argb4444_color_format_support"></a><a class="anchor" id="um_glcdc_clut8_support"></a><a class="anchor" id="um_glcdc_clut4_support"></a><a class="anchor" id="um_glcdc_clut1_support"></a><a class="anchor" id="um_glcdc_rgb888_support"></a><a class="anchor" id="um_glcdc_rgb666_support"></a><a class="anchor" id="um_glcdc_rgb565_support"></a><a class="anchor" id="um_glcdc_serial_rgb_signal_support"></a> <a class="anchor" id="um_glcdc_hardware_accelerated_fade_inout_blending"></a><a class="anchor" id="um_glcdc_alpha_blending"></a><a class="anchor" id="um_glcdc_rectangle_blending"></a><a class="anchor" id="um_glcdc_superimpose_graphic_data"></a><a class="anchor" id="um_glcdc_two_graphic_layers_with_different_pixel_size"></a><a class="anchor" id="um_glcdc_generate_data_enable_signal_to_lcd_panel"></a><a class="anchor" id="um_glcdc_clut_entries_load_or_change"></a><a class="anchor" id="um_glcdc_clut_entries_change_single"></a><a class="anchor" id="um_glcdc_clut_memory"></a><a class="anchor" id="um_glcdc_dither_effect"></a><a class="anchor" id="um_glcdc_brightness_and_contrast_adjustment"></a><a class="anchor" id="um_glcdc_gamma_correction"></a><a class="anchor" id="um_glcdc_color_correction_order"></a> <a class="anchor" id="um_glcdc_generate_vsynchsync_to_lcd_panel"></a><a class="anchor" id="um_glcdc_tcon_edge_selection"></a> <a class="anchor" id="um_glcdc_max_line_number"></a><a class="anchor" id="um_glcdc_max_pixel_size"></a> <a class="anchor" id="um_glcdc_control_events"></a> <a class="anchor" id="um_glcdc_line_repeat_function"></a><a class="anchor" id="um_glcdc_data_order_swapping"></a> <a class="anchor" id="um_glcdc_max_res"></a> </p><table class="doxtable">
 <tr>
 <th>Feature </th><th>Options  </th></tr>
 <tr>
@@ -210,13 +210,13 @@ Features</h2>
 <tr>
 <td>Timing signals </td><td>Dot clock, Vsync, Hsync, Vertical and horizontal data enable (DE) </td></tr>
 <tr>
-<td>Maximum resolution </td><td>Up to 1016 x 1020 pixels (dependent on sync signal width) </td></tr>
+<td>Maximum resolution </td><td>Up to 2038 x 2043 pixels (dependent on sync signal width) </td></tr>
 <tr>
 <td>Maximum dot clock </td><td>60MHz for serial RGB mode, 54MHz otherwise </td></tr>
 <tr>
 <td>Internal clock divisors </td><td>1-9, 12, 16, 24, 32 </td></tr>
 <tr>
-<td>Interrupts </td><td>Vsync (line detect), Layer 1 underflow, Layer 2 underflow </td></tr>
+<td>Interrupts </td><td>Line detect (Vblank), Layer 1 underflow, Layer 2 underflow </td></tr>
 <tr>
 <td>Other functions </td><td>Byte-order and endianness control, line repeat function </td></tr>
 </table>
@@ -271,9 +271,9 @@ No</li>
 </ul>
 </td><td>Yes </td><td>Specify Used if the graphics layer 1 is used. If so a framebuffer will be automatically generated based on the specified height and horizontal stride. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Horizontal size</td><td>Value must be between 16 and 1016</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
+<td>Input &gt; Graphics Layer 1 &gt; General &gt; Horizontal size</td><td>Value must be between 16 and 2040</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Vertical size</td><td>Value must be between 16 and 1020</td><td>272 </td><td>Specify the number of vertical pixels. </td></tr>
+<td>Input &gt; Graphics Layer 1 &gt; General &gt; Vertical size</td><td>Value must be between 16 and 2043</td><td>854 </td><td>Specify the number of vertical pixels. </td></tr>
 <tr>
 <td>Input &gt; Graphics Layer 1 &gt; General &gt; Horizontal position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4091</td><td>0 </td><td>Specify the horizontal offset in pixels of the graphics layer from the background layer. </td></tr>
 <tr>
@@ -317,9 +317,9 @@ Disabled</li>
 <tr>
 <td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Framebuffer name</td><td>This property must be a valid C symbol</td><td>fb_background </td><td>Specify the name for the framebuffer for Layer 1. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 1. </td></tr>
+<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 1. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.bss </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
+<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.sdram </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 <tr>
 <td>Input &gt; Graphics Layer 1 &gt; Line Repeat &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -351,9 +351,9 @@ No</li>
 </ul>
 </td><td>No </td><td>Specify Used if the graphics layer 2 is used. If so a framebuffer will be automatically generated based on the specified height and horizontal stride. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Horizontal size</td><td>Value must be between 16 and 1016</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
+<td>Input &gt; Graphics Layer 2 &gt; General &gt; Horizontal size</td><td>Value must be between 16 and 2040</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Vertical size</td><td>Value must be between 16 and 1020</td><td>272 </td><td>Specify the number of vertical pixels. </td></tr>
+<td>Input &gt; Graphics Layer 2 &gt; General &gt; Vertical size</td><td>Value must be between 16 and 2043</td><td>854 </td><td>Specify the number of vertical pixels. </td></tr>
 <tr>
 <td>Input &gt; Graphics Layer 2 &gt; General &gt; Horizontal position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4091</td><td>0 </td><td>Specify the horizontal offset in pixels of the graphics layer from the background layer. </td></tr>
 <tr>
@@ -397,9 +397,9 @@ Disabled</li>
 <tr>
 <td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Framebuffer name</td><td>This property must be a valid C symbol</td><td>fb_foreground </td><td>Specify the name for the framebuffer for Layer 2. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 2. </td></tr>
+<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 2. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.bss </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
+<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.sdram </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 <tr>
 <td>Input &gt; Graphics Layer 2 &gt; Line Repeat &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -423,13 +423,13 @@ Fade-out</li>
 <tr>
 <td>Input &gt; Graphics Layer 2 &gt; Fading &gt; Speed</td><td>Value must be between 0 and 255</td><td>0 </td><td>Specify the number of frames for the fading transition to complete. </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Horizontal total cycles</td><td>Value must be between 24 and 1024</td><td>525 </td><td>Specify the total cycles in a horizontal line. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system </td></tr>
+<td>Output &gt; Timing &gt; Horizontal total cycles</td><td>Value must be between 24 and 2048</td><td>559 </td><td>Specify the total cycles in a horizontal line. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Horizontal active video cycles</td><td>Value must be between 16 and 1016</td><td>480 </td><td>Specify the number of active video cycles in a horizontal line (including front and back porch). Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
+<td>Output &gt; Timing &gt; Horizontal active video cycles</td><td>Value must be between 16 and 2040</td><td>480 </td><td>Specify the number of active video cycles in a horizontal line (including front and back porch). Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Horizontal back porch cycles</td><td>Value must be between 6 and 1006</td><td>40 </td><td>Specify the number of back porch cycles in a horizontal line. Back porch starts from the beginning of Hsync cycles, which means back porch cycles contain Hsync cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
+<td>Output &gt; Timing &gt; Horizontal back porch cycles</td><td>Value must be between 5 and 2029</td><td>5 </td><td>Specify the number of back porch cycles in a horizontal line. Back porch starts from the beginning of Hsync cycles, which means back porch cycles contain Hsync cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Horizontal sync signal cycles</td><td>Value must be between 0 and 1023</td><td>1 </td><td>Specify the number of Hsync signal assertion cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
+<td>Output &gt; Timing &gt; Horizontal sync signal cycles</td><td>Value must be between 0 and 2046</td><td>2 </td><td>Specify the number of Hsync signal assertion cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
 <tr>
 <td>Output &gt; Timing &gt; Horizontal sync signal polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -439,13 +439,13 @@ High active</li>
 </ul>
 </td><td>Low active </td><td>Select the polarity of Hsync signal to match your system. </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Vertical total lines</td><td>Value must be between 20 and 1024</td><td>316 </td><td>Specify number of total lines in a frame (including front and back porch). </td></tr>
+<td>Output &gt; Timing &gt; Vertical total lines</td><td>Value must be between 20 and 2048</td><td>894 </td><td>Specify number of total lines in a frame (including front and back porch). </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Vertical active video lines</td><td>Value must be between 16 and 1020</td><td>272 </td><td>Specify the number of active video lines in a frame. </td></tr>
+<td>Output &gt; Timing &gt; Vertical active video lines</td><td>Value must be between 16 and 2043</td><td>854 </td><td>Specify the number of active video lines in a frame. </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Vertical back porch lines</td><td>Value must be between 3 and 1007</td><td>8 </td><td>Specify the number of back porch lines in a frame. Back porch starts from the beginning of Vsync lines, which means back porch lines contain Vsync lines. </td></tr>
+<td>Output &gt; Timing &gt; Vertical back porch lines</td><td>Value must be between 3 and 2030</td><td>20 </td><td>Specify the number of back porch lines in a frame. Back porch starts from the beginning of Vsync lines, which means back porch lines contain Vsync lines. </td></tr>
 <tr>
-<td>Output &gt; Timing &gt; Vertical sync signal lines</td><td>Value must be between 0 and 1023</td><td>1 </td><td>Specify the Vsync signal assertion lines in a frame. </td></tr>
+<td>Output &gt; Timing &gt; Vertical sync signal lines</td><td>Value must be between 0 and 2046</td><td>3 </td><td>Specify the Vsync signal assertion lines in a frame. </td></tr>
 <tr>
 <td>Output &gt; Timing &gt; Vertical sync signal polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -469,7 +469,7 @@ Rising edge</li>
 <li>
 Falling edge</li>
 </ul>
-</td><td>Rising edge </td><td>Select the polarity of Sync signals to match to your system. </td></tr>
+</td><td>Falling edge </td><td>Select the polarity of Sync signals to match to your system. </td></tr>
 <tr>
 <td>Output &gt; Format &gt; Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -481,7 +481,7 @@ Falling edge</li>
 <li>
 8bits serial</li>
 </ul>
-</td><td>16bits RGB565 </td><td>Specify the graphics layer output format to match to your LCD panel. </td></tr>
+</td><td>24bits RGB888 </td><td>Specify the graphics layer output format to match to your LCD panel. </td></tr>
 <tr>
 <td>Output &gt; Format &gt; Color order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -529,7 +529,7 @@ LCD_TCON2</li>
 <li>
 LCD_TCON3</li>
 </ul>
-</td><td>LCD_TCON0 </td><td>Select the TCON pin used for the Hsync signal to match to your system. </td></tr>
+</td><td>LCD_TCON1 </td><td>Select the TCON pin used for the Hsync signal to match to your system. </td></tr>
 <tr>
 <td>TCON &gt; Vsync pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -543,7 +543,7 @@ LCD_TCON2</li>
 <li>
 LCD_TCON3</li>
 </ul>
-</td><td>LCD_TCON1 </td><td>Select TCON pin used for Vsync signal to match to your system. </td></tr>
+</td><td>LCD_TCON0 </td><td>Select TCON pin used for Vsync signal to match to your system. </td></tr>
 <tr>
 <td>TCON &gt; Data enable (DE) pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -567,7 +567,7 @@ External clock (LCD_EXTCLK)</li>
 </ul>
 </td><td>Internal clock (GLCDCLK) </td><td>Choose between an internal GLCDCLK generated from PCLKA or an external clock provided to the LCD_EXTCLK pin. </td></tr>
 <tr>
-<td>TCON &gt; Panel clock division ratio</td><td>Refer to the RA Configuration tool for available options.</td><td>1/24 </td><td>Select the clock source divider value. </td></tr>
+<td>TCON &gt; Panel clock division ratio</td><td>Refer to the RA Configuration tool for available options.</td><td>1/8 </td><td>Select the clock source divider value. </td></tr>
 <tr>
 <td>Color Correction &gt; Brightness &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -920,24 +920,14 @@ Initial Configuration</h2>
 <p>During R_GLCDC_Open all configured parameters are set in the GLCDC peripheral fully preparing it for operation. Once opened, calling R_GLCDC_Start is typically all that is needed for basic operation. Background generation, timing and output parameters are not configurable at runtime, though layer control and color correction options can be altered.</p>
 <h3><a class="anchor" id="r-glcdc-framebuffers"></a>
 Framebuffer Allocation</h3>
-<p><a class="anchor" id="um_glcdc_memory_stride_size_aligned_to_64bytes"></a> The framebuffer should be allocated in the highest-speed region available (excluding SRAMHS) without displacing the stack, heap and other program-critical structures. While the RA6M3 does contain a relatively large 640K of on-chip SRAM, for many screen sizes and color depths SDRAM will be required. Regardless of the placement two rules must be followed to ensure correct operation of the GLCDC:</p>
+<p><a class="anchor" id="um_glcdc_memory_stride_size_aligned_to_64bytes"></a> The framebuffer should be allocated in the highest-speed region available without displacing the stack, heap and other program-critical structures. Regardless of the placement two rules must be followed to ensure correct operation of the GLCDC:</p>
 <ul>
 <li>The framebuffer must be aligned on a 64-byte boundary</li>
 <li>The horizontal stride of the buffer must be a multiple of 64 bytes</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Framebuffers allocated through the RA Configuraton tool automatically follow the alignment and size requirements.</dd></dl>
-<p>If your framebuffer will be placed into internal SRAM please note the following best practices:</p><ul>
-<li>The framebuffer should ideally not be placed in the SRAMHS block of SRAM as there is no speed advantage for doing so. In particular, it is important to ensure the framebuffer does not push the stack or any heaps outside of SRAMHS to preserve CPU performance.</li>
-<li>It is recommended to not cross the boundary between SRAM0 and SRAM1 with a single framebuffer for performance reasons.</li>
-<li>If double-buffering is desired (and possible within SRAM), place one framebuffer in SRAM0 and the other in SRAM1.</li>
-</ul>
-<p>If you are using SRAM for the framebuffer, to ensure correct placement you will need to edit the linker script to add new sections. Below is an example of the required edits in the GCC and IAR formats:</p>
-<h3><a class="anchor" id="r-glcdc-framebuffers-gcc"></a>
-GCC Linker</h3>
-<div class="fragment"><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">                  Linker File for RA6M3 MCU</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="comment">/* Linker script to configure memory regions. */</span></div><div class="line">MEMORY</div><div class="line">{</div><div class="line">  FLASH (rx)         : ORIGIN = 0x00000000, LENGTH = 0x0200000  <span class="comment">/*   2M */</span></div><div class="line">  RAM (rwx)          : ORIGIN = 0x1FFE0000, LENGTH = 0x00A0000  <span class="comment">/* 640K */</span></div><div class="line">  FB0 (rwx)          : ORIGIN = 0x20000000, LENGTH = 0x0080000  <span class="comment">/* 512K */</span>  <span class="comment">// Section for framebuffer 0 (or only framebuffer)</span></div><div class="line">  FB1 (rwx)          : ORIGIN = 0x20040000, LENGTH = 0x0040000  <span class="comment">/* 256K */</span>  <span class="comment">// Section for framebuffer 1</span></div><div class="line">  DATA_FLASH (rx)    : ORIGIN = 0x40100000, LENGTH = 0x0010000  <span class="comment">/*  64K */</span></div><div class="line">  QSPI_FLASH (rx)    : ORIGIN = 0x60000000, LENGTH = 0x4000000  <span class="comment">/*  64M */</span></div><div class="line">  SDRAM (rwx)        : ORIGIN = 0x90000000, LENGTH = 0x2000000  <span class="comment">/*  32M */</span></div><div class="line">  ID_CODE (rx)       : ORIGIN = 0x0100A150, LENGTH = 0x10    <span class="comment">/* 16 bytes */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// ...</span></div><div class="line"></div><div class="line">    .noinit (NOLOAD):</div><div class="line">    {</div><div class="line">        . = ALIGN(4);</div><div class="line">        __noinit_start = .;</div><div class="line">        KEEP(*(.noinit*))</div><div class="line">        __noinit_end = .;</div><div class="line">    } &gt; RAM</div><div class="line"></div><div class="line">    <span class="comment">/* Place framebuffer sections first, then the rest of RAM */</span></div><div class="line"></div><div class="line">    .fb0 :</div><div class="line">    {</div><div class="line">        . = ALIGN(64);</div><div class="line">        __fb0_start = .;</div><div class="line">        *(.fb0*);</div><div class="line">        __fb0_end = .;</div><div class="line">    } &gt; FB0</div><div class="line"></div><div class="line">    .fb1 :</div><div class="line">    {</div><div class="line">        . = ALIGN(64);</div><div class="line">        __fb1_start = .;</div><div class="line">        *(.fb1*);</div><div class="line">        __fb1_end = .;</div><div class="line">    } &gt; FB1</div><div class="line"></div><div class="line">    .bss :</div><div class="line">    {</div><div class="line">        . = ALIGN(4);</div><div class="line">        __bss_start__ = .;</div><div class="line">        *(.bss*)</div><div class="line">        *(COMMON)</div><div class="line">        . = ALIGN(4);</div><div class="line">        __bss_end__ = .;</div><div class="line">    } &gt; RAM</div><div class="line"></div><div class="line"><span class="comment">// ...</span></div><div class="line"></div></div><!-- fragment --><h2><a class="anchor" id="r-glcdc-framebuffers-iar"></a>
-IAR Linker</h2>
-<dl class="section note"><dt>Note</dt><dd>The IAR linker does not place items correctly when sections overlap. As a result, it is advised to place your framebuffer(s) as high as possible in the SRAM region in the linker script to maximize the RAM available for everything else. The below is a general case that should be used unedited only if RAM usage (excluding framebuffers) is less than 128K.</dd></dl>
-<div class="fragment"><div class="line"><span class="comment">/* ... */</span></div><div class="line"></div><div class="line"><span class="comment">/*-Memory Regions-*/</span></div><div class="line">define symbol region_VECT_start    = 0x00000000;</div><div class="line">define symbol region_VECT_end      = 0x000003FF;</div><div class="line">define symbol region_ROMREG_start  = 0x00000400;</div><div class="line">define symbol region_ROMREG_end    = 0x000004FF;</div><div class="line">define symbol region_FLASH_start   = 0x00000500;</div><div class="line">define symbol region_FLASH_end     = 0x001FFFFF;</div><div class="line">define symbol region_RAM_start     = 0x1FFE0000;</div><div class="line">define symbol region_RAM_end       = 0x1FFFFFFF;  <span class="comment">/* RAM limited to SRAMHS */</span></div><div class="line">define symbol region_FB0_start     = 0x20000000;</div><div class="line">define symbol region_FB0_end       = 0x2003FFFF;  <span class="comment">/* SRAM0 dedicated to framebuffer 0 */</span></div><div class="line">define symbol region_FB1_start     = 0x20040000;</div><div class="line">define symbol region_FB1_end       = 0x2007FFFF;  <span class="comment">/* SRAM1 dedicated to framebuffer 1 */</span></div><div class="line">define symbol region_DF_start      = 0x40100000;</div><div class="line">define symbol region_DF_end        = 0x4010FFFF;</div><div class="line">define symbol region_SDRAM_start   = 0x90000000;</div><div class="line">define symbol region_SDRAM_end     = 0x91FFFFFF;</div><div class="line">define symbol region_QSPI_start    = 0x60000000;</div><div class="line">define symbol region_QSPI_end      = 0x63FFFFFF;</div><div class="line"></div><div class="line"><span class="comment">/* ... */</span></div><div class="line"></div><div class="line">define memory mem with size     = 4G;</div><div class="line">define region VECT_region       = mem:[from region_VECT_start    to region_VECT_end];</div><div class="line">define region ROMREG_region     = mem:[from region_ROMREG_start  to region_ROMREG_end];</div><div class="line">define region FLASH_region      = mem:[from region_FLASH_start   to region_FLASH_end];</div><div class="line">define region RAM_region        = mem:[from region_RAM_start     to region_RAM_end];</div><div class="line">define region FB0_region        = mem:[from region_FB0_start     to region_FB0_end];  <span class="comment">/* Define framebuffer 0 region */</span></div><div class="line">define region FB1_region        = mem:[from region_FB1_start     to region_FB1_end];  <span class="comment">/* Define framebuffer 1 region */</span></div><div class="line">define region DF_region         = mem:[from region_DF_start      to region_DF_end];</div><div class="line">define region SDRAM_region      = mem:[from region_SDRAM_start   to region_SDRAM_end];</div><div class="line">define region QSPI_region       = mem:[from region_QSPI_start    to region_QSPI_end];</div><div class="line"></div><div class="line"><span class="comment">/* ... */</span></div><div class="line"></div><div class="line">define block START_OF_RAM with fixed order { rw section .fsp_dtc_vector_table,</div><div class="line">                                             block RAM_CODE };</div><div class="line">place at start of RAM_region { block START_OF_RAM };</div><div class="line"></div><div class="line"><span class="comment">/* Place framebuffer sections first, then the rest of RAM */</span></div><div class="line">place in FB0_region  { rw section .fb0 };</div><div class="line">place in FB1_region  { rw section .fb1 };</div><div class="line"></div><div class="line">place in RAM_region     { rw,</div><div class="line">                          rw section .noinit,</div><div class="line">                          rw section .bss,</div><div class="line">                          rw section .data,</div><div class="line">                          rw section HEAP,</div><div class="line">                          rw section .stack };</div><div class="line"></div></div><!-- fragment --><h3><a class="anchor" id="r-glcdc-layers"></a>
+<p>If your framebuffer will be placed in internal memory it is recommended to avoid any high-speed RAM regions as there is typically no speed advantage for doing so. In particular, it is important to ensure the framebuffer does not push the stack or any heaps outside of high-speed RAM areas to preserve CPU performance.</p>
+<h3><a class="anchor" id="r-glcdc-layers"></a>
 Graphics Layers and Timing Parameters</h3>
 <p><a class="anchor" id="um_glcdc_background_screen_with_selected_background_color"></a><a class="anchor" id="um_glcdc_generate_back_porch_front_porch"></a> The GLCDC synthesizes graphics data through two configurable graphics layers onto a background layer. The background is used as a solid-color canvas upon which to composite data from the graphics layers. The two graphics layers are blended on top of each other (Layer 2 above Layer 1) and overlaid on the background layer based on their individual configuration. The placement of the layers (as well as LCD timing parameters) are detailed in Figure 1. The colors of the dimensions indicate which element of the <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__cfg__t">display_cfg_t</a> struct is being referenced - for example, the width of the background layer would be [display_cfg].output.htiming.display_cyc as shown in the figure below.</p>
 <div class="image">
@@ -976,61 +966,32 @@ Gamma correction</h3>
 <h3><a class="anchor" id="r-glcdc-dithering"></a>
 Dithering</h3>
 <p>Dithering is a method of pixel blending that allows for smoother transitions between colors when using a limited palette. A full description of dithering is outside the scope of this document. For more information on the pattern settings and how to configure them refer to the RA6M3 User's Manual (R01UH0886EJ0100) Figure 58.13 "Configuration of dither correction block" and Figure 58.14 "Addition value selection method for 2x2 pattern dither".</p>
-<h2><a class="anchor" id="r-glcdc-bus-utilization"></a>
-Bus Utilization</h2>
-<dl class="section note"><dt>Note</dt><dd><span style="color: red; font-size: 1.15em; font-weight: bold">The data provided in this section consists of estimates only. Experimentation is necessary to obtain real-world performance data on any platform.</span></dd></dl>
-<p>While the GLCDC is very flexible in size and color depth of displays there are considerations to be made in the tradeoff between color depth, framerate and bus utilization. Below is a table showing estimates of the load at various resolutions, framerates and color depths based on a PLL frequency of 120MHz (default) and an effective SDRAM throughput of 60 MB/sec. Bus utilization percentages are provided for the following use cases:</p>
-<ul>
-<li>Static image display (<b>GLCDC only</b>): One read</li>
-<li>Redrawing one framebuffer every display frame (<b>minimal redraw</b>): One write, one read</li>
-<li>Blitting one buffer to another then redrawing the entire buffer every display frame (<b>worst case</b>): Two writes, three reads</li>
-</ul>
+<h2><a class="anchor" id="r-glcdc-max-res"></a>
+Maximum Resolution</h2>
+<p>Though the GLCDC is capable of outputting resolutions in excess of HD, maximum clockspeeds and bus throughput limit what can be realistically achieved. Below is a table of maximum recommended widescreen resolutions at various input color depths <b>based on clock and bus limits at 60 FPS.</b></p>
 <table class="doxtable">
 <tr>
-<th>Name </th><th align="center">Width </th><th align="center">Height </th><th align="center">Input color<br />
- depth (bits) </th><th align="center">Framerate<br />
-(FPS) </th><th align="center">Buffer size<br />
-(bytes) </th><th align="center">SRAM use </th><th align="center">SRAM bus<br />
-(GLCDC only) </th><th align="center">SDRAM bus<br />
-(GLCDC only) </th><th align="center">SRAM bus<br />
-(minimal redraw) </th><th align="center">SDRAM bus<br />
-(minimal redraw) </th><th align="center">SRAM bus<br />
-(worst case) </th><th align="center">SDRAM bus<br />
-(worst case)  </th></tr>
+<th>Device </th><th>8bpp </th><th>16bpp </th><th>24/32bpp  </th></tr>
 <tr>
-<td>HQVGA </td><td align="center">240 </td><td align="center">160 </td><td align="center">8 </td><td align="center">60 </td><td align="center">38400 </td><td align="center">6% </td><td align="center">1% </td><td align="center">4% </td><td align="center">2% </td><td align="center">8% </td><td align="center">5% </td><td align="center">19% </td></tr>
+<td>RA6M3 </td><td>960x540 (qHD) </td><td>800x480 (WVGA) </td><td>640x360 (nHD) </td></tr>
 <tr>
-<td>HQVGA </td><td align="center">240 </td><td align="center">160 </td><td align="center">16 </td><td align="center">60 </td><td align="center">76800 </td><td align="center">12% </td><td align="center">2% </td><td align="center">8% </td><td align="center">4% </td><td align="center">15% </td><td align="center">10% </td><td align="center">38% </td></tr>
-<tr>
-<td>QVGA </td><td align="center">320 </td><td align="center">240 </td><td align="center">16 </td><td align="center">60 </td><td align="center">153600 </td><td align="center">23% </td><td align="center">4% </td><td align="center">15% </td><td align="center">8% </td><td align="center">31% </td><td align="center">19% </td><td align="center">77% </td></tr>
-<tr>
-<td>WQVGA </td><td align="center">400 </td><td align="center">240 </td><td align="center">8 </td><td align="center">60 </td><td align="center">96000 </td><td align="center">15% </td><td align="center">2% </td><td align="center">10% </td><td align="center">5% </td><td align="center">19% </td><td align="center">12% </td><td align="center">48% </td></tr>
-<tr>
-<td>WQVGA </td><td align="center">400 </td><td align="center">240 </td><td align="center">16 </td><td align="center">60 </td><td align="center">192000 </td><td align="center">29% </td><td align="center">5% </td><td align="center">19% </td><td align="center">10% </td><td align="center">38% </td><td align="center">24% </td><td align="center">96% </td></tr>
-<tr>
-<td>HVGA </td><td align="center">480 </td><td align="center">320 </td><td align="center">16 </td><td align="center">60 </td><td align="center">307200 </td><td align="center">47% </td><td align="center">8% </td><td align="center">31% </td><td align="center">15% </td><td align="center">61% </td><td align="center">38% </td><td align="center">154% </td></tr>
-<tr>
-<td>VGA </td><td align="center">640 </td><td align="center">480 </td><td align="center">16 </td><td align="center">30 </td><td align="center">614400 </td><td align="center">&mdash; </td><td align="center">&mdash; </td><td align="center">31% </td><td align="center">&mdash; </td><td align="center">61% </td><td align="center">&mdash; </td><td align="center">154% </td></tr>
-<tr>
-<td>WVGA </td><td align="center">800 </td><td align="center">480 </td><td align="center">8 </td><td align="center">60 </td><td align="center">384000 </td><td align="center">59% </td><td align="center">10% </td><td align="center">38% </td><td align="center">19% </td><td align="center">77% </td><td align="center">48% </td><td align="center">192% </td></tr>
-<tr>
-<td>WVGA </td><td align="center">800 </td><td align="center">480 </td><td align="center">16 </td><td align="center">30 </td><td align="center">768000 </td><td align="center">&mdash; </td><td align="center">&mdash; </td><td align="center">38% </td><td align="center">&mdash; </td><td align="center">77% </td><td align="center">&mdash; </td><td align="center">192% </td></tr>
-<tr>
-<td>WVGA </td><td align="center">800 </td><td align="center">480 </td><td align="center">32 </td><td align="center">15 </td><td align="center">1536000 </td><td align="center">&mdash; </td><td align="center">&mdash; </td><td align="center">38% </td><td align="center">&mdash; </td><td align="center">77% </td><td align="center">&mdash; </td><td align="center">192% </td></tr>
-<tr>
-<td>FWVGA </td><td align="center">960 </td><td align="center">480 </td><td align="center">8 </td><td align="center">30 </td><td align="center">460800 </td><td align="center">70% </td><td align="center">6% </td><td align="center">23% </td><td align="center">12% </td><td align="center">46% </td><td align="center">29% </td><td align="center">115% </td></tr>
-<tr>
-<td>FWVGA </td><td align="center">960 </td><td align="center">480 </td><td align="center">16 </td><td align="center">30 </td><td align="center">921600 </td><td align="center">&mdash; </td><td align="center">&mdash; </td><td align="center">46% </td><td align="center">&mdash; </td><td align="center">92% </td><td align="center">&mdash; </td><td align="center">230% </td></tr>
-<tr>
-<td>qHD </td><td align="center">960 </td><td align="center">540 </td><td align="center">8 </td><td align="center">30 </td><td align="center">518400 </td><td align="center">79% </td><td align="center">6% </td><td align="center">26% </td><td align="center">13% </td><td align="center">52% </td><td align="center">32% </td><td align="center">130% </td></tr>
+<td>RA8 </td><td>1920x1200 (WUXGA) </td><td>1280x800 (WXGA) </td><td>960x540 (qHD) </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>Bus utilization values over 100% indicate that the bandwidth for that bus is exceeded in that scenario and GLCDC underflow and/or dropped frames may result depending on the bus priority setting. <b>It is recommended to avoid these scenarios if at all possible by reducing the buffer drawing rate, number of draw/copy operations or the input color depth.</b> Relaxing vertical timing (increasing total line count) or increasing the clock divider are the easiest ways to increase the time per frame.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The above values are estimated conservatively based on effective SDRAM bus throughput at a standard framerate. To calculate estimated maximum values for other situations the following equations can be used:</dd>
+<dd>
+<code>bytes per frame = (SDCLK speed (Hz) * SDRAM bus width / 8) / framerate</code> </dd>
+<dd>
+<code>width = sqrt(16/9 * (bytes per frame) / (pixel bit depth / 8))</code> </dd>
+<dd>
+<code>height = 9/16 * width</code></dd>
+<dd>
+These equations provide values that are theoretically possible but may or may not be attainable depending on a number of other factors. It is the responsibility of the developer to test and confirm performance on each system to determine a suitable panel size for the application.</dd></dl>
 <h2><a class="anchor" id="r-glcdc-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the GLCDC API:</p>
 <ul>
 <li>Due to a limitation of the GLCDC hardware, if the horizontal back porch is less than the number of pixels in a graphics burst read (64 bytes) for a layer and the layer is positioned at a negative X-value then the layer X-position will be locked to the nearest 64-byte boundary, rounded toward zero.</li>
-<li>The GLCDC peripheral offers a chroma-key function that can be used to perform a green-screen-like color replacement. This functionality is not exposed through the GLCDC API. See the descriptions for GRn.AB7 through .AB9 in the RA6M3 User's Manual for further details.</li>
+<li>The GLCDC peripheral offers a chroma-key function that can be used to perform a green-screen-like color replacement. This functionality is not exposed through the GLCDC API. See the descriptions for GR1_AB7/GR2_AB7 through GR1_AB9/GR2_AB9 in the device's User's Manual for further details.</li>
 <li>Use of R_GLCDC_ClutUpdate and R_GLCDC_ClutEdit may not be mixed on the same frame.</li>
 </ul>
 <h1><a class="anchor" id="r-glcdc-examples"></a>
@@ -1889,7 +1850,7 @@ Dithering pattern D. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

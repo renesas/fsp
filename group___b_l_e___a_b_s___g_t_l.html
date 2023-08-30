@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -211,7 +211,10 @@ Usage Notes</h1>
 <p>A random address can be set by calling the R_BLE_VS_SetBdAddr function before the R_BLE_GAP_Init function is called.</p>
 <p>Ensure the BSP heap size is set to at least 2K bytes.</p>
 <p>When using FreeRTOS ensure the heap 4 size is set to a minimum of 2K bytes.</p>
-<p>This middleware module is compatible with GTL binary version 6.0.18 and later.</p>
+<p>This middleware module is compatible with GTL binary version 6.0.18 and later. You must ensure that the DA14531 Module (or PMOD) you are using contains this version (or later) firmware. Instructions detailing how to upgrade the firmware in a DA14531 Module can be found here:</p>
+<p><a href="https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html">https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html</a></p>
+<p>The GTL binary file can be downloaded using the tool described in the above instructions, or by using the following link:</p>
+<p><a href="https://www.renesas.com/us/en/document/swo/fsp-gtl-binary-us159-da14531evz-pmod-programming?r=1564826">https://www.renesas.com/us/en/document/swo/fsp-gtl-binary-us159-da14531evz-pmod-programming?r=1564826</a></p>
 <h2><a class="anchor" id="rm_ble_abs_gtl-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the BLE_ABS:</p>
@@ -298,7 +301,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

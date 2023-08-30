@@ -8,6 +8,7 @@ var searchData=
   ['last_5f1_5fblock_5fas_5ffraction',['last_1_block_as_fraction',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a7aa912727de4213d74b2172686fe52ee',1,'sce_aes_handle_t']]],
   ['last_5f2_5fblock_5fas_5ffraction',['last_2_block_as_fraction',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a87f8e7ebbebe47d5cfdc1b0e603fdb09',1,'sce_aes_handle_t']]],
   ['last_5fdata',['last_data',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a3de60a0267cb49272d28d0dbfe9f80e8',1,'wifi_onchip_silex_instance_ctrl_t']]],
+  ['last_5fdirection',['last_direction',['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#af91ffc82622593ab4b1c04e3f8423c4a',1,'motor_sense_hall_instance_ctrl_t']]],
   ['last_5fonoff',['last_onoff',['../group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___s_r_v.html#ae97393bcbaee8ac51a8ba69f5ad939c5',1,'rm_mesh_generic_on_off_srv_info_t']]],
   ['layer',['layer',['../group___d_i_s_p_l_a_y___a_p_i.html#a0d527f8a7654fc8b2cf49d350247d0db',1,'display_cfg_t::layer()'],['../group___d_i_s_p_l_a_y___a_p_i.html#abd363f5bea0685cb767a6002c3d5afe3',1,'display_runtime_cfg_t::layer()']]],
   ['layerchange',['layerChange',['../group___d_i_s_p_l_a_y___a_p_i.html#ac012f204038e500efa90632c7c8ce5a8',1,'display_api_t']]],

@@ -64,8 +64,6 @@ var group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x =
     [ "MQTT_ONCHIP_DA16XXX_MAX_PUBMSG_LEN", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gaa44178dbbeefc6648583f9d4f93c6f0b", null ],
     [ "MQTT_ONCHIP_DA16XXX_MAX_PUBTOPICMSG_LEN", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gacb9d797d491d8b7e0554720cd8e64c24", null ],
     [ "MQTT_ONCHIP_DA16XXX_SUBTOPIC_MAX_CNT", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gada689d4ce668525b9ea3bc74f304c0e3", null ],
-    [ "MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga56d8b673d17495ac1668c3c904a042ee", null ],
-    [ "MQTT_ONCHIP_DA16XXX_CFG_CMD_RX_BUF_SIZE", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga7624ab389782a71bde62b179e93cadab", null ],
     [ "mqtt_onchip_da16xxx_qos_t", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gacf4d0a83b425273cf518d734b5af9247", [
       [ "MQTT_ONCHIP_DA16XXX_QOS_0", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ggacf4d0a83b425273cf518d734b5af9247aa58bc9dc9fbdf8e4518f0113c07da21a", null ],
       [ "MQTT_ONCHIP_DA16XXX_QOS_1", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ggacf4d0a83b425273cf518d734b5af9247a1af0136faa1f56a09e1143176910f5ac", null ],

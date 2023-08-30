@@ -973,6 +973,7 @@ var searchData=
   ['reg_5fid',['reg_id',['../group___a_d_c.html#a369eb3d0d52d0b68bcd36f3b0dbdeaef',1,'adc_sample_state_t']]],
   ['register_5faddress',['register_address',['../group___r_m___o_b1203.html#a8671a1b4dd57a4e872515a27904d712b',1,'rm_ob1203_instance_ctrl_t::register_address()'],['../group___r_m___z_m_o_d4_x_x_x.html#af89ee122a3cd7e3ab844bae5addfe9df',1,'rm_zmod4xxx_instance_ctrl_t::register_address()']]],
   ['registerbeaconhandler',['registerBeaconHandler',['../group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a13d237a2c2563cd481b5ab80c838f11f',1,'rm_ble_mesh_bearer_api_t']]],
+  ['registered_5fmotor_5fcount',['registered_motor_count',['../group___m_o_t_o_r___d_r_i_v_e_r.html#a93f6074a29726d2b72f4ff35374f8af2',1,'motor_driver_shared_instance_ctrl_t']]],
   ['registerinterface',['registerInterface',['../group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#ae4fae6ade1c5f063ee3ebb82c290b62b',1,'rm_ble_mesh_bearer_api_t']]],
   ['registermodel',['registerModel',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#aa85ec1647a661edfa55ffc02a494d0f5',1,'rm_ble_mesh_access_api_t']]],
   ['reinitreplaycache',['reinitReplayCache',['../group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#a13ad4955c99b45b330db2bda9f981b12',1,'rm_ble_mesh_lower_trans_api_t']]],

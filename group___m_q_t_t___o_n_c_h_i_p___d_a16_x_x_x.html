@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -223,6 +223,10 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>Size of MQTT RX buffer</td><td>Must be an integer greater than 0</td><td>512 </td><td>Size in bytes of the MQTT buffer used for receiving subscribed data. Must be an integer greater than 0. </td></tr>
+<tr>
+<td>Size of MQTT TX buffer</td><td>Must be an integer greater than 200 and less than 2064</td><td>512 </td><td>Size in bytes of the MQTT buffer used for sending commands and publishing data. Maximum publishing length is 2063 bytes </td></tr>
 </table>
 </p>
 <p>Refer to <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a>.</p>
@@ -305,14 +309,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gada689d4ce668525b9ea3bc74f304c0e3">MQTT_ONCHIP_DA16XXX_SUBTOPIC_MAX_CNT</a></td></tr>
 <tr class="memdesc:gada689d4ce668525b9ea3bc74f304c0e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of subscription topics allowed. <br /></td></tr>
 <tr class="separator:gada689d4ce668525b9ea3bc74f304c0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56d8b673d17495ac1668c3c904a042ee"><td class="memItemLeft" align="right" valign="top"><a id="ga56d8b673d17495ac1668c3c904a042ee"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga56d8b673d17495ac1668c3c904a042ee">MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE</a></td></tr>
-<tr class="memdesc:ga56d8b673d17495ac1668c3c904a042ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the transmit buffer for the MQTT client. <br /></td></tr>
-<tr class="separator:ga56d8b673d17495ac1668c3c904a042ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7624ab389782a71bde62b179e93cadab"><td class="memItemLeft" align="right" valign="top"><a id="ga7624ab389782a71bde62b179e93cadab"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga7624ab389782a71bde62b179e93cadab">MQTT_ONCHIP_DA16XXX_CFG_CMD_RX_BUF_SIZE</a></td></tr>
-<tr class="memdesc:ga7624ab389782a71bde62b179e93cadab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the receive buffer for the MQTT client. <br /></td></tr>
-<tr class="separator:ga7624ab389782a71bde62b179e93cadab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -599,13 +595,13 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="fieldtype">
 <a id="a498c27bdf3abfd9316feaa9cfd5ca09f"></a>uint8_t</td>
 <td class="fieldname">
-cmd_tx_buff[<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga56d8b673d17495ac1668c3c904a042ee">MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE</a>]</td>
+cmd_tx_buff[MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE]</td>
 <td class="fielddoc">
 Command send buffer. </td></tr>
 <tr><td class="fieldtype">
 <a id="a25c4c3880ef3ac0601533ceb681c8c48"></a>uint8_t</td>
 <td class="fieldname">
-cmd_rx_buff[<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga7624ab389782a71bde62b179e93cadab">MQTT_ONCHIP_DA16XXX_CFG_CMD_RX_BUF_SIZE</a>]</td>
+cmd_rx_buff[MQTT_ONCHIP_DA16XXX_CFG_CMD_RX_BUF_SIZE]</td>
 <td class="fielddoc">
 Command receive buffer. </td></tr>
 <tr><td class="fieldtype">
@@ -736,7 +732,6 @@ Pointer to p_cfg for MQTT. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The p_cfg instance is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data size is too large or NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The instance has already been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_OUT_OF_MEMORY</td><td>Certificates are too large for buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1053,7 +1048,7 @@ Pointer to p_cfg for MQTT. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

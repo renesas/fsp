@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -302,7 +302,7 @@ Disabled</li>
 <tr>
 <td>Display Rotation &gt; Canvas Buffer Memory Section</td><td>This property must be a valid section name</td><td>bss </td><td>Specify the memory section where the GUIX Canvas Buffer will be allocated. </td></tr>
 <tr>
-<td>JPEG Decoding &gt; Work Buffer Size</td><td>Must be a valid integer</td><td>0xC800 </td><td>Specify the JPEG work buffer size in bytes. A larger buffer can reduce JPEG decode/draw times. The buffer will not be allocated if JPEG Codec support is disabled.<br />
+<td>JPEG Decoding &gt; Work Buffer Size</td><td>Must be a positive integer greater than 0</td><td>0xC800 </td><td>Specify the JPEG work buffer size in bytes. A larger buffer can reduce JPEG decode/draw times. The buffer will not be allocated if JPEG Codec support is disabled.<br />
 <br />
 Unless you are sure of the subsampling used in and the size of the input JPEG images it is recommended to allocate at least 16 framebuffer lines of memory. </td></tr>
 <tr>
@@ -496,7 +496,7 @@ Error code if RM_GUIX_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

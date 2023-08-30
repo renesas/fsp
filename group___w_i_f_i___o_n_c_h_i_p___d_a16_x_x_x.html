@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -188,6 +188,7 @@ Overview</h1>
 <p>The DA16XXX module supports the following modules:</p>
 <ul>
 <li>DA16200</li>
+<li>DA16600 (currently Wi-Fi features only)</li>
 </ul>
 <h2><a class="anchor" id="r-wifi-onchip-da16xxx-features"></a>
 Features</h2>
@@ -219,6 +220,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>Enable DA16600 Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enabled if using the DA16600 module </td></tr>
 <tr>
 <td>Number of supported socket instances (not used with on-chip APIs)</td><td>1</td><td>1 </td><td>Enable number of socket instances </td></tr>
 <tr>
@@ -273,6 +282,7 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <ul>
 <li>When the DA16XXX Wi-Fi configures the UART baud rate on the DA16XXX module based on the user settings in the UART driver configuration properties, the UART Baud rate settings will be stored in the NVM memory of the DA16XXX. After reboot, the DA16XXX comes up with the previously updated UART baud rate settings.</li>
+<li>When using the DA16600 Pmod module, make sure that the SDK has been updated to the latest version that supports AT commands. The default SDK that comes from the factory doesn’t support the AT command interface, which will cause the <a class="el" href="group___w_i_f_i___a_p_i.html#ga2ee26776a00869c415da4a108031af1d" title="Turns on Wi-Fi. ">WIFI_On()</a> API to fail. This is not required for the DA16200 Pmod module.</li>
 </ul>
 <h2>Limitations</h2>
 <ul>
@@ -903,7 +913,7 @@ Internal socket instances. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

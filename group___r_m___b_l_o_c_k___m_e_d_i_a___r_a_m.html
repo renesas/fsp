@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.5.0</span>
+   &#160;<span id="projectnumber">Release v4.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -193,16 +193,39 @@ Features</h2>
 <ul>
 <li>This module is for using internal RAM as a media area.</li>
 </ul>
-<h2>Note</h2>
-<p>When using PMSC driver in combination with this module, the API of this module is called from the PMSC driver.</p>
+<dl class="section note"><dt>Note</dt><dd>When using PMSC driver in combination with this module, the API of this module is called from the PMSC driver.</dd></dl>
 <h1><a class="anchor" id="rm-block-media-ram-configuration"></a>
 Configuration</h1>
-<p>The user needs to specify the RAM media size.</p>
-<h2>Note</h2>
-<ul>
-<li>Please be sure to specify RAM media size of 20K bytes or more.</li>
-<li>If a user is using an MCU that cannot allocate more than 20 Kbytes of RAM as media area, that user cannot use this module.</li>
+<p><h2>Build Time Configurations for rm_block_media_ram</h2>
+The following build time configurations are defined in fsp_cfg/rm_block_media_ram_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
 </ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>RAM Media Size</td><td>Please enter the RAM media size.</td><td>65536 </td><td>Enter a RAM media size of 20K bytes or more. </td></tr>
+</table>
+ <h2>Configurations for Storage &gt; Block Media RAM Implementation (rm_block_media_ram)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Block Media RAM Implementation (rm_block_media_ram).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_block_media0 </td><td>Module name. </td></tr>
+<tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called when a card is inserted or removed. </td></tr>
+</table>
+</p>
+<dl class="section note"><dt>Note</dt><dd>Specify RAM media size of 20 Kbytes or more. This module cannot be used with an MCU that cannot allocate at least 20 Kbytes of RAM as media area.</dd></dl>
 <h2><a class="anchor" id="rm-block-media-ram-clock-configuration"></a>
 Clock Configuration</h2>
 <p>This module has no required clock configurations.</p>
@@ -245,7 +268,7 @@ Pin Configuration</h2>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls: </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. </dd></dl>
 
 </div>
 </div>
@@ -315,7 +338,8 @@ Pin Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reads data from RAM media. <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a5c9c1b20f8ae1d95defa766a757d031a">rm_block_media_api_t::read()</a>.</p>
+<p>Reads data from RAM media.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a5c9c1b20f8ae1d95defa766a757d031a">rm_block_media_api_t::read()</a>.</p>
 <p>This function blocks until the data is read into the destination buffer.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -367,7 +391,8 @@ Pin Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Writes data to RAM media. <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108ef8243422a2ed8b3bea6cb67dbb6a">rm_block_media_api_t::write()</a>.</p>
+<p>Writes data to RAM media.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108ef8243422a2ed8b3bea6cb67dbb6a">rm_block_media_api_t::write()</a>.</p>
 <p>This function blocks until the write operation completes.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -413,7 +438,8 @@ Pin Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Erases sectors of RAM media. <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108bacf3e0522dd84e1121785eaf8f87">rm_block_media_api_t::erase()</a>.</p>
+<p>Erases sectors of RAM media.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108bacf3e0522dd84e1121785eaf8f87">rm_block_media_api_t::erase()</a>.</p>
 <p>This function blocks until erase is complete.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -453,7 +479,8 @@ Pin Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Provides driver status. <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a802c5b072fad72944fc03c14a9bbca4e">rm_block_media_api_t::statusGet()</a>.</p>
+<p>Provides driver status.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a802c5b072fad72944fc03c14a9bbca4e">rm_block_media_api_t::statusGet()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Status stored in p_status. </td></tr>
@@ -490,7 +517,8 @@ Pin Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieves module information. <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a031bb4fa56552052a1c361edfb7072cf">rm_block_media_api_t::infoGet()</a>.</p>
+<p>Retrieves module information.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a031bb4fa56552052a1c361edfb7072cf">rm_block_media_api_t::infoGet()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Erase operation requested. </td></tr>
@@ -517,7 +545,8 @@ Pin Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Closes an open SD/MMC device. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad116017606d47877fcc2dae3517f2f6e">rm_block_media_api_t::close()</a>.</p>
+<p>Closes the module.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad116017606d47877fcc2dae3517f2f6e">rm_block_media_api_t::close()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
@@ -535,7 +564,7 @@ Pin Configuration</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.5.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
