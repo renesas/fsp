@@ -69,7 +69,7 @@ typedef enum e_keymatrix_trigger
 } keymatrix_trigger_t;
 
 /** Callback function parameter data */
-typedef struct st_keymatrix_calback_args
+typedef struct st_keymatrix_callback_args
 {
     void const * p_context;            ///< Holder for user data. Set in @ref keymatrix_api_t::open function in @ref keymatrix_cfg_t.
 

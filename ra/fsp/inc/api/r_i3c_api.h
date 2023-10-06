@@ -155,7 +155,7 @@ typedef enum e_i3c_type
 /** Identifies the protocol for transferring data with the device on the bus. */
 typedef enum e_i3c_device_protocol
 {
-    I3C_DEVICE_PROTOCOL_I2C,           ///< Transfers will use legacy I2C protocal with open-drain output at a reduced baudrate.
+    I3C_DEVICE_PROTOCOL_I2C,           ///< Transfers will use legacy I2C protocol with open-drain output at a reduced baudrate.
     I3C_DEVICE_PROTOCOL_I3C,           ///< Transfers will use I3C SDR mode.
 } i3c_device_protocol_t;
 
@@ -442,7 +442,7 @@ typedef struct st_i3c_api
     /**
      * In master mode: Start a write transfer. When the transfer is completed send a stop condition or a repeated-start.
      * In slave mode:  Set the write buffer and configure the number of bytes that will be transferred before the the transfer
-     *                 is ended by the slave via the 'T' bit or by the master issueing a stop condition.
+     *                 is ended by the slave via the 'T' bit or by the master issuing a stop condition.
      *
      * @par Implemented as
      * - @ref R_I3C_Write()

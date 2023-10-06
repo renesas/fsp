@@ -1957,7 +1957,7 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
     /* Convert the MULNF value to use a common multiple of 6. */
     if (fractional < 3U)
     {
-        /* Values for 1/3 and 2/3 are 1 and 2 respectivly therefore it only needs a coefficient of 2 applied. */
+        /* Values for 1/3 and 2/3 are 1 and 2 respectively therefore it only needs a coefficient of 2 applied. */
         fractional *= CGC_PRV_PLL_MUL_NF_COEFF;
     }
     else

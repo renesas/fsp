@@ -329,7 +329,7 @@ fsp_err_t RM_MOTOR_120_DEGREE_Stop (motor_ctrl_t * const p_ctrl)
  * Example:
  * @snippet rm_motor_120_degree_example.c RM_MOTOR_120_DEGREE_ErrorSet
  *
- * @retval FSP_SUCCESS              Successfully set error infomation.
+ * @retval FSP_SUCCESS              Successfully set error information.
  * @retval FSP_ERR_ASSERTION        p_ctrl is NULL.
  * @retval FSP_ERR_NOT_OPEN         Module is not open.
  *

@@ -204,7 +204,7 @@ const smci_api_t g_smci_on_sci =
  * expected should the transfer mode be changed after reset.  Implements @ref smci_api_t::open
  *
  * @param[inout]  p_api_ctrl               Pointer to SMCI control block that is to be opened
- * @param[in] p_cfg                        Pointer to the config structure that shall be used to set paramters of the SMCI
+ * @param[in] p_cfg                        Pointer to the config structure that shall be used to set parameters of the SMCI
  *                                         baud calculations needed to be have done and set into
  *                                         p_cfg->p_extend->p_smci_baud_setting
  *

@@ -210,7 +210,7 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
     FSP_ERROR_RETURN(RM_VEE_FLASH_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
     FSP_ERROR_RETURN(2 <= p_cfg->num_segments, FSP_ERR_INVALID_ARGUMENT);
 
-    /* Start and end adress are valid */
+    /* Start and end address are valid */
     FSP_ERROR_RETURN(BSP_FEATURE_FLASH_DATA_FLASH_START <= p_cfg->start_addr, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(RM_VEE_FLASH_PHYSICAL_END_ADDRESS >= (p_cfg->start_addr + p_cfg->total_size),
                      FSP_ERR_INVALID_ARGUMENT);
@@ -1636,7 +1636,7 @@ void rm_vee_flash_callback (flash_callback_args_t * p_args)
                 }
                 else
                 {
-                    /* The end of the record must be written seperately. */
+                    /* The end of the record must be written separately. */
                     length        = length & (~RM_VEE_FLASH_DF_WRITE_MASK);
                     p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA_TAIL;
                 }

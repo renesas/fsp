@@ -137,7 +137,7 @@
   #define TOUCH_UART_INSTANCE_MAX             (32)
 
 /* UART Receive Buffer Size */
-  #define TOUCH_UART_RECIEVE_BUF_SIZE         (13)
+  #define TOUCH_UART_RECEIVE_BUF_SIZE         (13)
 
 /* UART Command version */
   #define TOUCH_UART_VERSION_MAJOR            ((uint8_t) 0x01U)
@@ -240,7 +240,7 @@
  #endif
 
  #define TOUCH_TUNING_COMMAND_BUF_NUM     (0x2)
- #define TOUCH_TUNING_RECIEVE_BUF_SIZE    (0xF)
+ #define TOUCH_TUNING_RECEIVE_BUF_SIZE    (0xF)
  #define TOUCH_TUNING_ICOG_100            (0)                     // ICOG = 100%
  #define TOUCH_TUNING_ICOG_66             (1)                     // ICOG = 66%
  #define TOUCH_TUNING_RICOA_RECOMMEND     (0xFF)                  // ICO input current
@@ -439,7 +439,7 @@ static uint8_t g_touch_tuning_tx_buf[TOUCH_TUNING_TRANSMIT_BUF_SIZE];
 /* data transmit flag */
 volatile uint8_t g_touch_uart_transmit_flag;
 
-static uint8_t           g_touch_uart_rx_buf[TOUCH_TUNING_RECIEVE_BUF_SIZE];
+static uint8_t           g_touch_uart_rx_buf[TOUCH_TUNING_RECEIVE_BUF_SIZE];
 static uint16_t          g_touch_uart_rx_num = 0;
 static uart_instance_t * gp_touch_uart_instance;
 #endif
@@ -2457,9 +2457,9 @@ void touch_uart_callback (uart_callback_args_t * p_args)
  #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
     touch_instance_ctrl_t * p_instance_ctrl = gp_touch_isr_context;
     uint16_t                element_id;
-    uint8_t               * port_adress_8;
-    uint16_t              * port_adress_16;
-    uint32_t              * port_adress_32;
+    uint8_t               * port_address_8;
+    uint16_t              * port_address_16;
+    uint32_t              * port_address_32;
     uint8_t                 write_byte;
  #endif
 
@@ -2489,7 +2489,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
  #if (TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1))
             case TOUCH_UART_COMMAND_TOP_NUM:
             {
-                g_touch_uart_rx_num = TOUCH_UART_RECIEVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM;
+                g_touch_uart_rx_num = TOUCH_UART_RECEIVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM;
                 gp_touch_uart_instance->p_api->read(gp_touch_uart_instance->p_ctrl,
                                                     &g_touch_uart_rx_buf[TOUCH_TUNING_COMMAND_BUF_NUM],
                                                     g_touch_uart_rx_num);
@@ -2499,7 +2499,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
  #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
             case TOUCH_TUNING_COMMAND_TOP_NUM:
             {
-                g_touch_uart_rx_num = TOUCH_TUNING_RECIEVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM;
+                g_touch_uart_rx_num = TOUCH_TUNING_RECEIVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM;
                 gp_touch_uart_instance->p_api->read(gp_touch_uart_instance->p_ctrl,
                                                     &g_touch_uart_rx_buf[TOUCH_TUNING_COMMAND_BUF_NUM],
                                                     g_touch_uart_rx_num);
@@ -2524,7 +2524,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
     }
 
  #if (TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1))
-    if ((g_touch_uart_rx_num == (TOUCH_UART_RECIEVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM)) &&
+    if ((g_touch_uart_rx_num == (TOUCH_UART_RECEIVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM)) &&
         (p_args->event == UART_EVENT_RX_COMPLETE))
     {
         /* Restart reception */
@@ -2806,7 +2806,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
  #endif
 
  #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
-    if ((g_touch_uart_rx_num == (TOUCH_TUNING_RECIEVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM)) &&
+    if ((g_touch_uart_rx_num == (TOUCH_TUNING_RECEIVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM)) &&
         (p_args->event == UART_EVENT_RX_COMPLETE))
     {
         /* Restart reception */
@@ -3306,31 +3306,31 @@ void touch_uart_callback (uart_callback_args_t * p_args)
 
             if (1 == write_byte)
             {
-                port_adress_8 = (uint8_t *) (g_touch_uart_rx_buf[5] |
+                port_address_8 = (uint8_t *) (g_touch_uart_rx_buf[5] |
                                              (g_touch_uart_rx_buf[6] << 8) |
                                              (g_touch_uart_rx_buf[7] << 16) |
                                              (g_touch_uart_rx_buf[8] << 24));
 
-                (*port_adress_8) |= (g_touch_uart_rx_buf[10]);
+                (*port_address_8) |= (g_touch_uart_rx_buf[10]);
             }
             else if (2 == write_byte)
             {
-                port_adress_16 = (uint16_t *) (g_touch_uart_rx_buf[5] |
+                port_address_16 = (uint16_t *) (g_touch_uart_rx_buf[5] |
                                                (g_touch_uart_rx_buf[6] << 8) |
                                                (g_touch_uart_rx_buf[7] << 16) |
                                                (g_touch_uart_rx_buf[8] << 24));
 
-                (*port_adress_16) |= (uint16_t) (g_touch_uart_rx_buf[10] |
+                (*port_address_16) |= (uint16_t) (g_touch_uart_rx_buf[10] |
                                                  (g_touch_uart_rx_buf[11] << 8));
             }
             else
             {
-                port_adress_32 = (uint32_t *) (g_touch_uart_rx_buf[5] |
+                port_address_32 = (uint32_t *) (g_touch_uart_rx_buf[5] |
                                                (g_touch_uart_rx_buf[6] << 8) |
                                                (g_touch_uart_rx_buf[7] << 16) |
                                                (g_touch_uart_rx_buf[8] << 24));
 
-                (*port_adress_32) |= (uint32_t) (g_touch_uart_rx_buf[10] |
+                (*port_address_32) |= (uint32_t) (g_touch_uart_rx_buf[10] |
                                                  (g_touch_uart_rx_buf[11] << 8) |
                                                  (g_touch_uart_rx_buf[12] << 16) |
                                                  (g_touch_uart_rx_buf[13] << 24));
@@ -3344,30 +3344,30 @@ void touch_uart_callback (uart_callback_args_t * p_args)
 
             if (1 == write_byte)
             {
-                port_adress_8 = (uint8_t *) (g_touch_uart_rx_buf[5] |
+                port_address_8 = (uint8_t *) (g_touch_uart_rx_buf[5] |
                                              (g_touch_uart_rx_buf[6] << 8) |
                                              (g_touch_uart_rx_buf[7] << 16) |
                                              (g_touch_uart_rx_buf[8] << 24));
 
-                touch_tuning_send8((*port_adress_8), 6);
+                touch_tuning_send8((*port_address_8), 6);
             }
             else if (2 == write_byte)
             {
-                port_adress_16 = (uint16_t *) (g_touch_uart_rx_buf[5] |
+                port_address_16 = (uint16_t *) (g_touch_uart_rx_buf[5] |
                                                (g_touch_uart_rx_buf[6] << 8) |
                                                (g_touch_uart_rx_buf[7] << 16) |
                                                (g_touch_uart_rx_buf[8] << 24));
 
-                touch_tuning_send16((*port_adress_16), 6);
+                touch_tuning_send16((*port_address_16), 6);
             }
             else
             {
-                port_adress_32 = (uint32_t *) (g_touch_uart_rx_buf[5] |
+                port_address_32 = (uint32_t *) (g_touch_uart_rx_buf[5] |
                                                (g_touch_uart_rx_buf[6] << 8) |
                                                (g_touch_uart_rx_buf[7] << 16) |
                                                (g_touch_uart_rx_buf[8] << 24));
 
-                touch_tuning_send32((*port_adress_32), 6);
+                touch_tuning_send32((*port_address_32), 6);
             }
         }
         else if (g_touch_uart_rx_buf[1] == TOUCH_TUNING_COMMAND_PHASE_RUN)

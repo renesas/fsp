@@ -61,7 +61,7 @@ typedef enum e_cec_addr
 {
     CEC_ADDR_TV                 = 0U,  ///< CEC Address for TV
     CEC_ADDR_RECORDING_DEVICE_1 = 1U,  ///< CEC Address for Recording Device 1
-    CEC_ADDR_RECORDING_DEVICE_2 = 2U,  ///< CEC Address for Recording Devide 2
+    CEC_ADDR_RECORDING_DEVICE_2 = 2U,  ///< CEC Address for Recording Divide 2
     CEC_ADDR_TUNER_1            = 3U,  ///< CEC Address for Tuner 1
     CEC_ADDR_PLAYBACK_DEVICE_1  = 4U,  ///< CEC Address for Playback Device 1
     CEC_ADDR_AUDIO_SYSTEM       = 5U,  ///< CEC Address for Audio System

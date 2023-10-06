@@ -921,7 +921,7 @@ UINT i;
  *       sce_nx_crypto_gcm_decrypt_init is created here to mimic an equivalent _nx_crypto_gcm_decrypt_init.
  *       This is directly called by the _nx_crypto_method_aes_gcm_operation function when HW AES is enabled.
  *       Only GHASH and block cipher is HW accelerated due to the nature of SCE9 procedures in handling partial blocks.
- * @note Keeping this function here instead of the nx_crypto_gcm_alt_process.c to satisfy dependancy of 
+ * @note Keeping this function here instead of the nx_crypto_gcm_alt_process.c to satisfy dependency of 
  *       static function _nx_crypto_gcm_inc32.
  *
  * @retval NX_CRYPTO_SUCCESS              GCM initialization was successful.

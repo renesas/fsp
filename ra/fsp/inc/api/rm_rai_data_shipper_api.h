@@ -63,7 +63,7 @@ typedef struct st_rai_data_shipper_callback_args
     void const     * p_context;        ///< Pointer to the user-provided context
 } rai_data_shipper_callback_args_t;
 
-/** Data Shipper write funciton parameter structure */
+/** Data Shipper write function parameter structure */
 typedef struct st_rai_data_shipper_write_params
 {
     uint16_t  events;                                   ///< Events

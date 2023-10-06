@@ -1217,7 +1217,7 @@ fsp_err_t R_FLASH_HP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
  * @param[in]  write_size          The write size
  * @param[in]  timeout             The timeout
  *
- * @retval     FSP_SUCCESS         Write completed succesfully
+ * @retval     FSP_SUCCESS         Write completed successfully
  * @retval     FSP_ERR_TIMEOUT     Flash timed out during write operation.
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, uint32_t write_size, uint32_t timeout)
@@ -1297,7 +1297,7 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
  * @param[in]  error_bits          The error bits
  * @param[in]  return_error        The return error
  *
- * @retval     FSP_SUCCESS         Command completed succesfully
+ * @retval     FSP_SUCCESS         Command completed successfully
  * @retval     FSP_ERR_CMD_LOCKED  Flash entered command locked state
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_check_errors (fsp_err_t previous_error, uint32_t error_bits, fsp_err_t return_error)
@@ -1728,7 +1728,7 @@ static fsp_err_t flash_hp_df_blank_check (flash_hp_instance_ctrl_t * const p_ctr
 /*******************************************************************************************************************//**
  * This function will initialize the FCU and set the FCU Clock based on the current FCLK frequency.
  * @param      p_ctrl        Pointer to the instance control block
- * @retval     FSP_SUCCESS   Clock and timeouts configured succesfully.
+ * @retval     FSP_SUCCESS   Clock and timeouts configured successfully.
  * @retval     FSP_ERR_FCLK  FCLK is not within the acceptable range.
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)

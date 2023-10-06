@@ -97,7 +97,7 @@
  * Macro definitions
  **********************************************************************************************************************/
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-  #define USB_RESPONCE_COUNTER_VALUE    (6000U)
+  #define USB_RESPONSE_COUNTER_VALUE    (6000U)
  #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
  #if defined(USB_CFG_HVND_USE)
@@ -1134,7 +1134,7 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
         {
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
             g_usb_hstd_response_counter[ptr->ip]++;
-            if (USB_RESPONCE_COUNTER_VALUE == g_usb_hstd_response_counter[ptr->ip])
+            if (USB_RESPONSE_COUNTER_VALUE == g_usb_hstd_response_counter[ptr->ip])
             {
                 hw_usb_clear_enb_sofe(ptr);
                 disp_param.status = USB_COMPLIANCETEST_NORES;

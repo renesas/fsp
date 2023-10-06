@@ -217,7 +217,7 @@ uint32_t TZ_StoreContext_S (TZ_MemoryId_t id) {
   __asm volatile (
     "MRS    R1, PSP                          \n" /* r1 = PSP. */
     "VSTMDB R1!, {S0}                        \n" /* Trigger the deferred stacking of FPU registers. */
-    "VLDMIA R1!, {S0}                        \n" /* Nullify the effect of the pervious statement. */
+    "VLDMIA R1!, {S0}                        \n" /* Nullify the effect of the previous statement. */
     ::: "r1", "memory"
   );
 

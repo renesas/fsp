@@ -54,7 +54,7 @@ static volatile uint32_t g_gui_time_ms = 0;
  *                 GUI_Delay(int)
  *
  * Some timing dependent routines require a GetTime
- * and delay funtion. Default time unit (tick), normally is
+ * and delay function. Default time unit (tick), normally is
  * 1 ms.
  */
 #if EMWIN_CFG_RTOS == 0                // No RTOS

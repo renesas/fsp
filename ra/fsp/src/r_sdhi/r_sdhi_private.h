@@ -87,7 +87,7 @@ FSP_HEADER
 #define SDHI_PRV_SDIO_CMD52_READ                        (0U)
 #define SDHI_PRV_SDIO_CMD52_WRITE                       (1U)
 
-/* SWITCH command argument's bit postion */
+/* SWITCH command argument's bit position */
 #define SDHI_PRV_SWITCH_ACCESS_SHIFT                    (24U)
 #define SDHI_PRV_SWITCH_INDEX_SHIFT                     (16U)
 #define SDHI_PRV_SWITCH_VALUE_SHIFT                     (8U)

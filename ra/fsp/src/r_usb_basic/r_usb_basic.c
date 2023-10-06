@@ -423,7 +423,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-    g_usb_compliance_callback[p_ctrl->module_number] = p_cfg->usb_complience_cb;
+    g_usb_compliance_callback[p_ctrl->module_number] = p_cfg->usb_compliance_cb;
  #endif                                /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 #endif                                 /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 
@@ -1385,7 +1385,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
             usb_rtos_delete(p_ctrl->module_number);
 
             /* Remove settings that prevent preemption. */
-            tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispath ti the other task */
+            tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispatch ti the other task */
    #else                                                                            /* (BSP_CFG_RTOS == 1) */
             usb_rtos_delete(p_ctrl->module_number);
    #endif  /* (BSP_CFG_RTOS == 1) */
@@ -1401,7 +1401,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
         usb_rtos_delete(p_ctrl->module_number);
 
         /* Remove settings that prevent preemption. */
-        tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispath ti the other task */
+        tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispatch ti the other task */
    #else                                                                        /* (BSP_CFG_RTOS == 1) */
         usb_rtos_delete(p_ctrl->module_number);
    #endif  /* (BSP_CFG_RTOS == 1) */
@@ -2828,7 +2828,7 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
 }
 
 /**************************************************************************//**
- * @brief Gets the selected pipe number (number of the pipe that has completed initalization) via bit map information.
+ * @brief Gets the selected pipe number (number of the pipe that has completed initialization) via bit map information.
  *
  * The bit map information is stored in the area specified in argument (p_pipe).
  * Based on the information (module member and address member) assigned to the usb_ctrl_t structure,

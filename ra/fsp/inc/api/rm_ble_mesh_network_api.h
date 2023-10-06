@@ -186,7 +186,7 @@ typedef  enum e_rm_ble_mesh_network_event
     RM_BLE_MESH_NETWORK_EVENT_PROXY_STATUS = 0x02,
 
     /** GATT Proxy Event - Receive */
-    RM_BLE_MESH_NETWORK_EVENT_RECIEVE = 0x03,
+    RM_BLE_MESH_NETWORK_EVENT_RECEIVE = 0x03,
 
     /** GATT Proxy Event - TX queue empty */
     RM_BLE_MESH_NETWORK_EVENT_TX_QUEUE_EMPTY = 0x04,

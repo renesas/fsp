@@ -146,7 +146,7 @@ const spi_api_t g_spi_on_spi =
  *
  * This function performs the following tasks:
  * - Performs parameter checking and processes error conditions.
- * - Configures the pperipheral registers acording to the configuration.
+ * - Configures the pperipheral registers according to the configuration.
  * - Initialize the control structure for use in other @ref SPI_API functions.
  *
  * @retval     FSP_SUCCESS                     Channel initialized successfully.
@@ -708,7 +708,7 @@ static void r_spi_nvic_config (spi_instance_ctrl_t * p_ctrl)
 
     R_BSP_IrqCfg(p_ctrl->p_cfg->tei_irq, p_ctrl->p_cfg->tei_ipl, p_ctrl);
 
-    /* Note tei_irq is not enabled until the last data frame is transfered. */
+    /* Note tei_irq is not enabled until the last data frame is transferred. */
 }
 
 /*******************************************************************************************************************//**
@@ -1150,7 +1150,7 @@ void spi_tx_dmac_callback (spi_instance_ctrl_t const * const p_ctrl)
         /* Only enable the transfer end ISR if there are no receive buffer full interrupts expected to be handled
          * after this interrupt. */
 
-        /* If DMA is used to transmit data, enable the interrupt after all the data has been transfered, but do not
+        /* If DMA is used to transmit data, enable the interrupt after all the data has been transferred, but do not
          * clear the IRQ Pending Bit. */
         R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
     }
@@ -1188,7 +1188,7 @@ void spi_txi_isr (void)
         }
         else if (p_ctrl->p_cfg->p_transfer_tx)
         {
-            /* If DMA is used to transmit data, enable the interrupt after all the data has been transfered, but do not
+            /* If DMA is used to transmit data, enable the interrupt after all the data has been transferred, but do not
              * clear the IRQ Pending Bit. */
             R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
         }

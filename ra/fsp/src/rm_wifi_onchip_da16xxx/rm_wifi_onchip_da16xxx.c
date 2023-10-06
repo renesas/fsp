@@ -829,7 +829,7 @@ fsp_err_t rm_wifi_onchip_da16xxx_connect (const char   * p_ssid,
     }
     else
     {
-        /* Return with error for unsupported secuirty types */
+        /* Return with error for unsupported security types */
         rm_wifi_onchip_da16xxx_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
@@ -1473,7 +1473,7 @@ fsp_err_t rm_wifi_onchip_da16xxx_dns_query (const char * p_textstring, uint8_t *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        The parameter p_socket_id is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
- * @retval FSP_ERR_WIFI_FAILED      Error occured in the execution of this function
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred in the execution of this function
  **********************************************************************************************************************/
 fsp_err_t rm_wifi_onchip_da16xxx_avail_socket_get (uint32_t * p_socket_id)
 {

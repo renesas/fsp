@@ -134,7 +134,7 @@ typedef struct st_motor_position_api
      * - @ref RM_MOTOR_POSITION_PositionReferenceSet()
      *
      * @param[in]  p_ctrl                 Pointer to control structure.
-     * @param[in]  position_refernce_deg  Position reference [degree]
+     * @param[in]  position_references_deg  Position reference [degree]
      */
     fsp_err_t (* positionReferenceSet)(motor_position_ctrl_t * const p_ctrl, int16_t const position_reference_deg);
 

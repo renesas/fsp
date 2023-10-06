@@ -563,7 +563,7 @@ fsp_err_t R_ADC_B_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
  * Enables the hardware trigger for a scan depending on how the triggers were configured in the R_ADC_B_ScanCfg call.
  * If the unit was configured for ELC, GPT, or external hardware triggering, then this function allows the trigger
  * signal to get to the ADC unit. The function is not able to control the generation of the trigger itself.
- * If the unit was configured for software triggering, This function was added to this ADC version for compatability
+ * If the unit was configured for software triggering, This function was added to this ADC version for compatibility
  * with r_adc driver. For additional flexibility, it is recommended to use R_ADC_B_ScanGroupStart.
  *
  * @pre Call R_ADC_B_ScanCfg after R_ADC_B_Open before starting a scan.
@@ -989,19 +989,19 @@ static void adc_b_calculate_wait_time (adc_b_instance_ctrl_t * p_instance_ctrl, 
         bool     sync_enabled                 = sync_enabled_lut[p_adc_group->converter_selection];
         uint32_t trigger_delay                = p_extend->start_trigger_delay_table[group];
 
-        uint32_t caclulated_cycles = 0;
+        uint32_t calculated_cycles = 0;
         if (sync_enabled)
         {
-            caclulated_cycles = trigger_delay + sync_cycles * 2;
+            calculated_cycles = trigger_delay + sync_cycles * 2;
         }
         else
         {
-            caclulated_cycles = trigger_delay + 4;
+            calculated_cycles = trigger_delay + 4;
         }
 
-        if (wait_cycles < caclulated_cycles)
+        if (wait_cycles < calculated_cycles)
         {
-            wait_cycles = caclulated_cycles;
+            wait_cycles = calculated_cycles;
         }
     }
 
@@ -1788,7 +1788,7 @@ void adc_b_fiforeq5678_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
-    /* Get groups with less data availabe than threshold */
+    /* Get groups with less data available than threshold */
     adc_group_mask_t group = (adc_group_mask_t) (ADC_B_GROUP_MASK_5678 & R_ADC_B->ADFIFOERSR_b.FIFOFLFn);
     IRQn_Type        irq   = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                                group,

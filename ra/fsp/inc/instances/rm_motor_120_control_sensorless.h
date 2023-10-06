@@ -50,7 +50,7 @@ FSP_HEADER
 /** Draw in a initial position */
 typedef enum e_motor_120_control_sensorless_draw_in_position
 {
-    MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_INIT     = 0, ///< Inital parameter
+    MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_INIT     = 0, ///< Initial parameter
     MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME = 1, ///< Draw in a initial position of the 1st time
     MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_2ND_TIME = 2, ///< Draw in a initial position of the 2nd time
 } motor_120_control_sensorless_draw_in_position_t;
@@ -58,7 +58,7 @@ typedef enum e_motor_120_control_sensorless_draw_in_position
 /** Pattern change */
 typedef enum e_motor_120_sensorless_pattern_change_flag
 {
-    MOTOR_120_CONTROL_SENSORLESS_PATTERN_CHANGE_FLAG_CLEAR = 0, ///< Inital parameter
+    MOTOR_120_CONTROL_SENSORLESS_PATTERN_CHANGE_FLAG_CLEAR = 0, ///< Initial parameter
     MOTOR_120_CONTROL_SENSORLESS_PATTERN_CHANGE_FLAG_SET   = 1, ///< Voltage pattern change
 } motor_120_control_sensorless_pattern_change_flag_t;
 

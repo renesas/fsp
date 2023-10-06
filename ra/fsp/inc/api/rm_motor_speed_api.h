@@ -194,7 +194,7 @@ typedef struct st_motor_speed_api
      * - @ref RM_MOTOR_SPEED_SpeedReferenceSet()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
-     * @param[in]  speed_refernce_rpm  Speed reference [rpm]
+     * @param[in]  speed_references_rpm  Speed reference [rpm]
      */
     fsp_err_t (* speedReferenceSet)(motor_speed_ctrl_t * const p_ctrl, float const speed_reference_rpm);
 

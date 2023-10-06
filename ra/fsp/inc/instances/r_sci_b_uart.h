@@ -134,7 +134,7 @@ typedef enum e_sci_b_uart_rs485_de_polarity
     SCI_B_UART_RS485_DE_POLARITY_LOW  = 1, ///< The DE signal is low when a write transfer is in progress.
 } sci_b_uart_rs485_de_polarity_t;
 
-/** Register settings to acheive a desired baud rate and modulation duty. */
+/** Register settings to achieve a desired baud rate and modulation duty. */
 typedef struct st_sci_b_baud_setting_t
 {
     union

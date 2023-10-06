@@ -137,8 +137,8 @@ static const uint8_t g_usb_atapi_rs_tbl[USB_ATAPI_REQUEST_SENSE_SIZE] =
     0x00,                              /* [9]Vendor Specific */
     0x00,                              /* [10]Vendor Specific */
     0x00,                              /* [11]Vendor Specific */
-    0x24,                              /* [12]ASC(Additonal Sense Code(Mandatory)) */
-    0x00,                              /* [13]ASCQ(Additonal Sense Code Qualifier(Mandatory)) */
+    0x24,                              /* [12]ASC(Additional Sense Code(Mandatory)) */
+    0x00,                              /* [13]ASCQ(Additional Sense Code Qualifier(Mandatory)) */
     0x00,                              /* [14]Field Replaceable Unit Code(Optional) */
     0x00,                              /* [15]b7:SKSV(Sense-Key Specific Valid),b6-b0:Sense-Key Specific */
     0x00,                              /* [16]Sense-Key Specific */
@@ -835,7 +835,7 @@ void pmsc_atapi_command_processing (uint8_t * cbw, uint16_t usb_result, usb_cb_t
                     }
                     else
                     {
-                        /* All data in Device recieved */
+                        /* All data in Device received */
                         if (g_usb_pmsc_dtl == g_usb_pmsc_message.ul_size)
                         {
                             /* case 12 */

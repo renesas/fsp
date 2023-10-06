@@ -121,7 +121,7 @@ fsp_err_t R_EDMAC_Open (edmac_instance_ctrl_t * const p_ctrl, edmac_cfg_t const 
     p_ctrl->p_reg->RDLAR = (uint32_t) p_cfg->p_rx_descriptors;
 
     /*
-     * Set the fifo depth register acording to the hardware manual
+     * Set the fifo depth register according to the hardware manual
      * (Reference section 31.2.13 FIFO Depth Register (FDR) in the RA6M3 manual R01UH0886EJ0100).
      */
     p_ctrl->p_reg->FDR = EDMAC_FDR_VALUE;

@@ -1117,7 +1117,7 @@ static fsp_err_t r_flash_lp_setup (flash_lp_instance_ctrl_t * p_ctrl)
  * @param      p_ctrl                   Pointer to the control block
  * @param[in]  flash_address            The flash address
  * @param[in]  num_bytes                The number bytes
- * @param[in]  check_write              Check paramters for writing.
+ * @param[in]  check_write              Check parameters for writing.
  *
  * @retval     FSP_SUCCESS              Parameter checking completed without error.
  * @retval     FSP_ERR_NOT_OPEN         The Flash API is not Open.
@@ -2589,7 +2589,7 @@ static fsp_err_t r_flash_lp_wait_for_ready (flash_lp_instance_ctrl_t * const p_c
 /*******************************************************************************************************************//**
  * Set the flash interface peripheral clock frequency
  * @param      p_ctrl           Pointer to the interface control block
- * @retval     FSP_SUCCESS      Flash interface clock frequency succesfully configured.
+ * @retval     FSP_SUCCESS      Flash interface clock frequency successfully configured.
  * @retval     FSP_ERR_TIMEOUT  Setting the flash interface clock frequency timed out.
  **********************************************************************************************************************/
 fsp_err_t r_flash_lp_set_fisr (flash_lp_instance_ctrl_t * const p_ctrl)

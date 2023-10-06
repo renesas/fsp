@@ -978,8 +978,8 @@ fsp_err_t R_SCI_B_UART_BaudCalculate (uint32_t                     baudrate,
     {
         for (uint32_t i = 0U; i < SCI_B_UART_NUM_DIVISORS_ASYNC; i++)
         {
-            /* if select_16_base_clk_cycles == true:  Skip this calculation for divisors that are not acheivable with 16 base clk cycles per bit.
-             *  if select_16_base_clk_cycles == false: Skip this calculation for divisors that are only acheivable without 16 base clk cycles per bit.
+            /* if select_16_base_clk_cycles == true:  Skip this calculation for divisors that are not achievable with 16 base clk cycles per bit.
+             *  if select_16_base_clk_cycles == false: Skip this calculation for divisors that are only achievable without 16 base clk cycles per bit.
              */
             if (((uint8_t) select_16_base_clk_cycles) ^ (g_async_baud[i].abcs | g_async_baud[i].abcse))
             {

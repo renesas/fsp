@@ -44,7 +44,7 @@
  * and is overwriting the current values.
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *  <d2_settexturemapping> */
@@ -239,7 +239,7 @@ d2_s32 d2_utility_maptriangle( d2_device *handle, const d2_f32 *points, const d2
  *   wt - 1/z (z>1) value in 16 Bit fraction (z=2 -> wt=65536/2)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * example:
  * Copy a 256x256 source texture into a 640x480 destination rectangle:

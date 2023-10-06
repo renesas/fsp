@@ -250,7 +250,7 @@ CellularError_t Cellular_GetSimCardInfo (CellularHandle_t cellularHandle, Cellul
     atReqGetImsi.pData        = pSimCardInfo->imsi;
     atReqGetImsi.dataLen      = CELLULAR_IMSI_MAX_SIZE + 1U;
 
-    atReqGetHplmn.pAtCmd       = "AT+CRSM=176,28514,0,0,0"; /* READ BINARY commmand. HPLMN Selector with Access Technology( 6F62 ). */
+    atReqGetHplmn.pAtCmd       = "AT+CRSM=176,28514,0,0,0"; /* READ BINARY command. HPLMN Selector with Access Technology( 6F62 ). */
     atReqGetHplmn.atCmdType    = CELLULAR_AT_WITH_PREFIX;
     atReqGetHplmn.pAtRspPrefix = "+CRSM";
     atReqGetHplmn.respCallback = _Cellular_RecvFuncGetHplmn;

@@ -1801,7 +1801,7 @@ static uint8_t ether_check_magic_packet_detection_bit (ether_instance_ctrl_t con
 }                                      /* End of function ether_check_magic_packet_detection_bit() */
 
 /*******************************************************************************************************************//**
- * @brief Verifies the Etherent link is up or not.
+ * @brief Verifies the Ethernet link is up or not.
  *
  * @param[in] p_instance_ctrl   Pointer to the control block for the channel
  *

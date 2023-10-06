@@ -1166,7 +1166,7 @@ void canfd_error_isr (void)
     {
 #if BSP_FEATURE_CANFD_NUM_INSTANCES > 1
 
-        /* If there are seperate instances of CANFD, then loop over each instance to handle the source of the global
+        /* If there are separate instances of CANFD, then loop over each instance to handle the source of the global
          * error IRQ. */
         for (uint32_t i = 0; i < BSP_FEATURE_CANFD_NUM_INSTANCES; i++)
         {
@@ -1280,7 +1280,7 @@ void canfd_rx_fifo_isr (void)
 
 #if BSP_FEATURE_CANFD_NUM_INSTANCES > 1
 
-    /* If there are seperate instances of CANFD, then loop over each instance to handle the source of the global
+    /* If there are separate instances of CANFD, then loop over each instance to handle the source of the global
      * receive IRQ. */
     for (uint32_t i = 0; i < BSP_FEATURE_CANFD_NUM_INSTANCES; i++)
     {

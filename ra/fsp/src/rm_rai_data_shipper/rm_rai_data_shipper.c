@@ -134,7 +134,7 @@ fsp_err_t RM_RAI_DATA_SHIPPER_Read (rai_data_shipper_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Write data. Note this funciton may be called in ISR.
+ * Write data. Note this function may be called in ISR.
  *
  * Implements @ref rai_data_shipper_api_t::write().
  *

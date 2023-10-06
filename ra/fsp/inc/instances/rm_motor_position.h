@@ -133,7 +133,7 @@ typedef struct st_motor_position_ipd_design_parameter
 /*********************************/
 /*     For Position Profiling    */
 /*********************************/
-typedef struct st_motor_positon_profiling
+typedef struct st_motor_position_profiling
 {
     uint8_t  u1_state_pos_pf;          ///< position profile status
     uint8_t  u1_pos_ref_mode;          ///< position reference mode

@@ -1149,7 +1149,7 @@ fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, WIFISecurity_t secu
     }
     else
     {
-        /* Return with error for unsupported secuirty types */
+        /* Return with error for unsupported security types */
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
@@ -1766,7 +1766,7 @@ fsp_err_t rm_wifi_onchip_silex_ip_addr_get (uint32_t * p_ip_addr)
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        The parameter p_socket_id is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
- * @retval FSP_ERR_WIFI_FAILED      Error occured in the execution of this function
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred in the execution of this function
  **********************************************************************************************************************/
 fsp_err_t rm_wifi_onchip_silex_avail_socket_get (uint32_t * p_socket_id)
 {
@@ -2685,7 +2685,7 @@ fsp_err_t rm_wifi_onchip_silex_change_socket (uint32_t socket_no)
 /*******************************************************************************************************************//**
  *  Cancel the current read operation over UART. Return the number of bytes received.
  *
- * @param[in,out]  bytes_received    Location to store number of bytes recieved.
+ * @param[in,out]  bytes_received    Location to store number of bytes received.
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  *
@@ -2707,7 +2707,7 @@ fsp_err_t rm_wifi_onchip_silex_stop_tcp_recv (uint32_t * bytes_received)
 }
 
 /*******************************************************************************************************************//**
- *  Get the recieve start semaphore for the module.
+ *  Get the receive start semaphore for the module.
  *
  * @param[in]  wait_option              How long to wait for the semaphore, this accepts the
  *                                      same values as the wait_option for tx_semaphore_get.
@@ -2721,7 +2721,7 @@ UINT rm_wifi_onchip_silex_get_rx_start_semaphore (ULONG wait_option)
 }
 
 /*******************************************************************************************************************//**
- *  Get the recieve complete (packet filled) semaphore for the module.
+ *  Get the receive complete (packet filled) semaphore for the module.
  *
  * @param[in]  wait_option              How long to wait for the semaphore, this accepts the
  *                                      same values as the wait_option for tx_semaphore_get.
@@ -3197,7 +3197,7 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
             if (TX_SUCCESS ==
                 tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port], byte_timeout))
             {
-                /* Next byte recieved */
+                /* Next byte received */
                 recvcnt++;
             }
             else
@@ -3399,7 +3399,7 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan (wifi_onchip_silex_instance_ctrl
         if (TX_SUCCESS ==
             tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port], MS_TO_TICKS(byte_timeout)))
         {
-            /* Next byte recieved */
+            /* Next byte received */
             recvcnt++;
         }
         else
@@ -3681,7 +3681,7 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
             }
             else
             {
-                /* If we don't have a packet buffer then don't recieve anything */
+                /* If we don't have a packet buffer then don't receive anything */
                 if (NULL == p_instance_ctrl->p_current_packet_buffer)
                 {
                     break;
@@ -3715,13 +3715,13 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
                 /* Packet buffer has been filled, move to next one */
                 p_instance_ctrl->p_current_packet_buffer = p_instance_ctrl->p_next_packet_buffer;
 
-                /* If we don't have a packet buffer then don't recieve anything */
+                /* If we don't have a packet buffer then don't receive anything */
                 if (NULL == p_instance_ctrl->p_current_packet_buffer)
                 {
                     break;
                 }
 
-                /* Start recieving next packet */
+                /* Start receiving next packet */
                 p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
                                              p_instance_ctrl->p_current_packet_buffer,
                                              p_instance_ctrl->packet_buffer_size);

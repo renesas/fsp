@@ -78,14 +78,14 @@ typedef struct st_three_phase_duty_cycle
     /**
      * Duty cycle.
      * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
-     *       this value sets the duty cycle count that is transfered to GTCCRA/B at the trough.
+     *       this value sets the duty cycle count that is transferred to GTCCRA/B at the trough.
      */
     uint32_t duty[3];
 
     /**
      * Double-buffer for duty cycle values.
      * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
-     *       this value sets the duty cycle count that is transfered to GTCCRA/B at the crest.
+     *       this value sets the duty cycle count that is transferred to GTCCRA/B at the crest.
      */
     uint32_t duty_buffer[3];
 } three_phase_duty_cycle_t;

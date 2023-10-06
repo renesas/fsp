@@ -80,7 +80,7 @@ void srand (unsigned int seed)
 
 /***********************************************************************************************************************
  * ECC Key Generate helper function for ECDSA and ECDH APIs.
- * @note This fucntion must not be called directly by the user application.
+ * @note This function must not be called directly by the user application.
  * Output: (Wrapped private key || Uncompressed public key) where Uncompressed public key starts with 0x04.
  * @retval NX_CRYPTO_SUCCESS              Key generation was successful.
  * @retval NX_CRYPTO_NOT_SUCCESSFUL       Key Generation was not successful.

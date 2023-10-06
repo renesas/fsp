@@ -38,7 +38,7 @@
  #define TX_PORT_CFG_SYSTICK_IPL    TX_PORT_MAX_IPL
 #endif
 
-/* Define the location of the begining of the free RAM  */
+/* Define the location of the beginning of the free RAM  */
 
 #if defined(__ARMCC_VERSION)           /* AC6 compiler */
 extern uint32_t Image$$RAM_END$$Limit;

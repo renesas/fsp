@@ -174,7 +174,7 @@ UINT sce_nx_crypto_ecdsa_sign (NX_CRYPTO_EC * curve,
      * *-Any larger hash data will be truncated.
      * *-Any smaller data will be 0-padded to the LEFT.
      *//* Start after 8 bytes to prevent another memory adjustment for 224 and 192 bit curves. This will serve as 0 padding offset.
-     * The 'digest' buffer is large enough to accomadate this extra 0 padding for 224 and 192 bit curves.
+     * The 'digest' buffer is large enough to accommodate this extra 0 padding for 224 and 192 bit curves.
      * There will be no 0 padding for 256 and 384 bit curves.
      */
     uint32_t idx = (curve_size > hash_length) ? (curve_size - hash_length) : 0;
@@ -274,7 +274,7 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
     uint32_t idx = (curve_size > hash_length) ? (curve_size - hash_length) : 0;
 
     /* Start after 8 bytes to prevent another memory adjustment for 224 and 192 bit curves. This will serve as 0 padding offset.
-     * The 'digest' buffer is large enough to accomadate this extra 0 padding for 224 and 192 bit curves.
+     * The 'digest' buffer is large enough to accommodate this extra 0 padding for 224 and 192 bit curves.
      * There will be no 0 padding for 256 and 384 bit curves.
      */
     NX_CRYPTO_MEMCPY(&digest[idx + 8U], hash, hash_length);

@@ -148,7 +148,7 @@ static void r_rtc_call_callback(rtc_instance_ctrl_t * p_ctrl, rtc_event_t event)
 #if RTC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_rtc_rfrl_validate(uint32_t value);
 
-static fsp_err_t r_rtc_err_adjustment_paramter_check(rtc_error_adjustment_cfg_t const * const err_adj_cfg);
+static fsp_err_t r_rtc_err_adjustment_parameter_check(rtc_error_adjustment_cfg_t const * const err_adj_cfg);
 
 static fsp_err_t r_rtc_time_and_date_validate(rtc_time_t * const p_time);
 
@@ -223,7 +223,7 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     /* Validate the error adjustment parameters when using SubClock */
     else
     {
-        FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_paramter_check(p_instance_ctrl->p_cfg->p_err_cfg),
+        FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_parameter_check(p_instance_ctrl->p_cfg->p_err_cfg),
                          FSP_ERR_INVALID_ARGUMENT);
     }
 #endif
@@ -775,7 +775,7 @@ fsp_err_t R_RTC_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjustm
     }
 
     /* Verify the frequecy comparison valure for RFRL when using LOCO */
-    FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_paramter_check(err_adj_cfg), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_parameter_check(err_adj_cfg), FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
@@ -1055,7 +1055,7 @@ static void r_rtc_call_callback (rtc_instance_ctrl_t * p_ctrl, rtc_event_t event
 /*******************************************************************************************************************//**
  * Validate RFRL value for LOCO
  *
- * @param[in]  value                      Frequency Comparision Value
+ * @param[in]  value                      Frequency Comparison Value
  * @retval FSP_SUCCESS                    validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT       invalid field in rtc_time_t structure
  **********************************************************************************************************************/
@@ -1082,7 +1082,7 @@ static fsp_err_t r_rtc_rfrl_validate (uint32_t value)
  * @retval FSP_SUCCESS                 Validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT    Invalid error configuration
  **********************************************************************************************************************/
-static fsp_err_t r_rtc_err_adjustment_paramter_check (rtc_error_adjustment_cfg_t const * const err_adj_cfg)
+static fsp_err_t r_rtc_err_adjustment_parameter_check (rtc_error_adjustment_cfg_t const * const err_adj_cfg)
 {
     rtc_error_adjustment_mode_t   mode   = err_adj_cfg->adjustment_mode;
     rtc_error_adjustment_period_t period = err_adj_cfg->adjustment_period;

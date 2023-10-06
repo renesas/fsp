@@ -1,0 +1,20 @@
+name: misspell
+on: push
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: fsp-'${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Run misspell (findings may not increase)
+        if: always()
+        run: |
+            curl -L -o ./install-misspell.sh https://git.io/misspell
+            sh ./install-misspell.sh
+            bin/misspell -i mosquitto .

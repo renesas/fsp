@@ -72,7 +72,7 @@ d2_s32 d2_renderpolyline_intern( d2_devicedata *handle, d2_contextdata *ctx, con
 
    connectors[0] = connectors[1] = connectors[2] = connectors[3] = 0;
 
-   /* check if linejoins have to be renderd */
+   /* check if linejoins have to be rendered */
    joins = (w > D2_FIX4(1)) ? 1 : 0;
 
    if(count < 3)

@@ -442,7 +442,7 @@ typedef struct st_adc_b_virtual_channel_cfg
 
     union
     {
-        uint32_t channel_control_b;              ///< A/D converison data operation control b
+        uint32_t channel_control_b;              ///< A/D conversions data operation control b
         struct
         {
             uint32_t addition_average_mode  : 2; ///< Addition/Averaging mode selection
@@ -489,7 +489,7 @@ typedef struct st_adc_b_group_cfg
     adc_b_virtual_channel_cfg_t ** p_virtual_channels;     ///< Pointer to virtual channel configuration array of size virtual_channel_count
 } adc_b_group_cfg_t;
 
-/** ADC Scan Group configuraiton */
+/** ADC Scan Group configuration */
 typedef struct st_adc_b_scan_cfg
 {
 /* The ADC operates on scan groups.

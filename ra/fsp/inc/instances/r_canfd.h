@@ -298,7 +298,7 @@ typedef struct st_canfd_instance_ctrl
     can_operation_mode_t operation_mode;        // Can operation mode.
     can_test_mode_t      test_mode;             // Can operation mode.
 #if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transition is required to call p_callback (BLXNS)
 #endif
     void (* p_callback)(can_callback_args_t *); // Pointer to callback
     can_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory

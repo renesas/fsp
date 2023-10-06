@@ -14,7 +14,7 @@
  * List of all dave driver errorcodes.
  *
  * Every device stores the errorcode returned by the last function executed
- * for this device. Successfull operations reset this code to D2_OK.
+ * for this device. Successful operations reset this code to D2_OK.
  *
  * Latest errorcode can be queried by <d2_geterror> / <d2_geterrorstring> functions
  *

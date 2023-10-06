@@ -254,7 +254,7 @@ d2_renderbuffer * d2_newrenderbuffer( d2_device *handle, d2_u32 initialsize, d2_
  *   buffer - renderbuffer address
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * */
 d2_s32 d2_freerenderbuffer( d2_device *handle,  d2_renderbuffer *buffer )
@@ -564,7 +564,7 @@ d2_renderbuffer * d2_getrenderbuffer( d2_device *handle, d2_s32 index )
  *   handle - device pointer (see: <d2_opendevice>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_startframe( d2_device *handle )
 {
@@ -608,7 +608,7 @@ d2_s32 d2_startframe( d2_device *handle )
  *   handle - device pointer (see: <d2_opendevice>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_endframe( d2_device *handle )
 {
@@ -638,7 +638,7 @@ d2_s32 d2_endframe( d2_device *handle )
  *   ptr - new address of the top left pixel (coordinate 0,0)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * note:
  *   Intention of this function is to support an immediate flush to a hidden
@@ -929,7 +929,7 @@ d2_s32 d2_dumprenderbuffer( d2_device *handle, d2_renderbuffer *buffer, void **r
 
       if(blk == lastBlk)
       {
-         lastEntry = dlist->position;            /* use insert postion of current block */
+         lastEntry = dlist->position;            /* use insert position of current block */
       }
       else
       {
@@ -1150,7 +1150,7 @@ d2_u32 d2_getrenderbuffersize(d2_device *handle, d2_renderbuffer *rb)
  *  data - pointer to memory (created by <d2_dumprenderbuffer>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_freedumpedbuffer( d2_device *handle, void *data )
 {

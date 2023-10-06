@@ -17,7 +17,7 @@
  *  2006-11-07 CSe  added dlist_buffer to device struct for 'd2_df_low_localmem' mode
  *  2007-03-01 MGe  added check of null values after creation of renderbuffers
  *  2007-03-12 CSe  fixed error in d2_lowlocalmemmode
- *  2007-05-23 MGe  added null checks in d2_inithw; initalize delayed_errorcode in context
+ *  2007-05-23 MGe  added null checks in d2_inithw; initialize delayed_errorcode in context
  *  2007-08-30 ASc  replaced clib functions, removed tabs, added description for
  *                  d2_getrendermode, changed C++ to C comments, changed g_versionid
  *  2007-09-10 ASc  smaller updates of d2_lowlocalmemmode and d2_inithw
@@ -329,7 +329,7 @@ d2_device * d2_opendevice( d2_u32 flags )
  *   handle - device pointer (see: <d2_opendevice>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_closedevice( d2_device *handle )
 {
@@ -457,7 +457,7 @@ const d2_char * d2_geterrorstring( const d2_device *handle )
  *   flags - hardware instance id (use 0 for default)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_inithw( d2_device *handle, d2_u32 flags )
 {
@@ -537,14 +537,14 @@ d2_s32 d2_inithw( d2_device *handle, d2_u32 flags )
 /*--------------------------------------------------------------------------
  * function: d2_deinithw
  * Unlink hardware currently bound by specified device.
- * Hardware must be deinitialized before it can be reinitalized for another
+ * Hardware must be deinitialized before it can be reinitialized for another
  * device.
  *
  * parameters:
  *   handle - device pointer (see: <d2_opendevice>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_deinithw( d2_device *handle )
 {
@@ -963,7 +963,7 @@ d2_s32 d2_lowlocalmemmode(d2_device *handle, d2_u32 dlistblockfactor, d2_u32 dli
  *  d2_rm_postprocess - Direct rendering of primitives as a postprocess
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_outlinewidth>, <d2_shadowoffset>
@@ -1051,7 +1051,7 @@ d2_u32 d2_getrendermode( const d2_device *handle )
  *   handle - device pointer (see: <d2_opendevice>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_selectrendermode>
@@ -1077,7 +1077,7 @@ d2_s32 d2_layermerge( d2_device *handle )
  *   width - outline width in pixels (fixedpoint)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_selectrendermode>, <d2_shadowoffset>
@@ -1103,7 +1103,7 @@ d2_s32 d2_outlinewidth( d2_device *handle, d2_width width )
  *   y - y axis offset in pixels (fixedpoint)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_selectrendermode>, <d2_outlinewidth>
@@ -1135,7 +1135,7 @@ d2_s32 d2_shadowoffset( d2_device *handle, d2_point x, d2_point y )
  *   handle - device pointer (see: <d2_opendevice>)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_flushframe( d2_device *handle )
 {

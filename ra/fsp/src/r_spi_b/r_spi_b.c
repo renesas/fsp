@@ -657,7 +657,7 @@ static void r_spi_b_nvic_config (spi_b_instance_ctrl_t * p_ctrl)
 
     R_BSP_IrqCfg(p_ctrl->p_cfg->tei_irq, p_ctrl->p_cfg->tei_ipl, p_ctrl);
 
-    /* Note tei_irq is not enabled until the last data frame is transfered. */
+    /* Note tei_irq is not enabled until the last data frame is transferred. */
 }
 
 /*******************************************************************************************************************//**
@@ -1049,7 +1049,7 @@ void spi_b_txi_isr (void)
         }
         else if (p_ctrl->p_cfg->p_transfer_tx)
         {
-            /* If DMA is used to transmit data, enable the interrupt after all the data has been transfered, but do not
+            /* If DMA is used to transmit data, enable the interrupt after all the data has been transferred, but do not
              * clear the IRQ Pending Bit. */
             R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
         }
