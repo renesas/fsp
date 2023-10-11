@@ -1055,7 +1055,7 @@ fsp_err_t R_GPT_Close (timer_ctrl_t * const p_ctrl)
  * @retval FSP_ERR_INVALID_STATE       The source clock frequnecy is out of the required range for the PDG.
  * @retval FSP_ERR_UNSUPPORTED         This feature is not supported.
  **********************************************************************************************************************/
-fsp_err_t R_GPT_PwmOutputDelayInitialize ()
+fsp_err_t R_GPT_PwmOutputDelayInitialize (void)
 {
 #if 0U != BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK && GPT_CFG_OUTPUT_SUPPORT_ENABLE
  #if BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0 || GPT_CFG_PARAM_CHECKING_ENABLE
