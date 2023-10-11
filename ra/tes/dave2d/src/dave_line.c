@@ -576,7 +576,7 @@ d2_s32 d2_renderline_intern( d2_devicedata *handle, d2_contextdata *ctx, d2_poin
          control = d2_initgradients_intern( handle, ctx, &bbox2, 3, control );
       }
 
-      /* restore seperation limiter to fit new bbox */
+      /* restore separation limiter to fit new bbox */
       if(0 != flip)
       {
          dx = D2_INT4(bbox2.xmin - bbox.xmin);       /* PRQA S 0502 */ /* $Misra: #PERF_ARITHMETIC_SHIFT_RIGHT $*/

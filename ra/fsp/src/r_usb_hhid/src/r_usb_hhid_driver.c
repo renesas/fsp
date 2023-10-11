@@ -347,7 +347,7 @@ void usb_hhid_task (usb_vp_int_t stacd)
  * Arguments       : usb_utr_t *mess         : Pointer to usb_utr_t structure.
  *                 : uint8_t *table          : Descriptor store address
  *                 : uint16_t speed          : Conect Dpeed(Hi/Full/...)
- *                 : uint16_t length         : Descriptor total lenght
+ *                 : uint16_t length         : Descriptor total length
  * Return value    : uint16_t                : Error info
  ******************************************************************************/
 uint16_t usb_hhid_pipe_info (usb_utr_t * ptr, uint8_t * table, uint16_t speed, uint16_t length)

@@ -20,7 +20,7 @@
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_INTERFACES
- * @defgroup RM_COMMS_API Communicatons Middleware Interface
+ * @defgroup RM_COMMS_API Communications Middleware Interface
  * @brief Interface for Communications Middleware functions.
  *
  * @section RM_COMMS_API_Summary Summary

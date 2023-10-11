@@ -2424,7 +2424,7 @@ UINT    status;
         case NX_CRYPTO_SET_ADDITIONAL_DATA:
         {
 
-            /* Set additonal data pointer.  */
+            /* Set additional data pointer.  */
             ctx -> nx_crypto_aes_mode_context.ccm.nx_crypto_ccm_additional_data = (VOID *)input;
 
             /* Set additional data length.  */
@@ -2841,7 +2841,7 @@ UINT    status;
         case NX_CRYPTO_SET_ADDITIONAL_DATA:
         {
 
-            /* Set additonal data pointer.  */
+            /* Set additional data pointer.  */
             ctx -> nx_crypto_aes_mode_context.gcm.nx_crypto_gcm_additional_data = (VOID *)input;
 
             /* Set additional data length.  */

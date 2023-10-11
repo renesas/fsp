@@ -322,7 +322,7 @@ __attribute__((weak)) BaseType_t xApplicationGetRandomNumber (uint32_t * pulNumb
 {
     /* example of a 32-bit random number generator.
      * rand() in returns a 16-bit number. so create 32 bit Random number using 16 bit rand().
-     * In this case just a psuedo random number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
+     * In this case just a pseudo random number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
      */
     uint32_t ulRandomValue = 0;
 
@@ -341,7 +341,7 @@ BSP_WEAK_REFERENCE uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourc
 {
     /*
      * Callback that provides the inputs necessary to generate a randomized TCP
-     * Initial Sequence Number per RFC 6528.  In this case just a psuedo random
+     * Initial Sequence Number per RFC 6528.  In this case just a pseudo random
      * number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
      */
     FSP_PARAMETER_NOT_USED(ulSourceAddress);

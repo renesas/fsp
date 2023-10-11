@@ -449,7 +449,7 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Erase (rm_block_media_ctrl_t * const p_ctrl,
         iteration--;
     }
 
-    /* Notify appication of completion */
+    /* Notify application of completion */
     p_instance_ctrl->erase_in_progress = false;
     rm_block_media_event_t event =
         (FSP_SUCCESS == err ? RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE : RM_BLOCK_MEDIA_EVENT_ERROR);
@@ -508,7 +508,7 @@ static fsp_err_t rm_block_media_spi_program (rm_block_media_spi_instance_ctrl_t 
         iteration--;
     }
 
-    /* Notify appication of completion */
+    /* Notify application of completion */
     p_instance_ctrl->write_in_progress = false;
     rm_block_media_event_t event =
         (FSP_SUCCESS == err ? RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE : RM_BLOCK_MEDIA_EVENT_ERROR);

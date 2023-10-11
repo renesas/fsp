@@ -897,7 +897,7 @@ uint16_t usb_hstd_read_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
     }
     else
     {
-        /* Continus Receive data */
+        /* Continues Receive data */
         count    = dtln;
         end_flag = USB_READING;
         if ((0 == count) || (0 != (count % mxps)))

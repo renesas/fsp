@@ -52,7 +52,7 @@
  *   ymax - integer pixel position of bottom border (inclusive)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_cliprect( d2_device *handle, d2_border xmin, d2_border ymin, d2_border xmax, d2_border ymax )
 {
@@ -126,7 +126,7 @@ d2_s32 d2_cliprect( d2_device *handle, d2_border xmin, d2_border ymin, d2_border
  *   ymax - pointer to an integer that receives pixel position of bottom border
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_getcliprect( d2_device *handle, d2_border *xmin, d2_border *ymin, d2_border *xmax, d2_border *ymax )
 {
@@ -188,7 +188,7 @@ d2_s32 d2_getcliprect( d2_device *handle, d2_border *xmin, d2_border *ymin, d2_b
  *  d2_mode_rgba4444 - colored 16bit per pixel
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * note:
  *   this function has no effect on what memory area is currently visible
@@ -295,7 +295,7 @@ d2_s32 d2_framebuffer( d2_device *handle, void *ptr, d2_s32 pitch, d2_u32 width,
  *  d2_mode_argb4444 - colored 16bit per pixel
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_getframebuffer( d2_device *handle, void** ptr, d2_s32 * pitch, d2_u32 * width, d2_u32 * height, d2_s32 * format )
 {

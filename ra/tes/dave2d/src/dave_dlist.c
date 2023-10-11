@@ -57,7 +57,7 @@ static d2_s32 d2_dlist2dlist_intern( d2_device *handle, d2_dlist *dlist, void *a
 
 /*--------------------------------------------------------------------------
  * create a display list block (displaylist memory can be fetched from a
- * different heap, see dave_memory.h for detials)
+ * different heap, see dave_memory.h for details)
  * size specifies the number of dlist entries (4 register slots per entry)
  * */
 d2_dlist_block * d2_alloc_dlistblock_intern( const d2_device *handle, d2_u32 size )
@@ -324,7 +324,7 @@ void d2_nextdlistblock_intern( d2_dlist *dlist )
       d2_insertdlistspecial_intern( dlist, 3 );  /* terminate list correctly */
       /* grow to prepare for next write */
       d2_growdlist_intern( dlist );
-      /* check if d2_growdlist succeded */
+      /* check if d2_growdlist succeeded */
       if ( D2_DEV(dlist->device)->delayed_errorcode != D2_OK )
       {
          /* no more memory -> terminate current list */
@@ -410,7 +410,7 @@ void d2_nextdlistblock_intern( d2_dlist *dlist )
     
       d2_growdlist_intern( dlist );  /* go to next dlist buffer in ring */
 
-      /* check if d2_growdlist succeded */
+      /* check if d2_growdlist succeeded */
       if ( D2_DEV(dlist->device)->delayed_errorcode != D2_OK )
       {
          return;

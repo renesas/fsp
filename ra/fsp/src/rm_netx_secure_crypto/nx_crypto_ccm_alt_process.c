@@ -50,7 +50,7 @@ static UINT ccm_block_format (NX_CRYPTO_CCM * ccm_metadata, UCHAR * a_data, UINT
     USHORT M = ccm_metadata -> nx_crypto_ccm_icv_length;
 
     /* Check the block size. */
-    /* Accroding to RFC 3610, valid values of L range between 2 octets and 8 octets, iv[0] range between 7 octets and 13 octets. */
+    /* According to RFC 3610, valid values of L range between 2 octets and 8 octets, iv[0] range between 7 octets and 13 octets. */
     if (block_size != NX_CRYPTO_CCM_BLOCK_SIZE || iv[0] > 13 || iv[0] < 7)
     {
         return(NX_CRYPTO_PTR_ERROR);
@@ -125,7 +125,7 @@ UINT sce_nx_crypto_ccm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
 
     /* The memory allocated by the NetX Secure stack to store the metadata is not fully 
     required for the crypto processing when sce engines are used. Thus the same space has 
-    been used to accomodate the context info of sce engines. The allocated space for 
+    been used to accommodate the context info of sce engines. The allocated space for 
     processing buffer 'nx_crypto_ccm_X' is utilized for storing the input data length 
     in big endian form */
     NX_CRYPTO_MEMSET(p_ccm_metadata->nx_crypto_ccm_X, 0, sizeof(p_ccm_metadata->nx_crypto_ccm_X));

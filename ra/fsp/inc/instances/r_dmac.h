@@ -48,7 +48,7 @@ FSP_HEADER
 /** Max number of transfers per block in TRANSFER_MODE_BLOCK */
 #define DMAC_MAX_BLOCK_TRANSFER_LENGTH     (0x400)
 
-/** Max configurable number of repeats to trasnfer in TRANSFER_MODE_REPEAT */
+/** Max configurable number of repeats to transfer in TRANSFER_MODE_REPEAT */
 #define DMAC_MAX_REPEAT_COUNT              (0x10000)
 
 /** Max configurable number of blocks to transfer in TRANSFER_MODE_BLOCK */

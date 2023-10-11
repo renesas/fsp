@@ -105,7 +105,7 @@ typedef enum e_elc_event_ra6m5
     ELC_EVENT_RTC_ALARM              = (0x054), // Alarm interrupt
     ELC_EVENT_RTC_PERIOD             = (0x055), // Periodic interrupt
     ELC_EVENT_RTC_CARRY              = (0x056), // Carry interrupt
-    ELC_EVENT_CAN_RXF                = (0x059), // Global recieve FIFO interrupt
+    ELC_EVENT_CAN_RXF                = (0x059), // Global receive FIFO interrupt
     ELC_EVENT_CAN_GLERR              = (0x05A), // Global error
     ELC_EVENT_CAN_DMAREQ0            = (0x05B), // DMA 0 request
     ELC_EVENT_CAN_DMAREQ1            = (0x05C), // DMA 1 request
@@ -117,11 +117,11 @@ typedef enum e_elc_event_ra6m5
     ELC_EVENT_CAN_DMAREQ7            = (0x062), // DMA 7 request
     ELC_EVENT_CAN0_TX                = (0x063), // Transmit interrupt
     ELC_EVENT_CAN0_CHERR             = (0x064), // Channel error
-    ELC_EVENT_CAN0_COMFRX            = (0x065), // Common FIFO recieve interrupt
+    ELC_EVENT_CAN0_COMFRX            = (0x065), // Common FIFO receive interrupt
     ELC_EVENT_CAN0_CF_DMAREQ         = (0x066), // Channel DMA request
     ELC_EVENT_CAN1_TX                = (0x067), // Transmit interrupt
     ELC_EVENT_CAN1_CHERR             = (0x068), // Channel error
-    ELC_EVENT_CAN1_COMFRX            = (0x069), // Common FIFO recieve
+    ELC_EVENT_CAN1_COMFRX            = (0x069), // Common FIFO receive
     ELC_EVENT_CAN1_CF_DMAREQ         = (0x06A), // Channel DMA request
     ELC_EVENT_USBFS_FIFO_0           = (0x06B), // DMA transfer request 0
     ELC_EVENT_USBFS_FIFO_1           = (0x06C), // DMA transfer request 1

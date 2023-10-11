@@ -620,7 +620,7 @@ static void rm_motor_inertia_estimate_speed_cyclic (motor_inertia_estimate_ctrl_
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_inertia_estimate_steady_process
- * Description   : Process at positon control in steady state (reached to reference position)
+ * Description   : Process at position control in steady state (reached to reference position)
  * Arguments     : p_ctrl - pointer of module data
  * Return Value  : None
  **********************************************************************************************************************/
@@ -767,7 +767,7 @@ static void rm_motor_inertia_estimate_steady_process (motor_inertia_estimate_ins
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_inertia_estimate_transition_process
- * Description   : Process at positon control in transition state
+ * Description   : Process at position control in transition state
  * Arguments     : p_ctrl - pointer of module data
  * Return Value  : None
  **********************************************************************************************************************/

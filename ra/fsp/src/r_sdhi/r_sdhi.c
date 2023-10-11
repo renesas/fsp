@@ -1115,7 +1115,7 @@ fsp_err_t R_SDHI_Close (sdmmc_ctrl_t * const p_api_ctrl)
     p_ctrl->p_cfg->p_lower_lvl_transfer->p_api->close(p_ctrl->p_cfg->p_lower_lvl_transfer->p_ctrl);
 
     /* Do not set the module stop bit since the CMD0 may not be complete yet. Do not wait for CMD0 to complete because
-     * the card could be unplugged and waiting for the response timeout in this function is not desireable. */
+     * the card could be unplugged and waiting for the response timeout in this function is not desirable. */
 
     return FSP_SUCCESS;
 }

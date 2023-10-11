@@ -336,7 +336,7 @@ d2_s32 d2_settexture( d2_device *handle, void *ptr, d2_s32 pitch, d2_s32 width, 
  *  d2_tm_filter - apply bilinear filter (both axis)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_settexturemode( d2_device *handle, d2_u32 mode )
 {
@@ -380,7 +380,7 @@ d2_s32 d2_settexturemode( d2_device *handle, d2_u32 mode )
  * function: d2_settextureoperation
  * Choose texture operation for each channel.
  *
- * Textures can be 'colorized' by a varity of operations. A textureoperation
+ * Textures can be 'colorized' by a variety of operations. A textureoperation
  * can be defined for each channel (a,r,g,b) individually.
  * Depending on the chosen operation one or two additional parameters
  * have to be set using <d2_settexopparam>.
@@ -406,7 +406,7 @@ d2_s32 d2_settexturemode( d2_device *handle, d2_u32 mode )
  *   d2_to_blend - use channel data to blend between two constants (p1,p2)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_settexopparam>
@@ -470,7 +470,7 @@ d2_s32 d2_settextureoperation( d2_device *handle, d2_u8 amode, d2_u8 rmode, d2_u
  *   d2_cc_all - all channels
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_settextureoperation>
@@ -553,7 +553,7 @@ d2_s32 d2_settexopparam( d2_device *handle, d2_u32 index, d2_u32 p1, d2_u32 p2 )
  *   dyu, dyv - texture increment for a step in y direction (16:16 fixedpoint)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_settexturemapping( d2_device *handle, d2_point x, d2_point y, d2_s32 u0, d2_s32 v0, d2_s32 dxu, d2_s32 dyu, d2_s32 dxv, d2_s32 dyv )
 {
@@ -589,7 +589,7 @@ d2_s32 d2_settexturemapping( d2_device *handle, d2_point x, d2_point y, d2_s32 u
  *   x , y - subpixel position of the texel center (fixedpoint)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_settexelcenter( d2_device *handle, d2_point x, d2_point y )
 {
@@ -958,7 +958,7 @@ d2_s32 d2_settexclut_format( d2_device *handle, d2_u32 format )
  *   color_key  - RGB value of color key 
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * note:
  *   colorkeying is available if the feature bit D2FB_COLORKEY is set (see <d2_getrevisionhw>)

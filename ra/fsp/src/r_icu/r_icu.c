@@ -336,7 +336,7 @@ void r_icu_isr (void)
             /* Save current state of p_callback_args so that it can be shared between interrupts. */
             args = *p_ctrl->p_callback_memory;
 
-            /* Set the callback args passed to the Non-secure calback. */
+            /* Set the callback args passed to the Non-secure callback. */
             p_ctrl->p_callback_memory->channel   = p_ctrl->channel;
             p_ctrl->p_callback_memory->p_context = p_ctrl->p_context;
 

@@ -76,7 +76,7 @@ typedef struct st_rm_comms_semaphore
 /**********************************************************************************************************************
  * @brief rm_comms_lock API
  *
- * @retval FSP_SUCCESS              Funciton call succeeds.
+ * @retval FSP_SUCCESS              Function call succeeds.
  * @retval FSP_ERR_INTERNAL         RTOS internal error.
  * @retval FSP_ERR_UNSUPPORTED      RTOS not supported.
  *********************************************************************************************************************/

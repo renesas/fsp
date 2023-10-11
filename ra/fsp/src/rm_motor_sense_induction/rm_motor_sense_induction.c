@@ -1104,7 +1104,7 @@ static void rm_motor_sense_induction_correction_sequence (motor_sense_induction_
 
             if (p_ctrl->u2_signal_maximum_difference < p_extended_cfg->u2_signal_error_limit)
             {
-                /* Finish the error correction process normaly */
+                /* Finish the error correction process normally */
                 p_ctrl->u1_correct_status      = MOTOR_SENSE_INDUCTION_CORRECT_FINISH;
                 p_ctrl->u1_angle_adjust_status = MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH;
             }
@@ -1485,7 +1485,7 @@ static void rm_motor_sense_induction_get_data_phase_calibration (motor_sense_ind
             f4_sens_sin_adc = (f4_sens_sin_adc * p_ctrl->f_adc_scaling);
             f4_sens_cos_adc = (f4_sens_cos_adc * p_ctrl->f_adc_scaling);
 
-            /* signal correctin */
+            /* signal correction */
             f4_sens_sin_adc = (f4_sens_sin_adc - p_ctrl->f_sin_offset) * p_ctrl->f_sin_gain;
             f4_sens_cos_adc = (f4_sens_cos_adc - p_ctrl->f_cos_offset) * p_ctrl->f_cos_gain;
 

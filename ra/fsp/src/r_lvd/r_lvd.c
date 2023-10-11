@@ -802,7 +802,7 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
 #endif
 
 /***********************************************************************************************************************
- * Private funtions configurate LVD of VBAT, RTC, EX
+ * Private funtions configure LVD of VBAT, RTC, EX
  *
  * @param[in] p_ctrl            Pointer to the control block structure for the driver instance
  *

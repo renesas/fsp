@@ -188,7 +188,7 @@ typedef struct _d2_devicedata
 
    d2_s8   lasttextwasrle;               /* last texture format was RLE */
    d2_s8   maxpatlen;                    /* maximum size of pattern bitvector supported by the hardware */
-   d2_s8   errorcode;                    /* last actions detaild result code */
+   d2_s8   errorcode;                    /* last actions detailed result code */
    d2_s8   delayed_errorcode;            /* errorcondition that exists until the renderbuffer gets executed. This errorcode is used for errors that occure while the scratchbuffer is written to the displaylist */
    d2_s8   hilimiterprecision_supported; /* is set to 1 when the hilimiterprecision feature is supported by the hardware */
 

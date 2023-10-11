@@ -112,7 +112,7 @@ static void      r_dmac_config_transfer_info(dmac_instance_ctrl_t * p_ctrl, tran
 
 #if DMAC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_dma_open_parameter_checking(dmac_instance_ctrl_t * const p_ctrl, transfer_cfg_t const * const p_cfg);
-static fsp_err_t r_dmac_reconfigure_paramter_checking(transfer_info_t const * const p_info);
+static fsp_err_t r_dmac_reconfigure_parameter_checking(transfer_info_t const * const p_info);
 static fsp_err_t r_dmac_enable_parameter_checking(dmac_instance_ctrl_t * const p_ctrl);
 
 #endif
@@ -201,7 +201,7 @@ fsp_err_t R_DMAC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_
 #if DMAC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl != NULL);
     FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
-    err = r_dmac_reconfigure_paramter_checking(p_info);
+    err = r_dmac_reconfigure_parameter_checking(p_info);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
@@ -650,7 +650,7 @@ static fsp_err_t r_dma_open_parameter_checking (dmac_instance_ctrl_t * const p_c
         FSP_ERROR_RETURN(p_extend->irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
 
-    fsp_err_t err = r_dmac_reconfigure_paramter_checking(p_cfg->p_info);
+    fsp_err_t err = r_dmac_reconfigure_parameter_checking(p_cfg->p_info);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
@@ -664,7 +664,7 @@ static fsp_err_t r_dma_open_parameter_checking (dmac_instance_ctrl_t * const p_c
  * @retval FSP_SUCCESS              The transfer info is valid.
  * @retval FSP_ERR_ASSERTION        A transfer info setting is invalid.
  **********************************************************************************************************************/
-static fsp_err_t r_dmac_reconfigure_paramter_checking (transfer_info_t const * const p_info)
+static fsp_err_t r_dmac_reconfigure_parameter_checking (transfer_info_t const * const p_info)
 {
     FSP_ASSERT(p_info != NULL);
 

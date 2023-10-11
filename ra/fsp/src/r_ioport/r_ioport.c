@@ -402,7 +402,7 @@ fsp_err_t R_IOPORT_PinWrite (ioport_ctrl_t * const p_ctrl, bsp_io_port_pin_t pin
         setbits = pin_mask;
     }
 
-    /* PCNTR register is updated instead of using PFS as access is atomic and PFS requires seperate enable/disable
+    /* PCNTR register is updated instead of using PFS as access is atomic and PFS requires separate enable/disable
      * using PWPR register */
 
     /* Get the port address */

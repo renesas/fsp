@@ -3370,7 +3370,7 @@ NX_CRYPTO_EC_POINT    public_key;
 /*    NX_CRYPTO_HUGE_NUMBER_COPY            Copy huge number              */
 /*    NX_CRYPTO_HUGE_NUMBER_INITIALIZE      Initialize the buffer of      */
 /*                                            huge number                 */
-/*    [nx_crypto_ec_add]                    Perform addtion for EC        */
+/*    [nx_crypto_ec_add]                    Perform addition for EC        */
 /*    [nx_crypto_ec_multiple]               Perform multiplication for EC */
 /*                                                                        */
 /*  CALLED BY                                                             */

@@ -256,7 +256,7 @@ void r_ptp_ipls_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/* Lookup table for calcualting TSLATR. */
+/* Lookup table for calculating TSLATR. */
 static const ptp_tslatr_setting_t g_tslatr_lut[2][2][4] =
 {
     /* MMI */
@@ -395,7 +395,7 @@ const ptp_api_t g_ptp_api =
  *
  * This function performs the following tasks:
  * - Performs parameter checking and processes error conditions.
- * - Configures the peripheral registers acording to the configuration.
+ * - Configures the peripheral registers according to the configuration.
  * - Initialize the control structure for use in other @ref PTP_API functions.
  *
  * @retval     FSP_SUCCESS                     The instance has been successfully configured.
@@ -1280,13 +1280,13 @@ static void r_ptp_hw_config (ptp_instance_ctrl_t * p_instance_ctrl)
     /* Set the number of times the offsetFromMaster must be above the threshold for sync to be lost. */
     uint32_t stmr = (uint32_t) (p_cfg->stca.sync_threshold.count << R_ETHERC_EPTPC_COMMON_STMR_DVTH_Pos);
 
-    /* Set the number of times the offsetFromMaster must be below the threshold for sync to be aquired. */
+    /* Set the number of times the offsetFromMaster must be below the threshold for sync to be acquired. */
     stmr |= (uint32_t) (p_cfg->stca.sync_loss_threshold.count << R_ETHERC_EPTPC_COMMON_STMR_SYTH_Pos);
 
     /* Enable the SYNCOUT and SYNTOUT flags in STSR. */
     stmr |= R_ETHERC_EPTPC_COMMON_STMR_ALEN0_Msk | R_ETHERC_EPTPC_COMMON_STMR_ALEN1_Msk;
 
-    /* Configure gradient worst10 aquisition. */
+    /* Configure gradient worst10 acquisition. */
     if (PTP_CLOCK_CORRECTION_MODE2 == p_cfg->stca.clock_correction_mode)
     {
         /* Enable clock correction mode 2. */
@@ -2167,7 +2167,7 @@ void r_ptp_mint_isr (void)
              * (See 30.2.5 of the RA6M3 manual R01UH0886EJ0100). */
             stsr |= R_ETHERC_EPTPC_COMMON_STSR_SYNTOUT_Msk | R_ETHERC_EPTPC_COMMON_STSR_SYNCOUT_Msk;
 
-            /* Start syncronization. */
+            /* Start synchronization. */
             R_ETHERC_EPTPC_COMMON->SYNSTARTR = 1U;
 
             if (PTP_CLOCK_CORRECTION_MODE2 == p_instance_ctrl->p_cfg->stca.clock_correction_mode)

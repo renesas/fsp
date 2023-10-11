@@ -1879,7 +1879,7 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
   #if defined(USB_CFG_HUVC_USE)
     uint32_t             alternate_number;
     uint32_t             interface_number;
-    uint16_t             is_interface_discoverd = 0;
+    uint16_t             is_interface_discovered = 0;
     uint16_t             length;
     uint16_t             offset;
     uint16_t             usb_class;
@@ -2129,12 +2129,12 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
                         if ((UX_HOST_CLASS_VIDEO_SUBCLASS_STREAMING == *(p_config + offset + 6)) &&
                             (alternate_number == *(p_config + offset + 3)))
                         {
-                            is_interface_discoverd = 1;
+                            is_interface_discovered = 1;
                         }
                     }
                 }
 
-                if (1 == is_interface_discoverd)
+                if (1 == is_interface_discovered)
                 {
                     if (USB_DT_ENDPOINT == *(p_config + offset + USB_EP_B_DESCRIPTORTYPE))
                     {
@@ -2650,7 +2650,7 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
    #if (USB_CFG_DMA == USB_CFG_ENABLE)
                     if (USB_YES == is_in_transfer)
                     {
-                        // IN transfere
+                        // IN transferred
                         max_packet_size = (uint16_t) endpoint->ux_endpoint_descriptor.wMaxPacketSize;
                         if (0 != (size % max_packet_size))
                         {

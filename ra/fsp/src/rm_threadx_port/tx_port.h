@@ -572,7 +572,7 @@ extern void    _tx_thread_secure_stack_initialize(void);
    armlink linker inlining. This requires them to consist of either a
    single 32-bit instruction, or either one or two 16-bit instructions
    followed by a "BX lr". Note that to reduce the critical region size, the
-   16-bit "CPSID i" instruction is preceeded by a 16-bit NOP */
+   16-bit "CPSID i" instruction is preceded by a 16-bit NOP */
 
 
 #ifdef TX_DISABLE_INLINE

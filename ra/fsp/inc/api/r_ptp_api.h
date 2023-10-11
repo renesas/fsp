@@ -254,7 +254,7 @@ typedef enum e_ptp_event
     PTP_EVENT_SYNC_ACQUIRED                = 0x80, ///< The local clock is synchronized to the master clock.
     PTP_EVENT_SYNC_LOST                    = 0x81, ///< The local clock is not synchronized to the master clcok.
     PTP_EVENT_SYNC_MESSAGE_TIMEOUT         = 0x83, ///< A sync message has not been received for the configured time.
-    PTP_EVENT_WORST10_ACQUIRED             = 0x84, ///< Gradient worst10 values has been calcualted.
+    PTP_EVENT_WORST10_ACQUIRED             = 0x84, ///< Gradient worst10 values has been calculated.
     PTP_EVENT_OFFSET_FROM_MASTER_UPDATED   = 0x00, ///< The offset from the master clock has been updated.
     PTP_EVENT_LOG_MESSAGE_INT_CHANGED      = 0x01, ///< The message interval was changed.
     PTP_EVENT_MEAN_PATH_DELAY_UPDATED      = 0x02, ///< The mean path delay has been updated.
@@ -274,8 +274,8 @@ typedef enum e_ptp_event
 /** The Ethernet PHY interface type. */
 typedef enum e_ptp_ethernet_phy_interface
 {
-    PTP_ETHERNET_PHY_INTERFACE_MII,    ///< Media-independant interface.
-    PTP_ETHERNET_PHY_INTERFACE_RMII,   ///< Reduced media-independant interface.
+    PTP_ETHERNET_PHY_INTERFACE_MII,    ///< Media-independent interface.
+    PTP_ETHERNET_PHY_INTERFACE_RMII,   ///< Reduced media-independent interface.
 } ptp_ethernet_phy_interface_t;
 
 /**

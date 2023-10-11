@@ -406,7 +406,7 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t * const p_ctrl,
         err = p_transfer->p_api->softwareStart(p_transfer->p_ctrl, TRANSFER_START_MODE_SINGLE);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-        /* Wait for DMAC to complete to maintain deterministic processing and backward compatability */
+        /* Wait for DMAC to complete to maintain deterministic processing and backward compatibility */
         transfer_properties_t transfer_properties = {0U};
         err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);

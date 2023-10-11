@@ -258,7 +258,7 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
 
     FSP_PARAMETER_NOT_USED(p_phase_err);
 
-    /* Position aquisition (hall sensor) */
+    /* Position acquisition (hall sensor) */
     p_instance_ctrl->u1_last_hall_signal = p_instance_ctrl->u1_hall_signal;
 
     u4_temp_level = R_BSP_PinRead(p_extended_cfg->port_hall_sensor_u);

@@ -70,7 +70,7 @@
  *  d2_pc_fbwordswritten - framebuffer cache words written
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_setperfcountevent( d2_device *handle, d2_u32 counter, d2_u32 event )
 {
@@ -129,7 +129,7 @@ d2_s32 d2_setperfcountevent( d2_device *handle, d2_u32 counter, d2_u32 event )
  *   value - value to be set: 0 for reset
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_setperfcountvalue( d2_device *handle, d2_u32 counter, d2_slong value )
 {

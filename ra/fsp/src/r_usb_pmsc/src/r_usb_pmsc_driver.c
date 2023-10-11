@@ -676,7 +676,7 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
     }
     else if (0 != g_usb_pmsc_cbw.bmcbw_flags.cbw_dir)
     {
-        (*uc_case) |= (uint8_t) USB_MSC_XXHI; /* Host Recieved(IN) Data */
+        (*uc_case) |= (uint8_t) USB_MSC_XXHI; /* Host Received(IN) Data */
     }
     else
     {
@@ -693,7 +693,7 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
             break;
         }
 
-        case USB_MSC_DNHI:             /* Device No Data & Host Recieved(IN) Data */
+        case USB_MSC_DNHI:             /* Device No Data & Host Received(IN) Data */
         {
             result = USB_MSC_CASE04;
 
@@ -714,7 +714,7 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
             break;
         }
 
-        case USB_MSC_DIHI:             /* Device Send(IN) Data & Host Recieved(IN) Data */
+        case USB_MSC_DIHI:             /* Device Send(IN) Data & Host Received(IN) Data */
         {
             if (g_usb_pmsc_dtl > ul_size)
             {
@@ -742,21 +742,21 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
             break;
         }
 
-        case USB_MSC_DOHN:             /* Device Recieved(OUT) Data & Host No Data */
+        case USB_MSC_DOHN:             /* Device Received(OUT) Data & Host No Data */
         {
             result = USB_MSC_CASE03;
 
             break;
         }
 
-        case USB_MSC_DOHI:             /* Device Recieved(OUT) Data & Host Recieved(IN) Data */
+        case USB_MSC_DOHI:             /* Device Received(OUT) Data & Host Received(IN) Data */
         {
             result = USB_MSC_CASE08;
 
             break;
         }
 
-        case USB_MSC_DOHO:             /* Device Recieved(OUT) Data & Host Send(OUT) Data */
+        case USB_MSC_DOHO:             /* Device Received(OUT) Data & Host Send(OUT) Data */
         {
             if (g_usb_pmsc_dtl > ul_size)
             {

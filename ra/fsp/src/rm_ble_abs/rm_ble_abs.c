@@ -252,20 +252,20 @@
 
 #define BLE_ABS_SECURE_DATA_BONDING_NUMBER_OFFSET               BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE
 #define BLE_ABS_SECURE_DATA_OUT_BONDING_OFFSET                  (5)
-#define BLE_ABS_SECURE_DATA_SECURITY_INFOMATION_OFFSET          (8)
-#define BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFOMATION_OFFSET     (12)
+#define BLE_ABS_SECURE_DATA_SECURITY_INFORMATION_OFFSET          (8)
+#define BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFORMATION_OFFSET     (12)
 #define BLE_ABS_SECURE_DATA_SECURITY_KEYS_OFFSET                (20)
 #define BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET              (48)
 #define BLE_ABS_SECURE_DATA_SECURITY_IDENTITY_ADDRESS_OFFSET    (62)
 
 #define BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE                 (88)
 #define BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE                     (40)
-#define BLE_ABS_SECURE_DATA_LOCAL_INFOMATION_SIZE               (1)
+#define BLE_ABS_SECURE_DATA_LOCAL_INFORMATION_SIZE               (1)
 #define BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE       (7)
 #define BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE                (8)
 #define BLE_ABS_SECURE_DATA_REMOTE_KEY_ATTRIBUTE_SIZE           (6)
 #define BLE_ABS_SECURE_DATA_REMOTE_KEYS_SIZE                    (65)
-#define BLE_ABS_SECURE_DATA_REMOTE_KEYS_INFOMATION_SIZE         (4)
+#define BLE_ABS_SECURE_DATA_REMOTE_KEYS_INFORMATION_SIZE         (4)
 
 #define BLE_ABS_SECURE_DATA_BASE_ADDR                           (BLE_ABS_SECURE_DATA_BLOCK_BASE +           \
                                                                  (BLE_ABS_CFG_SECURE_DATA_DATAFLASH_BLOCK * \
@@ -281,7 +281,7 @@
 #define BLE_ABS_SECURE_DATA_ADDR_LOC_INFO                       (BLE_ABS_SECURE_DATA_ADDR_LOC_IDADDR + \
                                                                  BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE)
 #define BLE_ABS_SECURE_DATA_ADDR_REM_START                      (BLE_ABS_SECURE_DATA_ADDR_LOC_INFO + \
-                                                                 BLE_ABS_SECURE_DATA_LOCAL_INFOMATION_SIZE)
+                                                                 BLE_ABS_SECURE_DATA_LOCAL_INFORMATION_SIZE)
 #define BLE_ABS_SECURE_DATA_MAX_SIZE                            (BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + \
                                                                  BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE *    \
                                                                  BLE_ABS_CFG_NUMBER_BONDING)
@@ -2568,7 +2568,7 @@ static fsp_err_t ble_abs_advertising_report_handler (ble_abs_instance_ctrl_t * c
             while (pos < len)
             {
                 /* Each advertising structure have following constructs.
-                 * - Lenght: 1 byte (The length of AD type + AD data)
+                 * - Length: 1 byte (The length of AD type + AD data)
                  * - AD type: 1 byte
                  * - AD data: variable
                  */
@@ -3741,7 +3741,7 @@ static fsp_err_t ble_abs_secure_data_writeremkeys (flash_instance_t const * p_in
 
     gs_key_ex_param.p_keys_info = (st_ble_gap_key_dist_t *) (start_addr + BLE_ABS_SECURE_DATA_SECURITY_KEYS_OFFSET); ///< ex_key_param
     memcpy(&p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + entry * BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE +
-                       BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFOMATION_OFFSET],
+                       BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFORMATION_OFFSET],
            (uint8_t *) &gs_key_ex_param,
            BLE_ABS_SECURE_DATA_REMOTE_KEY_ATTRIBUTE_SIZE);
 
@@ -3751,9 +3751,9 @@ static fsp_err_t ble_abs_secure_data_writeremkeys (flash_instance_t const * p_in
            BLE_ABS_SECURE_DATA_REMOTE_KEYS_SIZE); ///< keys
 
     memcpy(&p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + entry * BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE +
-                       BLE_ABS_SECURE_DATA_SECURITY_INFOMATION_OFFSET],
+                       BLE_ABS_SECURE_DATA_SECURITY_INFORMATION_OFFSET],
            (uint8_t *) p_keyinfo,
-           BLE_ABS_SECURE_DATA_REMOTE_KEYS_INFOMATION_SIZE);                                ///< keyinfo
+           BLE_ABS_SECURE_DATA_REMOTE_KEYS_INFORMATION_SIZE);                                ///< keyinfo
 
     ble_abs_secure_data_update_bond_num(p_instance, entry, op_code, &bond_num, p_sec_data); ///< update bond order and the number of bonds.
 
@@ -4084,9 +4084,9 @@ static fsp_err_t ble_abs_secure_data_read_bond_info (flash_instance_t const * p_
                      BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE;
         p_bond_info[i].p_addr      = (st_ble_dev_addr_t *) (p_bonds + start_addr);
         p_bond_info[i].p_auth_info =
-            (st_ble_gap_auth_info_t *) (p_bonds + start_addr + BLE_ABS_SECURE_DATA_SECURITY_INFOMATION_OFFSET);
+            (st_ble_gap_auth_info_t *) (p_bonds + start_addr + BLE_ABS_SECURE_DATA_SECURITY_INFORMATION_OFFSET);
         p_bond_info[i].p_keys =
-            (st_ble_gap_key_ex_param_t *) (p_bonds + start_addr + BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFOMATION_OFFSET);
+            (st_ble_gap_key_ex_param_t *) (p_bonds + start_addr + BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFORMATION_OFFSET);
         p_bond_info[i].p_keys->p_keys_info =
             (st_ble_gap_key_dist_t *) (p_bonds + start_addr + BLE_ABS_SECURE_DATA_SECURITY_KEYS_OFFSET);
         (*p_out_bond_num)++;

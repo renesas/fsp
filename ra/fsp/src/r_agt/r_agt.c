@@ -1156,7 +1156,7 @@ void agt_int_isr (void)
             *p_instance_ctrl->p_callback_memory = callback_args;
         }
 
-        /* Retreive AGTCR in case it was modified in the callback. */
+        /* Retrieve AGTCR in case it was modified in the callback. */
         agtcr = p_reg_ctrl->AGTCR;
     }
 

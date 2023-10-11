@@ -196,7 +196,7 @@ typedef struct st_motor_api
      * - @ref RM_MOTOR_INDUCTION_ErrorSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[in]  error        Happend error code
+     * @param[in]  error        Happened error code
      */
     fsp_err_t (* errorSet)(motor_ctrl_t * const p_ctrl, motor_error_t const error);
 
@@ -280,7 +280,7 @@ typedef struct st_motor_api
      * - @ref RM_MOTOR_INDUCTION_ErrorCheck()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_error      Pointer to get occured error
+     * @param[out] p_error      Pointer to get occurred error
      */
     fsp_err_t (* errorCheck)(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
 

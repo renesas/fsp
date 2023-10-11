@@ -91,13 +91,13 @@ typedef enum e_elc_event_ra4e2
     ELC_EVENT_RTC_ALARM              = (0x054), // Alarm interrupt
     ELC_EVENT_RTC_PERIOD             = (0x055), // Periodic interrupt
     ELC_EVENT_RTC_CARRY              = (0x056), // Carry interrupt
-    ELC_EVENT_CAN_RXF                = (0x059), // Global recieve FIFO interrupt
+    ELC_EVENT_CAN_RXF                = (0x059), // Global receive FIFO interrupt
     ELC_EVENT_CAN_GLERR              = (0x05A), // Global error
     ELC_EVENT_CAN_DMAREQ0            = (0x05B), // DMA 0 request
     ELC_EVENT_CAN_DMAREQ1            = (0x05C), // DMA 1 request
     ELC_EVENT_CAN0_TX                = (0x063), // Transmit interrupt
     ELC_EVENT_CAN0_CHERR             = (0x064), // Channel error
-    ELC_EVENT_CAN0_COMFRX            = (0x065), // Common FIFO recieve interrupt
+    ELC_EVENT_CAN0_COMFRX            = (0x065), // Common FIFO receive interrupt
     ELC_EVENT_CAN0_CF_DMAREQ         = (0x066), // Channel DMA request
     ELC_EVENT_CAN0_RXMB              = (0x067), // Receive message buffer interrupt
     ELC_EVENT_USBFS_INT              = (0x06D), // USBFS interrupt

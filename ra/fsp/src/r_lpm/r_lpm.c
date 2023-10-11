@@ -185,7 +185,7 @@ fsp_err_t R_LPM_Open (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_c
  * NOTE: This function does not enter the low power mode, it only configures parameters of the mode. Execution of the
  * WFI instruction is what causes the low power mode to be entered.
  *
- * @retval     FSP_SUCCESS                   Low power mode successfuly applied
+ * @retval     FSP_SUCCESS                   Low power mode successfully applied
  * @retval     FSP_ERR_ASSERTION             Null Pointer
  * @retval     FSP_ERR_NOT_OPEN              LPM instance is not open
  * @retval     FSP_ERR_UNSUPPORTED           This MCU does not support Deep Software Standby

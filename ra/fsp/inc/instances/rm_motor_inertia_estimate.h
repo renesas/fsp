@@ -88,7 +88,7 @@ typedef struct st_motor_inertia_estimate_instance_ctrl
     motor_inertia_estimate_mode_t       mode;            ///< Internal mode
     uint8_t u1_mode_count;                               ///< Use to manage internal mode
     motor_inertia_estimate_period_t speed_period;        ///< Measure period
-    motor_inertia_estimate_period_t speed_period_buffer; ///< Buffer of measure period to be reffered by current cyclic
+    motor_inertia_estimate_period_t speed_period_buffer; ///< Buffer of measure period to be referred by current cyclic
 
     uint32_t u4_measure_count;                           ///< Counter for speed control cycle
     uint32_t u4_wait_count;                              ///< Counter to wait change mode timing
@@ -99,7 +99,7 @@ typedef struct st_motor_inertia_estimate_instance_ctrl
     float   f_iq_ad;                                     ///< q-axis current [A]
     float   f_summary_iq_ad;                             ///< Summary of q-axis current
     float   f_position_mode_time;                        ///< Summary of speed control period to judge the timing
-    float   f_position_dt_time_sec;                      ///< Differencial time of move
+    float   f_position_dt_time_sec;                      ///< Differential time of move
 
     int16_t s2_position_reference_degree;                ///< Position reference [degree]
 

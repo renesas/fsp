@@ -1367,7 +1367,7 @@ void bsp_clock_init (void)
 
 #if BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
-    /* Transition to an intermediate clock configuration in order to prepare for writing the new clock configuraiton. */
+    /* Transition to an intermediate clock configuration in order to prepare for writing the new clock configuration. */
     bsp_soft_reset_prepare();
 #endif
 

@@ -243,7 +243,7 @@ d2_s32 d2_setblitsrc( d2_device *handle, void *ptr, d2_s32 pitch, d2_s32 width, 
  * d2_bf_filterv cannot be used if the pitch of the texture is >= 2048
  * 
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_blitcopy( d2_device *handle, d2_s32 srcwidth, d2_s32 srcheight, d2_blitpos srcx, d2_blitpos srcy, d2_width dstwidth, d2_width dstheight, d2_point dstx, d2_point dsty, d2_u32 flags )
 {

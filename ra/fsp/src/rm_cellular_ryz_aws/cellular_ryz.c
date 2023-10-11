@@ -178,7 +178,7 @@ CellularError_t Cellular_ModuleEnableUrc (CellularContext_t * pContext)
  * @param[in] pAtReq    Pointer to AT request
  *
  * @retval  CELLULAR_SUCCESS        AT command succeeded
- * @retval  CELLULAR_BAD_PARAMETER  Bad paramter passed in
+ * @retval  CELLULAR_BAD_PARAMETER  Bad parameter passed in
  **********************************************************************************************************************/
 static CellularError_t sendAtCommandWithRetryTimeout (CellularContext_t * pContext, const CellularAtReq_t * pAtReq)
 {

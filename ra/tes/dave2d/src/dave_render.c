@@ -396,7 +396,7 @@ void d2_startrender_bottom_intern( d2_devicedata *handle, const d2_bbox *bbox, d
  *   color - fill color and alpha
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_clear( d2_device *handle, d2_color color )
 {
@@ -421,7 +421,7 @@ d2_s32 d2_clear( d2_device *handle, d2_color color )
  *   h - height of rectangle in pixels (fixedpoint)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_renderbox( d2_device *handle, d2_point x1, d2_point y1, d2_width w, d2_width h )
 {
@@ -474,7 +474,7 @@ d2_s32 d2_renderbox( d2_device *handle, d2_point x1, d2_point y1, d2_width w, d2
  *   d2_le_exclude_both  - start and endpoint are not part of the line
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_renderline2>, <d2_setlinecap>
@@ -533,7 +533,7 @@ d2_s32 d2_renderline( d2_device *handle, d2_point x1, d2_point y1, d2_point x2, 
  *   d2_le_exclude_both  - start and endpoint are not part of the line
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_renderline>, <d2_setlinecap>
@@ -586,7 +586,7 @@ d2_s32 d2_renderline2(  d2_device *handle, d2_point x1, d2_point y1, d2_point x2
  * d2_edge2_shared - edge from (x3,y3) - (x1,y1) is shared
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_rendertri( d2_device *handle, d2_point x1, d2_point y1, d2_point x2, d2_point y2, d2_point x3, d2_point y3, d2_u32 flags )
 {
@@ -639,7 +639,7 @@ d2_s32 d2_rendertri( d2_device *handle, d2_point x1, d2_point y1, d2_point x2, d
  * d2_edge3_shared - edge from (x4,y4) - (x1,y1) is shared
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_renderquad( d2_device *handle, d2_point x1, d2_point y1, d2_point x2, d2_point y2, d2_point x3, d2_point y3, d2_point x4, d2_point y4, d2_u32 flags )
 {
@@ -684,7 +684,7 @@ d2_s32 d2_renderquad( d2_device *handle, d2_point x1, d2_point y1, d2_point x2, 
  *   w - width or 0 for a solid circle (fixedpoint)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_rendercircle( d2_device *handle, d2_point x, d2_point y, d2_width r, d2_width w )
 {
@@ -832,7 +832,7 @@ d2_s32 d2_renderwedge( d2_device *handle, d2_point x, d2_point y, d2_width r, d2
  *   d2_le_closed - polyline has no start or endpoint, last vertex is connected back to first
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_setlinecap>, <d2_setlinejoin>
@@ -889,7 +889,7 @@ d2_s32 d2_renderpolyline( d2_device *handle, const d2_point *data, d2_u32 count,
  *   d2_le_closed - polyline has no start or endpoint, last vertex is connected back to first
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *   <d2_setlinecap>, <d2_setlinejoin>, <d2_renderpolyline>
@@ -945,7 +945,7 @@ d2_s32 d2_renderpolyline2( d2_device *handle, const d2_point *data, d2_u32 count
  *   count - number of triangles
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *  <d2_rendertri>, <d2_rendertrifan>, <d2_rendertristrip>
@@ -1015,7 +1015,7 @@ d2_s32 d2_rendertrilist( d2_device *handle, const d2_point *data, const d2_u32 *
  *   count - number of triangles
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *  <d2_rendertri>, <d2_rendertrifan>, <d2_rendertrilist>
@@ -1133,7 +1133,7 @@ d2_s32 d2_rendertristrip( d2_device *handle, const d2_point *data, const d2_u32 
  *   count - number of triangles
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  *
  * see also:
  *  <d2_rendertri>, <d2_rendertrilist>, <d2_rendertristrip>
@@ -1182,7 +1182,7 @@ d2_s32 d2_rendertrifan( d2_device *handle, const d2_point *data, const d2_u32 *f
 /* function: d2_renderpolygon
  * Render a convex polygon
  *
- * All vertices have to be in clockwise order. If seperation into monoton
+ * All vertices have to be in clockwise order. If separation into monoton
  * subregions is required, internal edges will be flagged as 'shared'
  * automatically.
  * Outer edges are always nonshared for now.
@@ -1195,7 +1195,7 @@ d2_s32 d2_rendertrifan( d2_device *handle, const d2_point *data, const d2_u32 *f
  *   flags - reserved (should be NULL)
  *
  * returns:
- *   errorcode (D2_OK if successfull) see list of <Errorcodes> for details
+ *   errorcode (D2_OK if successful) see list of <Errorcodes> for details
  * */
 d2_s32 d2_renderpolygon( d2_device *handle, const d2_point *data, d2_u32 count, d2_u32 flags)
 {

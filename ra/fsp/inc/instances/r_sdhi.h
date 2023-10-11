@@ -68,7 +68,7 @@ typedef union
         uint32_t reserved_5         : 3;
         uint32_t card_dat3_removed  : 1; // < card removal detected by dat3 pin
         uint32_t card_dat3_inserted : 1; // < card inserion detected by dat3 pin
-        uint32_t reservered_10      : 6;
+        uint32_t reserved_10      : 6;
         uint32_t cmd_err            : 1; // < command error
         uint32_t crc_err            : 1; // < crc error
         uint32_t end_err            : 1; // < end bit error

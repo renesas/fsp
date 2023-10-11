@@ -90,7 +90,7 @@ typedef enum e_glcdc_tcon_pin
 } glcdc_tcon_pin_t;
 
 /** Bus Arbitration setting */
-typedef enum e_glcdc_bus_arbitraion
+typedef enum e_glcdc_bus_arbitration
 {
     GLCDC_BUS_ARBITRATION_ROUNDROBIN,  ///< Round robin
     GLCDC_BUS_ARBITRATION_FIX_PRIORITY ///< Fixed

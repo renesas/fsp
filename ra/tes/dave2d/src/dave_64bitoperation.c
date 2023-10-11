@@ -175,7 +175,7 @@ void d2_add64(const d2_int64 *a, const d2_int64 *b, d2_int64 *res)
  *
  *    Function: d2_sub64
  *    
- *    Substraction of 2 64bit value
+ *    Subtraction of 2 64bit value
  *
  *    Parameters:
  *

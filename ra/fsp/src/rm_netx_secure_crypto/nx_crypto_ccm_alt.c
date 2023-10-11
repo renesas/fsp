@@ -331,7 +331,7 @@ UCHAR  Flags = 0;
 UCHAR *A = ccm_metadata -> nx_crypto_ccm_A;
 
     /* Check the block size. */
-    /* Accroding to RFC 3610, valid values of L range between 2 octets and 8 octets, iv[0] range between 7 octets and 13 octets. */
+    /* According to RFC 3610, valid values of L range between 2 octets and 8 octets, iv[0] range between 7 octets and 13 octets. */
     if (block_size != NX_CRYPTO_CCM_BLOCK_SIZE || iv[0] > 13 || iv[0] < 7)
     {
         return(NX_CRYPTO_PTR_ERROR);

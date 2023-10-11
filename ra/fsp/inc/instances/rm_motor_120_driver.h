@@ -151,7 +151,7 @@ typedef struct st_motor_120_driver_instance_ctrl
     uint32_t u4_gtiocb_periheral_low_cfg;                    ///< I/O port "Low" config for gtioca periheral functions
     uint32_t u4_gtiocb_periheral_high_cfg;                   ///< I/O port "High" config for gtioca periheral functions
 
-    motor_120_driver_modulation_t  st_modulation;            ///< Modulation paramter
+    motor_120_driver_modulation_t  st_modulation;            ///< Modulation parameter
     motor_120_driver_cfg_t const * p_cfg;                    ///< Pointer of configuration structure
 
     /* For ADC callback */

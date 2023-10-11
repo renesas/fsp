@@ -49,7 +49,7 @@ FSP_HEADER
 typedef enum e_motor_driver_select_adc_instance
 {
     MOTOR_DRIVER_SELECT_ADC_INSTANCE_FIRST = 0, ///< Use first ADC instance
-    MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND,    ///< Use second ADC instanse
+    MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND,    ///< Use second ADC instances
 } motor_driver_select_adc_instance_t;
 
 /* Modulation type selection */
