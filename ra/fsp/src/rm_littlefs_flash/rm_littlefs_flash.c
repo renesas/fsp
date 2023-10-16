@@ -107,6 +107,14 @@ fsp_err_t RM_LITTLEFS_FLASH_Open (rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if LFS_THREAD_SAFE
+ #if BSP_CFG_RTOS == 1                 // ThreadX
+    if(tx_mutex_create(&p_instance_ctrl->mutex, "littlefs", TX_INHERIT) != TX_SUCCESS)
+    {
+        p_flash->p_api->close(p_flash->p_ctrl);
+
+        return FSP_ERR_INTERNAL;
+    }
+ #elif BSP_CFG_RTOS == 2               // FreeRTOS
     p_instance_ctrl->xSemaphore = xSemaphoreCreateMutexStatic(&p_instance_ctrl->xMutexBuffer);
 
     if (NULL == p_instance_ctrl->xSemaphore)
@@ -115,6 +123,7 @@ fsp_err_t RM_LITTLEFS_FLASH_Open (rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs
 
         return FSP_ERR_INTERNAL;
     }
+ #endif
 #endif
 
     /* This module is now open. */
@@ -152,7 +161,11 @@ fsp_err_t RM_LITTLEFS_FLASH_Close (rm_littlefs_ctrl_t * const p_ctrl)
     p_flash->p_api->close(p_extend->p_flash->p_ctrl);
 
 #if LFS_THREAD_SAFE
+ #if BSP_CFG_RTOS == 1                 // ThreadX
+    tx_mutex_delete(&p_instance_ctrl->mutex);
+ #elif BSP_CFG_RTOS == 2               // FreeRTOS
     vSemaphoreDelete(p_instance_ctrl->xSemaphore);
+ #endif
 #endif
 
     return FSP_SUCCESS;
@@ -277,9 +290,15 @@ int rm_littlefs_flash_lock (const struct lfs_config * c)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(RM_LITTLEFS_FLASH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
  #endif
+ #if BSP_CFG_RTOS == 1                 // ThreadX
+    UINT err = tx_mutex_get(&p_instance_ctrl->mutex, RM_LITTLEFS_FLASH_SEMAPHORE_TIMEOUT);
+
+    FSP_ERROR_RETURN(err == TX_SUCCESS, LFS_ERR_IO);
+ #elif BSP_CFG_RTOS == 2                // FreeRTOS
     BaseType_t err = xSemaphoreTake(p_instance_ctrl->xSemaphore, RM_LITTLEFS_FLASH_SEMAPHORE_TIMEOUT);
 
     FSP_ERROR_RETURN(true == err, LFS_ERR_IO);
+ #endif
 
     return LFS_ERR_OK;
 #else
@@ -303,9 +322,15 @@ int rm_littlefs_flash_unlock (const struct lfs_config * c)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(RM_LITTLEFS_FLASH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
  #endif
+ #if BSP_CFG_RTOS == 1                 // ThreadX
+    UINT err = tx_mutex_put(&p_instance_ctrl->mutex);
+
+    FSP_ERROR_RETURN(err == TX_SUCCESS, LFS_ERR_IO);
+ #elif BSP_CFG_RTOS == 2               // FreeRTOS
     BaseType_t err = xSemaphoreGive(p_instance_ctrl->xSemaphore);
 
     FSP_ERROR_RETURN(true == err, LFS_ERR_IO);
+ #endif
 
     return LFS_ERR_OK;
 #else
