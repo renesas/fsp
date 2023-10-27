@@ -40,25 +40,6 @@ FSP_HEADER
  * @section   RM_BLE_MESH_MODEL_CLIENT_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Client (BLE MESH MODEL CLIENT) middleware provides Bluetooth Low Energy Mesh Model Client functionality.
  *
- * The Bluetooth Low Energy Mesh Model Client interface can be implemented by:
- * - @ref  RM_MESH_GENERIC_BATTERY_CLT
- * - @ref  RM_MESH_GENERIC_DTT_CLT
- * - @ref  RM_MESH_GENERIC_LEVEL_CLT
- * - @ref  RM_MESH_GENERIC_LOC_CLT
- * - @ref  RM_MESH_GENERIC_ON_OFF_CLT
- * - @ref  RM_MESH_GENERIC_PL_CLT
- * - @ref  RM_MESH_GENERIC_POO_CLT
- * - @ref  RM_MESH_GENERIC_PROP_CLT
- * - @ref  RM_MESH_HEALTH_CLT
- * - @ref  RM_MESH_LIGHT_CTL_CLT
- * - @ref  RM_MESH_LIGHT_HSL_CLT
- * - @ref  RM_MESH_LIGHT_LC_CLT
- * - @ref  RM_MESH_LIGHT_LIGHTNESS_CLT
- * - @ref  RM_MESH_LIGHT_XYL_CLT
- * - @ref  RM_MESH_SCENE_CLT
- * - @ref  RM_MESH_SCHEDULER_CLT
- * - @ref  RM_MESH_TIME_CLT
- * - @ref  RM_MESH_SENSOR_CLT
  *
  * @{
  **********************************************************************************************************************/
@@ -80,8 +61,6 @@ typedef struct st_rm_ble_mesh_model_client_callback_args
 } rm_ble_mesh_model_client_callback_args_t;
 
 /** BLE MESH MODEL CLIENT control block.  Allocate an instance specific control block to pass into the BLE mesh model health client API calls.
- * @par Implemented as
- * - rm_ble_mesh_health_client_instance_ctrl_t
  */
 typedef void rm_ble_mesh_model_client_ctrl_t;
 
@@ -101,25 +80,6 @@ typedef struct st_rm_ble_mesh_model_client_cfg
 typedef struct st_rm_ble_mesh_model_client_api
 {
     /** API to open client model.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_CLT_Open()
-     * - @ref RM_MESH_GENERIC_DTT_CLT_Open()
-     * - @ref RM_MESH_GENERIC_LEVEL_CLT_Open()
-     * - @ref RM_MESH_GENERIC_LOC_CLT_Open()
-     * - @ref RM_MESH_GENERIC_ON_OFF_CLT_Open()
-     * - @ref RM_MESH_GENERIC_PL_CLT_Open()
-     * - @ref RM_MESH_GENERIC_POO_CLT_Open()
-     * - @ref RM_MESH_GENERIC_PROP_CLT_Open()
-     * - @ref RM_MESH_LIGHT_CTL_CLT_Open()
-     * - @ref RM_MESH_LIGHT_HSL_CLT_Open()
-     * - @ref RM_MESH_LIGHT_LC_CLT_Open()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_CLT_Open()
-     * - @ref RM_MESH_LIGHT_XYL_CLT_Open()
-     * - @ref RM_MESH_SCENE_CLT_Open()
-     * - @ref RM_MESH_SCHEDULER_CLT_Open()
-     * - @ref RM_MESH_TIME_CLT_Open()
-     * - @ref RM_MESH_SENSOR_CLT_Open()
-     * - @ref RM_MESH_HEALTH_CLIENT_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -128,77 +88,12 @@ typedef struct st_rm_ble_mesh_model_client_api
                        rm_ble_mesh_model_client_cfg_t const * const p_cfg);
 
     /** API to close client model.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_CLT_Close()
-     * - @ref RM_MESH_GENERIC_DTT_CLT_Close()
-     * - @ref RM_MESH_GENERIC_LEVEL_CLT_Close()
-     * - @ref RM_MESH_GENERIC_LOC_CLT_Close()
-     * - @ref RM_MESH_GENERIC_ON_OFF_CLT_Close()
-     * - @ref RM_MESH_GENERIC_PL_CLT_Close()
-     * - @ref RM_MESH_GENERIC_POO_CLT_Close()
-     * - @ref RM_MESH_GENERIC_PROP_CLT_Close()
-     * - @ref RM_MESH_LIGHT_CTL_CLT_Close()
-     * - @ref RM_MESH_LIGHT_HSL_CLT_Close()
-     * - @ref RM_MESH_LIGHT_LC_CLT_Close()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_CLT_Close()
-     * - @ref RM_MESH_LIGHT_XYL_CLT_Close()
-     * - @ref RM_MESH_SCENE_CLT_Close()
-     * - @ref RM_MESH_SCHEDULER_CLT_Close()
-     * - @ref RM_MESH_TIME_CLT_Close()
-     * - @ref RM_MESH_SENSOR_CLT_Close()
-     * - @ref RM_MESH_HEALTH_CLIENT_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_model_client_ctrl_t * const p_ctrl);
 
-    /** DEPRECATED - API to set Model client model handle.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_DTT_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_LEVEL_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_LOC_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_ON_OFF_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_PL_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_POO_CLT_SetModelHandle()
-     * - @ref RM_MESH_GENERIC_PROP_CLT_SetModelHandle()
-     * - @ref RM_MESH_LIGHT_CTL_CLT_SetModelHandle()
-     * - @ref RM_MESH_LIGHT_HSL_CLT_SetModelHandle()
-     * - @ref RM_MESH_LIGHT_LC_CLT_SetModelHandle()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_CLT_SetModelHandle()
-     * - @ref RM_MESH_LIGHT_XYL_CLT_SetModelHandle()
-     * - @ref RM_MESH_SCENE_CLT_SetModelHandle()
-     * - @ref RM_MESH_SCHEDULER_CLT_SetModelHandle()
-     * - @ref RM_MESH_TIME_CLT_SetModelHandle()
-     * - @ref RM_MESH_SENSOR_CLT_SetModelHandle()
-     * - @ref RM_MESH_HEALTH_CLIENT_SetModelHandle()
-     *
-     * @param[in]  p_ctrl        Pointer to control structure.
-     * @param[in]  model_handle  Model handle to be assigned.
-     */
-    fsp_err_t (* setModelHandle)(rm_ble_mesh_model_client_ctrl_t * const p_ctrl,
-                                 rm_ble_mesh_access_model_handle_t       model_handle);
-
     /** API to get Model client model handle.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_DTT_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_LEVEL_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_LOC_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_ON_OFF_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_PL_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_POO_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_PROP_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_CTL_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_HSL_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_LC_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_XYL_CLT_GetModelHandle()
-     * - @ref RM_MESH_SCENE_CLT_GetModelHandle()
-     * - @ref RM_MESH_SCHEDULER_CLT_GetModelHandle()
-     * - @ref RM_MESH_TIME_CLT_GetModelHandle()
-     * - @ref RM_MESH_SENSOR_CLT_GetModelHandle()
-     * - @ref RM_MESH_HEALTH_CLIENT_GetModelHandle()
      *
      * @param[in]   p_ctrl          Pointer to control structure.
      * @param[out]  p_model_handle  Pointer to model handle to be filled/returned.
@@ -207,25 +102,6 @@ typedef struct st_rm_ble_mesh_model_client_api
                                  rm_ble_mesh_access_model_handle_t * const p_model_handle);
 
     /** API to send acknowledged commands.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_DTT_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_LEVEL_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_LOC_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_ON_OFF_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_PL_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_POO_CLT_GetModelHandle()
-     * - @ref RM_MESH_GENERIC_PROP_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_CTL_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_HSL_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_LC_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_CLT_GetModelHandle()
-     * - @ref RM_MESH_LIGHT_XYL_CLT_GetModelHandle()
-     * - @ref RM_MESH_SCENE_CLT_GetModelHandle()
-     * - @ref RM_MESH_SCHEDULER_CLT_GetModelHandle()
-     * - @ref RM_MESH_TIME_CLT_GetModelHandle()
-     * - @ref RM_MESH_SENSOR_CLT_GetModelHandle()
-     * - @ref RM_MESH_HEALTH_CLIENT_GetModelHandle()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  req_opcode   Request Opcode.

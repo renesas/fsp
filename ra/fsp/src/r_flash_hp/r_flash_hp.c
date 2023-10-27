@@ -479,7 +479,7 @@ fsp_err_t R_FLASH_HP_Write (flash_ctrl_t * const p_api_ctrl,
 #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
 
     /* Verify write parameters. If failure return error. */
-    err = r_flash_hp_write_bc_parameter_checking(p_ctrl, flash_address, num_bytes, true);
+    err = r_flash_hp_write_bc_parameter_checking(p_ctrl, flash_address & ~BSP_FEATURE_TZ_NS_OFFSET, num_bytes, true);
     FSP_ERROR_RETURN((err == FSP_SUCCESS), err);
 #endif
 
@@ -489,7 +489,7 @@ fsp_err_t R_FLASH_HP_Write (flash_ctrl_t * const p_api_ctrl,
     p_ctrl->current_operation    = FLASH_OPERATION_NON_BGO;
 
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-    if (flash_address < BSP_FEATURE_FLASH_DATA_FLASH_START)
+    if ((flash_address & ~BSP_FEATURE_TZ_NS_OFFSET) < BSP_FEATURE_FLASH_DATA_FLASH_START)
     {
  #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
 
@@ -558,7 +558,7 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
     p_ctrl->current_operation = FLASH_OPERATION_NON_BGO;
 
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-    if (address < BSP_FEATURE_FLASH_DATA_FLASH_START)
+    if ((address & ~BSP_FEATURE_TZ_NS_OFFSET) < BSP_FEATURE_FLASH_DATA_FLASH_START)
     {
         uint32_t start_address = 0;
  #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
@@ -566,13 +566,14 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
  #endif
 
  #if BSP_FEATURE_FLASH_CODE_FLASH_START != 0
-        FSP_ERROR_RETURN(BSP_FEATURE_FLASH_CODE_FLASH_START <= address, FSP_ERR_INVALID_ADDRESS);
+        FSP_ERROR_RETURN(BSP_FEATURE_FLASH_CODE_FLASH_START <= (address & ~BSP_FEATURE_TZ_NS_OFFSET),
+                         FSP_ERR_INVALID_ADDRESS);
  #endif
 
         /* Configure the current parameters based on if the operation is for code flash or data flash. */
-        if (((address) & FLASH_HP_PRV_BANK1_MASK) < BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE)
+        if ((((address & ~BSP_FEATURE_TZ_NS_OFFSET)) & FLASH_HP_PRV_BANK1_MASK) < BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE)
         {
-            start_address = address & ~(BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE - 1);
+            start_address = address & ~((BSP_FEATURE_TZ_NS_OFFSET | BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE) - 1);
 
  #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
             region0_blocks = (BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE - (start_address & FLASH_HP_PRV_BANK1_MASK)) /
@@ -581,7 +582,7 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
         }
         else
         {
-            start_address = address & ~(BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE - 1);
+            start_address = address & ~((BSP_FEATURE_TZ_NS_OFFSET | BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) - 1);
         }
 
  #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
@@ -619,14 +620,14 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
                          FSP_ERR_INVALID_BLOCKS);
   #endif
  #endif
-
-        err = flash_hp_cf_erase(p_ctrl, start_address, num_blocks);
+        start_address |= (address & BSP_FEATURE_TZ_NS_OFFSET);
+        err            = flash_hp_cf_erase(p_ctrl, start_address, num_blocks);
     }
     else
 #endif
     {
 #if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
-        uint32_t start_address = address & ~(BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE - 1);
+        uint32_t start_address = address & ~((BSP_FEATURE_TZ_NS_OFFSET | BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE) - 1);
 
  #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
         uint32_t num_bytes = num_blocks * BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE;
@@ -640,7 +641,8 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
  #endif
 
         /* Initiate the flash erase. */
-        err = flash_hp_df_erase(p_ctrl, start_address, num_blocks);
+        start_address |= (address & BSP_FEATURE_TZ_NS_OFFSET);
+        err            = flash_hp_df_erase(p_ctrl, start_address, num_blocks);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #else
 
@@ -681,7 +683,7 @@ fsp_err_t R_FLASH_HP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
 #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
 
     /* Check parameters. If failure return error */
-    err = r_flash_hp_write_bc_parameter_checking(p_ctrl, address, num_bytes, false);
+    err = r_flash_hp_write_bc_parameter_checking(p_ctrl, address & ~BSP_FEATURE_TZ_NS_OFFSET, num_bytes, false);
     FSP_ERROR_RETURN((err == FSP_SUCCESS), err);
 #endif
 
@@ -689,7 +691,7 @@ fsp_err_t R_FLASH_HP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
 
     /* Is this a request to Blank check Code Flash? */
     /* If the address is code flash check if the region is blank. If not blank return error. */
-    if (address < BSP_FEATURE_FLASH_DATA_FLASH_START)
+    if ((address & ~BSP_FEATURE_TZ_NS_OFFSET) < BSP_FEATURE_FLASH_DATA_FLASH_START)
     {
         /* Blank checking for Code Flash does not require any FCU operations. The specified address area
          * can simply be checked for non 0xFF. */
@@ -2033,6 +2035,11 @@ static fsp_err_t flash_hp_pe_mode_exit (void)
 #endif
 
         R_BSP_FlashCacheEnable();
+#if defined(RENESAS_CORTEX_M85)
+
+        /* Invalidate I-Cache after programming code flash. */
+        SCB_InvalidateICache();
+#endif
     }
 
 #if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE

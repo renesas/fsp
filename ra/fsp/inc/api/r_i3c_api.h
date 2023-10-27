@@ -26,8 +26,6 @@
  * @section I3C_API_SUMMARY Summary
  * @brief The I3C interface provides APIs and definitions for I3C communication.
  *
- * @section I3C_API_INSTANCES Known Implementations
- * @ref I3C
  * @{
  **********************************************************************************************************************/
 
@@ -328,8 +326,6 @@ typedef struct st_i3c_cfg
 } i3c_cfg_t;
 
 /** I3C control block.  Allocate an instance specific control block to pass into the I3C API calls.
- * @par Implemented as
- * - i3c_instance_ctrl_t
  */
 typedef void i3c_ctrl_t;
 
@@ -337,8 +333,6 @@ typedef void i3c_ctrl_t;
 typedef struct st_i3c_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_I3C_Open()
      *
      * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.
@@ -348,8 +342,6 @@ typedef struct st_i3c_api
     /**
      * Enable the I3C device.
      *
-     * @par Implemented as
-     * - @ref R_I3C_Enable()
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
      */
@@ -358,8 +350,6 @@ typedef struct st_i3c_api
     /**
      * Set the configuration of this device.
      *
-     * @par Implemented as
-     * - @ref R_I3C_DeviceCfgSet()
      *
      * @param[in]   p_ctrl       Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_device_cfg Pointer to device configuration.
@@ -372,8 +362,6 @@ typedef struct st_i3c_api
      *
      * Note: This function is not used in slave mode.
      *
-     * @par Implemented as
-     * - @ref R_I3C_MasterDeviceTableSet()
      *
      * @param[in]   p_ctrl             Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   device_index       Index into the device table.
@@ -387,8 +375,6 @@ typedef struct st_i3c_api
      *
      * Note: This function is not used in slave mode.
      *
-     * @par Implemented as
-     * - @ref R_I3C_DeviceSelect()
      *
      * @param[in]   p_ctrl          Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   device_index    Index into the device table.
@@ -401,8 +387,6 @@ typedef struct st_i3c_api
      *
      * Note: This function is not used in slave mode.
      *
-     * @par Implemented as
-     * - @ref R_I3C_DynamicAddressAssignmentStart()
      *
      * @param[in]   p_ctrl                  Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   address_assignment_mode The command to use for Dynamic Address Assignment.
@@ -418,8 +402,6 @@ typedef struct st_i3c_api
      *
      * Note: This function is not used in master mode.
      *
-     * @par Implemented as
-     * - @ref R_I3C_SlaveStatusSet()
      *
      * @param[in]   p_ctrl          Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   device_status   New status settings for responding to the GETSTATUS command code.
@@ -431,8 +413,6 @@ typedef struct st_i3c_api
      *
      * Note: This function is not used in slave mode.
      *
-     * @par Implemented as
-     * - @ref R_I3C_CommandSend()
      *
      * @param[in]   p_ctrl               Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_command_descriptor A descriptor for executing the command.
@@ -444,8 +424,6 @@ typedef struct st_i3c_api
      * In slave mode:  Set the write buffer and configure the number of bytes that will be transferred before the the transfer
      *                 is ended by the slave via the 'T' bit or by the master issueing a stop condition.
      *
-     * @par Implemented as
-     * - @ref R_I3C_Write()
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_data     Pointer to a buffer to write.
@@ -460,8 +438,6 @@ typedef struct st_i3c_api
      *                 will receive a callback requesting a new read buffer. If no buffer is provided by the application, the driver will
      *                 discard any remaining bytes read during the transfer.
      *
-     * @par Implemented as
-     * - @ref R_I3C_Read()
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_data     Pointer to a buffer to store the bytes read during the transfer.
@@ -475,8 +451,6 @@ typedef struct st_i3c_api
      *
      * Note: This function is not used in master mode.
      *
-     * @par Implemented as
-     * - @ref R_I3C_IbiWrite()
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_data     Pointer to a buffer to start the bytes read during the transfer.
@@ -488,8 +462,6 @@ typedef struct st_i3c_api
     /**
      * Set the read buffer for storing received IBI data (This function is not used in slave mode).
      *
-     * @par Implemented as
-     * - @ref R_I3C_IbiRead()
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_data     Pointer to a buffer to store the bytes read during the transfer.
@@ -498,8 +470,6 @@ typedef struct st_i3c_api
     fsp_err_t (* ibiRead)(i3c_ctrl_t * const p_ctrl, uint8_t * const p_data, uint32_t length);
 
     /** Allows driver to be reconfigured and may reduce power consumption.
-     * @par Implemented as
-     * - @ref R_I3C_Close()
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
      */
@@ -520,5 +490,5 @@ FSP_FOOTER
 #endif
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup I3C_API)
+ * @} (end defgroup I3C_API)
  **********************************************************************************************************************/

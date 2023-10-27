@@ -359,15 +359,15 @@ typedef struct st_gpt_extended_pwm_cfg
     gpt_interrupt_skip_source_t interrupt_skip_source;  ///< Interrupt source to count for interrupt skipping
     gpt_interrupt_skip_count_t  interrupt_skip_count;   ///< Number of interrupts to skip between events
     gpt_interrupt_skip_adc_t    interrupt_skip_adc;     ///< ADC events to skip when interrupt skipping is enabled
-    gpt_gtioc_disable_t         gtioca_disable_setting; ///< DEPRECATED - Select how to configure GTIOCA when output is disabled
-    gpt_gtioc_disable_t         gtiocb_disable_setting; ///< DEPRECATED - Select how to configure GTIOCB when output is disabled
+    gpt_gtioc_disable_t         gtioca_disable_setting; ///< Select how to configure GTIOCA when output is disabled
+    gpt_gtioc_disable_t         gtiocb_disable_setting; ///< Select how to configure GTIOCB when output is disabled
 } gpt_extended_pwm_cfg_t;
 
 /** GPT extension configures the output pins for GPT. */
 typedef struct st_gpt_extended_cfg
 {
-    gpt_output_pin_t gtioca;           ///< DEPRECATED - Configuration for GPT I/O pin A
-    gpt_output_pin_t gtiocb;           ///< DEPRECATED - Configuration for GPT I/O pin B
+    gpt_output_pin_t gtioca;           ///< Configuration for GPT I/O pin A
+    gpt_output_pin_t gtiocb;           ///< Configuration for GPT I/O pin B
     gpt_source_t     start_source;     ///< Event sources that trigger the timer to start
     gpt_source_t     stop_source;      ///< Event sources that trigger the timer to stop
     gpt_source_t     clear_source;     ///< Event sources that trigger the timer to clear
@@ -382,10 +382,10 @@ typedef struct st_gpt_extended_cfg
      * and count_down_source, then the timer count source is PCLK.  */
     gpt_source_t count_down_source;
 
-    /* Debounce filter for GTIOCxA input signal pin (DEPRECATED). */
+    /* Debounce filter for GTIOCxA input signal pin. */
     gpt_capture_filter_t capture_filter_gtioca;
 
-    /* Debounce filter for GTIOCxB input signal pin (DEPRECATED). */
+    /* Debounce filter for GTIOCxB input signal pin. */
     gpt_capture_filter_t capture_filter_gtiocb;
 
     uint8_t   capture_a_ipl;                      ///< Capture A interrupt priority

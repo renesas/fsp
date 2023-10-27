@@ -226,7 +226,7 @@ fsp_err_t R_CAC_StopMeasurement (cac_ctrl_t * const p_ctrl)
  * @retval     FSP_ERR_ASSERTION  An argument is NULL.
  * @retval     FSP_ERR_NOT_OPEN   R_CAC_Open() has not been successfully called.
  **********************************************************************************************************************/
-fsp_err_t R_CAC_Read (cac_ctrl_t * const p_ctrl, uint16_t * const p_counter)
+fsp_err_t R_CAC_Read (cac_ctrl_t * const p_ctrl, uint32_t * const p_counter)
 {
 #if (CAC_CFG_PARAM_CHECKING_ENABLE == 1)
     cac_instance_ctrl_t * p_instance_ctrl = (cac_instance_ctrl_t *) p_ctrl;

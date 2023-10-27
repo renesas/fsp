@@ -180,8 +180,6 @@ typedef struct st_jpeg_cfg
 } jpeg_cfg_t;
 
 /** JPEG decode control block.  Allocate an instance specific control block to pass into the JPEG decode API calls.
- * @par Implemented as
- * - jpeg_instance_ctrl_t
  */
 typedef void jpeg_ctrl_t;
 
@@ -189,8 +187,6 @@ typedef void jpeg_ctrl_t;
 typedef struct st_jpeg_api
 {
     /** Initial configuration
-     * @par Implemented as
-     * - @ref R_JPEG_Open()
      *
      * @pre none
      *
@@ -200,8 +196,6 @@ typedef struct st_jpeg_api
     fsp_err_t (* open)(jpeg_ctrl_t * const p_ctrl, jpeg_cfg_t const * const p_cfg);
 
     /** Assign input data buffer to JPEG codec.
-     * @par Implemented as
-     * - @ref R_JPEG_InputBufferSet()
      *
      * @pre the JPEG codec module must have been opened properly.
      * @note The buffer starting address must be 8-byte aligned.
@@ -212,8 +206,6 @@ typedef struct st_jpeg_api
     fsp_err_t (* inputBufferSet)(jpeg_ctrl_t * const p_ctrl, void * p_buffer, uint32_t buffer_size);
 
     /** Assign output buffer to JPEG codec for storing output data.
-     * @par Implemented as
-     * - @ref R_JPEG_OutputBufferSet()
      *
      * @pre The JPEG codec module must have been opened properly.
      * @note The buffer starting address must be 8-byte aligned.
@@ -228,8 +220,6 @@ typedef struct st_jpeg_api
     fsp_err_t (* outputBufferSet)(jpeg_ctrl_t * const p_ctrl, void * p_buffer, uint32_t buffer_size);
 
     /** Retrieve current status of the JPEG codec module.
-     * @par Implemented as
-     * - @ref R_JPEG_StatusGet()
      *
      * @pre the JPEG codec module must have been opened properly.
      * @param[in]     p_ctrl               Control block set in jpeg_api_t::open call.
@@ -238,8 +228,6 @@ typedef struct st_jpeg_api
     fsp_err_t (* statusGet)(jpeg_ctrl_t * const p_ctrl, jpeg_status_t * const p_status);
 
     /** Cancel an outstanding operation.
-     * @par Implemented as
-     * - @ref R_JPEG_Close()
      *
      * @pre the JPEG codec module must have been opened properly.
      * @note If the encoding or the decoding operation is finished without errors, the HLD driver
@@ -252,19 +240,15 @@ typedef struct st_jpeg_api
 #if JPEG_CFG_DECODE_ENABLE
 
     /** Configure the horizontal stride value.
-     * @par Implemented as
-     * - @ref R_JPEG_DecodeHorizontalStrideSet()
      *
      * @pre The JPEG codec module must have been opened properly.
-     * @param[in]     p_ctrl      Control block set in jpeg_api_t::open call.
+     * @param[in]     p_ctrl             Control block set in jpeg_api_t::open call.
      * @param[in]     horizontal_stride  Horizontal stride value to be used for the decoded image data.
-     * @param[in]     buffer_size Size of the output buffer
+     * @param[in]     buffer_size        Size of the output buffer
      */
     fsp_err_t (* horizontalStrideSet)(jpeg_ctrl_t * const p_ctrl, uint32_t horizontal_stride);
 
     /** Get the input pixel format.
-     * @par Implemented as
-     * - @ref R_JPEG_DecodePixelFormatGet()
      *
      * @pre the JPEG codec module must have been opened properly.
      * @param[in]     p_ctrl               Control block set in jpeg_api_t::open call.
@@ -273,11 +257,9 @@ typedef struct st_jpeg_api
     fsp_err_t (* pixelFormatGet)(jpeg_ctrl_t * const p_ctrl, jpeg_color_space_t * const p_color_space);
 
     /** Configure the horizontal and vertical subsample settings.
-     * @par Implemented as
-     * - @ref R_JPEG_DecodeImageSubsampleSet()
      *
      * @pre The JPEG codec module must have been opened properly.
-     * @param[in]     p_ctrl      Control block set in jpeg_api_t::open call.
+     * @param[in]     p_ctrl                  Control block set in jpeg_api_t::open call.
      * @param[in]     horizontal_subsample    Horizontal subsample value
      * @param[in]     vertical_subsample      Vertical subsample value
      */
@@ -285,8 +267,6 @@ typedef struct st_jpeg_api
                                     jpeg_decode_subsample_t vertical_subsample);
 
     /** Return the number of lines decoded into the output buffer.
-     * @par Implemented as
-     * - @ref R_JPEG_DecodeLinesDecodedGet()
      *
      * @pre the JPEG codec module must have been opened properly.
      * @param[in]     p_ctrl      Control block set in jpeg_api_t::open call.
@@ -295,8 +275,6 @@ typedef struct st_jpeg_api
     fsp_err_t (* linesDecodedGet)(jpeg_ctrl_t * const p_ctrl, uint32_t * const p_lines);
 
     /** Retrieve image size during decoding operation.
-     * @par Implemented as
-     * - @ref R_JPEG_DecodeImageSizeGet()
      *
      * @pre the JPEG codec module must have been opened properly.
      * @note If the encoding or the decoding operation is finished without errors, the HLD driver
@@ -312,8 +290,6 @@ typedef struct st_jpeg_api
 #if JPEG_CFG_ENCODE_ENABLE
 
     /** Set image parameters to JPEG Codec
-     * @par Implemented as
-     * - @ref R_JPEG_EncodeImageSizeSet()
      *
      * @pre The JPEG codec module must have been opened properly.
      *
@@ -325,8 +301,6 @@ typedef struct st_jpeg_api
  #if JPEG_CFG_DECODE_ENABLE
 
     /** Switch between encode and decode mode or vice-versa.
-     * @par Implemented as
-     * - @ref R_JPEG_ModeSet()
      *
      * @pre The JPEG codec module must have been opened properly.
      * The JPEG Codec can only perform one operation at a time and requires different configuration for encode and

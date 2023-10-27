@@ -37,7 +37,10 @@
  ***********************************************************************************************************************/
 
 /* Vendor Specific PHY Registers */
- #define ETHER_PHY_REG_PHY_CONTROL_1    (0x1E)
+ #define ETHER_PHY_REG_PHY_CONTROL_1                   (0x1E)
+
+ #define ETHER_PHY_LED_MODE_LED0_LINK_LED1_ACTIVITY    (0x4000U)
+ #define ETHER_PHY_LED_MODE_MASK                       (0xC000U)
 
 /***********************************************************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -49,8 +52,6 @@
 void ether_phy_target_ksz8041_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
 bool ether_phy_target_ksz8041_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
                                                               uint32_t                    line_speed_duplex);
-extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -76,10 +77,10 @@ void ether_phy_target_ksz8041_initialize (ether_phy_instance_ctrl_t * p_instance
      * the pin that outputs the state of LINK is used combinedly with ACTIVITY in default.
      * The setting of the pin is changed so that only the state of LINK is output.
      */
-    reg  = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1);
-    reg &= ~0x8000U;
-    reg |= 0x4000U;
-    ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1, reg);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1, &reg);
+    reg &= ~ETHER_PHY_LED_MODE_MASK;
+    reg |= ETHER_PHY_LED_MODE_LED0_LINK_LED1_ACTIVITY;
+    R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1, reg);
 }                                      /* End of function ether_phy_targets_initialize() */
 
 /***********************************************************************************************************************

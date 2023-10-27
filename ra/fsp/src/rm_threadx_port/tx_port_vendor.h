@@ -59,7 +59,7 @@ extern "C" {
  #define TX_INCLUDE_USER_DEFINE_FILE
 #endif
 
-#ifdef __ARM_ARCH_8M_MAIN__            // CM33
+#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM33, CM85
  #define TX_PORT_PSPLIM_PRESENT
 #else
  #define TX_PORT_VENDOR_STACK_MONITOR_ENABLE

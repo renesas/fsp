@@ -87,6 +87,8 @@ static fsp_err_t r_dtc_source_destination_parameter_check(transfer_info_t * p_in
 
 #endif
 
+static void r_dtc_wait_for_transfer_complete(dtc_instance_ctrl_t * p_ctrl);
+
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
@@ -109,6 +111,7 @@ const transfer_api_t g_transfer_on_dtc =
     .softwareStop  = R_DTC_SoftwareStop,
     .enable        = R_DTC_Enable,
     .disable       = R_DTC_Disable,
+    .reload        = R_DTC_Reload,
     .close         = R_DTC_Close,
 };
 
@@ -209,11 +212,7 @@ fsp_err_t R_DTC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_t
     R_ICU->IELSR_b[p_ctrl->irq].DTCE = 0U;
 
     /* Wait for current transfer to finish. */
-    uint32_t in_progress = (1U << DTC_PRV_OFFSET_IN_PROGRESS) | R_ICU->IELSR_b[p_ctrl->irq].IELS;
-    while (in_progress == R_DTC->DTCSTS)
-    {
-        ;
-    }
+    r_dtc_wait_for_transfer_complete(p_ctrl);
 
     /* Copy p_info into the DTC vector table. */
     r_dtc_set_info(p_ctrl, p_info);
@@ -250,11 +249,7 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
     R_ICU->IELSR_b[p_ctrl->irq].DTCE = 0U;
 
     /* Wait for current transfer to finish. */
-    uint32_t in_progress = (1U << DTC_PRV_OFFSET_IN_PROGRESS) | R_ICU->IELSR_b[p_ctrl->irq].IELS;
-    while (in_progress == R_DTC->DTCSTS)
-    {
-        ;
-    }
+    r_dtc_wait_for_transfer_complete(p_ctrl);
 
     /* Disable read skip prior to modifying settings. It will be enabled later
      * (See DTC Section 18.4.1 of the RA6M3 manual R01UH0886EJ0100). */
@@ -421,6 +416,24 @@ fsp_err_t R_DTC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_properties
 }
 
 /*******************************************************************************************************************//**
+ * To update next transfer information without interruption during transfer.
+ *
+ * @retval FSP_ERR_UNSUPPORTED        This feature is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_DTC_Reload (transfer_ctrl_t * const p_api_ctrl,
+                        void const            * p_src,
+                        void                  * p_dest,
+                        uint32_t const          num_transfers)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_src);
+    FSP_PARAMETER_NOT_USED(p_dest);
+    FSP_PARAMETER_NOT_USED(num_transfers);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Disables DTC activation in the ICU, then clears transfer data from the DTC vector table.
  * Implements @ref transfer_api_t::close.
  *
@@ -507,8 +520,18 @@ static void r_dtc_state_initialize (void)
         R_DTC->DTCVBR = (uint32_t) gp_dtc_vector_table;
 #endif
 
+#if BSP_FEATURE_TZ_HAS_TRUSTZONE && BSP_TZ_NONSECURE_BUILD
+        if (1 == R_CPSCU->DTCSAR_b.DTCSTSA)
+        {
+            /* Enable the DTC Peripheral */
+            R_DTC->DTCST = 1;
+        }
+
+#else
+
         /* Enable the DTC Peripheral */
-        R_DTC->DTCST = 1U;
+        R_DTC->DTCST = 1;
+#endif
     }
 }
 
@@ -619,3 +642,14 @@ static fsp_err_t r_dtc_source_destination_parameter_check (transfer_info_t * p_i
 }
 
 #endif
+
+/*******************************************************************************************************************//**
+ * Wait for the current DTC transfer to complete.
+ **********************************************************************************************************************/
+static void r_dtc_wait_for_transfer_complete (dtc_instance_ctrl_t * p_ctrl)
+{
+    uint32_t in_progress = (1U << DTC_PRV_OFFSET_IN_PROGRESS) | (uint32_t) p_ctrl->irq;
+
+    /* Wait for the DTCSTS.ACT flag to be clear if the current vector is the activation source.*/
+    FSP_HARDWARE_REGISTER_WAIT((FSP_STYPE3_REG16_READ(R_DTC->DTCSTS, !R_CPSCU->DTCSAR_b.DTCSTSA) == in_progress), 0);
+}

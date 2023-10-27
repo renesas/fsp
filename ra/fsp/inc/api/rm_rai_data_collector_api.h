@@ -30,8 +30,6 @@
  * The rai data collector interface provides functionality to collect data from differnet channels using snapshot mode,
  * data feed mode or mixed mode.
  *
- * Implemented by:
- * - @ref RM_RAI_DATA_COLLECTOR
  *
  * @{
  **********************************************************************************************************************/
@@ -142,8 +140,6 @@ typedef struct st_rai_data_collector_cfg
 } rai_data_collector_cfg_t;
 
 /** Data Collector control block.  Allocate an instance specific control block to pass into the Data Collector API calls.
- * @par Implemented as
- * - @ref rai_data_collector_instance_ctrl_t
  */
 typedef void rai_data_collector_ctrl_t;
 
@@ -151,8 +147,6 @@ typedef void rai_data_collector_ctrl_t;
 typedef struct st_rai_data_collector_api
 {
     /** Initialize Data Collector module instance.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_Open()
      *
      * @note To reopen after calling this function, call @ref rai_data_collector_api_t::close first.
      * @param[in]  p_ctrl  Pointer to control handle structure
@@ -161,20 +155,16 @@ typedef struct st_rai_data_collector_api
     fsp_err_t (* open)(rai_data_collector_ctrl_t * const p_ctrl, rai_data_collector_cfg_t const * const p_cfg);
 
     /** Config transfer source address for snapshot mode channel
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_SnapshotChannelRegister()
      *
      * @param[in]  p_ctrl      Pointer to control handle structure
      * @param[in]  p_src       Pointer to transfer source address
      *
      */
 
-    fsp_err_t (* snapshotChannelRegister)(rai_data_collector_ctrl_t * const p_api_ctrl, uint8_t channel,
+    fsp_err_t (* snapshotChannelRegister)(rai_data_collector_ctrl_t * const p_ctrl, uint8_t channel,
                                           void const * p_src);
 
     /** Release frame buffers by upper modules
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_BufferRelease()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      * @param[in]  channel  Which snapshot mode channel
@@ -183,16 +173,12 @@ typedef struct st_rai_data_collector_api
     fsp_err_t (* bufferRelease)(rai_data_collector_ctrl_t * const p_ctrl);
 
     /** Reset internal buffers
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_BufferReset()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      */
     fsp_err_t (* bufferReset)(rai_data_collector_ctrl_t * const p_ctrl);
 
     /** Starts snapshot mode.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_SnapshotStart()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      *
@@ -200,8 +186,6 @@ typedef struct st_rai_data_collector_api
     fsp_err_t (* snapshotStart)(rai_data_collector_ctrl_t * const p_ctrl);
 
     /** Stops snapshot mode.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_SnapshotStop()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      *
@@ -209,19 +193,15 @@ typedef struct st_rai_data_collector_api
     fsp_err_t (* snapshotStop)(rai_data_collector_ctrl_t * const p_ctrl);
 
     /** Get the PING or PONG buffer address for data transfer. For data feed mode only.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_ChannelBufferGet()
      *
      * @param[in]  p_ctrl      Pointer to control handle structure
      * @param[in]  channel     Which data feed mode channel
      * @param[out] pp_buf      Returned buffer address
      *
      */
-    fsp_err_t (* channelBufferGet)(rai_data_collector_ctrl_t * const p_api_ctrl, uint8_t channel, void ** pp_buf);
+    fsp_err_t (* channelBufferGet)(rai_data_collector_ctrl_t * const p_ctrl, uint8_t channel, void ** pp_buf);
 
     /** Write data to frame buffer using CPU copy. For data feed mode only.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_ChannelWrite()
      *
      * @param[in]  p_ctrl      Pointer to control handle structure
      * @param[in]  channel     Which data feed mode channel
@@ -229,12 +209,10 @@ typedef struct st_rai_data_collector_api
      * @param[in]  len         Length of data buffer in data samples
      *
      */
-    fsp_err_t (* channelWrite)(rai_data_collector_ctrl_t * const p_api_ctrl, uint8_t channel, const void * p_buf,
+    fsp_err_t (* channelWrite)(rai_data_collector_ctrl_t * const p_ctrl, uint8_t channel, const void * p_buf,
                                uint32_t len);
 
     /** Close the specified Data Collector module instance.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_COLLECTOR_Close()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      */

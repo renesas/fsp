@@ -32,8 +32,6 @@
  * - Allocation for full range of local address settings (TV, Recording Device, Playback Device, etc.)
  * - Supports a user-callback function (required), invoked when transmit, receive, or error interrupts are received.
  *
- * Implemented by:
- * - @ref CEC
  * @{
  **********************************************************************************************************************/
 
@@ -190,8 +188,6 @@ typedef struct st_cec_cfg
 } cec_cfg_t;
 
 /** CEC control block.  Allocate an instance specific control block to pass into the CEC API calls.
- * @par Implemented as
- * - cec_instance_ctrl_t
  */
 typedef void cec_ctrl_t;
 
@@ -199,8 +195,6 @@ typedef void cec_ctrl_t;
 typedef struct st_cec_api
 {
     /** Open function for CEC device
-     * @par Implemented as
-     * - @ref R_CEC_Open()
      *
      * @param[in,out]  p_ctrl           Pointer to the CEC control block. Must be declared by user. Value set here.
      * @param[in]      p_cfg            Pointer to CEC configuration structure. All elements of this structure must be set by user.
@@ -209,8 +203,6 @@ typedef struct st_cec_api
 
     /** Initializes the CEC device. May be called any time after the CEC module has been opened.
      * This API blocks until the device initialization procedure is complete.
-     * @par Implemented as
-     * - @ref R_CEC_MediaInit()
      *
      * @param[in]     p_ctrl            Pointer to CEC instance control block.
      * @param[out]    local_address     Desired Logical address for local device.
@@ -218,8 +210,6 @@ typedef struct st_cec_api
     fsp_err_t (* mediaInit)(cec_ctrl_t * const p_ctrl, cec_addr_t local_address);
 
     /** Write function for CEC device
-     * @par Implemented as
-     * - @ref R_CEC_Write()
      *
      * @param[in]     p_ctrl            Pointer to CEC instance control block
      * @param[in]     p_message         Message data
@@ -228,8 +218,6 @@ typedef struct st_cec_api
     fsp_err_t (* write)(cec_ctrl_t * const p_ctrl, cec_message_t const * const p_message, uint32_t message_size);
 
     /** Close function for CEC device
-     * @par Implemented as
-     * - @ref R_CEC_Close()
      *
      * @param[in]     p_ctrl            Pointer to CEC instance control block
      * @param[out]    p_message         Message data
@@ -237,8 +225,6 @@ typedef struct st_cec_api
     fsp_err_t (* close)(cec_ctrl_t * const p_ctrl);
 
     /** Get CEC channel info.
-     * @par Implemented as
-     * - @ref R_CEC_StatusGet()
      *
      * @param[in]   p_ctrl              Pointer to CEC instance control block
      * @param[out]  p_status            Memory address to return channel specific data to.
@@ -246,8 +232,6 @@ typedef struct st_cec_api
     fsp_err_t (* statusGet)(cec_ctrl_t * const p_ctrl, cec_status_t * const p_status);
 
     /** Specify callback function, optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_CEC_CallbackSet()
      *
      * @param[in]   p_ctrl              Control block set in @ref cec_api_t::open call.
      * @param[in]   p_callback          Callback function to register

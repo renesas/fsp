@@ -16,6 +16,11 @@
 #include "flash_otp_nv_counters_backend.h"
 #include "Driver_Flash.h"
 
+
+#ifdef TFM_DUMMY_PROVISIONING
+#include "bootutil/sign_key.h"
+#endif
+
 #include <string.h>
 
 #define INT2LE(A) (uint8_t)(A & 0xFF), (uint8_t )((A >> 8) & 0xFF),\
@@ -117,7 +122,7 @@ const struct flash_otp_nv_counters_region_t otp_rea_dummy_provision =
         0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     },
  #ifdef PLATFORM_DEFAULT_NV_COUNTERS
-    .flash_nv_counters        = {0x0,                       0x0,0x0},
+    .flash_nv_counters        = {0x0,0x0,0x0},
  #endif
 };
 #else
@@ -156,13 +161,57 @@ int tfm_plat_provisioning_is_required (void)
            lcs == PLAT_OTP_LCS_PSA_ROT_PROVISIONING;
 }
 
-enum tfm_plat_err_t fsp_example_provision_rot (void)
+#ifdef TFM_DUMMY_PROVISIONING
+enum tfm_plat_err_t tfm_renesas_validate_provisioning (void)
+{
+    enum tfm_plat_err_t err;
+    int32_t             result;
+    uint8_t             key_hash[PSA_HASH_LENGTH(PSA_ALG_SHA_256)] = {0};
+
+    err = read_otp_nv_counters_flash(offsetof(struct flash_otp_nv_counters_region_t, bl2_rotpk_0), key_hash, sizeof(key_hash));
+    
+    if (err != TFM_PLAT_ERR_SUCCESS)
+    {
+        return err;
+    }
+
+    result = psa_hash_compare(PSA_ALG_SHA_256, bootutil_keys[0].key, *(bootutil_keys[0].len), key_hash, sizeof(key_hash));
+
+    if(PSA_SUCCESS != result)
+    {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+    
+    return TFM_PLAT_ERR_SUCCESS;
+}
+#endif
+
+static enum tfm_plat_err_t fsp_example_provision_rot (void)
 {
     enum tfm_plat_err_t err;
     uint32_t offset = 0U;
+    psa_algorithm_t      alg       = PSA_ALG_SHA_256;
+    psa_hash_operation_t operation = {0};
+    uint8_t              key_hash[PSA_HASH_LENGTH(PSA_ALG_SHA_256)] = {0};
+    size_t               hash_length = 0;
+    int32_t              result;
 
     err = write_otp_nv_counters_flash(offset, &otp_rea_dummy_provision,
                                          sizeof(otp_rea_dummy_provision));
+#if defined(BL2) && defined(TFM_DUMMY_PROVISIONING)
+    result = psa_hash_setup(&operation, alg);
+
+    result = psa_hash_update(&operation, bootutil_keys[0].key, *(bootutil_keys[0].len));
+
+    result = psa_hash_finish(&operation, key_hash, sizeof(key_hash), &hash_length);
+
+    if(PSA_SUCCESS != result)
+    {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    err = write_otp_nv_counters_flash(offsetof(struct flash_otp_nv_counters_region_t, bl2_rotpk_0), key_hash, sizeof(key_hash));
+#endif
 
     return err;
 }

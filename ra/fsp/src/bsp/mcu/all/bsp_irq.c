@@ -67,20 +67,22 @@ const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_MAX_ENT
 void bsp_irq_cfg (void)
 {
 #if FSP_PRIV_TZ_USE_SECURE_REGS
+ #if (BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_SECURE_BUILD == 0)
+
+    /* On MCUs with this implementation of TrustZone, IRQ security attribution is set to secure by default.
+     * This means that flat projects do not need to set security attribution to secure. */
+ #else
 
     /* Unprotect security registers. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
 
- #if !BSP_TZ_SECURE_BUILD
+  #if !BSP_TZ_SECURE_BUILD
 
     /* Set the DMAC channels to secure access. */
-  #ifdef BSP_TZ_CFG_ICUSARC
+   #ifdef BSP_TZ_CFG_ICUSARC
     R_CPSCU->ICUSARC = ~R_CPSCU_ICUSARC_SADMACn_Msk;
+   #endif
   #endif
-  #ifdef BSP_TZ_CFG_DMASARA
-    R_CPSCU->DMASARA = ~R_CPSCU_DMASARA_DMASARAn_Msk;
-  #endif
- #endif
 
     /* Place all vectors in non-secure state unless they are used in the secure project. */
     uint32_t interrupt_security_state[BSP_ICU_VECTOR_MAX_ENTRIES / BSP_PRV_BITS_PER_WORD];
@@ -108,10 +110,14 @@ void bsp_irq_cfg (void)
 
     /* Protect security registers. */
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
+ #endif
 #endif
 
     for (uint32_t i = 0U; i < (BSP_ICU_VECTOR_MAX_ENTRIES - BSP_FEATURE_ICU_FIXED_IELSR_COUNT); i++)
     {
-        R_ICU->IELSR[i] = (uint32_t) g_interrupt_event_link_select[i];
+        if (0U != g_interrupt_event_link_select[i])
+        {
+            R_ICU->IELSR[i] = (uint32_t) g_interrupt_event_link_select[i];
+        }
     }
 }

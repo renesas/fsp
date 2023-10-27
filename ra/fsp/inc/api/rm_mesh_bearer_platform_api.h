@@ -29,8 +29,6 @@
  * @section RM_MESH_BEARER_PLATFORM_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Bearer Platform (BLE MESH BEARER PLATFORM) peripheral provides Bluetooth Low Energy Mesh Bearer Platform functionality.
  *
- * The Bluetooth Low Energy Mesh Bearer Platform interface can be implemented by:
- * - @ref RM_MESH_BEARER_PLATFORM
  *
  * @{
  **********************************************************************************************************************/
@@ -85,8 +83,6 @@ typedef enum e_rm_mesh_bearer_platform_gatt_mode
 } rm_mesh_bearer_platform_gatt_mode_t;
 
 /** MESH BEARER PLATFORM control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_mesh_bearer_platform_instance_ctrl_t
  */
 typedef void rm_mesh_bearer_platform_ctrl_t;
 
@@ -105,8 +101,6 @@ typedef struct st_rm_mesh_bearer_platform_cfg_t
 typedef struct st_rm_mesh_bearer_platform_api
 {
     /** Open Bearer Platform middleware.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -115,16 +109,12 @@ typedef struct st_rm_mesh_bearer_platform_api
                        rm_mesh_bearer_platform_cfg_t const * const p_cfg);
 
     /** Close Bearer Platform middleware.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_mesh_bearer_platform_ctrl_t * const p_ctrl);
 
     /** Set scan response data in connectable and scannable undirected advertising event.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_SetScanResponseData()
      *
      * @param[in]   p_ctrl       Pointer to control structure.
      * @param[out]  p_data       Pointer to scan response data.
@@ -133,8 +123,6 @@ typedef struct st_rm_mesh_bearer_platform_api
     fsp_err_t (* setScanResponseData)(rm_mesh_bearer_platform_ctrl_t * const p_ctrl, uint8_t * p_data, uint8_t len);
 
     /** Request to create connection.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_Connect()
      *
      * @param[in]  p_ctrl            Pointer to control structure.
      * @param[in]  p_remote_address  Pointer to remote device address.
@@ -145,8 +133,6 @@ typedef struct st_rm_mesh_bearer_platform_api
                           uint8_t address_type, rm_mesh_bearer_platform_gatt_mode_t mode);
 
     /** Start service discovery for Mesh GATT service.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_DiscoverService()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  handle  Connection handle to identify device.
@@ -156,8 +142,6 @@ typedef struct st_rm_mesh_bearer_platform_api
                                   rm_mesh_bearer_platform_gatt_mode_t mode);
 
     /** Configure GATT notification of Mesh GATT service.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_ConfigureNotification()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  handle  Connection handle to identify device.
@@ -169,8 +153,6 @@ typedef struct st_rm_mesh_bearer_platform_api
                                         rm_mesh_bearer_platform_gatt_mode_t mode);
 
     /** Terminate Connection.
-     * @par Implemented as
-     * - @ref RM_MESH_BEARER_PLATFORM_Disconnect()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  handle  Connection handle to identify device.

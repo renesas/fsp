@@ -182,6 +182,7 @@ typedef struct st_glcdc_extended_cfg
     glcdc_dithering_pattern_t     dithering_pattern_B;   ///< Dithering pattern B
     glcdc_dithering_pattern_t     dithering_pattern_C;   ///< Dithering pattern C
     glcdc_dithering_pattern_t     dithering_pattern_D;   ///< Dithering pattern D
+    void * phy_layer;                                    ///< Alternate PHY layer, such as MIPI DSI.
 } glcdc_extended_cfg_t;
 
 /* GLCDC hardware specific control block */
@@ -218,13 +219,8 @@ fsp_err_t R_GLCDC_LayerChange(display_ctrl_t const * const        p_api_ctrl,
 fsp_err_t R_GLCDC_BufferChange(display_ctrl_t const * const p_api_ctrl,
                                uint8_t * const              framebuffer,
                                display_frame_layer_t        layer);
-
-#if GLCDC_CFG_COLOR_CORRECTION_ENABLE
 fsp_err_t R_GLCDC_ColorCorrection(display_ctrl_t const * const       p_api_ctrl,
                                   display_correction_t const * const p_correction);
-
-#endif
-
 fsp_err_t R_GLCDC_ClutUpdate(display_ctrl_t const * const     p_api_ctrl,
                              display_clut_cfg_t const * const p_clut_cfg,
                              display_frame_layer_t            layer);
@@ -232,6 +228,9 @@ fsp_err_t R_GLCDC_ClutEdit(display_ctrl_t const * const p_api_ctrl,
                            display_frame_layer_t        layer,
                            uint8_t                      index,
                            uint32_t                     color);
+fsp_err_t R_GLCDC_ColorKeySet(display_ctrl_t const * const p_api_ctrl,
+                              display_colorkeying_layer_t  key_cfg,
+                              display_frame_layer_t        layer);
 fsp_err_t R_GLCDC_StatusGet(display_ctrl_t const * const p_api_ctrl, display_status_t * const status);
 
 /*******************************************************************************************************************//**

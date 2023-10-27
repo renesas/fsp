@@ -30,8 +30,6 @@
  * The FileX block media port provides notifications for insertion and removal of removable media and provides
  * initialization functions required by FileX.
  *
- * The FileX Block media interface can be implemented by:
- * @ref RM_FILEX_BLOCK_MEDIA
  *
  * @{
  **********************************************************************************************************************/
@@ -82,8 +80,6 @@ typedef void rm_filex_block_media_ctrl_t;
 typedef struct st_rm_filex_block_media_api
 {
     /** Open media device.
-     * @par Implemented as
-     * - @ref RM_FILEX_BLOCK_MEDIA_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -91,8 +87,6 @@ typedef struct st_rm_filex_block_media_api
     fsp_err_t (* open)(rm_filex_block_media_ctrl_t * const p_ctrl, rm_filex_block_media_cfg_t const * const p_cfg);
 
     /** Close media device.
-     * @par Implemented as
-     * - @ref RM_FILEX_BLOCK_MEDIA_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */

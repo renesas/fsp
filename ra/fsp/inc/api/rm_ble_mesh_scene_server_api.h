@@ -40,8 +40,6 @@ FSP_HEADER
  * @section RM_BLE_MESH_SCENE_SERVER_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Scene Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Scene Server functionality.
  *
- * The Bluetooth Low Energy Mesh Model Scene Server interface can be implemented by:
- * - @ref RM_MESH_SCENE_SRV
  *
  * @{
  **********************************************************************************************************************/
@@ -101,8 +99,6 @@ typedef struct st_rm_ble_mesh_scene_server_timeout_callback_args
 } rm_ble_mesh_scene_server_timeout_callback_args_t;
 
 /** BLE MESH SCENE SERVER control block.  Allocate an instance specific control block to pass into the BLE mesh model scene server API calls.
- * @par Implemented as
- * - rm_ble_mesh_scene_server_instance_ctrl_t
  */
 typedef void rm_ble_mesh_scene_server_ctrl_t;
 
@@ -115,7 +111,7 @@ typedef struct st_rm_ble_mesh_scene_server_cfg
     rm_ble_mesh_access_model_handle_t     setup_server_handle;                              ///< Access Model handle for setup server.
 
     /* Pointer to callback and optional working memory */
-    void * (*p_callback)(rm_ble_mesh_scene_server_callback_args_t * p_args);                ///< Mesh model scene server callback.
+    void (* p_callback)(rm_ble_mesh_scene_server_callback_args_t * p_args);                 ///< Mesh model scene server callback.
     void (* p_timeout_callback)(rm_ble_mesh_scene_server_timeout_callback_args_t * p_args); ///< Mesh model scene server publication timeout callback.
     void const * p_context;                                                                 ///< Placeholder for user data.
     void const * p_extend;                                                                  ///< Placeholder for user extension.
@@ -125,8 +121,6 @@ typedef struct st_rm_ble_mesh_scene_server_cfg
 typedef struct st_rm_ble_mesh_scene_server_api
 {
     /** API to open scene server model.
-     * @par Implemented as
-     * - @ref RM_MESH_SCENE_SRV_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -135,16 +129,12 @@ typedef struct st_rm_ble_mesh_scene_server_api
                        rm_ble_mesh_scene_server_cfg_t const * const p_cfg);
 
     /** API to close scene server model.
-     * @par Implemented as
-     * - @ref RM_MESH_SCENE_SRV_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_scene_server_ctrl_t * const p_ctrl);
 
     /** API to send reply or to update state change.
-     * @par Implemented as
-     * - @ref RM_MESH_SCENE_SRV_StateUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_state      Pointer to model specific current/target state parameters.

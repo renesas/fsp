@@ -66,10 +66,6 @@ extern "C" {
  #define FLASH_ITS_AREA_OFFSET                   (CFG_DATA_FLASH_ITS_AREA_OFFSET)
  #define FLASH_ITS_AREA_SIZE                     (CFG_DATA_FLASH_ITS_AREA_SIZE)
 
-/* NV Counters definitions */
- #define FLASH_NV_COUNTERS_AREA_OFFSET           (CFG_DATA_FLASH_NV_COUNTERS_AREA_OFFSET)
- #define FLASH_NV_COUNTERS_AREA_SIZE             (CFG_DATA_FLASH_NV_COUNTERS_AREA_SIZE)
-
 /* Protected Storage (PS) Service definitions size is 20 KB. */
  #define QSPI_FLASH_BASE_ADDRESS                 (0x10000000)
  #define FLASH_PS_AREA_OFFSET                    (0x0)
@@ -135,27 +131,21 @@ extern "C" {
 /* The maximum number of assets to be stored in the ITS area */
  #define ITS_NUM_ASSETS                          (CFG_TFM_ITS_NUM_ASSETS)
 
-/* NV Counters definitions */
- #define TFM_NV_COUNTERS_AREA_ADDR               FLASH_NV_COUNTERS_AREA_OFFSET
- #define TFM_NV_COUNTERS_AREA_SIZE               (FLASH_NV_COUNTERS_AREA_SIZE)
- #define TFM_NV_COUNTERS_SECTOR_ADDR             FLASH_NV_COUNTERS_AREA_OFFSET
- #define TFM_NV_COUNTERS_SECTOR_SIZE             FLASH_NV_COUNTERS_AREA_SIZE
-
 /* OTP_definitions */
 #define ROUNDOFF_VALUE(X,Y)                      ((Y) * (((X) + (Y - 1)) / (Y)))
 #define DATA_FLASH_OTP_NV_COUNTERS_AREA_SIZE     (ROUNDOFF_VALUE((sizeof(struct flash_otp_nv_counters_region_t)),\
-                                                  128U))
-#define FLASH_OTP_NV_COUNTERS_AREA_OFFSET        (CFG_DATA_FLASH_OTP_NV_COUNTERS_AREA_OFFSET)
-#define FLASH_OTP_NV_COUNTERS_AREA_SIZE          (DATA_FLASH_OTP_NV_COUNTERS_AREA_SIZE)
-#define FLASH_OTP_NV_COUNTERS_SECTOR_SIZE        (DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
+                                                  DATA_FLASH_AREA_IMAGE_SECTOR_SIZE))         
 
-/* OTP / NV counter definitions */
-#define OTP_NV_COUNTERS_WRITE_BLOCK_SIZE         (DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
-#define TFM_OTP_NV_COUNTERS_AREA_SIZE            (FLASH_OTP_NV_COUNTERS_AREA_SIZE)
-#define TFM_OTP_NV_COUNTERS_AREA_ADDR            FLASH_OTP_NV_COUNTERS_AREA_OFFSET
-#define TFM_OTP_NV_COUNTERS_SECTOR_SIZE          FLASH_OTP_NV_COUNTERS_SECTOR_SIZE
+#ifndef OTP_NV_COUNTERS_RAM_EMULATION
+#define OTP_NV_COUNTERS_WRITE_BLOCK_SIZE         (DATA_FLASH_AREA_IMAGE_SECTOR_SIZE) /* If not defined, will take a value of 128 bytes.
+                                                                                        Set to 64 bytes since the ITS considers the d
+                                                                                        ata flash sector size to 64bytes. */
+#define TFM_OTP_NV_COUNTERS_AREA_SIZE            (DATA_FLASH_OTP_NV_COUNTERS_AREA_SIZE)
+#define TFM_OTP_NV_COUNTERS_AREA_ADDR            (CFG_DATA_FLASH_OTP_NV_COUNTERS_AREA_OFFSET)
+#define TFM_OTP_NV_COUNTERS_SECTOR_SIZE          (DATA_FLASH_AREA_IMAGE_SECTOR_SIZE)
 #define TFM_OTP_NV_COUNTERS_BACKUP_AREA_ADDR     (TFM_OTP_NV_COUNTERS_AREA_ADDR + \
                                                  TFM_OTP_NV_COUNTERS_AREA_SIZE)
+#endif
 
 /* Use eFlash 0 memory to store Code data */
  #define S_ROM_ALIAS_BASE                        (0x00000000)

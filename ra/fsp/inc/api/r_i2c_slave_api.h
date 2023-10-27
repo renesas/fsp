@@ -31,9 +31,6 @@
  *        - Interrupt driven transmit/receive processing
  *        - Callback function support which returns a event codes
  *
- * Implemented by:
- * - @ref IIC_SLAVE
- * - @ref IIC_B_SLAVE
  *
  * @{
  **********************************************************************************************************************/
@@ -44,6 +41,7 @@
 
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
+#include "r_transfer_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -106,9 +104,13 @@ typedef struct st_i2c_slave_cfg
     IRQn_Type txi_irq;                                       ///< Transmit IRQ number
     IRQn_Type tei_irq;                                       ///< Transmit end IRQ number
     IRQn_Type eri_irq;                                       ///< Error IRQ number
-    uint8_t   ipl;                                           ///< Interrupt priority level for RXI, TXI and TER interrupts
-    uint8_t   eri_ipl;                                       ///< Interrupt priority level for ERI interrupt
+    uint8_t   ipl;                                           ///< Interrupt priority level for receive, transmit, and transmit end interrupts
+    uint8_t   eri_ipl;                                       ///< Interrupt priority level for error interrupt
     bool      clock_stretching_enable;                       ///< Low Hold SCL during reception for the period between the 9th and the 1st clock cycle
+
+    /** DTC support */
+    transfer_instance_t const * p_transfer_tx;                ///< DTC instance for I2C transmit.Set to NULL if unused.
+    transfer_instance_t const * p_transfer_rx;                ///< DTC instance for I2C receive. Set to NULL if unused.
 
     /** Parameters to control software behavior */
     void (* p_callback)(i2c_slave_callback_args_t * p_args); ///< Pointer to callback function
@@ -119,8 +121,6 @@ typedef struct st_i2c_slave_cfg
 } i2c_slave_cfg_t;
 
 /** I2C control block.  Allocate an instance specific control block to pass into the I2C API calls.
- * @par Implemented as
- * - iic_slave_instance_ctrl_t
  */
 typedef void i2c_slave_ctrl_t;
 
@@ -128,9 +128,6 @@ typedef void i2c_slave_ctrl_t;
 typedef struct st_i2c_slave_api
 {
     /** Opens the I2C Slave driver and initializes the hardware.
-     * @par Implemented as
-     * - @ref R_IIC_SLAVE_Open()
-     * - @ref R_IIC_B_SLAVE_Open()
      *
      * @param[in] p_ctrl    Pointer to control block. Must be declared by user. Elements are set here.
      * @param[in] p_cfg     Pointer to configuration structure.
@@ -138,9 +135,6 @@ typedef struct st_i2c_slave_api
     fsp_err_t (* open)(i2c_slave_ctrl_t * const p_ctrl, i2c_slave_cfg_t const * const p_cfg);
 
     /** Performs a read operation on an I2C Slave device.
-     * @par Implemented as
-     * - @ref R_IIC_SLAVE_Read()
-     * - @ref R_IIC_B_SLAVE_Read()
      *
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      * @param[in] p_dest    Pointer to the location to store read data.
@@ -149,9 +143,6 @@ typedef struct st_i2c_slave_api
     fsp_err_t (* read)(i2c_slave_ctrl_t * const p_ctrl, uint8_t * const p_dest, uint32_t const bytes);
 
     /** Performs a write operation on an I2C Slave device.
-     * @par Implemented as
-     * - @ref R_IIC_SLAVE_Write()
-     * - @ref R_IIC_B_SLAVE_Write()
      *
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      * @param[in] p_src     Pointer to the location to get write data from.
@@ -161,9 +152,6 @@ typedef struct st_i2c_slave_api
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_IIC_SLAVE_CallbackSet()
-     * - @ref R_IIC_B_SLAVE_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the IIC Slave control block.
      * @param[in]   p_callback               Callback function
@@ -171,13 +159,10 @@ typedef struct st_i2c_slave_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(i2c_slave_ctrl_t * const p_api_ctrl, void (* p_callback)(i2c_slave_callback_args_t *),
+    fsp_err_t (* callbackSet)(i2c_slave_ctrl_t * const p_ctrl, void (* p_callback)(i2c_slave_callback_args_t *),
                               void const * const p_context, i2c_slave_callback_args_t * const p_callback_memory);
 
     /** Closes the driver and releases the I2C Slave device.
-     * @par Implemented as
-     * - @ref R_IIC_SLAVE_Close()
-     * - @ref R_IIC_B_SLAVE_Close()
      *
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      */
@@ -193,7 +178,7 @@ typedef struct st_i2c_slave_instance
 } i2c_slave_instance_t;
 
 /******************************************************************************************************************//**
- * @} (end addtogroup I2C_SLAVE_API)
+ * @} (end defgroup I2C_SLAVE_API)
  *********************************************************************************************************************/
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

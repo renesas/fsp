@@ -26,8 +26,6 @@
  * @section RM_COMMS_API_Summary Summary
  * The Communications interface provides multiple communications functionality.
  *
- * The Communications interface can be implemented by:
- * - @ref RM_COMMS_I2C
  *
  * @{
  **********************************************************************************************************************/
@@ -103,8 +101,6 @@ typedef struct st_rm_comms_cfg
 } rm_comms_cfg_t;
 
 /** Communications control block.  Allocate an instance specific control block to pass into the Communications API calls.
- * @par Implemented as
- * - rm_comms_i2c_instance_ctrl_t
  */
 typedef void rm_comms_ctrl_t;
 
@@ -112,9 +108,6 @@ typedef void rm_comms_ctrl_t;
 typedef struct st_rm_comms_api
 {
     /** Open driver.
-     * @par Implemented as
-     * - @ref RM_COMMS_I2C_Open()
-     * - @ref RM_COMMS_UART_Open()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  p_cfg    Pointer to configuration structure.
@@ -122,18 +115,12 @@ typedef struct st_rm_comms_api
     fsp_err_t (* open)(rm_comms_ctrl_t * const p_ctrl, rm_comms_cfg_t const * const p_cfg);
 
     /** Close driver.
-     * @par Implemented as
-     * - @ref RM_COMMS_I2C_Close()
-     * - @ref RM_COMMS_UART_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_comms_ctrl_t * const p_ctrl);
 
     /** Read data.
-     * @par Implemented as
-     * - @ref RM_COMMS_I2C_Read()
-     * - @ref RM_COMMS_UART_Read()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in] 　p_dest   Pointer to the location to store read data.
@@ -142,9 +129,6 @@ typedef struct st_rm_comms_api
     fsp_err_t (* read)(rm_comms_ctrl_t * const p_ctrl, uint8_t * const p_dest, uint32_t const bytes);
 
     /** Write data.
-     * @par Implemented as
-     * - @ref RM_COMMS_I2C_Write()
-     * - @ref RM_COMMS_UART_Write()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  p_src    Pointer to the location to get write data from.
@@ -153,9 +137,6 @@ typedef struct st_rm_comms_api
     fsp_err_t (* write)(rm_comms_ctrl_t * const p_ctrl, uint8_t * const p_src, uint32_t const bytes);
 
     /** Write bytes over comms followed by a read, will have a struct for params.
-     * @par Implemented as
-     * - @ref RM_COMMS_I2C_WriteRead()
-     * - @ref RM_COMMS_UART_WriteRead()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  write_read_params    Parameters structure.
@@ -164,14 +145,12 @@ typedef struct st_rm_comms_api
 
     /**
      * Specify callback function and optional context pointer.
-     * @par Implemented as
-     * - RM_COMMS_UART_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the control block.
      * @param[in]   p_callback               Callback function
      * @param[in]   p_context                Pointer to send to callback function
      */
-    fsp_err_t (* callbackSet)(rm_comms_ctrl_t * const p_api_ctrl, void (* p_callback)(rm_comms_callback_args_t *),
+    fsp_err_t (* callbackSet)(rm_comms_ctrl_t * const p_ctrl, void (* p_callback)(rm_comms_callback_args_t *),
                               void const * const p_context);
 } rm_comms_api_t;
 

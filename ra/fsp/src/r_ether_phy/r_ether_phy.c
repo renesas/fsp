@@ -111,6 +111,9 @@
 #define ETHER_PHY_PIR_MDC_HIGH                  (0x01)
 #define ETHER_PHY_PIR_MDC_LOW                   (0x00)
 
+#define ETHER_PHY_ADDRESS_SIZE                  (0x1fU)
+#define ETHER_PHY_REGISTER_DATA_SIZE            (0xffffU)
+
 #define ETHER_PHY_PREAMBLE_LENGTH               (32U)
 #define ETHER_PHY_WRITE_DATA_BIT_MASK           (0x8000)
 
@@ -125,9 +128,6 @@
 /***********************************************************************************************************************
  * Exported global function
  ***********************************************************************************************************************/
-uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
-
 #if (ETHER_PHY_CFG_TARGET_KSZ8091RNB_ENABLE)
 extern void ether_phy_target_ksz8091rnb_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
 extern bool ether_phy_target_ksz8091rnb_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
@@ -179,6 +179,9 @@ const ether_phy_api_t g_ether_phy_on_ether_phy =
     .startAutoNegotiate    = R_ETHER_PHY_StartAutoNegotiate,
     .linkPartnerAbilityGet = R_ETHER_PHY_LinkPartnerAbilityGet,
     .linkStatusGet         = R_ETHER_PHY_LinkStatusGet,
+    .chipInit              = R_ETHER_PHY_ChipInit,
+    .read                  = R_ETHER_PHY_Read,
+    .write                 = R_ETHER_PHY_Write
 };
 
 /*******************************************************************************************************************//**
@@ -200,14 +203,14 @@ const ether_phy_api_t g_ether_phy_on_ether_phy =
  * @retval  FSP_ERR_INVALID_CHANNEL                 Invalid channel number is given.
  * @retval  FSP_ERR_INVALID_POINTER                 Pointer to p_cfg is NULL.
  * @retval  FSP_ERR_TIMEOUT                         PHY-LSI Reset wait timeout.
+ * @retval  FSP_ERR_INVALID_ARGUMENT                Register address is incorrect
+ * @retval  FSP_ERR_NOT_INITIALIZED                 The control block has not been initialized.
  ***********************************************************************************************************************/
 fsp_err_t R_ETHER_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t const * const p_cfg)
 {
     fsp_err_t err = FSP_SUCCESS;
     ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
     R_ETHERC0_Type            * p_reg_etherc;
-    uint32_t reg;
-    uint32_t count = 0;
 
 #if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
@@ -227,13 +230,19 @@ fsp_err_t R_ETHER_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t con
     /* Configure pins for MII or RMII. Set PHYMODE0 if MII is selected. */
     R_PMISC->PFENET = (uint8_t) ((ETHER_PHY_MII_TYPE_MII == p_cfg->mii_type) << R_PMISC_PFENET_PHYMODE0_Pos);
 
+#if ETHER_PHY_CFG_INIT_PHY_LSI_AUTOMATIC
+    uint32_t reg   = 0;
+    uint32_t count = 0;
+
+    p_instance_ctrl->interface_status = ETHER_PHY_INTERFACE_STATUS_INITIALIZED;
+
     /* Reset PHY */
-    ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_CONTROL, ETHER_PHY_CONTROL_RESET);
+    R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_CONTROL, ETHER_PHY_CONTROL_RESET);
 
     /* Reset completion waiting */
     do
     {
-        reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_CONTROL);
+        R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_CONTROL, &reg);
         count++;
     } while ((reg & ETHER_PHY_CONTROL_RESET) && (count < p_cfg->phy_reset_wait_time));
 
@@ -249,6 +258,12 @@ fsp_err_t R_ETHER_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t con
     {
         err = FSP_ERR_TIMEOUT;
     }
+
+#else
+    p_instance_ctrl->open = ETHER_PHY_OPEN;
+
+    err = FSP_SUCCESS;
+#endif
 
     return err;
 }                                      /* End of function R_ETHER_PHY_Open() */
@@ -276,7 +291,8 @@ fsp_err_t R_ETHER_PHY_Close (ether_phy_ctrl_t * const p_ctrl)
     p_instance_ctrl->local_advertise = 0;
     p_instance_ctrl->p_reg_pir       = NULL;
 
-    p_instance_ctrl->open = 0;
+    p_instance_ctrl->interface_status = ETHER_PHY_INTERFACE_STATUS_UNINITIALIZED;
+    p_instance_ctrl->open             = 0;
 
     return err;
 }                                      /* End of function R_ETHER_PHY_Close() */
@@ -287,15 +303,20 @@ fsp_err_t R_ETHER_PHY_Close (ether_phy_ctrl_t * const p_ctrl)
  * @retval  FSP_SUCCESS                                 ETHER_PHY successfully starts auto-negotiate.
  * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
  * @retval  FSP_ERR_NOT_OPEN                            The control block has not been opened
- *
+ * @retval  FSP_ERR_INVALID_ARGUMENT                    Register address is incorrect
+ * @retval  FSP_ERR_INVALID_POINTER                     Pointer to read buffer is NULL.
+ * @retval  FSP_ERR_NOT_INITIALIZED                     The control block has not been initialized
  ***********************************************************************************************************************/
 fsp_err_t R_ETHER_PHY_StartAutoNegotiate (ether_phy_ctrl_t * const p_ctrl)
 {
     ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
+    uint32_t reg = 0;
 
 #if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
     ETHER_PHY_ERROR_RETURN(ETHER_PHY_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_INTERFACE_STATUS_INITIALIZED == p_instance_ctrl->interface_status,
+                           FSP_ERR_NOT_INITIALIZED);
 #endif
 
     /* Set local ability */
@@ -321,13 +342,13 @@ fsp_err_t R_ETHER_PHY_StartAutoNegotiate (ether_phy_ctrl_t * const p_ctrl)
     }
 
     /* Configure what the PHY and the Ethernet controller on this board supports */
-    ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_AN_ADVERTISEMENT, p_instance_ctrl->local_advertise);
-    ether_phy_write(p_instance_ctrl,
-                    ETHER_PHY_REG_CONTROL,
-                    (ETHER_PHY_CONTROL_AN_ENABLE |
-                     ETHER_PHY_CONTROL_AN_RESTART));
+    R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_AN_ADVERTISEMENT, p_instance_ctrl->local_advertise);
+    R_ETHER_PHY_Write(p_instance_ctrl,
+                      ETHER_PHY_REG_CONTROL,
+                      (ETHER_PHY_CONTROL_AN_ENABLE |
+                       ETHER_PHY_CONTROL_AN_RESTART));
 
-    ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_AN_ADVERTISEMENT);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_AN_ADVERTISEMENT, &reg);
 
     return FSP_SUCCESS;
 }                                      /* End of function R_ETHER_PHY_StartAutoNegotiate() */
@@ -341,6 +362,8 @@ fsp_err_t R_ETHER_PHY_StartAutoNegotiate (ether_phy_ctrl_t * const p_ctrl)
  * @retval  FSP_ERR_NOT_OPEN                            The control block has not been opened
  * @retval  FSP_ERR_ETHER_PHY_ERROR_LINK                PHY-LSI is not link up.
  * @retval  FSP_ERR_ETHER_PHY_NOT_READY                 The auto-negotiation isn't completed
+ * @retval  FSP_ERR_INVALID_ARGUMENT                    Status register address is incorrect
+ * @retval  FSP_ERR_NOT_INITIALIZED                     The control block has not been initialized
  ***********************************************************************************************************************/
 fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
                                              uint32_t * const         p_line_speed_duplex,
@@ -349,7 +372,7 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
 {
     fsp_err_t err = FSP_SUCCESS;
     ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
-    uint32_t reg;
+    uint32_t reg               = 0;
     uint32_t line_speed_duplex = ETHER_PHY_LINK_SPEED_NO_LINK;
 
 #if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
@@ -358,11 +381,13 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
     ETHER_PHY_ERROR_RETURN(NULL != p_line_speed_duplex, FSP_ERR_INVALID_POINTER);
     ETHER_PHY_ERROR_RETURN(NULL != p_local_pause, FSP_ERR_INVALID_POINTER);
     ETHER_PHY_ERROR_RETURN(NULL != p_partner_pause, FSP_ERR_INVALID_POINTER);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_INTERFACE_STATUS_INITIALIZED == p_instance_ctrl->interface_status,
+                           FSP_ERR_NOT_INITIALIZED);
 #endif
 
     /* Because reading the first time shows the previous state, the Link status bit is read twice. */
-    ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_STATUS);
-    reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_STATUS);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_STATUS, &reg);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_STATUS, &reg);
 
     /* When the link isn't up, return error */
     ETHER_PHY_ERROR_RETURN(ETHER_PHY_STATUS_LINK_UP == (reg & ETHER_PHY_STATUS_LINK_UP), FSP_ERR_ETHER_PHY_ERROR_LINK);
@@ -383,7 +408,7 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
                            FSP_ERR_ETHER_PHY_NOT_READY);
 
     /* Get the link partner response */
-    reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_AN_LINK_PARTNER);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_AN_LINK_PARTNER, &reg);
 
     /* Establish partner pause capability */
     if (ETHER_PHY_AN_LINK_PARTNER_PAUSE == (reg & ETHER_PHY_AN_LINK_PARTNER_PAUSE))
@@ -440,6 +465,9 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
  * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
  * @retval  FSP_ERR_NOT_OPEN                            The control block has not been opened
  * @retval  FSP_ERR_ETHER_PHY_ERROR_LINK                PHY-LSI is not link up.
+ * @retval  FSP_ERR_INVALID_ARGUMENT                    Status register address is incorrect
+ * @retval  FSP_ERR_INVALID_POINTER                     Pointer to read buffer is NULL.
+ * @retval  FSP_ERR_NOT_INITIALIZED                     The control block has not been initialized
  ***********************************************************************************************************************/
 fsp_err_t R_ETHER_PHY_LinkStatusGet (ether_phy_ctrl_t * const p_ctrl)
 {
@@ -450,11 +478,13 @@ fsp_err_t R_ETHER_PHY_LinkStatusGet (ether_phy_ctrl_t * const p_ctrl)
 #if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
     ETHER_PHY_ERROR_RETURN(ETHER_PHY_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_INTERFACE_STATUS_INITIALIZED == p_instance_ctrl->interface_status,
+                           FSP_ERR_NOT_INITIALIZED);
 #endif
 
     /* Because reading the first time shows the previous state, the Link status bit is read twice. */
-    ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_STATUS);
-    reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_STATUS);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_STATUS, &reg);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_STATUS, &reg);
 
     /* When the link isn't up, return error */
     if (ETHER_PHY_STATUS_LINK_UP != (reg & ETHER_PHY_STATUS_LINK_UP))
@@ -471,26 +501,76 @@ fsp_err_t R_ETHER_PHY_LinkStatusGet (ether_phy_ctrl_t * const p_ctrl)
     return err;
 }                                      /* End of function R_ETHER_PHY_LinkStatusGet() */
 
-/*******************************************************************************************************************//**
- * @} (end addtogroup ETHER_PHY)
- **********************************************************************************************************************/
-
-/**
- * Private functions
- */
-
-/***********************************************************************************************************************
- * Function Name: ether_phy_read
- * Description  : Reads a PHY register
- * Arguments    : ether_channel -
- *                    Ethernet channel number
- *                reg_addr -
- *                    address of the PHY register
- * Return Value : read value
+/********************************************************************************************************************//**
+ * @brief Initialize Ethernet PHY device. Implements @ref ether_phy_api_t::chipInit.
+ *
+ * @retval  FSP_SUCCESS                             PHY device initialized successfully.
+ * @retval  FSP_ERR_ASSERTION                       Pointer to ETHER_PHY control block or configuration structure is NULL.
+ * @retval  FSP_ERR_INVALID_ARGUMENT                Address or data is not a valid size.
+ * @retval  FSP_ERR_INVALID_POINTER                 Pointer to p_cfg is NULL.
+ * @retval  FSP_ERR_NOT_INITIALIZED                 The control block has not been initialized.
+ * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened.
+ * @retval  FSP_ERR_TIMEOUT                         PHY-LSI Reset wait timeout.
  ***********************************************************************************************************************/
-uint32_t ether_phy_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr)
+fsp_err_t R_ETHER_PHY_ChipInit (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t const * const p_cfg)
 {
+    fsp_err_t err = FSP_SUCCESS;
+    ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
+    uint32_t reg   = 0;
+    uint32_t count = 0;
+
+#if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    ETHER_PHY_ERROR_RETURN(NULL != p_cfg, FSP_ERR_INVALID_POINTER);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    p_instance_ctrl->interface_status = ETHER_PHY_INTERFACE_STATUS_INITIALIZED;
+
+    /* Reset PHY */
+    R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_CONTROL, ETHER_PHY_CONTROL_RESET);
+
+    /* Reset completion waiting */
+    do
+    {
+        R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_CONTROL, &reg);
+        count++;
+    } while ((reg & ETHER_PHY_CONTROL_RESET) && (count < p_cfg->phy_reset_wait_time));
+
+    if (count < p_cfg->phy_reset_wait_time)
+    {
+        ether_phy_targets_initialize(p_instance_ctrl);
+
+        err = FSP_SUCCESS;
+    }
+    else
+    {
+        err = FSP_ERR_TIMEOUT;
+    }
+
+    return err;
+}                                      /* End of function R_ETHER_PHY_ChipInit() */
+
+/********************************************************************************************************************//**
+ * @brief Read data from register of PHY-LSI . Implements @ref ether_phy_api_t::read.
+ *
+ * @retval  FSP_SUCCESS                                 ETHER_PHY successfully read data.
+ * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
+ * @retval  FSP_ERR_INVALID_POINTER                     Pointer to read buffer is NULL.
+ * @retval  FSP_ERR_INVALID_ARGUMENT                    Address is not a valid size
+ * @retval  FSP_ERR_NOT_INITIALIZED                     The control block has not been initialized
+ ***********************************************************************************************************************/
+fsp_err_t R_ETHER_PHY_Read (ether_phy_ctrl_t * const p_ctrl, uint32_t reg_addr, uint32_t * const p_data)
+{
+    ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
     uint32_t data;
+#if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    ETHER_PHY_ERROR_RETURN(NULL != p_data, FSP_ERR_INVALID_POINTER);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_ADDRESS_SIZE >= reg_addr, FSP_ERR_INVALID_ARGUMENT);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_INTERFACE_STATUS_INITIALIZED == p_instance_ctrl->interface_status,
+                           FSP_ERR_NOT_INITIALIZED);
+#endif
 
     /*
      * The value is read from the PHY register by the frame format of MII Management Interface provided
@@ -502,22 +582,31 @@ uint32_t ether_phy_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t r
     ether_phy_reg_read(p_instance_ctrl, &data);
     ether_phy_trans_idle(p_instance_ctrl);
 
-    return data;
-}                                      /* End of function ether_phy_read() */
+    (*p_data) = data;
 
-/***********************************************************************************************************************
- * Function Name: ether_phy_write
- * Description  : Writes to a PHY register
- * Arguments    : ether_channel -
- *                    Ethernet channel number
- *                reg_addr -
- *                    address of the PHY register
- *                data -
- *                    value
- * Return Value : none
+    return FSP_SUCCESS;
+}                                      /* End of function R_ETHER_PHY_Read() */
+
+/********************************************************************************************************************//**
+ * @brief Write data to register of PHY-LSI . Implements @ref ether_phy_api_t::write.
+ *
+ * @retval  FSP_SUCCESS                                 ETHER_PHY successfully write data.
+ * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
+ * @retval  FSP_ERR_INVALID_ARGUMENT                    Address or data is not a valid size
+ * @retval  FSP_ERR_NOT_INITIALIZED                     The control block has not been initialized
  ***********************************************************************************************************************/
-void ether_phy_write (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data)
+fsp_err_t R_ETHER_PHY_Write (ether_phy_ctrl_t * const p_ctrl, uint32_t reg_addr, uint32_t data)
 {
+    ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
+
+#if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_ADDRESS_SIZE >= reg_addr, FSP_ERR_INVALID_ARGUMENT);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_REGISTER_DATA_SIZE >= data, FSP_ERR_INVALID_ARGUMENT);
+    ETHER_PHY_ERROR_RETURN(ETHER_PHY_INTERFACE_STATUS_INITIALIZED == p_instance_ctrl->interface_status,
+                           FSP_ERR_NOT_INITIALIZED);
+#endif
+
     /*
      * The value is read from the PHY register by the frame format of MII Management Interface provided
      * for by Table 22-12 of 22.2.4.5 of IEEE 802.3-2008_section2.
@@ -527,7 +616,17 @@ void ether_phy_write (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_
     ether_phy_trans_1to0(p_instance_ctrl);
     ether_phy_reg_write(p_instance_ctrl, data);
     ether_phy_trans_idle(p_instance_ctrl);
-}                                      /* End of function ether_phy_write() */
+
+    return FSP_SUCCESS;
+}                                      /* End of function R_ETHER_PHY_Write() */
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup ETHER_PHY)
+ **********************************************************************************************************************/
+
+/**
+ * Private functions
+ */
 
 /***********************************************************************************************************************
  * Function Name: phy_preamble
@@ -921,6 +1020,23 @@ static void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance
         }
 #endif
 
+        /* User custom */
+#if (ETHER_PHY_CFG_USE_CUSTOM_PHY_LSI_ENABLE)
+        case ETHER_PHY_LSI_TYPE_CUSTOM:
+        {
+            if (NULL != p_instance_ctrl->p_ether_phy_cfg->p_extend)
+            {
+                ether_phy_extended_cfg_t const * p_callback = p_instance_ctrl->p_ether_phy_cfg->p_extend;
+                if (NULL != p_callback->p_port_custom_init)
+                {
+                    p_callback->p_port_custom_init(p_instance_ctrl);
+                }
+            }
+
+            break;
+        }
+#endif
+
         /* If module is configured for default LSI */
         default:
         {
@@ -977,6 +1093,23 @@ static bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instanc
         case ETHER_PHY_LSI_TYPE_ICS1894:
         {
             result = ether_phy_target_ics1894_is_support_link_partner_ability(p_instance_ctrl, line_speed_duplex);
+            break;
+        }
+#endif
+
+        /* User custom */
+#if (ETHER_PHY_CFG_USE_CUSTOM_PHY_LSI_ENABLE)
+        case ETHER_PHY_LSI_TYPE_CUSTOM:
+        {
+            if (NULL != p_instance_ctrl->p_ether_phy_cfg->p_extend)
+            {
+                ether_phy_extended_cfg_t const * p_callback = p_instance_ctrl->p_ether_phy_cfg->p_extend;
+                if (NULL != p_callback->p_port_custom_link_partner_ability_get)
+                {
+                    result = p_callback->p_port_custom_link_partner_ability_get(p_instance_ctrl, line_speed_duplex);
+                }
+            }
+
             break;
         }
 #endif

@@ -26,8 +26,6 @@
  * @section USB_HCDC_API_Summary Summary
  * The USB HCDC interface provides USB HCDC functionality.
  *
- * The USB HCDC interface can be implemented by:
- * - @ref USB_HCDC
  *
  * @{
  **********************************************************************************************************************/
@@ -38,11 +36,12 @@
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
- #include "r_usb_hcdc_cfg.h"
+/* Register definitions, common services and error codes. */
+#include "bsp_api.h" 
+#include "r_usb_hcdc_cfg.h"
 
- #ifdef __cplusplus
-extern "C" {
- #endif
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /******************************************************************************
  * Macro definitions
@@ -192,9 +191,57 @@ typedef struct
     uint16_t wtime_ms;                 ///< Duration of Break
 } usb_hcdc_breakduration_t;
 
- #ifdef __cplusplus
-}
- #endif
+/** Break duration data */
+typedef struct
+{
+    uint16_t vendor_id;                ///< Vendor ID
+    uint16_t product_id;               ///< Product ID
+    uint8_t  subclass;                 ///< Subclass code
+} usb_hcdc_device_info_t;
+
+/*****************************************************************************
+ * Typedef definitions
+ ******************************************************************************/
+
+/** USB HCDC functions implemented at the HAL layer will follow this API. */
+typedef struct st_usb_hcdc_api
+{
+    /** Read Control Data (CDC Interrupt IN data)
+     *
+     * @param[in]  p_api_ctrl       Pointer to control structure.
+     * @param[in]  p_buf            Pointer to area that stores read data.
+     * @param[in]  size             Read request size.
+     * @param[in]  device_address   Device address.
+     */
+    fsp_err_t (* controlDataRead)(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t device_address);
+
+    /** Register the specified vendor class device in the device table.
+     *
+     * @param[in]  p_api_ctrl      Pointer to control structure.
+     * @param[in]  vendor_id       Vendor ID.
+     * @param[in]  product_id      Product ID.
+     */
+    fsp_err_t (* deviceRegister)(usb_ctrl_t * const p_api_ctrl, uint16_t vendor_id, uint16_t product_id);
+
+    /** Get connected device information.
+     *
+     * @param[in]  p_api_ctrl      Pointer to control structure.
+     * @param[in]  p_info          Pointer to store CDC device information.
+     * @param[in]  device_address  Device address.
+     */
+    fsp_err_t (* infoGet)(usb_ctrl_t * const p_api_ctrl, usb_hcdc_device_info_t * p_info, uint8_t device_address);
+} usb_hcdc_api_t;
+
+/** This structure encompasses everything that is needed to use an instance of this interface. */
+typedef struct st_usb_hcdc_instance
+{
+    usb_ctrl_t           * p_ctrl;     ///< Pointer to the control structure for this instance
+    usb_cfg_t const      * p_cfg;      ///< Pointer to the configuration structure for this instance
+    usb_hcdc_api_t const * p_api;      ///< Pointer to the API structure for this instance
+} usb_hcdc_instance_t;
+
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif                                 /* R_USB_HCDC_API_H */
 

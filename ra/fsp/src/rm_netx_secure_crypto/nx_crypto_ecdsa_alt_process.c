@@ -188,8 +188,8 @@ UINT sce_nx_crypto_ecdsa_sign (NX_CRYPTO_EC * curve,
         {
             /* digest - No 0 padding, skip the first 2 '0' words */
             err =
-                HW_SCE_EcdsaP384SignatureGenerateSub(&curve_type, wrapped_private_key, (uint32_t *) &work_buffer[digest_offset],
-                                                     sign);
+                HW_SCE_EcdsaP384SignatureGenerateSubAdaptor(&curve_type, wrapped_private_key, (uint32_t *) &work_buffer[digest_offset],
+                                                            &DomainParam_NIST_P384[0], sign);                           
             break;
         }
 
@@ -200,8 +200,9 @@ UINT sce_nx_crypto_ecdsa_sign (NX_CRYPTO_EC * curve,
         case NX_CRYPTO_EC_SECP256R1:
         {
             err =
-                HW_SCE_EcdsaSignatureGenerateSub(&curve_type, &cmd, wrapped_private_key,
-                                                 (uint32_t *) &work_buffer[digest_offset], sign);
+                HW_SCE_EcdsaSignatureGenerateSubAdaptor(&curve_type, &cmd, wrapped_private_key,
+                                                        (uint32_t *) &work_buffer[digest_offset], 
+                                                        &DomainParam_NIST_P256[0], sign);                                     
             break;
         }
 
@@ -355,8 +356,8 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
         {
             /* digest - No 0 padding, skip the first 2 '0' words */
             err =
-                HW_SCE_EcdsaP384SignatureVerificationSub(&curve_type, formatted_public_key, (uint32_t *) &digest[digest_offset],
-                                                         sign);
+                HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(&curve_type, formatted_public_key, (uint32_t *) &digest[digest_offset],
+                                                                sign, &DomainParam_NIST_P384[0]);
             break;
         }
 
@@ -367,8 +368,9 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
         case NX_CRYPTO_EC_SECP256R1:
         {
             err =
-                HW_SCE_EcdsaSignatureVerificationSub(&curve_type, &cmd, formatted_public_key,
-                                                     (uint32_t *) &digest[digest_offset], sign);
+                HW_SCE_EcdsaSignatureVerificationSubAdaptor(&curve_type, &cmd, formatted_public_key,
+                                                            (uint32_t *) &digest[digest_offset],
+                                                            sign, &DomainParam_NIST_P256[0]);                                    
             break;
         }
 

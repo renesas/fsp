@@ -740,7 +740,8 @@ static void sci_b_i2c_open_hw_master (sci_b_i2c_instance_ctrl_t * const p_ctrl, 
      * - Write the Noise filter setting.
      * - Enable the Noise filter.
      */
-    p_ctrl->p_reg->CCR1 = (uint32_t) pextend->clock_settings.snfr_value | R_SCI_B0_CCR1_NFEN_Msk;
+    p_ctrl->p_reg->CCR1 = (uint32_t) (pextend->clock_settings.snfr_value << R_SCI_B0_CCR1_NFCS_Pos) |
+                          R_SCI_B0_CCR1_NFEN_Msk;
 
     /* Clear status flags. */
     p_ctrl->p_reg->CFCLR = (R_SCI_B0_CFCLR_RDRFC_Msk |

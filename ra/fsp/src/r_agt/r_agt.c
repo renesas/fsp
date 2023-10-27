@@ -723,13 +723,14 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
     agt_extended_cfg_t const * p_extend = (agt_extended_cfg_t const *) p_cfg->p_extend;
     FSP_ASSERT((AGT_CLOCK_AGT_UNDERFLOW != p_extend->count_source) || (p_cfg->channel & 1U));
 
-    /* Devices with RTCCR.TCEN support P402/P403 as count sources. */
+    /* Devices with RTCCR.TCEN support P402/P403/P404 as count sources. */
  #if !BSP_FEATURE_RTC_HAS_TCEN
     if (AGT_PRV_IS_AGTW(p_instance_ctrl))
     {
-        /* Return error for MCUs that do not support P402 and P403 as count sources*/
+        /* Return error for MCUs that do not support P402, P403 and P404 as count sources*/
         FSP_ASSERT(AGT_CLOCK_P402 != p_extend->count_source);
         FSP_ASSERT(AGT_CLOCK_P403 != p_extend->count_source);
+        FSP_ASSERT(AGT_CLOCK_P404 != p_extend->count_source);
     }
  #endif
 

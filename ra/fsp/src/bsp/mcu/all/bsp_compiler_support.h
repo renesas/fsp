@@ -45,7 +45,7 @@ extern "C" {
   #ifndef BSP_SECTION_HEAP
    #define BSP_SECTION_HEAP                 BSP_UNINIT_SECTION_PREFIX ".heap"
   #endif
-  #define BSP_DONT_REMOVE
+  #define BSP_DONT_REMOVE                   __attribute__((used))
   #define BSP_ATTRIBUTE_STACKLESS           __attribute__((naked))
   #define BSP_FORCE_INLINE                  __attribute__((always_inline))
  #elif   defined(__GNUC__)             /* GCC compiler */

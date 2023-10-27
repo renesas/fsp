@@ -67,6 +67,7 @@ typedef enum e_agt_clock
     AGT_CLOCK_SUBCLOCK      = 0x60,    ///< Subclock count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
     AGT_CLOCK_P402          = 0x92,    ///< Counts events on P402, events are counted in deep software standby mode
     AGT_CLOCK_P403          = 0x93,    ///< Counts events on P403, events are counted in deep software standby mode
+    AGT_CLOCK_P404          = 0x91,    ///< Counts events on P404, events are counted in deep software standby mode
     AGT_CLOCK_AGTIO         = 0x80,    ///< Counts events on AGTIOn, events are not counted in software standby modes
 } agt_clock_t;
 

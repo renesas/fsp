@@ -29,7 +29,7 @@
 
 #include "rm_netx_secure_crypto_cfg.h"
 #include "rm_netx_secure_crypto.h"
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1) || \
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1) || \
     ((BSP_FEATURE_CRYPTO_HAS_SCE5 || BSP_FEATURE_CRYPTO_HAS_SCE5B) == 1))
  #include "nx_crypto_aes.h"
  #include "hw_sce_private.h"
@@ -149,7 +149,7 @@ UINT sce_nx_crypto_ccm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
                                                     (uint32_t *) work_buffer, indata_seqnum,
                                                     header_length);
     }
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
+ #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 ||  BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes192CcmEncryptInitSubGeneral(key_type, indata_type, indata_cmd, indata_textlen,
@@ -202,7 +202,7 @@ UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
                                              (uint32_t *) output,
                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
+ #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 ||  BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
         else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
         {
         	HW_SCE_Aes192CcmEncryptUpdateSub((uint32_t *) input,
@@ -214,7 +214,7 @@ UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
         {
         	HW_SCE_Aes256CcmEncryptUpdateSub((uint32_t *) input,
                                              (uint32_t *) output,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
+                                            RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
         else
         {
@@ -231,20 +231,20 @@ UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
 
     if (SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
-    	err = HW_SCE_Aes128CcmEncryptFinalSubGeneral(indata_textlen, (uint32_t *) work_buffer,
+    	err = HW_SCE_Aes128CcmEncryptFinalSubGeneral((uint32_t *) work_buffer, indata_textlen,
                                                      (uint32_t *) &output[input_length], (uint32_t *) p_ccm_metadata->nx_crypto_ccm_X);
     }
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 ||  BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
     	err = HW_SCE_Aes192CcmEncryptFinalSub(indata_textlen, (uint32_t *) work_buffer,
-                                              (uint32_t *) &output[input_length], (uint32_t *) p_ccm_metadata->nx_crypto_ccm_X);
+                                                     (uint32_t *) &output[input_length], (uint32_t *) p_ccm_metadata->nx_crypto_ccm_X);
     }
 #endif
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
     	err = HW_SCE_Aes256CcmEncryptFinalSub(indata_textlen, (uint32_t *) work_buffer,
-                                              (uint32_t *) &output[input_length], (uint32_t *) p_ccm_metadata->nx_crypto_ccm_X);
+                                                     (uint32_t *) &output[input_length], (uint32_t *) p_ccm_metadata->nx_crypto_ccm_X);
     }
     else
     {
@@ -306,7 +306,7 @@ UINT sce_nx_crypto_ccm_decrypt_init (NX_CRYPTO_AES * crypto_metadata, NX_CRYPTO_
                                                     (uint32_t *) work_buffer, indata_seqnum,
                                                     header_length);
     }
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
+ #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 ||  BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes192CcmDecryptInitSubGeneral(key_type, indata_type, indata_cmd, indata_textlen,
@@ -362,22 +362,22 @@ UINT sce_nx_crypto_ccm_decrypt_update (NX_CRYPTO_AES * crypto_metadata, UCHAR * 
         if (SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
         {
             HW_SCE_Aes128CcmDecryptUpdateSub((uint32_t *) input,
-                                             (uint32_t *) output,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
+                                                    (uint32_t *) output,
+                                                    RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
+ #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 ||  BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
         else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
         {
         	HW_SCE_Aes192CcmDecryptUpdateSub((uint32_t *) input,
-                                             (uint32_t *) output,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
+                                                    (uint32_t *) output,
+                                                    RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
  #endif
         else if (SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
         {
         	HW_SCE_Aes256CcmDecryptUpdateSub((uint32_t *) input,
-                                             (uint32_t *) output,
-                                             RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
+                                                    (uint32_t *) output,
+                                                    RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
         else
         {
@@ -415,21 +415,21 @@ UINT sce_nx_crypto_ccm_decrypt_final (NX_CRYPTO_AES * crypto_metadata, NX_CRYPTO
                                                      indata_maclength,
                                                      (uint32_t *) work_buffer);
     }
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1)
+#if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
     {
     	err = HW_SCE_Aes192CcmDecryptFinalSub((uint32_t *) work_buffer, indata_textlen,
-                                              (uint32_t *) icv,
-                                              indata_maclength,
-                                              (uint32_t *) work_buffer);
+                                                     (uint32_t *) icv,
+                                                     indata_maclength,
+                                                     (uint32_t *) work_buffer);
     }
 #endif
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
     {
     	err = HW_SCE_Aes256CcmDecryptFinalSub((uint32_t *) work_buffer, indata_textlen,
-                                              (uint32_t *) icv,
-                                              indata_maclength,
-                                              (uint32_t *) work_buffer);
+                                                     (uint32_t *) icv,
+                                                     indata_maclength,
+                                                     (uint32_t *) work_buffer);
     }
     else
     {

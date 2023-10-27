@@ -110,8 +110,8 @@ fsp_err_t R_SLCDC_Open (slcdc_ctrl_t * const p_ctrl, slcdc_cfg_t const * const p
 
     /* Set voltage reference */
     R_SLCDC->VLCD =
-        (uint8_t) (((p_cfg->ref_volt_sel << R_SLCDC_VLCD_MDSET2_Pos) & R_SLCDC_VLCD_MDSET2_Msk) |
-                   SLCDC_PRV_VLCD_DEFAULT);
+        (((uint8_t) (p_cfg->ref_volt_sel << R_SLCDC_VLCD_MDSET2_Pos) & R_SLCDC_VLCD_MDSET2_Msk) |
+         SLCDC_PRV_VLCD_DEFAULT);
 #endif
 
     /* Set Mode, waveform, timeslice and bias method */

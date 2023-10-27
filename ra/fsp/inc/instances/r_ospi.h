@@ -145,6 +145,7 @@ typedef struct st_ospi_extended_cfg
     ospi_opi_command_set_t const * p_opi_commands;                          ///< If OPI commands are not used set this to NULL
     uint8_t                        opi_mem_read_dummy_cycles;               ///< Dummy cycles to be inserted for memory mapped reads
     uint8_t                        opi_mem_write_dummy_cycles;              ///< Dummy cycles to be inserted for memory mapped writes
+    uint8_t                        opi_status_read_dummy_cycles;            ///< Dummy cycles to be inserted for status reads in OPI mode.
     uint8_t                      * p_autocalibration_preamble_pattern_addr; ///< OctaFlash memory address holding the preamble pattern
     ospi_dopi_byte_order_t         dopi_byte_order;                         ///< Byte order on external bus. Only applicable in DOPI mode.
     uint16_t                       ram_chip_select_max_period_setting;      ///< Indicates the maximum period that OM_CS0/OM_CS1 are Low in single continuous write/read of OctaRAM.

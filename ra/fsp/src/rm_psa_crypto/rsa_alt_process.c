@@ -51,9 +51,16 @@
   #include "hw_sce_ra_private.h"
   #include "hw_sce_private.h"
 
-  #define RM_PSA_CRYPTO_RSA_KEY_PLAINTEXT    (0U)
-  #define RM_PSA_CRYPTO_RSA_KEY_WRAPPED      (1U)
-  #define RM_PSA_CRYPTO_DUMMY_KEY_BYTES      (20U)
+  #define RM_PSA_CRYPTO_RSA_KEY_PLAINTEXT                 (0U)
+  #define RM_PSA_CRYPTO_RSA_KEY_WRAPPED                   (1U)
+  #define RM_PSA_CRYPTO_DUMMY_KEY_BYTES                   (20U)
+
+  #ifndef HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE
+   #define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE    (4U)
+  #endif
+  #ifndef HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE
+   #define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE     (4U)
+  #endif
 
   #if BSP_FEATURE_CRYPTO_HAS_SCE7
 fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSub (const uint32_t * InData_KeyIndex,
@@ -172,7 +179,9 @@ fsp_err_t HW_SCE_RSA_2048KeyGenerate (uint32_t   num_tries,
                                       uint32_t * OutData_DomainParam)
 
 {
-    sce_rsa2048_key_pair_index_t key_pair_index = {0};
+    uint32_t local_private_key[HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_BYTE_SIZE / 4U] = {0};
+    uint32_t local_public_key[HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_BYTE_SIZE / 4U]   = {0};
+
     fsp_err_t err = FSP_SUCCESS;
     uint32_t  local_dummy[RM_PSA_CRYPTO_DUMMY_KEY_BYTES / 4U];
     uint32_t  indata_key_type = SCE_OEM_KEY_TYPE_PLAIN;
@@ -188,14 +197,14 @@ fsp_err_t HW_SCE_RSA_2048KeyGenerate (uint32_t   num_tries,
         HW_SCE_GenerateRsa2048RandomKeyIndexSub(num_tries,
                                                 &indata_key_type,
                                                 local_dummy,
-                                                (uint32_t *) &key_pair_index.pub_key.plain_value,
+                                                (uint32_t *) local_public_key,
                                                 local_dummy,
-                                                (uint32_t *) &key_pair_index.priv_key.plain_value);
+                                                (uint32_t *) local_private_key);
 
     if (FSP_SUCCESS == err)
     {
-        memcpy(OutData_PrivateKey, &key_pair_index.priv_key.plain_value, sizeof(key_pair_index.priv_key.plain_value));
-        memcpy(OutData_N, &key_pair_index.pub_key.plain_value, sizeof(key_pair_index.pub_key.value.key_n));
+        memcpy(OutData_PrivateKey, local_private_key, sizeof(local_private_key));
+        memcpy(OutData_N, local_public_key, sizeof(local_public_key));
         memcpy((uint8_t *) OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
     }
 
@@ -257,8 +266,6 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
     uint32_t public_key_size_bytes  = RSA_MODULUS_SIZE_BYTES(2048);
     FSP_PARAMETER_NOT_USED(private_key_size_bytes);
 
-   #if defined(MBEDTLS_CHECK_PARAMS)
-
     /* HW can only generate public exponent of 65537 */
     if (exponent != RSA_PUBLIC_EXPONENT_BE)
     {
@@ -270,7 +277,6 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
     {
         return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
     }
-   #endif
 
     if (true == (bool) ctx->vendor_ctx)
     {
@@ -507,7 +513,7 @@ int mbedtls_rsa_public (mbedtls_rsa_context * ctx, const unsigned char * input, 
         p_hw_sce_rsa_public_encrypt = HW_SCE_RSA_2048PublicKeyEncrypt;
     }
 
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_RSIP7
    #if RM_PSA_CRYPTO_CFG_RSA3K_ENABLED
     else if (ctx->len == RSA_MODULUS_SIZE_BYTES(RSA_3072_BITS))
     {

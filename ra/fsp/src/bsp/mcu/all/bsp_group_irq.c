@@ -102,7 +102,9 @@ fsp_err_t R_BSP_GroupIrqWrite (bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_ir
  **********************************************************************************************************************/
 void NMI_Handler (void)
 {
-    uint16_t nmisr = R_ICU->NMISR;
+    /* NMISR is masked by NMIER to prevent iterating over NMI status flags that are not enabled. */
+    uint16_t nmier = R_ICU->NMIER;
+    uint16_t nmisr = R_ICU->NMISR & nmier;
 
     /* Loop over all NMI status flags */
     for (bsp_grp_irq_t irq = BSP_GRP_IRQ_IWDT_ERROR; irq <= (bsp_grp_irq_t) (BSP_GRP_IRQ_TOTAL_ITEMS - 1); irq++)
@@ -116,6 +118,14 @@ void NMI_Handler (void)
 
     /* Clear status flags that have been handled. */
     R_ICU->NMICLR = nmisr;
+
+#if BSP_CFG_MCU_PART_SERIES == 8
+
+    /* Wait for NMISR to be cleared before exiting the ISR to prevent the IRQ from being regenerated.
+     * See section "13.2.12 NMICLR : Non-Maskable Interrupt Status Clear Register" in the RA8M1 manual
+     * R01UH0994EJ0100 */
+    FSP_HARDWARE_REGISTER_WAIT((R_ICU->NMISR & nmisr), 0);
+#endif
 }
 
 /** @} (end addtogroup BSP_MCU) */

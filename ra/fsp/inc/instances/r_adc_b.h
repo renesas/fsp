@@ -544,7 +544,7 @@ typedef struct st_adc_b_isr_cfg
 } adc_b_isr_cfg_t;
 
 /** ADC extended configuration data */
-typedef __PACKED_STRUCT st_adc_b_extended_cfg
+typedef struct st_adc_b_extended_cfg
 {
     /* Data used to calculate register settings */
     adc_b_pga_gain_t pga_gain[4];       ///< PGA Gain selection

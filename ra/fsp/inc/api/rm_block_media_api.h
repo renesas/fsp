@@ -30,11 +30,6 @@
  * The block media interface supports reading, writing, and erasing media devices. All functions are non-blocking if
  * possible. The callback is used to determine when an operation completes.
  *
- * Implemented by:
- * - @ref RM_BLOCK_MEDIA_SDMMC
- * - @ref RM_BLOCK_MEDIA_SPI
- * - @ref RM_BLOCK_MEDIA_USB
- * - @ref RM_BLOCK_MEDIA_RAM
  *
  * @{
  **********************************************************************************************************************/
@@ -105,11 +100,6 @@ typedef struct st_rm_block_media_status
 } rm_block_media_status_t;
 
 /** Block media API control block.  Allocate an instance specific control block to pass into the block media API calls.
- * @par Implemented as
- * - @ref rm_block_media_sdmmc_instance_ctrl_t
- * - @ref rm_block_media_spi_instance_ctrl_t
- * - @ref rm_block_media_usb_instance_ctrl_t
- * - @ref rm_block_media_ram_instance_ctrl_t
  */
 typedef void rm_block_media_ctrl_t;
 
@@ -118,11 +108,6 @@ typedef struct st_rm_block_media_api
 {
     /** Initialize block media device. @ref rm_block_media_api_t::mediaInit must be called to complete the
      * initialization procedure.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_Open
-     * - @ref RM_BLOCK_MEDIA_SPI_Open
-     * - @ref RM_BLOCK_MEDIA_USB_Open
-     * - @ref RM_BLOCK_MEDIA_RAM_Open
      *
      * @param[in]   p_ctrl              Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg               Pointer to configuration structure. All elements of this structure must be set by user.
@@ -131,22 +116,12 @@ typedef struct st_rm_block_media_api
 
     /** Initializes a media device.  If the device is removable, it must be plugged in prior to calling this API.
      * This function blocks until media initialization is complete.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_MediaInit
-     * - @ref RM_BLOCK_MEDIA_SPI_MediaInit
-     * - @ref RM_BLOCK_MEDIA_USB_MediaInit
-     * - @ref RM_BLOCK_MEDIA_RAM_MediaInit
      *
      * @param[in]   p_ctrl              Control block set in @ref rm_block_media_api_t::open call.
      */
     fsp_err_t (* mediaInit)(rm_block_media_ctrl_t * const p_ctrl);
 
     /** Reads blocks of data from the specified memory device address to the location specified by the caller.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_Read
-     * - @ref RM_BLOCK_MEDIA_SPI_Read
-     * - @ref RM_BLOCK_MEDIA_USB_Read
-     * - @ref RM_BLOCK_MEDIA_RAM_Read
      *
      * @param[in]   p_ctrl              Control block set in @ref rm_block_media_api_t::open call.
      * @param[out]  p_dest_address      Destination to read the data into.
@@ -157,11 +132,6 @@ typedef struct st_rm_block_media_api
                        uint32_t const block_address, uint32_t const num_blocks);
 
     /** Writes blocks of data to the specified device memory address.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_Write
-     * - @ref RM_BLOCK_MEDIA_SPI_Write
-     * - @ref RM_BLOCK_MEDIA_USB_Write
-     * - @ref RM_BLOCK_MEDIA_RAM_Write
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
      * @param[in]   p_src_address      Address to read the data to be written.
@@ -172,11 +142,6 @@ typedef struct st_rm_block_media_api
                         uint32_t const block_address, uint32_t const num_blocks);
 
     /** Erases blocks of data from the memory device.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_Erase
-     * - @ref RM_BLOCK_MEDIA_SPI_Erase
-     * - @ref RM_BLOCK_MEDIA_USB_Erase
-     * - @ref RM_BLOCK_MEDIA_RAM_Erase
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
      * @param[in]   block_address      Block address to start the erase process at.
@@ -185,8 +150,6 @@ typedef struct st_rm_block_media_api
     fsp_err_t (* erase)(rm_block_media_ctrl_t * const p_ctrl, uint32_t const block_address, uint32_t const num_blocks);
 
     /** Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_CallbackSet()
      *
      * @param[in]   p_ctrl                   Control block set in @ref rm_block_media_api_t::open call.
      * @param[in]   p_callback               Callback function to register
@@ -201,23 +164,12 @@ typedef struct st_rm_block_media_api
 
     /** Get status of connected device.
      *
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_StatusGet
-     * - @ref RM_BLOCK_MEDIA_SPI_StatusGet
-     * - @ref RM_BLOCK_MEDIA_USB_StatusGet
-     * - @ref RM_BLOCK_MEDIA_RAM_StatusGet
-     *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
      * @param[out]  p_status           Pointer to store current status.
      */
     fsp_err_t (* statusGet)(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_status_t * const p_status);
 
     /** Returns information about the block media device.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_InfoGet
-     * - @ref RM_BLOCK_MEDIA_SPI_InfoGet
-     * - @ref RM_BLOCK_MEDIA_USB_InfoGet
-     * - @ref RM_BLOCK_MEDIA_RAM_InfoGet
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
      * @param[out]  p_info             Pointer to information structure. All elements of this structure will be set by the
@@ -226,11 +178,6 @@ typedef struct st_rm_block_media_api
     fsp_err_t (* infoGet)(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_info_t * const p_info);
 
     /** Closes the module.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_Close
-     * - @ref RM_BLOCK_MEDIA_SPI_Close
-     * - @ref RM_BLOCK_MEDIA_USB_Close
-     * - @ref RM_BLOCK_MEDIA_RAM_Close
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
      */

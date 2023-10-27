@@ -158,7 +158,7 @@ USHORT result;
     counter_block[12] = (UCHAR)(result & 0xFF);
 }
 #if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) || ((0U == BSP_FEATURE_CRYPTO_HAS_SCE9) && \
-    (0U == BSP_FEATURE_CRYPTO_HAS_SCE5B) && (0U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+    (0U == BSP_FEATURE_CRYPTO_HAS_SCE5B) && (0U == BSP_FEATURE_CRYPTO_HAS_SCE7) && (0U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -296,7 +296,7 @@ UCHAR mask;
 NX_CRYPTO_KEEP static VOID _nx_crypto_gcm_ghash_update(UCHAR *hkey, UCHAR *input, UINT input_length, UCHAR *output)
 {
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
     sce_nx_crypto_gcm_ghash_update(hkey, input, input_length, output);
 #else
 UCHAR tmp_block[NX_CRYPTO_GCM_BLOCK_SIZE];
@@ -512,7 +512,7 @@ UCHAR iv_len;
         _nx_crypto_gcm_ghash_update(hkey, tmp_block, NX_CRYPTO_GCM_BLOCK_SIZE, j0);
     }
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
     NX_CRYPTO_PARAMETER_NOT_USED(counter);
     UINT ret = sce_nx_crypto_gcm_encrypt_init ((NX_CRYPTO_AES *)crypto_metadata, j0, additional_data, additional_len);
     if (NX_CRYPTO_SUCCESS != ret)
@@ -601,7 +601,7 @@ UCHAR *counter = gcm_metadata -> nx_crypto_gcm_counter;
         return(NX_CRYPTO_PTR_ERROR);
     }
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
     NX_CRYPTO_PARAMETER_NOT_USED(hkey);
     NX_CRYPTO_PARAMETER_NOT_USED(s);
     NX_CRYPTO_PARAMETER_NOT_USED(counter);
@@ -705,7 +705,7 @@ UINT length;
     tmp_block[14] = (UCHAR)(((length << 3) & 0x0000FF00) >> 8);
     tmp_block[15] = (UCHAR)((length << 3) & 0x000000FF);
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
     NX_CRYPTO_PARAMETER_NOT_USED(hkey);
     NX_CRYPTO_PARAMETER_NOT_USED(s);
     NX_CRYPTO_PARAMETER_NOT_USED(j0);
@@ -912,7 +912,7 @@ UINT i;
 }
 
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7))
+    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
 /***********************************************************************************************************************
  * GCM Decrypt Init and AAD setup. This includes preparing the IV.
  *

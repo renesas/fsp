@@ -607,6 +607,18 @@ uint8_t flash_area_erased_val (const struct flash_area * area)
     return UINT8_MAX;
 }
 
+int rm_mcuboot_cleanup (void)
+{
+    /* Clean up internal flash driver. */
+    int err = flash_on_chip_cleanup();
+    if (FSP_SUCCESS != err)
+    {
+        return -1;
+    }
+    
+    return 0U;
+}
+
 /*< Cleanup all flash operations. */
 int flash_on_chip_cleanup (void)
 {

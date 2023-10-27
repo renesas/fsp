@@ -40,8 +40,6 @@ FSP_HEADER
  * @section   RM_BLE_MESH_HEALTH_SERVER_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Health Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Health Server functionality.
  *
- * The Bluetooth Low Energy Mesh Model Health Server interface can be implemented by:
- * - @ref RM_MESH_HEALTH_SRV
  *
  * @{
  **********************************************************************************************************************/
@@ -97,8 +95,6 @@ typedef struct st_rm_ble_mesh_health_server_self_test
 } rm_ble_mesh_health_server_self_test_t;
 
 /** BLE MESH HEALTH SERVER control block.  Allocate an instance specific control block to pass into the BLE mesh model health server API calls.
- * @par Implemented as
- * - rm_ble_mesh_health_server_instance_ctrl_t
  */
 typedef void rm_ble_mesh_health_server_ctrl_t;
 
@@ -120,8 +116,6 @@ typedef struct st_rm_ble_mesh_health_server_cfg
 typedef struct st_rm_ble_mesh_health_server_api
 {
     /** API to open health server model.
-     * @par Implemented as
-     * - @ref RM_MESH_HEALTH_SERVER_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -130,16 +124,12 @@ typedef struct st_rm_ble_mesh_health_server_api
                        rm_ble_mesh_health_server_cfg_t const * const p_cfg);
 
     /** API to close health server model.
-     * @par Implemented as
-     * - @ref RM_MESH_HEALTH_SERVER_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_health_server_ctrl_t * const p_ctrl);
 
     /** API to report self-test fault.
-     * @par Implemented as
-     * - @ref RM_MESH_HEALTH_SERVER_ReportFault()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  p_model_handle  Pointer to model handle identifying the health server model instance.
@@ -153,8 +143,6 @@ typedef struct st_rm_ble_mesh_health_server_api
                               uint8_t fault_code);
 
     /** API to publish current status.
-     * @par Implemented as
-     * - @ref RM_MESH_HEALTH_SERVER_PublishCurrentStatus()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  p_status        Pointer to current status.

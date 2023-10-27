@@ -81,11 +81,12 @@ typedef fsp_err_t (* hw_sce_aes_ccm_decrypt_init_t)(uint32_t *InData_KeyType, ui
                                                     uint32_t *InData_MACLength, uint32_t *InData_KeyIndex, 
                                                     uint32_t *InData_IV, uint32_t *InData_Header, 
                                                     uint32_t *InData_SeqNum, uint32_t Header_Len);
-typedef void (* hw_sce_aes_ccm_crypt_update_t)(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT);
-typedef fsp_err_t (* hw_sce_aes_ccm_encrypt_final_t)(uint32_t *InData_TextLen, uint32_t *InData_Text, 
+
+typedef void (* hw_sce_aes_ccm_crypt_update_t)(const uint32_t *InData_Text, uint32_t *OutData_Text, const uint32_t MAX_CNT);
+typedef fsp_err_t (* hw_sce_aes_ccm_encrypt_final_t)(const uint32_t *InData_Text, const uint32_t *InData_TextLen, 
                                                      uint32_t *OutData_Text, uint32_t *OutData_MAC);
-typedef fsp_err_t (* hw_sce_aes_ccm_decrypt_final_t)(uint32_t *InData_Text, uint32_t *InData_TextLen, 
-                                                     uint32_t *InData_MAC, uint32_t *InData_MACLength, 
+typedef fsp_err_t (* hw_sce_aes_ccm_decrypt_final_t)(const uint32_t *InData_Text, const uint32_t *InData_TextLen, 
+                                                     const uint32_t *InData_MAC, const uint32_t *InData_MACLength, 
                                                      uint32_t *OutData_Text);
 typedef fsp_err_t (* hw_sce_aes_ecb_encrypt_using_encrypted_key)(const uint32_t * InData_KeyIndex,
                                                                  const uint32_t num_words, const uint32_t * InData_Text,

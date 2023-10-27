@@ -30,8 +30,6 @@
  * The FreeRTOS+FAT port provides notifications for insertion and removal of removable media and provides
  * initialization functions required by FreeRTOS+FAT.
  *
- * The FreeRTOS+FAT interface can be implemented by:
- * @ref RM_FREERTOS_PLUS_FAT
  *
  * @{
  **********************************************************************************************************************/
@@ -127,8 +125,6 @@ typedef void rm_freertos_plus_fat_ctrl_t;
 typedef struct st_rm_freertos_plus_fat_api
 {
     /** Open media device.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -137,8 +133,6 @@ typedef struct st_rm_freertos_plus_fat_api
 
     /** Initializes a media device.  If the device is removable, it must be plugged in prior to calling this API.
      * This function blocks until media initialization is complete.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_MediaInit
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_device     Pointer to store device information.
@@ -146,8 +140,6 @@ typedef struct st_rm_freertos_plus_fat_api
     fsp_err_t (* mediaInit)(rm_freertos_plus_fat_ctrl_t * const p_ctrl, rm_freertos_plus_fat_device_t * const p_device);
 
     /** Initializes a FreeRTOS+FAT FF_Disk_t structure.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_DiskInit
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_disk_cfg   Pointer to disk configurations
@@ -157,8 +149,6 @@ typedef struct st_rm_freertos_plus_fat_api
                            rm_freertos_plus_fat_disk_cfg_t const * const p_disk_cfg, FF_Disk_t * const p_disk);
 
     /** Deinitializes a FreeRTOS+FAT FF_Disk_t structure.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_DiskDeinit
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_disk_cfg   Pointer to disk configurations
@@ -167,8 +157,6 @@ typedef struct st_rm_freertos_plus_fat_api
     fsp_err_t (* diskDeinit)(rm_freertos_plus_fat_ctrl_t * const p_ctrl, FF_Disk_t * const p_disk);
 
     /** Returns information about the media device.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_InfoGet
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_info       Pointer to information structure. All elements of this structure will be set by the
@@ -178,8 +166,6 @@ typedef struct st_rm_freertos_plus_fat_api
                           rm_freertos_plus_fat_info_t * const p_info);
 
     /** Close media device.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */

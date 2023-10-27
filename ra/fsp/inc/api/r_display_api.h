@@ -31,8 +31,6 @@
  * - Color correction (brightness/configuration/gamma correction).
  * - Interrupts and callback function.
  *
- * Implemented by:
- * @ref GLCDC
  *
  * @{
  **********************************************************************************************************************/
@@ -46,7 +44,6 @@
 
 /* Includes board and MCU related header files. */
 #include "bsp_api.h"
-#include "r_glcdc_cfg.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -82,7 +79,10 @@ typedef enum e_display_event
     DISPLAY_EVENT_GR1_UNDERFLOW  = 1,  ///< Graphics frame1 underflow occurs
     DISPLAY_EVENT_GR2_UNDERFLOW  = 2,  ///< Graphics frame2 underflow occurs
     DISPLAY_EVENT_LINE_DETECTION = 3,  ///< Designated line is processed
+    DISPLAY_EVENT_FRAME_END      = 4,  ///< Frame end is processed
 } display_event_t;
+
+#ifndef BSP_OVERRIDE_DISPLAY_IN_FORMAT_T
 
 /** Input format setting */
 typedef enum e_display_in_format
@@ -96,6 +96,8 @@ typedef enum e_display_in_format
     DISPLAY_IN_FORMAT_CLUT4           = 6, ///< CLUT4
     DISPLAY_IN_FORMAT_CLUT1           = 7, ///< CLUT1
 } display_in_format_t;
+
+#endif
 
 /** Output format setting */
 typedef enum e_display_out_format
@@ -121,7 +123,7 @@ typedef enum e_display_color_order
 } display_color_order_t;
 
 /** Polarity of a signal select */
-typedef enum st_display_signal_polarity
+typedef enum e_display_signal_polarity
 {
     DISPLAY_SIGNAL_POLARITY_LOACTIVE,  ///< Low active signal
     DISPLAY_SIGNAL_POLARITY_HIACTIVE,  ///< High active signal
@@ -149,6 +151,26 @@ typedef enum e_display_fade_status
     DISPLAY_FADE_STATUS_FADING_UNDERWAY, ///< Fade-in or fade-out is in progress
     DISPLAY_FADE_STATUS_PENDING          ///< Fade-in/fade-out is configured but not yet started
 } display_fade_status_t;
+
+/** Color Keying enable or disable */
+typedef enum e_display_color_keying
+{
+    DISPLAY_COLOR_KEYING_DISABLE = 0,  ///< Color keying disable
+    DISPLAY_COLOR_KEYING_ENABLE  = 1   ///< Color keying enable
+} display_color_keying_t;
+
+#ifndef BSP_OVERRIDE_DISPLAY_DATA_SWAP_T
+
+/** Data swap settings */
+typedef enum e_display_data_swap
+{
+    DISPLAY_DATA_SWAP_8BIT  = 1,
+    DISPLAY_DATA_SWAP_16BIT = 2,
+    DISPLAY_DATA_SWAP_32BIT = 4,
+    DISPLAY_DATA_SWAP_64BIT = 8,
+} display_data_swap_t;
+
+#endif
 
 /** Display signal timing setting */
 typedef struct st_display_timing
@@ -231,6 +253,22 @@ typedef struct st_display_clut
     const uint32_t * p_clut;           ///< Address of the area storing the CLUT data (in ARGB8888 format)
 } display_clut_t;
 
+/** Color Keying setting */
+typedef struct st_display_colorkeying_cfg
+{
+    display_color_t        src_color;   ///< Source color
+    display_color_t        dst_color;   ///< Destination color
+    display_color_keying_t enable_ckey; ///< Select enable or disable
+} display_colorkeying_cfg_t;
+
+/** Color Keying layer setting */
+typedef struct st_display_colorkeying_layer
+{
+    display_colorkeying_cfg_t layer[2];
+} display_colorkeying_layer_t;
+
+#ifndef BSP_OVERRIDE_DISPLAY_INPUT_CFG_T
+
 /** Graphics plane input configuration structure */
 typedef struct st_display_input_cfg
 {
@@ -244,23 +282,23 @@ typedef struct st_display_input_cfg
     uint16_t            lines_repeat_times;     ///< Expected number of line repeating
 } display_input_cfg_t;
 
+#endif
+
 /** Display output configuration structure */
 typedef struct st_display_output_cfg
 {
-    display_timing_t          htiming;               ///< Horizontal display cycle setting
-    display_timing_t          vtiming;               ///< Vertical display cycle setting
-    display_out_format_t      format;                ///< Output format setting
-    display_endian_t          endian;                ///< Bit order of output data
-    display_color_order_t     color_order;           ///< Color order in pixel
-    display_signal_polarity_t data_enable_polarity;  ///< Data Enable signal polarity
-    display_sync_edge_t       sync_edge;             ///< Signal sync edge selection
-    display_color_t           bg_color;              ///< Background color
-#if GLCDC_CFG_COLOR_CORRECTION_ENABLE
-    display_brightness_t         brightness;         ///< Brightness setting
-    display_contrast_t           contrast;           ///< Contrast setting
-    display_gamma_correction_t * p_gamma_correction; ///< Pointer to gamma correction setting
-#endif
-    bool dithering_on;                               ///< Dithering on/off
+    display_timing_t             htiming;              ///< Horizontal display cycle setting
+    display_timing_t             vtiming;              ///< Vertical display cycle setting
+    display_out_format_t         format;               ///< Output format setting
+    display_endian_t             endian;               ///< Bit order of output data
+    display_color_order_t        color_order;          ///< Color order in pixel
+    display_signal_polarity_t    data_enable_polarity; ///< Data Enable signal polarity
+    display_sync_edge_t          sync_edge;            ///< Signal sync edge selection
+    display_color_t              bg_color;             ///< Background color
+    display_brightness_t         brightness;           ///< Brightness setting
+    display_contrast_t           contrast;             ///< Contrast setting
+    display_gamma_correction_t * p_gamma_correction;   ///< Pointer to gamma correction setting
+    bool dithering_on;                                 ///< Dithering on/off
 } display_output_cfg_t;
 
 /** Graphics layer blend setup parameter structure */
@@ -318,8 +356,6 @@ typedef struct st_display_clut_cfg
 } display_clut_cfg_t;
 
 /** Display control block.  Allocate an instance specific control block to pass into the display API calls.
- * @par Implemented as
- * - glcdc_instance_ctrl_t
  */
 
 /** Display control block */
@@ -328,7 +364,7 @@ typedef void display_ctrl_t;
 /** Display Status */
 typedef struct st_display_status
 {
-    display_state_t       state;                                  ///< Status of GLCDC module
+    display_state_t       state;                                  ///< Status of display module
     display_fade_status_t fade_status[DISPLAY_FRAME_LAYER_2 + 1]; ///< Status of fade-in/fade-out status
 } display_status_t;
 
@@ -336,8 +372,6 @@ typedef struct st_display_status
 typedef struct st_display_api
 {
     /** Open display device.
-     * @par Implemented as
-     * - @ref R_GLCDC_Open()
      * @param[in,out]  p_ctrl        Pointer to display interface control block. Must be declared by user. Value set
      *                               here.
      * @param[in]      p_cfg         Pointer to display configuration structure. All elements of this structure must be
@@ -346,29 +380,21 @@ typedef struct st_display_api
     fsp_err_t (* open)(display_ctrl_t * const p_ctrl, display_cfg_t const * const p_cfg);
 
     /** Close display device.
-     * @par Implemented as
-     * - @ref R_GLCDC_Close()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* close)(display_ctrl_t * const p_ctrl);
 
     /** Display start.
-     * @par Implemented as
-     * - @ref R_GLCDC_Start()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* start)(display_ctrl_t * const p_ctrl);
 
     /** Display stop.
-     * @par Implemented as
-     * - @ref R_GLCDC_Stop()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* stop)(display_ctrl_t * const p_ctrl);
 
     /** Change layer parameters at runtime.
-     * @par Implemented as
-     * - @ref R_GLCDC_LayerChange()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   p_cfg      Pointer to run-time layer configuration structure.
      * @param[in]   frame      Number of graphic frames.
@@ -377,8 +403,6 @@ typedef struct st_display_api
                               display_frame_layer_t frame);
 
     /** Change layer framebuffer pointer.
-     * @par Implemented as
-     * - @ref R_GLCDC_BufferChange()
      * @param[in]   p_ctrl       Pointer to display interface control block.
      * @param[in]   framebuffer  Pointer to desired framebuffer.
      * @param[in]   frame        Number of graphic frames.
@@ -386,20 +410,13 @@ typedef struct st_display_api
     fsp_err_t (* bufferChange)(display_ctrl_t const * const p_ctrl, uint8_t * const framebuffer,
                                display_frame_layer_t frame);
 
-#if GLCDC_CFG_COLOR_CORRECTION_ENABLE
-
     /** Color correction.
-     * @par Implemented as
-     * - @ref R_GLCDC_ColorCorrection()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   param      Pointer to color correction configuration structure.
      */
     fsp_err_t (* correction)(display_ctrl_t const * const p_ctrl, display_correction_t const * const p_param);
-#endif
 
     /** Set CLUT for display device.
-     * @par Implemented as
-     * - @ref R_GLCDC_ClutUpdate()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   p_clut_cfg Pointer to CLUT configuration structure.
      * @param[in]   layer      Layer number corresponding to the CLUT.
@@ -408,8 +425,6 @@ typedef struct st_display_api
                        display_frame_layer_t layer);
 
     /** Set CLUT element for display device.
-     * @par Implemented as
-     * - @ref R_GLCDC_ClutEdit()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   layer      Layer number corresponding to the CLUT.
      * @param[in]   index      CLUT element index.
@@ -418,9 +433,15 @@ typedef struct st_display_api
     fsp_err_t (* clutEdit)(display_ctrl_t const * const p_ctrl, display_frame_layer_t layer, uint8_t index,
                            uint32_t color);
 
+    /** Configure color keying.
+     * @param[in]   p_ctrl    Pointer to display interface control block.
+     * @param[in]   key_cfg   Pointer to color keying configuration.
+     * @param[in]   layer     Layer to apply color keying.
+     */
+    fsp_err_t (* colorKeySet)(display_ctrl_t const * const p_ctrl, display_colorkeying_layer_t key_cfg,
+                              display_frame_layer_t layer);
+
     /** Get status for display device.
-     * @par Implemented as
-     * - @ref R_GLCDC_StatusGet()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   status     Pointer to display interface status structure.
      */

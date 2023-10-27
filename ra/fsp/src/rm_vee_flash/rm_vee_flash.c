@@ -700,7 +700,10 @@ fsp_err_t RM_VEE_FLASH_StatusGet (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_statu
 
     p_status->last_id = p_ctrl->last_id;
 
-    p_status->segment_erase_count = ((rm_vee_seg_hdr_t *) p_ctrl->active_seg_addr)->refresh_cnt;
+    if (RM_VEE_STATE_READY == p_status->state)
+    {
+        p_status->segment_erase_count = ((rm_vee_seg_hdr_t *) p_ctrl->active_seg_addr)->refresh_cnt;
+    }
 
     p_status->space_available = p_ctrl->ref_hdr_addr - p_ctrl->next_write_addr;
 

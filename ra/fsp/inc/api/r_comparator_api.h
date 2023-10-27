@@ -30,9 +30,6 @@
  * The comparator interface provides standard comparator functionality, including generating an event when the
  * comparator result changes.
  *
- * Implemented by:
- * - @ref ACMPHS
- * - @ref ACMPLP
  *
  * @{
  **********************************************************************************************************************/
@@ -56,9 +53,6 @@ FSP_HEADER
  ******************************************************************************/
 
 /** Comparator control block.  Allocate an instance specific control block to pass into the comparator API calls.
- * @par Implemented as
- * - acmphs_instance_ctrl_t
- * - acmplp_instance_ctrl_t
  */
 typedef void comparator_ctrl_t;
 
@@ -154,9 +148,6 @@ typedef struct st_comparator_cfg
 typedef struct st_comparator_api
 {
     /** Initialize the comparator.
-     * @par Implemented as
-     * - @ref R_ACMPHS_Open()
-     * - @ref R_ACMPLP_Open()
      *
      * @param[in]  p_ctrl  Pointer to instance control block
      * @param[in]  p_cfg   Pointer to configuration
@@ -164,18 +155,12 @@ typedef struct st_comparator_api
     fsp_err_t (* open)(comparator_ctrl_t * const p_ctrl, comparator_cfg_t const * const p_cfg);
 
     /** Start the comparator.
-     * @par Implemented as
-     * - @ref R_ACMPHS_OutputEnable()
-     * - @ref R_ACMPLP_OutputEnable()
      *
      * @param[in]  p_ctrl         Pointer to instance control block
      */
     fsp_err_t (* outputEnable)(comparator_ctrl_t * const p_ctrl);
 
     /** Provide information such as the recommended minimum stabilization wait time.
-     * @par Implemented as
-     * - @ref R_ACMPHS_InfoGet()
-     * - @ref R_ACMPLP_InfoGet()
      *
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[out]  p_info       Comparator information stored here
@@ -183,9 +168,6 @@ typedef struct st_comparator_api
     fsp_err_t (* infoGet)(comparator_ctrl_t * const p_ctrl, comparator_info_t * const p_info);
 
     /** Provide current comparator status.
-     * @par Implemented as
-     * - @ref R_ACMPHS_StatusGet()
-     * - @ref R_ACMPLP_StatusGet()
      *
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[out]  p_status     Status stored here
@@ -193,9 +175,6 @@ typedef struct st_comparator_api
     fsp_err_t (* statusGet)(comparator_ctrl_t * const p_ctrl, comparator_status_t * const p_status);
 
     /** Stop the comparator.
-     * @par Implemented as
-     * - @ref R_ACMPHS_Close()
-     * - @ref R_ACMPLP_Close()
      *
      * @param[in]  p_ctrl   Pointer to instance control block
      */

@@ -22,7 +22,7 @@
  * @file zmod4410_config_iaq2.h
  * @brief This is the configuration for zmod4410 module - iaq_2nd_gen library
  * @author  Renesas Electronics Corporation
- * @version 3.1.0
+ * @version 3.2.0
  */
 
 #ifndef _ZMOD4410_CONFIG_IAQ_2ND_GEN_H

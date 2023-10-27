@@ -383,7 +383,7 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
             WR1_PROG(REG_143CH, 0x00001800U);
 
             WR1_PROG(REG_1014H, 0x00000340U);
-            WR1_PROG(REG_1018H, 0x00000400U);
+            WR1_PROG(REG_1018H, 0x00000410U);
             WR1_PROG(REG_1020H, 0x000001b0U);
 
             WR1_PROG(REG_1004H, 0x0606000aU);
@@ -392,12 +392,12 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
             WR1_PROG(REG_143CH, 0x00a10000U);
 
-            HW_SCE_p_func100(0x928e7144U, 0x93d7b0d2U, 0x3d1e374cU, 0x15ad884fU);
+            HW_SCE_p_func100(0x9fd78fdfU, 0xe32bc47aU, 0xbacc0d16U, 0xa7ddde77U);
             WR1_PROG(REG_143CH, 0x00400000U);
 
             if (CHCK_STS(REG_143CH, 22, 1))
             {
-                HW_SCE_p_func100(0x1d9f87a1U, 0xf2b352ccU, 0x6127f9e3U, 0x7c6d1be0U);
+                HW_SCE_p_func100(0x8840e798U, 0x6cb7a6fdU, 0x1f0d7de8U, 0xdbf97d0dU);
                 WR1_PROG(REG_1014H, 0x00000250U);
                 WR1_PROG(REG_1018H, 0x00000340U);
                 WR1_PROG(REG_101CH, 0x000002f0U);
@@ -437,7 +437,7 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
                 WR1_PROG(REG_1600H, 0x0000b720U);
                 WR1_PROG(REG_1600H, 0x180f25a9U);
 
-                HW_SCE_p_func101(0x6acf1e27U, 0x0c640d42U, 0x7f97f242U, 0x7a94b7b2U);
+                HW_SCE_p_func101(0xac3b5a09U, 0xb3d88430U, 0x1c84dbdcU, 0xc9badd6aU);
             }
             else
             {
@@ -456,7 +456,7 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub (const uint32_t InData_CurveT
 
                 WR1_PROG(REG_1600H, 0x00000b39U);
 
-                HW_SCE_p_func101(0x456633baU, 0x311805afU, 0x6d2bcc91U, 0xe7f2743aU);
+                HW_SCE_p_func101(0xac5e3773U, 0x3b188712U, 0x5151e20cU, 0x94e2ab3bU);
             }
 
             HW_SCE_p_func100(0x7d31dd45U, 0xcad27170U, 0x786366fbU, 0x7deb9e81U);

@@ -29,8 +29,6 @@
  * @section   RM_BLE_MESH_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh (BLE MESH) peripheral provides Bluetooth Low Energy Mesh functionality.
  *
- * The Bluetooth Low Energy Mesh interface can be implemented by:
- * - @ref RM_BLE_MESH
  *
  * @{
  **********************************************************************************************************************/
@@ -647,8 +645,6 @@ typedef struct st_rm_ble_mesh_access_state_transition
 } rm_ble_mesh_access_state_transition_t;
 
 /** BLE MESH control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_ble_mesh_instance_ctrl_t
  */
 typedef void rm_ble_mesh_ctrl_t;
 
@@ -825,8 +821,6 @@ typedef struct st_rm_ble_mesh_cfg
 typedef struct st_rm_ble_mesh_api
 {
     /** Open BLE mesh middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -834,16 +828,12 @@ typedef struct st_rm_ble_mesh_api
     fsp_err_t (* open)(rm_ble_mesh_ctrl_t * const p_ctrl, rm_ble_mesh_cfg_t const * const p_cfg);
 
     /** Close BLE mesh middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_ctrl_t * const p_ctrl);
 
     /** To start transition timer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_StartTransitionTimer()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -861,8 +851,6 @@ typedef struct st_rm_ble_mesh_api
                                        uint16_t * const                                    p_transition_time_handle);
 
     /** To stop transition timer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_StopTransitionTimer()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -874,8 +862,6 @@ typedef struct st_rm_ble_mesh_api
     fsp_err_t (* stopTransitionTimer)(rm_ble_mesh_ctrl_t * const p_ctrl, uint16_t transition_time_handle);
 
     /** To get remaining Transition Time.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_GetRemainingTransitionTime()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -891,8 +877,6 @@ typedef struct st_rm_ble_mesh_api
                                              uint8_t * const p_remaining_transition_time);
 
     /** To get remaining Transition Time, with offset.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_GetRemainingTransitionTimeWithOffset()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -912,8 +896,6 @@ typedef struct st_rm_ble_mesh_api
                                                        uint8_t * const p_remaining_transition_time);
 
     /** To convert transition time from millisecond.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ConvertTransitionTimeFromMs()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -928,8 +910,6 @@ typedef struct st_rm_ble_mesh_api
                                               uint8_t * const p_transition_time);
 
     /** To convert transition time to millisecond.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ConvertTransitionTimeToMs()
      *
      * @param [in]  p_ctrl
      *              Pointer to control structure.

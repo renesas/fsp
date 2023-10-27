@@ -426,7 +426,7 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
 
                 WR1_PROG(REG_1014H, 0x00000200U);
                 WR1_PROG(REG_1018H, 0x00000110U);
-                WR1_PROG(REG_1020H, 0x00000140U);
+                WR1_PROG(REG_1020H, 0x00000150U);
 
                 WR1_PROG(REG_1004H, 0x0808000aU);
                 WR1_PROG(REG_1000H, 0x00010001U);
@@ -434,12 +434,12 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
 
                 WR1_PROG(REG_143CH, 0x00210000U);
 
-                HW_SCE_p_func100(0x5cd12344U, 0x9a3df758U, 0x2f501e41U, 0xb6742555U);
+                HW_SCE_p_func100(0xf36cf79aU, 0xab3145a9U, 0xdbf7521aU, 0x99135820U);
                 WR1_PROG(REG_143CH, 0x00400000U);
 
                 if (CHCK_STS(REG_143CH, 22, 1))
                 {
-                    HW_SCE_p_func102(0x9a86261bU, 0xce0dc521U, 0x8fc3c492U, 0x332c5b01U);
+                    HW_SCE_p_func102(0x628a129eU, 0x3d7efadaU, 0x7a7dd18cU, 0x7238618eU);
                     WR1_PROG(REG_14B8H, 0x00000040U);
                     WAIT_STS(REG_142CH, 12, 0);
 
@@ -447,7 +447,7 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
                 }
                 else
                 {
-                    HW_SCE_p_func100(0x3b8b415eU, 0xec129123U, 0x96d625a5U, 0x222e9349U);
+                    HW_SCE_p_func100(0x6c8cfd61U, 0x20305620U, 0x50c3f690U, 0x61acac69U);
                     WR1_PROG(REG_1404H, 0x12600000U);
                     WR1_PROG(REG_1A2CH, 0x00000200U);
                     WR1_PROG(REG_1A24H, 0x08008107U);
@@ -463,7 +463,7 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
                     WAIT_STS(REG_1408H, 30, 1);
                     RD4_ADDR(REG_1420H, &OutData_Signature[8]);
 
-                    HW_SCE_p_func100(0x435f52d9U, 0xe1139f16U, 0xebd97b5eU, 0x7beda61bU);
+                    HW_SCE_p_func100(0x90140fcdU, 0xcd06c2baU, 0xb536e9f0U, 0x8d908c90U);
                     WR1_PROG(REG_1A24H, 0x08000105U);
                     WR1_PROG(REG_1400H, 0x00830011U);
                     WAIT_STS(REG_1404H, 30, 0);
@@ -473,7 +473,7 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
                     WAIT_STS(REG_1408H, 30, 1);
                     RD4_ADDR(REG_1420H, &OutData_Signature[12]);
 
-                    HW_SCE_p_func100(0x16852fcbU, 0x6b0f8624U, 0x5a93805fU, 0x68d82bc8U);
+                    HW_SCE_p_func100(0x2d378205U, 0x1f23f6dcU, 0x6923132aU, 0x6ff823d4U);
                     WR1_PROG(REG_1404H, 0x11c00000U);
                     WR1_PROG(REG_1A2CH, 0x00000200U);
                     WR1_PROG(REG_1A24H, 0x08008107U);
@@ -489,7 +489,7 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
                     WAIT_STS(REG_1408H, 30, 1);
                     RD4_ADDR(REG_1420H, &OutData_Signature[24]);
 
-                    HW_SCE_p_func100(0x1f19022cU, 0xa5b6e73bU, 0x3f806f91U, 0x8a1bce12U);
+                    HW_SCE_p_func100(0x34e11dd8U, 0x805163aaU, 0x78ee151dU, 0x5296aa90U);
                     WR1_PROG(REG_1A24H, 0x08000105U);
                     WR1_PROG(REG_1400H, 0x00830011U);
                     WAIT_STS(REG_1404H, 30, 0);
@@ -499,7 +499,7 @@ fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub (const uint32_t InData_KeyIndex[]
                     WAIT_STS(REG_1408H, 30, 1);
                     RD4_ADDR(REG_1420H, &OutData_Signature[28]);
 
-                    HW_SCE_p_func102(0x79dea226U, 0x80f199bbU, 0x1acc5221U, 0x647095ecU);
+                    HW_SCE_p_func102(0x32425f38U, 0x1c3d0776U, 0x2f47db0fU, 0xd17d676fU);
                     WR1_PROG(REG_14B8H, 0x00000040U);
                     WAIT_STS(REG_142CH, 12, 0);
 

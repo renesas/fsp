@@ -1488,6 +1488,13 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
     {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         p_ctrl->device_address = destination;
+ #if defined(USB_CFG_HCDC_USE)
+
+        /* Add the following code. */
+        /* Because the value of "type" member change to "USB_CLASS_INTERNAL_HCDCC" */
+        /* when calling R_USB_HCDC_ControlDataRead function. */
+        p_ctrl->type = (usb_class_t) USB_CLASS_INTERNAL_HCDC;
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
 #endif                                 /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
     }
 
@@ -1614,6 +1621,13 @@ fsp_err_t R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_bu
     {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         p_ctrl->device_address = destination;
+ #if defined(USB_CFG_HCDC_USE)
+
+        /* Add the following code. */
+        /* Because the value of "type" member change to "USB_CLASS_INTERNAL_HCDCC" */
+        /* when calling R_USB_HCDC_ControlDataRead function. */
+        p_ctrl->type = (usb_class_t) USB_CLASS_INTERNAL_HCDC;
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
 #endif                                 /* USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
 
@@ -2780,9 +2794,9 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
     FSP_ASSERT(p_api_ctrl)
  #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
- #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-    utr.ip = p_ctrl->module_number;
+    utr.ip = p_ctrl->module_number;    /* Update USB module number */
 
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     if (USB_MODE_HOST == g_usb_usbmode[p_ctrl->module_number])
     {
         utr.ipp                = usb_hstd_get_usb_ip_adr(utr.ip);

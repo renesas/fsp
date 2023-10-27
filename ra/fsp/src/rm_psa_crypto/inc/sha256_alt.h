@@ -41,12 +41,19 @@ extern "C" {
  */
 typedef struct mbedtls_sha256_context
 {
-    uint32_t       total[2];                                         /*!< The number of Bytes processed.  */
-    uint32_t       state[HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE];                                         /*!< The intermediate digest state.  */
-    unsigned char  buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES]; /*!< The data block being processed. */
-    int            is224;                                            /*!< Determines which function to use:
-                                                                      * 0: Use SHA-256, or 1: Use SHA-224. */
+    uint32_t      total[2];                                              /*!< The number of Bytes processed.  */
+    uint32_t      state[HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE];           /*!< The intermediate digest state.  */
+    unsigned char buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES];      /*!< The data block being processed. */
+    int           is224;                                                 /*!< Determines which function to use:
+                                                                          * 0: Use SHA-256, or 1: Use SHA-224. */
+    uint32_t       used;                                                 // Used to indicate if the final block has user data or only padding
     sce_hash_cmd_t sce_operation_state;
+ #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+    uint32_t      rsip_internal_state[20];                               // RSIP specific state array
+    unsigned char rsip_buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES]; /*!< buffered data for RSIP procedure. */
+    uint32_t      use_rsip_buffer;                                       // Used to indicate if the rsip_buffer is to be used or not
+    uint32_t      rsip_buffer_processed;                                 // Used to indicate if the rsip_buffer data is processed or not
+ #endif
 } mbedtls_sha256_context;
 
 int mbedtls_internal_sha256_process_ext(mbedtls_sha256_context * ctx,

@@ -63,10 +63,7 @@ int mbedtls_platform_setup (mbedtls_platform_context * ctx)
  #endif
 
  #ifdef MBEDTLS_THREADING_ALT
-    mbedtls_threading_set_alt(mbedtls_platform_mutex_init,
-                              mbedtls_platform_mutex_free,
-                              mbedtls_platform_mutex_lock,
-                              mbedtls_platform_mutex_unlock);
+    mbedtls_platform_threading_init();
  #endif
 
     iret = HW_SCE_McuSpecificInit();

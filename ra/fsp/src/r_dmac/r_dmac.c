@@ -136,6 +136,7 @@ const transfer_api_t g_transfer_on_dmac =
     .softwareStop  = R_DMAC_SoftwareStop,
     .enable        = R_DMAC_Enable,
     .disable       = R_DMAC_Disable,
+    .reload        = R_DMAC_Reload,
     .close         = R_DMAC_Close,
 };
 
@@ -384,6 +385,24 @@ fsp_err_t R_DMAC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_propertie
     }
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * To update next transfer information without interruption during transfer.
+ *
+ * @retval FSP_ERR_UNSUPPORTED        This feature is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Reload (transfer_ctrl_t * const p_api_ctrl,
+                         void const            * p_src,
+                         void                  * p_dest,
+                         uint32_t const          num_transfers)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_src);
+    FSP_PARAMETER_NOT_USED(p_dest);
+    FSP_PARAMETER_NOT_USED(num_transfers);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

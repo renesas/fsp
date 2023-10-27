@@ -522,6 +522,7 @@
  **********************************************************************************************************************/
 static uint8_t bsp_clock_set_prechange(uint32_t requested_freq_hz);
 static void    bsp_clock_set_postchange(uint32_t updated_freq_hz, uint8_t new_rom_wait_state);
+static void    bsp_sosc_init(void);
 
 #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
  #if defined(__ICCARM__)
@@ -616,7 +617,7 @@ void r_bsp_clock_update_callback_set (bsp_clock_update_callback_t        p_callb
     r_bsp_clock_update_callback_call(g_bsp_clock_update_callback, &callback_args);
 }
 
-#elif BSP_TZ_NONSECURE_BUILD && BSP_TZ_CFG_CGFSAR != 0xFFFFFFFFU
+#elif BSP_TZ_NONSECURE_BUILD && BSP_CFG_CLOCKS_SECURE == 1
 
 bsp_clock_update_callback_args_t g_callback_memory;
  #if BSP_TZ_SECURE_BUILD || BSP_TZ_NONSECURE_BUILD
@@ -781,11 +782,21 @@ void bsp_prv_prepare_pll (uint32_t pll_freq_hz)
  **********************************************************************************************************************/
 void SystemCoreClockUpdate (void)
 {
-    uint32_t clock_index = R_SYSTEM->SCKSCR;
+#if BSP_FEATURE_TZ_HAS_TRUSTZONE && (BSP_TZ_SECURE_BUILD || BSP_TZ_NONSECURE_BUILD) && BSP_FEATURE_TZ_VERSION == 2
+    bool secure = !R_SYSTEM->CGFSAR_b.NONSEC00;
+#endif
+
+    uint32_t clock_index = FSP_STYPE3_REG8_READ(R_SYSTEM->SCKSCR, secure);
+
 #if !BSP_FEATURE_CGC_HAS_CPUCLK
-    SystemCoreClock = g_clock_freq[clock_index] >> R_SYSTEM->SCKDIVCR_b.ICK;
+    uint32_t ick =
+        (FSP_STYPE3_REG32_READ(R_SYSTEM->SCKDIVCR, secure) & R_SYSTEM_SCKDIVCR_ICK_Msk) >> R_SYSTEM_SCKDIVCR_ICK_Pos;
+    SystemCoreClock = g_clock_freq[clock_index] >> ick;
 #else
-    uint8_t cpuclk_div = R_SYSTEM->SCKDIVCR2_b.CPUCK;
+    uint8_t cpuck = (FSP_STYPE3_REG8_READ(R_SYSTEM->SCKDIVCR2, secure) & R_SYSTEM_SCKDIVCR2_CPUCK_Msk) >>
+                    R_SYSTEM_SCKDIVCR2_CPUCK_Pos;
+    uint8_t cpuclk_div = cpuck;
+
     if (8U == cpuclk_div)
     {
         SystemCoreClock = g_clock_freq[clock_index] / 3U;
@@ -942,6 +953,52 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2)
     /* Switching to a faster source clock. */
     if (g_clock_freq[clock] >= g_clock_freq[R_SYSTEM->SCKSCR])
     {
+#if BSP_CFG_CLOCK_SETTLING_DELAY_ENABLE
+        if ((clock_freq_hz_post_change > SystemCoreClock) &&
+            ((clock_freq_hz_post_change - SystemCoreClock) > BSP_MAX_CLOCK_CHANGE_THRESHOLD))
+        {
+            /* If the requested ICLK divider is greater than or equal to the current ICLK divider, then writing to
+             * SCKDIVCR first will always satisfy the constraint: CPUCLK frequency >= ICLK frequency. */
+            if (iclk_div == sckdivcr2)
+            {
+                /* If dividers are equal, bump both down 1 notch.
+                 * /1 and /2 are the only possible options. */
+                uint32_t new_div = BSP_CLOCKS_SYS_CLOCK_DIV_2;
+                if (BSP_CFG_CPUCLK_DIV == BSP_CLOCKS_SYS_CLOCK_DIV_1)
+                {
+                    new_div = BSP_CLOCKS_SYS_CLOCK_DIV_4;
+                }
+
+                R_SYSTEM->SCKDIVCR = (BSP_PRV_STARTUP_SCKDIVCR & ~(R_SYSTEM_SCKDIVCR_ICK_Msk)) |
+                                     (new_div << R_SYSTEM_SCKDIVCR_ICK_Pos);
+                R_SYSTEM->SCKDIVCR2 = (uint8_t) new_div;
+            }
+            else
+            {
+                R_SYSTEM->SCKDIVCR = BSP_PRV_STARTUP_SCKDIVCR;
+                if (BSP_CFG_CPUCLK_DIV == BSP_CLOCKS_SYS_CLOCK_DIV_1)
+                {
+                    /* Determine what the other dividers are using and stay aligned with that. */
+                    R_SYSTEM->SCKDIVCR2 =
+                        (BSP_CFG_ICLK_DIV & 0x8) ? BSP_CLOCKS_SYS_CLOCK_DIV_3 : BSP_CLOCKS_SYS_CLOCK_DIV_2;
+                }
+                else
+                {
+                    /* If not /1, can just add 1 to it. */
+                    R_SYSTEM->SCKDIVCR2 = BSP_PRV_STARTUP_SCKDIVCR2 + 1;
+                }
+            }
+
+            /* Set the system source clock */
+            R_SYSTEM->SCKSCR = BSP_CFG_CLOCK_SOURCE;
+
+            /* Wait for settling delay. */
+            SystemCoreClockUpdate();
+            R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+        }
+        /* Continue and set clock to actual target speed. */
+#endif
+
         /* Set the clock dividers before switching to the new clock source. */
         prv_clock_dividers_set(sckdivcr, sckdivcr2);
 
@@ -951,6 +1008,36 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2)
     /* Switching to a slower source clock. */
     else
     {
+#if BSP_CFG_CLOCK_SETTLING_DELAY_ENABLE
+        if ((SystemCoreClock > clock_freq_hz_post_change) &&
+            ((SystemCoreClock - clock_freq_hz_post_change) > BSP_MAX_CLOCK_CHANGE_THRESHOLD))
+        {
+            uint32_t current_sckdivcr = R_SYSTEM->SCKDIVCR;
+
+            /* Must first step CPUCLK down by factor of 2 or 3 if it is currently above threshold. */
+            if (R_SYSTEM->SCKDIVCR2 == ((current_sckdivcr >> R_SYSTEM_SCKDIVCR_ICK_Pos) & 0xF))
+            {
+                /* If ICLK and CPUCLK have same divider currently, move ICLK down 1 notch first. */
+                uint32_t current_iclk_div = (current_sckdivcr >> R_SYSTEM_SCKDIVCR_ICK_Pos) & 0xF;
+                uint32_t new_div          = current_iclk_div + 1;
+                if (current_iclk_div == 0)
+                {
+                    /* Align with already selected divider for PCLKA because it must have one > 1 already. */
+                    new_div =
+                        (current_sckdivcr &
+                         (0x8 << R_SYSTEM_SCKDIVCR_PCKA_Pos)) ? BSP_CLOCKS_SYS_CLOCK_DIV_3 : BSP_CLOCKS_SYS_CLOCK_DIV_2;
+                }
+
+                R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+                R_SYSTEM->SCKDIVCR = (current_sckdivcr & ~(R_SYSTEM_SCKDIVCR_ICK_Msk)) |
+                                     (new_div << R_SYSTEM_SCKDIVCR_ICK_Pos);
+                R_SYSTEM->SCKDIVCR2 = (uint8_t) new_div;
+
+                SystemCoreClockUpdate();
+            }
+        }
+        R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+#endif
         R_SYSTEM->SCKSCR = (uint8_t) clock;
 
         /* Set the clock dividers after switching to the new clock source. */
@@ -987,6 +1074,46 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2)
     bsp_prv_power_change_mstp_clear(mstp_set_bitmask);
 #endif
 }
+
+#if BSP_CFG_SLEEP_MODE_DELAY_ENABLE || BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
+
+bool bsp_prv_clock_prepare_pre_sleep (void)
+{
+    /* Must wait before entering or exiting sleep modes.
+     * See Section 10.7.10 in RA8M1 manual R01UH0994EJ0100 */
+    R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Need to slow CPUCLK down before sleeping if it is above 240MHz. */
+    bool cpuclk_slowed = false;
+    if (SystemCoreClock > BSP_MAX_CLOCK_CHANGE_THRESHOLD)
+    {
+        /* Reduce speed of CPUCLK to /2 or /3 of current, select which ones based on what ICLK divider is. */
+        R_SYSTEM->SCKDIVCR2 =
+            (R_SYSTEM->SCKDIVCR &
+             (0x8 << R_SYSTEM_SCKDIVCR_ICK_Pos)) ? BSP_CLOCKS_SYS_CLOCK_DIV_3 : BSP_CLOCKS_SYS_CLOCK_DIV_2;
+        cpuclk_slowed = true;
+        SystemCoreClockUpdate();
+        R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+
+    return cpuclk_slowed;
+}
+
+void bsp_prv_clock_prepare_post_sleep (bool cpuclk_slowed)
+{
+    /* Set CPUCLK back to original speed here if it was slowed down before sleeping (dropped to below 240MHz)
+     * Add delays as described in Section 10.7.10 of RA8M1 manual R01UH0994EJ0100 */
+    R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+    if (cpuclk_slowed)
+    {
+        /* Set divider of CPUCLK back to /1. This is the only possible value for it to have been over 240MHz before sleeping. */
+        R_SYSTEM->SCKDIVCR2 = BSP_CLOCKS_SYS_CLOCK_DIV_1;
+        SystemCoreClockUpdate();
+        R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+}
+
+#endif
 
 #if !BSP_CFG_STARTUP_CLOCK_REG_NOT_RESET
 
@@ -1039,18 +1166,60 @@ static void bsp_prv_clock_set_hard_reset (void)
      * then set the clock dividers before switching to the new source clock. */
  #if BSP_MOCO_FREQ_HZ <= BSP_STARTUP_SOURCE_CLOCK_HZ
   #if BSP_FEATURE_CGC_HAS_CPUCLK
-   #if BSP_PRV_ICLK_DIV_VALUE >= BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_FEATURE_CGC_ICLK_DIV_RESET)
+   #if BSP_CFG_CLOCK_SETTLING_DELAY_ENABLE && (BSP_STARTUP_CPUCLK_HZ >= BSP_MAX_CLOCK_CHANGE_THRESHOLD)
+
+    /* If the requested ICLK divider is greater than or equal to the current ICLK divider, then writing to
+     * SCKDIVCR first will always satisfy the constraint: CPUCLK frequency >= ICLK frequency. */
+    #if BSP_CFG_ICLK_DIV == BSP_CFG_CPUCLK_DIV
+
+    /* If dividers are equal, bump both down 1 notch.
+     * /1 and /2 are the only possible options. */
+     #if BSP_CFG_CPUCLK_DIV == BSP_CLOCKS_SYS_CLOCK_DIV_1
+    R_SYSTEM->SCKDIVCR = (BSP_PRV_STARTUP_SCKDIVCR & ~(R_SYSTEM_SCKDIVCR_ICK_Msk)) |
+                         (BSP_CLOCKS_SYS_CLOCK_DIV_2 << R_SYSTEM_SCKDIVCR_ICK_Pos);
+    R_SYSTEM->SCKDIVCR2 = BSP_CLOCKS_SYS_CLOCK_DIV_2;
+     #else
+    R_SYSTEM->SCKDIVCR = (BSP_PRV_STARTUP_SCKDIVCR & ~(R_SYSTEM_SCKDIVCR_ICK_Msk)) |
+                         (BSP_CLOCKS_SYS_CLOCK_DIV_4 << R_SYSTEM_SCKDIVCR_ICK_Pos);
+    R_SYSTEM->SCKDIVCR2 = BSP_CLOCKS_SYS_CLOCK_DIV_4;
+     #endif
+    #else
+    R_SYSTEM->SCKDIVCR = BSP_PRV_STARTUP_SCKDIVCR;
+     #if BSP_CFG_CPUCLK_DIV == BSP_CLOCKS_SYS_CLOCK_DIV_1
+
+    /* Determine what the other dividers are using and stay aligned with that. */
+    R_SYSTEM->SCKDIVCR2 = (BSP_CFG_ICLK_DIV & 0x8) ? BSP_CLOCKS_SYS_CLOCK_DIV_3 : BSP_CLOCKS_SYS_CLOCK_DIV_2;
+     #else
+
+    /* If not /1, can just add 1 to it. */
+    R_SYSTEM->SCKDIVCR2 = BSP_PRV_STARTUP_SCKDIVCR2 + 1;
+     #endif
+    #endif
+
+    /* Set the system source clock */
+    R_SYSTEM->SCKSCR = BSP_CFG_CLOCK_SOURCE;
+
+    /* Wait for settling delay. */
+    SystemCoreClockUpdate();
+    R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Continue and set clock to actual target speed. */
+    R_SYSTEM->SCKDIVCR2 = BSP_PRV_STARTUP_SCKDIVCR2;
+    R_SYSTEM->SCKDIVCR  = BSP_PRV_STARTUP_SCKDIVCR;
+   #else
+    #if BSP_PRV_ICLK_DIV_VALUE >= BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_FEATURE_CGC_ICLK_DIV_RESET)
 
     /* If the requested ICLK divider is greater than or equal to the current ICLK divider, then writing to
      * SCKDIVCR first will always satisfy the constraint: CPUCLK frequency >= ICLK frequency. */
     R_SYSTEM->SCKDIVCR  = BSP_PRV_STARTUP_SCKDIVCR;
     R_SYSTEM->SCKDIVCR2 = BSP_PRV_STARTUP_SCKDIVCR2;
-   #else
+    #else
 
     /* If the requested ICLK divider is less than the current ICLK divider, then writing to SCKDIVCR2 first
      * will always satisfy the constraint: CPUCLK frequency >= ICLK frequency. */
     R_SYSTEM->SCKDIVCR2 = BSP_PRV_STARTUP_SCKDIVCR2;
     R_SYSTEM->SCKDIVCR  = BSP_PRV_STARTUP_SCKDIVCR;
+    #endif
    #endif
   #else
     R_SYSTEM->SCKDIVCR = BSP_PRV_STARTUP_SCKDIVCR;
@@ -1098,7 +1267,8 @@ static void bsp_prv_clock_set_hard_reset (void)
    #else
     R_SRAM->SRAMPRCR = BSP_PRV_SRAM_UNLOCK;
 
-    /* Execute data memory barrier before and after setting the wait states (MREF_INTERNAL_000). */
+    /* Execute data memory barrier before and after setting the wait states, See Section 50.4.2 in the RA8M1
+     * manual R01UH0994EJ0100 */
     __DMB();
     R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE;
     __DMB();
@@ -1153,7 +1323,7 @@ static void bsp_clock_freq_var_init (void)
  #endif
 #endif
 
-#if BSP_TZ_NONSECURE_BUILD && BSP_TZ_CFG_CGFSAR != 0xFFFFFFFFU
+#if BSP_TZ_NONSECURE_BUILD && BSP_CFG_CLOCKS_SECURE == 1
 
     /* If the CGC is secure and this is a non secure project, register a callback for getting clock settings. */
     R_BSP_ClockUpdateCallbackSet(g_bsp_clock_update_callback, &g_callback_memory);
@@ -1342,7 +1512,11 @@ void bsp_soft_reset_prepare (void)
 void bsp_clock_init (void)
 {
     /* Unlock CGC and LPM protection registers. */
+#if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+    R_SYSTEM->PRCR_NS = (uint16_t) BSP_PRV_PRCR_UNLOCK;
+#else
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_UNLOCK;
+#endif
 
 #if BSP_FEATURE_BSP_FLASH_CACHE
  #if !BSP_CFG_USE_LOW_VOLTAGE_MODE && BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
@@ -1398,56 +1572,8 @@ void bsp_clock_init (void)
  #endif
 #endif
 
-#if BSP_FEATURE_CGC_HAS_SOSC
- #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
-    if (R_SYSTEM->SOSCCR || (BSP_CLOCK_CFG_SUBCLOCK_DRIVE != R_SYSTEM->SOMCR_b.SODRV))
-    {
-        /* If Sub-Clock Oscillator is started at reset, stop it before configuring the subclock drive. */
-        if (0U == R_SYSTEM->SOSCCR)
-        {
-            /* Stop the Sub-Clock Oscillator to update the SOMCR register. */
-            R_SYSTEM->SOSCCR = 1U;
-
-            /* Allow a stop interval of at least 5 SOSC clock cycles before configuring the drive capacity
-             * and restarting Sub-Clock Oscillator. */
-            R_BSP_SoftwareDelay(BSP_PRV_SUBCLOCK_STOP_INTERVAL_US, BSP_DELAY_UNITS_MICROSECONDS);
-
-            /*
-             * r01uh0893ej0120-ra4m3 8.2.9 SOSCCR : Sub-Clock Oscillator Control Register:
-             * When changing the value of the SOSTP bit, execute subsequent instructions
-             * only after reading the bit to check that the value is updated.
-             */
-            FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SOSCCR, 1U);
-        }
-
-        /* Configure the subclock drive as subclock is not running. */
-        R_SYSTEM->SOMCR = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
-
-        R_SYSTEM->SOSCCR = 0U;
-
-        /* r01uh0893ej0120-ra4m3 8.2.9 SOSCCR : Sub-Clock Oscillator Control Register:
-         * After setting the SOSTP bit to 0, use the sub-clock only after the sub-clock
-         * oscillation stabilization time has elapsed.
-         */
-  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
-        R_BSP_SubClockStabilizeWait(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
-  #endif
-    }
-    else
-    {
-        /*
-         * RA MCUs like RA6M5 requires to use sub-clock after oscillation stabilization time
-         * has elapsed on Power-On-Reset. But, POR is not well supported on EK boards, so BSP
-         * has to wait on any reset. Please override this function in application if waiting
-         * for stabilization is not required.
-         */
-        R_BSP_SubClockStabilizeWaitAfterReset(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
-    }
-
- #else
-    R_SYSTEM->SOSCCR = 1U;
- #endif
-#endif
+    /* Initialize the sub-clock according to the BSP configuration. */
+    bsp_sosc_init();
 
 #if BSP_FEATURE_CGC_HAS_HOCOWTCR
  #if BSP_FEATURE_CGC_HOCOWTCR_64MHZ_ONLY
@@ -1802,13 +1928,24 @@ void bsp_clock_init (void)
 
     /* Set the SDADC clock if it exists on the MCU. */
 #if BSP_FEATURE_BSP_HAS_SDADC_CLOCK && (BSP_CFG_SDADC_CLOCK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
+ #if BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO
+    uint8_t sdadcckcr = 1U;
+ #elif BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL
+    uint8_t sdadcckcr = 2U;
+ #else                                 /* BSP_CLOCK_SOURCE_CLOCK_MOSC */
+    uint8_t sdadcckcr = 0U;
+ #endif
 
     /* SDADC isn't controlled like the other peripheral clocks so we cannot use the generic setter. */
-    R_SYSTEM->SDADCCKCR = BSP_CFG_SDADC_CLOCK_SOURCE & R_SYSTEM_SDADCCKCR_SDADCCKSEL_Msk;
+    R_SYSTEM->SDADCCKCR = sdadcckcr & R_SYSTEM_SDADCCKCR_SDADCCKSEL_Msk;
 #endif
 
     /* Lock CGC and LPM protection registers. */
+#if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+    R_SYSTEM->PRCR_NS = (uint16_t) BSP_PRV_PRCR_LOCK;
+#else
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_LOCK;
+#endif
 
 #if BSP_FEATURE_BSP_FLASH_CACHE && BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
     R_BSP_FlashCacheEnable();
@@ -1923,7 +2060,8 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
  #else
         R_SRAM->SRAMPRCR = BSP_PRV_SRAM_UNLOCK;
 
-        /* Execute data memory barrier before and after setting the wait states (MREF_INTERNAL_000). */
+        /* Execute data memory barrier before and after setting the wait states, See Section 50.4.2 in the RA8M1
+         * manual R01UH0994EJ0100 */
         __DMB();
         R_SRAM->SRAMWTSC = BSP_FEATURE_SRAM_SRAMWTSC_WAIT_CYCLE_ENABLE;
         __DMB();
@@ -2079,7 +2217,8 @@ static void bsp_clock_set_postchange (uint32_t updated_freq_hz, uint8_t new_rom_
  #else
         R_SRAM->SRAMPRCR = BSP_PRV_SRAM_UNLOCK;
 
-        /* Execute data memory barrier before and after setting the wait states (MREF_INTERNAL_000). */
+        /* Execute data memory barrier before and after setting the wait states,See Section 50.4.2 in the RA8M1
+         * manual R01UH0994EJ0100*/
         __DMB();
         R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE;
         __DMB();
@@ -2112,6 +2251,77 @@ static void bsp_clock_set_postchange (uint32_t updated_freq_hz, uint8_t new_rom_
 }
 
 /*******************************************************************************************************************//**
+ * Initializes sub-clock according to the BSP configuration.
+ **********************************************************************************************************************/
+static void bsp_sosc_init (void)
+{
+#if BSP_FEATURE_CGC_HAS_SOSC
+ #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+  #if BSP_FEATURE_RTC_IS_IRTC
+   #if ((BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL))
+
+    /* If sub-clock is used as system clock source or HOCO FLL source, wait for VRTC-domain become valid */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->VRTSR_b.VRTVLD, 1);
+   #else
+
+    /* Check if VRTC-domain area is valid. */
+    if (1U == R_SYSTEM->VRTSR_b.VRTVLD)
+   #endif
+  #endif
+    {
+        if (R_SYSTEM->SOSCCR || (BSP_CLOCK_CFG_SUBCLOCK_DRIVE != R_SYSTEM->SOMCR_b.SODRV))
+        {
+            /* If Sub-Clock Oscillator is started at reset, stop it before configuring the subclock drive. */
+            if (0U == R_SYSTEM->SOSCCR)
+            {
+                /* Stop the Sub-Clock Oscillator to update the SOMCR register. */
+                R_SYSTEM->SOSCCR = 1U;
+
+                /* Allow a stop interval of at least 5 SOSC clock cycles before configuring the drive capacity
+                 * and restarting Sub-Clock Oscillator. */
+                R_BSP_SoftwareDelay(BSP_PRV_SUBCLOCK_STOP_INTERVAL_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+                /*
+                 * r01uh0893ej0120-ra4m3 8.2.9 SOSCCR : Sub-Clock Oscillator Control Register:
+                 * When changing the value of the SOSTP bit, execute subsequent instructions
+                 * only after reading the bit to check that the value is updated.
+                 */
+                FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SOSCCR, 1U);
+            }
+
+            /* Configure the subclock drive as subclock is not running. */
+            R_SYSTEM->SOMCR =
+                ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
+
+            R_SYSTEM->SOSCCR = 0U;
+
+            /* r01uh0893ej0120-ra4m3 8.2.9 SOSCCR : Sub-Clock Oscillator Control Register:
+             * After setting the SOSTP bit to 0, use the sub-clock only after the sub-clock
+             * oscillation stabilization time has elapsed.
+             */
+  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
+            R_BSP_SubClockStabilizeWait(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
+  #endif
+        }
+        else
+        {
+            /*
+             * RA MCUs like RA6M5 requires to use sub-clock after oscillation stabilization time
+             * has elapsed on Power-On-Reset. But, POR is not well supported on EK boards, so BSP
+             * has to wait on any reset. Please override this function in application if waiting
+             * for stabilization is not required.
+             */
+            R_BSP_SubClockStabilizeWaitAfterReset(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
+        }
+    }
+
+ #else
+    R_SYSTEM->SOSCCR = 1U;
+ #endif
+#endif
+}
+
+/*******************************************************************************************************************//**
  * Octa-SPI clock update.
  * @param[in]   p_octaclk_setting   Pointer to Octaclk setting structure which provides information regarding
  *                                  Octaclk source and divider settings to be applied.
@@ -2122,10 +2332,18 @@ void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
 #if BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK
 
     /* Store initial value of CGC and LPM protection registers. */
+ #if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+    uint16_t bsp_prv_prcr_orig = R_SYSTEM->PRCR_NS;
+ #else
     uint16_t bsp_prv_prcr_orig = R_SYSTEM->PRCR;
+ #endif
 
     /* Unlock CGC and LPM protection registers. */
+ #if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+    R_SYSTEM->PRCR_NS = (uint16_t) BSP_PRV_PRCR_UNLOCK;
+ #else
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_UNLOCK;
+ #endif
 
     /* Request to change the OCTASPI Clock. */
     R_SYSTEM->OCTACKCR_b.OCTACKSREQ = 1;
@@ -2144,7 +2362,11 @@ void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 0U);
 
     /* Restore CGC and LPM protection registers. */
+ #if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+    R_SYSTEM->PRCR_NS = bsp_prv_prcr_orig;
+ #else
     R_SYSTEM->PRCR = bsp_prv_prcr_orig;
+ #endif
 #else
     FSP_PARAMETER_NOT_USED(p_octaclk_setting);
 #endif
@@ -2179,6 +2401,14 @@ void R_BSP_Init_RTC (void)
     /* RCKSEL bit is not initialized after reset. Use LOCO as the default
      * clock source if it is available. Note RCR4.ROPSEL is also cleared.
      */
+
+ #if BSP_FEATURE_RTC_IS_IRTC
+    if (0U == R_SYSTEM->VRTSR_b.VRTVLD) // Return if VRTC-domain is invalid
+    {
+        return;
+    }
+ #endif
+
  #if BSP_PRV_LOCO_USED && !BSP_FEATURE_RTC_IS_IRTC
     R_RTC->RCR4 = 1 << R_RTC_RCR4_RCKSEL_Pos;
  #else
@@ -2223,6 +2453,58 @@ void R_BSP_Init_RTC (void)
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
     R_SYSTEM->VBTICTLR = 0U;
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
+ #endif
+}
+
+#endif
+
+#if BSP_FEATURE_RTC_IS_IRTC
+
+/*******************************************************************************************************************//**
+ * To check sub-clock status.
+ *
+ * @retval FSP_SUCCESS                  Sub-clock is ready to use.
+ * @retval FSP_ERR_INVALID_HW_CONDITION VRTC-domain area is invalid.
+ * @retval FSP_ERR_NOT_INITIALIZED      Sub-clock has not been inititalized yet.
+ **********************************************************************************************************************/
+fsp_err_t R_BSP_SubclockStatusGet ()
+{
+ #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+
+    /* Check if VRTC-domain area is invalid */
+    FSP_ERROR_RETURN(1U == R_SYSTEM->VRTSR_b.VRTVLD, FSP_ERR_INVALID_HW_CONDITION);
+
+    /* Check if SOSC has been configured */
+    if ((0U == R_SYSTEM->SOSCCR) && (BSP_CLOCK_CFG_SUBCLOCK_DRIVE == R_SYSTEM->SOMCR_b.SODRV))
+    {
+        return FSP_SUCCESS;
+    }
+ #endif
+
+    return FSP_ERR_NOT_INITIALIZED;
+}
+
+/*******************************************************************************************************************//**
+ * To initialize the sub-clock.
+ *
+ * @retval FSP_SUCCESS                  Sub-clock successfully initialized.
+ * @retval FSP_ERR_INVALID_HW_CONDITION Sub-clock cannot be initialized.
+ **********************************************************************************************************************/
+fsp_err_t R_BSP_SubclockInitialize ()
+{
+ #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+
+    /* Check if VRTC-domain area is valid */
+    FSP_ERROR_RETURN(1U == R_SYSTEM->VRTSR_b.VRTVLD, FSP_ERR_INVALID_HW_CONDITION);
+
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
+    bsp_sosc_init();
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
+
+    return FSP_SUCCESS;
+ #else
+
+    return FSP_ERR_INVALID_HW_CONDITION;
  #endif
 }
 

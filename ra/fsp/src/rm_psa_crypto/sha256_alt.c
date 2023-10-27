@@ -682,7 +682,94 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
     ctx->total[0] += (uint32_t) ilen;
     ctx->total[0] &= 0xFFFFFFFF;
 
-    /* Update the HW sce operation status/rsip command */
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+    uint32_t sha256_block_aligned_size_mod;
+
+    if (ctx->total[0] < (uint32_t) ilen) {
+        ctx->total[1]++;
+    }
+
+    /* If there is enough new data to fill up the ctx buffer then fill it up and process it. */
+    if (left && ilen >= fill) {
+        memcpy((void *) (ctx->buffer + left), input, fill);
+
+        input += fill;
+        ilen  -= fill;
+        left = 0;
+        /* If there is data in the rsip_buffer that must be processed first before the ctx buffer. */
+        if ((1U == ctx->use_rsip_buffer) && (0U == ctx->rsip_buffer_processed))
+        {
+            if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->rsip_buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0)
+            {
+                return ret;
+            }
+            ctx->rsip_buffer_processed = 1U;
+            ctx->use_rsip_buffer = 0U;
+        }
+
+        /* Process the data in the ctx buffer. */
+        if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0) {
+            return ret;
+        }
+    }
+
+    if (ilen >= SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES)
+    {
+        sha256_block_aligned_size_mod = ilen / SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES;
+        sha256_block_aligned_size = sha256_block_aligned_size_mod;
+        ilen = ilen - (sha256_block_aligned_size_mod * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES);
+
+        /* Check to see if there will be unaligned data to be buffered.
+        If there is no unaligned data to be buffered, then in case of the RSIP7,
+        64 bytes (SHA256 block size) of data will be buffered and processed when the finish() is called. */
+        /* If all the data is aligned, copy over the final 64 bytes for later processing. */
+        if (ilen > 0)
+        {
+             if ((1U == ctx->use_rsip_buffer) && (0U == ctx->rsip_buffer_processed))
+            {
+                if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->rsip_buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0)
+                {
+                    return ret;
+                }
+                ctx->rsip_buffer_processed = 1U;
+                ctx->use_rsip_buffer = 0U;
+            }
+            ctx->use_rsip_buffer = 0U;
+            ctx->rsip_buffer_processed = 1U;
+        }
+        else
+        {
+            if ((1U == ctx->use_rsip_buffer) && (0U == ctx->rsip_buffer_processed))
+            {
+                if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->rsip_buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0)
+                {
+                    return ret;
+                }
+                ctx->rsip_buffer_processed = 1U;
+                ctx->use_rsip_buffer = 0U;
+            }
+            uint32_t final_block_start = (sha256_block_aligned_size_mod * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES) - SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES;
+            memcpy(ctx->rsip_buffer, input + final_block_start, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES);
+            sha256_block_aligned_size_mod -= 1U;
+            ctx->use_rsip_buffer = 1U;
+            ctx->rsip_buffer_processed = 0U;
+        }
+
+        if ((ilen > SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES) || (sha256_block_aligned_size_mod > 0U))
+        {
+            if( ( ret = mbedtls_internal_sha256_process_ext(ctx, input, sha256_block_aligned_size_mod * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES) ) != 0 )
+                return( ret );
+
+            input += (sha256_block_aligned_size * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES);
+        }
+    }
+
+    if (ilen > 0) {
+        memcpy((void *) (ctx->buffer + left), input, ilen);
+    }
+   return 0;
+#else
+/* Update the HW sce operation status/rsip command */
     ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND;
 
     if (ctx->total[0] < (uint32_t) ilen) {
@@ -691,7 +778,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
 
     if (left && ilen >= fill) {
         memcpy((void *) (ctx->buffer + left), input, fill);
-        /*mbedtls_internal_sha256_process_ext() is an SCE specific modification to improve processing speed by using 
+        /*mbedtls_internal_sha256_process_ext() is an SCE specific modification to improve processing speed by using
         the SCE for all the block size data rather than 64 bytes at a time. */
         if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0) {
             return ret;
@@ -716,6 +803,9 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
     }
 
     return 0;
+#endif
+
+
 }
 
 /*
@@ -726,12 +816,75 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx,
 {
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     uint32_t used;
-    uint32_t high, low;
 
-    /*
+      /*
      * Add padding: 0x80 then 0x00 until 8 bytes remain for the length
      */
     used = ctx->total[0] & 0x3F;
+
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+    /* If there is no unaligned data in the context buffer. */
+    if (0 == used)
+    {
+        /* If there is aligned data buffered in the rsip buffer, process that.*/
+        if ((1U == ctx->use_rsip_buffer) && (0U == ctx->rsip_buffer_processed))
+        {
+            if (SCE_OEM_CMD_HASH_INIT_TO_SUSPEND == ctx->sce_operation_state)
+            {
+                ctx->sce_operation_state = SCE_OEM_CMD_HASH_ONESHOT;
+            }
+            else if (ctx->sce_operation_state == SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND)
+            {
+                ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_FINAL;
+            }
+            if( ( ret = mbedtls_internal_sha256_process_ext(ctx, ctx->rsip_buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0)
+            {
+                return ret;
+            }
+            ctx->rsip_buffer_processed = 1U;
+            ctx->use_rsip_buffer = 0U;
+        }
+        else
+        { /* If there is no data in the unaligned ctx buffer and no data in the aligned buffer
+            then this is case of 0 total length passed in. */
+            ctx->sce_operation_state = SCE_OEM_CMD_HASH_ONESHOT;
+            if( ( ret = mbedtls_internal_sha256_process_ext(ctx, ctx->rsip_buffer, 0 ) ) != 0)
+            {
+                return ret;
+            }
+        }
+    }
+    else
+    {
+        if ((1U == ctx->use_rsip_buffer) && (0U == ctx->rsip_buffer_processed))
+        {
+            if (SCE_OEM_CMD_HASH_INIT_TO_SUSPEND != ctx->sce_operation_state)
+            {
+                ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND;
+            }
+            if( ( ret = mbedtls_internal_sha256_process_ext(ctx, ctx->rsip_buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0)
+            {
+                return ret;
+            }
+            ctx->rsip_buffer_processed = 1U;
+            ctx->use_rsip_buffer = 0U;
+        }
+        if (SCE_OEM_CMD_HASH_INIT_TO_SUSPEND == ctx->sce_operation_state)
+        {
+            ctx->sce_operation_state = SCE_OEM_CMD_HASH_ONESHOT;
+        }
+        else
+        {
+            ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_FINAL;;
+        }
+        if((ret = mbedtls_internal_sha256_process_ext(ctx, ctx->buffer, used)) != 0)
+        {
+            return ret;
+        }
+    }
+
+  #else
+    uint32_t high, low;
 
     ctx->buffer[used++] = 0x80;
 
@@ -765,6 +918,8 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx,
     if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0) {
         return ret;
     }
+
+  #endif
 
     /*
      * Output final state

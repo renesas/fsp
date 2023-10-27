@@ -26,8 +26,6 @@
  * @section PTP_API_SUMMARY Summary
  * The PTP interface provides the functionality for using PTP.
  *
- * Implemented by:
- * - @ref PTP
  *
  * @{
  **********************************************************************************************************************/
@@ -565,8 +563,6 @@ typedef void ptp_ctrl_t;
 typedef struct st_ptp_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_PTP_Open()
      *
      * @note To reconfigure after calling this function, call @ref ptp_api_t::close first.
      * @param[in]  p_ctrl       Pointer to control structure.
@@ -575,8 +571,6 @@ typedef struct st_ptp_api
     fsp_err_t (* open)(ptp_ctrl_t * const p_ctrl, ptp_cfg_t const * const p_cfg);
 
     /** Set the MAC address for the PTP.
-     * @par Implemented as
-     * - @ref R_PTP_MacAddrSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_hw_addr    Pointer to the 6 byte MAC address.
@@ -584,8 +578,6 @@ typedef struct st_ptp_api
     fsp_err_t (* macAddrSet)(ptp_ctrl_t * const p_ctrl, uint8_t const * const p_mac_addr);
 
     /** Set the IP address for the PTP.
-     * @par Implemented as
-     * - @ref R_PTP_IpAddrSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  ip_addr      32 bit IPv4 address of the PTP.
@@ -593,8 +585,6 @@ typedef struct st_ptp_api
     fsp_err_t (* ipAddrSet)(ptp_ctrl_t * const p_ctrl, uint32_t ip_addr);
 
     /** Set the local clock ID (Usually based off of the PTP MAC address).
-     * @par Implemented as
-     * - @ref R_PTP_LocalClockIdSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_clock_id   Pointer to 8 byte clock ID.
@@ -602,8 +592,6 @@ typedef struct st_ptp_api
     fsp_err_t (* localClockIdSet)(ptp_ctrl_t * const p_ctrl, uint8_t const * const p_clock_id);
 
     /** Set the master clock ID (Usually obtained from previously received announce message).
-     * @par Implemented as
-     * - @ref R_PTP_MasterClockIdSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_clock_id   Pointer to 8 byte clock ID.
@@ -612,8 +600,6 @@ typedef struct st_ptp_api
     fsp_err_t (* masterClockIdSet)(ptp_ctrl_t * const p_ctrl, uint8_t const * const p_clock_id, uint16_t port_id);
 
     /** Set the flags field for the given message type.
-     * @par Implemented as
-     * - @ref R_PTP_MessageFlagsSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  message_type The message type.
@@ -623,8 +609,6 @@ typedef struct st_ptp_api
                                   ptp_message_flags_t flags);
 
     /** Sets the offsetFromMaster field in announce messages.
-     * @par Implemented as
-     * - @ref R_PTP_CurrentUtcOffsetSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  offset       New currentUtcOffset value.
@@ -633,8 +617,6 @@ typedef struct st_ptp_api
 
     /** Transition to a new clock state.
      *
-     * @par Implemented as
-     * - @ref R_PTP_PortStateSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  state        The state to transition into.
@@ -644,8 +626,6 @@ typedef struct st_ptp_api
     /** Send a PTP message. Appropriate fields in the PTP message will be endian swapped.
      * The application must ensure that the TLV data is in big endian format.
      *
-     * @par Implemented as
-     * - @ref R_PTP_MessageSend()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  p_message     Pointer to a PTP message.
@@ -657,8 +637,6 @@ typedef struct st_ptp_api
 
     /** Set the local clock value.
      *
-     * @par Implemented as
-     * - @ref R_PTP_LocalClockValueSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_time       Pointer to the new time setting.
@@ -667,8 +645,6 @@ typedef struct st_ptp_api
 
     /** Get the local clock value.
      *
-     * @par Implemented as
-     * - @ref R_PTP_LocalClockValueGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_time       Pointer to store the current time setting.
@@ -677,8 +653,6 @@ typedef struct st_ptp_api
 
     /** Configuration that is common to all of the pulse timers.
      *
-     * @par Implemented as
-     * - @ref R_PTP_PulseTimerCommonConfig()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_timer_cfg  Pointer to the pulse timer common configuration.
@@ -687,8 +661,6 @@ typedef struct st_ptp_api
 
     /** Setup a pulse timer.
      *
-     * @par Implemented as
-     * - @ref R_PTP_PulseTimerEnable()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  channel      The pulse timer channel to setup.
@@ -699,8 +671,6 @@ typedef struct st_ptp_api
 
     /** Stop a pulse timer.
      *
-     * @par Implemented as
-     * - @ref R_PTP_PulseTimerDisable()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  channel      The pulse timer channel to stop.
@@ -709,8 +679,6 @@ typedef struct st_ptp_api
 
     /** Stop PTP operation.
      *
-     * @par Implemented as
-     * - @ref R_PTP_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */

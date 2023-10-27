@@ -30,8 +30,6 @@
  * The OPAMP interface provides standard operational amplifier functionality, including starting and stopping the
  * amplifier.
  *
- * Implemented by:
- * @ref OPAMP
  *
  * @{
  **********************************************************************************************************************/
@@ -101,8 +99,6 @@ typedef void opamp_ctrl_t;
 typedef struct st_opamp_api
 {
     /** Initialize the operational amplifier.
-     * @par Implemented as
-     * - @ref R_OPAMP_Open()
      *
      * @param[in]  p_ctrl  Pointer to instance control block
      * @param[in]  p_cfg   Pointer to configuration
@@ -110,8 +106,6 @@ typedef struct st_opamp_api
     fsp_err_t (* open)(opamp_ctrl_t * const p_ctrl, opamp_cfg_t const * const p_cfg);
 
     /** Start the op-amp(s).
-     * @par Implemented as
-     * - @ref R_OPAMP_Start()
      *
      * @param[in]  p_ctrl         Pointer to instance control block
      * @param[in]  channel_mask   Bitmask of channels to start
@@ -119,8 +113,6 @@ typedef struct st_opamp_api
     fsp_err_t (* start)(opamp_ctrl_t * const p_ctrl, uint32_t const channel_mask);
 
     /** Stop the op-amp(s).
-     * @par Implemented as
-     * - @ref R_OPAMP_Stop()
      *
      * @param[in]  p_ctrl         Pointer to instance control block
      * @param[in]  channel_mask   Bitmask of channels to stop
@@ -128,8 +120,6 @@ typedef struct st_opamp_api
     fsp_err_t (* stop)(opamp_ctrl_t * const p_ctrl, uint32_t const channel_mask);
 
     /** Trim the op-amp(s). Not supported on all MCUs. See implementation for procedure details.
-     * @par Implemented as
-     * - @ref R_OPAMP_Trim()
      *
      * @param[in]  p_ctrl         Pointer to instance control block
      * @param[in]  cmd            Trim command
@@ -138,8 +128,6 @@ typedef struct st_opamp_api
     fsp_err_t (* trim)(opamp_ctrl_t * const p_ctrl, opamp_trim_cmd_t const cmd, opamp_trim_args_t const * const p_args);
 
     /** Provide information such as the recommended minimum stabilization wait time.
-     * @par Implemented as
-     * - @ref R_OPAMP_InfoGet()
      *
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[out]  p_info       OPAMP information stored here
@@ -147,8 +135,6 @@ typedef struct st_opamp_api
     fsp_err_t (* infoGet)(opamp_ctrl_t * const p_ctrl, opamp_info_t * const p_info);
 
     /** Provide status of each op-amp channel.
-     * @par Implemented as
-     * - @ref R_OPAMP_StatusGet()
      *
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[out]  p_status     Status stored here
@@ -157,8 +143,6 @@ typedef struct st_opamp_api
 
     /** Close the specified OPAMP unit by ending any scan in progress, disabling interrupts, and removing power to the
      * specified A/D unit.
-     * @par Implemented as
-     * - @ref R_OPAMP_Close()
      *
      * @param[in]  p_ctrl   Pointer to instance control block
      */

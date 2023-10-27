@@ -146,18 +146,6 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
     rm_motor_120_driver_mod_set_max_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_max_duty);
     rm_motor_120_driver_mod_set_min_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_min_duty);
 
-    /* Start ADC module */
-    if (p_extended_cfg->p_adc_instance != NULL)
-    {
-        p_extended_cfg->p_adc_instance->p_api->open(p_extended_cfg->p_adc_instance->p_ctrl,
-                                                    p_extended_cfg->p_adc_instance->p_cfg);
-        p_extended_cfg->p_adc_instance->p_api->scanCfg(p_extended_cfg->p_adc_instance->p_ctrl,
-                                                       p_extended_cfg->p_adc_instance->p_channel_cfg);
-        p_extended_cfg->p_adc_instance->p_api->calibrate(p_extended_cfg->p_adc_instance->p_ctrl,
-                                                         p_extended_cfg->p_adc_instance->p_cfg->p_extend);
-        p_extended_cfg->p_adc_instance->p_api->scanStart(p_extended_cfg->p_adc_instance->p_ctrl);
-    }
-
     /* Start GPT three phase module */
     if (p_extended_cfg->p_three_phase_instance != NULL)
     {
@@ -202,6 +190,26 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
                                                             p_extended_cfg->p_three_phase_instance->p_cfg);
 
         p_extended_cfg->p_three_phase_instance->p_api->start(p_extended_cfg->p_three_phase_instance->p_ctrl);
+    }
+
+    /* Start ADC module */
+    if (p_extended_cfg->p_adc_instance != NULL)
+    {
+        adc_status_t status = {.state = ADC_STATE_SCAN_IN_PROGRESS};
+
+        p_extended_cfg->p_adc_instance->p_api->open(p_extended_cfg->p_adc_instance->p_ctrl,
+                                                    p_extended_cfg->p_adc_instance->p_cfg);
+        p_extended_cfg->p_adc_instance->p_api->scanCfg(p_extended_cfg->p_adc_instance->p_ctrl,
+                                                       p_extended_cfg->p_adc_instance->p_channel_cfg);
+        p_extended_cfg->p_adc_instance->p_api->calibrate(p_extended_cfg->p_adc_instance->p_ctrl,
+                                                         p_extended_cfg->p_adc_instance->p_cfg->p_extend);
+
+        while (ADC_STATE_IDLE != status.state)
+        {
+            p_extended_cfg->p_adc_instance->p_api->scanStatusGet(p_extended_cfg->p_adc_instance->p_ctrl, &status);
+        }
+
+        p_extended_cfg->p_adc_instance->p_api->scanStart(p_extended_cfg->p_adc_instance->p_ctrl);
     }
 
     rm_motor_120_driver_reset(p_instance_ctrl);

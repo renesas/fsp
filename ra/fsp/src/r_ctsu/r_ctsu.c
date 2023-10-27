@@ -1154,6 +1154,13 @@ fsp_err_t R_CTSU_ScanStart (ctsu_ctrl_t * const p_ctrl)
         R_CTSU->CTSUCHTRC4 = p_instance_ctrl->ctsuchtrc4;
     }
 
+ #if (CTSU_CFG_NUM_CFC != 0)
+    if (CTSU_MODE_MUTUAL_CFC_SCAN == p_instance_ctrl->md)
+    {
+        R_CTSU->CTSUSR_b.CFCRDCH = 0x00;
+    }
+ #endif
+
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
     if (CTSU_MODE_DIAGNOSIS_SCAN == p_instance_ctrl->md)
     {
@@ -2638,12 +2645,6 @@ void ctsu_read_isr (void)
         {
             p_instance_ctrl->p_self_raw[p_instance_ctrl->rd_index] = R_CTSU->CTSUSC;
             p_instance_ctrl->rd_index++;
-
-            /* Interim */
-            if (0 == p_instance_ctrl->rd_index % 3)
-            {
-                R_CTSU->CTSUSR_b.MFC = 0;
-            }
         }
   #endif
   #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)

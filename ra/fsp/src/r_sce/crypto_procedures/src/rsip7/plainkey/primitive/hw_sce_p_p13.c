@@ -560,7 +560,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (const uint32_t InData_DomainP
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1408H, 0x00002032U);
-        for (iLoop = iLoop; iLoop < 24U; )
+        for (; iLoop < 24U; )
         {
             WAIT_STS(REG_1408H, 30, 1);
             RD4_ADDR(REG_1420H, &OutData_PubKeyIndex[iLoop + 1]);
@@ -577,7 +577,7 @@ fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSub (const uint32_t InData_DomainP
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1408H, 0x00002032U);
-        for (iLoop = iLoop; iLoop < 36U; )
+        for (; iLoop < 36U; )
         {
             WAIT_STS(REG_1408H, 30, 1);
             RD4_ADDR(REG_1420H, &OutData_PubKeyIndex[iLoop + 1]);

@@ -26,8 +26,6 @@
  * @section MOTOR_SPEED_API_Summary Summary
  * The Motor speed interface for getting the current references from electric current and rotational speed
  *
- * The motor speed interface can be implemented by:
- * - @ref MOTOR_SPEED
  *
  * @{
  **********************************************************************************************************************/
@@ -131,8 +129,6 @@ typedef struct st_motor_speed_position_data
 } motor_speed_position_data_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_speed_ctrl_t
  */
 typedef void motor_speed_ctrl_t;
 
@@ -157,8 +153,6 @@ typedef struct st_motor_speed_cfg
 typedef struct st_motor_speed_api
 {
     /** Initialize the motor speed module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -166,32 +160,24 @@ typedef struct st_motor_speed_api
     fsp_err_t (* open)(motor_speed_ctrl_t * const p_ctrl, motor_speed_cfg_t const * const p_cfg);
 
     /** Close (Finish) the motor speed module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_speed_ctrl_t * const p_ctrl);
 
     /** Reset(Stop) the motor speed module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_speed_ctrl_t * const p_ctrl);
 
     /** Activate the motor speed control.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_Run()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* run)(motor_speed_ctrl_t * const p_ctrl);
 
     /** Set (Input) speed reference into the motor speed module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_SpeedReferenceSet()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      * @param[in]  speed_refernce_rpm  Speed reference [rpm]
@@ -199,8 +185,6 @@ typedef struct st_motor_speed_api
     fsp_err_t (* speedReferenceSet)(motor_speed_ctrl_t * const p_ctrl, float const speed_reference_rpm);
 
     /** Set (Input) position reference and control mode
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_PositionReferenceSet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_position_data    Pointer to structure position data
@@ -209,8 +193,6 @@ typedef struct st_motor_speed_api
                                        motor_speed_position_data_t const * const p_position_data);
 
     /** Set (Input) speed parameters into the motor speed module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_ParameterSet()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  p_st_input     Pointer to structure to input parameters.
@@ -218,16 +200,12 @@ typedef struct st_motor_speed_api
     fsp_err_t (* parameterSet)(motor_speed_ctrl_t * const p_ctrl, motor_speed_input_t const * const p_st_input);
 
     /** Calculate current reference
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_SpeedControl()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* speedControl)(motor_speed_ctrl_t * const p_ctrl);
 
     /** Get speed control output parameters
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_ParameterGet()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[out] p_st_output    Pointer to get speed control parameters
@@ -235,8 +213,6 @@ typedef struct st_motor_speed_api
     fsp_err_t (* parameterGet)(motor_speed_ctrl_t * const p_ctrl, motor_speed_output_t * const p_st_output);
 
     /** Update Parameters for the calculation in the motor speed module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SPEED_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

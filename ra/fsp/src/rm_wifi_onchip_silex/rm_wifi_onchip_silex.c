@@ -391,7 +391,13 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan(wifi_onchip_silex_instance_ctrl_
  **********************************************************************************************************************/
 fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg)
 {
+#if defined(__llvm__) && !defined(__CLANG_TIDY__)
+
+    /* This is volatile for LLVM to prevent an optimization error.  */
+    wifi_onchip_silex_instance_ctrl_t * volatile p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
+#else
     wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
+#endif
     fsp_err_t         err    = FSP_SUCCESS;
     uart_instance_t * p_uart = NULL;
     rm_wifi_onchip_silex_uart_extended_cfg_t uart0_cfg_extended_115200;
@@ -448,6 +454,7 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     p_instance_ctrl->p_current_packet_buffer = NULL;
     p_instance_ctrl->p_next_packet_buffer    = NULL;
     p_instance_ctrl->packet_buffer_size      = 0;
+    p_instance_ctrl->handle_socket_connect   = false;
 #endif
 
     /* Reset the wifi module to a known state */
@@ -2003,6 +2010,15 @@ fsp_err_t rm_wifi_onchip_silex_tcp_connect (uint32_t socket_no, uint32_t ipaddr,
             (uint8_t) (ipaddr >> 24), (uint8_t) (ipaddr >> 16), (uint8_t) (ipaddr >> 8), (uint8_t) (ipaddr),
             (int) port);
 
+#if (BSP_CFG_RTOS == 1)
+    if (1 == p_instance_ctrl->num_uarts)
+    {
+        /* Set a flag to handle parsing connect command response in interrupt so that any
+         * immediate socket data makes it into the packet buffer */
+        p_instance_ctrl->handle_socket_connect = true;
+    }
+#endif
+
     ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
                                           (char *) p_instance_ctrl->cmd_tx_buff,
@@ -2019,6 +2035,13 @@ fsp_err_t rm_wifi_onchip_silex_tcp_connect (uint32_t socket_no, uint32_t ipaddr,
     }
     else
     {
+#if (BSP_CFG_RTOS == 1)
+        if (1 == p_instance_ctrl->num_uarts)
+        {
+            p_instance_ctrl->handle_socket_connect = false;
+        }
+#endif
+
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
@@ -2098,6 +2121,15 @@ fsp_err_t rm_wifi_onchip_silex_udp_connect (uint32_t socket_no, uint32_t ipaddr,
                 (int) port);
     }
 
+#if (BSP_CFG_RTOS == 1)
+    if (1 == p_instance_ctrl->num_uarts)
+    {
+        /* Set a flag to handle parsing connect command response in interrupt so that any
+         * immediate socket data makes it into the packet buffer */
+        p_instance_ctrl->handle_socket_connect = true;
+    }
+#endif
+
     ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
                                           (char *) p_instance_ctrl->cmd_tx_buff,
@@ -2114,6 +2146,13 @@ fsp_err_t rm_wifi_onchip_silex_udp_connect (uint32_t socket_no, uint32_t ipaddr,
     }
     else
     {
+#if (BSP_CFG_RTOS == 1)
+        if (1 == p_instance_ctrl->num_uarts)
+        {
+            p_instance_ctrl->handle_socket_connect = false;
+        }
+#endif
+
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
@@ -3233,28 +3272,31 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
             }
         }
 
-        char * p_response_string =
-            (char *) &p_instance_ctrl->cmd_rx_buff[recvcnt -
-                                                   strlen((const char *) g_wifi_onchip_silex_result_code[expect_code][
-                                                              p_instance_ctrl->at_cmd_mode])];
+        char * p_response_string;
+        char * p_expected_string =
+            (char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode];
+        uint32_t expected_string_length = strlen(p_expected_string);
+
+        if (WIFI_ONCHIP_SILEX_RETURN_CONNECT == expect_code)
+        {
+            /* For socket connect data could come in right after the response */
+            p_response_string = (char *) p_instance_ctrl->cmd_rx_buff;
+        }
+        else
+        {
+            p_response_string = (char *) &p_instance_ctrl->cmd_rx_buff[recvcnt - expected_string_length];
+        }
 
         /* Response data check */
-        FSP_ERROR_RETURN(recvcnt >=
-                         strlen((const char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode
-                                ]),
-                         FSP_ERR_WIFI_FAILED);
+        FSP_ERROR_RETURN(recvcnt >= expected_string_length, FSP_ERR_WIFI_FAILED);
 
-        if (0 !=
-            strncmp(p_response_string,
-                    (const char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode],
-                    strlen((const char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode])))
+        if (0 != strncmp(p_response_string, p_expected_string, expected_string_length))
         {
-            if (0 ==
-                strncmp(p_response_string,
-                        (const char *) g_wifi_onchip_silex_result_code[WIFI_ONCHIP_SILEX_RETURN_BUSY][p_instance_ctrl->
-                                                                                                      at_cmd_mode],
-                        strlen((const char *) g_wifi_onchip_silex_result_code[WIFI_ONCHIP_SILEX_RETURN_BUSY][
-                                   p_instance_ctrl->at_cmd_mode])))
+            p_expected_string =
+                (char *) g_wifi_onchip_silex_result_code[WIFI_ONCHIP_SILEX_RETURN_BUSY][p_instance_ctrl->at_cmd_mode];
+            expected_string_length = strlen(p_expected_string);
+
+            if (0 == strncmp(p_response_string, p_expected_string, expected_string_length))
             {
 
                 /* Busy */
@@ -3662,24 +3704,38 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
 
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 #else                                  // AzureRTOS
-            uart_instance_t * p_uart_instance = p_instance_ctrl->uart_instance_objects[uart_context_index];
+            uart_instance_t * p_uart_instance     = p_instance_ctrl->uart_instance_objects[uart_context_index];
+            bool              socket_buffer_write = false;
 
-            /* Check if socket is connected */
-            if ((WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED !=
-                 p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status) ||
-                (uart_context_index == WIFI_ONCHIP_SILEX_UART_SECOND_PORT))
+            if (p_instance_ctrl->num_uarts == 1)
             {
-                /* Socket isn't connected, data should go to command buffer */
-                p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index] = (uint8_t) p_args->data;
-                p_instance_ctrl->current_cmd_buffer_index++;
-                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
-                                             &p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index],
-                                             1);
-
-                /* Notify that reception has started */
-                tx_semaphore_put(&p_instance_ctrl->uart_rx_sem[uart_context_index]);
+                if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED !=
+                    p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status)
+                {
+                    /* Socket isn't connected, data should go to command buffer */
+                    socket_buffer_write = false;
+                }
+                else
+                {
+                    socket_buffer_write = true;
+                }
             }
             else
+            {
+                if ((1 == p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_create_flag) &&
+                    (WIFI_ONCHIP_SILEX_UART_INITIAL_PORT == uart_context_index))
+                {
+                    /* Socket is created and port is data port so write to packet buffer */
+                    socket_buffer_write = true;
+                }
+                else
+                {
+                    /* Write to command buffer */
+                    socket_buffer_write = false;
+                }
+            }
+
+            if (socket_buffer_write)
             {
                 /* If we don't have a packet buffer then don't recieve anything */
                 if (NULL == p_instance_ctrl->p_current_packet_buffer)
@@ -3697,6 +3753,18 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
                 /* Notify that reception has started */
                 tx_semaphore_put(&p_instance_ctrl->uart_data_rx_start_sem);
             }
+            else
+            {
+                /* Write to command buffer */
+                p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index] = (uint8_t) p_args->data;
+                p_instance_ctrl->current_cmd_buffer_index++;
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             &p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index],
+                                             1);
+
+                /* Notify that reception has started */
+                tx_semaphore_put(&p_instance_ctrl->uart_rx_sem[uart_context_index]);
+            }
 #endif
 
             break;
@@ -3705,12 +3773,58 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
 #if (BSP_CFG_RTOS == 1)                // AzureRTOS
         case UART_EVENT_RX_COMPLETE:
         {
-            uart_instance_t * p_uart_instance = p_instance_ctrl->uart_instance_objects[uart_context_index];
+            uart_instance_t * p_uart_instance     = p_instance_ctrl->uart_instance_objects[uart_context_index];
+            bool              socket_buffer_write = false;
 
-            /* Check if socket is open and UART port is the data port */
-            if ((WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED ==
-                 p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status) &&
-                (uart_context_index == WIFI_ONCHIP_SILEX_UART_INITIAL_PORT))
+            if (p_instance_ctrl->num_uarts == 1)
+            {
+                if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED !=
+                    p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status)
+                {
+                    if (p_instance_ctrl->handle_socket_connect)
+                    {
+                        /* Check if socket connect response has been recieved */
+                        if (0 ==
+                            memcmp(p_instance_ctrl->cmd_rx_buff, WIFI_ONCHIP_SILEX_RETURN_NUMERIC_CONNECT,
+                                   sizeof(WIFI_ONCHIP_SILEX_RETURN_NUMERIC_CONNECT) - 1))
+                        {
+                            /* Socket has been connected, set connect flag so that any other data goes through packet buffer */
+                            p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status =
+                                WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED;
+
+                            p_instance_ctrl->handle_socket_connect = false;
+
+                            /* Notify that reception has completed */
+                            tx_semaphore_put(&p_instance_ctrl->uart_rx_sem[uart_context_index]);
+
+                            break;
+                        }
+                    }
+
+                    /* Socket isn't connected, data should go to command buffer */
+                    socket_buffer_write = false;
+                }
+                else
+                {
+                    socket_buffer_write = true;
+                }
+            }
+            else
+            {
+                if ((1 == p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_create_flag) &&
+                    (WIFI_ONCHIP_SILEX_UART_INITIAL_PORT == uart_context_index))
+                {
+                    /* Socket is created and port is data port so write to packet buffer */
+                    socket_buffer_write = true;
+                }
+                else
+                {
+                    /* Write to command buffer */
+                    socket_buffer_write = false;
+                }
+            }
+
+            if (socket_buffer_write)
             {
                 /* Packet buffer has been filled, move to next one */
                 p_instance_ctrl->p_current_packet_buffer = p_instance_ctrl->p_next_packet_buffer;
@@ -3742,7 +3856,7 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
         }
 #endif
 
-        case UART_EVENT_TX_DATA_EMPTY:
+        case UART_EVENT_TX_COMPLETE:
         {
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS
             if ((0 ==

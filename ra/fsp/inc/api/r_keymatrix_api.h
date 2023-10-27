@@ -29,8 +29,6 @@
  * that instant via a bit mask. This allows the interface to be used with a matrix configuration or a one-to-one
  * hardware implementation that is triggered on either a rising or a falling edge.
  *
- * Implemented by:
- * - @ref KINT
  * @{
  **********************************************************************************************************************/
 
@@ -56,8 +54,6 @@ FSP_HEADER
  *********************************************************************************************************************/
 
 /** Key matrix control block.  Allocate an instance specific control block to pass into the key matrix API calls.
- * @par Implemented as
- * - kint_instance_ctrl_t
  */
 typedef void keymatrix_ctrl_t;
 
@@ -94,8 +90,6 @@ typedef struct st_keymatrix_cfg
 typedef struct st_keymatrix_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_KINT_Open()
      *
      * @param[out]  p_ctrl   Pointer to control block. Must be declared by user. Value set in this function.
      * @param[in]   p_cfg    Pointer to configuration structure. All elements of the structure must be set by user.
@@ -103,24 +97,18 @@ typedef struct st_keymatrix_api
     fsp_err_t (* open)(keymatrix_ctrl_t * const p_ctrl, keymatrix_cfg_t const * const p_cfg);
 
     /** Enable Key interrupt
-     * @par Implemented as
-     * - @ref R_KINT_Enable()
      *
      * @param[in]     p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */
     fsp_err_t (* enable)(keymatrix_ctrl_t * const p_ctrl);
 
     /** Disable Key interrupt.
-     * @par Implemented as
-     * - @ref R_KINT_Disable()
      *
      * @param[in]     p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */
     fsp_err_t (* disable)(keymatrix_ctrl_t * const p_ctrl);
 
     /** Allow driver to be reconfigured. May reduce power consumption.
-     * @par Implemented as
-     * - @ref R_KINT_Close()
      *
      * @param[in]  p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */

@@ -32,8 +32,6 @@
  * an interrupt can be triggered, and if a callback function is provided, the call back is invoked with the
  * appropriate event information.
  *
- * Implemented by:
- * @ref ADC
  *
  * @{
  **********************************************************************************************************************/
@@ -44,7 +42,9 @@
 
 /* Includes board and MCU related header files. */
 #include "bsp_api.h"
-#include "r_elc_api.h"
+#ifndef BSP_OVERRIDE_ADC_INCLUDE
+ #include "r_elc_api.h"
+#endif
 #include "r_transfer_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
@@ -57,6 +57,7 @@ FSP_HEADER
 /*****************************************************************************
  * Typedef definitions
  ******************************************************************************/
+#ifndef BSP_OVERRIDE_ADC_MODE_T
 
 /** ADC operation mode definitions  */
 typedef enum e_adc_mode
@@ -65,6 +66,8 @@ typedef enum e_adc_mode
     ADC_MODE_GROUP_SCAN      = 1,      ///< Two trigger sources to trigger scan for two groups which contain one or more channels
     ADC_MODE_CONTINUOUS_SCAN = 2,      ///< Continuous scan - one or more channels
 } adc_mode_t;
+
+#endif
 
 /** ADC data resolution definitions */
 typedef enum e_adc_resolution
@@ -84,6 +87,8 @@ typedef enum e_adc_alignment
     ADC_ALIGNMENT_LEFT  = 1            ///< Data alignment left
 } adc_alignment_t;
 
+#ifndef BSP_OVERRIDE_ADC_TRIGGER_T
+
 /** ADC trigger mode definitions */
 typedef enum e_adc_trigger
 {
@@ -92,11 +97,16 @@ typedef enum e_adc_trigger
     ADC_TRIGGER_ASYNC_EXTERNAL = 3,    ///< External asynchronous trigger; not for group modes
 } adc_trigger_t;
 
+#endif
+
+#ifndef BSP_OVERRIDE_ADC_EVENT_T
+
 /** ADC callback event definitions  */
 typedef enum e_adc_event
 {
     ADC_EVENT_SCAN_COMPLETE,           ///< Normal/Group A scan complete
     ADC_EVENT_SCAN_COMPLETE_GROUP_B,   ///< Group B scan complete
+    ADC_EVENT_SCAN_COMPLETE_GROUP_C,   ///< Group C scan complete
     ADC_EVENT_CALIBRATION_COMPLETE,    ///< Calibration complete
     ADC_EVENT_CONVERSION_COMPLETE,     ///< Conversion complete
     ADC_EVENT_CALIBRATION_REQUEST,     ///< Calibration requested
@@ -107,7 +117,10 @@ typedef enum e_adc_event
     ADC_EVENT_FIFO_OVERFLOW,           ///< FIFO overflow occurred
     ADC_EVENT_WINDOW_COMPARE_A,        ///< Window A comparison condition met
     ADC_EVENT_WINDOW_COMPARE_B,        ///< Window B comparison condition met
+    ADC_EVENT_ZERO_CROSS_DETECTION,    ///< Zero-cross detection interrupt
 } adc_event_t;
+
+#endif
 
 #ifndef BSP_OVERRIDE_ADC_CHANNEL_T
 
@@ -200,10 +213,12 @@ typedef struct st_adc_callback_args
     uint16_t         unit;             ///< ADC device in use
     adc_event_t      event;            ///< ADC callback event
     void const     * p_context;        ///< Placeholder for user data
-    adc_channel_t    channel;          ///< Channel of conversion result. Only valid for r_adc ADC_EVENT_CONVERSION_COMPLETE
-    uint64_t         channel_mask;     ///< Channel mask for conversion result. Only valid for r_adc_b
+    adc_channel_t    channel;          ///< Channel of conversion result
+    uint64_t         channel_mask;     ///< Channel mask for conversion result. Only valid for r_adc_b and r_sdadc_b
     adc_group_mask_t group_mask;       ///< Group Mask
 } adc_callback_args_t;
+
+#ifndef BSP_OVERRIDE_ADC_INFO_T
 
 /** ADC Information Structure for Transfer Interface */
 typedef struct st_adc_info
@@ -219,6 +234,8 @@ typedef struct st_adc_info
     bool             calibration_ongoing; ///< Calibration is in progress.
 } adc_info_t;
 
+#endif
+
 /** ADC general configuration  */
 typedef struct st_adc_cfg
 {
@@ -229,8 +246,10 @@ typedef struct st_adc_cfg
     adc_trigger_t    trigger;                          ///< Default and Group A trigger source
     IRQn_Type        scan_end_irq;                     ///< Scan end IRQ number
     IRQn_Type        scan_end_b_irq;                   ///< Scan end group B IRQ number
+    IRQn_Type        scan_end_c_irq;                   ///< Scan end group C IRQ number
     uint8_t          scan_end_ipl;                     ///< Scan end interrupt priority
     uint8_t          scan_end_b_ipl;                   ///< Scan end group B interrupt priority
+    uint8_t          scan_end_c_ipl;                   ///< Scan end group C interrupt priority
     void (* p_callback)(adc_callback_args_t * p_args); ///< Callback function; set to NULL for none
     void const * p_context;                            ///< Placeholder for user data. Passed to the user callback in @ref adc_callback_args_t.
     void const * p_extend;                             ///< Extension parameter for hardware specific settings
@@ -244,10 +263,6 @@ typedef struct st_adc_api
 {
     /** Initialize ADC Unit;  apply power, set the operational mode, trigger sources, interrupt priority,
      * and configurations common to all channels and sensors.
-     * @par Implemented as
-     * - @ref R_ADC_Open()
-     * - @ref R_ADC_B_Open()
-     * - @ref R_SDADC_Open()
      *
      * @pre Configure peripheral clocks, ADC pins and IRQs prior to calling this function.
      * @param[in]  p_ctrl  Pointer to control handle structure
@@ -258,10 +273,6 @@ typedef struct st_adc_api
     /** Configure the scan including the channels, groups, and scan triggers to be used for the unit that
      * was initialized in the open call.  Some configurations are not supported for all implementations.
      * See implementation for details.
-     * @par Implemented as
-     * - @ref R_ADC_ScanCfg()
-     * - @ref R_ADC_B_ScanCfg()
-     * - @ref R_SDADC_ScanCfg()
      *
      * @param[in]  p_ctrl     Pointer to control handle structure
      * @param[in]  p_extend   See implementation for details
@@ -269,17 +280,12 @@ typedef struct st_adc_api
     fsp_err_t (* scanCfg)(adc_ctrl_t * const p_ctrl, void const * const p_extend);
 
     /** Start the scan (in case of a software trigger), or enable the hardware trigger.
-     * @par Implemented as
-     * - @ref R_ADC_ScanStart()
-     * - @ref R_SDADC_ScanStart()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      */
     fsp_err_t (* scanStart)(adc_ctrl_t * const p_ctrl);
 
     /** Start the scan group (in case of a software trigger), or enable the hardware trigger.
-     * @par Implemented as
-     * - @ref R_ADC_B_ScanGroupStart()
      *
      * @param[in]  p_ctrl     Pointer to control handle structure
      * @param[in]  group_mask Mask of groups to start
@@ -287,19 +293,12 @@ typedef struct st_adc_api
     fsp_err_t (* scanGroupStart)(adc_ctrl_t * p_ctrl, adc_group_mask_t group_mask);
 
     /** Stop the ADC scan (in case of a software trigger), or disable the hardware trigger.
-     * @par Implemented as
-     * - @ref R_ADC_ScanStop()
-     * - @ref R_SDADC_ScanStop()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      */
     fsp_err_t (* scanStop)(adc_ctrl_t * const p_ctrl);
 
     /** Check scan status.
-     * @par Implemented as
-     * - @ref R_ADC_StatusGet()
-     * - @ref R_ADC_B_StatusGet()
-     * - @ref R_SDADC_StatusGet()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      * @param[out] p_status Pointer to store current status in
@@ -307,10 +306,6 @@ typedef struct st_adc_api
     fsp_err_t (* scanStatusGet)(adc_ctrl_t * const p_ctrl, adc_status_t * p_status);
 
     /** Read ADC conversion result.
-     * @par Implemented as
-     * - @ref R_ADC_Read()
-     * - @ref R_ADC_B_Read()
-     * - @ref R_SDADC_Read()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      * @param[in]  reg_id   ADC channel to read (see enumeration adc_channel_t)
@@ -319,10 +314,6 @@ typedef struct st_adc_api
     fsp_err_t (* read)(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, uint16_t * const p_data);
 
     /** Read ADC conversion result into a 32-bit word.
-     * @par Implemented as
-     * - @ref R_ADC_Read32()
-     * - @ref R_ADC_B_Read32()
-     * - @ref R_SDADC_Read32()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      * @param[in]  reg_id   ADC channel to read (see enumeration adc_channel_t)
@@ -332,10 +323,6 @@ typedef struct st_adc_api
 
     /** Calibrate ADC or associated PGA (programmable gain amplifier).  The driver may require implementation specific
      * arguments to the p_extend input. Not supported for all implementations. See implementation for details.
-     * @par Implemented as
-     * - @ref R_ADC_Calibrate()
-     * - @ref R_ADC_B_Calibrate()
-     * - @ref R_SDADC_Calibrate()
      *
      * @param[in]  p_ctrl    Pointer to control handle structure
      * @param[in]  p_extend  Pointer to implementation specific arguments
@@ -344,8 +331,6 @@ typedef struct st_adc_api
 
     /** Set offset for input PGA configured for differential input. Not supported for all implementations.
      *  See implementation for details.
-     * @par Implemented as
-     * - @ref R_SDADC_OffsetSet()
      *
      * @param[in]  p_ctrl    Pointer to control handle structure
      * @param[in]  reg_id    ADC channel to read (see enumeration adc_channel_t)
@@ -355,9 +340,6 @@ typedef struct st_adc_api
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_ADC_CallbackSet()
-     * - @ref R_ADC_B_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the ADC control block.
      * @param[in]   p_callback               Callback function
@@ -365,15 +347,11 @@ typedef struct st_adc_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(adc_ctrl_t * const p_api_ctrl, void (* p_callback)(adc_callback_args_t *),
+    fsp_err_t (* callbackSet)(adc_ctrl_t * const p_ctrl, void (* p_callback)(adc_callback_args_t *),
                               void const * const p_context, adc_callback_args_t * const p_callback_memory);
 
     /** Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the
      * specified A/D unit.
-     * @par Implemented as
-     * - @ref R_ADC_Close()
-     * - @ref R_ADC_B_Close()
-     * - @ref R_SDADC_Close()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      */
@@ -382,10 +360,6 @@ typedef struct st_adc_api
     /** Return the ADC data register address of the first (lowest number) channel and the total number of bytes
      * to be read in order for the DTC/DMAC to read the conversion results of all configured channels.
      * Return the temperature sensor calibration and slope data.
-     * @par Implemented as
-     * - @ref R_ADC_InfoGet()
-     * - @ref R_ADC_B_InfoGet()
-     * - @ref R_SDADC_InfoGet()
      *
      * @param[in]   p_ctrl       Pointer to control handle structure
      * @param[out]  p_adc_info   Pointer to ADC information structure

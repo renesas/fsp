@@ -33,7 +33,7 @@
 #if (BSP_CFG_RTOS != 1)
  #if defined(USB_CFG_HCDC_USE)
   #include "r_usb_hcdc_api.h"
-  #include "r_usb_hcdc.h"
+  #include "r_usb_hcdc_driver.h"
 
  #endif                                /* defined(USB_CFG_HCDC_USE) */
 

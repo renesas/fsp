@@ -26,8 +26,6 @@
  * @section RM_ZMOD4XXX_API_Summary Summary
  * The ZMOD4XXX interface provides ZMOD4XXX functionality.
  *
- * The ZMOD4XXX interface can be implemented by:
- * - @ref RM_ZMOD4XXX
  *
  * @{
  **********************************************************************************************************************/
@@ -191,8 +189,6 @@ typedef struct st_rm_zmod4xxx_cfg
 } rm_zmod4xxx_cfg_t;
 
 /** ZMOD4xxx Control block. Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - rm_zmod4xxx_instance_ctrl_t
  */
 typedef void rm_zmod4xxx_ctrl_t;
 
@@ -200,176 +196,137 @@ typedef void rm_zmod4xxx_ctrl_t;
 typedef struct st_rm_zmod4xxx_api
 {
     /** Open sensor.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Open()
      *
-     * @param[in]  p_api_ctrl   Pointer to control structure.
+     * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
      */
-    fsp_err_t (* open)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_cfg_t const * const p_cfg);
+    fsp_err_t (* open)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_cfg_t const * const p_cfg);
 
     /** Start measurement
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_MeasurementStart()
      *
-     * @param[in]  p_api_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl                 Pointer to control structure.
      */
-    fsp_err_t (* measurementStart)(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+    fsp_err_t (* measurementStart)(rm_zmod4xxx_ctrl_t * const p_ctrl);
 
     /** Stop measurement
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_MeasurementStop()
      *
-     * @param[in]  p_api_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl                 Pointer to control structure.
      */
-    fsp_err_t (* measurementStop)(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+    fsp_err_t (* measurementStop)(rm_zmod4xxx_ctrl_t * const p_ctrl);
 
     /** Read status of the sensor
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_StatusCheck()
      *
-     * @param[in]  p_api_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl                 Pointer to control structure.
      */
-    fsp_err_t (* statusCheck)(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+    fsp_err_t (* statusCheck)(rm_zmod4xxx_ctrl_t * const p_ctrl);
 
     /** Read ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Read()
      *
-     * @param[in]  p_api_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl                 Pointer to control structure.
      * @param[in]  p_raw_data             Pointer to raw data structure.
      */
-    fsp_err_t (* read)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data);
+    fsp_err_t (* read)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data);
 
     /** Calculate IAQ 1st Gen. values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Iaq1stGenDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* iaq1stGenDataCalculate)(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                         rm_zmod4xxx_raw_data_t * const     p_raw_data,
+    fsp_err_t (* iaq1stGenDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                          rm_zmod4xxx_iaq_1st_data_t * const p_zmod4xxx_data);
 
     /** Calculate IAQ 2nd Gen. values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Iaq2ndGenDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* iaq2ndGenDataCalculate)(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                         rm_zmod4xxx_raw_data_t * const     p_raw_data,
+    fsp_err_t (* iaq2ndGenDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                          rm_zmod4xxx_iaq_2nd_data_t * const p_zmod4xxx_data);
 
     /** Calculate Odor values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_OdorDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* odorDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+    fsp_err_t (* odorDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                     rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data);
 
     /** Calculate Sulfur Odor values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_SulfurOdorDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* sulfurOdorDataCalculate)(rm_zmod4xxx_ctrl_t * const             p_api_ctrl,
-                                          rm_zmod4xxx_raw_data_t * const         p_raw_data,
+    fsp_err_t (* sulfurOdorDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                           rm_zmod4xxx_sulfur_odor_data_t * const p_zmod4xxx_data);
 
     /** Calculate OAQ 1st Gen. values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Oaq1stGenDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* oaq1stGenDataCalculate)(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                         rm_zmod4xxx_raw_data_t * const     p_raw_data,
+    fsp_err_t (* oaq1stGenDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                          rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data);
 
     /** Calculate OAQ 2nd Gen. values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Oaq2ndGenDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* oaq2ndGenDataCalculate)(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                         rm_zmod4xxx_raw_data_t * const     p_raw_data,
+    fsp_err_t (* oaq2ndGenDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                          rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);
 
     /** Calculate RAQ values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_RaqDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* raqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+    fsp_err_t (* raqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                    rm_zmod4xxx_raq_data_t * const p_zmod4xxx_data);
 
     /** Calculate Relative IAQ values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_RelIaqDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* relIaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+    fsp_err_t (* relIaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                       rm_zmod4xxx_rel_iaq_data_t * const p_zmod4xxx_data);
 
     /** Calculate PBAQ values from ADC data.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_PbaqDataCalculate()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_raw_data           Pointer to raw data.
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
-    fsp_err_t (* pbaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+    fsp_err_t (* pbaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                     rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data);
 
     /** Set temperature and humidity.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_TemperatureAndHumiditySet()
      *
-     * @param[in]  p_api_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl                 Pointer to control structure.
      * @param[in]  temperature            Temperature (deg C).
      * @param[in]  humidity               Humidity (percent).
      */
-    fsp_err_t (* temperatureAndHumiditySet)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, float temperature, float humidity);
+    fsp_err_t (* temperatureAndHumiditySet)(rm_zmod4xxx_ctrl_t * const p_ctrl, float temperature, float humidity);
 
     /** Check device error event.
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_DeviceErrorCheck()
      *
-     * @param[in]  p_api_ctrl             Pointer to control structure.
+     * @param[in]  p_ctrl                 Pointer to control structure.
      */
-    fsp_err_t (* deviceErrorCheck)(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+    fsp_err_t (* deviceErrorCheck)(rm_zmod4xxx_ctrl_t * const p_ctrl);
 
     /** Close the sensor
-     * @par Implemented as
-     * - @ref RM_ZMOD4XXX_Close()
      *
-     * @param[in]  p_api_ctrl           Pointer to control structure.
+     * @param[in]  p_ctrl               Pointer to control structure.
      */
-    fsp_err_t (* close)(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+    fsp_err_t (* close)(rm_zmod4xxx_ctrl_t * const p_ctrl);
 } rm_zmod4xxx_api_t;
 
 /** ZMOD4XXX instance */

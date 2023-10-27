@@ -143,7 +143,7 @@ fsp_err_t R_IOPORT_Open (ioport_ctrl_t * const p_ctrl, const ioport_cfg_t * p_cf
 #if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_cfg);
-    FSP_ASSERT(NULL != p_cfg->p_pin_cfg_data);
+    FSP_ASSERT(NULL != p_cfg->p_pin_cfg_data || 0 == p_cfg->number_of_pins);
     FSP_ERROR_RETURN(IOPORT_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
@@ -789,6 +789,31 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
     uint32_t pin_index;
     uint32_t vbatt_index;
 
+ #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+    R_SYSTEM_Type * p_system = R_SYSTEM;
+ #endif
+ #if BSP_FEATURE_RTC_HAS_TCEN
+    R_RTC_Type * p_rtc = R_RTC;
+ #endif
+
+ #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_NS_OFFSET > 0
+  #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+    if (1 == R_SYSTEM->BBFSAR_b.NONSEC2)
+    {
+        /* If security attribution of VBTICTLR is set to non-secure, then use the non-secure alias. */
+        p_system = (R_SYSTEM_Type *) ((uint32_t) p_system | BSP_FEATURE_TZ_NS_OFFSET);
+    }
+  #endif
+
+  #if BSP_FEATURE_RTC_HAS_TCEN
+    if (1 == R_PSCU->PSARE_b.PSARE2)
+    {
+        /* If security attribution of RTC is set to non-secure, then use the non-secure alias. */
+        p_rtc = (R_RTC_Type *) ((uint32_t) p_rtc | BSP_FEATURE_TZ_NS_OFFSET);
+    }
+  #endif
+ #endif
+
     /* Must loop over all pins as pin configuration table is unordered. */
     for (pin_index = 0U; pin_index < p_pin_cfg->number_of_pins; pin_index++)
     {
@@ -807,10 +832,17 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
                 {
                     /* Bit should be set to 1. */
  #if BSP_FEATURE_SYSC_HAS_VBTICTLR
-                    if (0 == (R_SYSTEM->VBTICTLR & (uint8_t) (1U << vbatt_index)))
+  #if BSP_TZ_NONSECURE_BUILD
+                    if (0 == R_SYSTEM->BBFSAR_b.NONSEC2)
+                    {
+                        /* Do nothing: non secure build can't configure secure VBTICTLR register. */
+                    }
+                    else
+  #endif
+                    if (0 == (p_system->VBTICTLR & (uint8_t) (1U << vbatt_index)))
                     {
                         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
-                        R_SYSTEM->VBTICTLR |= (uint8_t) (1U << vbatt_index);
+                        p_system->VBTICTLR |= (uint8_t) (1U << vbatt_index);
                         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
                     }
                     else
@@ -827,9 +859,9 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
                     else
   #endif
                     {
-                        if (0 == R_RTC->RTCCR[vbatt_index].RTCCR_b.TCEN)
+                        if (0 == p_rtc->RTCCR[vbatt_index].RTCCR_b.TCEN)
                         {
-                            R_RTC->RTCCR[vbatt_index].RTCCR_b.TCEN = 1;
+                            p_rtc->RTCCR[vbatt_index].RTCCR_b.TCEN = 1;
                             R_BSP_SoftwareDelay(BSP_PRV_RTC_RESET_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
                         }
                         else
@@ -843,10 +875,17 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
                 {
                     /* Bit should be cleared to 0. */
  #if BSP_FEATURE_SYSC_HAS_VBTICTLR
-                    if ((R_SYSTEM->VBTICTLR & (uint8_t) (1U << vbatt_index)) > 0)
+  #if BSP_TZ_NONSECURE_BUILD
+                    if (0 == R_SYSTEM->BBFSAR_b.NONSEC2)
+                    {
+                        /* Do nothing: non secure build can't configure secure VBTICTLR register. */
+                    }
+                    else
+  #endif
+                    if ((p_system->VBTICTLR & (uint8_t) (1U << vbatt_index)) > 0)
                     {
                         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
-                        R_SYSTEM->VBTICTLR &= (uint8_t) ~(1U << vbatt_index);
+                        p_system->VBTICTLR &= (uint8_t) ~(1U << vbatt_index);
                         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
                     }
                     else
@@ -863,9 +902,9 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
                     else
   #endif
                     {
-                        if (R_RTC->RTCCR[vbatt_index].RTCCR_b.TCEN > 0)
+                        if (p_rtc->RTCCR[vbatt_index].RTCCR_b.TCEN > 0)
                         {
-                            R_RTC->RTCCR[vbatt_index].RTCCR_b.TCEN = 0;
+                            p_rtc->RTCCR[vbatt_index].RTCCR_b.TCEN = 0;
                             R_BSP_SoftwareDelay(BSP_PRV_RTC_RESET_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
                         }
                         else

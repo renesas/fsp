@@ -26,8 +26,6 @@
  * @section MOTOR_DRIVER_API_Summary Summary
  * The Motor driver interface for setting the PWM modulation duty
  *
- * The motor current control interface can be implemented by:
- * - @ref MOTOR_DRIVER
  *
  * @{
  **********************************************************************************************************************/
@@ -93,8 +91,6 @@ typedef struct st_motor_driver_current_get
 } motor_driver_current_get_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_driver_ctrl_t
  */
 typedef void motor_driver_ctrl_t;
 
@@ -129,8 +125,6 @@ typedef struct st_motor_driver_cfg
 typedef struct st_motor_driver_api
 {
     /** Initialize the Motor Driver Module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -138,24 +132,18 @@ typedef struct st_motor_driver_api
     fsp_err_t (* open)(motor_driver_ctrl_t * const p_ctrl, motor_driver_cfg_t const * const p_cfg);
 
     /** Close the Motor Driver Module
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_driver_ctrl_t * const p_ctrl);
 
     /** Reset variables of the Motor Driver Module
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_driver_ctrl_t * const p_ctrl);
 
     /** Set (Input) Phase Voltage data into the Motor Driver Module
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_PhaseVoltageSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  u_voltage    U phase voltage [V]
@@ -166,8 +154,6 @@ typedef struct st_motor_driver_api
                                   float const w_voltage);
 
     /** Get Phase current, Vdc and Va_max data from the Motor Driver Module
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_CurrentGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_current_get    Pointer to get data structure.
@@ -175,8 +161,6 @@ typedef struct st_motor_driver_api
     fsp_err_t (* currentGet)(motor_driver_ctrl_t * const p_ctrl, motor_driver_current_get_t * const p_current_get);
 
     /** Get the flag of finish current offset detection from the Motor Driver Module
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_FlagCurrentOffsetGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_flag_offset   Flag of finish current offset detection
@@ -184,16 +168,12 @@ typedef struct st_motor_driver_api
     fsp_err_t (* flagCurrentOffsetGet)(motor_driver_ctrl_t * const p_ctrl, uint8_t * const p_flag_offset);
 
     /** Restart current offset detection
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_CurrentOffsetRestart()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* currentOffsetRestart)(motor_driver_ctrl_t * const p_ctrl);
 
     /** Update Configuration Parameters for the calculation in the Motor Driver Module
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

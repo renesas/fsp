@@ -26,8 +26,6 @@
  * @section MOTOR_INERTIA_ESTIMATE_API_Summary Summary
  * The Motor interface provides Motor inertia estimate functionality.
  *
- * Implemented by:
- * - @ref MOTOR_INERTIA_ESTIMATE
  *
  * @{
  **********************************************************************************************************************/
@@ -82,8 +80,6 @@ typedef struct st_motor_inertia_estimate_set_data
 } motor_inertia_estimate_set_data_t;
 
 /** Motor inertia estimate block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_inertia_estimate_instance_ctrl_t
  */
 typedef void motor_inertia_estimate_ctrl_t;
 
@@ -98,8 +94,6 @@ typedef struct st_motor_inertia_estimate_cfg
 typedef struct st_motor_inertia_estimate_api
 {
     /** Open driver.
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -107,40 +101,30 @@ typedef struct st_motor_inertia_estimate_api
     fsp_err_t (* open)(motor_inertia_estimate_ctrl_t * const p_ctrl, motor_inertia_estimate_cfg_t const * const p_cfg);
 
     /** Close driver.
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_inertia_estimate_ctrl_t * const p_ctrl);
 
     /** Start the function.
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_Start()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* start)(motor_inertia_estimate_ctrl_t * const p_ctrl);
 
     /** Stop( same as cancel ) the function.
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_Stop()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* stop)(motor_inertia_estimate_ctrl_t * const p_ctrl);
 
     /** Reset the function. (recover from error state)
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_inertia_estimate_ctrl_t * const p_ctrl);
 
     /** Get information from the function (to set speed & position control)
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_InfoGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_info       Pointer to information
@@ -148,8 +132,6 @@ typedef struct st_motor_inertia_estimate_api
     fsp_err_t (* infoGet)(motor_inertia_estimate_ctrl_t * const p_ctrl, motor_inertia_estimate_info_t * const p_info);
 
     /** Set the data to the function (from speed, position and current control)
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_DataSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_set_data   Pointer to set the data
@@ -158,24 +140,18 @@ typedef struct st_motor_inertia_estimate_api
                           motor_inertia_estimate_set_data_t * const p_set_data);
 
     /** Speed cyclic process of the function
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_SpeedCyclic()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* speedCyclic)(motor_inertia_estimate_ctrl_t * const p_ctrl);
 
     /** Current cyclic process of the function
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_CurrentCyclic()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* currentCyclic)(motor_inertia_estimate_ctrl_t * const p_ctrl);
 
     /** Update parameters for the function.
-     * @par Implemented as
-     * - @ref RM_MOTOR_INERTIA_ESTIMATE_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

@@ -29,8 +29,6 @@
  * @section BLE_ABS_API_Summary Summary
  * The BLE ABS interface for the Bluetooth Low Energy Abstraction (BLE ABS) peripheral provides Bluetooth Low Energy Abstraction functionality.
  *
- * The Bluetooth Low Energy Abstraction interface can be implemented by:
- * - @ref BLE_ABS
  *
  * @{
  **********************************************************************************************************************/
@@ -42,14 +40,18 @@
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 #include "r_ble_api.h"
-
-#if defined(BLE_CFG_RYZ012_DEVICE) || defined(BLE_CFG_DA14xxx_DEVICE)
- #include "r_uart_api.h"
- #include "r_spi_api.h"
- #include "r_external_irq_api.h"
+#ifndef BSP_OVERRIDE_BLE_ABS_INCLUDE
+ #if defined(BLE_CFG_RYZ012_DEVICE) || defined(BLE_CFG_DA14xxx_DEVICE)
+  #include "r_uart_api.h"
+  #include "r_spi_api.h"
+  #include "r_external_irq_api.h"
+ #else
+  #include "r_flash_api.h"
+  #include "r_timer_api.h"
+ #endif
 #else
- #include "r_flash_api.h"
  #include "r_timer_api.h"
+ #include "r_spi_flash_api.h"
 #endif
 
 #include "fsp_common_api.h"
@@ -168,8 +170,6 @@ typedef struct st_ble_abs_callback_args
 } ble_abs_callback_args_t;
 
 /** BLE ABS control block.  Allocate an instance specific control block to pass into the BLE ABS API calls.
- * @par Implemented as
- * - ble_abs_instance_ctrl_t
  */
 typedef void ble_abs_ctrl_t;
 
@@ -785,14 +785,18 @@ typedef struct st_ble_abs_cfg
     ble_abs_gatt_client_callback_set_t * p_gatt_client_callback_list;       ///< GATT Client callback set.
     uint8_t gatt_client_callback_list_number;                               ///< The number of GATT Client callback functions.
     ble_abs_pairing_parameter_t * p_pairing_parameter;                      ///< Pairing parameters.
-
-#if defined(BLE_CFG_RYZ012_DEVICE) || defined(BLE_CFG_DA14xxx_DEVICE)
+#ifndef BSP_OVERRIDE_BLE_ABS_INCLUDE
+ #if defined(BLE_CFG_RYZ012_DEVICE) || defined(BLE_CFG_DA14xxx_DEVICE)
     const uart_instance_t         * p_uart_instance;                        ///< SCI UART instance
     const spi_instance_t          * p_spi_instance;                         ///< SPI instance
     const external_irq_instance_t * p_irq_instance;                         ///< IRQ instance
-#else
+ #else
     flash_instance_t const * p_flash_instance;                              ///< Pointer to flash instance.
     timer_instance_t const * p_timer_instance;                              ///< Pointer to timer instance.
+ #endif
+#else
+    spi_flash_instance_t const * p_flash_instance;                          ///< Pointer to flash instance.
+    timer_instance_t const     * p_timer_instance;                          ///< Pointer to timer instance.
 #endif
 
     void (* p_callback)(ble_abs_callback_args_t * p_args);                  ///< Callback provided when a BLE ISR occurs.
@@ -804,8 +808,6 @@ typedef struct st_ble_abs_cfg
 typedef struct st_ble_abs_api
 {
     /** Initialize the BLE ABS in register start mode.
-     * @par Implemented as
-     * - RM_BLE_ABS_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -813,16 +815,12 @@ typedef struct st_ble_abs_api
     fsp_err_t (* open)(ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * const p_cfg);
 
     /** Close the BLE ABS.
-     * @par Implemented as
-     * - RM_BLE_ABS_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(ble_abs_ctrl_t * const p_ctrl);
 
     /** Close the BLE ABS.
-     * @par Implemented as
-     * - RM_BLE_ABS_Reset()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  init_callback callback function to initialize Host Stack.
@@ -830,8 +828,6 @@ typedef struct st_ble_abs_api
     fsp_err_t (* reset)(ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_callback);
 
     /** Start Legacy Connectable Advertising.
-     * @par Implemented as
-     * - RM_BLE_ABS_StartLegacyAdvertising()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_advertising_parameter        Pointer to Advertising parameters for Legacy Advertising.
      */
@@ -839,8 +835,6 @@ typedef struct st_ble_abs_api
                                          ble_abs_legacy_advertising_parameter_t const * const p_advertising_parameter);
 
     /** Start Extended Connectable Advertising.
-     * @par Implemented as
-     * - RM_BLE_ABS_StartExtendedAdvertising()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_advertising_parameter        Pointer to Advertising parameters for extend Advertising.
      */
@@ -848,8 +842,6 @@ typedef struct st_ble_abs_api
                                            ble_abs_extend_advertising_parameter_t const * const p_advertising_parameter);
 
     /** Start Non-Connectable Advertising.
-     * @par Implemented as
-     * - RM_BLE_ABS_StartNonConnectableAdvertising()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_advertising_parameter        Pointer to Advertising parameters for non-connectable Advertising.
      */
@@ -858,8 +850,6 @@ typedef struct st_ble_abs_api
                                                  p_advertising_parameter);
 
     /** Start Periodic Advertising.
-     * @par Implemented as
-     * - RM_BLE_ABS_StartPeriodicAdvertising()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_advertising_parameter        Pointer to Advertising parameters for periodic Advertising.
      */
@@ -868,16 +858,12 @@ typedef struct st_ble_abs_api
                                            p_advertising_parameter);
 
     /** Start scanning.
-     * @par Implemented as
-     * - RM_BLE_ABS_StartScanning()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_scan_parameter        Pointer to scan parameter.
      */
     fsp_err_t (* startScanning)(ble_abs_ctrl_t * const p_ctrl, ble_abs_scan_parameter_t const * const p_scan_parameter);
 
     /** Request create connection.
-     * @par Implemented as
-     * - RM_BLE_ABS_CreateConnection()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_connection_parameter        Pointer to connection parameter.
      */
@@ -885,8 +871,6 @@ typedef struct st_ble_abs_api
                                    ble_abs_connection_parameter_t const * const p_connection_parameter);
 
     /** Configure local device privacy.
-     * @par Implemented as
-     * - RM_BLE_ABS_SetLocalPrivacy()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_lc_irk        Pointer to IRK (Identity Resolving Key) to be registered in the resolving list.
      * @param[in]  privacy_mode        privacy_mode privacy mode.
@@ -894,16 +878,12 @@ typedef struct st_ble_abs_api
     fsp_err_t (* setLocalPrivacy)(ble_abs_ctrl_t * const p_ctrl, uint8_t const * const p_lc_irk, uint8_t privacy_mode);
 
     /** Start pairing or encryption.
-     * @par Implemented as
-     * - RM_BLE_ABS_StartAuthentication()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  connection_handle        Connection handle identifying the remote device.
      */
     fsp_err_t (* startAuthentication)(ble_abs_ctrl_t * const p_ctrl, uint16_t connection_handle);
 
     /** Delete bond information.
-     * @par Implemented as
-     * - RM_BLE_ABS_DeleteBondInformation()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_bond_information_parameter   Pointer to bond information parameter.
      */
@@ -911,8 +891,6 @@ typedef struct st_ble_abs_api
                                         ble_abs_bond_information_parameter_t const * const p_bond_information_parameter);
 
     /** Import local identity address, keys information to local storage.
-     * @par Implemented as
-     * - RM_BLE_ABS_ImportKeyInformation()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_local_identity_address Pointer to local identiry address.
      * @param[in]  uint8_t  p_local_irk Pointer to local IRK (Identity Resolving Key)
@@ -922,8 +900,6 @@ typedef struct st_ble_abs_api
                                        uint8_t * p_local_irk, uint8_t * p_local_csrk);
 
     /** Export local identity address, keys information from local storage.
-     * @par Implemented as
-     * - RM_BLE_ABS_ExportKeyInformation()
      * @param[in]   p_ctrl       Pointer to control structure.
      * @param[out]  p_local_identity_address Pointer to local identiry address.
      * @param[out]  uint8_t  p_local_irk Pointer to local IRK (Identity Resolving Key)

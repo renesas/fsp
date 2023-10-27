@@ -100,6 +100,14 @@ const uint32_t sce_oem_key_size[SCE_OEM_CMD_NUM] =
     SCE_OEM_KEY_SIZE_ECCSECP256K1_PRIVATE_KEY_INST_DATA_WORD,
 };
 
+/* Dummy domain parameter structure create for all RSIP devices to allow using the same API for all engines. */
+
+uint32_t const DomainParam_NIST_P256[ECC_DUMMY_DOMAIN_PARAM_SIZE] = {0};
+uint32_t const DomainParam_NIST_P384[ECC_DUMMY_DOMAIN_PARAM_SIZE] = {0};
+uint32_t const DomainParam_Brainpool_256r1[ECC_DUMMY_DOMAIN_PARAM_SIZE] = {0};
+uint32_t const DomainParam_Brainpool_384r1[ECC_DUMMY_DOMAIN_PARAM_SIZE] = {0};
+uint32_t const DomainParam_Koblitz_secp256k1[ECC_DUMMY_DOMAIN_PARAM_SIZE] = {0};
+
 /* Find the lifecycle state load the hardware unique key */
 /* returns fsp_err_t                                     */
 
@@ -398,16 +406,16 @@ fsp_err_t HW_SCE_Aes256CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
     return (HW_SCE_Aes256CcmDecryptInitSub(InData_KeyIndex, InData_IV, InData_Header, Header_Len));
 }
 
-fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (uint32_t *InData_TextLen, uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t *OutData_MAC)
+fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (const uint32_t *InData_Text, const uint32_t *InData_TextLen, uint32_t *OutData_Text, uint32_t *OutData_MAC)
 {
     FSP_PARAMETER_NOT_USED(InData_TextLen);
     return (HW_SCE_Aes128CcmEncryptFinalSub(InData_Text, OutData_Text, OutData_MAC));
 }
 
-fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(uint32_t *InData_Text, 
-                                                 uint32_t *InData_TextLen, 
-                                                 uint32_t *InData_MAC, 
-                                                 uint32_t *InData_MACLength, 
+fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(const uint32_t *InData_Text, 
+                                                 const uint32_t *InData_TextLen, 
+                                                 const uint32_t *InData_MAC, 
+                                                 const uint32_t *InData_MACLength, 
                                                  uint32_t *OutData_Text)
 {
     FSP_PARAMETER_NOT_USED(InData_TextLen);
@@ -443,3 +451,93 @@ fsp_err_t HW_SCE_Aes128GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
     return (HW_SCE_Aes128GcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV));
 }
 
+fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
+                                                      const uint32_t InData_Cmd[],
+                                                      const uint32_t InData_KeyIndex[],
+                                                      const uint32_t InData_PubKey[],
+                                                      const uint32_t InData_DomainParam[],
+                                                      uint32_t OutData_R[])
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    return (HW_SCE_Ecc256ScalarMultiplicationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_PubKey,  OutData_R));
+}
+
+fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
+                                                      const uint32_t InData_Cmd[],
+                                                      const uint32_t InData_KeyIndex[],
+                                                      const uint32_t InData_PubKey[],
+                                                      const uint32_t InData_DomainParam[],
+                                                      uint32_t OutData_R[])
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    FSP_PARAMETER_NOT_USED (InData_Cmd);
+    return (HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType, InData_KeyIndex, InData_PubKey, OutData_R));
+}
+
+fsp_err_t HW_SCE_EcdsaSignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
+                                                  const uint32_t InData_Cmd[],
+                                                  const uint32_t InData_KeyIndex[],
+                                                  const uint32_t InData_MsgDgst[],
+                                                  const uint32_t InData_DomainParam[],
+                                                  uint32_t OutData_Signature[])
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    return (HW_SCE_EcdsaSignatureGenerateSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_MsgDgst, OutData_Signature));
+}
+
+fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSubAdaptor(const uint32_t InData_CurveType[], 
+                                                      const uint32_t InData_KeyIndex[],
+                                                      const uint32_t InData_MsgDgst[],
+                                                      const uint32_t InData_DomainParam[],
+                                                      uint32_t OutData_Signature[])
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    return (HW_SCE_EcdsaP384SignatureGenerateSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, OutData_Signature));
+}
+
+fsp_err_t HW_SCE_EcdsaSignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
+                                                  const uint32_t InData_Cmd[],
+                                                  const uint32_t InData_KeyIndex[],
+                                                  const uint32_t InData_MsgDgst[],
+                                                  const uint32_t InData_Signature[],
+                                                  const uint32_t InData_DomainParam[])
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    return (HW_SCE_EcdsaSignatureVerificationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_MsgDgst, InData_Signature));
+}
+
+fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
+                                                          const uint32_t InData_KeyIndex[],
+                                                          const uint32_t InData_MsgDgst[],
+                                                          const uint32_t InData_Signature[],
+                                                          const uint32_t InData_DomainParam[])
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    return (HW_SCE_EcdsaP384SignatureVerificationSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, InData_Signature));
+}
+
+fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType,
+                                                     const uint32_t *InData_Cmd,
+                                                     const uint32_t *InData_KeyType,
+                                                     const uint32_t InData_DomainParam[],
+                                                     uint32_t *OutData_PubKeyIndex,
+                                                     uint32_t *OutData_PubKey,
+                                                     uint32_t *OutData_PrivKeyIndex,
+                                                     uint32_t *OutData_PrivKey)
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    return (HW_SCE_GenerateEccRandomKeyIndexSub(InData_CurveType, InData_Cmd, InData_KeyType, OutData_PubKeyIndex, OutData_PubKey, OutData_PrivKeyIndex, OutData_PrivKey));
+}
+
+fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType,
+                                                         const uint32_t *InData_KeyType,
+                                                         const uint32_t InData_DomainParam[],
+                                                         uint32_t *OutData_PubKeyIndex,
+                                                         uint32_t *OutData_PubKey,
+                                                         uint32_t *OutData_PrivKeyIndex,
+                                                         uint32_t *OutData_PrivKey)
+{
+    FSP_PARAMETER_NOT_USED (InData_DomainParam);
+    
+    return (HW_SCE_GenerateEccP384RandomKeyIndexSub(InData_CurveType, InData_KeyType, OutData_PubKeyIndex, OutData_PubKey, OutData_PrivKeyIndex, OutData_PrivKey));
+}

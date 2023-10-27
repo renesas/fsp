@@ -1107,6 +1107,19 @@ void R_BSP_Init_RTC(void);
 
 #endif
 
+#if BSP_CFG_SLEEP_MODE_DELAY_ENABLE || BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
+bool bsp_prv_clock_prepare_pre_sleep(void);
+void bsp_prv_clock_prepare_post_sleep(bool cpuclk_slowed);
+
+#endif
+
+/* The public function is used to get state or initialize the sub-clock. */
+#if BSP_FEATURE_RTC_IS_IRTC
+fsp_err_t R_BSP_SubclockStatusGet();
+fsp_err_t R_BSP_SubclockInitialize();
+
+#endif
+
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 

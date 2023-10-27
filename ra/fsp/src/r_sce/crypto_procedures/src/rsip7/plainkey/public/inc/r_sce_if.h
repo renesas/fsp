@@ -30,7 +30,6 @@
 // added for RA6M4 start
 // #include "platform.h"
 #include "bsp_api.h"
-#include "hw_sce_ra_private.h"
 
 // added for RA6M4 end
 
@@ -76,223 +75,249 @@
  #define HW_SCE_MAC_SIZE                                           (16U)
 
 /* For AES operation. */
- #define HW_SCE_AES128XTS_KEY_INDEX_WORD_SIZE                      (13U)
- #define HW_SCE_AES256XTS_KEY_INDEX_WORD_SIZE                      (21U)
- #define HW_SCE_AES128_KEY_WORD_SIZE                               (4U)
- #define HW_SCE_AES192_KEY_WORD_SIZE                               (8U)
- #define HW_SCE_AES256_KEY_WORD_SIZE                               (8U)
- #define HW_SCE_AES128_KEY_BYTE_SIZE                               (16U)
- #define HW_SCE_AES192_KEY_BYTE_SIZE                               (32U)
- #define HW_SCE_AES256_KEY_BYTE_SIZE                               (32U)
- #define HW_SCE_AES_BLOCK_BYTE_SIZE                                (16U)
- #define HW_SCE_AES_BLOCK_BIT_SIZE                                 (128U)
- #define HW_SCE_AES_CBC_IV_BYTE_SIZE                               (16U)
- #define HW_SCE_AES_CTR_ICOUNTER_BYTE_SIZE                         (16U)
- #define HW_SCE_AES_GCM_AAD_BLOCK_BYTE_SIZE                        (16U)
- #define HW_SCE_AES_CCM_B_FORMAT_BYTE_SIZE                         (128U)
- #define HW_SCE_AES_CCM_COUNTER_BYTE_SIZE                          (16U)
- #define HW_SCE_AES128XTS_KEY_BYTE_SIZE                            (32U)
- #define HW_SCE_AES256XTS_KEY_BYTE_SIZE                            (64U)
- #define HW_SCE_AES128XTS_KEY_BIT_SIZE                             (256U)
- #define HW_SCE_AES256XTS_KEY_BIT_SIZE                             (512U)
- #define HW_SCE_AES_XTS_IV_BYTE_SIZE                               (16U)
+ #define HW_SCE_AES128_KEY_INDEX_WORD_SIZE     (12U)
+ #define HW_SCE_AES192_KEY_INDEX_WORD_SIZE     (16U)
+ #define HW_SCE_AES256_KEY_INDEX_WORD_SIZE     (16U)
+ #define HW_SCE_AES128_KEY_WORD_SIZE           (4U)
+ #define HW_SCE_AES192_KEY_WORD_SIZE           (8U)
+ #define HW_SCE_AES256_KEY_WORD_SIZE           (8U)
+ #define HW_SCE_AES128_KEY_BYTE_SIZE           (16U)
+ #define HW_SCE_AES192_KEY_BYTE_SIZE           (32U)
+ #define HW_SCE_AES256_KEY_BYTE_SIZE           (32U)
+ #define HW_SCE_AES_BLOCK_BYTE_SIZE            (16U)
+ #define HW_SCE_AES_BLOCK_BIT_SIZE             (128U)
+ #define HW_SCE_AES_CBC_IV_BYTE_SIZE           (16U)
+ #define HW_SCE_AES_CTR_ICOUNTER_BYTE_SIZE     (16U)
+ #define HW_SCE_AES_GCM_AAD_BLOCK_BYTE_SIZE    (16U)
+ #define HW_SCE_AES_CCM_B_FORMAT_BYTE_SIZE     (128U)
+ #define HW_SCE_AES_CCM_COUNTER_BYTE_SIZE      (16U)
+ #define HW_SCE_AES128XTS_KEY_BYTE_SIZE        (32U)
+ #define HW_SCE_AES256XTS_KEY_BYTE_SIZE        (64U)
+ #define HW_SCE_AES128XTS_KEY_BIT_SIZE         (256U)
+ #define HW_SCE_AES256XTS_KEY_BIT_SIZE         (512U)
+ #define HW_SCE_AES_XTS_IV_BYTE_SIZE           (16U)
+ #define HW_SCE_AES128XTS_KEY_INDEX_WORD_SIZE  (13U)
+ #define HW_SCE_AES256XTS_KEY_INDEX_WORD_SIZE  (21U)
 
 /* For TDES operation. */
- #define HW_SCE_TDES_KEY_INDEX_WORD_SIZE                           (16U)
- #define HW_SCE_TDES_BLOCK_BYTE_SIZE                               (8U)
- #define HW_SCE_TDES_CBC_IV_BYTE_SIZE                              (8U)
- #define HW_SCE_TDES_KEY_WORD_SIZE                                 (8U)
- #define HW_SCE_TDES_KEY_BYTE_SIZE                                 (32U)
+ #define HW_SCE_TDES_KEY_INDEX_WORD_SIZE       (16U)
+ #define HW_SCE_TDES_BLOCK_BYTE_SIZE           (8U)
+ #define HW_SCE_TDES_CBC_IV_BYTE_SIZE          (8U)
+ #define HW_SCE_TDES_KEY_WORD_SIZE             (8U)
+ #define HW_SCE_TDES_KEY_BYTE_SIZE             (32U)
 
 /* For ARC4 operation. */
- #define HW_SCE_ARC4_KEY_INDEX_WORD_SIZE                           (72U)
- #define HW_SCE_ARC4_KEY_WORD_SIZE                                 (64U)
- #define HW_SCE_ARC4_KEY_BYTE_SIZE                                 (256U)
- #define HW_SCE_ARC4_BLOCK_BYTE_SIZE                               (16U)
+#define HW_SCE_ARC4_KEY_INDEX_WORD_SIZE       (72U)
+#define HW_SCE_ARC4_KEY_WORD_SIZE             (64U)
+#define HW_SCE_ARC4_KEY_BYTE_SIZE             (256U)
+#define HW_SCE_ARC4_BLOCK_BYTE_SIZE           (16U)
 
 /* For SHA operation. */
- #define HW_SCE_SHA1_HASH_LENGTH_BYTE_SIZE                         (20U)
- #define HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE                       (32U)
- #define HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE                       (48U)
- #define HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE                      (8U)
+#define HW_SCE_SHA1_HASH_LENGTH_BYTE_SIZE      (20U)
+#define HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE    (32U)
+#define HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE    (48U)
+ #define HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE  (8U)
 
 /* For MD5 operation. */
- #define HW_SCE_MD5_HASH_LENGTH_BYTE_SIZE                          (16U)
+ #define HW_SCE_MD5_HASH_LENGTH_BYTE_SIZE       (16U)
 
 /* For HMAC operation. */
- #define HW_SCE_HMAC_KEY_BYTE_SIZE                                 (32U)
-
-/* For RSA operation. */
- #define HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE                    (128U)
- #define HW_SCE_RSA_1024_KEY_E_LENGTH_BYTE_SIZE                    (4U)
- #define HW_SCE_RSA_1024_KEY_D_LENGTH_BYTE_SIZE                    (128U)
- #define HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE                    (256U)
- #define HW_SCE_RSA_2048_KEY_E_LENGTH_BYTE_SIZE                    (4U)
- #define HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE                    (256U)
- #define HW_SCE_RSA_3072_KEY_N_LENGTH_BYTE_SIZE                    (96 * 4U)
- #define HW_SCE_RSA_3072_KEY_E_LENGTH_BYTE_SIZE                    (4U)
- #define HW_SCE_RSA_3072_KEY_D_LENGTH_BYTE_SIZE                    (96 * 4U)
- #define HW_SCE_RSA_4096_KEY_N_LENGTH_BYTE_SIZE                    (128 * 4U)
- #define HW_SCE_RSA_4096_KEY_E_LENGTH_BYTE_SIZE                    (4U)
- #define HW_SCE_RSA_4096_KEY_D_LENGTH_BYTE_SIZE                    (128 * 4U)
- #define HW_SCE_RSA_1024_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
- #define HW_SCE_RSA_1024_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (36U)
- #define HW_SCE_RSA_1024_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
- #define HW_SCE_RSA_1024_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (68U)
- #define HW_SCE_RSA_2048_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
- #define HW_SCE_RSA_2048_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (68U)
- #define HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
- #define HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (132U)
- #define HW_SCE_RSA_3072_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
- #define HW_SCE_RSA_3072_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
- #define HW_SCE_RSA_3072_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (132U)
- #define HW_SCE_RSA_4096_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
- #define HW_SCE_RSA_4096_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
- #define HW_SCE_RSA_4096_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (132U)
- #define HW_SCE_RSA_KEY_GENERATION_DUMMY_BYTE_SIZE                 (12U)
- #define HW_SCE_RSA1024_NE_KEY_BYTE_SIZE                           (144U)
- #define HW_SCE_RSA1024_ND_KEY_BYTE_SIZE                           (256U)
- #define HW_SCE_RSA2048_NE_KEY_BYTE_SIZE                           (272U)
- #define HW_SCE_RSA2048_ND_KEY_BYTE_SIZE                           (512U)
- #define HW_SCE_RSA3072_NE_KEY_BYTE_SIZE                           (96 * 4 + 16U)
- #define HW_SCE_RSA3072_ND_KEY_BYTE_SIZE                           (192 * 4U)
- #define HW_SCE_RSA4096_NE_KEY_BYTE_SIZE                           (128 * 4 + 16U)
- #define HW_SCE_RSA4096_ND_KEY_BYTE_SIZE                           (256 * 4U)
- #define HW_SCE_RSA1024_NE_KEY_INDEX_WORD_SIZE                     (73U)
- #define HW_SCE_RSA1024_ND_KEY_INDEX_WORD_SIZE                     (101U)
- #define HW_SCE_RSA2048_NE_KEY_INDEX_WORD_SIZE                     (137U)
- #define HW_SCE_RSA2048_ND_KEY_INDEX_WORD_SIZE                     (197U)
- #define HW_SCE_RSA3072_ND_KEY_INDEX_WORD_SIZE                     (197U)
- #define HW_SCE_RSA4096_NE_KEY_INDEX_WORD_SIZE                     (137U)
-
-// #define HW_SCE_RSA3072_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
-// #define HW_SCE_RSA3072_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
-// #define HW_SCE_RSA4096_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
-// #define HW_SCE_RSA4096_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
- #define HW_SCE_RSA_RSAES_PKCS_MIN_KEY_N_BYTE_SIZE           (11U)
- #define HW_SCE_RSA_1024_DATA_BYTE_SIZE                      (128U)
- #define HW_SCE_RSA_2048_DATA_BYTE_SIZE                      (256U)
- #define HW_SCE_RSA_3072_DATA_BYTE_SIZE                      (96 * 4U)
- #define HW_SCE_RSA_4096_DATA_BYTE_SIZE                      (128 * 4U)
-
-/* RSA HASH type. */
- #define HW_SCE_RSA_HASH_MD5                                 (0x01) /* MD5     */
- #define HW_SCE_RSA_HASH_SHA1                                (0x02) /* SHA-1   */
- #define HW_SCE_RSA_HASH_SHA256                              (0x03) /* SHA-256 */
-
+ #define HW_SCE_HMAC_KEY_BYTE_SIZE              (32U)
+ #define HW_SCE_HMAC_KEY_INDEX_BYTE_SIZE        (32U)
+  #define HW_SCE_HMAC_KEY_INDEX_WORD_SIZE        (8U)
+ 
+ /* For RSA operation. */
+ #define HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE                  (128U)
+ #define HW_SCE_RSA_1024_KEY_E_LENGTH_BYTE_SIZE                  (4U)
+ #define HW_SCE_RSA_1024_KEY_D_LENGTH_BYTE_SIZE                  (128U)
+ #define HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE                  (256U)
+ #define HW_SCE_RSA_2048_KEY_E_LENGTH_BYTE_SIZE                  (4U)
+ #define HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE                  (256U)
+ #define HW_SCE_RSA_3072_KEY_N_LENGTH_BYTE_SIZE                  (96  * 4U)
+ #define HW_SCE_RSA_3072_KEY_E_LENGTH_BYTE_SIZE                  (4U)
+ #define HW_SCE_RSA_3072_KEY_D_LENGTH_BYTE_SIZE                  (96  * 4U)
+ #define HW_SCE_RSA_4096_KEY_N_LENGTH_BYTE_SIZE                  (128 * 4U)
+ #define HW_SCE_RSA_4096_KEY_E_LENGTH_BYTE_SIZE                  (4U)
+ #define HW_SCE_RSA_4096_KEY_D_LENGTH_BYTE_SIZE                  (128 * 4U)
+ #define HW_SCE_RSA_1024_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE   (1U)
+ #define HW_SCE_RSA_1024_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE   (36U)
+ #define HW_SCE_RSA_1024_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE  (1U)
+ #define HW_SCE_RSA_1024_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE  (68U)
+ #define HW_SCE_RSA_2048_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE   (1U)
+ #define HW_SCE_RSA_2048_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE   (68U)
+ #define HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE  (1U)
+ #define HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE  (132U)
+ #define HW_SCE_RSA_3072_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE   (1U)
+ #define HW_SCE_RSA_3072_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE   (19U)
+ #define HW_SCE_RSA_3072_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE  (1U)
+ #define HW_SCE_RSA_3072_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE  (132U)
+ #define HW_SCE_RSA_4096_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE   (1U)
+ #define HW_SCE_RSA_4096_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE   (19U)
+ #define HW_SCE_RSA_4096_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE  (1U)
+ #define HW_SCE_RSA_4096_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE  (132U)
+ #define HW_SCE_RSA_KEY_GENERATION_DUMMY_BYTE_SIZE               (12U)
+ #define HW_SCE_RSA1024_NE_KEY_BYTE_SIZE                         (144U)
+ #define HW_SCE_RSA1024_ND_KEY_BYTE_SIZE                         (256U)
+ #define HW_SCE_RSA2048_NE_KEY_BYTE_SIZE                         (272U)
+ #define HW_SCE_RSA2048_ND_KEY_BYTE_SIZE                         (512U)
+ #define HW_SCE_RSA3072_NE_KEY_BYTE_SIZE                         (96  * 4 + 16U)
+ #define HW_SCE_RSA3072_ND_KEY_BYTE_SIZE                         (192 * 4U)
+ #define HW_SCE_RSA4096_NE_KEY_BYTE_SIZE                         (128 * 4 + 16U)
+ #define HW_SCE_RSA4096_ND_KEY_BYTE_SIZE                         (256 * 4U)
+ #define HW_SCE_RSA1024_NE_KEY_INDEX_WORD_SIZE                   (73U)
+ #define HW_SCE_RSA1024_ND_KEY_INDEX_WORD_SIZE                   (101U)
+ #define HW_SCE_RSA2048_NE_KEY_INDEX_WORD_SIZE                   (137U)
+ #define HW_SCE_RSA2048_ND_KEY_INDEX_WORD_SIZE                   (197U)
+ #define HW_SCE_RSA3072_NE_KEY_INDEX_WORD_SIZE                   (137U)
+ #define HW_SCE_RSA3072_ND_KEY_INDEX_WORD_SIZE                   (197U)
+ #define HW_SCE_RSA4096_NE_KEY_INDEX_WORD_SIZE                   (137U)
+ #define HW_SCE_RSA4096_ND_KEY_INDEX_WORD_SIZE                   (197U)
+ #define HW_SCE_RSA1024_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (76U)
+ #define HW_SCE_RSA1024_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (104U)
+ #define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
+ #define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
+ //#define HW_SCE_RSA3072_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
+ //#define HW_SCE_RSA3072_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
+ //#define HW_SCE_RSA4096_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE        (140U)
+ //#define HW_SCE_RSA4096_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE       (200U)
+ #define HW_SCE_RSA_RSAES_PKCS_MIN_KEY_N_BYTE_SIZE               (11U)
+ #define HW_SCE_RSA_1024_DATA_BYTE_SIZE                          (128U)
+ #define HW_SCE_RSA_2048_DATA_BYTE_SIZE                          (256U)
+ #define HW_SCE_RSA_3072_DATA_BYTE_SIZE                          (96  * 4U)
+ #define HW_SCE_RSA_4096_DATA_BYTE_SIZE                          (128 * 4U)
+ 
+ /* RSA HASH type. */
+ #define HW_SCE_RSA_HASH_MD5                                     (0x01)  /* MD5     */
+ #define HW_SCE_RSA_HASH_SHA1                                    (0x02)  /* SHA-1   */
+ #define HW_SCE_RSA_HASH_SHA256                                  (0x03)  /* SHA-256 */
+ 
 /* For ECC operation. */
-
-// #define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                     (32U)
- #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
- #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE    (4U)
-
-// #define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE   (4U)
-// #define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE   (12U)
-// #define HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE                     (64U)
-// #define HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE                (96U)
-// #define HW_SCE_ECC_PRIVATE_KEY_BYTE_SIZE                    (32U)
-// #define HW_SCE_ECC_P384_PRIVATE_KEY_BYTE_SIZE               (48U)
-// #define HW_SCE_ECDSA_DATA_BYTE_SIZE                         (64U)
-// #define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                    (96U)
-// #define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE            (16U)
-// #define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE          (7U)
- #define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                             (112U)
-
-// #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO_WORD_SIZE     (1U)
-// #define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO_WORD_SIZE    (17U)
- #define HW_SCE_ECC_P192_P224_P256_PUBLIC_KEY_BYTE_SIZE              (64U)
- #define HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE                        (96U)
- #define HW_SCE_ECC_PRIVATE_KEY_BYTE_SIZE                            (32U)
- #define HW_SCE_ECC_P384_PRIVATE_KEY_BYTE_SIZE                       (48U)
- #define HW_SCE_ECDSA_DATA_BYTE_SIZE                                 (64U)
- #define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                            (96U)
-
-// #define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE            (13U)
- #define HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE                       (5U)
- #define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE                  (7U)
+//#define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                     (32U)
+ #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
+ #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (4U)
+//#define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE   (4U)
+//#define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE   (12U)
+//#define HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE                     (64U)
+//#define HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE                (96U)
+//#define HW_SCE_ECC_PRIVATE_KEY_BYTE_SIZE                    (32U)
+//#define HW_SCE_ECC_P384_PRIVATE_KEY_BYTE_SIZE               (48U)
+//#define HW_SCE_ECDSA_DATA_BYTE_SIZE                         (64U)
+//#define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                    (96U)
+//#define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE            (16U)
+//#define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE          (7U)
+ #define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                     (112U)
+ #define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO_WORD_SIZE     (4U)
+ #define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO_WORD_SIZE    (20U)
+ #define HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE                     (64U)
+ #define HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE                (96U)
+ #define HW_SCE_ECC_PRIVATE_KEY_BYTE_SIZE                    (32U)
+ #define HW_SCE_ECC_P384_PRIVATE_KEY_BYTE_SIZE               (48U)
+ #define HW_SCE_ECDSA_DATA_BYTE_SIZE                         (64U)
+ #define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                    (96U)
+ #define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE            (16U)
+ #define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE          (7U)
+ #define HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE               (5U)
 
 /* For KeyWrap. */
  #define HW_SCE_KEYWRAP_AES128                                       (0U)
  #define HW_SCE_KEYWRAP_AES256                                       (2U)
 
 /* For TLS. */
- #define HW_SCE_TLS_RSA_NE_KEY_BYTE_SIZE                             (272U)
- #define HW_SCE_TLS_RSA_NE_KEY_INDEX_WORD_SIZE                       (140U)
-
-// #define HW_SCE_TLS_ROOT_PUBLIC_KEY_WORD_SIZE                (137U)
- #define HW_SCE_TLS_P256_ECC_KEY_WORD_SIZE                           (16U)
- #define HW_SCE_TLS_EPHEMERAL_ECDH_PUBLIC_KEY_WORD_SIZE              (16U)
- #define HW_SCE_TLS_MASTER_SECRET_WORD_SIZE                          (20U)
- #define HW_SCE_TLS_GENERATE_MAC_KEY_WORD_SIZE                       (16U)
- #define HW_SCE_TLS_GENERATE_AES128_CRYPTO_KEY_WORD_SIZE             (12U)
- #define HW_SCE_TLS_GENERATE_AES256_CRYPTO_KEY_WORD_SIZE             (16U)
- #define HW_SCE_TLS_GENERATE_VERIFY_DATA_BYTE_SIZE                   (12U)
- #define HW_SCE_TLS_RSA_WITH_AES_128_CBC_SHA                         (0U)
- #define HW_SCE_TLS_RSA_WITH_AES_256_CBC_SHA                         (1U)
- #define HW_SCE_TLS_RSA_WITH_AES_128_CBC_SHA256                      (2U)
- #define HW_SCE_TLS_RSA_WITH_AES_256_CBC_SHA256                      (3U)
- #define HW_SCE_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256              (4U)
- #define HW_SCE_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256                (5U)
- #define HW_SCE_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256              (6U)
- #define HW_SCE_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256                (7U)
- #define HW_SCE_TLS_GENERATE_CLIENT_VERIFY                           (0U)
- #define HW_SCE_TLS_GENERATE_SERVER_VERIFY                           (1U)
- #define HW_SCE_TLS_PUBLIC_KEY_TYPE_RSA2048                          (0U)
- #define HW_SCE_TLS_PUBLIC_KEY_TYPE_ECDSA_P256                       (2U)
+#define HW_SCE_TLS_RSA_NE_KEY_BYTE_SIZE                     (272U)
+#define HW_SCE_TLS_RSA_NE_KEY_INDEX_WORD_SIZE               (140U)
+#define HW_SCE_TLS_ROOT_PUBLIC_KEY_WORD_SIZE                (140U)
+#define HW_SCE_TLS_P256_ECC_KEY_WORD_SIZE                   (16U)
+#define HW_SCE_TLS_EPHEMERAL_ECDH_PUBLIC_KEY_WORD_SIZE      (16U)
+#define HW_SCE_TLS_MASTER_SECRET_WORD_SIZE                  (20U)
+#define HW_SCE_TLS_GENERATE_MAC_KEY_WORD_SIZE               (16U)
+#define HW_SCE_TLS_GENERATE_AES128_CRYPTO_KEY_WORD_SIZE     (12U)
+#define HW_SCE_TLS_GENERATE_AES256_CRYPTO_KEY_WORD_SIZE     (16U)
+#define HW_SCE_TLS_GENERATE_VERIFY_DATA_BYTE_SIZE           (12U)
+#define HW_SCE_TLS_RSA_WITH_AES_128_CBC_SHA                 (0U)
+#define HW_SCE_TLS_RSA_WITH_AES_256_CBC_SHA                 (1U)
+#define HW_SCE_TLS_RSA_WITH_AES_128_CBC_SHA256              (2U)
+#define HW_SCE_TLS_RSA_WITH_AES_256_CBC_SHA256              (3U)
+#define HW_SCE_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256      (4U)
+#define HW_SCE_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256        (5U)
+#define HW_SCE_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256      (6U)
+#define HW_SCE_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256        (7U)
+#define HW_SCE_TLS_GENERATE_CLIENT_VERIFY                   (0U)
+#define HW_SCE_TLS_GENERATE_SERVER_VERIFY                   (1U)
+#define HW_SCE_TLS_PUBLIC_KEY_TYPE_RSA2048                  (0U)
+#define HW_SCE_TLS_PUBLIC_KEY_TYPE_ECDSA_P256               (2U)
 
 /* TLS-HMAC. */
- #define HW_SCE_TLS_HMAC_KEY_INDEX_BYTE_SIZE                         (64U)
- #define HW_SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE                         (16U)
+#define HW_SCE_TLS_HMAC_KEY_INDEX_BYTE_SIZE                 (64U)
+#define HW_SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE                 (16U)
 
 /* TLS-AES. */
- #define HW_SCE_TLS_AES128_KEY_INDEX_WORD_SIZE                       (12U)
- #define HW_SCE_TLS_AES256_KEY_INDEX_WORD_SIZE                       (16U)
+#define HW_SCE_TLS_AES128_KEY_INDEX_WORD_SIZE               (12U)
+#define HW_SCE_TLS_AES256_KEY_INDEX_WORD_SIZE               (16U)
 
 /* Key update. */
  #define HW_SCE_UPDATE_KEY_RING_INDEX_WORD_SIZE                      (16U)
 
+
 /* Firmware update. */
- #define HW_SCE_FIRMWARE_MAC_BYTE_SIZE                               (16U)
- #if defined BSP_MCU_RX231 || defined BSP_MCU_RX23W
-  #define HW_SCE_SECURE_BOOT_AREA_TOP                                (0xFFFF8000)
- #else
-  #define HW_SCE_SECURE_BOOT_AREA_TOP                                (0xFFFF0000)
- #endif                                /* defined BSP_MCU_RX231 || defined BSP_MCU_RX23W */
+#define HW_SCE_FIRMWARE_MAC_BYTE_SIZE           (16U)
+#if defined BSP_MCU_RX231 || defined BSP_MCU_RX23W
+#define HW_SCE_SECURE_BOOT_AREA_TOP             (0xFFFF8000)
+#else
+#define HW_SCE_SECURE_BOOT_AREA_TOP             (0xFFFF0000)
+#endif  /* defined BSP_MCU_RX231 || defined BSP_MCU_RX23W */
 
- #define SCE_OEM_KEY_SIZE_DUMMY_INST_DATA_WORD                       (0)
- #define SCE_OEM_KEY_SIZE_AES128_INST_DATA_WORD                      (8)
- #define SCE_OEM_KEY_SIZE_AES192_INST_DATA_WORD                      (12)
- #define SCE_OEM_KEY_SIZE_AES256_INST_DATA_WORD                      (12)
- #define SCE_OEM_KEY_SIZE_AES128_XTS_INST_DATA_WORD                  (12)
- #define SCE_OEM_KEY_SIZE_AES256_XTS_INST_DATA_WORD                  (20)
+#define SCE_OEM_KEY_SIZE_DUMMY_INST_DATA_WORD                    (0)
+#define SCE_OEM_KEY_SIZE_AES128_INST_DATA_WORD                   (8)
+#define SCE_OEM_KEY_SIZE_AES192_INST_DATA_WORD                   (12)
+#define SCE_OEM_KEY_SIZE_AES256_INST_DATA_WORD                   (12)
+#define SCE_OEM_KEY_SIZE_AES128_XTS_INST_DATA_WORD               (12)
+#define SCE_OEM_KEY_SIZE_AES256_XTS_INST_DATA_WORD               (20)
 
- #define SCE_OEM_KEY_SIZE_RSA1024_PUBLICK_KEY_INST_DATA_WORD         (40)
- #define SCE_OEM_KEY_SIZE_RSA1024_PRIVATE_KEY_INST_DATA_WORD         (68)
- #define SCE_OEM_KEY_SIZE_RSA2048_PUBLICK_KEY_INST_DATA_WORD         (72)
- #define SCE_OEM_KEY_SIZE_RSA2048_PRIVATE_KEY_INST_DATA_WORD         (132)
- #define SCE_OEM_KEY_SIZE_RSA3072_PUBLICK_KEY_INST_DATA_WORD         (104)
- #define SCE_OEM_KEY_SIZE_RSA3072_PRIVATE_KEY_INST_DATA_WORD         (196)
- #define SCE_OEM_KEY_SIZE_RSA4096_PUBLICK_KEY_INST_DATA_WORD         (136)
- #define SCE_OEM_KEY_SIZE_RSA4096_PRIVATE_KEY_INST_DATA_WORD         (260)
+#define SCE_OEM_KEY_SIZE_RSA1024_PUBLICK_KEY_INST_DATA_WORD      (40)
+#define SCE_OEM_KEY_SIZE_RSA1024_PRIVATE_KEY_INST_DATA_WORD      (68)
+#define SCE_OEM_KEY_SIZE_RSA2048_PUBLICK_KEY_INST_DATA_WORD      (72)
+#define SCE_OEM_KEY_SIZE_RSA2048_PRIVATE_KEY_INST_DATA_WORD      (132)
+#define SCE_OEM_KEY_SIZE_RSA3072_PUBLICK_KEY_INST_DATA_WORD      (104)
+#define SCE_OEM_KEY_SIZE_RSA3072_PRIVATE_KEY_INST_DATA_WORD      (196)
+#define SCE_OEM_KEY_SIZE_RSA4096_PUBLICK_KEY_INST_DATA_WORD      (136)
+#define SCE_OEM_KEY_SIZE_RSA4096_PRIVATE_KEY_INST_DATA_WORD      (260)
 
- #define SCE_OEM_KEY_SIZE_ECCP192_PUBLICK_KEY_INST_DATA_WORD         (20)
- #define SCE_OEM_KEY_SIZE_ECCP192_PRIVATE_KEY_INST_DATA_WORD         (12)
- #define SCE_OEM_KEY_SIZE_ECCP224_PUBLICK_KEY_INST_DATA_WORD         (20)
- #define SCE_OEM_KEY_SIZE_ECCP224_PRIVATE_KEY_INST_DATA_WORD         (12)
- #define SCE_OEM_KEY_SIZE_ECCP256_PUBLICK_KEY_INST_DATA_WORD         (20)
- #define SCE_OEM_KEY_SIZE_ECCP256_PRIVATE_KEY_INST_DATA_WORD         (12)
- #define SCE_OEM_KEY_SIZE_ECCP384_PUBLICK_KEY_INST_DATA_WORD         (28)
- #define SCE_OEM_KEY_SIZE_ECCP384_PRIVATE_KEY_INST_DATA_WORD         (16)
- #define SCE_OEM_KEY_SIZE_HMAC_SHA224_INST_DATA_WORD                 (12)
- #define SCE_OEM_KEY_SIZE_HMAC_SHA256_INST_DATA_WORD                 (12)
- #define SCE_OEM_KEY_SIZE_ECCP256R1_PUBLICK_KEY_INST_DATA_WORD       (20)
- #define SCE_OEM_KEY_SIZE_ECCP256R1_PRIVATE_KEY_INST_DATA_WORD       (12)
- #define SCE_OEM_KEY_SIZE_ECCP384R1_PUBLICK_KEY_INST_DATA_WORD       (28)
- #define SCE_OEM_KEY_SIZE_ECCP384R1_PRIVATE_KEY_INST_DATA_WORD       (16)
- #define SCE_OEM_KEY_SIZE_ECCP512R1_PUBLICK_KEY_INST_DATA_WORD       (36)
- #define SCE_OEM_KEY_SIZE_ECCP512R1_PRIVATE_KEY_INST_DATA_WORD       (20)
- #define SCE_OEM_KEY_SIZE_ECCSECP256K1_PUBLICK_KEY_INST_DATA_WORD    (20)
- #define SCE_OEM_KEY_SIZE_ECCSECP256K1_PRIVATE_KEY_INST_DATA_WORD    (12)
+#define SCE_OEM_KEY_SIZE_ECCP192_PUBLICK_KEY_INST_DATA_WORD      (20)
+#define SCE_OEM_KEY_SIZE_ECCP192_PRIVATE_KEY_INST_DATA_WORD      (12)
+#define SCE_OEM_KEY_SIZE_ECCP224_PUBLICK_KEY_INST_DATA_WORD      (20)
+#define SCE_OEM_KEY_SIZE_ECCP224_PRIVATE_KEY_INST_DATA_WORD      (12)
+#define SCE_OEM_KEY_SIZE_ECCP256_PUBLICK_KEY_INST_DATA_WORD      (20)
+#define SCE_OEM_KEY_SIZE_ECCP256_PRIVATE_KEY_INST_DATA_WORD      (12)
+#define SCE_OEM_KEY_SIZE_ECCP384_PUBLICK_KEY_INST_DATA_WORD      (28)
+#define SCE_OEM_KEY_SIZE_ECCP384_PRIVATE_KEY_INST_DATA_WORD      (16)
+#define SCE_OEM_KEY_SIZE_HMAC_SHA224_INST_DATA_WORD              (12)
+#define SCE_OEM_KEY_SIZE_HMAC_SHA256_INST_DATA_WORD              (12)
+#define SCE_OEM_KEY_SIZE_ECCP256R1_PUBLICK_KEY_INST_DATA_WORD    (20)
+#define SCE_OEM_KEY_SIZE_ECCP256R1_PRIVATE_KEY_INST_DATA_WORD    (12)
+#define SCE_OEM_KEY_SIZE_ECCP384R1_PUBLICK_KEY_INST_DATA_WORD    (28)
+#define SCE_OEM_KEY_SIZE_ECCP384R1_PRIVATE_KEY_INST_DATA_WORD    (16)
+#define SCE_OEM_KEY_SIZE_ECCP512R1_PUBLICK_KEY_INST_DATA_WORD    (36)
+#define SCE_OEM_KEY_SIZE_ECCP512R1_PRIVATE_KEY_INST_DATA_WORD    (20)
+#define SCE_OEM_KEY_SIZE_ECCSECP256K1_PUBLICK_KEY_INST_DATA_WORD (20)
+#define SCE_OEM_KEY_SIZE_ECCSECP256K1_PRIVATE_KEY_INST_DATA_WORD (12)
+#define SCE_OEM_KEY_SIZE_ECCP521_PUBLICK_KEY_INST_DATA_WORD      (44)
+#define SCE_OEM_KEY_SIZE_ECCP521_PRIVATE_KEY_INST_DATA_WORD      (24)
+#define SCE_OEM_KEY_SIZE_HMAC_SHA384_INST_DATA_WORD              (16)
+#define SCE_OEM_KEY_SIZE_HMAC_SHA512_INST_DATA_WORD              (20)
+#define SCE_OEM_KEY_SIZE_HMAC_SHA512_224_INST_DATA_WORD          (20)
+#define SCE_OEM_KEY_SIZE_HMAC_SHA512_256_INST_DATA_WORD          (20)
+
+/* DomainParams */
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_NIST_P192            (72U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_NIST_P224            (72U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_NIST_P256            (72U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_NIST_P384            (104U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_NIST_P521            (168U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_NIST_ED25519         (76U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_BRAINPOOL_256R1      (72U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_BRAINPOOL_384R1      (104U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_BRAINPOOL_512R1      (136U)
+#define RSIP_PRV_WORD_SIZE_DOMAINPARAM_KOBLITZ_SECP256K1    (72U)
 
 /**********************************************************************************************************************
  * Global Typedef definitions
@@ -400,13 +425,59 @@ typedef enum
     SCE_RMA_ACK,
 } lifecycle_t;
 
-// added for RA6M4 end
+ /* OEM Command */
+ typedef enum e_sce_oem_cmd
+ {
+     SCE_OEM_CMD_AES128 = 5,
+     SCE_OEM_CMD_AES192,
+     SCE_OEM_CMD_AES256,
+     SCE_OEM_CMD_AES128_XTS,
+     SCE_OEM_CMD_AES256_XTS,
+     SCE_OEM_CMD_RSA1024_PUBLIC,
+     SCE_OEM_CMD_RSA1024_PRIVATE,
+     SCE_OEM_CMD_RSA2048_PUBLIC,
+     SCE_OEM_CMD_RSA2048_PRIVATE,
+     SCE_OEM_CMD_RSA3072_PUBLIC,
+     SCE_OEM_CMD_RSA3072_PRIVATE,
+     SCE_OEM_CMD_RSA4096_PUBLIC,
+     SCE_OEM_CMD_RSA4096_PRIVATE,
+     SCE_OEM_CMD_ECC_P192_PUBLIC,
+     SCE_OEM_CMD_ECC_P192_PRIVATE,
+     SCE_OEM_CMD_ECC_P224_PUBLIC,
+     SCE_OEM_CMD_ECC_P224_PRIVATE,
+     SCE_OEM_CMD_ECC_P256_PUBLIC,
+     SCE_OEM_CMD_ECC_P256_PRIVATE,
+     SCE_OEM_CMD_ECC_P384_PUBLIC,
+     SCE_OEM_CMD_ECC_P384_PRIVATE,
+     SCE_OEM_CMD_HMAC_SHA224,
+     SCE_OEM_CMD_HMAC_SHA256,
+     SCE_OEM_CMD_ECC_P256R1_PUBLIC,
+     SCE_OEM_CMD_ECC_P256R1_PRIVATE,
+     SCE_OEM_CMD_ECC_P384R1_PUBLIC,
+     SCE_OEM_CMD_ECC_P384R1_PRIVATE,
+     SCE_OEM_CMD_ECC_P512R1_PUBLIC,
+     SCE_OEM_CMD_ECC_P512R1_PRIVATE,
+     SCE_OEM_CMD_ECC_SECP256K1_PUBLIC,
+     SCE_OEM_CMD_ECC_SECP256K1_PRIVATE,
+     SCE_OEM_CMD_ECC_P521_PUBLIC,
+     SCE_OEM_CMD_ECC_P521_PRIVATE,
+     SCE_OEM_CMD_ED25519_PUBLIC,
+     SCE_OEM_CMD_ED25519_PRIVATE,
+     SCE_OEM_CMD_HMAC_SHA384,
+     SCE_OEM_CMD_HMAC_SHA512,
+     SCE_OEM_CMD_HMAC_SHA512_224,
+     SCE_OEM_CMD_HMAC_SHA512_256,
+     SCE_OEM_CMD_RSA2048_PUBLIC_FOR_TLS = 254,
+     SCE_OEM_CMD_NUM
+ } sce_oem_cmd_t;
 
-typedef enum e_sce_oem_key_type
+ typedef enum e_sce_oem_key_type
 {
     SCE_OEM_KEY_TYPE_ENCRYPTED = 0,
     SCE_OEM_KEY_TYPE_PLAIN     = 1
 } sce_oem_key_type_t;
+
+// added for RA6M4 end
 
 /* Byte data structure */
 typedef struct sce_byte_data
@@ -586,12 +657,12 @@ typedef struct sce_ecc_public_key_index
     struct
     {
         uint32_t key_management_info1[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE];
-        uint8_t  key_q[HW_SCE_ECC_P192_P224_P256_PUBLIC_KEY_BYTE_SIZE];
+        uint8_t  key_q[HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE];
         uint32_t key_management_info2[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE];
     } value;
     struct
     {
-        uint8_t key[HW_SCE_ECC_P192_P224_P256_PUBLIC_KEY_BYTE_SIZE];
+        uint8_t key[HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE];
     } plain_value;
 } sce_ecc_public_key_index_t;
 
@@ -780,6 +851,7 @@ fsp_err_t HW_SCE_Close(void);
 void      HW_SCE_SoftwareReset(void);
 fsp_err_t HW_SCE_SelfCheck2(void);
 fsp_err_t HW_SCE_SelfCheck3(void);
+fsp_err_t HW_SCE_McuSpecificInit (void);
 
 // added for RA6M4 start
 fsp_err_t HW_SCE_FwIntegrityCheck(void);

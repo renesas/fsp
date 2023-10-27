@@ -54,7 +54,28 @@ typedef struct st_cgc_instance_ctrl
 
     /** Placeholder for user data.  Passed to the user callback in ::cgc_callback_args_t. */
     void const * p_context;
+#if BSP_FEATURE_CGC_HAS_OSTDCSE
+    void const * p_extend;
+#endif
 } cgc_instance_ctrl_t;
+
+#if BSP_FEATURE_CGC_HAS_OSTDCSE
+
+/** CGC extend configuration */
+typedef struct s_cgc_extended_cfg_t
+{
+    bool      ostd_enable;                 /// <Enable Oscillation Stop Detection Function for System Clock
+    bool      mostd_enable;                /// <Enable Main Oscillation Stop Detection
+    bool      sostd_enable;                /// <Enable Sub Clock Oscillation Stop Detection
+    IRQn_Type mostd_irq;                   ///< Main Oscillation Stop IRQ number
+    uint8_t   mostd_ipl;                   ///< Main Oscillation Stop interrupt priority
+    IRQn_Type sostd_irq;                   ///< Sub Clock Oscillation Stop IRQ number
+    uint8_t   sostd_ipl;                   ///< Sub Clock Oscillation Stop interrupt priority
+    uint8_t   sdadc_b_clock_switch_enable; ///< Enable switch to HOCO when oscillation stop occurs
+    uint16_t  mostd_detection_time;        ///< Main Oscillation Stop Detection Time
+    uint16_t  sostd_detection_time;        ///< Sub Clock Oscillation Stop Detection Time
+} cgc_extended_cfg_t;
+#endif
 
 /**********************************************************************************************************************
  * Exported global variables

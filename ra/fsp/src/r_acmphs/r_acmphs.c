@@ -376,7 +376,8 @@ static void acmphs_hardware_initialize (acmphs_instance_ctrl_t * const p_instanc
         R_MSTP->MSTPCRD_b.MSTPD28 = 0;
 
         /* Read back the register to ensure that the write has completed.
-         * MREF_INTERNAL_002 */
+         * See Note for readback in section "10.2.4 MSTPCRA: Module Stop Control Register A" in
+         *   the RA8M1 manual R01UH0994EJ0100. */
         FSP_REGISTER_READ(R_MSTP->MSTPCRD);
 
         /*Writes to VREFEN bit must be in critical sections to ensure the driver is reentrant for different channels.*/

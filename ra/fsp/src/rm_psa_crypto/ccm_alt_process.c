@@ -315,7 +315,7 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
 
     if (MBEDTLS_CCM_ENCRYPT == mode)
     {
-        err = g_sce_aes_ccm_encrypt_final[key_len_idx](indata_textlen, (uint32_t *) work_buffer,
+        err = g_sce_aes_ccm_encrypt_final[key_len_idx]((uint32_t *) work_buffer, indata_textlen,
                                                        (uint32_t *) &output[input_length], (uint32_t *) tag);
     }
     else

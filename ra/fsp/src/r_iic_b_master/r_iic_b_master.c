@@ -1206,8 +1206,6 @@ static void iic_b_master_err_master (iic_b_master_instance_ctrl_t * p_ctrl)
          * the RA6T2 manual R01UH0951EJ0050 */
 
         /* Request IIC to issue the stop condition */
-        p_ctrl->p_reg->BST_b.SPCNDDF = 0U;
-
         p_ctrl->p_reg->CNDCTL = (uint32_t) R_I3C0_CNDCTL_SPCND_Msk; /* It is safe to write 0's to other bits. */
         /* Allow timeouts to be generated on the low value of SCL using either long or short mode */
 

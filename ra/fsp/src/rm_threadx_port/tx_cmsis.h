@@ -31,8 +31,20 @@
 #endif
 
 #include <stddef.h>
-#include "../../src/bsp/mcu/all/bsp_arm_exceptions.h"
+#include "../../src/bsp/mcu/all/bsp_exceptions.h"
+
+/* Workaround for LLVM. __ARM_ARCH_8_1M_MAIN__ is defined for CM85 parts. But CMSIS_5 does not support this */
+#if defined(__llvm__) && !defined(__CLANG_TIDY__) && defined(__ARM_ARCH_8_1M_MAIN__)
+ #undef __ARM_ARCH_8_1M_MAIN__
+ #define __ARM_ARCH_8M_MAIN__    1
+#endif
 #include "cmsis_compiler.h"
+
+/* Workaround for compilers that are not defining __ARM_ARCH_8_1M_MAIN__ for CM85 parts. */
+#if BSP_CFG_MCU_PART_SERIES == 8
+ #undef __ARM_ARCH_8M_MAIN__
+ #define __ARM_ARCH_8_1M_MAIN__    1
+#endif
 
 #include "bsp_api.h"                   /* This include brings in a workaround for defining __ARM_ARCH_8_1M_MAIN__. It should be removed when this behaviour is fixed. */
 

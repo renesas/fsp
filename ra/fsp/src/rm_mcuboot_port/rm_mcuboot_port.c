@@ -60,7 +60,7 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     uint32_t   app_pc    = app_image[1];
 
     /* Clean up internal flash driver. */
-    flash_on_chip_cleanup();
+    rm_mcuboot_cleanup();
 
     BOOT_LOG_DBG("Vector Table: 0x%x. PC=0x%x, SP=0x%x\n", (unsigned int) vector_table, (unsigned int) app_pc,
                  (unsigned int) app_sp);

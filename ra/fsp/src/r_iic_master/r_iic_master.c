@@ -834,8 +834,8 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
      * making the final timeout count as:
      * Timeout = ((ICLK/PCLKB)*ICBRL)/4.
      */
-    volatile uint32_t sysdiccr =
-        (uint32_t) (R_SYSTEM->SCKDIVCR & (IIC_MASTER_SYSDIVCK_ICLK_MASK | IIC_MASTER_SYSDIVCK_PCLKB_MASK));
+    volatile uint32_t sysdiccr = FSP_STYPE3_REG8_READ(R_SYSTEM->SCKDIVCR, BSP_CFG_CLOCKS_SECURE);
+    sysdiccr &= (IIC_MASTER_SYSDIVCK_ICLK_MASK | IIC_MASTER_SYSDIVCK_PCLKB_MASK);
     uint32_t pclkb         = (IIC_MASTER_SYSDIVCK_PCLKB_MASK & sysdiccr) >> 8U;
     uint32_t iclk          = sysdiccr >> 24U;
     uint32_t timeout_count = ((1U << (pclkb - iclk)) * p_ctrl->p_reg->ICBRL) >> 2U;
@@ -1152,7 +1152,7 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
 {
     /* Clear all the event flags except the receive data full, transmit end and transmit data empty flags*/
     uint8_t errs_events = IIC_MASTER_STATUS_REGISTER_2_ERR_MASK & p_ctrl->p_reg->ICSR2;
-    p_ctrl->p_reg->ICSR2 = (uint8_t) ~IIC_MASTER_STATUS_REGISTER_2_ERR_MASK;
+    p_ctrl->p_reg->ICSR2 &= (uint8_t) ~IIC_MASTER_STATUS_REGISTER_2_ERR_MASK;
 
     /* If the event was an error event, then handle it */
     if ((errs_events &
@@ -1191,8 +1191,7 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
          * See item '[4]' under 'Figure 36.6 Example master transmission flow' of the RA6M3 manual R01UH0886EJ0100 */
 
         /* Request IIC to issue the stop condition */
-        p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);
-        p_ctrl->p_reg->ICCR2  = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */
+        p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */
         /* Allow timeouts to be generated on the low value of SCL using either long or short mode */
         p_ctrl->p_reg->ICMR2 = (uint8_t) 0x02U |
                                (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT ==

@@ -27,9 +27,6 @@
  * The WDT interface for the Watchdog Timer (WDT) peripheral provides watchdog functionality including resetting the
  * device or generating an interrupt.
  *
- * The watchdog timer interface can be implemented by:
- * - @ref WDT
- * - @ref IWDT
  *
  * @{
  **********************************************************************************************************************/
@@ -54,6 +51,7 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#ifndef BSP_OVERRIDE_WDT_TIMEOUT_T
 
 /** WDT time-out periods. */
 typedef enum e_wdt_timeout
@@ -66,6 +64,9 @@ typedef enum e_wdt_timeout
     WDT_TIMEOUT_8192,                  ///< 8192 clock cycles
     WDT_TIMEOUT_16384,                 ///< 16384 clock cycles
 } wdt_timeout_t;
+#endif
+
+#ifndef BSP_OVERRIDE_WDT_CLOCK_DIVISION_T
 
 /** WDT clock division ratio. */
 typedef enum e_wdt_clock_division
@@ -81,6 +82,7 @@ typedef enum e_wdt_clock_division
     WDT_CLOCK_DIVISION_2048 = 7,       ///< CLK/2048
     WDT_CLOCK_DIVISION_8192 = 8,       ///< CLK/8192
 } wdt_clock_division_t;
+#endif
 
 /** WDT refresh permitted period window start position. */
 typedef enum e_wdt_window_start
@@ -103,7 +105,7 @@ typedef enum e_wdt_window_end
 /** WDT Counter underflow and refresh error control. */
 typedef enum e_wdt_reset_control
 {
-    WDT_RESET_CONTROL_NMI   = 0,       ///< NMI request when counter underflows.
+    WDT_RESET_CONTROL_NMI   = 0,       ///< NMI/IRQ request when counter underflows.
     WDT_RESET_CONTROL_RESET = 1,       ///< Reset request when counter underflows.
 } wdt_reset_control_t;
 
@@ -118,9 +120,10 @@ typedef enum e_wdt_stop_control
 typedef enum e_wdt_status
 {
     WDT_STATUS_NO_ERROR                    = 0, ///< No status flags set.
-    WDT_STATUS_UNDERFLOW_ERROR             = 1, ///< Underflow flag set.
+    WDT_STATUS_UNDERFLOW                   = 1, ///< Underflow flag set.
     WDT_STATUS_REFRESH_ERROR               = 2, ///< Refresh error flag set. Refresh outside of permitted window.
     WDT_STATUS_UNDERFLOW_AND_REFRESH_ERROR = 3, ///< Underflow and refresh error flags set.
+    WDT_STATUS_OVERFLOW                    = 4, ///< Overflow flag set.
 } wdt_status_t;
 
 /** Callback function parameter data */
@@ -137,9 +140,6 @@ typedef struct st_wdt_timeout_values
 } wdt_timeout_values_t;
 
 /** WDT control block.  Allocate an instance specific control block to pass into the WDT API calls.
- * @par Implemented as
- * - wdt_instance_ctrl_t
- * - iwdt_instance_ctrl_t
  */
 typedef void wdt_ctrl_t;
 
@@ -150,9 +150,9 @@ typedef struct st_wdt_cfg
     wdt_clock_division_t clock_division;               ///< Clock divider.
     wdt_window_start_t   window_start;                 ///< Refresh permitted window start position.
     wdt_window_end_t     window_end;                   ///< Refresh permitted window end position.
-    wdt_reset_control_t  reset_control;                ///< Select NMI or reset generated on underflow.
+    wdt_reset_control_t  reset_control;                ///< Select NMI/IRQ or reset generated on underflow.
     wdt_stop_control_t   stop_control;                 ///< Select whether counter operates in sleep mode.
-    void (* p_callback)(wdt_callback_args_t * p_args); ///< Callback provided when a WDT NMI ISR occurs.
+    void (* p_callback)(wdt_callback_args_t * p_args); ///< Callback provided when a WDT ISR occurs.
 
     /** Placeholder for user data.  Passed to the user callback in wdt_callback_args_t. */
     void const * p_context;
@@ -162,10 +162,8 @@ typedef struct st_wdt_cfg
 /** WDT functions implemented at the HAL layer will follow this API. */
 typedef struct st_wdt_api
 {
-    /** Initialize the WDT in register start mode. In auto-start mode with NMI output it registers the NMI callback.
-     * @par Implemented as
-     * - @ref R_WDT_Open()
-     * - @ref R_IWDT_Open()
+    /** Initialize the WDT in register start mode. In auto-start mode (Supported devices only) with NMI output it
+     * registers the NMI callback.
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -173,18 +171,12 @@ typedef struct st_wdt_api
     fsp_err_t (* open)(wdt_ctrl_t * const p_ctrl, wdt_cfg_t const * const p_cfg);
 
     /** Refresh the watchdog timer.
-     * @par Implemented as
-     * - @ref R_WDT_Refresh()
-     * - @ref R_IWDT_Refresh()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* refresh)(wdt_ctrl_t * const p_ctrl);
 
     /** Read the status of the WDT.
-     * @par Implemented as
-     * - @ref R_WDT_StatusGet()
-     * - @ref R_IWDT_StatusGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_status     Pointer to variable to return status information through.
@@ -192,9 +184,6 @@ typedef struct st_wdt_api
     fsp_err_t (* statusGet)(wdt_ctrl_t * const p_ctrl, wdt_status_t * const p_status);
 
     /** Clear the status flags of the WDT.
-     * @par Implemented as
-     * - @ref R_WDT_StatusClear()
-     * - @ref R_IWDT_StatusClear()
      *
      * @param[in] p_ctrl        Pointer to control structure.
      * @param[in] status        Status condition(s) to clear.
@@ -202,9 +191,6 @@ typedef struct st_wdt_api
     fsp_err_t (* statusClear)(wdt_ctrl_t * const p_ctrl, const wdt_status_t status);
 
     /** Read the current WDT counter value.
-     * @par Implemented as
-     * - @ref R_WDT_CounterGet()
-     * - @ref R_IWDT_CounterGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_count      Pointer to variable to return current WDT counter value.
@@ -212,9 +198,6 @@ typedef struct st_wdt_api
     fsp_err_t (* counterGet)(wdt_ctrl_t * const p_ctrl, uint32_t * const p_count);
 
     /** Read the watchdog timeout values.
-     * @par Implemented as
-     * - @ref R_WDT_TimeoutGet()
-     * - @ref R_IWDT_TimeoutGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_timeout        Pointer to structure to return timeout values.
@@ -222,16 +205,14 @@ typedef struct st_wdt_api
     fsp_err_t (* timeoutGet)(wdt_ctrl_t * const p_ctrl, wdt_timeout_values_t * const p_timeout);
 
     /** Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_WDT_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the WDT control block.
      * @param[in]   p_callback               Callback function
      * @param[in]   p_context                Pointer to send to callback function
-     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     * @param[in]   p_callback_memory        Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(wdt_ctrl_t * const p_api_ctrl, void (* p_callback)(wdt_callback_args_t *),
+    fsp_err_t (* callbackSet)(wdt_ctrl_t * const p_ctrl, void (* p_callback)(wdt_callback_args_t *),
                               void const * const p_context, wdt_callback_args_t * const p_callback_memory);
 } wdt_api_t;
 
@@ -249,5 +230,5 @@ FSP_FOOTER
 #endif
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup WDT_API)
+ * @} (end defgroup WDT_API)
  **********************************************************************************************************************/

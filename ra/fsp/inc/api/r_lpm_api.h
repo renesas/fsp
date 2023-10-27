@@ -32,8 +32,6 @@
  *
  * @note Not all low power modes are available on all MCUs.
  *
- * The LPM interface is implemented by:
- * - @ref LPM
  *
  * @{
  **********************************************************************************************************************/
@@ -67,6 +65,8 @@ typedef enum e_lpm_mode
     LPM_MODE_STANDBY_SNOOZE,           ///< Software Standby mode with Snooze mode enabled
     LPM_MODE_DEEP,                     ///< Deep Software Standby mode
 } lpm_mode_t;
+
+#ifndef BSP_OVERRIDE_LPM_SNOOZE_REQUEST_T
 
 /** Snooze request sources */
 typedef enum e_lpm_snooze_request
@@ -103,6 +103,9 @@ typedef enum e_lpm_snooze_request
     LPM_SNOOZE_REQUEST_AGT3_COMPARE_A  = 0x200000000ULL, ///< Enable AGT3 compare match A snooze request
     LPM_SNOOZE_REQUEST_AGT3_COMPARE_B  = 0x400000000ULL, ///< Enable AGT3 compare match B snooze request
 } lpm_snooze_request_t;
+#endif
+
+#ifndef BSP_OVERRIDE_LPM_SNOOZE_END_T
 
 /** Snooze end control */
 typedef enum e_lpm_snooze_end
@@ -121,31 +124,35 @@ typedef enum e_lpm_snooze_end
 } lpm_snooze_end_t;
 
 typedef uint16_t lpm_snooze_end_bits_t;
+#endif
+
+#ifndef BSP_OVERRIDE_LPM_SNOOZE_CANCEL_T
 
 /** Snooze cancel control */
 typedef enum e_lpm_snooze_cancel
 {
-    LPM_SNOOZE_CANCEL_SOURCE_NONE       = ELC_EVENT_NONE,                     ///< No snooze cancel source
-    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPM = ELC_EVENT_ADC0_COMPARE_MATCH,       ///< ADC Channel 0 window compare match
-#if (2U != BSP_FEATURE_ELC_VERSION)
-    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPUM = ELC_EVENT_ADC0_COMPARE_MISMATCH,   ///< ADC Channel 0 window compare mismatch
-#endif
-#if BSP_FEATURE_ADC_VALID_UNIT_MASK & (1U << 1)                               // If ADC has unit 1
-    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPM = ELC_EVENT_ADC1_COMPARE_MATCH,       ///< ADC Channel 1 window compare match
+    LPM_SNOOZE_CANCEL_SOURCE_NONE       = ELC_EVENT_NONE,                      ///< No snooze cancel source
+    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPM = ELC_EVENT_ADC0_COMPARE_MATCH,        ///< ADC Channel 0 window compare match
  #if (2U != BSP_FEATURE_ELC_VERSION)
-    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPUM = ELC_EVENT_ADC1_COMPARE_MISMATCH,   ///< ADC Channel 1 window compare mismatch
+    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPUM = ELC_EVENT_ADC0_COMPARE_MISMATCH,    ///< ADC Channel 0 window compare mismatch
  #endif
-#endif
-#if (BSP_FEATURE_SCI_CHANNELS & (1U << 0)) && (2U != BSP_FEATURE_ELC_VERSION) // If SCI has channel 0
-    LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM         = ELC_EVENT_SCI0_AM,             ///< SCI0 address match event
-    LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI = ELC_EVENT_SCI0_RXI_OR_ERI,     ///< SCI0 receive error
-#endif
-    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE = ELC_EVENT_DTC_COMPLETE,           ///< DTC transfer completion
-    LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI    = ELC_EVENT_DOC_INT,                ///< Data operation circuit interrupt
-#if BSP_FEATURE_CTSU_VERSION
-    LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN = ELC_EVENT_CTSU_END,                ///< CTSU measurement end interrupt
-#endif
+ #if BSP_FEATURE_ADC_VALID_UNIT_MASK & (1U << 1)                               // If ADC has unit 1
+    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPM = ELC_EVENT_ADC1_COMPARE_MATCH,        ///< ADC Channel 1 window compare match
+  #if (2U != BSP_FEATURE_ELC_VERSION)
+    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPUM = ELC_EVENT_ADC1_COMPARE_MISMATCH,    ///< ADC Channel 1 window compare mismatch
+  #endif
+ #endif
+ #if (BSP_FEATURE_SCI_CHANNELS & (1U << 0)) && (2U != BSP_FEATURE_ELC_VERSION) // If SCI has channel 0
+    LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM         = ELC_EVENT_SCI0_AM,              ///< SCI0 address match event
+    LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI = ELC_EVENT_SCI0_RXI_OR_ERI,      ///< SCI0 receive error
+ #endif
+    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE = ELC_EVENT_DTC_COMPLETE,            ///< DTC transfer completion
+    LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI    = ELC_EVENT_DOC_INT,                 ///< Data operation circuit interrupt
+ #if BSP_FEATURE_CTSU_VERSION
+    LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN = ELC_EVENT_CTSU_END,                 ///< CTSU measurement end interrupt
+ #endif
 } lpm_snooze_cancel_t;
+#endif
 
 /** DTC Enable in Snooze Mode */
 typedef enum e_lpm_snooze_dtc
@@ -153,6 +160,8 @@ typedef enum e_lpm_snooze_dtc
     LPM_SNOOZE_DTC_DISABLE = 0U,       ///< Disable DTC operation
     LPM_SNOOZE_DTC_ENABLE  = 1U,       ///< Enable DTC operation
 } lpm_snooze_dtc_t;
+
+#ifndef BSP_OVERRIDE_LPM_STANDBY_WAKE_SOURCE_T
 
 /** Wake from deep sleep or standby mode sources, does not apply to sleep or deep standby modes */
 typedef enum e_lpm_standby_wake_source
@@ -218,6 +227,7 @@ typedef enum e_lpm_standby_wake_source
 } lpm_standby_wake_source_t;
 
 typedef uint64_t lpm_standby_wake_source_bits_t;
+#endif
 
 /** I/O port state after Deep Software Standby mode */
 typedef enum e_lpm_io_port
@@ -324,6 +334,8 @@ typedef enum e_lpm_deep_standby_cancel_edge
 
 typedef uint32_t lpm_deep_standby_cancel_edge_bits_t;
 
+#ifndef BSP_OVERRIDE_LPM_DEEP_STANDBY_WAKE_SOURCE_T
+
 /** Deep Standby cancel sources */
 typedef enum e_lpm_deep_standby_cancel_source
 {
@@ -362,6 +374,7 @@ typedef enum e_lpm_deep_standby_cancel_source
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IWDT  = 0x20000000U,        ///< IWDT Underflow
     LPM_DEEP_STANDBY_CANCEL_SOURCE_VBATT = 0x80000000U,        ///< VBATT Tamper Detection
 } lpm_deep_standby_cancel_source_t;
+#endif
 
 typedef uint32_t lpm_deep_standby_cancel_source_bits_t;
 
@@ -441,8 +454,13 @@ typedef struct st_lpm_cfg
     /** Bitwise list of snooze end sources */
     lpm_snooze_end_bits_t snooze_end_sources;
 
+ #ifndef BSP_OVERRIDE_LPM_SNOOZE_CANCEL_T
+
     /** List of snooze cancel sources */
     lpm_snooze_cancel_t snooze_cancel_sources;
+ #else
+    lpm_snooze_cancel_source_bits_t snooze_cancel_sources;
+ #endif
 #endif
 
     /** State of DTC in snooze mode, enabled or disabled */
@@ -484,8 +502,6 @@ typedef struct st_lpm_cfg
 } lpm_cfg_t;
 
 /** LPM control block.  Allocate an instance specific control block to pass into the LPM API calls.
- * @par Implemented as
- * - lpm_instance_ctrl_t
  */
 typedef void lpm_ctrl_t;
 
@@ -493,38 +509,28 @@ typedef void lpm_ctrl_t;
 typedef struct st_lpm_api
 {
     /** Initialization function
-     * @par Implemented as
-     * - @ref R_LPM_Open()
-     **/
+    **/
 
-    fsp_err_t (* open)(lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cfg);
+    fsp_err_t (* open)(lpm_ctrl_t * const p_ctrl, lpm_cfg_t const * const p_cfg);
 
     /** Initialization function
-     * @par Implemented as
-     * - @ref R_LPM_Close()
-     **/
-    fsp_err_t (* close)(lpm_ctrl_t * const p_api_ctrl);
+    **/
+    fsp_err_t (* close)(lpm_ctrl_t * const p_ctrl);
 
     /** Configure a low power mode.
-     * @par Implemented as
-     * - @ref R_LPM_LowPowerReconfigure()
      *
      * @param[in]   p_cfg   Pointer to configuration structure. All elements of this structure must be set by user.
      **/
-    fsp_err_t (* lowPowerReconfigure)(lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cfg);
+    fsp_err_t (* lowPowerReconfigure)(lpm_ctrl_t * const p_ctrl, lpm_cfg_t const * const p_cfg);
 
     /** Enter low power mode (sleep/standby/deep standby) using WFI macro.
      *  Function will return after waking from low power mode.
-     * @par Implemented as
-     * - @ref R_LPM_LowPowerModeEnter()
      **/
-    fsp_err_t (* lowPowerModeEnter)(lpm_ctrl_t * const p_api_ctrl);
+    fsp_err_t (* lowPowerModeEnter)(lpm_ctrl_t * const p_ctrl);
 
     /** Clear the IOKEEP bit after deep software standby.
-     * * @par Implemented as
-     * - @ref R_LPM_IoKeepClear()
-     **/
-    fsp_err_t (* ioKeepClear)(lpm_ctrl_t * const p_api_ctrl);
+    **/
+    fsp_err_t (* ioKeepClear)(lpm_ctrl_t * const p_ctrl);
 } lpm_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

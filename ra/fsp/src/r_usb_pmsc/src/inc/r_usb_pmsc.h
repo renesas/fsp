@@ -167,11 +167,11 @@ typedef struct
     usb_msc_bcbwlun_t       bcbwlun;
     usb_msc_bcbwcb_length_t bcbwcb_length;
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(USB_HIGH_SPEED_MODULE)
     uint8_t cbwcb[(16 + USB_VALUE_481)]; /* Hi-Speed USB_MSC_CBW_t:512Byte */
-  #else /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #else /* defined(USB_HIGH_SPEED_MODULE) */
     uint8_t cbwcb[(16 + USB_VALUE_33)];  /* Full-Speed USB_MSC_CBW_t:64Byte*/
-  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif /* defined(USB_HIGH_SPEED_MODULE) */
  #else                                   /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
     uint8_t cbwcb[16];
  #endif /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */

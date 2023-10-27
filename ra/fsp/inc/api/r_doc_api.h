@@ -29,8 +29,6 @@
  * @section DOC_API_SUMMARY Summary
  * @brief This module implements the DOC_API using the Data Operation Circuit (DOC).
  *
- * Implemented by:
- * @ref DOC
  *
  * @{
  **********************************************************************************************************************/
@@ -85,8 +83,6 @@ typedef struct st_doc_callback_args
 } doc_callback_args_t;
 
 /** DOC control block.  Allocate an instance specific control block to pass into the DOC API calls.
- * @par Implemented as
- * - doc_instance_ctrl_t
  */
 typedef void doc_ctrl_t;
 
@@ -111,7 +107,7 @@ typedef struct st_doc_cfg
     uint32_t doc_data_extra;
 
     uint8_t   ipl;                     ///< DOC interrupt priority
-    IRQn_Type irq;                     ///< NVIC interrupt number assigned to this instance
+    IRQn_Type irq;                     ///< Interrupt number assigned to this instance
 
     /** Callback provided when a DOC ISR occurs. */
     void (* p_callback)(doc_callback_args_t * p_args);
@@ -124,23 +120,17 @@ typedef struct st_doc_cfg
 typedef struct st_doc_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_DOC_Open()
      * @param[in]   p_ctrl      Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg       Pointer to configuration structure. All elements of this structure must be set by user.
      */
     fsp_err_t (* open)(doc_ctrl_t * const p_ctrl, doc_cfg_t const * const p_cfg);
 
     /**Allow the driver to be reconfigured. Will reduce power consumption.
-     * @par Implemented as
-     * - @ref R_DOC_Close()
      * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      */
     fsp_err_t (* close)(doc_ctrl_t * const p_ctrl);
 
     /** Gets the result of addition/subtraction operations and stores it in the provided pointer p_result.
-     * @par Implemented as
-     * - @ref R_DOC_Read()
      *
      * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      * @param[in]   p_result    The result of the DOC operation.
@@ -148,8 +138,6 @@ typedef struct st_doc_api
     fsp_err_t (* read)(doc_ctrl_t * const p_ctrl, uint32_t * p_result);
 
     /** Write to the DODIR register.
-     * @par Implemented as
-     * - @ref R_DOC_Write()
      *
      * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      * @param[in]   data        data to be written to DOC DODIR register.
@@ -158,8 +146,6 @@ typedef struct st_doc_api
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - R_DOC_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the DOC control block.
      * @param[in]   p_callback               Callback function
@@ -167,7 +153,7 @@ typedef struct st_doc_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(doc_ctrl_t * const p_api_ctrl, void (* p_callback)(doc_callback_args_t *),
+    fsp_err_t (* callbackSet)(doc_ctrl_t * const p_ctrl, void (* p_callback)(doc_callback_args_t *),
                               void const * const p_context, doc_callback_args_t * const p_callback_memory);
 } doc_api_t;
 
@@ -185,5 +171,5 @@ FSP_FOOTER
 #endif
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup DOC_API)
+ * @} (end defgroup DOC_API)
  **********************************************************************************************************************/

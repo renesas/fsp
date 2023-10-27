@@ -102,6 +102,14 @@ const uint32_t sce_oem_key_size[SCE_OEM_CMD_NUM] =
     SCE_OEM_KEY_SIZE_ECCSECP256K1_PRIVATE_KEY_INST_DATA_WORD,
 };
 
+/* Dummy domain parameter structure create for all RSIP devices to allow using the same API for all engines. */
+
+uint32_t const DomainParam_NIST_P256 = {0};
+uint32_t const DomainParam_NIST_P384 = {0};
+uint32_t const DomainParam_Brainpool_256r1 = {0};
+uint32_t const DomainParam_Brainpool_384r1 = {0};
+uint32_t const DomainParam_Koblitz_secp256k1 = {0};
+
 /* Find the lifecycle state load the hardware unique key */
 /* returns fsp_err_t                                     */
 
@@ -374,21 +382,21 @@ fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
                                      (uint32_t *)InData_DataTLen, OutData_DataT);
 }
 
-void HW_SCE_Aes192CcmEncryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT)
+void HW_SCE_Aes192CcmEncryptUpdateSub(const uint32_t *InData_Text, uint32_t *OutData_Text, const uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(InData_Text);
     FSP_PARAMETER_NOT_USED(OutData_Text);
     FSP_PARAMETER_NOT_USED(MAX_CNT);
 }
 
-void HW_SCE_Aes192CcmDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT)
+void HW_SCE_Aes192CcmDecryptUpdateSub(const uint32_t *InData_Text, uint32_t *OutData_Text, const uint32_t MAX_CNT)
 {
     FSP_PARAMETER_NOT_USED(InData_Text);
     FSP_PARAMETER_NOT_USED(OutData_Text);
     FSP_PARAMETER_NOT_USED(MAX_CNT);
 }
 
-fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub(uint32_t *InData_TextLen, uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t *OutData_MAC)
+fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub(const uint32_t *InData_Text, const uint32_t *InData_TextLen, uint32_t *OutData_Text, uint32_t *OutData_MAC)
 {
     FSP_PARAMETER_NOT_USED(InData_TextLen);
     FSP_PARAMETER_NOT_USED(InData_Text);
@@ -397,7 +405,7 @@ fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub(uint32_t *InData_TextLen, uint32_t *In
     return FSP_ERR_UNSUPPORTED;
 }
 
-fsp_err_t HW_SCE_Aes192CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InData_TextLen, uint32_t *InData_MAC, uint32_t *InData_MACLength, uint32_t *OutData_Text)
+fsp_err_t HW_SCE_Aes192CcmDecryptFinalSub(const uint32_t *InData_Text, const uint32_t *InData_TextLen, const uint32_t *InData_MAC, const uint32_t *InData_MACLength, uint32_t *OutData_Text)
 {
     FSP_PARAMETER_NOT_USED(InData_Text);
     FSP_PARAMETER_NOT_USED(InData_TextLen);
@@ -532,15 +540,15 @@ fsp_err_t HW_SCE_Aes256CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
     return (HW_SCE_Aes256CcmDecryptInitSub(InData_KeyIndex, InData_IV, InData_Header, Header_Len));
 }
 
-fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (uint32_t *InData_TextLen, uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t *OutData_MAC)
+fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (const uint32_t *InData_Text, const uint32_t *InData_TextLen, uint32_t *OutData_Text, uint32_t *OutData_MAC)
 {
     return (HW_SCE_Aes128CcmEncryptFinalSub(InData_TextLen, InData_Text, OutData_Text, OutData_MAC));
 }
 
-fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(uint32_t *InData_Text, 
-                                                 uint32_t *InData_TextLen, 
-                                                 uint32_t *InData_MAC, 
-                                                 uint32_t *InData_MACLength, 
+fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(const uint32_t *InData_Text, 
+                                                 const uint32_t *InData_TextLen, 
+                                                 const uint32_t *InData_MAC, 
+                                                 const uint32_t *InData_MACLength, 
                                                  uint32_t *OutData_Text)
 {
     return (HW_SCE_Aes128CcmDecryptFinalSub(InData_Text, InData_TextLen, InData_MAC, InData_MACLength, OutData_Text));

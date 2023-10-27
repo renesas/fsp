@@ -29,8 +29,6 @@
  * @section   RM_BLE_MESH_BEARER_API_Summary Summary
  * The BLE Mesh Bearer interface for the Bluetooth Low Energy Mesh Bearer (BLE MESH BEARER) peripheral provides Bluetooth Low Energy Mesh Bearer functionality.
  *
- * The Bluetooth Low Energy Mesh Bearer interface can be implemented by:
- * - @ref RM_BLE_MESH_BEARER
  *
  * @{
  **********************************************************************************************************************/
@@ -285,8 +283,6 @@ typedef struct st_rm_ble_mesh_bearer_beacon_callback_args
 } rm_ble_mesh_bearer_beacon_callback_args_t;
 
 /** BLE MESH BEARER control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_ble_mesh_bearer_instance_ctrl_t
  */
 typedef void rm_ble_mesh_bearer_ctrl_t;
 
@@ -304,8 +300,6 @@ typedef struct st_rm_ble_mesh_bearer_cfg
 typedef struct st_rm_ble_mesh_bearer_api
 {
     /** Open bearer middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -313,8 +307,6 @@ typedef struct st_rm_ble_mesh_bearer_api
     fsp_err_t (* open)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, rm_ble_mesh_bearer_cfg_t const * const p_cfg);
 
     /** Close bearer middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_Close()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -322,8 +314,6 @@ typedef struct st_rm_ble_mesh_bearer_api
     fsp_err_t (* close)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl);
 
     /** Register Interface with Bearer Layer
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_RegisterInterface()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -339,8 +329,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                                         rm_ble_mesh_bearer_ntf_callback_args_t * p_args));
 
     /** Register Beacon Interface with Bearer Layer
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_RegisterBeaconHandler()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -357,8 +345,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                                             rm_ble_mesh_bearer_beacon_callback_args_t * p_args));
 
     /** Add a bearer to Bearer Layer
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_AddBearer()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -377,8 +363,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                             rm_ble_mesh_bearer_handle_t * const p_brr_handle);
 
     /** Remove a bearer from Bearer Layer
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_RemoveBearer()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -393,8 +377,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                                rm_ble_mesh_bearer_handle_t const * const p_brr_handle);
 
     /** Observe ON/OFF for the beacon type
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_ObserveBeacon()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -408,8 +390,6 @@ typedef struct st_rm_ble_mesh_bearer_api
     fsp_err_t (* observeBeacon)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t bcon_type, uint8_t enable);
 
     /** API to send Unprovisioned Device Beacon
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_BcastUnprovisionedBeacon()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -433,8 +413,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                                            rm_ble_mesh_buffer_t const * const p_uri);
 
     /** API to broadcast a beacon
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_BroadcastBeacon()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -452,8 +430,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                                   uint8_t const * const p_packet, uint16_t length);
 
     /** API to send Proxy Device ADV
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_StartProxyAdv()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -479,8 +455,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                                 uint16_t datalen);
 
     /** Send a bearer PDU
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_SendPdu()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -499,8 +473,6 @@ typedef struct st_rm_ble_mesh_bearer_api
                           rm_ble_mesh_buffer_t const * const p_buffer);
 
     /** Get the RSSI of current received packet being processed.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_GetPacketRssi()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -514,8 +486,6 @@ typedef struct st_rm_ble_mesh_bearer_api
     fsp_err_t (* getPacketRssi)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl, uint8_t * p_rssi_value);
 
     /** Put the bearer to sleep.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_Sleep()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.
@@ -523,8 +493,6 @@ typedef struct st_rm_ble_mesh_bearer_api
     fsp_err_t (* sleep)(rm_ble_mesh_bearer_ctrl_t * const p_ctrl);
 
     /** Wakeup the bearer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_BEARER_Wakeup()
      *
      * @param[in]  p_ctrl
      *             Pointer to control structure.

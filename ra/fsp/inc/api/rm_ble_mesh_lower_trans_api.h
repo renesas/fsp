@@ -29,8 +29,6 @@
  * @section   RM_BLE_MESH_LOWER_TRANS_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Lower Trans peripheral provides Bluetooth Low Energy Abstraction functionality.
  *
- * The Bluetooth Low Energy Mesh interface can be implemented by:
- * - @ref RM_BLE_MESH_LOWER_TRANS
  *
  * @{
  **********************************************************************************************************************/
@@ -118,8 +116,6 @@ typedef struct st_rm_ble_mesh_lower_trans_callback_args
 } rm_ble_mesh_lower_trans_callback_args_t;
 
 /** BLE MESH control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_ble_mesh_lower_trans_instance_ctrl_t
  */
 typedef void rm_ble_mesh_lower_trans_ctrl_t;
 
@@ -140,8 +136,6 @@ typedef struct st_rm_ble_mesh_lower_trans_cfg
 typedef struct st_rm_ble_mesh_lower_trans_api
 {
     /** Register Interface with Lower Transport Layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -150,16 +144,12 @@ typedef struct st_rm_ble_mesh_lower_trans_api
                        rm_ble_mesh_lower_trans_cfg_t const * const p_cfg);
 
     /** Unregister Interface with Lower Transport Layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_lower_trans_ctrl_t * const p_ctrl);
 
     /** API to send transport PDUs.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_SendPdu()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      * @param[in]  p_transmit_setting  Pointer to transmit setting structure.
@@ -171,16 +161,12 @@ typedef struct st_rm_ble_mesh_lower_trans_api
                           rm_ble_mesh_buffer_t const * const p_buffer, rm_ble_mesh_lower_trans_reliable_t reliable);
 
     /** To clear all segmentation and reassembly contexts.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_ClearSarContexts()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      */
     fsp_err_t (* clearSarContexts)(rm_ble_mesh_lower_trans_ctrl_t * const p_ctrl);
 
     /** To clear all segmentation and reassembly contexts for a given subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_ClearSubnetSarContexts()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      * @param[in]  subnet_handle       Subnet Handle whose respective SAR Contexts are to be cleared.
@@ -189,16 +175,12 @@ typedef struct st_rm_ble_mesh_lower_trans_api
                                          rm_ble_mesh_network_subnet_handle_t    subnet_handle);
 
     /** To reinitialize all Lower Transport replay cache entries.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_ReinitReplayCache()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      */
     fsp_err_t (* reinitReplayCache)(rm_ble_mesh_lower_trans_ctrl_t * const p_ctrl);
 
     /** To trigger any Lower Transport pending transmissions.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_LOWER_TRANS_TriggerPendingTransmits()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      */

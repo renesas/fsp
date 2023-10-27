@@ -26,8 +26,6 @@
  * @section RM_OB1203_API_Summary Summary
  * The OB1203 interface provides OB1203 functionality.
  *
- * The OB1203 interface can be implemented by:
- * - @ref RM_OB1203
  *
  * @{
  **********************************************************************************************************************/
@@ -466,8 +464,6 @@ typedef struct st_rm_ob1203_cfg
 } rm_ob1203_cfg_t;
 
 /** OB1203 control block.  Allocate an instance specific control block to pass into the OB1203 API calls.
- * @par Implemented as
- * - rm_ob1203_instance_ctrl_t
  */
 typedef void rm_ob1203_ctrl_t;
 
@@ -475,8 +471,6 @@ typedef void rm_ob1203_ctrl_t;
 typedef struct st_rm_ob1203_api
 {
     /** Open sensor.
-     * @par Implemented as
-     * - @ref RM_OB1203_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -484,8 +478,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* open)(rm_ob1203_ctrl_t * const p_ctrl, rm_ob1203_cfg_t const * const p_cfg);
 
     /** Start measurement.
-     * @par Implemented as
-     * - @ref RM_OB1203_MeasurementStart()
      *
      * @param[in]  p_ctrl    Pointer to control structure.
      * @param[in]  mode      Sensor mode.
@@ -493,8 +485,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* measurementStart)(rm_ob1203_ctrl_t * const p_ctrl);
 
     /** Stop measurement.
-     * @par Implemented as
-     * - @ref RM_OB1203_MeasurementStop()
      *
      * @param[in]  p_ctrl    Pointer to control structure.
      * @param[in]  mode      Sensor mode.
@@ -502,8 +492,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* measurementStop)(rm_ob1203_ctrl_t * const p_ctrl);
 
     /** Read Light ADC data from OB1203.
-     * @par Implemented as
-     * - @ref RM_OB1203_LightRead()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -513,8 +501,6 @@ typedef struct st_rm_ob1203_api
                             rm_ob1203_light_data_type_t type);
 
     /** Calculate Light data from raw data.
-     * @par Implemented as
-     * - @ref RM_OB1203_LightDataCalculate()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -524,8 +510,6 @@ typedef struct st_rm_ob1203_api
                                      rm_ob1203_light_data_t * const p_ob1203_data);
 
     /** Read Proximity ADC data from OB1203.
-     * @par Implemented as
-     * - @ref RM_OB1203_ProxRead()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -533,8 +517,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* proxRead)(rm_ob1203_ctrl_t * const p_ctrl, rm_ob1203_raw_data_t * const p_raw_data);
 
     /** Calculate Proximity data from raw data.
-     * @par Implemented as
-     * - @ref RM_OB1203_ProxDataCalculate()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -544,8 +526,6 @@ typedef struct st_rm_ob1203_api
                                     rm_ob1203_prox_data_t * const p_ob1203_data);
 
     /** Read PPG ADC data from OB1203.
-     * @par Implemented as
-     * - @ref RM_OB1203_PpgRead()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -555,8 +535,6 @@ typedef struct st_rm_ob1203_api
                           uint8_t const number_of_samples);
 
     /** Calculate PPG data from raw data.
-     * @par Implemented as
-     * - @ref RM_OB1203_PpgDataCalculate()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -566,8 +544,6 @@ typedef struct st_rm_ob1203_api
                                    rm_ob1203_ppg_data_t * const p_ob1203_data);
 
     /** Get device status. Read STATUS_0 and STATUS_1 registers.
-     * @par Implemented as
-     * - @ref RM_OB1203_DeviceStatusGet()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_status             Pointer to device status.
@@ -575,8 +551,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* deviceStatusGet)(rm_ob1203_ctrl_t * const p_ctrl, rm_ob1203_device_status_t * const p_status);
 
     /** Set device interrupt configuration.
-     * @par Implemented as
-     * - @ref RM_OB1203_DeviceInterruptCfgSet()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  interrupt_cfg        Device interrupt configuration.
@@ -585,8 +559,6 @@ typedef struct st_rm_ob1203_api
                                         rm_ob1203_device_interrupt_cfg_t const interrupt_cfg);
 
     /** Set gain.
-     * @par Implemented as
-     * - @ref RM_OB1203_GainSet()
      *
      * @param[in]  p_ctrl      Pointer to control structure.
      * @param[in]  gain        Gain configuration.
@@ -594,8 +566,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* gainSet)(rm_ob1203_ctrl_t * const p_ctrl, rm_ob1203_gain_t const gain);
 
     /** Set LED current value.
-     * @par Implemented as
-     * - @ref RM_OB1203_LedCurrentSet()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  led_current          Current value structure.
@@ -603,8 +573,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* ledCurrentSet)(rm_ob1203_ctrl_t * const p_ctrl, rm_ob1203_led_current_t const led_current);
 
     /** Get FIFO information.
-     * @par Implemented as
-     * - @ref RM_OB1203_FifoInfoGet()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_fifo_info          Pointer to FIFO information (write index, read index and overflow counter).
@@ -612,8 +580,6 @@ typedef struct st_rm_ob1203_api
     fsp_err_t (* fifoInfoGet)(rm_ob1203_ctrl_t * const p_ctrl, rm_ob1203_fifo_info_t * const p_fifo_info);
 
     /** Close OB1203.
-     * @par Implemented as
-     * - @ref RM_OB1203_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */

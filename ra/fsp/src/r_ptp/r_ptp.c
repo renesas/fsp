@@ -218,6 +218,8 @@ static void r_ptp_hw_config(ptp_instance_ctrl_t * p_instance_ctrl);
 
 static uint32_t r_ptp_calculate_timeout(ptp_instance_ctrl_t * p_instance_ctrl, int8_t log_interval);
 
+void r_ptp_local_clock_value_get(ptp_time_t * const p_time);
+
 static void r_ptp_message_endian_swap(ptp_message_t * p_message);
 
 static fsp_err_t r_ptp_process_llc_snap_packet(uint8_t const * const p_llc_snap_packet,
@@ -952,17 +954,7 @@ fsp_err_t R_PTP_LocalClockValueGet (ptp_ctrl_t * const p_ctrl, ptp_time_t * cons
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    /* Issue a directive to capture information. */
-    R_ETHERC_EPTPC_COMMON->GETINFOR = 1U;
-
-    /* Waiting for information capturing to complete.
-     * (See Figure 30.27 in the RA6M3 manual R01UH0886EJ0100) */
-    FSP_HARDWARE_REGISTER_WAIT(R_ETHERC_EPTPC_COMMON->GETINFOR, 0U);
-
-    /* Read the value of the local clock counter from the LCCVR register. */
-    p_time->seconds_upper = (uint16_t) R_ETHERC_EPTPC_COMMON->LCCVRU;
-    p_time->seconds_lower = R_ETHERC_EPTPC_COMMON->LCCVRM;
-    p_time->nanoseconds   = R_ETHERC_EPTPC_COMMON->LCCVRL;
+    r_ptp_local_clock_value_get(p_time);
 
     return FSP_SUCCESS;
 }
@@ -1019,6 +1011,7 @@ fsp_err_t R_PTP_PulseTimerCommonConfig (ptp_ctrl_t * const p_ctrl, ptp_pulse_tim
  * @retval     FSP_SUCCESS                     The pulse timer has been enabled.
  * @retval     FSP_ERR_NOT_OPEN                The instance has not been opened.
  * @retval     FSP_ERR_ASSERTION               An argument was NULL or invalid.
+ * @retval     FSP_ERR_INVALID_ARGUMENT        The start time must be set to a value that is later than current time.
  **********************************************************************************************************************/
 fsp_err_t R_PTP_PulseTimerEnable (ptp_ctrl_t * const p_ctrl, uint32_t channel,
                                   ptp_pulse_timer_cfg_t * const p_timer_cfg)
@@ -1031,6 +1024,23 @@ fsp_err_t R_PTP_PulseTimerEnable (ptp_ctrl_t * const p_ctrl, uint32_t channel,
     FSP_ASSERT(PTP_NUM_PULSE_TIMER >= channel);
     FSP_ASSERT(1000000000U > p_timer_cfg->start_time.nanoseconds);
     FSP_ASSERT(p_timer_cfg->period > p_timer_cfg->pulse);
+
+    /* Verify that the start time is after the current time. */
+    ptp_time_t current_time;
+    r_ptp_local_clock_value_get(&current_time);
+
+    FSP_ERROR_RETURN(p_timer_cfg->start_time.seconds_upper >= current_time.seconds_upper, FSP_ERR_INVALID_ARGUMENT);
+
+    if (p_timer_cfg->start_time.seconds_upper == current_time.seconds_upper)
+    {
+        FSP_ERROR_RETURN(p_timer_cfg->start_time.seconds_lower >= current_time.seconds_lower, FSP_ERR_INVALID_ARGUMENT);
+
+        if (p_timer_cfg->start_time.seconds_lower == current_time.seconds_lower)
+        {
+            FSP_ERROR_RETURN(p_timer_cfg->start_time.nanoseconds >= current_time.nanoseconds, FSP_ERR_INVALID_ARGUMENT);
+        }
+    }
+
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
@@ -1266,6 +1276,9 @@ static void r_ptp_hw_reset (void)
     R_BSP_SoftwareDelay(delay_microseconds, BSP_DELAY_UNITS_MICROSECONDS);
 
     R_ETHERC_EPTPC_CFG->PTRSTR = 0;
+
+    /* Wait 2 access cycles to ensure that the write has completed. */
+    R_ETHERC_EPTPC_CFG->PTRSTR;
 }
 
 /*******************************************************************************************************************//**
@@ -1332,6 +1345,9 @@ static void r_ptp_hw_config (ptp_instance_ctrl_t * p_instance_ctrl)
 
     /* Set the value of STCA Clock Select Register. */
     R_ETHERC_EPTPC_CFG->STCSELR = (uint32_t) p_cfg->stca.clock_sel;
+
+    /* Ensure that there are at least 2 access cycles between writing STCSELR and STCFR. */
+    R_ETHERC_EPTPC_CFG->STCSELR;
 
     /* Set the value of the STCA Clock Frequency Setting Register. */
     R_ETHERC_EPTPC_COMMON->STCFR = (uint32_t) p_cfg->stca.clock_freq;
@@ -1483,6 +1499,26 @@ static uint32_t r_ptp_calculate_timeout (ptp_instance_ctrl_t * p_instance_ctrl, 
     }
 
     return (uint32_t) (timeout & UINT32_MAX);
+}
+
+/*******************************************************************************************************************//**
+ * Get the current value of the local clock.
+ *
+ * @param[in]  p_time                 Pointer to a structure for storing the clock value.
+ **********************************************************************************************************************/
+void r_ptp_local_clock_value_get (ptp_time_t * const p_time)
+{
+    /* Issue a directive to capture information. */
+    R_ETHERC_EPTPC_COMMON->GETINFOR = 1U;
+
+    /* Waiting for information capturing to complete.
+     * (See Figure 30.27 in the RA6M3 manual R01UH0886EJ0100) */
+    FSP_HARDWARE_REGISTER_WAIT(R_ETHERC_EPTPC_COMMON->GETINFOR, 0U);
+
+    /* Read the value of the local clock counter from the LCCVR register. */
+    p_time->seconds_upper = (uint16_t) R_ETHERC_EPTPC_COMMON->LCCVRU;
+    p_time->seconds_lower = R_ETHERC_EPTPC_COMMON->LCCVRM;
+    p_time->nanoseconds   = R_ETHERC_EPTPC_COMMON->LCCVRL;
 }
 
 /*******************************************************************************************************************//**

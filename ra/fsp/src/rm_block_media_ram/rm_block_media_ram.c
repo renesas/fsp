@@ -542,6 +542,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
     if (NULL != p_instance_ctrl->p_callback)
     {
         block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
 
@@ -590,6 +591,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Read (rm_block_media_ctrl_t * const p_ctrl,
     if (NULL != p_instance_ctrl->p_callback)
     {
         block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
 
@@ -636,6 +638,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Write (rm_block_media_ctrl_t * const p_ctrl,
     if (NULL != p_instance_ctrl->p_callback)
     {
         block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
 
@@ -680,6 +683,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Erase (rm_block_media_ctrl_t * const p_ctrl,
     if (NULL != p_instance_ctrl->p_callback)
     {
         block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
 

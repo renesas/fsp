@@ -26,9 +26,6 @@
  * @section MOTOR_120_CONTROL_API_Summary Summary
  * The motor 120 control interface for speed calculation and setting, fixed cycle processing
  *
- * The motor 120 control interface can be implemented by:
- * - @ref MOTOR_120_CONTROL_SENSORLESS
- * - @ref MOTOR_120_CONTROL_HALL
  *
  * @{
  **********************************************************************************************************************/
@@ -153,9 +150,6 @@ typedef enum  e_motor_120_control_voltage_ref
 } motor_120_control_voltage_ref_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_120_control_sensorless_instance_ctrl_t
- * - motor_120_control_hall_instance_ctrl_t
  */
 typedef void motor_120_control_ctrl_t;
 
@@ -185,9 +179,6 @@ typedef struct st_motor_120_control_cfg
 typedef struct st_motor_120_control_api
 {
     /** Initialize the motor 120 control module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_Open()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -195,45 +186,30 @@ typedef struct st_motor_120_control_api
     fsp_err_t (* open)(motor_120_control_ctrl_t * const p_ctrl, motor_120_control_cfg_t const * const p_cfg);
 
     /** Close the motor 120 control module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_Close()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_120_control_ctrl_t * const p_ctrl);
 
     /** Run the motor 120 control module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_Run()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_Run()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* run)(motor_120_control_ctrl_t * const p_ctrl);
 
     /** Stop the motor 120 control module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_Stop()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_Stop()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* stop)(motor_120_control_ctrl_t * const p_ctrl);
 
     /** Reset variables of the motor 120 control module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_Reset()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_120_control_ctrl_t * const p_ctrl);
 
     /** Set speed[rpm]
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_SpeedSet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_SpeedSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] speed_rpm    Pointer to get speed data[rpm]
@@ -241,9 +217,6 @@ typedef struct st_motor_120_control_api
     fsp_err_t (* speedSet)(motor_120_control_ctrl_t * const p_ctrl, float const speed_rpm);
 
     /** Get speed.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_SpeedGet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_SpeedGet()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      * @param[out] p_speed_rpm         Pointer to get speed data[rpm]
@@ -251,9 +224,6 @@ typedef struct st_motor_120_control_api
     fsp_err_t (* speedGet)(motor_120_control_ctrl_t * const p_ctrl, float * const p_speed_rpm);
 
     /** Get phase current, Vdc and Va_max data.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_CurrentGet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_CurrentGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_current_status Pointer to get data structure.
@@ -262,9 +232,6 @@ typedef struct st_motor_120_control_api
                              motor_120_driver_current_status_t * const p_current_status);
 
     /** Get wait stop flag.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_WaitStopFlagGet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_WaitStopFlagGet()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      * @param[out] p_flag              Pointer to wait stop flag
@@ -273,9 +240,6 @@ typedef struct st_motor_120_control_api
                                   motor_120_control_wait_stop_flag_t * const p_flag);
 
     /** Get timerout error flag.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_TimeoutErrorFlagGet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_TimeoutErrorFlagGet()
      *
      * @param[in]  p_ctrl                   Pointer to control structure.
      * @param[out] p_timeout_error_flag     Pointer to timeout error flag
@@ -284,9 +248,6 @@ typedef struct st_motor_120_control_api
                                       motor_120_control_timeout_error_flag_t * const p_timeout_error_flag);
 
     /** Get pattern error flag.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_PatternErrorFlagGet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_PatternErrorFlagGet()
      *
      * @param[in]  p_ctrl                       Pointer to control structure.
      * @param[out] p_pattern_error_flag         Pointer to pattern error flag
@@ -295,9 +256,6 @@ typedef struct st_motor_120_control_api
                                       motor_120_control_pattern_error_flag_t * const p_pattern_error_flag);
 
     /** Get voltage ref.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_VoltageRefGet()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_VoltageRefGet()
      *
      * @param[in]  p_ctrl                       Pointer to control structure.
      * @param[out] p_voltage_ref                Pointer to flag voltage ref
@@ -306,9 +264,6 @@ typedef struct st_motor_120_control_api
                                 motor_120_control_voltage_ref_t * const p_voltage_ref);
 
     /** Update configuration parameters for the calculation in the motor 120 control module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_CONTROL_SENSORLESS_ParameterUpdate()
-     * - @ref RM_MOTOR_120_CONTROL_HALL_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

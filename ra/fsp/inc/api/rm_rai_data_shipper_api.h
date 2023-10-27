@@ -29,8 +29,6 @@
  * @section RM_RAI_DATA_SHIPPER_API_SUMMARY Summary
  * The rai data shipper interface provides multiple communication methods.
  *
- * Implemented by:
- * - @ref RM_RAI_DATA_SHIPPER
  *
  * @{
  **********************************************************************************************************************/
@@ -85,8 +83,6 @@ typedef struct st_rai_data_shipper_cfg
 } rai_data_shipper_cfg_t;
 
 /** Data Shipper control block.  Allocate an instance specific control block to pass into the Data Shipper API calls.
- * @par Implemented as
- * - @ref rai_data_shipper_instance_ctrl_t
  */
 typedef void rai_data_shipper_ctrl_t;
 
@@ -94,8 +90,6 @@ typedef void rai_data_shipper_ctrl_t;
 typedef struct st_rai_data_shipper_api
 {
     /** Initialize Data Shipper module instance.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_SHIPPER_Open()
      *
      * @note To reopen after calling this function, call @ref rai_data_shipper_api_t::close first.
      * @param[in]  p_ctrl  Pointer to control handle structure
@@ -104,28 +98,21 @@ typedef struct st_rai_data_shipper_api
     fsp_err_t (* open)(rai_data_shipper_ctrl_t * const p_ctrl, rai_data_shipper_cfg_t const * const p_cfg);
 
     /** Read data.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_SHIPPER_Read()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  p_buf    Pointer to the location to store read data.
      * @param[in]  buf_len  Number of bytes to read.
      */
-    fsp_err_t (* read)(rai_data_shipper_ctrl_t * const p_api_ctrl, void * const p_buf, uint32_t * const buf_len);
+    fsp_err_t (* read)(rai_data_shipper_ctrl_t * const p_ctrl, void * const p_buf, uint32_t * const buf_len);
 
     /** Write data.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_SHIPPER_Write()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  write_params     Pointer to write parameters structure
      */
-    fsp_err_t (* write)(rai_data_shipper_ctrl_t * const         p_api_ctrl,
-                        rai_data_shipper_write_params_t const * p_write_params);
+    fsp_err_t (* write)(rai_data_shipper_ctrl_t * const p_ctrl, rai_data_shipper_write_params_t const * p_write_params);
 
     /** Close the specified Data Shipper module instance.
-     * @par Implemented as
-     * - @ref RM_RAI_DATA_SHIPPER_Close()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
      */

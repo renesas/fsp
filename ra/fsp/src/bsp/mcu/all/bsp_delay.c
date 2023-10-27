@@ -166,11 +166,12 @@ BSP_ATTRIBUTE_STACKLESS void bsp_prv_software_delay_loop (__attribute__(
     __asm volatile (
 #if defined(RENESAS_CORTEX_M85) && (defined(__ARMCC_VERSION) || defined(__GNUC__))
 
-        /* Optimize inner loop execution time on CM85 cores (Alignment allows for instruction fusion). */
-        ".align 8\n"
+        /* Align the branch target to a 64-bit boundary, a CM85 specific optimization. */
+        /* IAR does not support alignment control within inline assembly. */
+        ".balign 8\n"
 #endif
         "sw_delay_loop:         \n"
-#if defined(__ICCARM__) || defined(__ARMCC_VERSION)
+#if defined(__ICCARM__) || defined(__ARMCC_VERSION) || (defined(__llvm__) && !defined(__CLANG_TIDY__))
         "   subs r0, #1         \n"    ///< 1 cycle
 #elif defined(__GNUC__)
         "   sub r0, r0, #1      \n"    ///< 1 cycle

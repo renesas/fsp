@@ -94,6 +94,10 @@ fsp_err_t R_DTC_SoftwareStop(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DTC_Enable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DTC_Disable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DTC_InfoGet(transfer_ctrl_t * const p_api_ctrl, transfer_properties_t * const p_properties);
+fsp_err_t R_DTC_Reload(transfer_ctrl_t * const p_api_ctrl,
+                       void const            * p_src,
+                       void                  * p_dest,
+                       uint32_t const          num_transfers);
 fsp_err_t R_DTC_Close(transfer_ctrl_t * const p_api_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

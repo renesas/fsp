@@ -21,7 +21,7 @@
 /**
   * @file    iaq_2nd_gen.h
   * @author  Renesas Electronics Corporation
-  * @version 3.1.0
+  * @version 3.2.0
   * @brief   This file contains the data structure definitions and
   *          the function definitions for the 2nd generation IAQ algorithm.
   * @details The library contains an algorithm to calculate an EtOH, TVOC and
@@ -57,22 +57,20 @@ extern "C" {
 /**
 * @brief Variables that describe the sensor or the algorithm state.
 */
+
 typedef struct {
     float log_rcda[9]; /**< log10 of CDA resistances. */
     float rh_cda;
     float t_cda;
     uint32_t sample_counter;
-    float rg_mean;
-    float var_log10_rel_iaq;
-    uint8_t need_filter_init;
-    float rel_iaq_smooth;
-    float rel_iaq_deltafilter;
-    float eco2_untracked;
-    float min_tracking;
+    float tvoc_smooth;
+    float tvoc_deltafilter;
     float acchw;
     float accow;
+    float eco2;
     float etoh;
     float iaq;
+    uint8_t need_filter_init;
 } iaq_2nd_gen_handle_t;
 
 /**

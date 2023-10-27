@@ -29,7 +29,7 @@
 #include "../../../r_usb_basic/src/driver/inc/r_usb_extern.h"
 #include "../../../r_usb_basic/src/hw/inc/r_usb_bitdefine.h"
 #include "r_usb_hcdc_api.h"
-#include "inc/r_usb_hcdc.h"
+#include "inc/r_usb_hcdc_driver.h"
 
 #define USB_VALUE_32    (32)
 
@@ -55,6 +55,13 @@ const uint16_t g_usb_hcdc_device_tpl[] =
     USB_CFG_TPLCNT,                    /* Number of tpl table */
     0,                                 /* Reserved */
     USB_CFG_TPL                        /* Vendor ID, Product ID */
+};
+
+uint16_t g_usb_hcdc_vendor_table[2 + (2 * USB_HCDC_SPECIFIC_DEV_MAX)] =
+{
+    0,                                 /* Number of registered device */
+    0,                                 /* Reserved */
+    0                                  /* Vendor ID, Product ID */
 };
 
 int16_t g_usb_hcdc_smpl_class_seq[USB_NUM_USBIP];
@@ -445,6 +452,13 @@ void usb_hcdc_detach (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     ctrl.module_number  = ptr->ip;           /* Module number setting */
     ctrl.device_address = (uint8_t) devadr;
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
+
+    g_usb_hcdc_smpl_class_seq[ptr->ip]    = 0;
+    g_usb_hcdc_speed[ptr->ip]             = 0;
+    g_usb_hcdc_devaddr[ptr->ip]           = 0;
+    g_p_usb_hcdc_device_table[ptr->ip]    = 0;
+    g_p_usb_hcdc_config_table[ptr->ip]    = 0;
+    g_p_usb_hcdc_interface_table[ptr->ip] = 0;
 }
 
 /******************************************************************************
@@ -591,23 +605,39 @@ void usb_hcdc_registration (usb_utr_t * ptr)
     driver.devresume  = (usb_cb_t) &usb_hstd_dummy_function;    /* Device resume */
 
 #if USB_CFG_HUB == USB_CFG_ENABLE
+
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)            /* Loop support CDC device count */
+    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++) /* Loop support CDC device count */
     {
-        usb_hstd_driver_registration(ptr, &driver);             /* Host CDC class driver registration. */
+        usb_hstd_driver_registration(ptr, &driver);  /* Host CDC class driver registration. */
     }
 
  #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);              /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);   /* Hub Task Priority set */
  #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(ptr, USB_NULL);                       /* Hub registration. */
-#else                                                           /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(ptr, &driver);                 /* Host CDC class driver registration. */
+    usb_hhub_registration(ptr, USB_NULL);            /* Hub registration. */
+#else                                                /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(ptr, &driver);      /* Host CDC class driver registration. */
 #endif  /* USB_CFG_HUB == USB_CFG_ENABLE */
 }
 
 /******************************************************************************
  * End of function usb_hcdc_registration
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : usb_hcdc_get_vendor_table
+ * Description     : Returns the address of the vendor registration table under HCDC management.
+ * Argument        : none
+ * Return value    : uint16_t             : Address of the vendor registration table
+ ******************************************************************************/
+uint16_t * usb_hcdc_get_vendor_table (void)
+{
+    return &g_usb_hcdc_vendor_table[0];
+}
+
+/******************************************************************************
+ * End of function usb_hcdc_get_vendor_table
  ******************************************************************************/
 
 /******************************************************************************
@@ -669,6 +699,7 @@ void usb_hcdc_class_check (usb_utr_t * ptr, uint16_t ** table)
     *table[3] = USB_OK;                                             /* Set class check done  */
 
 #if (BSP_CFG_RTOS == 2)
+
     /* Get String Descriptors */
     iproduct = g_p_usb_hcdc_device_table[ptr->ip][USB_DEV_I_PRODUCT];
     retval   = usb_hcdc_get_string_info(ptr, g_usb_hcdc_devaddr[ptr->ip], iproduct);
@@ -679,6 +710,7 @@ void usb_hcdc_class_check (usb_utr_t * ptr, uint16_t ** table)
 
         return;
     }
+
 #else                                               /* (BSP_CFG_RTOS == 2) */
     g_usb_hcdc_smpl_class_seq[ptr->ip] = USB_SEQ_0; /* Initialize sequence number for enumeration */
 

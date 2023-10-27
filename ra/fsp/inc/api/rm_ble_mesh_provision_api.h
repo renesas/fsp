@@ -29,8 +29,6 @@
  * @section RM_BLE_MESH_PROVISION_API_Summary Summary
  * The BLE Mesh Provision interface for the Bluetooth Low Energy Mesh Provision (BLE MESH PROVISION) peripheral provides Bluetooth Low Energy Mesh Provision functionality.
  *
- * The Bluetooth Low Energy Mesh interface can be implemented by:
- * - @ref RM_BLE_MESH_PROVISION
  *
  * @{
  **********************************************************************************************************************/
@@ -443,8 +441,6 @@ typedef struct st_rm_ble_mesh_provision_callback_args
 } rm_ble_mesh_provision_callback_args_t;
 
 /** BLE MESH PROVISION control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_ble_mesh_provision_instance_ctrl_t
  */
 typedef void rm_ble_mesh_provision_ctrl_t;
 
@@ -464,8 +460,6 @@ typedef struct st_rm_ble_mesh_provision_cfg
 typedef struct st_rm_ble_mesh_provision_api
 {
     /** Open access middleware.
-     * @par Implemented as
-     * - RM_BLE_MESH_PROVISION_Open()
      *
      * @param [in]  p_ctrl  Pointer to control structure.
      * @param [in]  p_cfg   Pointer to pin configuration structure.
@@ -473,16 +467,12 @@ typedef struct st_rm_ble_mesh_provision_api
     fsp_err_t (* open)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, rm_ble_mesh_provision_cfg_t const * const p_cfg);
 
     /** Close access middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_Close()
      *
      * @param [in]  p_ctrl  Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_provision_ctrl_t * const p_ctrl);
 
     /** Setup the device for provisioning.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_Setup()
      *
      * @param [in]  p_ctrl   Pointer to control structure.
      * @param [in]  role     Provisioning role to be setup - Device or Provisioner.
@@ -493,8 +483,6 @@ typedef struct st_rm_ble_mesh_provision_api
                         rm_ble_mesh_provision_device_info_t info, uint16_t timeout);
 
     /** Bind to the peer device for provisioning
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_Bind()
      *
      * @param [in]  p_ctrl     Pointer to control structure.
      * @param [in]  info       Device information.
@@ -508,8 +496,6 @@ typedef struct st_rm_ble_mesh_provision_api
                        uint8_t attention, rm_ble_mesh_provision_handle_t * const p_handle);
 
     /** Send provisioning PDUs to the peer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_SendPdu()
      *
      * @param [in]  p_ctrl    Pointer to control structure.
      * @param [in]  p_handle  Pointer to provisioning context to be used.
@@ -524,8 +510,6 @@ typedef struct st_rm_ble_mesh_provision_api
                           rm_ble_mesh_buffer_t pdu_data);
 
     /** Set the display Auth-Value.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_SetAuthVal()
      *
      * @param [in]  p_ctrl      Pointer to control structure.
      * @param [in]  p_handle    Pointer to provisioning context to be used.
@@ -535,8 +519,6 @@ typedef struct st_rm_ble_mesh_provision_api
                              rm_ble_mesh_provision_handle_t const * const p_handle, rm_ble_mesh_buffer_t auth_value);
 
     /** Abort the provisioning procedure
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_Abort()
      *
      * @param [in] p_ctrl    Pointer to control structure.
      * @param [in] p_handle  Pointer to provisioning context to be used.
@@ -547,8 +529,6 @@ typedef struct st_rm_ble_mesh_provision_api
                         rm_ble_mesh_provision_link_close_reason_t    reason);
 
     /** Utility API to get current ECDH Public Key to be used for Provisioning
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_GetLocalPublicKey()
      *
      * @param [in]  p_ctrl      Pointer to control structure.
      * @param [out] public_key  To a pointer of uint8_t array of length
@@ -557,8 +537,6 @@ typedef struct st_rm_ble_mesh_provision_api
     fsp_err_t (* getLocalPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const public_key);
 
     /** Utility API to set current ECDH Public Key to be used for Provisioning
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_SetLocalPublicKey()
      *
      * @param [in]  p_ctrl      Pointer to control structure.
      * @param [out] public_key  To a pointer of uint8_t array of length
@@ -567,8 +545,6 @@ typedef struct st_rm_ble_mesh_provision_api
     fsp_err_t (* setLocalPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const public_key);
 
     /** Utility API to generate 128bits (16 bytes) randomized number to be used for provisioning.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_GenerateRandomizedNumber()
      *
      * @param [in]  p_ctrl   Pointer to control structure.
      * @param [out] p_key    Pointer to buffer to store random number.
@@ -576,8 +552,6 @@ typedef struct st_rm_ble_mesh_provision_api
     fsp_err_t (* generateRandomizedNumber)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const p_key);
 
     /** Utility API to set device out of band public key for provisioning.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_SetOobPublicKey()
      *
      * @param [in]  p_ctrl   Pointer to control structure.
      * @param [in]  p_key    Pointer to public key.
@@ -587,8 +561,6 @@ typedef struct st_rm_ble_mesh_provision_api
                                   uint8_t size);
 
     /** Utility API to set device out of band authentication information for provisioning.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_SetOobAuthInfo()
      *
      * @param [in]  p_ctrl       Pointer to control structure.
      * @param [in]  p_auth_info  Pointer to authentication information.
@@ -598,8 +570,6 @@ typedef struct st_rm_ble_mesh_provision_api
                                  uint8_t size);
 
     /** Utility API to generate ECDH Public Key to be used for Provisioning
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_PROVISION_GenerateEcdhKey()
      *
      * @param [in]  p_ctrl       Pointer to control structure.
      * @param [out] p_public_key Pointer to public key. Size of public key is @ref RM_BLE_MESH_PROVISION_ECDH_KEY_SIZE.

@@ -113,7 +113,7 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile canfd_prv_ns_callback)(can_callb
  * Private function prototypes
  **********************************************************************************************************************/
 #if CANFD_CFG_PARAM_CHECKING_ENABLE
-static bool r_canfd_bit_timing_parameter_check(can_bit_timing_cfg_t * p_bit_timing);
+static bool r_canfd_bit_timing_parameter_check(can_bit_timing_cfg_t * p_bit_timing, bool is_data_phase);
 
 #endif
 
@@ -213,19 +213,23 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
  #if BSP_CFG_CANFDCLK_SOURCE != BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC
 
     /* Check that PLL/PLL2 is running when it is selected as the DLL source clock */
-    FSP_ERROR_RETURN(0U == (R_SYSTEM->CANFDCKCR == BSP_CLOCKS_SOURCE_CLOCK_PLL ? R_SYSTEM->PLLCR : R_SYSTEM->PLL2CR),
+    FSP_ERROR_RETURN(0U ==
+                     (FSP_STYPE3_REG8_READ(R_SYSTEM->CANFDCKCR,
+                                           !R_SYSTEM->CGFSAR_b.NONSEC18) == BSP_CLOCKS_SOURCE_CLOCK_PLL ?
+                      FSP_STYPE3_REG8_READ(R_SYSTEM->PLLCR, !R_SYSTEM->CGFSAR_b.NONSEC08) :
+                      FSP_STYPE3_REG8_READ(R_SYSTEM->PLL2CR, !R_SYSTEM->CGFSAR_b.NONSEC09)),
                      FSP_ERR_CLOCK_INACTIVE);
  #endif
 
     /* Check nominal bit timing parameters for correctness */
-    FSP_ERROR_RETURN(r_canfd_bit_timing_parameter_check(p_cfg->p_bit_timing), FSP_ERR_CAN_INIT_FAILED);
+    FSP_ERROR_RETURN(r_canfd_bit_timing_parameter_check(p_cfg->p_bit_timing, false), FSP_ERR_CAN_INIT_FAILED);
 
  #if BSP_FEATURE_CANFD_FD_SUPPORT
 
     /* Check that bit timing for FD bitrate switching is present and correct */
     can_bit_timing_cfg_t * p_data_timing = p_extend->p_data_timing;
     FSP_ASSERT(p_data_timing);
-    FSP_ERROR_RETURN(r_canfd_bit_timing_parameter_check(p_data_timing), FSP_ERR_CAN_INIT_FAILED);
+    FSP_ERROR_RETURN(r_canfd_bit_timing_parameter_check(p_data_timing, true), FSP_ERR_CAN_INIT_FAILED);
 
     can_bit_timing_cfg_t * p_bit_timing = p_cfg->p_bit_timing;
 
@@ -957,18 +961,32 @@ fsp_err_t R_CANFD_CallbackSet (can_ctrl_t * const          p_api_ctrl,
  * Private Functions
  **********************************************************************************************************************/
 #if CANFD_CFG_PARAM_CHECKING_ENABLE
-static bool r_canfd_bit_timing_parameter_check (can_bit_timing_cfg_t * const p_bit_timing)
+static bool r_canfd_bit_timing_parameter_check (can_bit_timing_cfg_t * const p_bit_timing, bool is_data_phase)
 {
     /* Check that prescaler is in range */
     FSP_ERROR_RETURN((p_bit_timing->baud_rate_prescaler <= CANFD_BAUD_RATE_PRESCALER_MAX) &&
                      (p_bit_timing->baud_rate_prescaler >= CANFD_BAUD_RATE_PRESCALER_MIN),
                      false);
 
-    /* Check that TSEG1 > TSEG2 >= SJW for nominal bitrate per section 32.4.1.1 "Bit Timing Conditions" in the RA6M5
-     * User's Manual (R01UH0891EJ0100). */
+    /* Check that TSEG1 > TSEG2 >= SJW for nominal bitrate and that TSEG1 >= TSEG2 >= SJW for data bitrate per section
+     * 32.4.1.1 "Bit Timing Conditions" in the RA6M5 User's Manual (R01UH0891EJ0100). */
 
-    /* Check Time Segment 1 is greater than Time Segment 2 */
-    FSP_ERROR_RETURN((uint32_t) p_bit_timing->time_segment_1 > (uint32_t) p_bit_timing->time_segment_2, false);
+ #if BSP_FEATURE_CANFD_FD_SUPPORT
+    if (is_data_phase)
+    {
+        /* Check Time Segment 1 is greater than or equal to Time Segment 2 */
+        FSP_ERROR_RETURN((uint32_t) p_bit_timing->time_segment_1 >= (uint32_t) p_bit_timing->time_segment_2, false);
+    }
+    else
+ #else
+
+    /* Data phase is only avaiable for FD mode. */
+    FSP_PARAMETER_NOT_USED(is_data_phase);
+ #endif
+    {
+        /* Check Time Segment 1 is greater than Time Segment 2 */
+        FSP_ERROR_RETURN((uint32_t) p_bit_timing->time_segment_1 > (uint32_t) p_bit_timing->time_segment_2, false);
+    }
 
     /* Check Time Segment 2 is greater than or equal to the synchronization jump width */
     FSP_ERROR_RETURN((uint32_t) p_bit_timing->time_segment_2 >= (uint32_t) p_bit_timing->synchronization_jump_width,

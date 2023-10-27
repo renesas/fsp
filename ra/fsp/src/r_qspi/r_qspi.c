@@ -138,6 +138,8 @@ fsp_err_t R_QSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_cfg);
     FSP_ERROR_RETURN(QSPI_PRV_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
+    FSP_ASSERT((p_cfg->dummy_clocks >= SPI_FLASH_DUMMY_CLOCKS_3 && p_cfg->dummy_clocks <= SPI_FLASH_DUMMY_CLOCKS_17) ||
+               p_cfg->dummy_clocks == SPI_FLASH_DUMMY_CLOCKS_DEFAULT);
 #endif
 
     /* Enable clock to the QSPI block */
@@ -160,8 +162,15 @@ fsp_err_t R_QSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
     /* Set the address mode. */
     R_QSPI->SFMSAC = p_cfg->address_bytes;
 
+    uint32_t dummy_clocks = 0;
+    if (SPI_FLASH_DUMMY_CLOCKS_DEFAULT != p_cfg->dummy_clocks)
+    {
+        /* Convert dummy cycles setting to the register value. */
+        dummy_clocks = (uint32_t) p_cfg->dummy_clocks - 2U;
+    }
+
     /* Set the number of dummy cycles in QSPI peripheral */
-    R_QSPI->SFMSDC = p_cfg->dummy_clocks | R_QSPI_SFMSDC_SFMXD_Msk;
+    R_QSPI->SFMSDC = dummy_clocks | R_QSPI_SFMSDC_SFMXD_Msk;
 
     /* Set configured minimum high level width for QSSL signal. */
     R_QSPI->SFMSSC = p_cfg_extend->min_qssl_deselect_cycles | R_QSPI_SFMSSC_SFMSLD_Msk | R_QSPI_SFMSSC_SFMSHD_Msk;
@@ -662,9 +671,16 @@ static fsp_err_t r_qspi_xip (qspi_instance_ctrl_t * p_instance_ctrl, uint8_t cod
 
     FSP_PARAMETER_NOT_USED(i);
 
+    uint32_t dummy_clocks = 0;
+    if (SPI_FLASH_DUMMY_CLOCKS_DEFAULT != p_instance_ctrl->p_cfg->dummy_clocks)
+    {
+        /* Convert dummy cycles setting to the register value. */
+        dummy_clocks = (uint32_t) p_instance_ctrl->p_cfg->dummy_clocks - 2U;
+    }
+
     R_QSPI->SFMSDC = (uint32_t) (code << R_QSPI_SFMSDC_SFMXD_Pos) |
                      (uint32_t) (enter_mode << R_QSPI_SFMSDC_SFMXEN_Pos) |
-                     (uint32_t) p_instance_ctrl->p_cfg->dummy_clocks;
+                     dummy_clocks;
 
     /* Read from QSPI to send the XIP entry request. */
     i = *(volatile uint8_t *) QSPI_DEVICE_START_ADDRESS;

@@ -74,6 +74,10 @@ typedef struct st_iic_b_slave_instance_ctrl
     volatile iic_b_slave_transfer_dir_t direction; // Holds the direction of the data byte transfer
     volatile bool do_dummy_read;                   // Tracks whether a dummy read is issued on the first RX
     volatile bool transaction_completed;           // Tracks whether previous transaction restarted
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+    volatile bool activation_on_rxi;               // Tracks whether the transfer is activated on RXI interrupt
+    volatile bool activation_on_txi;               // Tracks whether the transfer is activated on TXI interrupt
+#endif
 
     /* Pointer to callback and optional working memory */
     void (* p_callback)(i2c_slave_callback_args_t *);

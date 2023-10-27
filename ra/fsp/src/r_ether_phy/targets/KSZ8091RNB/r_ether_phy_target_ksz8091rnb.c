@@ -55,8 +55,6 @@
 void ether_phy_target_ksz8091rnb_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
 bool ether_phy_target_ksz8091rnb_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
                                                                  uint32_t                    line_speed_duplex);
-extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -82,12 +80,12 @@ void ether_phy_target_ksz8091rnb_initialize (ether_phy_instance_ctrl_t * p_insta
      * b10=1:Enable link-down interrupt
      * b8=1 :Enable link-up interrupt
      */
-    ether_phy_write(p_instance_ctrl,
-                    ETHER_PHY_REG_INTERRUPT_CONTROL,
-                    (0x1 << ETHER_PHY_REG_INTERRUPT_CONTROL_LUIE_OFFSET | 0x1 <<
-                     ETHER_PHY_REG_INTERRUPT_CONTROL_LDIE_OFFSET));
-    ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_INTERRUPT_CONTROL);
-    reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2);
+    R_ETHER_PHY_Write(p_instance_ctrl,
+                      ETHER_PHY_REG_INTERRUPT_CONTROL,
+                      (0x1 << ETHER_PHY_REG_INTERRUPT_CONTROL_LUIE_OFFSET | 0x1 <<
+                       ETHER_PHY_REG_INTERRUPT_CONTROL_LDIE_OFFSET));
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_INTERRUPT_CONTROL, &reg);
+    R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, &reg);
 
     /* b7=1:RMII 50MHz clock mode; clock input to XI(pin 9) is 50MHz */
  #if (ETHER_PHY_CFG_USE_REF_CLK == 0)
@@ -95,8 +93,8 @@ void ether_phy_target_ksz8091rnb_initialize (ether_phy_instance_ctrl_t * p_insta
  #endif
 
     /* b9=0:Interrupt pin active low */
-    reg &= (uint16_t) ~(0x01 << ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET);
-    ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, reg);
+    reg &= (uint16_t) ~(0x1 << ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET);
+    R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, reg);
 }                                      /* End of function ether_phy_targets_initialize() */
 
 /***********************************************************************************************************************

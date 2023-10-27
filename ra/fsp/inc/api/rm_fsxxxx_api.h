@@ -26,8 +26,6 @@
  * @section RM_FSXXXX_API_Summary Summary
  * The FSXXXX interface provides FSXXXX functionality.
  *
- * The FSXXXX interface can be implemented by:
- * - @ref RM_FS2012
  *
  * @{
  **********************************************************************************************************************/
@@ -111,8 +109,6 @@ typedef struct st_rm_fsxxxx_cfg
 } rm_fsxxxx_cfg_t;
 
 /** FSXXXX control block.  Allocate an instance specific control block to pass into the FSXXXX API calls.
- * @par Implemented as
- * - rm_fsxxxx_instance_ctrl_t
  */
 typedef void rm_fsxxxx_ctrl_t;
 
@@ -120,8 +116,6 @@ typedef void rm_fsxxxx_ctrl_t;
 typedef struct st_rm_fsxxxx_api
 {
     /** Open sensor.
-     * @par Implemented as
-     * - @ref RM_FS2012_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -129,8 +123,6 @@ typedef struct st_rm_fsxxxx_api
     fsp_err_t (* open)(rm_fsxxxx_ctrl_t * const p_ctrl, rm_fsxxxx_cfg_t const * const p_cfg);
 
     /** Read ADC data from FSXXXX.
-     * @par Implemented as
-     * - @ref RM_FS2012_Read()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data structure.
@@ -138,8 +130,6 @@ typedef struct st_rm_fsxxxx_api
     fsp_err_t (* read)(rm_fsxxxx_ctrl_t * const p_ctrl, rm_fsxxxx_raw_data_t * const p_raw_data);
 
     /** Calculate flow values from ADC data.
-     * @par Implemented as
-     * - @ref RM_FS2012_DataCalculate()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_raw_data       Pointer to raw data.
@@ -149,8 +139,6 @@ typedef struct st_rm_fsxxxx_api
                                 rm_fsxxxx_data_t * const p_fsxxxx_data);
 
     /** Close FSXXXX.
-     * @par Implemented as
-     * - @ref RM_FS2012_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */

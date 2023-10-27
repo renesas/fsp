@@ -88,6 +88,15 @@ static uint16_t usb_hstd_chk_remote(usb_utr_t * ptr);
 
 static void usb_hstd_mgr_rel_mpl(usb_utr_t * ptr, uint16_t n);
 
+ #if (BSP_CFG_RTOS == 2)
+  #if defined(USB_CFG_HCDC_USE)
+extern uint16_t * usb_hcdc_get_vendor_table(void);
+
+extern uint16_t g_usb_hcdc_speed[USB_NUM_USBIP];
+extern uint16_t g_usb_hcdc_devaddr[USB_NUM_USBIP];
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
+ #endif                                /* #if (BSP_CFG_RTOS == 2) */
+
 /******************************************************************************
  * Exported global functions (to be accessed by other files)
  ******************************************************************************/
@@ -1045,6 +1054,9 @@ uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
     uint16_t   product_id;
     uint16_t   id_check;
     uint16_t   i;
+ #if defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2)
+    uint16_t * vendor_table;
+ #endif                                /* defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2) */
 
     descriptor_table = (uint8_t *) g_usb_hstd_device_descriptor[ptr->ip];
 
@@ -1093,6 +1105,28 @@ uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
     }
     else
     {
+ #if defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2)
+        if (USB_IFCLS_CDC == driver->ifclass)
+        {
+            vendor_table = usb_hcdc_get_vendor_table();
+
+            /* WAIT_LOOP */
+            for (i = 0; i < vendor_table[0]; i++)
+            {
+                if ((vendor_table[(i * 2) + 2] == vendor_id) && (vendor_table[(i * 2) + 3] == product_id))
+                {
+                    result = USB_OK;
+                    g_usb_hcdc_speed[ptr->ip]   = g_usb_hstd_device_speed[ptr->ip];
+                    g_usb_hcdc_devaddr[ptr->ip] = g_usb_hstd_device_addr[ptr->ip];
+                }
+            }
+
+            if (USB_OK == result)
+            {
+                return result;
+            }
+        }
+ #endif                                /* defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2) */
         id_check = USB_ERROR;
 
         /* WAIT_LOOP */

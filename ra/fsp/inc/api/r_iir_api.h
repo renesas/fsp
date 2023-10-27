@@ -27,8 +27,6 @@
  *    The IIR interface allows access to the IIRFA peripheral for hardware acceleration of direct form 2
  *    transposed biquad IIR filters.
  *
- * Implemented by:
- * - @ref IIRFA
  *
  * @{
  **********************************************************************************************************************/
@@ -94,8 +92,6 @@ typedef struct st_iir_cfg
 } iir_cfg_t;
 
 /** IIR control block.  Allocate an instance specific control block to pass into the DAC API calls.
- * @par Implemented as
- * - iirfa_instance_ctrl_t
  */
 typedef void iir_ctrl_t;
 
@@ -103,8 +99,6 @@ typedef void iir_ctrl_t;
 typedef struct st_iir_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_IIRFA_Open()
      *
      * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.
@@ -112,16 +106,12 @@ typedef struct st_iir_api
     fsp_err_t (* open)(iir_ctrl_t * const p_ctrl, iir_cfg_t const * const p_cfg);
 
     /** Close the IIRFA channel.
-     * @par Implemented as
-     * - @ref R_IIRFA_Close()
      *
      * @param[in]   p_ctrl     Control block set in @ref iir_api_t::open.
      */
     fsp_err_t (* close)(iir_ctrl_t * const p_ctrl);
 
     /** Configure filter coefficients and state variables.
-     * @par Implemented as
-     * - @ref R_IIRFA_Configure()
      *
      * @param[in]   p_ctrl         Control block set in @ref iir_api_t::open.
      * @param[in]   p_filter_cfg   Pointer to filter configuration to write.
@@ -129,8 +119,6 @@ typedef struct st_iir_api
     fsp_err_t (* configure)(iir_ctrl_t * const p_ctrl, iir_filter_cfg_t const * const p_filter_cfg);
 
     /** Filter the specified data.
-     * @par Implemented as
-     * - @ref R_IIRFA_Filter()
      *
      * @param[in]   p_ctrl        Control block set in @ref iir_api_t::open.
      * @param[in]   p_data_in     Pointer to float input data.
@@ -141,8 +129,6 @@ typedef struct st_iir_api
                          uint16_t const num_samples);
 
     /** Retrieve current status (including state registers).
-     * @par Implemented as
-     * - @ref R_IIRFA_StatusGet()
      *
      * @param[in]   p_ctrl     Control block set in @ref iir_api_t::open.
      * @param[in]   p_status   Pointer to status struct.

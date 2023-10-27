@@ -26,8 +26,6 @@
  * @section SCE_API_Summary Summary
  * The SCE key injection interface provides SCE functionality.
  *
- * The SCE  key injection interface can be implemented by:
- * - @ref SCE_KEY_INJECTION
  *
  * @{
  **********************************************************************************************************************/
@@ -209,8 +207,6 @@ typedef struct sce_ecc_private_wrapped_key
 typedef struct st_sce_key_injection_api
 {
     /** This API outputs 128-bit AES wrapped key.
-     * @par Implemented as
-     * -  @ref R_SCE_AES128_InitialKeyWrap "R_SCE_AES128_InitialKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -224,8 +220,6 @@ typedef struct st_sce_key_injection_api
                                         const uint8_t * const encrypted_key, sce_aes_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 192-bit AES wrapped key.
-     * @par Implemented as
-     * -  @ref R_SCE_AES192_InitialKeyWrap "R_SCE_AES192_InitialKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -239,8 +233,6 @@ typedef struct st_sce_key_injection_api
                                         const uint8_t * const encrypted_key, sce_aes_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit AES wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_AES256_InitialKeyWrap "R_SCE_AES256_InitialKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -254,8 +246,6 @@ typedef struct st_sce_key_injection_api
                                         const uint8_t * const encrypted_key, sce_aes_wrapped_key_t * const wrapped_key);
 
     /** This API outputs key update key.
-     * @par Implemented as
-     * - @ref R_SCE_KeyUpdateKeyWrap "R_SCE_KeyUpdateKeyWrap()"
      *
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
      * @param[in]     initial_vector                        Initialization vector when generating encrypted_key
@@ -267,8 +257,6 @@ typedef struct st_sce_key_injection_api
                                    sce_key_update_key_t * const key_update_key);
 
     /** This API updates 128-bit AES wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_AES128_EncryptedKeyWrap "R_SCE_AES128_EncryptedKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -280,8 +268,6 @@ typedef struct st_sce_key_injection_api
                                           sce_aes_wrapped_key_t * const wrapped_key);
 
     /** This API updates 192-bit AES wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_AES192_EncryptedKeyWrap "R_SCE_AES192_EncryptedKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -293,8 +279,6 @@ typedef struct st_sce_key_injection_api
                                           sce_aes_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit AES wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_AES256_EncryptedKeyWrap "R_SCE_AES256_EncryptedKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -306,8 +290,6 @@ typedef struct st_sce_key_injection_api
                                           sce_aes_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 2048-bit RSA public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_RSA2048_InitialPublicKeyWrap "R_SCE_RSA2048_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -323,8 +305,6 @@ typedef struct st_sce_key_injection_api
                                                sce_rsa2048_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 3072-bit RSA public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_RSA3072_InitialPublicKeyWrap "R_SCE_RSA3072_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -340,8 +320,6 @@ typedef struct st_sce_key_injection_api
                                                sce_rsa3072_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 4096-bit RSA public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_RSA4096_InitialPublicKeyWrap "R_SCE_RSA4096_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -357,8 +335,6 @@ typedef struct st_sce_key_injection_api
                                                sce_rsa4096_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 2048-bit RSA private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_RSA2048_InitialPrivateKeyWrap "R_SCE_RSA2048_InitialPrivateKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -374,8 +350,6 @@ typedef struct st_sce_key_injection_api
                                                 sce_rsa2048_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 2048-bit RSA public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_RSA2048_EncryptedPublicKeyWrap "R_SCE_RSA2048_EncryptedPublicKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -388,8 +362,6 @@ typedef struct st_sce_key_injection_api
                                                  sce_rsa2048_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 2048-bit RSA private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_RSA2048_EncryptedPrivateKeyWrap "R_SCE_RSA2048_EncryptedPrivateKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -402,8 +374,6 @@ typedef struct st_sce_key_injection_api
                                                   sce_rsa2048_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256r1_InitialPublicKeyWrap "R_SCE_ECC_secp256r1_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -419,8 +389,6 @@ typedef struct st_sce_key_injection_api
                                                      sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256k1_InitialPublicKeyWrap "R_SCE_ECC_secp256k1_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -436,8 +404,6 @@ typedef struct st_sce_key_injection_api
                                                      sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp384r1_InitialPublicKeyWrap "R_SCE_ECC_secp384r1_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -453,8 +419,6 @@ typedef struct st_sce_key_injection_api
                                                      sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256r1_InitialPrivateKeyWrap "R_SCE_ECC_secp256r1_InitialPrivateKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -470,8 +434,6 @@ typedef struct st_sce_key_injection_api
                                                       sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256k1_InitialPrivateKeyWrap "R_SCE_ECC_secp256k1_InitialPrivateKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -487,8 +449,6 @@ typedef struct st_sce_key_injection_api
                                                       sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp384r1_InitialPrivateKeyWrap "R_SCE_ECC_secp384r1_InitialPrivateKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -504,8 +464,6 @@ typedef struct st_sce_key_injection_api
                                                       sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap "R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -518,8 +476,6 @@ typedef struct st_sce_key_injection_api
                                                        sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap "R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -532,8 +488,6 @@ typedef struct st_sce_key_injection_api
                                                        sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap "R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -546,8 +500,6 @@ typedef struct st_sce_key_injection_api
                                                        sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap "R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -560,8 +512,6 @@ typedef struct st_sce_key_injection_api
                                                         sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap "R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -574,8 +524,6 @@ typedef struct st_sce_key_injection_api
                                                         sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap "R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -588,8 +536,6 @@ typedef struct st_sce_key_injection_api
                                                         sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit Brainpool ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap "R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -605,8 +551,6 @@ typedef struct st_sce_key_injection_api
                                                            sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit Brainpool ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap "R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -622,8 +566,6 @@ typedef struct st_sce_key_injection_api
                                                             sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit Brainpool ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap "R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -639,8 +581,6 @@ typedef struct st_sce_key_injection_api
                                                            sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit Brainpool ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap "R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap()"
      *
      * @param[in]     key_type                              Key type whether encrypted_key or plain key
      * @param[in]     wrapped_user_factory_programming_key  Provisioning key wrapped by the DLM server
@@ -656,8 +596,6 @@ typedef struct st_sce_key_injection_api
                                                             sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap "R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -670,8 +608,6 @@ typedef struct st_sce_key_injection_api
                                                              sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 256-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap "R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -684,8 +620,6 @@ typedef struct st_sce_key_injection_api
                                                               sce_ecc_private_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit ECC public wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap "R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended
@@ -698,8 +632,6 @@ typedef struct st_sce_key_injection_api
                                                              sce_ecc_public_wrapped_key_t * const wrapped_key);
 
     /** This API outputs 384-bit ECC private wrapped key.
-     * @par Implemented as
-     * - @ref R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap "R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap()"
      *
      * @param[in]     initial_vector Initialization vector when generating encrypted_key
      * @param[in]     encrypted_key  User key encryptedand MAC appended

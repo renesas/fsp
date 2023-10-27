@@ -57,17 +57,17 @@
   #define SCE9_AES_GCM_KEY_TYPE_GENERAL    (0)
 
 fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral(uint32_t * InData_KeyType,
-                                                uint32_t * InData_DataType, 
-                                                uint32_t * InData_Cmd, 
-                                                uint32_t * InData_KeyIndex, 
-                                                uint32_t * InData_IV, 
+                                                uint32_t * InData_DataType,
+                                                uint32_t * InData_Cmd,
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV,
                                                 uint32_t * InData_SeqNum);
 
 fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
-                                                 uint32_t * InData_DataType, 
-                                                 uint32_t * InData_Cmd, 
-                                                 uint32_t * InData_KeyIndex, 
-                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
                                                  uint32_t * InData_SeqNum)
 {
     FSP_PARAMETER_NOT_USED(InData_KeyType);
@@ -78,18 +78,18 @@ fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
     return HW_SCE_Aes192GcmEncryptInitSub(InData_KeyIndex, InData_IV);
 }
 
-fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral(uint32_t * InData_KeyType, 
-                                                uint32_t * InData_DataType, 
+fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral(uint32_t * InData_KeyType,
+                                                uint32_t * InData_DataType,
                                                 uint32_t * InData_Cmd,
-                                                uint32_t * InData_KeyIndex, 
-                                                uint32_t * InData_IV, 
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV,
                                                 uint32_t * InData_SeqNum);
 
-fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral (uint32_t * InData_KeyType, 
-                                                 uint32_t * InData_DataType, 
+fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
                                                  uint32_t * InData_Cmd,
-                                                 uint32_t * InData_KeyIndex, 
-                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
                                                  uint32_t * InData_SeqNum)
 {
     FSP_PARAMETER_NOT_USED(InData_KeyType);
@@ -101,17 +101,17 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
 }
 
 fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral(uint32_t * InData_KeyType,
-                                                uint32_t * InData_DataType, 
-                                                uint32_t * InData_Cmd, 
-                                                uint32_t * InData_KeyIndex, 
-                                                uint32_t * InData_IV, 
+                                                uint32_t * InData_DataType,
+                                                uint32_t * InData_Cmd,
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV,
                                                 uint32_t * InData_SeqNum);
 
 fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
-                                                 uint32_t * InData_DataType, 
-                                                 uint32_t * InData_Cmd, 
-                                                 uint32_t * InData_KeyIndex, 
-                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
                                                  uint32_t * InData_SeqNum)
 {
     FSP_PARAMETER_NOT_USED(InData_DataType);
@@ -121,18 +121,18 @@ fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
     return HW_SCE_Aes256GcmEncryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
 }
 
-fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral(uint32_t * InData_KeyType, 
-                                                uint32_t * InData_DataType, 
+fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral(uint32_t * InData_KeyType,
+                                                uint32_t * InData_DataType,
                                                 uint32_t * InData_Cmd,
-                                                uint32_t * InData_KeyIndex, 
-                                                uint32_t * InData_IV, 
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV,
                                                 uint32_t * InData_SeqNum);
 
-fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral (uint32_t * InData_KeyType, 
-                                                 uint32_t * InData_DataType, 
+fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
                                                  uint32_t * InData_Cmd,
-                                                 uint32_t * InData_KeyIndex, 
-                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
                                                  uint32_t * InData_SeqNum)
 {
     FSP_PARAMETER_NOT_USED(InData_DataType);
@@ -378,15 +378,13 @@ int sce_gcm_crypt_and_tag (mbedtls_gcm_context * ctx,
                            size_t                tag_len,
                            unsigned char       * tag)
 {
-    int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
-
     GCM_VALIDATE_RET(ctx != NULL);
     GCM_VALIDATE_RET(iv != NULL);
     GCM_VALIDATE_RET(aad_len == 0 || aad != NULL);
     GCM_VALIDATE_RET(length == 0 || input != NULL);
     GCM_VALIDATE_RET(length == 0 || output != NULL);
     GCM_VALIDATE_RET(tag != NULL);
-    uint32_t              key_len_idx      = RM_PSA_CRYPTO_AES_LOOKUP_INDEX(ctx->cipher_ctx.key_bitlen);
+    uint32_t              key_len_idx      = (uint32_t)RM_PSA_CRYPTO_AES_LOOKUP_INDEX(ctx->cipher_ctx.key_bitlen);
     mbedtls_aes_context * aes_ctx          = (mbedtls_aes_context *) ctx->cipher_ctx.cipher_ctx;
     fsp_err_t             err              = FSP_SUCCESS;
     uint32_t              aad_bit_size[2]  = {0};
@@ -397,7 +395,7 @@ int sce_gcm_crypt_and_tag (mbedtls_gcm_context * ctx,
     uint32_t              input_length     = aad_len;
     uint32_t              key_type[1]      = {SCE9_AES_GCM_KEY_TYPE_GENERAL};
     uint8_t             * gcm_buffer;
-    uint32_t              dummy_val[1]     = {0};  
+    uint32_t              dummy_val[1] = {0};
 
     /* Get the hashed IV for AES-GCM operations */
     prepare_gcm_iv((uint8_t *) iv, iv_len, aes_ctx->buf, key_len_idx, hashed_ivec);
@@ -473,8 +471,14 @@ int sce_gcm_crypt_and_tag (mbedtls_gcm_context * ctx,
                                                          tag_bit_size, (uint32_t *) &output[input_length]);
         }
     }
-
-    return err;
+    if (FSP_SUCCESS != err)
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+    else 
+    {
+        return 0U;
+    }
 }
 
  #endif                                /* !MBEDTLS_GCM_ALT */

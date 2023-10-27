@@ -26,8 +26,6 @@
  * @section MOTOR_CURRENT_API_Summary Summary
  * The Motor current interface for getting the PWM modulation duty from electric current and speed
  *
- * The motor current control interface can be implemented by:
- * - @ref MOTOR_CURRENT
  *
  * @{
  **********************************************************************************************************************/
@@ -135,8 +133,6 @@ typedef struct st_motor_current_get_voltage
 } motor_current_get_voltage_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_current_ctrl_t
  */
 typedef void motor_current_ctrl_t;
 
@@ -160,8 +156,6 @@ typedef struct st_motor_current_cfg
 typedef struct st_motor_current_api
 {
     /** Initialize the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -169,32 +163,24 @@ typedef struct st_motor_current_api
     fsp_err_t (* open)(motor_current_ctrl_t * const p_ctrl, motor_current_cfg_t const * const p_cfg);
 
     /** Close (Finish) the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_current_ctrl_t * const p_ctrl);
 
     /** Reset variables for the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_current_ctrl_t * const p_ctrl);
 
     /** Activate the motor current control.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_Run()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* run)(motor_current_ctrl_t * const p_ctrl);
 
     /** Set (Input) parameters into the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_ParameterSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_st_input   Pointer to input data structure(speed control output data)
@@ -202,8 +188,6 @@ typedef struct st_motor_current_api
     fsp_err_t (* parameterSet)(motor_current_ctrl_t * const p_ctrl, motor_current_input_t const * const p_st_input);
 
     /** Set (Input) Current reference into the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_CurrentReferenceSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  id_reference D-axis current reference [A]
@@ -213,8 +197,6 @@ typedef struct st_motor_current_api
                                       float const iq_reference);
 
     /** Set (Input) Speed & Phase data into the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_SpeedPhaseSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  speed_rad    Rotational speed [rad/s]
@@ -223,8 +205,6 @@ typedef struct st_motor_current_api
     fsp_err_t (* speedPhaseSet)(motor_current_ctrl_t * const p_ctrl, float const speed_rad, float const phase_rad);
 
     /** Set (Input) Current data into the motor current module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_CurrentSet()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  p_st_current  Pointer to input current structure
@@ -235,8 +215,6 @@ typedef struct st_motor_current_api
                              motor_current_input_voltage_t const * const p_st_voltage);
 
     /** Get (output) parameters from the motor current module
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_ParameterGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_st_output  Pointer to output data structure(speed control input data)
@@ -244,8 +222,6 @@ typedef struct st_motor_current_api
     fsp_err_t (* parameterGet)(motor_current_ctrl_t * const p_ctrl, motor_current_output_t * const p_st_output);
 
     /** Get d/q-axis current
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_CurrentGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_id         Pointer to get d-axis current [A]
@@ -254,8 +230,6 @@ typedef struct st_motor_current_api
     fsp_err_t (* currentGet)(motor_current_ctrl_t * const p_ctrl, float * const p_id, float * const p_iq);
 
     /** Get phase output voltage
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_PhaseVoltageGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_voltage    Pointer to get voltages
@@ -263,8 +237,6 @@ typedef struct st_motor_current_api
     fsp_err_t (* phaseVoltageGet)(motor_current_ctrl_t * const p_ctrl, motor_current_get_voltage_t * const p_voltage);
 
     /** Update parameters for the calculation in the motor current control.
-     * @par Implemented as
-     * - @ref RM_MOTOR_CURRENT_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

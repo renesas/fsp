@@ -22,7 +22,7 @@
  * @file zmod4410_config_iaq2_ulp.h
  * @brief This is the configuration for zmod4410 module - iaq_2nd_gen_ulp library
  * @author Renesas Electronics Corporation
- * @version 1.1.0
+ * @version 1.2.0
  */
 
 #ifndef _ZMOD4410_CONFIG_IAQ_2ND_GEN_ULP_H

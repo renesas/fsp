@@ -40,27 +40,6 @@ FSP_HEADER
  * @section   RM_BLE_MESH_MODEL_SERVER_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Server (BLE MESH MODEL SERVER) middleware provides Bluetooth Low Energy Mesh Model Server functionality.
  *
- * The Bluetooth Low Energy Mesh Model Server interface can be implemented by:
- * - @ref RM_MESH_CONFIG_SRV
- * - @ref RM_MESH_GENERIC_BATTERY_SRV
- * - @ref RM_MESH_GENERIC_DTT_SRV
- * - @ref RM_MESH_GENERIC_LEVEL_SRV
- * - @ref RM_MESH_GENERIC_LOC_SRV
- * - @ref RM_MESH_GENERIC_ON_OFF_SRV
- * - @ref RM_MESH_GENERIC_PL_SRV
- * - @ref RM_MESH_GENERIC_POO_SRV
- * - @ref RM_MESH_GENERIC_ADMIN_PROP_SRV
- * - @ref RM_MESH_GENERIC_MFR_PROP_SRV
- * - @ref RM_MESH_GENERIC_USER_PROP_SRV
- * - @ref RM_MESH_GENERIC_CLIENT_PROP_SRV
- * - @ref RM_MESH_LIGHT_CTL_SRV
- * - @ref RM_MESH_LIGHT_HSL_SRV
- * - @ref RM_MESH_LIGHT_LC_SRV
- * - @ref RM_MESH_LIGHT_LIGHTNESS_SRV
- * - @ref RM_MESH_LIGHT_XYL_SRV
- * - @ref RM_MESH_SCHEDULER_SRV
- * - @ref RM_MESH_TIME_SRV
- * - @ref RM_MESH_SENSOR_SRV
  *
  * @{
  **********************************************************************************************************************/
@@ -345,8 +324,6 @@ typedef struct st_rm_ble_mesh_model_server_timeout_callback_args
 } rm_ble_mesh_model_server_timeout_callback_args_t;
 
 /** BLE MESH MODEL SERVER control block.  Allocate an instance specific control block to pass into the BLE mesh model server API calls.
- * @par Implemented as
- * - rm_ble_mesh_model_server_instance_ctrl_t
  */
 typedef void rm_ble_mesh_model_server_ctrl_t;
 
@@ -367,27 +344,6 @@ typedef struct st_rm_ble_mesh_model_server_cfg
 typedef struct st_rm_ble_mesh_model_server_api
 {
     /** API to open server model.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_SRV_Open()
-     * - @ref RM_MESH_GENERIC_DTT_SRV_Open()
-     * - @ref RM_MESH_GENERIC_LEVEL_SRV_Open()
-     * - @ref RM_MESH_GENERIC_LOC_SRV_Open()
-     * - @ref RM_MESH_GENERIC_ON_OFF_SRV_Open()
-     * - @ref RM_MESH_GENERIC_PL_SRV_Open()
-     * - @ref RM_MESH_GENERIC_POO_SRV_Open()
-     * - @ref RM_MESH_GENERIC_ADMIN_PROP_SRV_Open()
-     * - @ref RM_MESH_GENERIC_CLIENT_PROP_SRV_Open()
-     * - @ref RM_MESH_GENERIC_MFR_PROP_SRV_Open()
-     * - @ref RM_MESH_GENERIC_USER_PROP_SRV_Open()
-     * - @ref RM_MESH_LIGHT_CTL_SRV_Open()
-     * - @ref RM_MESH_LIGHT_HSL_SRV_Open()
-     * - @ref RM_MESH_LIGHT_LC_SRV_Open()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_SRV_Open()
-     * - @ref RM_MESH_LIGHT_XYL_SRV_Open()
-     * - @ref RM_MESH_SCHEDULER_SRV_Open()
-     * - @ref RM_MESH_TIME_SRV_Open()
-     * - @ref RM_MESH_SENSOR_SRV_Open()
-     * - @ref RM_MESH_CONFIG_SRV_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -396,53 +352,12 @@ typedef struct st_rm_ble_mesh_model_server_api
                        rm_ble_mesh_model_server_cfg_t const * const p_cfg);
 
     /** API to close server model.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_SRV_Close()
-     * - @ref RM_MESH_GENERIC_DTT_SRV_Close()
-     * - @ref RM_MESH_GENERIC_LEVEL_SRV_Close()
-     * - @ref RM_MESH_GENERIC_LOC_SRV_Close()
-     * - @ref RM_MESH_GENERIC_ON_OFF_SRV_Close()
-     * - @ref RM_MESH_GENERIC_PL_SRV_Close()
-     * - @ref RM_MESH_GENERIC_POO_SRV_Close()
-     * - @ref RM_MESH_GENERIC_ADMIN_PROP_SRV_Close()
-     * - @ref RM_MESH_GENERIC_CLIENT_PROP_SRV_Close()
-     * - @ref RM_MESH_GENERIC_MFR_PROP_SRV_Close()
-     * - @ref RM_MESH_GENERIC_USER_PROP_SRV_Close()
-     * - @ref RM_MESH_LIGHT_CTL_SRV_Close()
-     * - @ref RM_MESH_LIGHT_HSL_SRV_Close()
-     * - @ref RM_MESH_LIGHT_LC_SRV_Close()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_SRV_Close()
-     * - @ref RM_MESH_LIGHT_XYL_SRV_Close()
-     * - @ref RM_MESH_SCHEDULER_SRV_Close()
-     * - @ref RM_MESH_TIME_SRV_Close()
-     * - @ref RM_MESH_SENSOR_SRV_Close()
-     * - @ref RM_MESH_CONFIG_SRV_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_model_server_ctrl_t * const p_ctrl);
 
     /** API to send reply or to update state change.
-     * @par Implemented as
-     * - @ref RM_MESH_GENERIC_BATTERY_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_LEVEL_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_LOC_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_ON_OFF_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_PL_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_POO_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_ADMIN_PROP_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_CLIENT_PROP_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_MFR_PROP_SRV_StateUpdate()
-     * - @ref RM_MESH_GENERIC_USER_PROP_SRV_StateUpdate()
-     * - @ref RM_MESH_LIGHT_CTL_SRV_StateUpdate()
-     * - @ref RM_MESH_LIGHT_HSL_SRV_StateUpdate()
-     * - @ref RM_MESH_LIGHT_LC_SRV_StateUpdate()
-     * - @ref RM_MESH_LIGHT_LIGHTNESS_SRV_StateUpdate()
-     * - @ref RM_MESH_LIGHT_XYL_SRV_StateUpdate()
-     * - @ref RM_MESH_SCHEDULER_SRV_StateUpdate()
-     * - @ref RM_MESH_TIME_SRV_StateUpdate()
-     * - @ref RM_MESH_SENSOR_SRV_StateUpdate()
-     * - @ref RM_MESH_CONFIG_SRV_StateUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_state      Pointer to model specific current/target state parameters.

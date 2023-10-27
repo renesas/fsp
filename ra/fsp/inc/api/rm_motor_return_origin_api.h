@@ -26,8 +26,6 @@
  * @section MOTOR_RETURN_ORIGIN_API_Summary Summary
  * The Motor interface provides Motor return origin functionality.
  *
- * Implemented by:
- * - @ref MOTOR_RETURN_ORIGIN
  *
  * @{
  **********************************************************************************************************************/
@@ -89,8 +87,6 @@ typedef struct st_motor_return_origin_set_data
 } motor_return_origin_set_data_t;
 
 /** Motor return origin function block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_return_origin_instance_ctrl_t
  */
 typedef void motor_return_origin_ctrl_t;
 
@@ -107,8 +103,6 @@ typedef struct st_motor_return_origin_cfg
 typedef struct st_motor_return_origin_api
 {
     /** Open driver.
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -116,40 +110,30 @@ typedef struct st_motor_return_origin_api
     fsp_err_t (* open)(motor_return_origin_ctrl_t * const p_ctrl, motor_return_origin_cfg_t const * const p_cfg);
 
     /** Close driver.
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_return_origin_ctrl_t * const p_ctrl);
 
     /** Start the function.
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_Start()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* start)(motor_return_origin_ctrl_t * const p_ctrl);
 
     /** Stop the function. (Cancel the function works.)
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_Stop()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* stop)(motor_return_origin_ctrl_t * const p_ctrl);
 
     /** Reset the function. (Initialize the function.)
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_return_origin_ctrl_t * const p_ctrl);
 
     /** Get the function information.
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_InfoGet()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[out] p_info   Pointer to info
@@ -157,8 +141,6 @@ typedef struct st_motor_return_origin_api
     fsp_err_t (* infoGet)(motor_return_origin_ctrl_t * const p_ctrl, motor_return_origin_info_t * const p_info);
 
     /** Set the data to the function
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_DataSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_set_data   Pointer to set the data
@@ -166,16 +148,12 @@ typedef struct st_motor_return_origin_api
     fsp_err_t (* dataSet)(motor_return_origin_ctrl_t * const p_ctrl, motor_return_origin_set_data_t * const p_set_data);
 
     /** Speed cyclic process of the function
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_SpeedCyclic()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* speedCyclic)(motor_return_origin_ctrl_t * const p_ctrl);
 
     /** Update parameters for the function.
-     * @par Implemented as
-     * - @ref RM_MOTOR_RETURN_ORIGIN_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

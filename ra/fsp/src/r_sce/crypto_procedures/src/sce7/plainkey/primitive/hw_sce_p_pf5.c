@@ -48,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub(uint32_t *InData_CurveType, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature)
+fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub(const uint32_t *InData_CurveType, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature)
 {
     uint32_t iLoop    = 0U;
     uint32_t iLoop1   = 0U;

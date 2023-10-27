@@ -1,7 +1,7 @@
 /**
   * @file    rel_iaq.h
   * @author  Renesas Electronics Corporation
-  * @version 1.0.0
+  * @version 1.1.0
   * @brief   This file contains the data structure definitions and
   *          the function definitions for the Relative IAQ algorithm.
   * @details The library contains an algorithm to calculate a relative

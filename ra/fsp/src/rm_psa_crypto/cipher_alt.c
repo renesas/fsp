@@ -72,7 +72,7 @@
 #if (BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7) && defined(MBEDTLS_AES_C) && defined(MBEDTLS_AES_ALT)
 static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
 {
-    int ret = 0;
+    fsp_err_t ret = FSP_SUCCESS;
     unsigned int key_bitlen = ctx->cipher_info->key_bitlen;
 
     if (128U == key_bitlen)
@@ -92,7 +92,7 @@ static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
         return MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE;
     }
 
-    if (0 != ret)
+    if (FSP_SUCCESS != ret)
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
 
     /* Once final is successful, change operation state back to SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT to allow same AES key to 
@@ -116,7 +116,7 @@ const int *mbedtls_cipher_list(void)
         type = mbedtls_cipher_supported;
 
         while (def->type != 0) {
-            *type++ = (*def++).type;
+            *type++ = (int)(*def++).type;
         }
 
         *type = 0;

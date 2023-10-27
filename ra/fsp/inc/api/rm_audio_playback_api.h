@@ -29,8 +29,6 @@
  * @section AUDIO_PLAYBACK_API_SUMMARY Summary
  * @brief This module provides common interface for Audio Playback.
  *
- * Implemented by:
- * @ref RM_AUDIO_PLAYBACK_PWM
  *
  * @{
  **********************************************************************************************************************/
@@ -74,8 +72,6 @@ typedef struct st_audio_playback_callback_args
 } audio_playback_callback_args_t;
 
 /** Audio Playback control block.  Allocate an instance specific control block to pass into the AUDIO_PLAYBACK API calls.
- * @par Implemented as
- * - audio_playback_pwm_instance_ctrl_t
  */
 typedef void audio_playback_ctrl_t;
 
@@ -95,8 +91,6 @@ typedef struct st_audio_playback_cfg
 typedef struct st_audio_playback_api
 {
     /** Open a audio playback module.
-     * @par Implemented as
-     * - RM_AUDIO_PLAYBACK_PWM_Open()
      *
      * @param[in] p_ctrl    Pointer to memory allocated for control block.
      * @param[in]     p_cfg     Pointer to the hardware configurations.
@@ -104,24 +98,18 @@ typedef struct st_audio_playback_api
     fsp_err_t (* open)(audio_playback_ctrl_t * const p_ctrl, audio_playback_cfg_t const * const p_cfg);
 
     /** Start audio playback hardware.
-     * @par Implemented as
-     * - RM_AUDIO_PLAYBACK_PWM_Start()
      *
      * @param[in] p_ctrl        Pointer to control block.
      */
     fsp_err_t (* start)(audio_playback_ctrl_t * const p_ctrl);
 
     /** Stop audio playback hardware.
-     * @par Implemented as
-     * - RM_AUDIO_PLAYBACK_PWM_Stop()
      *
      * @param[in] p_ctrl        Pointer to control block.
      */
     fsp_err_t (* stop)(audio_playback_ctrl_t * const p_ctrl);
 
     /** Play audio buffer.
-     * @par Implemented as
-     * - RM_AUDIO_PLAYBACK_PWM_Play()
      *
      * @param[in] p_ctrl        Pointer to control block.
      * @param[in] p_buffer      Pointer to buffer with PCM samples to play.  Data must be scaled for audio
@@ -131,8 +119,6 @@ typedef struct st_audio_playback_api
     fsp_err_t (* play)(audio_playback_ctrl_t * const p_ctrl, void const * const p_buffer, uint32_t length);
 
     /** Close the audio driver.
-     * @par Implemented as
-     * - RM_AUDIO_PLAYBACK_PWM_Close()
      *
      * @param[in] p_ctrl        Pointer to control block initialized in audio_playback_api_t::open.
      */

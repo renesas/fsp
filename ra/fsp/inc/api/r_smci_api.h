@@ -30,8 +30,6 @@
  * - Runtime baud-rate change (baud = 1/ETU)
  * - Hardware resource locking during a transaction
  *
- * Implemented by:
- * - @ref SCI_SMCI
  *
  * @{
  **********************************************************************************************************************/
@@ -189,8 +187,6 @@ typedef struct st_smci_cfg
 } smci_cfg_t;
 
 /** Smart Card Interface control block.  Allocate an instance specific control block to pass into the SMCI API calls.
- * @par Implemented as
- * - smci_instance_ctrl_t
  */
 typedef void smci_ctrl_t;
 
@@ -198,8 +194,6 @@ typedef void smci_ctrl_t;
 typedef struct st_smci_api
 {
     /** Open Smart Card Interface Mode (SMCI)
-     * @par Implemented as
-     * - @ref R_SCI_SMCI_Open()
      *
      * @param[in,out]  p_ctrl     Pointer to the SMCI control block. Must be declared by user. Value set here.
      * @param[in]      smci_cfg_t Pointer to SMCI configuration structure. All elements of this structure must be set by
@@ -210,8 +204,6 @@ typedef struct st_smci_api
     /** Read from Smart Card device.  The read buffer is used until the read is complete.  When a transfer is complete,
      * the callback is called with event SMCI_EVENT_RX_COMPLETE.  Bytes received outside an active transfer are received
      * in the callback function with event SMCI_EVENT_RX_CHAR.
-     * @par Implemented as
-     * - @ref  R_SCI_SMCI_Read()
      *
      * @param[in]   p_ctrl     Pointer to the SMCI control block for the channel.
      * @param[in]   p_dest     Destination address to read data from.
@@ -222,8 +214,6 @@ typedef struct st_smci_api
     /** Write to Smart Card device.  The write buffer is used until write is complete.  Do not overwrite write buffer
      * contents until the write is finished.  When the write is complete (all bytes are fully transmitted on the wire),
      * the callback called with event SMCI_EVENT_TX_COMPLETE.
-     * @par Implemented as
-     * - @ref  R_SCI_SMCI_Write()
      *
      * @param[in]   p_ctrl     Pointer to the SMCI control block.
      * @param[in]   p_src      Source address to write data to.
@@ -232,8 +222,6 @@ typedef struct st_smci_api
     fsp_err_t (* write)(smci_ctrl_t * const p_ctrl, uint8_t const * const p_src, uint32_t const bytes);
 
     /** Change the peripheral settings based on provided transfer mode and data convention type
-     * @par Implemented as
-     * - @ref R_SCI_SMCI_TransferModeSet()
      *
      * @param[in]   p_ctrl          Pointer to the SMCI control block.
      * @param[in]   p_transfer_mode_params    Pointer to SMCI setting like protocol, convention, and gsm_mode
@@ -245,8 +233,6 @@ typedef struct st_smci_api
      * @warning Calling this API aborts any in-progress transmission and disables reception until the new baud
      * settings have been applied.
      *
-     * @par Implemented as
-     * - @ref  R_SCI_SMCI_BaudSet()
      *
      * @param[in]   p_ctrl          Pointer to the SMCI control block.
      * @param[in]   p_baud_setting  Pointer to module specific setting for configuring baud rate.
@@ -254,8 +240,6 @@ typedef struct st_smci_api
     fsp_err_t (* baudSet)(smci_ctrl_t * const p_ctrl, void const * const p_baud_setting);
 
     /** Get the driver specific information.
-     * @par Implemented as
-     * - @ref  R_SCI_SMCI_StatusGet()
      *
      * @param[in]   p_ctrl     Pointer to the SMCI control block.
      * @param[out]  p_status   State info for the driver.
@@ -264,8 +248,6 @@ typedef struct st_smci_api
 
     /**
      * Enable or disable the SMCI clock to control the start of the activation or de-activation
-     * @par Implemented as
-     * - @ref  R_SCI_SMCI_ClockControl()
      *
      * @param[in]   p_ctrl          Pointer to the SMCI control block.
      * @param[in]   clock_enable    True: enables clock output, False disables it
@@ -274,8 +256,6 @@ typedef struct st_smci_api
 
     /**
      * Specify callback function and optional context pointer and callback memory pointer.
-     * @par Implemented as
-     * - SMCI_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the SMCI control block.
      * @param[in]   p_callback               Callback function
@@ -283,12 +263,10 @@ typedef struct st_smci_api
      * @param[in]   p_callback_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(smci_ctrl_t * const p_api_ctrl, void (* p_callback)(smci_callback_args_t *),
+    fsp_err_t (* callbackSet)(smci_ctrl_t * const p_ctrl, void (* p_callback)(smci_callback_args_t *),
                               void const * const p_context, smci_callback_args_t * const p_callback_memory);
 
     /** Close SMCI device.
-     * @par Implemented as
-     * - @ref  R_SCI_SMCI_Close()
      *
      * @param[in]   p_ctrl     Pointer to the SMCI control block.
      */

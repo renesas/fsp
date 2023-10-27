@@ -99,7 +99,7 @@ UINT sce_nx_crypto_aes_encrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
             break;
         }
 
- #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7)
         case 12:
         {
             ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) w, dummy_iv);
@@ -206,7 +206,7 @@ UINT sce_nx_crypto_aes_decrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
             break;
         }
 
- #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7)
+ #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7)
         case 12:
         {
             ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) w, dummy_iv);

@@ -26,8 +26,6 @@
  * @section USB_HMSC_API_Summary Summary
  * The USB HMSC interface provides USB HMSC functionality.
  *
- * The USB HMSC interface can be implemented by:
- * - @ref USB_HMSC
  *
  * @{
  **********************************************************************************************************************/
@@ -86,29 +84,23 @@ typedef enum e_usb_csw_result
 typedef struct st_usb_hmsc_api
 {
     /** Processing for MassStorage(ATAPI) command.
-     * @par Implemented as
-     * - @ref R_USB_HMSC_StorageCommand()
      *
-     * @param[in]  p_api_ctrl   Pointer to control structure.
+     * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  *buf         Pointer to the buffer area to store the transfer data.
      * @param[in]  command      ATAPI command.
      * @param[in]  destination  Represents a device address.
      */
-    fsp_err_t (* storageCommand)(usb_ctrl_t * const p_api_ctrl, uint8_t * buf, uint8_t command, uint8_t destination);
+    fsp_err_t (* storageCommand)(usb_ctrl_t * const p_ctrl, uint8_t * buf, uint8_t command, uint8_t destination);
 
     /** Get number of Storage drive.
-     * @par Implemented as
-     * - @ref R_USB_HMSC_DriveNumberGet()
      *
-     * @param[in]  p_api_ctrl   Pointer to control structure.
+     * @param[in]  p_ctrl   Pointer to control structure.
      * @param[out] p_drive      Store address for Drive No.
      * @param[in]  destination  Represents a device address.
      */
-    fsp_err_t (* driveNumberGet)(usb_ctrl_t * const p_api_ctrl, uint8_t * p_drive, uint8_t destination);
+    fsp_err_t (* driveNumberGet)(usb_ctrl_t * const p_ctrl, uint8_t * p_drive, uint8_t destination);
 
     /** Read sector information.
-     * @par Implemented as
-     * - @ref R_USB_HMSC_StorageReadSector()
      *
      * @param[in]  drive_number      Drive number.
      * @param[out] *buff             Pointer to the buffer area to store the transfer data.
@@ -119,8 +111,6 @@ typedef struct st_usb_hmsc_api
                                     uint16_t sector_count);
 
     /** Write sector information.
-     * @par Implemented as
-     * - @ref R_USB_HMSC_StorageWriteSector()
      *
      * @param[in] drive_number      Drive number.
      * @param[in] *buff             Pointer to the buffer area to store the transfer data.
@@ -131,15 +121,11 @@ typedef struct st_usb_hmsc_api
                                      uint16_t sector_count);
 
     /** Get Semaphore.
-     * @par Implemented as
-     * - @ref R_USB_HMSC_SemaphoreGet()
      *
      */
     fsp_err_t (* semaphoreGet)(void);
 
     /** Release Semaphore.
-     * @par Implemented as
-     * - @ref R_USB_HMSC_SemaphoreRelease()
      *
      */
     fsp_err_t (* semaphoreRelease)(void);
@@ -151,5 +137,5 @@ FSP_FOOTER
 #endif                                 /* R_USB_HMSC_API_H */
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup USB_HMSC_API)
+ * @} (end defgroup USB_HMSC_API)
  **********************************************************************************************************************/

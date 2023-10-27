@@ -50,8 +50,6 @@
 void ether_phy_target_dp83620_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
 bool ether_phy_target_dp83620_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
                                                               uint32_t                    line_speed_duplex);
-extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -78,12 +76,12 @@ void ether_phy_target_dp83620_initialize (ether_phy_instance_ctrl_t * p_instance
          * The following is the recommended settings for TI to output 50 MHz from CLK_OUT when using Texas Instruments DP83620
          * in RMII master mode.
          */
-        ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0006);
-        reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_14H);
+        R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0006);
+        R_ETHER_PHY_Read(p_instance_ctrl, ETHER_PHY_REG_14H, &reg);
         if (0x800A == reg)
         {
-            ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_14H, 0x000A);
-            ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0000);
+            R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_14H, 0x000A);
+            R_ETHER_PHY_Write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0000);
         }
     }
 }                                      /* End of function ether_phy_targets_initialize() */

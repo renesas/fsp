@@ -189,12 +189,12 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const * 
 
     /* Max = 256 bytes, i.e., Page size */
     R_OSPI->DWSCTSR = OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
-        p_instance_ctrl->channel);
+                                     p_instance_ctrl->channel);
 
     /* Read back to ensure value has been written */
     FSP_HARDWARE_REGISTER_WAIT(R_OSPI->DWSCTSR,
                                OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
-    p_instance_ctrl->channel));
+                                              p_instance_ctrl->channel));
 
     /* OctaRAM specific, Ignored by OctaFlash. */
     R_OSPI->DCSMXR =
@@ -831,6 +831,7 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
 static bool r_ospi_status_sub (ospi_instance_ctrl_t * p_instance_ctrl, uint8_t bit_pos)
 {
     spi_flash_cfg_t const     * p_cfg          = p_instance_ctrl->p_cfg;
+    ospi_extended_cfg_t const * p_extend       = (ospi_extended_cfg_t *) p_cfg->p_extend;
     spi_flash_direct_transfer_t direct_command = {0};
     if (SPI_FLASH_PROTOCOL_EXTENDED_SPI == p_instance_ctrl->spi_protocol)
     {
@@ -844,7 +845,7 @@ static bool r_ospi_status_sub (ospi_instance_ctrl_t * p_instance_ctrl, uint8_t b
         direct_command.command_length = p_opi_commands->command_bytes & OSPI_PRV_DIRECT_COMMAND_MASK;
         direct_command.address_length = (p_cfg->address_bytes + 1U) &
                                         OSPI_PRV_DIRECT_ADDR_AND_DATA_MASK;
-        direct_command.dummy_cycles = 4U;
+        direct_command.dummy_cycles = p_extend->opi_status_read_dummy_cycles;
     }
 
     direct_command.data_length = 1U;
@@ -956,18 +957,32 @@ static void r_ospi_direct_transfer (ospi_instance_ctrl_t              * p_instan
                                     spi_flash_direct_transfer_t * const p_transfer,
                                     spi_flash_direct_transfer_dir_t     direction)
 {
+    ospi_extended_cfg_t * p_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
     R_OSPI->DCR = p_transfer->command; /* Write OSPI command. */
     R_OSPI->DAR = p_transfer->address; /* Write OSPI address */
-    /* Direct Read/Write settings */
-    R_OSPI->DCSR = (uint32_t) (p_transfer->command_length << R_OSPI_DCSR_CMDLEN_Pos) |
-                   (uint32_t) (p_transfer->address_length << R_OSPI_DCSR_ADLEN_Pos) |
-                   (uint32_t) (p_transfer->dummy_cycles << R_OSPI_DCSR_DMLEN_Pos) |
 
-                   /* OctaFlash: DOPI = 0, SOPI = 1; OctaRAM: DOPI = 0. */
-                   (uint32_t) (((uint8_t) (p_instance_ctrl->spi_protocol & 2U) >> 1U) << R_OSPI_DCSR_DOPI_Pos) |
-                   (uint32_t) (p_instance_ctrl->channel << R_OSPI_DCSR_ACDV_Pos) |
-                   (uint32_t) (1U << R_OSPI_DCSR_DAOR_Pos) |
-                   (uint32_t) (p_transfer->data_length << R_OSPI_DCSR_DALEN_Pos);
+    /* Build the read/write settings. */
+    uint32_t dcsr = (uint32_t) (p_transfer->command_length << R_OSPI_DCSR_CMDLEN_Pos) |
+                    (uint32_t) (p_transfer->address_length << R_OSPI_DCSR_ADLEN_Pos) |
+                    (uint32_t) (p_transfer->dummy_cycles << R_OSPI_DCSR_DMLEN_Pos) |
+
+                                       /* OctaFlash: DOPI = 0, SOPI = 1; OctaRAM: DOPI = 0. */
+                    (uint32_t) (((uint8_t) (p_instance_ctrl->spi_protocol & 2U) >> 1U) << R_OSPI_DCSR_DOPI_Pos) |
+                    (uint32_t) (p_instance_ctrl->channel << R_OSPI_DCSR_ACDV_Pos) |
+                    (uint32_t) (1U << R_OSPI_DCSR_DAOR_Pos) |
+                    (uint32_t) (p_transfer->data_length << R_OSPI_DCSR_DALEN_Pos);
+
+    /* Change the byte order as needed. */
+    if ((SPI_FLASH_PROTOCOL_DOPI == p_instance_ctrl->spi_protocol) &&
+        (OSPI_DOPI_BYTE_ORDER_0123 == p_extend->dopi_byte_order))
+    {
+        dcsr &= ~R_OSPI_DCSR_DAOR_Msk;
+    }
+
+    /* Apply Direct Read/Write settings */
+    R_OSPI->DCSR = dcsr;
+
     if (SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE == direction)
     {
         if (0 == p_transfer->data_length)

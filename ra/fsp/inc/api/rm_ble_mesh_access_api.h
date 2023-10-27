@@ -29,8 +29,6 @@
  * @section   RM_BLE_MESH_ACCESS_API_Summary Summary
  * The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Network Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality.
  *
- * The Bluetooth Low Energy Mesh Network Access interface can be implemented by:
- * - @ref RM_BLE_MESH_ACCESS
  *
  * @{
  **********************************************************************************************************************/
@@ -1497,8 +1495,6 @@ typedef struct st_rm_ble_mesh_access_friend_security_credential_info
 } rm_ble_mesh_access_friend_security_credential_info_t;
 
 /** BLE MESH ACCESS control block.  Allocate an instance specific control block to pass into the BLE MESH ACCESS API calls.
- * @par Implemented as
- * - rm_ble_mesh_access_instance_ctrl_t
  */
 typedef void rm_ble_mesh_access_ctrl_t;
 
@@ -1520,8 +1516,6 @@ typedef struct st_rm_ble_mesh_access_cfg
 typedef struct st_rm_ble_mesh_access_api
 {
     /** Open access middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_Open()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  p_cfg   Pointer to configuration structure.
@@ -1529,16 +1523,12 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* open)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_access_cfg_t const * const p_cfg);
 
     /** Close access middleware.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_Close()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_access_ctrl_t * const p_ctrl);
 
     /** Register a model with the access layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_RegisterModel()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_model          Pointer to model structure.
@@ -1549,8 +1539,6 @@ typedef struct st_rm_ble_mesh_access_api
                                 rm_ble_mesh_access_model_handle_t * const p_model_handle);
 
     /** Get element handle.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetElementHandle()
      *
      * @param[in]  p_ctrl     Pointer to control structure.
      * @param[in]  elem_addr  Address of the corresponding element.
@@ -1560,8 +1548,6 @@ typedef struct st_rm_ble_mesh_access_api
                                    rm_ble_mesh_access_element_handle_t * const p_handle);
 
     /** Get element handle for a given model handle
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetElementHandleForModelHandle()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  model_handle   Model handle.
@@ -1572,8 +1558,6 @@ typedef struct st_rm_ble_mesh_access_api
                                                  rm_ble_mesh_access_element_handle_t * const p_elem_handle);
 
     /** Get model handle.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetModelHandle()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  elem_handle  Element identifier associated with the Model.
@@ -1586,8 +1570,6 @@ typedef struct st_rm_ble_mesh_access_api
                                  rm_ble_mesh_access_model_handle_t * const p_handle);
 
     /** API to publish access layer message.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_Publish()
      *
      * @param[in]  p_ctrl             Pointer to control structure.
      * @param[in]  p_handl            Pointer to model handle.
@@ -1599,8 +1581,6 @@ typedef struct st_rm_ble_mesh_access_api
                           rm_ble_mesh_access_req_msg_raw_t const * const p_publish_message, uint8_t reliable);
 
     /** API to reliably publish access layer message.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_ReliablePublish()
      *
      * @param[in]  p_ctrl             Pointer to control structure.
      * @param[in]  p_handl            Pointer to model handle.
@@ -1613,8 +1593,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   uint32_t                                        rsp_opcode);
 
     /** API to reply to access layer message.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_Reply()
      *
      * @param[in]  p_ctrl             Pointer to control structure.
      * @param[in]  p_req_msg_context  Pointer to context of received message structure.
@@ -1626,8 +1604,6 @@ typedef struct st_rm_ble_mesh_access_api
                         rm_ble_mesh_access_req_msg_raw_t const * const p_req_msg_raw);
 
     /** API to reply to access layer message and optionally also to publish.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_ReplyAndPublish()
      *
      * @param[in]  p_ctrl             Pointer to control structure.
      * @param[in]  p_req_msg_context  Pointer to context of received message structure.
@@ -1640,8 +1616,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   rm_ble_mesh_access_publish_setting_t const * const       p_publish_setting);
 
     /** API to send access PDUs.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SendPdu()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  p_pdu    Pointer to PDU structure.
@@ -1651,8 +1625,6 @@ typedef struct st_rm_ble_mesh_access_api
                           uint8_t reliable);
 
     /** Get composition data.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetCompositionData()
      *
      * @param[in]  p_ctrl    Pointer to control structure.
      * @param[out] p_buffer  Pointer to buffer structure.
@@ -1660,16 +1632,12 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getCompositionData)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_buffer_t * const p_buffer);
 
     /**  To reset a node.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_Reset()
      *
      * @param[in]  p_ctrl    Pointer to control structure.
      */
     fsp_err_t (* reset)(rm_ble_mesh_access_ctrl_t * const p_ctrl);
 
     /**  To get the number of elements in local node.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetElementCount()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[out] p_count  Pointer to number of elements.
@@ -1677,8 +1645,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getElementCount)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_count);
 
     /**  To set primary unicast address.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetPrimaryUnicastAddress()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  addr    Primary Unicast address to be set.
@@ -1687,8 +1653,6 @@ typedef struct st_rm_ble_mesh_access_api
                                            rm_ble_mesh_network_address_t     addr);
 
     /**  To get primary unicast address.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetPrimaryUnicastAddress()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[out] p_addr  Pointer to address.
@@ -1697,8 +1661,6 @@ typedef struct st_rm_ble_mesh_access_api
                                            rm_ble_mesh_network_address_t * const p_addr);
 
     /**  To set default TTL.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetDefaultTtl()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  ttl     Default TTL to be set.
@@ -1706,8 +1668,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* setDefaultTtl)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t ttl);
 
     /**  To get default TTL.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetDefaultTtl()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  p_ttl   Pointer to TTL.
@@ -1715,8 +1675,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getDefaultTtl)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t const * const p_ttl);
 
     /**  To set IV Index.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetIvIndex()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  iv_index        IV index to be set.
@@ -1725,8 +1683,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* setIvIndex)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint32_t iv_index, uint8_t iv_update_flag);
 
     /**  To get IV Index.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetIvIndex()
      *
      * @param[in]  p_ctrl            Pointer to control structure.
      * @param[out] p_iv_index        Pointer to index.
@@ -1736,8 +1692,6 @@ typedef struct st_rm_ble_mesh_access_api
                              uint8_t * const p_iv_update_flag);
 
     /**  To get IV Index by IVI.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetIvIndexByIvi()
      *
      * @param[in]  p_ctrl      Pointer to control structure.
      * @param[in]  ivi         Least significant bit of the IV index used in the once to authenticate and encrypt the network PDU.
@@ -1746,8 +1700,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getIvIndexByIvi)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t ivi, uint32_t * const p_iv_index);
 
     /**  To enable/disable a feature.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetFeaturesField()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  enable   Enable or Disable.
@@ -1756,8 +1708,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* setFeaturesField)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t enable, uint8_t feature);
 
     /**  To get state of a feature.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetFeaturesField()
      *
      * @param[in]  p_ctrl    Pointer to control structure.
      * @param[in]  p_enable  Pointer to enable.
@@ -1766,8 +1716,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getFeaturesField)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_enable, uint8_t feature);
 
     /**  To get state of all features.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetFeatures()
      *
      * @param[in]  p_ctrl      Pointer to control structure.
      * @param[out] p_features  Pointer to features.
@@ -1775,8 +1723,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getFeatures)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_features);
 
     /**  To get friendship role of the node.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetFriendshipRole()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[out] p_friend_role  Pointer to friend role.
@@ -1784,8 +1730,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* getFriendshipRole)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t * const p_friend_role);
 
     /**  To set friendship role of the node.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetFriendshipRole()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] friend_role  Friend role.
@@ -1793,8 +1737,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* setFriendshipRole)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t friend_role);
 
     /**  To add Device Key.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_AddDeviceKey()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  p_dev_key     Pointer to device Key.
@@ -1805,8 +1747,6 @@ typedef struct st_rm_ble_mesh_access_api
                                rm_ble_mesh_network_address_t uaddr, uint8_t num_elements);
 
     /**  To get Device Key.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetDeviceKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  dev_key_index  Device key index.
@@ -1816,16 +1756,12 @@ typedef struct st_rm_ble_mesh_access_api
                                uint8_t ** const p_dev_key);
 
     /**  To remove all Device Keys.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_RemoveAllDeviceKeys()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      */
     fsp_err_t (* removeAllDeviceKeys)(rm_ble_mesh_access_ctrl_t * const p_ctrl);
 
     /**  To get list of Provisioned Device List.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetProvisionedDeviceList()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_prov_dev_list  Pointer to provisioned device list structure.
@@ -1836,8 +1772,6 @@ typedef struct st_rm_ble_mesh_access_api
                                            uint16_t * const                                            p_num_entries);
 
     /**  To get Device Key Handle.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetDeviceKeyHandle()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  prim_elem_uaddr  Primary element address to be searched.
@@ -1848,8 +1782,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      rm_ble_mesh_access_device_key_handle_t * const p_handle);
 
     /**  To get AppKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetAppKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  appkey_handle  AppKey Handle.
@@ -1860,8 +1792,6 @@ typedef struct st_rm_ble_mesh_access_api
                             uint8_t ** const p_app_key, uint8_t * const p_aid);
 
     /**  To add/update NetKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_AddUpdateNetkey()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  netkey_index  Identifies global index of NetKey. A 12bits value.
@@ -1872,8 +1802,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   uint8_t const * const p_net_key);
 
     /**  To add Security Credential of a LPN or the Friend.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_AddFriendSecurityCredential()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Identifies associated subnet.
@@ -1885,8 +1813,6 @@ typedef struct st_rm_ble_mesh_access_api
                                               rm_ble_mesh_access_friend_security_credential_info_t info);
 
     /**  To delete the Security Credential of a LPN or the Friend.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_DeleteFriendSecurityCredential()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Identifies associated subnet.
@@ -1897,8 +1823,6 @@ typedef struct st_rm_ble_mesh_access_api
                                                  uint16_t                            friend_index);
 
     /**  To find a Subnet associated with the NetKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_FindSubnet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  netkey_index     Identifies global Index of NetKey, corresponding Subnet to be returned.
@@ -1908,8 +1832,6 @@ typedef struct st_rm_ble_mesh_access_api
                              rm_ble_mesh_network_subnet_handle_t * const p_subnet_handle);
 
     /**  To find the Master Subnet associated with the friend security credential, identified by Friend Subnet Handle.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_FindMasterSubnet()
      *
      * @param[in]  p_ctrl                  Pointer to control structure.
      * @param[in]  friend_subnet_handle    Identifies the friend subnet handle, corresponding to friend subnet handle.
@@ -1920,8 +1842,6 @@ typedef struct st_rm_ble_mesh_access_api
                                    rm_ble_mesh_network_subnet_handle_t * const p_master_subnet_handle);
 
     /**  To delete NetKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_DeleteNetKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle of the subnet for which NetKey to be deleted.
@@ -1930,8 +1850,6 @@ typedef struct st_rm_ble_mesh_access_api
                                rm_ble_mesh_network_subnet_handle_t subnet_handle);
 
     /**  To get NetKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetNetKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Target subnet handle to get net key.
@@ -1941,8 +1859,6 @@ typedef struct st_rm_ble_mesh_access_api
                             uint8_t * const p_net_key);
 
     /**  To get list of all known NetKeys.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetNetKeyIndexList()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  p_netkey_count       Pointer to NetKey count.
@@ -1952,8 +1868,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      uint16_t * const p_netkey_index_list);
 
     /**  To search for NID.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_LookUpNid()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  nid              NID to be searched in all known subnets for match.
@@ -1965,8 +1879,6 @@ typedef struct st_rm_ble_mesh_access_api
                             rm_ble_mesh_access_associated_keys_t * const p_key_set);
 
     /**  To search for Network ID.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_LookUpNetworkId()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_network_id     Pointer to network ID to be searched in all known subnets for match.
@@ -1978,8 +1890,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   rm_ble_mesh_access_associated_keys_t * const p_key_set);
 
     /**  To search for AID.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_LookUpAid()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  aid              AID to be searched in all known AppKeys for match.
@@ -1990,8 +1900,6 @@ typedef struct st_rm_ble_mesh_access_api
                             rm_ble_mesh_network_appkey_handle_t * const p_appkey_handle, uint8_t * const p_app_key);
 
     /**  Set Provisioning Data.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetProvisioningData()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_prov_data      Pointer to provisioning data structure.
@@ -2000,8 +1908,6 @@ typedef struct st_rm_ble_mesh_access_api
                                       rm_ble_mesh_provision_data_t const * const p_prov_data);
 
     /**  To get NID associated with a subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetSubnetNid()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  handle  Handle identifying the subnet.
@@ -2011,8 +1917,6 @@ typedef struct st_rm_ble_mesh_access_api
                                uint8_t * const p_nid);
 
     /**  To get privacy Key associated with a subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetSubnetPrivacyKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  handle         Handle identifying the subnet.
@@ -2022,8 +1926,6 @@ typedef struct st_rm_ble_mesh_access_api
                                       rm_ble_mesh_network_subnet_handle_t handle, uint8_t * const p_privacy_key);
 
     /**  To get Network ID associated with a subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetSubnetNetworkId()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  handle        Handle identifying the subnet.
@@ -2033,8 +1935,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      rm_ble_mesh_network_subnet_handle_t handle, uint8_t * const p_network_id);
 
     /**  To get Beacon Key associated with a subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetSubnetBeaconKey()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  handle        Handle identifying the subnet.
@@ -2044,8 +1944,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      rm_ble_mesh_network_subnet_handle_t handle, uint8_t * const p_beacon_key);
 
     /**  To get Identity Key associated with a subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetSubnetIdentityKey()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  handle          Handle identifying the subnet.
@@ -2055,8 +1953,6 @@ typedef struct st_rm_ble_mesh_access_api
                                        rm_ble_mesh_network_subnet_handle_t handle, uint8_t * const p_identity_key);
 
     /**  To get Encryption Key associated with a subnet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetSubnetEncryptionKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  handle         Handle identifying the subnet.
@@ -2066,8 +1962,6 @@ typedef struct st_rm_ble_mesh_access_api
                                          rm_ble_mesh_network_subnet_handle_t handle, uint8_t * const p_encrypt_key);
 
     /**  To get Node Identity.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetNodeIdentity()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle identifying the subnet.
@@ -2077,8 +1971,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   rm_ble_mesh_network_subnet_handle_t subnet_handle, uint8_t * const p_id_state);
 
     /**  To set Node Identity.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetNodeIdentity()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle identifying the subnet.
@@ -2088,8 +1980,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   rm_ble_mesh_network_subnet_handle_t subnet_handle, uint8_t * const p_id_state);
 
     /**  To get Key refresh phase.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetKeyRefreshPhase()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  subnet_handle        Handle identifying the subnet.
@@ -2100,8 +1990,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      uint8_t * const                     p_key_refresh_state);
 
     /**  To set Key refresh phase.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetKeyRefreshPhase()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  subnet_handle        Handle identifying the subnet.
@@ -2112,8 +2000,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      uint8_t const * const               p_key_refresh_state);
 
     /**  To set Network/Relay Transmit state.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetTransmitState()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  tx_state_type  Transmit state type (Network or Relay).
@@ -2122,8 +2008,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* setTransmitState)(rm_ble_mesh_access_ctrl_t * const p_ctrl, uint8_t tx_state_type, uint8_t tx_state);
 
     /**  To get Network/Relay Transmit state.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetTransmitState()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  tx_state_type  Transmit State Type (Network or Relay).
@@ -2133,8 +2017,6 @@ typedef struct st_rm_ble_mesh_access_api
                                    uint8_t * const p_tx_state);
 
     /**  To add AppKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_AddAppKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle of the subnet for which AppKey to be added.
@@ -2145,8 +2027,6 @@ typedef struct st_rm_ble_mesh_access_api
                             uint16_t appkey_index, uint8_t const * const p_app_key);
 
     /**  To update/delete AppKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_UpdateAppKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle of the Subnet for which AppKey to be updated/deleted.
@@ -2158,8 +2038,6 @@ typedef struct st_rm_ble_mesh_access_api
                                uint8_t const * const p_app_key);
 
     /**  To update/delete AppKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_DeleteAppKey()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle of the Subnet for which AppKey to be updated/deleted.
@@ -2171,8 +2049,6 @@ typedef struct st_rm_ble_mesh_access_api
                                uint8_t const * const p_app_key);
 
     /**  To get AppKey Handle for a given AppKey Index.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetAppKeyHandle()
      *
      * @param[in]  p_ctrl            Pointer to control structure.
      * @param[in]  subnet_handle     Handle of the Subnet for which AppKey to be gotten.
@@ -2186,8 +2062,6 @@ typedef struct st_rm_ble_mesh_access_api
                                   rm_ble_mesh_network_appkey_handle_t * const p_appkey_handle);
 
     /**  To get list of all known AppKeys.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetAppKeyIndexList()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  subnet_handle        Handle of the Subnet for which AppKey to be returned.
@@ -2199,8 +2073,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      uint16_t * const p_appkey_index_list);
 
     /**  To bind a model with an AppKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_BindModelWithAppKey()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  model_handle  Model handle identifying the model.
@@ -2210,8 +2082,6 @@ typedef struct st_rm_ble_mesh_access_api
                                       rm_ble_mesh_access_model_handle_t model_handle, uint16_t appkey_index);
 
     /**  To unbind a model with an AppKey.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_UnbindModelWithAppKey()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  model_handle  Model handle identifying the model.
@@ -2221,8 +2091,6 @@ typedef struct st_rm_ble_mesh_access_api
                                         rm_ble_mesh_access_model_handle_t model_handle, uint16_t appkey_index);
 
     /**  To get list of all AppKeys associated with a model.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetModelAppKeyList()
      *
      * @param[in]  p_ctrl               Pointer to control structure.
      * @param[in]  model_handle         Handle of the Model for which AppKey to be returned.
@@ -2234,8 +2102,6 @@ typedef struct st_rm_ble_mesh_access_api
                                      uint16_t * const p_appkey_index_list);
 
     /**  To set Publication information associated with a model.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetModelPublication()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  model_handle    Handle of the Model for which Publication info to be set.
@@ -2246,8 +2112,6 @@ typedef struct st_rm_ble_mesh_access_api
                                       rm_ble_mesh_access_publish_info_t * const p_publish_info);
 
     /**  To set Publication Fast Period Divisor information associated with a model.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_SetModelPublicationPeriodDivisor()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  model_handle    Handle of the Model for which Publication info to be set.
@@ -2258,8 +2122,6 @@ typedef struct st_rm_ble_mesh_access_api
                                                    uint8_t                           period_divisor);
 
     /**  To get Publication information associated with a model.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetModelPublication()
      *
      * @param[in]  p_ctrl          Pointer to control structure.
      * @param[in]  model_handle    Handle of the Model for which Publication info to be returned.
@@ -2270,8 +2132,6 @@ typedef struct st_rm_ble_mesh_access_api
                                       rm_ble_mesh_access_publish_info_t * const p_publish_info);
 
     /**  To add an address to a model subscription list.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_AddModelSubscription()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  model_handle  Handle of the Model for which address to be added in the subscription list.
@@ -2282,8 +2142,6 @@ typedef struct st_rm_ble_mesh_access_api
                                        rm_ble_mesh_access_address_t const * const p_sub_addr);
 
     /**  To delete an address to a model subscription list.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_DeleteModelSubscription()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  model_handle  Handle of the Model for which address to be deleted in the subscription list.
@@ -2294,8 +2152,6 @@ typedef struct st_rm_ble_mesh_access_api
                                           rm_ble_mesh_access_address_t const * const p_sub_addr);
 
     /**  To discard a model subscription list.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_DeleteAllModelSubscription()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  model_handle  Handle of the Model for which the subscription list to be discarded.
@@ -2304,8 +2160,6 @@ typedef struct st_rm_ble_mesh_access_api
                                              rm_ble_mesh_access_model_handle_t model_handle);
 
     /**  To get list of subscription addresses of a model.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetModelSubscriptionList()
      *
      * @param[in]  p_ctrl            Pointer to control structure.
      * @param[in]  model_handle      Handle of the Model for which the subscription addresses to be returned.
@@ -2318,8 +2172,6 @@ typedef struct st_rm_ble_mesh_access_api
                                            uint16_t * const                  p_sub_addr_list);
 
     /**  To get list of subscription addresses of all the models.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_GetAllModelSubscriptionList()
      *
      * @param[in]  p_ctrl            Pointer to control structure.
      * @param[in]  p_sub_addr_count  Pointer to maximum number of subscription address.
@@ -2329,8 +2181,6 @@ typedef struct st_rm_ble_mesh_access_api
                                               uint16_t * const p_sub_addr_count, uint16_t * const p_sub_addr_list);
 
     /**  To check if valid element address to receive a packet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_IsValidElementAddress()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  addr    A valid element address, to be checked.
@@ -2338,8 +2188,6 @@ typedef struct st_rm_ble_mesh_access_api
     fsp_err_t (* isValidElementAddress)(rm_ble_mesh_access_ctrl_t * const p_ctrl, rm_ble_mesh_network_address_t addr);
 
     /**  To check if Fixed Group Address in receive packet to be processed.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_IsFixedGroupAddressToBeProcessed()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  addr    A valid fixed group address, to be checked.
@@ -2348,8 +2196,6 @@ typedef struct st_rm_ble_mesh_access_api
                                                    rm_ble_mesh_network_address_t     addr);
 
     /**  To check if valid subscription address to receive a packet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_IsValidSubscriptionAddress()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  addr    A valid subscription address, to be checked.
@@ -2358,8 +2204,6 @@ typedef struct st_rm_ble_mesh_access_api
                                              rm_ble_mesh_network_address_t     addr);
 
     /**  To set the IV Update Test Mode feature.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_ACCESS_EnableIvUpdateTestMode()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  mode    This flag is used to either enable or disable the IV update test mode feature.

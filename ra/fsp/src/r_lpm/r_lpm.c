@@ -249,7 +249,8 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     /* The MOCO must be running when entering standby mode. */
     if (LPM_MODE_STANDBY <= p_ctrl->p_cfg->low_power_mode)
     {
-        FSP_ERROR_RETURN(0 == R_SYSTEM->MOCOCR, FSP_ERR_INVALID_MODE);
+        FSP_ERROR_RETURN(0 == FSP_STYPE3_REG8_READ(R_SYSTEM->MOCOCR, !R_SYSTEM->CGFSAR_b.NONSEC03),
+                         FSP_ERR_INVALID_MODE);
     }
  #endif
 #endif
@@ -708,11 +709,13 @@ fsp_err_t r_lpm_check_clocks (uint32_t clock_source)
 fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 {
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
-    uint32_t saved_opccr = 0U;
+    uint32_t           saved_opccr = 0U;
+    uint8_t volatile * p_opccr     = &R_SYSTEM->OPCCR;
  #if BSP_FEATURE_CGC_HAS_SOPCCR
     uint32_t saved_sopccr = 0U;
  #endif
-    uint32_t saved_ostdcr_ostde = 0U;
+    uint32_t           saved_ostdcr_ostde = 0U;
+    uint8_t volatile * p_ostde            = &R_SYSTEM->OSTDCR;
  #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
     uint32_t saved_hocowtcr = 0U;
     uint32_t new_hocowtcr   = 0U;
@@ -723,6 +726,20 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #endif
 #if BSP_PRV_POWER_USE_DCDC
     bsp_power_mode_t power_mode = BSP_POWER_MODE_LDO;
+#endif
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+    if (1 == R_SYSTEM->LPMSAR_b.NONSEC0)
+    {
+        /* If security attribution of OPCCR is set to non-secure, then use the non-secure alias. */
+        p_opccr = (uint8_t volatile *) ((uint32_t) p_opccr | BSP_FEATURE_TZ_NS_OFFSET);
+    }
+
+    if (1 == R_SYSTEM->CGFSAR_b.NONSEC06)
+    {
+        /* If security attribution of OSTDCR is set to non-secure, then use the non-secure alias. */
+        p_ostde = (uint8_t volatile *) ((uint32_t) p_ostde | BSP_FEATURE_TZ_NS_OFFSET);
+    }
 #endif
 
 #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
@@ -761,7 +778,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         /* Save the OPCCR and SOPCCR registers. When transitioning from Software Standby mode to Normal or Snooze mode
          * these registers are overwritten. See Section 11.2.6 "Operating Power Control Register" in the RA6M3 manual
          * R01UM0004EU0110 */
-        saved_opccr = R_SYSTEM->OPCCR_b.OPCM;
+        saved_opccr = (*p_opccr & R_SYSTEM_OPCCR_OPCM_Msk) >> R_SYSTEM_OPCCR_OPCM_Pos;
  #if BSP_FEATURE_CGC_HAS_SOPCCR
         saved_sopccr = R_SYSTEM->SOPCCR_b.SOPCM;
  #endif
@@ -849,8 +866,8 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         }
 
         /* Save oscillator stop detect state. */
-        saved_ostdcr_ostde       = R_SYSTEM->OSTDCR_b.OSTDE;
-        R_SYSTEM->OSTDCR_b.OSTDE = 0U;
+        saved_ostdcr_ostde = (*p_ostde & R_SYSTEM_OSTDCR_OSTDE_Msk) >> R_SYSTEM_OSTDCR_OSTDE_Pos;
+        *p_ostde          &= (uint8_t) ~R_SYSTEM_OSTDCR_OSTDE_Msk;
 
  #if BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED
         stopped_modules = bsp_prv_power_change_mstp_set();
@@ -894,11 +911,19 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     }
 #endif
 
+#if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
+    bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
+#endif
+
     /* DSB should be last instruction executed before WFI
      * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html */
     __DSB();
 
     __WFI();
+
+#if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
+    bsp_prv_clock_prepare_post_sleep(clock_slowed);
+#endif
 
 #if BSP_FEATURE_LPM_HAS_DEEP_SLEEP
     if (LPM_MODE_SLEEP != p_instance_ctrl->p_cfg->low_power_mode)
@@ -928,13 +953,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         r_lpm_wait_for_operating_mode_flags();
 
         /* Restore system registers to the values prior to entering standby. */
-        R_SYSTEM->OPCCR = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
-
+        *p_opccr = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
   #if BSP_FEATURE_CGC_HAS_SOPCCR
         R_SYSTEM->SOPCCR = saved_sopccr & R_SYSTEM_SOPCCR_SOPCM_Msk;
   #endif
 
-        R_SYSTEM->OSTDCR_b.OSTDE = 0x1U & saved_ostdcr_ostde;
+        *p_ostde |= (uint8_t) saved_ostdcr_ostde;
   #if BSP_FEATURE_CGC_HOCOWTCR_SCI_SNOOZE_VALUE > 0
         R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (saved_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
   #endif
@@ -965,7 +989,9 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 void r_lpm_wait_for_operating_mode_flags (void)
 {
     /* Wait for transition to complete. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OPCCR_b.OPCMTSF, 0U);
+    FSP_HARDWARE_REGISTER_WAIT((FSP_STYPE3_REG8_READ(R_SYSTEM->OPCCR,
+                                                     !R_SYSTEM->LPMSAR_b.NONSEC0) & R_SYSTEM_OPCCR_OPCMTSF_Msk),
+                               0U);
 
 #if BSP_FEATURE_CGC_HAS_SOPCCR
 

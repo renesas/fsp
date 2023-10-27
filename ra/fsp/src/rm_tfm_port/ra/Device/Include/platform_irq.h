@@ -16,7 +16,7 @@
 
 #ifndef __PLATFORM_IRQ_H__
  #define __PLATFORM_IRQ_H__
- #include "../../src/bsp/mcu/all/bsp_arm_exceptions.h"
+ #include "../../src/bsp/mcu/all/bsp_exceptions.h"
  #include "vector_data.h"
  #ifdef __cplusplus
 extern "C" {

@@ -133,7 +133,7 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     R_ICU->IRQCR[p_ctrl->channel] = 0U;
 
     /* Set the digital filter divider. */
-    uint8_t irqcr = (uint8_t) (p_cfg->pclk_div << ICU_FCLKSEL_OFFSET);
+    uint8_t irqcr = (uint8_t) (p_cfg->clock_source_div << ICU_FCLKSEL_OFFSET);
 
     /* Enable/Disable digital filter. */
     irqcr |= (uint8_t) (p_cfg->filter_enable << ICU_FLTEN_OFFSET);

@@ -85,20 +85,30 @@ fsp_err_t HW_SCE_ECC_256WrappedScalarMultiplication (const uint32_t * InData_Cur
                                                      const uint32_t * InData_Cmd,
                                                      const uint32_t * InData_KeyIndex,
                                                      const uint32_t * InData_P,
+                                                     const uint32_t * Domain_Param,
                                                      uint32_t       * OutData_R)
 {
-    return HW_SCE_Ecc256ScalarMultiplicationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_P, OutData_R);
+    return HW_SCE_Ecc256ScalarMultiplicationSubAdaptor(InData_CurveType,
+                                                       InData_Cmd,
+                                                       InData_KeyIndex,
+                                                       InData_P,
+                                                       Domain_Param,
+                                                       OutData_R);
 }
 
 fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication (const uint32_t * InData_CurveType,
                                                      const uint32_t * InData_Cmd,
                                                      const uint32_t * InData_KeyIndex,
                                                      const uint32_t * InData_P,
+                                                     const uint32_t * Domain_Param,
                                                      uint32_t       * OutData_R)
 {
-    FSP_PARAMETER_NOT_USED(InData_Cmd);
-
-    return HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType, InData_KeyIndex, InData_P, OutData_R);
+    return HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(InData_CurveType,
+                                                       InData_Cmd,
+                                                       InData_KeyIndex,
+                                                       InData_P,
+                                                       Domain_Param,
+                                                       OutData_R);
 }
 
 static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_lookup[][2] =
@@ -134,7 +144,8 @@ extern int ecp_can_do_sce(mbedtls_ecp_group_id gid);
 extern int ecp_load_curve_attributes_sce(const mbedtls_ecp_group * grp,
                                          uint32_t                * p_curve_type,
                                          uint32_t                * p_cmd,
-                                         sce_oem_cmd_t           * oem_priv_cmd);
+                                         sce_oem_cmd_t           * oem_priv_cmd,
+                                         uint32_t               ** pp_domain_param);
 
 uint32_t ecp_load_key_size(bool wrapped_mode_ctx, const mbedtls_ecp_group * grp);
 
@@ -238,18 +249,19 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
 
     p_private_key_buff_32 = p_common_buff_32;
 
-    uint32_t curve_type;
-    uint32_t cmd;
-    ret = ecp_load_curve_attributes_sce(grp, &curve_type, &cmd, NULL);
+    uint32_t   curve_type;
+    uint32_t   cmd;
+    uint32_t * p_domain_param = NULL;
+    ret = ecp_load_curve_attributes_sce(grp, &curve_type, &cmd, NULL, &p_domain_param);
     if (ret == 0)
     {
         if (ECC_256_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
-            sce_ecc_public_key_index_t public_key = {0};
+            uint32_t dummy[sizeof(sce_ecc_public_key_index_t)] = {0};
             if (FSP_SUCCESS !=
-                HW_SCE_GenerateEccRandomKeyIndexSub(&curve_type, &cmd, &indata_key_type, (uint32_t *) &public_key.value,
-                                                    (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
-                                                    (uint32_t *) &public_key.plain_value))
+                HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type, &cmd, &indata_key_type,
+                                                           (const uint32_t *) p_domain_param, dummy, dummy,
+                                                           (uint32_t *) wrapped_key, dummy))
             {
                 ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
             }
@@ -258,13 +270,17 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
                 memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
             }
         }
+
+  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
         else if (ECC_384_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
             sce_ecc384_public_key_index_t public_key = {0};
             if (FSP_SUCCESS !=
-                HW_SCE_GenerateEccP384RandomKeyIndexSub(&curve_type, &indata_key_type, (uint32_t *) &public_key.value,
-                                                        (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
-                                                        (uint32_t *) &public_key.plain_value))
+                HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor(&curve_type, &indata_key_type, p_domain_param,
+                                                               (uint32_t *) &public_key.value,
+                                                               (uint32_t *) &public_key.plain_value,
+                                                               (uint32_t *) wrapped_key,
+                                                               (uint32_t *) &public_key.plain_value))
             {
                 ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
             }
@@ -273,6 +289,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
                 memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
             }
         }
+  #endif
         else
         {
             ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
@@ -378,7 +395,8 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     uint32_t      curve_type;
     uint32_t      cmd;
     sce_oem_cmd_t oem_cmd;
-    ret = ecp_load_curve_attributes_sce(grp, &curve_type, &cmd, &oem_cmd);
+    uint32_t    * p_domain_param = NULL;
+    ret = ecp_load_curve_attributes_sce(grp, &curve_type, &cmd, &oem_cmd, &p_domain_param);
     if (0 == ret)
     {
         ret = mbedtls_mpi_write_binary(m, (uint8_t *) p_integer_buff_m_32, m_size_words * 4);
@@ -417,7 +435,7 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     }
     else if (FSP_SUCCESS !=
              p_hw_sce_ecc_scalarmultiplication(&curve_type, &cmd, p_integer_buff_m_wrapped_32, p_point_buff_P_32,
-                                               p_point_result_buff_R_32))
+                                               p_domain_param, p_point_result_buff_R_32))
     {
         ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
     }

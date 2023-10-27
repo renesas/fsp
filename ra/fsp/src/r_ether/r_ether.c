@@ -282,6 +282,8 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
     err = ether_open_param_check(p_instance_ctrl, p_cfg); /** check arguments */
     ETHER_ERROR_RETURN((FSP_SUCCESS == err), err);
 #endif
+    ETHER_ERROR_RETURN((ETHER_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
+
     p_ether_extended_cfg = (ether_extended_cfg_t *) p_cfg->p_extend;
 
     /** Make sure this channel exists. */
@@ -331,6 +333,17 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
     phy_ret = p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_api->open(
         p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_ctrl,
         p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_cfg);
+
+#if !ETHER_PHY_CFG_INIT_PHY_LSI_AUTOMATIC
+
+    /* Initialize the PHY */
+    if (FSP_SUCCESS == phy_ret)
+    {
+        phy_ret = p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_api->chipInit(
+            p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_ctrl,
+            p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_cfg);
+    }
+#endif
 
     if (FSP_SUCCESS == phy_ret)
     {
@@ -1197,7 +1210,6 @@ fsp_err_t R_ETHER_CallbackSet (ether_ctrl_t * const          p_api_ctrl,
  *
  * @retval  FSP_SUCCESS                  No parameter error found
  * @retval  FSP_ERR_ASSERTION            Pointer to ETHER control block or configuration structure is NULL
- * @retval  FSP_ERR_ALREADY_OPEN         Control block has already been opened
  * @retval  FSP_ERR_INVALID_CHANNEL      Invalid channel number is given.
  * @retval  FSP_ERR_INVALID_POINTER      Pointer to MAC address is NULL.
  * @retval  FSP_ERR_INVALID_ARGUMENT     Irq number lower then 0.
@@ -1222,8 +1234,6 @@ static fsp_err_t ether_open_param_check (ether_instance_ctrl_t const * const p_i
     {
         ETHER_ERROR_RETURN((p_cfg->pp_ether_buffers != NULL), FSP_ERR_INVALID_ARGUMENT);
     }
-
-    ETHER_ERROR_RETURN((ETHER_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
 
     return FSP_SUCCESS;
 }

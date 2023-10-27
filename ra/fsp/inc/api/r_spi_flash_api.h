@@ -65,7 +65,7 @@ typedef enum e_spi_flash_read_mode
 /** SPI protocol. */
 typedef enum e_spi_flash_protocol
 {
-    /** Extended SPI mode (commands on 1 line) or 1S-1S-1S protocol mode on OSPI_B. */
+    /** Extended SPI mode (commands on 1 line) */
     SPI_FLASH_PROTOCOL_EXTENDED_SPI = 0x000,
 
     /** QPI mode (commands on 4 lines). Note that the application must ensure the device is in QPI mode. */
@@ -77,22 +77,25 @@ typedef enum e_spi_flash_protocol
     /** DOPI mode (command and data on 8 lines, dual data rate). Note that the application must ensure the device is in DOPI mode. */
     SPI_FLASH_PROTOCOL_DOPI = 0x004,
 
-    /** 4S-4D-4D protocol mode on OSPI_B. */
+    /** 1S-1S-1S protocol mode */
+    SPI_FLASH_PROTOCOL_1S_1S_1S = 0x000,
+
+    /** 4S-4D-4D protocol mode */
     SPI_FLASH_PROTOCOL_4S_4D_4D = 0x3B2,
 
-    /** 8D-8D-8D protocol mode on OSPI_B. */
+    /** 8D-8D-8D protocol mode */
     SPI_FLASH_PROTOCOL_8D_8D_8D = 0x3FF,
 
-    /** 1S-2S-2S protocol mode on OSPI_B. */
+    /** 1S-2S-2S protocol mode */
     SPI_FLASH_PROTOCOL_1S_2S_2S = 0x048,
 
-    /** 2S-2S-2S protocol mode on OSPI_B. */
+    /** 2S-2S-2S protocol mode */
     SPI_FLASH_PROTOCOL_2S_2S_2S = 0x049,
 
-    /** 1S-4S-4S protocol mode on OSPI_B. */
+    /** 1S-4S-4S protocol mode */
     SPI_FLASH_PROTOCOL_1S_4S_4S = 0x090,
 
-    /** 4S-4S-4S protocol mode on OSPI_B. */
+    /** 4S-4S-4S protocol mode */
     SPI_FLASH_PROTOCOL_4S_4S_4S = 0x092
 } spi_flash_protocol_t;
 
@@ -120,9 +123,9 @@ typedef enum e_spi_flash_data_lines
 /** Number of dummy cycles for fast read operations. */
 typedef enum e_spi_flash_dummy_clocks
 {
-    /** Default is 6 clocks for Fast Read Quad I/O, 4 clocks for Fast Read Dual I/O, and 8 clocks for other
-     * fast read instructions including Fast Read Quad Output, Fast Read Dual Output, and Fast Read. */
-    SPI_FLASH_DUMMY_CLOCKS_DEFAULT,
+    SPI_FLASH_DUMMY_CLOCKS_0 = 0,      ///< 0 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_1,          ///< 1 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_2,          ///< 2 dummy clocks
     SPI_FLASH_DUMMY_CLOCKS_3,          ///< 3 dummy clocks
     SPI_FLASH_DUMMY_CLOCKS_4,          ///< 4 dummy clocks
     SPI_FLASH_DUMMY_CLOCKS_5,          ///< 5 dummy clocks
@@ -138,6 +141,21 @@ typedef enum e_spi_flash_dummy_clocks
     SPI_FLASH_DUMMY_CLOCKS_15,         ///< 15 dummy clocks
     SPI_FLASH_DUMMY_CLOCKS_16,         ///< 16 dummy clocks
     SPI_FLASH_DUMMY_CLOCKS_17,         ///< 17 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_18,         ///< 18 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_19,         ///< 19 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_20,         ///< 20 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_21,         ///< 21 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_22,         ///< 22 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_23,         ///< 23 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_24,         ///< 24 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_25,         ///< 25 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_26,         ///< 26 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_27,         ///< 27 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_28,         ///< 28 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_29,         ///< 29 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_30,         ///< 30 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_31,         ///< 31 dummy clocks
+    SPI_FLASH_DUMMY_CLOCKS_DEFAULT = 0xFF,
 } spi_flash_dummy_clocks_t;
 
 /** Direct Read and Write direction */
@@ -326,5 +344,5 @@ FSP_FOOTER
 #endif
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup SPI_FLASH_API)
+ * @} (end defgroup SPI_FLASH_API)
  **********************************************************************************************************************/

@@ -73,7 +73,7 @@ __STATIC_INLINE void R_BSP_IrqStatusClear (IRQn_Type irq)
     R_ICU->IELSR_b[irq].IR = 0U;
 
     /* Read back the IELSR register to ensure that the IR bit is cleared.
-     * MREF_INTERNAL_001 */
+     * See section "13.5.1 Operations During an Interrupt" in the RA8M1 manual R01UH0994EJ0100. */
     FSP_REGISTER_READ(R_ICU->IELSR[irq]);
 }
 

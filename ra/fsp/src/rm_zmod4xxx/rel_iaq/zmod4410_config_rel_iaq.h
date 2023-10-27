@@ -2,7 +2,7 @@
  * @file zmod4410_config_rel_iaq.h
  * @brief This is the configuration for zmod4410 module - rel_iaq library
  * @author  Renesas Electronics Corporation
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 #ifndef _ZMOD4410_CONFIG_REL_IAQ_H

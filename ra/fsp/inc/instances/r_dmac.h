@@ -122,6 +122,10 @@ fsp_err_t R_DMAC_SoftwareStop(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DMAC_Enable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DMAC_Disable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DMAC_InfoGet(transfer_ctrl_t * const p_api_ctrl, transfer_properties_t * const p_info);
+fsp_err_t R_DMAC_Reload(transfer_ctrl_t * const p_api_ctrl,
+                        void const            * p_src,
+                        void                  * p_dest,
+                        uint32_t const          num_transfers);
 fsp_err_t R_DMAC_Close(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DMAC_BlockReset(transfer_ctrl_t * const p_ctrl,
                             void const * volatile   p_src,

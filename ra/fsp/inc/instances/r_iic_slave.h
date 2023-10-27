@@ -73,6 +73,10 @@ typedef struct st_iic_slave_instance_ctrl
     volatile bool notify_request;                // Track whether the master request is notified to the application
     volatile iic_slave_transfer_dir_t direction; // Holds the direction of the data byte transfer
     volatile bool do_dummy_read;                 // Tracks whether a dummy read is issued on the first RX
+#if (IIC_SLAVE_CFG_DTC_ENABLE)
+    volatile bool activation_on_rxi;             // Tracks whether the transfer is activated on RXI interrupt
+    volatile bool activation_on_txi;             // Tracks whether the transfer is activated on TXI interrupt
+#endif
     volatile bool start_interrupt_enabled;       // Tracks whether the start interrupt is enabled
     volatile bool transaction_completed;         // Tracks whether previous transaction restarted
 

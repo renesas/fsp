@@ -86,12 +86,17 @@
 #define FLASH_LP_FEXCR_OCDID3                         (0x85U)
 #define FLASH_LP_FEXCR_OCDID4                         (0x86U)
 #define FLASH_LP_FEXCR_CLEAR                          (0x00U)
+#define FLASH_LP_FEXCR_MF4_CONTROL                    (0x81U)
 #define FLASH_LP_FEXCR_MF4_AW_STARTUP                 (0x82U)
 
 /* Wait Process definition */
 #define FLASH_LP_WAIT_TDIS                            (3U)
+#if (BSP_FEATURE_FLASH_LP_VERSION == 4)
+ #define FLASH_LP_WAIT_TMS_HIGH                       (16U) // MREF_INTERNAL_009
+#else
+ #define FLASH_LP_WAIT_TMS_HIGH                       (6U)  // tMS wait time on flash version 3
+#endif
 #define FLASH_LP_WAIT_TMS_MID                         (4U)
-#define FLASH_LP_WAIT_TMS_HIGH                        (6U)
 #define FLASH_LP_WAIT_TDSTOP                          (6U)
 
 /* Flash information */
@@ -122,7 +127,7 @@
 #define FLASH_LP_MAX_WRITE_DF_TIME_US                 (886)
 #define FLASH_LP_MAX_BLANK_CHECK_TIME_US              (88)
 #define FLASH_LP_MAX_ERASE_CF_BLOCK_TIME_US           (355000)
-#define FLASH_LP_MAX_ERASE_DF_BLOCK_TIME_US           (354000)
+#define FLASH_LP_MAX_ERASE_DF_BLOCK_TIME_US           (504000)
 #define FLASH_LP_MAX_WRITE_EXTRA_AREA_TIME_US         (2289000)
 
 #define FLASH_LP_FSTATR2_ILLEGAL_ERROR_BITS           (0x10)
@@ -131,6 +136,7 @@
 
 #define FLASH_LP_FISR_INCREASE_PCKA_EVERY_2MHZ        (32)
 
+#define FLASH_LP_3BIT_MASK                            (0x7U)
 #define FLASH_LP_6BIT_MASK                            (0x3FU)
 #define FLASH_LP_5BIT_MASK                            (0x1FU)
 
@@ -290,6 +296,11 @@ static void r_flash_lp_cf_write_operation(const uint32_t psrc_addr, const uint32
 static void r_flash_lp_extra_operation(const uint32_t    start_addr_startup_value,
                                        const uint32_t    end_addr,
                                        r_flash_command_t command) PLACE_IN_RAM_SECTION;
+
+ #if (BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK == 1)
+static fsp_err_t r_flash_lp_bank_swap(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
+
+ #endif
 
 #endif
 
@@ -934,17 +945,49 @@ fsp_err_t R_FLASH_LP_StartUpAreaSelect (flash_ctrl_t * const      p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Unsupported
- * @ref flash_api_t::bankSwap.
+ * Swap the Code Flash bank to update new program. Implement @ref flash_api_t::bankSwap.
  *
- * @retval     FSP_ERR_UNSUPPORTED       Module does not support Bank Swap.
+ * Swap the flash bank located at address 0x00000000 and address 0x00040000. After a bank swap is done the MCU will
+ * need to be reset for the changes to take place.
+ *
+ * To use this API, Code Flash Programming in the FSP Configuration Tool under Stack Properties must be enabled.
+ *
+ * @note This function only available on MCUs which support bank swap feature.
+ *
+ * @note When active bank is bank 1, startup program protection function is invalid.
+ *
+ * @param[in]   p_api_ctrl              The api control instance.
+ *
+ * @retval      FSP_SUCCESS             Banks were swapped.
+ * @retval      FSP_ERR_UNSUPPORTED     Module does not support Bank Swap.
+ * @retval      FSP_ERR_ASSERTION       NULL provided for p_ctrl.
+ * @retval      FSP_ERR_NOT_OPEN        The control block is not open.
+ * @retval      FSP_ERR_IN_USE          Extra area is being used by other command.
  **********************************************************************************************************************/
 fsp_err_t R_FLASH_LP_BankSwap (flash_ctrl_t * const p_api_ctrl)
 {
+    fsp_err_t err = FSP_SUCCESS;
+
+#if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK == 1)
+    flash_lp_instance_ctrl_t * p_ctrl = (flash_lp_instance_ctrl_t *) p_api_ctrl;
+
+ #if (FLASH_LP_CFG_PARAM_CHECKING_ENABLE)
+
+    /* Verify the control block is not null and is opened. */
+    err = r_flash_lp_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
+
+    err = r_flash_lp_bank_swap(p_ctrl);
+#else
+
     /* Eliminate unused warning. */
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
 
-    return FSP_ERR_UNSUPPORTED;
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -1780,7 +1823,7 @@ static fsp_err_t r_flash_lp_pe_mode_exit (flash_lp_instance_ctrl_t * const p_ctr
 #endif
     r_flash_lp_write_fpmcr(FLASH_LP_READ_MODE);
 
-    /* Wait for 5us over (tMS) */
+    /* Wait for flash mode transition complete. The value of tMS will depend on flash version */
     r_flash_lp_delay_us(FLASH_LP_WAIT_TMS_HIGH, p_ctrl->system_clock_frequency);
 
     /* Clear the P/E mode register */
@@ -2014,7 +2057,7 @@ static void r_flash_lp_delay_us (uint32_t us, uint32_t mhz)
     if (loop_cnt > 0U)
     {
         __asm volatile ("delay_loop:\n"
-#if defined(__ICCARM__) || defined(__ARMCC_VERSION)
+#if defined(__ICCARM__) || defined(__ARMCC_VERSION) || (defined(__llvm__) && !defined(__CLANG_TIDY__))
                         "   subs %[loops_remaining], #1         \n"                 ///< 1 cycle
 #elif defined(__GNUC__)
                         "   sub %[loops_remaining], %[loops_remaining], #1      \n" ///< 1 cycle
@@ -2633,4 +2676,48 @@ void r_flash_lp_memcpy (uint8_t * const dest, uint8_t * const src, uint32_t len)
     }
 }
 
+ #if (BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK == 1)
+
+/*******************************************************************************************************************//**
+ * This function swaps which flash bank will be used to boot from after swapped and activated. MREF_INTERNAL_010
+ *
+ * @param[in]   p_ctrl                  Flash control block.
+ *
+ * @retval      FSP_SUCCESS             Banks were swapped.
+ * @retval      FSP_ERR_IN_USE          Extra area is being used by other command.
+ * @retval      FSP_ERR_WRITE_FAILED    Failed to write bank swap command into extra area.
+ * @retval      FSP_ERR_TIMEOUT         Timed out waiting for completion of extra command or timed out waiting for
+ *                                      confirmation of transition to read mode.
+ **********************************************************************************************************************/
+static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    uint8_t   cur_bank;
+
+    /* MREF_INTERNAL_011 */
+    cur_bank = R_FACI_LP->FCTLFR_b.BANKSWP;
+
+    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+
+    /* Select The Extra Area. Needed when using FEXCR register. */
+    R_FACI_LP->FASR_b.EXS = 1U;
+
+    /* Change the BANKSWP[2:0] of extra area  */
+    R_FACI_LP->FWBL0_b.WDATA = ~cur_bank & FLASH_LP_3BIT_MASK;
+    R_FACI_LP->FWBH0_b.WDATA = 0x0000U;
+    R_FACI_LP->FEXCR         = FLASH_LP_FEXCR_MF4_CONTROL;
+
+    err = r_flash_lp_extra_check(p_ctrl);
+
+    /* Select User Area. Need to change back to User Area before return error. */
+    R_FACI_LP->FASR_b.EXS = 0U;
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    err = r_flash_lp_pe_mode_exit(p_ctrl);
+
+    return err;
+}
+
+ #endif
 #endif

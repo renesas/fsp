@@ -29,8 +29,6 @@
  * @section   RM_BLE_MESH_NETWORK_API_Summary Summary
  * The BLE Mesh Network interface for the Bluetooth Low Energy Mesh Network (BLE MESH NETWORK) peripheral provides Bluetooth Low Energy Mesh Network functionality.
  *
- * The Bluetooth Low Energy Mesh interface can be implemented by:
- * - @ref RM_BLE_MESH_NETWORK
  *
  * @{
  **********************************************************************************************************************/
@@ -284,8 +282,6 @@ typedef struct st_rm_ble_mesh_network_callback_args
 } rm_ble_mesh_network_callback_args_t;
 
 /** BLE MESH NETWORK control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_ble_mesh_network_instance_ctrl_t
  */
 typedef void rm_ble_mesh_network_ctrl_t;
 
@@ -308,8 +304,6 @@ typedef struct st_rm_ble_mesh_network_cfg
 typedef struct st_rm_ble_mesh_network_api
 {
     /** Register Interface with Network Layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -317,16 +311,12 @@ typedef struct st_rm_ble_mesh_network_api
     fsp_err_t (* open)(rm_ble_mesh_network_ctrl_t * const p_ctrl, rm_ble_mesh_network_cfg_t const * const p_cfg);
 
     /** Unregister Interface with Network Layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_network_ctrl_t * const p_ctrl);
 
     /** API to send Secure Network Beacon.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_BroadcastSecureBeacon()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Subnet handle of the network to be broadcasted.
@@ -335,8 +325,6 @@ typedef struct st_rm_ble_mesh_network_api
                                         rm_ble_mesh_network_subnet_handle_t subnet_handle);
 
     /** Extension API to send network PDUs on selected network interfaces.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_SendPduOnInterface()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  p_route_info  Pointer to network configuration information.
@@ -349,8 +337,6 @@ typedef struct st_rm_ble_mesh_network_api
                                      rm_ble_mesh_buffer_t const * const             p_buffer);
 
     /** To get address type.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_GetAddressType()
      *
      * @param[in]  p_ctrl  Pointer to control structure.
      * @param[in]  addr    Input network address.
@@ -363,8 +349,6 @@ typedef struct st_rm_ble_mesh_network_api
                                  rm_ble_mesh_network_address_type_t * const p_type);
 
     /** Check if the proxy module is ready to handle proxy messages/events.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_FetchProxyState()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[out]  p_proxy_state  Returns the current state of the proxy.
@@ -373,8 +357,6 @@ typedef struct st_rm_ble_mesh_network_api
                                   rm_ble_mesh_network_gatt_proxy_state_t * const p_proxy_state);
 
     /** Set proxy server's filter type.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_SetProxyFilter()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  p_route_info  Pointer to network configuration information.
@@ -387,8 +369,6 @@ typedef struct st_rm_ble_mesh_network_api
                                  rm_ble_mesh_proxy_filter_type_t                type);
 
     /** Add or Delete/Remove addresses to/from proxy filter list.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_ConfigProxyFilter()
      *
      * @param[in]  p_ctrl        Pointer to control structure.
      * @param[in]  p_route_info  Pointer to network configuration information.
@@ -404,8 +384,6 @@ typedef struct st_rm_ble_mesh_network_api
                                     rm_ble_mesh_network_proxy_address_list_t * const p_addr_list);
 
     /** Start connectable advertisements for a proxy server.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_StartProxyServerAdv()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Subnet handle which the proxy server is part of network.
@@ -418,16 +396,12 @@ typedef struct st_rm_ble_mesh_network_api
                                       rm_ble_mesh_network_gatt_proxy_adv_mode_t proxy_adv_mode);
 
     /** Stop connectable advertisements for a proxy server.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_StopProxyServerAdv()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      */
     fsp_err_t (* stopProxyServerAdv)(rm_ble_mesh_network_ctrl_t * const p_ctrl);
 
     /** To allocate sequence number.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_AllocateSeqNumber()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[out] p_seq_num      Location where sequence number to be filled.
@@ -435,8 +409,6 @@ typedef struct st_rm_ble_mesh_network_api
     fsp_err_t (* allocateSeqNumber)(rm_ble_mesh_network_ctrl_t * const p_ctrl, uint32_t * const p_seq_num);
 
     /** To get current sequence number state.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_GetSeqNumberState()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_seq_num_state  Location where sequence number state to be filled.
@@ -445,8 +417,6 @@ typedef struct st_rm_ble_mesh_network_api
                                     rm_ble_mesh_network_seq_number_state_t * const p_seq_num_state);
 
     /** To set current sequence number state.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_SetSeqNumberState()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  p_seq_num_state  Location from where sequence number state to be taken.
@@ -455,8 +425,6 @@ typedef struct st_rm_ble_mesh_network_api
                                     rm_ble_mesh_network_seq_number_state_t const * const p_seq_num_state);
 
     /** To reinitialize all Network Layer cache entries.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_NETWORK_ResetNetCache()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      */

@@ -1876,7 +1876,7 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
 
     uint32_t i;
 
-  #if defined(USB_CFG_HUVC_USE)
+  #if (defined(USB_CFG_HUVC_USE) | defined(USB_CFG_HPRN_USE))
     uint32_t             alternate_number;
     uint32_t             interface_number;
     uint16_t             is_interface_discoverd = 0;
@@ -1887,7 +1887,7 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
     uint16_t             dev_addr;
     uint8_t              pipe_no;
     usb_pipe_table_reg_t ep_tbl;
-  #endif                               /* defined(USB_CFG_HUVC_USE) */
+  #endif                               /* defined(USB_CFG_HUVC_USE) | defined(USB_CFG_HPRN_USE) */
 
     pipe = (uint8_t) p_utr->keyword;
 
@@ -2102,18 +2102,24 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
         g_usbx_hub_passed_count++;
     }
 
-  #if defined(USB_CFG_HUVC_USE)
+ #if (defined(USB_CFG_HUVC_USE) | defined(USB_CFG_HPRN_USE))
 
     /* Completion of SET_INTERFACE */
     if (p_utr->p_setup[0] == (USB_SET_INTERFACE | USB_HOST_TO_DEV | USB_STANDARD | USB_INTERFACE))
     {
         alternate_number = p_utr->p_setup[1]; /* Requested alternate number at SET_INTERFACE */
         interface_number = p_utr->p_setup[2]; /* Requested interface number at SET_INTERFACE */
-
+  #if (defined(USB_CFG_HUVC_USE))
         if ((0 != alternate_number) && (0 != interface_number))
         {
+  #endif                               /* (defined(USB_CFG_HUVC_USE)) */
             dev_addr  = p_utr->p_setup[4];
+  #if (defined(USB_CFG_HUVC_USE))
             usb_class = USB_CLASS_INTERNAL_HUVC;
+  #endif                               /* (defined(USB_CFG_HUVC_USE)) */
+  #if (defined(USB_CFG_HPRN_USE))
+            usb_class = USB_CLASS_INTERNAL_HPRN;
+  #endif                               /* (defined(USB_CFG_HPRN_USE)) */
 
             p_config = (uint8_t *) g_usb_hstd_config_descriptor[p_utr->ip];
             length   = (uint16_t) (*(p_config + 3) << 8);
@@ -2126,8 +2132,12 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
                 {
                     if (interface_number == *(p_config + offset + 2))
                     {
+  #if (defined(USB_CFG_HUVC_USE))
                         if ((UX_HOST_CLASS_VIDEO_SUBCLASS_STREAMING == *(p_config + offset + 6)) &&
                             (alternate_number == *(p_config + offset + 3)))
+  #else
+                        if ((alternate_number == *(p_config + offset + 3)))
+  #endif                               /* defined(USB_CFG_HUVC_USE) */
                         {
                             is_interface_discoverd = 1;
                         }
@@ -2138,7 +2148,11 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
                 {
                     if (USB_DT_ENDPOINT == *(p_config + offset + USB_EP_B_DESCRIPTORTYPE))
                     {
+  #if (defined(USB_CFG_HUVC_USE))
                         if (USB_EP_IN == (*(p_config + offset + USB_EP_B_ENDPOINTADDRESS) & USB_EP_DIRMASK))
+  #else
+                        if (USB_EP_OUT == (*(p_config + offset + USB_EP_B_ENDPOINTADDRESS) & USB_EP_DIRMASK))
+  #endif                               /* defined(USB_CFG_HUVC_USE) */
                         {
                             pipe_no =
                                 usb_hstd_make_pipe_reg_info(p_utr->ip,
@@ -2161,9 +2175,11 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
             }
 
             usb_host_usbx_set_pipe_registration(p_utr, g_usb_hstd_device_addr[p_utr->ip]); /* Host Pipe registration */
+  #if (defined(USB_CFG_HUVC_USE))
         }
+  #endif                               /* defined(USB_CFG_HUVC_USE) */
     }
-  #endif                                                                                   /* defined(USB_CFG_HUVC_USE) */
+ #endif                                /* defined(USB_CFG_HUVC_USE) | defined(USB_CFG_HPRN_USE) */
 
     tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
 }                                                                                          /* End of function usb_pstd_transfer_complete_cb() */

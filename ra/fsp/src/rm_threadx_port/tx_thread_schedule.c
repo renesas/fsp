@@ -37,7 +37,7 @@
  #define TX_PORT_ISA_IT_SUPPORTED
 #endif
 
-#ifdef __ARM_ARCH_8M_MAIN__            // CM33
+#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM33, CM85
  #define TX_PORT_ISA_CBZ_SUPPORTED
  #define TX_PORT_ISA_STMDB_LDMIA_SUPPORTED
  #define TX_PORT_ISA_THUMB2_SUB_ADD_SUPPORTED
@@ -272,6 +272,11 @@ __attribute((weak)) void * _tx_port_wait_thread_ready (VOID)
             break;
         }
 
+#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
+
+        bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
+#endif
+
         /**
          * DSB should be last instruction executed before WFI
          * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html
@@ -285,6 +290,11 @@ __attribute((weak)) void * _tx_port_wait_thread_ready (VOID)
 
         /* Instruction Synchronization Barrier. */
         __ISB();
+
+#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
+
+        bsp_prv_clock_prepare_post_sleep(clock_slowed);
+#endif
 
         /* Re-enable interrupts. */
         __enable_irq();

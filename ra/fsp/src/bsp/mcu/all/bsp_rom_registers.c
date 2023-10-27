@@ -125,7 +125,7 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_pbps
 
   #endif
 
- #else                                 /* CM33 parts */
+ #else                                 /* CM33 & CM85 parts */
 
   #if !BSP_TZ_NONSECURE_BUILD
 
@@ -225,6 +225,27 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_
     BSP_CFG_ROM_REG_BPS_SEL2;
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sel3") g_bsp_rom_bps_sel3 =
     BSP_CFG_ROM_REG_BPS_SEL3;
+
+  #endif
+
+  #if 85U == __CORTEX_M && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl0") g_bsp_rom_fsblctrl0 =
+    BSP_CFG_ROM_REG_FSBLCTRL0;
+
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl1") g_bsp_rom_fsblctrl1 =
+    BSP_CFG_ROM_REG_FSBLCTRL1;
+
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl2") g_bsp_rom_fsblctrl2 =
+    BSP_CFG_ROM_REG_FSBLCTRL2;
+
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_sacc0") g_bsp_rom_sacc0 =
+    BSP_CFG_ROM_REG_SACC0;
+
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_sacc1") g_bsp_rom_sacc1 =
+    BSP_CFG_ROM_REG_SACC1;
+
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_samr") g_bsp_rom_samr =
+    BSP_CFG_ROM_REG_SAMR;
 
   #endif
 

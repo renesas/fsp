@@ -30,8 +30,6 @@
  * The interface for the clock frequency accuracy measurement circuit (CAC) peripheral is used to check a system
  * clock frequency with a reference clock signal by counting the number of pulses of the clock to be measured.
  *
- * Implemented by:
- * @ref CAC
  *
  * @{
  **********************************************************************************************************************/
@@ -63,8 +61,6 @@ typedef enum e_cac_event
 } cac_event_t;
 
 /** CAC control block.  Allocate an instance specific control block to pass into the CAC API calls.
- * @par Implemented as
- * - cac_instance_ctrl_t
  */
 typedef void cac_ctrl_t;
 
@@ -74,6 +70,8 @@ typedef enum e_cac_clock_type
     CAC_CLOCK_MEASURED,                ///< Measurement clock
     CAC_CLOCK_REFERENCE                ///< Reference clock
 } cac_clock_type_t;
+
+#ifndef BSP_OVERRIDE_CAC_CLOCK_SOURCE_T
 
 /** Enumeration of the possible clock sources for both the reference and measurement clocks. */
 typedef enum e_cac_clock_source
@@ -87,6 +85,9 @@ typedef enum e_cac_clock_source
     CAC_CLOCK_SOURCE_IWDT     = 0x06,  ///< IWDT-dedicated on-chip oscillator
     CAC_CLOCK_SOURCE_EXTERNAL = 0x07,  ///< Externally supplied measurement clock on CACREF pin
 } cac_clock_source_t;
+#endif
+
+#ifndef BSP_OVERRIDE_CAC_REF_DIVIDER_T
 
 /** Enumeration of available dividers for the reference clock. */
 typedef enum e_cac_ref_divider
@@ -96,6 +97,7 @@ typedef enum e_cac_ref_divider
     CAC_REF_DIV_1024 = 0x02,           ///< Reference clock divided by 1024
     CAC_REF_DIV_8192 = 0x03,           ///< Reference clock divided by 8192
 } cac_ref_divider_t;
+#endif
 
 /** Enumeration of available digital filter settings for an external reference clock. */
 typedef enum e_cac_ref_digfilter
@@ -114,6 +116,8 @@ typedef enum e_cac_ref_edge
     CAC_REF_EDGE_BOTH = 0x02           ///< Both Rising and Falling edges detect for the Reference clock
 } cac_ref_edge_t;
 
+#ifndef BSP_OVERRIDE_CAC_MEAS_DIVIDER_T
+
 /** Enumeration of available dividers for the measurement clock */
 typedef enum e_cac_meas_divider
 {
@@ -122,6 +126,7 @@ typedef enum e_cac_meas_divider
     CAC_MEAS_DIV_8  = 0x02,            ///< Measurement clock divided by 8
     CAC_MEAS_DIV_32 = 0x03             ///< Measurement clock divided by 32
 } cac_meas_divider_t;
+#endif
 
 /** Structure defining the settings that apply to reference clock configuration. */
 typedef struct st_cac_ref_clock_config
@@ -191,11 +196,9 @@ typedef struct st_cac_api
      * @param[in]   p_ctrl Control for the CAC device context.
      * @param[in]   p_counter    Pointer to variable in which to store the current CACNTBR register contents.
      */
-    fsp_err_t (* read)(cac_ctrl_t * const p_ctrl, uint16_t * const p_counter);
+    fsp_err_t (* read)(cac_ctrl_t * const p_ctrl, uint32_t * const p_counter);
 
     /** Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_CAC_CallbackSet()
      *
      * @param[in]   p_ctrl                   Control block set in @ref cac_api_t::open call
      * @param[in]   p_callback               Callback function to register
@@ -203,7 +206,7 @@ typedef struct st_cac_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(cac_ctrl_t * const p_api_ctrl, void (* p_callback)(cac_callback_args_t *),
+    fsp_err_t (* callbackSet)(cac_ctrl_t * const p_ctrl, void (* p_callback)(cac_callback_args_t *),
                               void const * const p_context, cac_callback_args_t * const p_callback_memory);
 
     /** Close function for CAC device.

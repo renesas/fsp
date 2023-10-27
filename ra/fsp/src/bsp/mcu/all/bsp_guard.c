@@ -24,7 +24,7 @@
 #if BSP_TZ_SECURE_BUILD
 
 /* If the CGG Security Attribution is configured to secure access only. */
- #if BSP_TZ_CFG_CGFSAR != 0xFFFFFFFFU
+ #if BSP_CFG_CLOCKS_SECURE == 1
 
 /*******************************************************************************************************************//**
  * Set the callback used by the secure project to notify the nonsecure project when the clock settings have changed.

@@ -27,9 +27,6 @@
  * The DAC interface provides standard Digital/Analog Converter functionality.  A DAC application writes digital
  * sample data to the device and generates analog output on the DAC output pin.
  *
- * Implemented by:
- * - @ref DAC
- * - @ref DAC8
  *
  * @{
  **********************************************************************************************************************/
@@ -77,9 +74,6 @@ typedef struct st_dac_cfg
 } dac_cfg_t;
 
 /** DAC control block.  Allocate an instance specific control block to pass into the DAC API calls.
- * @par Implemented as
- * - dac_instance_ctrl_t
- * - dac8_instance_ctrl_t
  */
 typedef void dac_ctrl_t;
 
@@ -87,9 +81,6 @@ typedef void dac_ctrl_t;
 typedef struct st_dac_api
 {
     /** Initial configuration.
-     * @par Implemented as
-     * - @ref R_DAC_Open()
-     * - @ref R_DAC8_Open()
      *
      * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.
@@ -97,18 +88,12 @@ typedef struct st_dac_api
     fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);
 
     /** Close the D/A Converter.
-     * @par Implemented as
-     * - @ref R_DAC_Close()
-     * - @ref R_DAC8_Close()
      *
      * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */
     fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);
 
     /** Write sample value to the D/A Converter.
-     * @par Implemented as
-     * - @ref R_DAC_Write()
-     * - @ref R_DAC8_Write()
      *
      * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      * @param[in]   value      Sample value to be written to the D/A Converter.
@@ -116,18 +101,12 @@ typedef struct st_dac_api
     fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);
 
     /** Start the D/A Converter if it has not been started yet.
-     * @par Implemented as
-     * - @ref R_DAC_Start()
-     * - @ref R_DAC8_Start()
      *
      * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */
     fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);
 
     /** Stop the D/A Converter if the converter is running.
-     * @par Implemented as
-     * - @ref R_DAC_Stop()
-     * - @ref R_DAC8_Stop()
      *
      * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */

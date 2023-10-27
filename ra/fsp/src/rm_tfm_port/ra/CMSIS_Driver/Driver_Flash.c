@@ -142,12 +142,17 @@ static int32_t ARM_Flashx_Initialize (ARM_FLASHx_Resources  * ARM_FLASHx_DEV,
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_ERROR;
     ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_BUSY;
 
-    R_FLASH_HP_Close(ARM_FLASHx_DEV->dev->p_ctrl);
     fsp_err_t err = R_FLASH_HP_Open(ARM_FLASHx_DEV->dev->p_ctrl, ARM_FLASHx_DEV->dev->p_cfg);
-    if (FSP_SUCCESS != err)
+
+    if(FSP_ERR_ALREADY_OPEN == err)
+    {
+        R_FLASH_HP_Close(ARM_FLASHx_DEV->dev->p_ctrl);
+        err = R_FLASH_HP_Open(ARM_FLASHx_DEV->dev->p_ctrl, ARM_FLASHx_DEV->dev->p_cfg);
+    }
+
+    if(FSP_SUCCESS != err)
     {
         ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
-
         return ARM_DRIVER_ERROR;
     }
 

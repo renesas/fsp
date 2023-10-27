@@ -21,7 +21,6 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include "rm_wifi_onchip_da16xxx.h"
 #include "rm_mqtt_onchip_da16xxx.h"
 
 /***********************************************************************************************************************
@@ -36,12 +35,6 @@
 #define MQTT_ONCHIP_DA16XXX_TIMEOUT_500MS     (500)
 #define MQTT_ONCHIP_DA16XXX_TIMEOUT_1SEC      (1000)
 #define MQTT_ONCHIP_DA16XXX_TIMEOUT_5SEC      (5000)
-
-/* DA16XXX AT command retry delay in milliseconds */
-#define MQTT_ONCHIP_DA16XXX_DELAY_100MS       (100)
-#define MQTT_ONCHIP_DA16XXX_DELAY_200MS       (200)
-#define MQTT_ONCHIP_DA16XXX_DELAY_500MS       (500)
-#define MQTT_ONCHIP_DA16XXX_DELAY_1000MS      (1000)
 
 #define MQTT_ONCHIP_DA16XXX_MAX_CERT_SIZE     (2045)
 
@@ -87,47 +80,49 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init(mqtt_onchip_da16xxx_instance_ctrl
 fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                                 mqtt_onchip_da16xxx_cfg_t const * const p_cfg)
 {
+    at_transport_da16xxx_data_t             atcmd;
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_cfg->p_transport_instance;
+
     /* Do parameter checking */
 #if (1 == MQTT_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_cfg->p_callback);
+
+    /* Check if DA16xxx transport has already been opened */
+    at_transport_da16xxx_status_t status;
+    fsp_err_t err = p_transport_instance->p_api->statusGet(p_transport_instance->p_ctrl, &status);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    FSP_ERROR_RETURN(true == status.open, FSP_ERR_WIFI_FAILED);
     FSP_ERROR_RETURN(MQTT_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
-    p_ctrl->p_cfg = p_cfg;
+    p_ctrl->p_cfg              = p_cfg;
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
 
     /* Clear the stored ALPNs and SNI configurations */
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWHTCSNIDEL\r");
-
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWHTCALPNDEL\r");
-
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     /* Set MQTT 3.1.1 settings */
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQV311=%d\r",
              p_ctrl->p_cfg->use_mqtt_v311);
-
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     /* Check for host name and port */
@@ -140,13 +135,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
              "AT+NWMQBR=%s,%d\r",
              p_cfg->p_host_name,
              p_cfg->mqtt_port);
-
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     /* Store the MQTT Username and Password */
@@ -157,24 +147,14 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                  "AT+NWMQLI=%s,%s\r",
                  p_cfg->p_mqtt_user_name,
                  p_cfg->p_mqtt_password);
-
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
 
         /* Disable TLS with AT+NWMQTLS */
         snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQTLS=0\r");
-
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
     else
@@ -191,13 +171,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
 
             /* Enable TLS with AT+NWMQTLS */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQTLS=1\r");
-
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                    MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Program the root CA Certificate */
@@ -205,61 +180,45 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
             /* Put the DA16XXX module into certificate/key input mode */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%sC0,",
                      MQTT_ONCHIP_DA16XXX_CERT_START);
-
+            atcmd.p_expect_code = NULL;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Send certificate/key ascii text */
+            atcmd.p_at_cmd_string = (uint8_t *) p_cfg->p_root_ca;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_cfg->p_root_ca, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Send Indication of the end of content  */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%s", MQTT_ONCHIP_DA16XXX_CERT_END);
-
+            atcmd.p_at_cmd_string = (uint8_t *) p_ctrl->cmd_tx_buff;
+            atcmd.p_expect_code   = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS,
-                                                                    MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Put the DA16XXX module into certificate/key input mode */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%sC1,",
                      MQTT_ONCHIP_DA16XXX_CERT_START);
-
+            atcmd.p_expect_code = NULL;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Send certificate/key ascii text */
+            atcmd.p_at_cmd_string = (uint8_t *) p_cfg->p_client_cert;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_cfg->p_client_cert, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Send Indication of the end of content  */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%s", MQTT_ONCHIP_DA16XXX_CERT_END);
-
+            atcmd.p_at_cmd_string = (uint8_t *) p_ctrl->cmd_tx_buff;
+            atcmd.p_expect_code   = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS,
-                                                                    MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Program the private key */
@@ -267,31 +226,23 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
             /* Put the DA16XXX module into certificate/key input mode */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%sC2,",
                      MQTT_ONCHIP_DA16XXX_CERT_START);
-
+            atcmd.p_expect_code = NULL;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Send certificate/key ascii text */
+            atcmd.p_at_cmd_string = (uint8_t *) p_cfg->p_client_private_key;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_cfg->p_client_private_key,
-                                                                    p_ctrl->cmd_rx_buff, sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS, NULL),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
 
             /* Send Indication of the end of content  */
             snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "%s", MQTT_ONCHIP_DA16XXX_CERT_END);
-
+            atcmd.p_at_cmd_string = (uint8_t *) p_ctrl->cmd_tx_buff;
+            atcmd.p_expect_code   = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
             FSP_ERROR_RETURN(FSP_SUCCESS ==
-                             rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                    sizeof(p_ctrl->cmd_rx_buff),
-                                                                    MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                    MQTT_ONCHIP_DA16XXX_DELAY_500MS,
-                                                                    MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                             p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                              FSP_ERR_WIFI_FAILED);
         }
     }
@@ -300,13 +251,8 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
 
     /* Set the MQTT ping period */
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQPING=%d\r", p_cfg->keep_alive_seconds);
-
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     /* Perform MQTT optional settings */
@@ -329,6 +275,10 @@ fsp_err_t RM_MQTT_DA16XXX_Open (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
  **********************************************************************************************************************/
 fsp_err_t RM_MQTT_DA16XXX_Disconnect (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
     /* Do parameter checking */
 #if (1 == MQTT_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
     FSP_ASSERT(NULL != p_ctrl);
@@ -336,15 +286,19 @@ fsp_err_t RM_MQTT_DA16XXX_Disconnect (mqtt_onchip_da16xxx_instance_ctrl_t * p_ct
     FSP_ERROR_RETURN(true == p_ctrl->is_mqtt_connected, FSP_ERR_NOT_OPEN);
 #endif
 
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
     /* Disable the MQTT Client */
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQCL=0\r");
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     p_ctrl->is_mqtt_connected = false;
@@ -367,7 +321,9 @@ fsp_err_t RM_MQTT_DA16XXX_Disconnect (mqtt_onchip_da16xxx_instance_ctrl_t * p_ct
  **********************************************************************************************************************/
 fsp_err_t RM_MQTT_DA16XXX_Connect (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl, uint32_t timeout_ms)
 {
-    // wifi_onchip_da16xxx_instance_ctrl_t * p_wifi_instance_ctrl = &g_rm_wifi_onchip_da16xxx_instance;
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
     char * ptr = (char *) (p_ctrl->cmd_rx_buff);
 
     /* Do parameter checking */
@@ -377,27 +333,29 @@ fsp_err_t RM_MQTT_DA16XXX_Connect (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl,
     FSP_ERROR_RETURN(false == p_ctrl->is_mqtt_connected, FSP_ERR_IN_USE);
 #endif
 
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = timeout_ms;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
     /* Enable the MQTT Client */
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQCL=1\r");
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff), timeout_ms,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     R_BSP_SoftwareDelay(MQTT_ONCHIP_DA16XXX_TIMEOUT_5SEC, BSP_DELAY_UNITS_MILLISECONDS);
 
     /* Query results of connection */
+    atcmd.timeout_ms = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQCL=?\r");
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     /* Parse the response */
@@ -430,6 +388,10 @@ fsp_err_t RM_MQTT_DA16XXX_Connect (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl,
 fsp_err_t RM_MQTT_DA16XXX_Publish (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl,
                                    mqtt_onchip_da16xxx_pub_info_t * const p_pub_info)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
     /* Do parameter checking */
 #if (1 == MQTT_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
     FSP_ASSERT(NULL != p_ctrl);
@@ -439,6 +401,14 @@ fsp_err_t RM_MQTT_DA16XXX_Publish (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl
     FSP_ERROR_RETURN(true == p_ctrl->is_mqtt_connected, FSP_ERR_NOT_OPEN);
 #endif
 
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
     /* Publish an MQTT message with topic and payload */
     if ((p_pub_info->topic_name_Length + p_pub_info->payload_length) < MQTT_ONCHIP_DA16XXX_MAX_PUBTOPICMSG_LEN)
     {
@@ -446,11 +416,7 @@ fsp_err_t RM_MQTT_DA16XXX_Publish (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl
         snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQQOS=%d\r", p_pub_info->qos);
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
 
         FSP_ERROR_RETURN((strlen((char *) p_ctrl->cmd_tx_buff) + strlen(p_pub_info->p_payload) +
@@ -463,11 +429,9 @@ fsp_err_t RM_MQTT_DA16XXX_Publish (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl
                  p_pub_info->p_payload,
                  p_pub_info->p_topic_name);
 
+        atcmd.p_expect_code = NULL;
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS, NULL),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
     else
@@ -495,6 +459,10 @@ fsp_err_t RM_MQTT_DA16XXX_Subscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ct
                                      mqtt_onchip_da16xxx_sub_info_t * const p_sub_info,
                                      size_t                                 subscription_count)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
     /* Do parameter checking */
 #if (1 == MQTT_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
     FSP_ASSERT(NULL != p_ctrl);
@@ -503,6 +471,14 @@ fsp_err_t RM_MQTT_DA16XXX_Subscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ct
     FSP_ERROR_RETURN(MQTT_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
     /* Set the MQTT subscriber topic with AT+NWMQTS */
     if (subscription_count < MQTT_ONCHIP_DA16XXX_SUBTOPIC_MAX_CNT)
     {
@@ -510,11 +486,7 @@ fsp_err_t RM_MQTT_DA16XXX_Subscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ct
         snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQQOS=%d\r", p_sub_info[0].qos);
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
 
         /* Create subscription command by concatenating topics */
@@ -536,11 +508,7 @@ fsp_err_t RM_MQTT_DA16XXX_Subscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ct
                  "\r");
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
     else
@@ -566,12 +534,24 @@ fsp_err_t RM_MQTT_DA16XXX_Subscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ct
 fsp_err_t RM_MQTT_DA16XXX_UnSubscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl,
                                        mqtt_onchip_da16xxx_sub_info_t * const p_sub_info)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
     /* Do parameter checking */
 #if (1 == MQTT_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_sub_info);
     FSP_ERROR_RETURN(true == p_ctrl->is_mqtt_connected, FSP_ERR_NOT_OPEN);
 #endif
+
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
 
     FSP_ERROR_RETURN((strlen((char *) p_ctrl->cmd_tx_buff) + strlen(
                           p_sub_info->p_topic_filter)) < MQTT_ONCHIP_DA16XXX_CFG_CMD_TX_BUF_SIZE,
@@ -580,11 +560,7 @@ fsp_err_t RM_MQTT_DA16XXX_UnSubscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQUTS=%s\r", p_sub_info->p_topic_filter);
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
-                     rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                            sizeof(p_ctrl->cmd_rx_buff),
-                                                            MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                            MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                            MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                     p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                      FSP_ERR_WIFI_FAILED);
 
     return FSP_SUCCESS;
@@ -604,6 +580,8 @@ fsp_err_t RM_MQTT_DA16XXX_UnSubscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_
 fsp_err_t RM_MQTT_DA16XXX_Receive (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                                    mqtt_onchip_da16xxx_cfg_t const * const p_cfg)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
     mqtt_onchip_da16xxx_callback_args_t mqtt_data;
     char * ptr = (char *) p_ctrl->cmd_rx_buff;
 
@@ -615,11 +593,10 @@ fsp_err_t RM_MQTT_DA16XXX_Receive (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctr
 
     if (true == p_ctrl->is_mqtt_connected)
     {
-        size_t xReceivedBytes =
-            rm_wifi_onchip_da16xxx_buffer_recv((char *) p_ctrl->cmd_rx_buff,
-                                               sizeof(p_ctrl->cmd_rx_buff) - 1,
-                                               p_ctrl->p_cfg->rx_timeout,
-                                               sizeof(p_ctrl->cmd_rx_buff));
+        size_t xReceivedBytes = p_transport_instance->p_api->bufferRecv(p_transport_instance->p_ctrl,
+                                                                        (char *) p_ctrl->cmd_rx_buff,
+                                                                        sizeof(p_ctrl->cmd_rx_buff),
+                                                                        p_ctrl->p_cfg->rx_timeout);
         if (xReceivedBytes > 0)
         {
             char    * p_end_of_message = (char *) &p_ctrl->cmd_rx_buff[xReceivedBytes];
@@ -706,20 +683,26 @@ fsp_err_t RM_MQTT_DA16XXX_Receive (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctr
  **********************************************************************************************************************/
 fsp_err_t RM_MQTT_DA16XXX_Close (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
     /* Do parameter checking */
 #if (1 == MQTT_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(MQTT_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
     snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQDEL\r");
 
-    rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff,
-                                           p_ctrl->cmd_rx_buff,
-                                           sizeof(p_ctrl->cmd_rx_buff),
-                                           MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                           MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                           MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK);
+    p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd);
 
     p_ctrl->open = MQTT_CLOSED;
 
@@ -742,6 +725,18 @@ fsp_err_t RM_MQTT_DA16XXX_Close (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl)
 static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
                                                 mqtt_onchip_da16xxx_cfg_t const * const p_cfg)
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
+    atcmd.p_at_cmd_string      = (uint8_t *) p_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
     /* Set MQTT ALPN settings */
     if (p_cfg->alpn_count != 0)
     {
@@ -760,11 +755,7 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctr
                  "\r");
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
 
@@ -786,11 +777,7 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctr
                  "\r");
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
 
@@ -800,11 +787,7 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctr
         snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQSNI=%s\r", p_cfg->p_sni_name);
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
 
@@ -814,11 +797,7 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctr
         snprintf((char *) p_ctrl->cmd_tx_buff, sizeof(p_ctrl->cmd_tx_buff), "AT+NWMQCS=0\r");
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
 
@@ -831,11 +810,7 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctr
                  p_cfg->p_client_identifier);
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
 
@@ -850,11 +825,7 @@ static fsp_err_t rm_mqtt_da16xxx_optional_init (mqtt_onchip_da16xxx_instance_ctr
                  p_cfg->will_qos_level);
 
         FSP_ERROR_RETURN(FSP_SUCCESS ==
-                         rm_wifi_onchip_da16xxx_at_command_send((char *) p_ctrl->cmd_tx_buff, p_ctrl->cmd_rx_buff,
-                                                                sizeof(p_ctrl->cmd_rx_buff),
-                                                                MQTT_ONCHIP_DA16XXX_TIMEOUT_400MS,
-                                                                MQTT_ONCHIP_DA16XXX_DELAY_200MS,
-                                                                MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK),
+                         p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),
                          FSP_ERR_WIFI_FAILED);
     }
 

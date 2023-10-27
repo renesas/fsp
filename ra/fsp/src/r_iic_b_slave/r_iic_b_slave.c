@@ -22,29 +22,56 @@
  * Includes
  *********************************************************************************************************************/
 #include "r_iic_b_slave.h"
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+ #include "r_dtc.h"
+#endif
 
 /**********************************************************************************************************************
  * Macro definitions
  *********************************************************************************************************************/
 
 /* "I2CS" in ASCII, used to determine if channel is open. */
-#define IIC_B_SLAVE_OPEN                       (0x49324353ULL)
-#define IIC_B_SLAVE_PRV_NTDTBP0_SIZE           (0xFFU)
-#define IIC_B_SLAVE_CODE_10BIT                 (0xF0U)
-#define IIC_B_SLAVE_PRV_BIE_INIT_MASK          (R_I3C0_BIE_NACKDIE_Msk | R_I3C0_BIE_ALIE_Msk | R_I3C0_BIE_TODIE_Msk)
-#define IIC_B_SLAVE_PRV_BSTE_INIT_MASK         (R_I3C0_BSTE_NACKDE_Msk | R_I3C0_BSTE_ALE_Msk | R_I3C0_BSTE_TODE_Msk | \
-                                                R_I3C0_BSTE_TENDE_Msk)
-#define IIC_B_SLAVE_PRV_NTIE_INIT_MASK         (R_I3C0_NTIE_TDBEIE0_Msk | R_I3C0_NTIE_RDBFIE0_Msk)
-#define IIC_B_SLAVE_PRV_NTSTE_INIT_MASK        (R_I3C0_NTSTE_TDBEE0_Msk | R_I3C0_NTSTE_RDBFE0_Msk)
-#define IIC_B_SLAVE_PRV_BST_ERR_STATUS_MASK    (R_I3C0_BST_STCNDDF_Msk | R_I3C0_BST_SPCNDDF_Msk | \
-                                                R_I3C0_BST_NACKDF_Msk |                           \
-                                                R_I3C0_BST_ALF_Msk | R_I3C0_BST_TODF_Msk)
+#define IIC_B_SLAVE_OPEN                         (0x49324353ULL)
+#define IIC_B_SLAVE_PRV_NTDTBP0_SIZE             (0xFFU)
+#define IIC_B_SLAVE_CODE_10BIT                   (0xF0U)
+
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+ #define IIC_B_SLAVE_DTC_RX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL <<                           \
+                                                   TRANSFER_SETTINGS_MODE_BITS) |                    \
+                                                  (TRANSFER_SIZE_1_BYTE <<                           \
+                                                   TRANSFER_SETTINGS_SIZE_BITS) |                    \
+                                                  (TRANSFER_ADDR_MODE_FIXED <<                       \
+                                                   TRANSFER_SETTINGS_SRC_ADDR_BITS) |                \
+                                                  (TRANSFER_IRQ_END << TRANSFER_SETTINGS_IRQ_BITS) | \
+                                                  (TRANSFER_ADDR_MODE_INCREMENTED <<                 \
+                                                   TRANSFER_SETTINGS_DEST_ADDR_BITS))
+ #define IIC_B_SLAVE_DTC_TX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL <<                           \
+                                                   TRANSFER_SETTINGS_MODE_BITS) |                    \
+                                                  (TRANSFER_SIZE_1_BYTE <<                           \
+                                                   TRANSFER_SETTINGS_SIZE_BITS) |                    \
+                                                  (TRANSFER_ADDR_MODE_INCREMENTED <<                 \
+                                                   TRANSFER_SETTINGS_SRC_ADDR_BITS) |                \
+                                                  (TRANSFER_IRQ_END << TRANSFER_SETTINGS_IRQ_BITS) | \
+                                                  (TRANSFER_ADDR_MODE_FIXED <<                       \
+                                                   TRANSFER_SETTINGS_DEST_ADDR_BITS))
+
+#endif
+
+#define IIC_B_SLAVE_PRV_BIE_INIT_MASK            (R_I3C0_BIE_NACKDIE_Msk | R_I3C0_BIE_ALIE_Msk | R_I3C0_BIE_TODIE_Msk)
+#define IIC_B_SLAVE_PRV_BSTE_INIT_MASK           (R_I3C0_BSTE_NACKDE_Msk | R_I3C0_BSTE_ALE_Msk | \
+                                                  R_I3C0_BSTE_TODE_Msk |                         \
+                                                  R_I3C0_BSTE_TENDE_Msk)
+#define IIC_B_SLAVE_PRV_NTIE_INIT_MASK           (R_I3C0_NTIE_TDBEIE0_Msk | R_I3C0_NTIE_RDBFIE0_Msk)
+#define IIC_B_SLAVE_PRV_NTSTE_INIT_MASK          (R_I3C0_NTSTE_TDBEE0_Msk | R_I3C0_NTSTE_RDBFE0_Msk)
+#define IIC_B_SLAVE_PRV_BST_ERR_STATUS_MASK      (R_I3C0_BST_STCNDDF_Msk | R_I3C0_BST_SPCNDDF_Msk | \
+                                                  R_I3C0_BST_NACKDF_Msk |                           \
+                                                  R_I3C0_BST_ALF_Msk | R_I3C0_BST_TODF_Msk)
 
 /* Worst case ratio of ICLK/PCLKB (RA2E2) or ICLK/PCLKA (RA6T2) = 64 approximately.
  * 3 PCLKB cycles is the number of cycles to wait for IICn.
  * Refer "Table 3.2 Access cycles for non-GPT modules (1 of 2)" of the RA2E2 manual R01UH0919EJ0050)
  */
-#define IIC_B_SLAVE_PERIPHERAL_REG_MAX_WAIT    (0x40U * 0x03U)
+#define IIC_B_SLAVE_PERIPHERAL_REG_MAX_WAIT      (0x40U * 0x03U)
 
 #define IIC_B_SLAVE_HARDWARE_REGISTER_WAIT(reg, required_value, timeout) \
     while ((timeout))                                                    \
@@ -81,6 +108,13 @@ static fsp_err_t iic_b_slave_read_write(i2c_slave_ctrl_t * const   p_api_ctrl,
 static void iic_b_slave_call_callback(iic_b_slave_instance_ctrl_t * p_ctrl,
                                       i2c_slave_event_t             event,
                                       uint32_t                      transaction_count);
+
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+static fsp_err_t iic_b_slave_transfer_open(i2c_slave_cfg_t const * const p_cfg);
+static fsp_err_t iic_b_slave_transfer_configure(transfer_instance_t const * p_transfer,
+                                                iic_b_slave_transfer_dir_t  direction);
+
+#endif
 
 /* Functions that manipulate hardware */
 static void iic_b_open_hw_slave(iic_b_slave_instance_ctrl_t * const p_ctrl);
@@ -132,6 +166,7 @@ i2c_slave_api_t const g_i2c_slave_on_iic_b =
  *                                            3. Callback parameter is NULL.
  *                                            4. Set the rate to fast mode plus on a channel which does not support it.
  *                                            5. Invalid IRQ number assigned
+ *                                            6. transfer instance in p_cfg is NULL when DTC support enabled
  *********************************************************************************************************************/
 fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t const * const p_cfg)
 {
@@ -157,6 +192,9 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
         FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS & (1U << p_cfg->channel)));
     }
 #endif
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+    fsp_err_t err = FSP_SUCCESS;
+#endif
 
 #if (BSP_FEATURE_IIC_B_VALID_CHANNEL_MASK > 1U)
     p_ctrl->p_reg =
@@ -181,6 +219,18 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
      * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050). */
     iic_b_open_hw_slave(p_ctrl);
 
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+
+    /* Open the IIC transfer interface if available */
+    err = iic_b_slave_transfer_open(p_cfg);
+    if (FSP_SUCCESS != err)
+    {
+        R_BSP_MODULE_STOP(FSP_IP_IIC, p_cfg->channel);
+
+        return err;
+    }
+#endif
+
     R_BSP_IrqCfgEnable(p_ctrl->p_cfg->eri_irq, p_ctrl->p_cfg->eri_ipl, p_ctrl);
     R_BSP_IrqCfgEnable(p_ctrl->p_cfg->txi_irq, p_ctrl->p_cfg->ipl, p_ctrl);
     R_BSP_IrqCfgEnable(p_ctrl->p_cfg->tei_irq, p_ctrl->p_cfg->ipl, p_ctrl);
@@ -197,6 +247,12 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     p_ctrl->do_dummy_read     = false;
     p_ctrl->notify_request    = false;
     p_ctrl->transaction_count = 0U;
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+    /* Reset DTC activation source */
+    p_ctrl->activation_on_rxi = false;
+    p_ctrl->activation_on_txi = false;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -210,10 +266,11 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
  * In case the master continues to write more data, an I2C_SLAVE_EVENT_RX_MORE_REQUEST will be issued via callback.
  * In case of errors, an I2C_SLAVE_EVENT_ABORTED will be issued via callback.
  *
- * @retval  FSP_SUCCESS        Function executed without issue
- * @retval  FSP_ERR_ASSERTION  p_api_ctrl, bytes or p_dest is NULL.
- * @retval  FSP_ERR_IN_USE     Another transfer was in progress.
- * @retval  FSP_ERR_NOT_OPEN   Device is not open.
+ * @retval  FSP_SUCCESS             Function executed without issue
+ * @retval  FSP_ERR_ASSERTION       p_api_ctrl, bytes or p_dest is NULL.
+ * @retval  FSP_ERR_IN_USE          Another transfer was in progress.
+ * @retval  FSP_ERR_NOT_OPEN        Device is not open.
+ * @retval  FSP_ERR_INVALID_SIZE    Invalid size when reading data via DTC.
  *********************************************************************************************************************/
 fsp_err_t R_IIC_B_SLAVE_Read (i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * const p_dest, uint32_t const bytes)
 {
@@ -233,10 +290,11 @@ fsp_err_t R_IIC_B_SLAVE_Read (i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * con
  * In case the master continues to read more data, an I2C_SLAVE_EVENT_TX_MORE_REQUEST will be issued via callback.
  * In case of errors, an I2C_SLAVE_EVENT_ABORTED will be issued via callback.
  *
- * @retval  FSP_SUCCESS        Function executed without issue.
- * @retval  FSP_ERR_ASSERTION  p_api_ctrl or p_src is NULL.
- * @retval  FSP_ERR_IN_USE     Another transfer was in progress.
- * @retval  FSP_ERR_NOT_OPEN   Device is not open.
+ * @retval  FSP_SUCCESS             Function executed without issue.
+ * @retval  FSP_ERR_ASSERTION       p_api_ctrl or p_src is NULL.
+ * @retval  FSP_ERR_IN_USE          Another transfer was in progress.
+ * @retval  FSP_ERR_NOT_OPEN        Device is not open.
+ * @retval  FSP_ERR_INVALID_SIZE    Invalid size when writing data via DTC.
  *********************************************************************************************************************/
 fsp_err_t R_IIC_B_SLAVE_Write (i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * const p_src, uint32_t const bytes)
 {
@@ -322,6 +380,20 @@ fsp_err_t R_IIC_B_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
     p_ctrl->p_reg->BIE  = 0x00;
     p_ctrl->p_reg->NTIE = 0x00;
 
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+
+    /* Close the handles for the transfer interfaces */
+    if (NULL != p_ctrl->p_cfg->p_transfer_rx)
+    {
+        p_ctrl->p_cfg->p_transfer_rx->p_api->close(p_ctrl->p_cfg->p_transfer_rx->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_transfer_tx)
+    {
+        p_ctrl->p_cfg->p_transfer_tx->p_api->close(p_ctrl->p_cfg->p_transfer_tx->p_ctrl);
+    }
+#endif
+
     /* Disable all interrupts in NVIC */
     R_BSP_IrqDisable(p_ctrl->p_cfg->eri_irq);
     R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
@@ -361,7 +433,8 @@ fsp_err_t R_IIC_B_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
  *
  * @retval  FSP_SUCCESS           Function executed successfully.
  * @retval  FSP_ERR_ASSERTION     p_api_ctrl or p_buffer is NULL.
- *
+ * @retval  FSP_ERR_INVALID_SIZE  Provided number of bytes more than UINT16_MAX(= 65535) while DTC is used
+ *                                for data transfer.
  * @retval  FSP_ERR_IN_USE        Another transfer was in progress.
  * @retval  FSP_ERR_NOT_OPEN      Handle is not initialized. Call R_IIC_B_SLAVE_Open to initialize the control block.
  **********************************************************************************************************************/
@@ -383,6 +456,14 @@ static fsp_err_t iic_b_slave_read_write (i2c_slave_ctrl_t * const   p_api_ctrl,
     FSP_ERROR_RETURN(IIC_B_SLAVE_TRANSFER_DIR_NOT_ESTABLISHED == p_ctrl->direction, FSP_ERR_IN_USE);
 
     FSP_ASSERT(((iic_b_slave_instance_ctrl_t *) p_api_ctrl)->p_callback != NULL);
+ #if IIC_B_SLAVE_CFG_DTC_ENABLE
+
+    /* DTC on RX could actually receive 65535+1 = 65536 bytes as 1 bytes are handled separately.
+     * DTC on TX could actually receive 65535+2 = 65537 bytes as 2 bytes are handled separately.
+     * Forcing to 65535 to keep TX and RX uniform with respect to max transaction length via DTC.
+     */
+    FSP_ERROR_RETURN((bytes <= UINT16_MAX), FSP_ERR_INVALID_SIZE);
+ #endif
 #endif
 
     /* Record the new information about this transfer */
@@ -393,6 +474,13 @@ static fsp_err_t iic_b_slave_read_write (i2c_slave_ctrl_t * const   p_api_ctrl,
 
     /* Initialize fields used during transfer */
     p_ctrl->loaded = 0U;
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+    /* Reset DTC activation source */
+    p_ctrl->activation_on_rxi = false;
+    p_ctrl->activation_on_txi = false;
+#endif
 
     /* Set the response as ACK */
     p_ctrl->p_reg->ACKCTL = R_I3C0_ACKCTL_ACKTWP_Msk;
@@ -427,6 +515,23 @@ static void iic_b_slave_notify (iic_b_slave_instance_ctrl_t * const p_ctrl, i2c_
 
     /* Disable timeout interrupt */
     p_ctrl->p_reg->BIE_b.TODIE = 0U;
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+    /* Stop any DTC assisted transfer for tx */
+    const transfer_instance_t * p_transfer_tx = p_ctrl->p_cfg->p_transfer_tx;
+    if ((NULL != p_transfer_tx) && (p_ctrl->direction == IIC_B_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE))
+    {
+        p_transfer_tx->p_api->disable(p_transfer_tx->p_ctrl);
+    }
+
+    /* Stop any DTC assisted transfer for rx */
+    const transfer_instance_t * p_transfer_rx = p_ctrl->p_cfg->p_transfer_rx;
+    if ((NULL != p_transfer_rx) && (p_ctrl->direction == IIC_B_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ))
+    {
+        p_transfer_rx->p_api->disable(p_transfer_rx->p_ctrl);
+    }
+#endif
 
     /* Check if the transaction ended with a stop (or restart) */
     if (p_ctrl->transaction_completed)
@@ -822,6 +927,17 @@ static void iic_b_rxi_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
                  */
                 p_ctrl->p_reg->ACKCTL = R_I3C0_ACKCTL_ACKTWP_Msk | R_I3C0_ACKCTL_ACKT_Msk;
             }
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+            /* If this is the interrupt that got fired after DTC transfer,
+             * ignore it as the DTC has already taken care of the data transfer */
+            else if (true == p_ctrl->activation_on_rxi)
+            {
+                p_ctrl->activation_on_rxi = false;
+            }
+#endif
+
             /* If master is requesting still more data than configured to be read, notify
              * with a read more event in callback */
             else if (p_ctrl->total == p_ctrl->loaded)
@@ -843,7 +959,8 @@ static void iic_b_rxi_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
                         volatile uint32_t dummy_read = p_ctrl->p_reg->NTDTBP0;
                         FSP_PARAMETER_NOT_USED(dummy_read);
 
-                        /* Set the response as NACK, since slave is not setup for reading more data from master at this time.
+                        /* Set the response as NACK, since slave is not setup for
+                         *  reading more data from master at this time.
                          * This is an intentional way to let master know that the slave receiver cannot
                          * accept any more data and hence should eventually result in I2C_SLAVE_EVENT_RX_COMPLETE.
                          */
@@ -857,16 +974,50 @@ static void iic_b_rxi_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
 
                         /* Keep track of the the actual number of transactions */
                         p_ctrl->transaction_count++;
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+                        /* Enable DTC to operate from 2nd data byte */
+                        if ((NULL != p_ctrl->p_cfg->p_transfer_rx) && (p_ctrl->total > 1U) &&
+                            (false == p_ctrl->activation_on_rxi))
+                        {
+                            uint32_t volatile const * p_iic_b_slave_rx_buffer = &(p_ctrl->p_reg->NTDTBP0);
+                            p_ctrl->p_cfg->p_transfer_rx->p_api->reset(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                                       (uint8_t *) (p_iic_b_slave_rx_buffer),
+                                                                       (void *) (p_ctrl->p_buff + 1U),
+                                                                       (uint16_t) (p_ctrl->total - 1U));
+                            p_ctrl->activation_on_rxi  = true;
+                            p_ctrl->transaction_count += p_ctrl->total - 1U;
+                            p_ctrl->loaded             = p_ctrl->total;
+                        }
+#endif
                     }
                 }
             }
             else
             {
                 /* Read data */
-                p_ctrl->p_buff[p_ctrl->loaded++] = (uint8_t) (p_ctrl->p_reg->NTDTBP0 & IIC_B_SLAVE_PRV_NTDTBP0_SIZE);
+                p_ctrl->p_buff[p_ctrl->loaded++] =
+                    (uint8_t) (p_ctrl->p_reg->NTDTBP0 & IIC_B_SLAVE_PRV_NTDTBP0_SIZE);
 
                 /* Keep track of the the actual number of transactions */
                 p_ctrl->transaction_count++;
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+                /* Enable DTC to operate from 2nd data byte */
+                if ((NULL != p_ctrl->p_cfg->p_transfer_rx) && (p_ctrl->total > 1U) &&
+                    (false == p_ctrl->activation_on_rxi))
+                {
+                    uint32_t volatile const * p_iic_b_slave_rx_buffer = &(p_ctrl->p_reg->NTDTBP0);
+                    p_ctrl->p_cfg->p_transfer_rx->p_api->reset(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                               (uint8_t *) (p_iic_b_slave_rx_buffer),
+                                                               (void *) (p_ctrl->p_buff + 1U),
+                                                               (uint16_t) (p_ctrl->total - 1U));
+                    p_ctrl->activation_on_rxi  = true;
+                    p_ctrl->transaction_count += p_ctrl->total - 1U;
+                    p_ctrl->loaded             = p_ctrl->total;
+                }
+#endif
             }
         }
     }
@@ -913,6 +1064,23 @@ static void iic_b_txi_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
 
             /* Keep track of the the actual number of transactions */
             p_ctrl->transaction_count++;
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+
+            /* Enable transfers to operate from 3rd data byte */
+            if ((NULL != p_ctrl->p_cfg->p_transfer_tx) && (p_ctrl->total > 2U) &&
+                (false == p_ctrl->activation_on_txi) && (p_ctrl->loaded == 2U))
+            {
+                uint32_t volatile const * p_iic_b_slave_tx_buffer = &(p_ctrl->p_reg->NTDTBP0);
+                p_ctrl->p_cfg->p_transfer_tx->p_api->reset(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,
+                                                           (void *) (p_ctrl->p_buff + 2U),
+                                                           (uint8_t *) (p_iic_b_slave_tx_buffer),
+                                                           (uint16_t) (p_ctrl->total - 2U));
+                p_ctrl->transaction_count += p_ctrl->total - 2U;
+                p_ctrl->loaded             = p_ctrl->total;
+                p_ctrl->activation_on_txi  = true;
+            }
+#endif
         }
     }
 }
@@ -990,6 +1158,16 @@ static void iic_b_err_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
              * It is preferred to clear NACK bit in the driver to allow more granular ACK control from the slave side.
              */
             p_ctrl->p_reg->ACKCTL = R_I3C0_ACKCTL_ACKTWP_Msk;
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+            if ((NULL != p_ctrl->p_cfg->p_transfer_rx) && (true == p_ctrl->activation_on_rxi))
+            {
+                transfer_properties_t transaction_property;
+                p_ctrl->p_cfg->p_transfer_rx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                             &transaction_property);
+                p_ctrl->transaction_count -= transaction_property.transfer_length_remaining;
+            }
+#endif
         }
         else
         {
@@ -1001,6 +1179,23 @@ static void iic_b_err_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
             {
                 p_ctrl->transaction_count -= 1U;
             }
+
+#if (IIC_B_SLAVE_CFG_DTC_ENABLE)
+            if ((NULL != p_ctrl->p_cfg->p_transfer_tx) && (true == p_ctrl->activation_on_txi))
+            {
+                transfer_properties_t transaction_property;
+                p_ctrl->p_cfg->p_transfer_tx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,
+                                                             &transaction_property);
+
+                /* Decrement the transaction count when slave configured to write more data than master requested.
+                 * Addresses the exception raised from double buffer hardware implementation */
+                if (transaction_property.transfer_length_remaining > 0)
+                {
+                    p_ctrl->transaction_count -= 1U;
+                    p_ctrl->transaction_count -= transaction_property.transfer_length_remaining;
+                }
+            }
+#endif
         }
 
         /* Notify the user */
@@ -1021,12 +1216,97 @@ static void iic_b_err_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
          * when a timeout occurs. Not clearing the flag will cause error interrupt to get triggered again.
          */
         p_ctrl->p_reg->BIE &= (uint32_t) ~R_I3C0_BIE_NACKDIE_Msk;
+
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+
+        /* Stop any DTC assisted transfer for tx */
+        const transfer_instance_t * p_transfer_tx = p_ctrl->p_cfg->p_transfer_tx;
+        if (NULL != p_transfer_tx)
+        {
+            p_transfer_tx->p_api->disable(p_transfer_tx->p_ctrl);
+        }
+#endif
     }
     else
     {
         /* No processing, should not come here */
     }
 }
+
+#if IIC_B_SLAVE_CFG_DTC_ENABLE
+
+/*******************************************************************************************************************//**
+ * Configures IIC related transfer drivers (if enabled).
+ *
+ * @param[in]   p_ctrl    Pointer to IIC specific control structure
+ * @param[in]   p_cfg     Pointer to IIC specific configuration structure
+ *
+ * @retval      FSP_SUCCESS                Transfer interface initialized successfully.
+ * @retval      FSP_ERR_ASSERTION          Pointer to transfer instance for I2C receive in p_cfg is NULL.
+ **********************************************************************************************************************/
+static fsp_err_t iic_b_slave_transfer_open (i2c_slave_cfg_t const * const p_cfg)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    if (NULL != p_cfg->p_transfer_rx)
+    {
+        err = iic_b_slave_transfer_configure(p_cfg->p_transfer_rx, IIC_B_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    if (NULL != p_cfg->p_transfer_tx)
+    {
+        err = iic_b_slave_transfer_configure(p_cfg->p_transfer_tx, IIC_B_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE);
+        if (FSP_SUCCESS != err)
+        {
+            if (NULL != p_cfg->p_transfer_rx)
+            {
+                p_cfg->p_transfer_rx->p_api->close(p_cfg->p_transfer_rx->p_ctrl);
+            }
+
+            return err;
+        }
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Configures  IIC RX related transfer.
+ * @param[in]     p_ctrl                     Pointer to IIC specific control structure
+ * @param[in]     p_cfg                      Pointer to IIC specific configuration structure
+ *
+ * @retval        FSP_SUCCESS                Transfer interface is configured with valid parameters.
+ * @retval        FSP_ERR_ASSERTION          Pointer to transfer instance for I2C receive in p_cfg is NULL.
+ **********************************************************************************************************************/
+static fsp_err_t iic_b_slave_transfer_configure (transfer_instance_t const * p_transfer,
+                                                 iic_b_slave_transfer_dir_t  direction)
+{
+    fsp_err_t err;
+
+    /* Set default transfer info and open receive transfer module, if enabled. */
+ #if (IIC_B_SLAVE_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(NULL != p_transfer->p_api);
+    FSP_ASSERT(NULL != p_transfer->p_cfg);
+    FSP_ASSERT(NULL != p_transfer->p_cfg->p_info);
+ #endif
+    transfer_info_t * p_cfg = p_transfer->p_cfg->p_info;
+    if (IIC_B_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ == direction)
+    {
+        p_cfg->transfer_settings_word = IIC_B_SLAVE_DTC_RX_TRANSFER_SETTINGS;
+    }
+    else
+    {
+        p_cfg->transfer_settings_word = IIC_B_SLAVE_DTC_TX_TRANSFER_SETTINGS;
+    }
+
+    err = p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
+    FSP_ERROR_RETURN((FSP_SUCCESS == err), err);
+
+    return FSP_SUCCESS;
+}
+
+#endif
 
 /**********************************************************************************************************************
  * Interrupt Vectors

@@ -132,10 +132,6 @@ fsp_err_t RM_MESH_HEALTH_CLIENT_Close(rm_ble_mesh_model_client_ctrl_t * const p_
 
 fsp_err_t RM_MESH_HEALTH_CLIENT_GetModelHandle(rm_ble_mesh_model_client_ctrl_t * const   p_ctrl,
                                                rm_ble_mesh_access_model_handle_t * const p_model_handle);
-
-fsp_err_t RM_MESH_HEALTH_CLIENT_SetModelHandle(rm_ble_mesh_model_client_ctrl_t * const p_ctrl,
-                                               rm_ble_mesh_access_model_handle_t       model_handle);
-
 fsp_err_t RM_MESH_HEALTH_CLIENT_SendReliablePdu(rm_ble_mesh_model_client_ctrl_t * const p_ctrl,
                                                 uint32_t                                req_opcode,
                                                 void const * const                      parameter,

@@ -29,8 +29,6 @@
  * @section   RM_BLE_MESH_CONFIG_CLIENT_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Configuration Client (BLE MESH MODEL CONFIG CLIENT) middleware provides Bluetooth Low Energy Mesh Model Configuration Client functionality.
  *
- * The Bluetooth Low Energy Mesh Model Configuration Client interface can be implemented by:
- * - @ref RM_MESH_CONFIG_CLT
  *
  * @{
  **********************************************************************************************************************/
@@ -63,8 +61,6 @@ typedef struct st_rm_ble_mesh_config_client_callback_args
 } rm_ble_mesh_config_client_callback_args_t;
 
 /** BLE MESH CONFIG CLIENT control block.  Allocate an instance specific control block to pass into the BLE mesh model health client API calls.
- * @par Implemented as
- * - rm_ble_mesh_health_client_instance_ctrl_t
  */
 typedef void rm_ble_mesh_config_client_ctrl_t;
 
@@ -84,8 +80,6 @@ typedef struct st_rm_ble_mesh_config_client_cfg
 typedef struct st_rm_ble_mesh_config_client_api
 {
     /** API to open configuration client model.
-     * @par Implemented as
-     * - @ref RM_MESH_CONFIG_CLT_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -94,16 +88,12 @@ typedef struct st_rm_ble_mesh_config_client_api
                        rm_ble_mesh_config_client_cfg_t const * const p_cfg);
 
     /** API to close configuration client model.
-     * @par Implemented as
-     * - @ref RM_MESH_CONFIG_CLT_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_config_client_ctrl_t * const p_ctrl);
 
     /** API to set configuration server.
-     * @par Implemented as
-     * - @ref RM_MESH_CONFIG_CLT_SetServer()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  server_addr  Address of Configuration Server.
@@ -113,8 +103,6 @@ typedef struct st_rm_ble_mesh_config_client_api
                             uint8_t * p_dev_key);
 
     /** API to send acknowledged commands.
-     * @par Implemented as
-     * - @ref RM_MESH_CONFIG_CLT_SendReliablePdu()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  req_opcode   Request Opcode.

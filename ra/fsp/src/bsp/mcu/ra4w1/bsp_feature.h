@@ -129,8 +129,10 @@
 #define BSP_FEATURE_BSP_OFS1_HOCOFRQ_OFFSET                  (12U)
 #define BSP_FEATURE_BSP_OFS_HAS_SECURITY_ATTRIBUTION         (0U)
 #define BSP_FEATURE_BSP_OSIS_PADDING                         (1)
+#define BSP_FEATURE_BSP_POST_CRUNTIME_INIT                   (0U)
 #define BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED           (0U)
 #define BSP_FEATURE_BSP_RESET_TRNG                           (1U)
+#define BSP_FEATURE_BSP_SECURITY_PREINIT                     (0U)
 #define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_FIVE_ROM_WAITS        (0U) // The maximum frequency allowed without having five ROM wait cycles (Set to zero if this is not an option).
 #define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_FOUR_ROM_WAITS        (0U) // The maximum frequency allowed without having four ROM wait cycles (Set to zero if this is not an option).
 #define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_NO_RAM_WAITS          (0U) // The maximum frequency allowed without having RAM wait state enabled in SRAMWTSC.
@@ -215,6 +217,8 @@
 #define BSP_FEATURE_CGC_SRAMPRCR_KW_OFFSET                   (1)
 #define BSP_FEATURE_CGC_SRAMPRCR_KW_VALUE                    (0x78)
 #define BSP_FEATURE_CGC_STARTUP_OPCCR_MODE                   (2)
+#define BSP_FEATURE_CGC_HAS_OSTDCSE                          (0) // Feature not available on this MCU
+#define BSP_FEATURE_CGC_OSCILLATON_STOP_DETECT               (1)
 #define BSP_FEATURE_CGC_STARTUP_SCKDIVCR                     (0x44044444)
 #define BSP_FEATURE_CGC_STARTUP_SCKDIVCR2                    (0x00)
 #define BSP_FEATURE_CGC_STARTUP_SCKSCR                       (0x01)
@@ -286,6 +290,7 @@
 #define BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE                   (0x400U)
 #define BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE                   (1)
 #define BSP_FEATURE_FLASH_LP_FLASH_CLOCK_SRC                 ((fsp_priv_clock_t) FSP_PRIV_CLOCK_FCLK) // RA4W1 FlashIF uses FCLK
+#define BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK              (0)                                      // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_LP_VERSION                         (3)
 #define BSP_FEATURE_FLASH_SUPPORTS_ACCESS_WINDOW             (1)
 #define BSP_FEATURE_FLASH_SUPPORTS_ID_CODE                   (1)
@@ -362,8 +367,9 @@
 #define BSP_FEATURE_LVD_MONITOR_1_LOW_THRESHOLD              (LVD_THRESHOLD_MONITOR_1_LEVEL_1_65V) // 1.65V
 #define BSP_FEATURE_LVD_MONITOR_2_HI_THRESHOLD               (LVD_THRESHOLD_MONITOR_2_LEVEL_4_29V) // 4.29V
 #define BSP_FEATURE_LVD_MONITOR_2_LOW_THRESHOLD              (LVD_THRESHOLD_MONITOR_2_LEVEL_3_84V) // 3.84V
-#define BSP_FEATURE_LVD_MONITOR_1_STABILIZATION_TIME_US      (300U)                                // Time in microseconds required for LVD1 to stabilize
-#define BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US      (300U)                                // Time in microseconds required for LVD2 to stabilize
+#define BSP_FEATURE_LVD_MONITOR_1_STABILIZATION_TIME_US      (300U)                                // LVD1 operation stabilization time after LVD1 is enabled
+#define BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US      (300U)                                // LVD2 operation stabilization time after LVD2 is enabled
+#define BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE         (0U)
 
 #define BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS                   (0U)
 #define BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS                   (0U)
@@ -430,8 +436,10 @@
 #define BSP_FEATURE_TFU_SUPPORTED                            (0U) // Trigonometric Function Unit (TFU) not available on this MCU
 
 #define BSP_FEATURE_TRNG_HAS_MODULE_STOP                     (0U)
+#define BSP_FEATURE_TZ_NS_OFFSET                             (0U)
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                         (0U)
 #define BSP_FEATURE_TZ_HAS_DLM                               (0U)
+#define BSP_FEATURE_TZ_VERSION                               (0U)
 
 #define BSP_FEATURE_ULPT_MAX_CHANNEL_NUM                     (0)
 #define BSP_FEATURE_ULPT_VALID_CHANNEL_MASK                  (0U)

@@ -201,8 +201,6 @@ typedef struct st_slcdc_cfg
 } slcdc_cfg_t;
 
 /** SLCDC control block.  Allocate an instance specific control block to pass into the SLCDC API calls.
- * @par Implemented as
- * - slcdc_instance_ctrl_t
  */
 
 /** SLCDC control block */
@@ -212,8 +210,6 @@ typedef void slcdc_ctrl_t;
 typedef struct st_slcdc_api
 {
     /** Open SLCDC.
-     * @par Implemented as
-     * - @ref R_SLCDC_Open()
      * @param[in,out]  p_ctrl        Pointer to display interface control block. Must be declared by user.
      * @param[in]      p_cfg         Pointer to display configuration structure. All elements of this structure must be
      *                               set by the user.
@@ -223,8 +219,6 @@ typedef struct st_slcdc_api
     /** Write data to the SLCDC segment data array.
      * Specifies the initial display data. Except when using 8-time slice mode, store values in the lower 4 bits when
      * writing to the A-pattern area and in the upper 4 bits when writing to the B-pattern area.
-     * @par Implemented as
-     * - @ref R_SLCDC_Write()
      * @param[in]  p_ctrl           Pointer to display interface control block.
      * @param[in]  start_segment    Specify the start segment number to be written.
      * @param[in]  p_data           Pointer to the display data to be written to the specified segments.
@@ -235,8 +229,6 @@ typedef struct st_slcdc_api
 
     /** Rewrite data in the SLCDC segment data array.
      * Rewrites the LCD display data in 1-bit units. If a bit is not specified for rewriting, the value stored in the bit is held as it is.
-     * @par Implemented as
-     * - @ref R_SLCDC_Modify()
      * @param[in]  p_ctrl           Pointer to display interface control block.
      * @param[in]  segment          The segment to be written.
      * @param[in]  data_mask        Mask the data being displayed. Set 0 to the bit to be rewritten and set 1 to the other bits. Multiple bits can be rewritten.
@@ -248,24 +240,18 @@ typedef struct st_slcdc_api
 
     /** Enable display signal output.
      * Displays the segment data on the LCD.
-     * @par Implemented as
-     * - @ref R_SLCDC_Start()
      * @param[in]  p_ctrl           Pointer to display interface control block.
      */
     fsp_err_t (* start)(slcdc_ctrl_t * const p_ctrl);
 
     /** Disable display signal output.
      * Stops displaying data on the LCD.
-     * @par Implemented as
-     * - @ref R_SLCDC_Stop()
      * @param[in]  p_ctrl           Pointer to display interface control block.
      */
     fsp_err_t (* stop)(slcdc_ctrl_t * const p_ctrl);
 
     /** Set the display contrast.
      * This function can be used only when the internal voltage boosting method is used for drive voltage generation.
-     * @par Implemented as
-     * - @ref R_SLCDC_SetContrast()
      * @param[in]  p_ctrl           Pointer to display interface control block.
      */
     fsp_err_t (* setContrast)(slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t const contrast);
@@ -281,16 +267,12 @@ typedef struct st_slcdc_api
      *  4) Enable IRQ, RTC_EVENT_PERIODIC_IRQ
      *  Refer to the User's Manual for the detailed procedure.
      *
-     * @par Implemented as
-     * - @ref R_SLCDC_SetDisplayArea()
      * @param[in]  p_ctrl           Pointer to display interface control block.
      * @param[in]  display_area     Display area to be used, A-pattern or B-pattern area.
      */
     fsp_err_t (* setDisplayArea)(slcdc_ctrl_t * const p_ctrl, slcdc_display_area_t const display_area);
 
     /** Close SLCDC.
-     * @par Implemented as
-     * - @ref R_SLCDC_Close()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* close)(slcdc_ctrl_t * const p_ctrl);

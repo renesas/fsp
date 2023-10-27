@@ -175,6 +175,10 @@ void * _tx_port_wait_thread_ready (void)
         }
 #endif
 
+#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
+        bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
+#endif
+
         /**
          * DSB should be last instruction executed before WFI
          * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html
@@ -188,6 +192,10 @@ void * _tx_port_wait_thread_ready (void)
 
         /* Instruction Synchronization Barrier. */
         __ISB();
+
+#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
+        bsp_prv_clock_prepare_post_sleep(clock_slowed);
+#endif
 
 #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
 

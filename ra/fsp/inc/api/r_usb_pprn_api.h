@@ -26,8 +26,6 @@
  * @section USB_PPRN_API_Summary Summary
  * The USB PPRN interface provides USB PPRN functionality.
  *
- * The USB PPRN interface can be implemented by:
- * - @ref USBX
  *
  * @{
  **********************************************************************************************************************/

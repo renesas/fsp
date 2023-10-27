@@ -30,6 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "rm_wifi_da16xxx.h"
+#include "rm_at_transport_da16xxx.h"
 #include "rm_mqtt_onchip_da16xxx_cfg.h"
 
 #define MQTT_ONCHIP_DA16XXX_MAX_ALPN                (3)    ///< Maximum number of ALPNs supported by DA16XXX.
@@ -96,6 +98,7 @@ typedef struct st_mqtt_onchip_da16xxx_callback_args
 /** MQTT Configuration */
 typedef struct st_mqtt_onchip_da16xxx_cfg
 {
+    at_transport_da16xxx_instance_t const * p_transport_instance;
     const uint8_t  use_mqtt_v311;                                                                        ///< Flag to use MQTT v3.1.1.
     const uint16_t rx_timeout;                                                                           ///< MQTT Rx timeout in milliseconds.
     const uint16_t tx_timeout;                                                                           ///< MQTT Tx timeout in milliseconds.

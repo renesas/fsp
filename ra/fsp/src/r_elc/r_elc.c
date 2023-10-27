@@ -149,8 +149,16 @@ fsp_err_t R_ELC_Close (elc_ctrl_t * const p_ctrl)
     /* Set state to closed */
     p_instance_ctrl->open = ELC_CLOSED;
 
+    uint8_t volatile * p_elcr = &R_ELC->ELCR;
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+
+    /* Access ELCR using the non-secure alias. */
+    p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+#endif
+
     /* Globally disable the operation of the Event Link Controller */
-    R_ELC->ELCR = ELC_ELCR_ELCON_DISABLE;
+    *p_elcr = ELC_ELCR_ELCON_DISABLE;
 
     return FSP_SUCCESS;
 }
@@ -175,17 +183,25 @@ fsp_err_t R_ELC_SoftwareEventGenerate (elc_ctrl_t * const p_ctrl, elc_software_e
 
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
+    uint8_t volatile * p_elsegrn = &R_ELC->ELSEGR[event_number].BY;
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+
+    /* Access ELSEGR using the non-secure alias. */
+    p_elsegrn = (uint8_t volatile *) ((uint32_t) p_elsegrn | BSP_FEATURE_TZ_NS_OFFSET);
+#endif
+
     /* Set the ELSEGR bits in the correct order (see Section 19.2.2 "Event Link Software Event Generation Register n
      * (ELSEGRn) (n = 0, 1)" of the RA6M3 manual R01UH0886EJ0100) */
 
     /* Step 1. enable the ELSEGR0 register for writing */
-    R_ELC->ELSEGR[event_number].BY = ELC_ELSEGRN_STEP1;
+    *p_elsegrn = ELC_ELSEGRN_STEP1;
 
     /* Step 2. Enable the SEG bit for writing */
-    R_ELC->ELSEGR[event_number].BY = ELC_ELSEGRN_STEP2;
+    *p_elsegrn = ELC_ELSEGRN_STEP2;
 
     /* Step 3. Set the SEG bit which causes the software event generation */
-    R_ELC->ELSEGR[event_number].BY = ELC_ELSEGRN_STEP3;
+    *p_elsegrn = ELC_ELSEGRN_STEP3;
 
     return FSP_SUCCESS;
 }
@@ -259,8 +275,16 @@ fsp_err_t R_ELC_Enable (elc_ctrl_t * const p_ctrl)
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
+    uint8_t volatile * p_elcr = &R_ELC->ELCR;
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+
+    /* Access ELCR using the non-secure alias. */
+    p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+#endif
+
     /* Globally enable ELC function */
-    R_ELC->ELCR = ELC_ELCR_ELCON_ENABLE;
+    *p_elcr = ELC_ELCR_ELCON_ENABLE;
 
     return FSP_SUCCESS;
 }
@@ -283,8 +307,16 @@ fsp_err_t R_ELC_Disable (elc_ctrl_t * const p_ctrl)
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
+    uint8_t volatile * p_elcr = &R_ELC->ELCR;
+
+#if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+
+    /* Access ELCR using the non-secure alias. */
+    p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+#endif
+
     /* Globally disable ELC function */
-    R_ELC->ELCR = ELC_ELCR_ELCON_DISABLE;
+    *p_elcr = ELC_ELCR_ELCON_DISABLE;
 
     return FSP_SUCCESS;
 }

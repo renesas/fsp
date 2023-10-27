@@ -213,6 +213,7 @@ typedef struct
     uint8_t * p_next_packet_buffer;
     uint32_t  packet_buffer_size;
     uint32_t  current_cmd_buffer_index;
+    bool      handle_socket_connect;
 #endif
     volatile uint32_t curr_socket_index;                                  ///< Currently active socket instance
     uint8_t           cmd_tx_buff[WIFI_ONCHIP_SILEX_CFG_CMD_TX_BUF_SIZE]; ///< Command send buffer

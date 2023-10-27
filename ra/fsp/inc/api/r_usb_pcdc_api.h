@@ -26,8 +26,6 @@
  * @section USB_PCDC_API_Summary Summary
  * The USB PCDC interface provides USB PCDC functionality.
  *
- * The USB PCDC interface can be implemented by:
- * - @ref USB_PCDC
  *
  * @{
  **********************************************************************************************************************/

@@ -30,8 +30,6 @@
  * The Virtual EEPROM Port configures a fail-safe key value store designed for microcontrollers on top of a lower
  * level storage device.
  *
- * Implemented by:
- * @ref RM_VEE_FLASH
  *
  * @{
  **********************************************************************************************************************/
@@ -94,8 +92,6 @@ typedef struct st_rm_vee_status
 } rm_vee_status_t;
 
 /** Virtual EEPROM API control block.  Allocate an instance specific control block to pass into the VEE API calls.
- * @par Implemented as
- * - @ref rm_vee_flash_instance_ctrl_t
  */
 typedef void rm_vee_ctrl_t;
 
@@ -103,8 +99,6 @@ typedef void rm_vee_ctrl_t;
 typedef struct st_rm_vee_api
 {
     /** Initializes the driver’s internal structures and opens the Flash driver.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_Open
      *
      * @param[in]   p_ctrl              Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg               Pointer to configuration structure. All elements of this structure must be set by user.
@@ -112,8 +106,6 @@ typedef struct st_rm_vee_api
     fsp_err_t (* open)(rm_vee_ctrl_t * const p_ctrl, rm_vee_cfg_t const * const p_cfg);
 
     /** Writes a record to data flash.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_RecordWrite
      *
      * @param[in]   p_ctrl              Pointer to control block.
      * @param[in]   rec_id              ID of record to write.
@@ -124,8 +116,6 @@ typedef struct st_rm_vee_api
                               uint32_t num_bytes);
 
     /** This function gets the pointer to the most recent version of a record specified by ID.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_RecordPtrGet
      *
      * @param[in]   p_ctrl              Pointer to control block.
      * @param[in]   rec_id              ID of record to locate.
@@ -136,8 +126,6 @@ typedef struct st_rm_vee_api
                                uint32_t * const p_num_bytes);
 
     /** Writes new Reference data to the reference update area.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_RefDataWrite
      *
      * @param[in]   p_ctrl              Pointer to control block.
      * @param[in]   p_ref_data          Pointer to data to write to the reference data update area.
@@ -145,8 +133,6 @@ typedef struct st_rm_vee_api
     fsp_err_t (* refDataWrite)(rm_vee_ctrl_t * const p_ctrl, uint8_t const * const p_ref_data);
 
     /** Gets a pointer to the most recent reference data.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_RefDataPtrGet
      *
      * @param[in]   p_ctrl              Pointer to control block.
      * @param[in]   pp_ref_data         Pointer to set to the most recent valid reference data.
@@ -154,8 +140,6 @@ typedef struct st_rm_vee_api
     fsp_err_t (* refDataPtrGet)(rm_vee_ctrl_t * const p_ctrl, uint8_t ** const pp_ref_data);
 
     /** Get the current status of the VEE driver.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_StatusGet
      *
      * @param[in]   p_ctrl              Pointer to control block.
      * @param[in]   p_status            Pointer to store the current status of the VEE driver.
@@ -163,16 +147,12 @@ typedef struct st_rm_vee_api
     fsp_err_t (* statusGet)(rm_vee_ctrl_t * const p_ctrl, rm_vee_status_t * const p_status);
 
     /** Manually start a refresh operation.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_Refresh
      *
      * @param[in]   p_ctrl              Pointer to control block.
      */
     fsp_err_t (* refresh)(rm_vee_ctrl_t * const p_ctrl);
 
     /** Format the Virtual EEPROM.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_Format
      *
      * @param[in]   p_ctrl              Pointer to control block.
      * @param[in]   p_ref_data          Optional pointer to reference data to write during format.
@@ -180,8 +160,6 @@ typedef struct st_rm_vee_api
     fsp_err_t (* format)(rm_vee_ctrl_t * const p_ctrl, uint8_t const * const p_ref_data);
 
     /** Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_CallbackSet()
      *
      * @param[in]   p_ctrl                   Control block set in @ref rm_vee_api_t::open call.
      * @param[in]   p_callback               Callback function to register
@@ -189,12 +167,10 @@ typedef struct st_rm_vee_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(rm_vee_ctrl_t * const p_api_ctrl, void (* p_callback)(rm_vee_callback_args_t *),
+    fsp_err_t (* callbackSet)(rm_vee_ctrl_t * const p_ctrl, void (* p_callback)(rm_vee_callback_args_t *),
                               void const * const p_context, rm_vee_callback_args_t * const p_callback_memory);
 
     /** Closes the module and lower level storage device.
-     * @par Implemented as
-     * - @ref RM_VEE_FLASH_Close
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_vee_api_t::open call.
      */

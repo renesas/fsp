@@ -28,8 +28,6 @@
  * The Flash interface provides the ability to read, write, erase, and blank check the code flash and data flash
  * regions.
  *
- * The Flash interface is implemented by:
- * - @ref FLASH_LP
  *
  * @{
  **********************************************************************************************************************/
@@ -124,9 +122,6 @@ typedef struct st_flash_info
 } flash_info_t;
 
 /** Flash control block.  Allocate an instance specific control block to pass into the flash API calls.
- * @par Implemented as
- * - flash_lp_instance_ctrl_t
- * - flash_hp_instance_ctrl_t
  */
 typedef void flash_ctrl_t;
 
@@ -158,9 +153,6 @@ typedef struct st_flash_cfg
 typedef struct st_flash_api
 {
     /** Open FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_Open()
-     * - @ref R_FLASH_HP_Open()
      *
      * @param[out]  p_ctrl       Pointer to FLASH device control. Must be declared by user. Value set here.
      * @param[in]   flash_cfg_t  Pointer to FLASH configuration structure. All elements of this structure
@@ -169,9 +161,6 @@ typedef struct st_flash_api
     fsp_err_t (* open)(flash_ctrl_t * const p_ctrl, flash_cfg_t const * const p_cfg);
 
     /** Write FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_Write()
-     * - @ref R_FLASH_HP_Write()
      *
      * @param[in]   p_ctrl         Control for the FLASH device context.
      * @param[in]   src_address    Address of the buffer containing the data to write to Flash.
@@ -187,9 +176,6 @@ typedef struct st_flash_api
                         uint32_t const num_bytes);
 
     /** Erase FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_Erase()
-     * - @ref R_FLASH_HP_Erase()
      *
      * @param[in]  p_ctrl               Control for the FLASH device.
      * @param[in]  address              The block containing this address is the first block erased.
@@ -199,14 +185,11 @@ typedef struct st_flash_api
     fsp_err_t (* erase)(flash_ctrl_t * const p_ctrl, uint32_t const address, uint32_t const num_blocks);
 
     /** Blank check FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_BlankCheck()
-     * - @ref R_FLASH_HP_BlankCheck()
      *
-     * @param[in]   p_ctrl    Control for the FLASH device context.
-     * @param[in]   address   The starting address of the Flash area to blank check.
-     * @param[in]   num_bytes Specifies the number of bytes that need to be checked.
-     *                        See the specific handler for details.
+     * @param[in]   p_ctrl                Control for the FLASH device context.
+     * @param[in]   address               The starting address of the Flash area to blank check.
+     * @param[in]   num_bytes             Specifies the number of bytes that need to be checked.
+     *                                    See the specific handler for details.
      * @param[out]  p_blank_check_result  Pointer that will be populated by the API with the results of the blank check
      *                                    operation in non-BGO (blocking) mode. In this case the blank check operation
      *                                    completes here and the result is returned. In Data Flash BGO mode the blank
@@ -218,9 +201,6 @@ typedef struct st_flash_api
                              flash_result_t * const p_blank_check_result);
 
     /** Close FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_InfoGet()
-     * - @ref R_FLASH_HP_InfoGet()
      *
      * @param[in]   p_ctrl        Pointer to FLASH device control.
      * @param[out]  p_info        Pointer to FLASH info structure.
@@ -228,18 +208,12 @@ typedef struct st_flash_api
     fsp_err_t (* infoGet)(flash_ctrl_t * const p_ctrl, flash_info_t * const p_info);
 
     /** Close FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_Close()
-     * - @ref R_FLASH_HP_Close()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
     fsp_err_t (* close)(flash_ctrl_t * const p_ctrl);
 
     /** Get Status for FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_StatusGet()
-     * - @ref R_FLASH_HP_StatusGet()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[out]  p_ctrl       Pointer to the current flash status.
@@ -247,9 +221,6 @@ typedef struct st_flash_api
     fsp_err_t (* statusGet)(flash_ctrl_t * const p_ctrl, flash_status_t * const p_status);
 
     /** Set Access Window for FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_AccessWindowSet()
-     * - @ref R_FLASH_HP_AccessWindowSet()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  start_addr    Determines the Starting block for the Code Flash access window.
@@ -259,9 +230,6 @@ typedef struct st_flash_api
     fsp_err_t (* accessWindowSet)(flash_ctrl_t * const p_ctrl, uint32_t const start_addr, uint32_t const end_addr);
 
     /** Clear any existing Code Flash access window for FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_AccessWindowClear()
-     * - @ref R_FLASH_HP_AccessWindowClear()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  start_addr    Determines the Starting block for the Code Flash access window.
@@ -280,9 +248,6 @@ typedef struct st_flash_api
      * With mode FLASH_ID_CODE_MODE_LOCKED, it
      * will result in an ID code of 00112233445566778899aabbccddee80
      *
-     * @par Implemented as
-     * - @ref R_FLASH_LP_IdCodeSet()
-     * - @ref R_FLASH_HP_IdCodeSet()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  p_id_bytes    Ponter to the ID Code to be written.
@@ -291,26 +256,17 @@ typedef struct st_flash_api
     fsp_err_t (* idCodeSet)(flash_ctrl_t * const p_ctrl, uint8_t const * const p_id_bytes, flash_id_code_mode_t mode);
 
     /** Reset function for FLASH device.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_Reset()
-     * - @ref R_FLASH_HP_Reset()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
     fsp_err_t (* reset)(flash_ctrl_t * const p_ctrl);
 
     /** Update Flash clock frequency (FCLK) and recalculate timeout values
-     * @par Implemented as
-     * - @ref R_FLASH_LP_UpdateFlashClockFreq()
-     * - @ref R_FLASH_HP_UpdateFlashClockFreq()
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
     fsp_err_t (* updateFlashClockFreq)(flash_ctrl_t * const p_ctrl);
 
     /** Select which block - Default (Block 0) or Alternate (Block 1) is used as the start-up area block.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_StartUpAreaSelect()
-     * - @ref R_FLASH_HP_StartUpAreaSelect()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  swap_type     FLASH_STARTUP_AREA_BLOCK0, FLASH_STARTUP_AREA_BLOCK1 or FLASH_STARTUP_AREA_BTFLG.
@@ -326,17 +282,13 @@ typedef struct st_flash_api
     fsp_err_t (* startupAreaSelect)(flash_ctrl_t * const p_ctrl, flash_startup_area_swap_t swap_type,
                                     bool is_temporary);
 
-    /** Swap the bank used as the startup area. Only valid in dual bank mode.
-     * @par Implemented as
-     * - @ref R_FLASH_HP_BankSwap()
+    /** Swap the bank used as the startup area. On Flash HP, need to change into dual bank mode to use this feature.
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
     fsp_err_t (* bankSwap)(flash_ctrl_t * const p_ctrl);
 
     /** Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_FLASH_HP_CallbackSet()
      *
      * @param[in]   p_ctrl                   Control block set in @ref flash_api_t::open call for this timer.
      * @param[in]   p_callback               Callback function to register
@@ -344,7 +296,7 @@ typedef struct st_flash_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(flash_ctrl_t * const p_api_ctrl, void (* p_callback)(flash_callback_args_t *),
+    fsp_err_t (* callbackSet)(flash_ctrl_t * const p_ctrl, void (* p_callback)(flash_callback_args_t *),
                               void const * const p_context, flash_callback_args_t * const p_callback_memory);
 } flash_api_t;
 

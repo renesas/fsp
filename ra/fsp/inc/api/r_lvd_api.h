@@ -26,8 +26,6 @@
  * @section LVD_API_SUMMARY Summary
  * The LVD driver provides functions for configuring the LVD voltage monitors and detectors.
  *
- * Implemented by:
- * - @ref LVD
  *
  * @{
  **********************************************************************************************************************/
@@ -104,11 +102,12 @@ typedef enum e_lvd_response
 {
     LVD_RESPONSE_NMI,                  ///< Non-maskable interrupt
     LVD_RESPONSE_INTERRUPT,            ///< Maskable interrupt
-    LVD_RESPONSE_RESET,                ///< Reset
+    LVD_RESPONSE_RESET,                ///< Reset on VCC-fall
+    LVD_RESPONSE_RESET_ON_RISING,      ///< Reset on VCC-rise
     LVD_RESPONSE_NONE,                 ///< No response, status must be requested via statusGet function
 } lvd_response_t;
 
-/** The direction from which Vcc must cross the threshold to trigger a detection (rising, falling, or both). */
+/** The direction from which VCC must cross the threshold to trigger a detection (rising, falling, or both). */
 typedef enum e_lvd_voltage_slope
 {
     LVD_VOLTAGE_SLOPE_RISING  = 0,     ///< When VCC >= Vdet2 (rise) is detected
@@ -220,8 +219,6 @@ typedef struct st_lvd_cfg
 } lvd_cfg_t;
 
 /** LVD control block.  Allocate an instance specific control block to pass into the LVD API calls.
- * @par Implemented as
- * - lvd_instance_ctrl_t
  */
 typedef void lvd_ctrl_t;
 
@@ -231,8 +228,6 @@ typedef void lvd_ctrl_t;
 typedef struct st_lvd_api
 {
     /** Initializes a low voltage detection driver according to the passed-in configuration structure.
-     * @par Implemented as
-     * - @ref R_LVD_Open()
      * @param[in]       p_ctrl      Pointer to control structure for the driver instance
      * @param[in]       p_cfg       Pointer to the configuration structure for the driver instance
      **/
@@ -240,8 +235,6 @@ typedef struct st_lvd_api
 
     /** Get the current state of the monitor, (threshold crossing detected, voltage currently above or below threshold).
      * Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE.
-     * @par Implemented as
-     * - @ref R_LVD_StatusGet()
      * @param[in]       p_ctrl          Pointer to the control structure for the driver instance
      * @param[in,out]   p_lvd_status    Pointer to a lvd_status_t structure
      **/
@@ -249,16 +242,12 @@ typedef struct st_lvd_api
 
     /** Clears the latched status of the monitor.
      * Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE.
-     * @par Implemented as
-     * - @ref R_LVD_StatusClear()
      * @param[in]       p_ctrl      Pointer to the control structure for the driver instance
      **/
     fsp_err_t (* statusClear)(lvd_ctrl_t * const p_ctrl);
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.
-     * @par Implemented as
-     * - @ref R_LVD_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the LVD control block.
      * @param[in]   p_callback               Callback function
@@ -266,13 +255,11 @@ typedef struct st_lvd_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
-    fsp_err_t (* callbackSet)(lvd_ctrl_t * const p_api_ctrl, void (* p_callback)(lvd_callback_args_t *),
+    fsp_err_t (* callbackSet)(lvd_ctrl_t * const p_ctrl, void (* p_callback)(lvd_callback_args_t *),
                               void const * const p_context, lvd_callback_args_t * const p_callback_memory);
 
     /** Disables the LVD peripheral.
      * Closes the driver instance.
-     * @par Implemented as
-     * - @ref R_LVD_Close()
      * @param[in]   p_ctrl      Pointer to the control structure for the driver instance
      **/
     fsp_err_t (* close)(lvd_ctrl_t * const p_ctrl);

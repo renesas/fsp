@@ -261,17 +261,21 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
     /* Generate ECC key pair based on the curve type & size */
     if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP384R1)
     {
-        err = HW_SCE_Ecc384ScalarMultiplicationSub(&curve_type,
-                                                   (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
-                                                   pub_key,
-                                                   (uint32_t *) share_secret_key_ptr);
-    }
-    else if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP256R1)
-    {
-        err = HW_SCE_Ecc256ScalarMultiplicationSub(&curve_type,
+        err = HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(&curve_type,
                                                    &cmd,
                                                    (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
                                                    pub_key,
+                                                   &DomainParam_NIST_P384[0],
+                                                   (uint32_t *) share_secret_key_ptr); 
+                                                   
+    }
+    else if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP256R1)
+    {
+        err = HW_SCE_Ecc256ScalarMultiplicationSubAdaptor(&curve_type,
+                                                   &cmd,
+                                                   (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                   pub_key,
+                                                   &DomainParam_NIST_P256[0],
                                                    (uint32_t *) share_secret_key_ptr);
     }
     else if (curve->nx_crypto_ec_id == NX_CRYPTO_EC_SECP224R1)
@@ -289,10 +293,11 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
                &pub_key[RM_NETX_SECURE_CRYPTO_ECC_224_COORDINATE_SIZE_BYTES / 4U],
                RM_NETX_SECURE_CRYPTO_ECC_224_COORDINATE_SIZE_BYTES);
 
-        err = HW_SCE_Ecc256ScalarMultiplicationSub(&curve_type,
+        err = HW_SCE_Ecc256ScalarMultiplicationSubAdaptor(&curve_type,
                                                    &cmd,
                                                    (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
                                                    (uint32_t *) padded_plain_public_key,
+                                                   &DomainParam_NIST_P256[0],
                                                    (uint32_t *) share_secret_key_ptr);
     }
     else

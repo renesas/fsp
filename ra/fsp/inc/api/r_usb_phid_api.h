@@ -26,8 +26,6 @@
  * @section USB_PHID_API_Summary Summary
  * The USB interface provides USB functionality.
  *
- * The USB PHID interface can be implemented by:
- * - @ref USB_PHID
  *
  * @{
  **********************************************************************************************************************/

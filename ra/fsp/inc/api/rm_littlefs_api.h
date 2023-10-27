@@ -30,8 +30,6 @@
  * The LittleFS Port configures a fail-safe filesystem designed for microcontrollers on top of a lower level storage
  * device.
  *
- * Implemented by:
- * @ref RM_LITTLEFS_FLASH
  *
  * @{
  **********************************************************************************************************************/
@@ -64,8 +62,6 @@ typedef struct st_rm_littlefs_cfg
 } rm_littlefs_cfg_t;
 
 /** LittleFS Port API control block.  Allocate an instance specific control block to pass into the LittleFS Port API calls.
- * @par Implemented as
- * - @ref rm_littlefs_flash_instance_ctrl_t
  */
 typedef void rm_littlefs_ctrl_t;
 
@@ -73,8 +69,6 @@ typedef void rm_littlefs_ctrl_t;
 typedef struct st_rm_littlefs_api
 {
     /** Initialize The lower level storage device.
-     * @par Implemented as
-     * - @ref RM_LITTLEFS_FLASH_Open
      *
      * @param[in]   p_ctrl              Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg               Pointer to configuration structure. All elements of this structure must be set by user.
@@ -82,8 +76,6 @@ typedef struct st_rm_littlefs_api
     fsp_err_t (* open)(rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs_cfg_t const * const p_cfg);
 
     /** Closes the module and lower level storage device.
-     * @par Implemented as
-     * - @ref RM_LITTLEFS_FLASH_Close
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_littlefs_api_t::open call.
      */

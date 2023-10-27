@@ -29,8 +29,6 @@
  * @section RM_BLE_MESH_UPPER_TRANS_API_Summary Summary
  * The BLE Mesh interface for the Bluetooth Low Energy Mesh Upper Trans peripheral provides Bluetooth Low Energy Mesh Upper Trans functionality.
  *
- * The Bluetooth Low Energy Mesh interface can be implemented by:
- * - @ref RM_BLE_MESH_UPPER_TRANS
  *
  * @{
  **********************************************************************************************************************/
@@ -292,8 +290,6 @@ typedef struct st_rm_ble_mesh_upper_trans_callback_args
 } rm_ble_mesh_upper_trans_callback_args_t;
 
 /** BLE MESH control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
- * @par Implemented as
- * - rm_ble_mesh_upper_trans_instance_ctrl_t
  */
 typedef void rm_ble_mesh_upper_trans_ctrl_t;
 
@@ -314,8 +310,6 @@ typedef struct st_rm_ble_mesh_upper_trans_cfg
 typedef struct st_rm_ble_mesh_upper_trans_api
 {
     /** Register interface with Transport Layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -324,16 +318,12 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                        rm_ble_mesh_upper_trans_cfg_t const * const p_cfg);
 
     /** Unregister interface with Transport Layer.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_ble_mesh_upper_trans_ctrl_t * const p_ctrl);
 
     /** API to send Access Layer PDUs.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_SendAccessPdu()
      *
      * @param[in]  p_ctrl              Pointer to control structure.
      * @param[in]  p_access_layer_pdu  Pointer to Access Layer PDUs.
@@ -344,8 +334,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                 rm_ble_mesh_lower_trans_reliable_t                       reliable);
 
     /** API to send transport Control PDUs.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_SendControlPdu()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  p_control_pdu  Pointer to control PDUs.
@@ -354,8 +342,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                  rm_ble_mesh_upper_trans_control_pdu_t const * const p_control_pdu);
 
     /** API to setup Friendship.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_LpnSetupFriendship()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  p_setting      Pointer to friendship settings.
@@ -364,16 +350,12 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                      rm_ble_mesh_upper_trans_friendship_setting_t const * const p_setting);
 
     /** API to terminate friendship.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_LpnClearFriendship()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      */
     fsp_err_t (* lpnClearFriendship)(rm_ble_mesh_upper_trans_ctrl_t * const p_ctrl);
 
     /** API to manage friend subscription list.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_LpnManageSubscription()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  action         Will be one of @ref RM_BLE_MESH_UPPER_TRANS_CONTROL_OPCODE_FRIEND_SUBSCRN_LIST_ADD or @ref RM_BLE_MESH_UPPER_TRANS_CONTROL_OPCODE_FRIEND_SUBSCRN_LIST_REMOVE.
@@ -385,16 +367,12 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                         uint16_t const * const p_addr_list, uint16_t count);
 
     /** To trigger Friend Poll from application.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_LpnPoll()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      */
     fsp_err_t (* lpnPoll)(rm_ble_mesh_upper_trans_ctrl_t * const p_ctrl);
 
     /** To check if address matches with any of the LPN.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_IsValidLpnElementAddress()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[in]   addr           Unicast address to search.
@@ -405,8 +383,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                            rm_ble_mesh_lower_trans_lpn_handle_t * const p_lpn_handle);
 
     /** To check if valid subscription address of an LPN to receive a packet.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_IsValidLpnSubscriptionAddress()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[in]   addr           Address to search.
@@ -417,8 +393,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                                 rm_ble_mesh_lower_trans_lpn_handle_t * const p_lpn_handle);
 
     /** To get Poll Timeout of an LPN.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_GetLpnPolltimeout()
      *
      * @param[in]   p_ctrl          Pointer to control structure.
      * @param[in]   lpn_addr        LPN address to search.
@@ -428,8 +402,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                     rm_ble_mesh_network_address_t lpn_addr, uint32_t * const p_poll_timeout);
 
     /** To get the LPN node information.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_GetFriendshipInfo()
      *
      * @param[in]   p_ctrl     Pointer to control structure.
      * @param[in]   role       Local friendship role.
@@ -441,8 +413,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                     rm_ble_mesh_upper_trans_friendship_info_t * const p_node);
 
     /** To add the security update information.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_LpnRegisterSecurityUpdate()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  subnet_handle  Handle to identify the network.
@@ -454,16 +424,12 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                             uint32_t ivindex);
 
     /** To clear information related to all LPNs.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_ClearAllLpn()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      */
     fsp_err_t (* clearAllLpn)(rm_ble_mesh_upper_trans_ctrl_t * const p_ctrl);
 
     /** To set the heartbeat publication data.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_SetHeartbeatPublication()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[out]  p_info         Heartbeat Publication information data as in \ref rm_ble_mesh_upper_trans_heartbeat_publication_info_t.
@@ -472,8 +438,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                           rm_ble_mesh_upper_trans_heartbeat_publication_info_t * const p_info);
 
     /** To get the heartbeat publication data.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_GetHeartbeatPublication()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[out]  p_info         Heartbeat Publication information data as in \ref rm_ble_mesh_upper_trans_heartbeat_publication_info_t.
@@ -482,8 +446,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                           rm_ble_mesh_upper_trans_heartbeat_publication_info_t * const p_info);
 
     /** To set the heartbeat subscription data.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_SetHeartbeatSubscription()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[out]  p_info         Heartbeat Publication information data as in \ref rm_ble_mesh_upper_trans_heartbeat_subscription_info_t.
@@ -492,8 +454,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                            rm_ble_mesh_upper_trans_heartbeat_subscription_info_t * const p_info);
 
     /** To get the heartbeat subscription data.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_GetHeartbeatSubscription()
      *
      * @param[in]   p_ctrl         Pointer to control structure.
      * @param[out]  p_info         Heartbeat Publication information data as in \ref rm_ble_mesh_upper_trans_heartbeat_subscription_info_t.
@@ -502,8 +462,6 @@ typedef struct st_rm_ble_mesh_upper_trans_api
                                            rm_ble_mesh_upper_trans_heartbeat_subscription_info_t * const p_info);
 
     /** To trigger heartbeat send on change in feature.
-     * @par Implemented as
-     * - @ref RM_BLE_MESH_UPPER_TRANS_GetHeartbeatSubscription()
      *
      * @param[in]  p_ctrl                 Pointer to control structure.
      * @param[in]  change_in_feature_bit  Bit mask of the changed feature field.

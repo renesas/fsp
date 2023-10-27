@@ -26,8 +26,6 @@
  * @section MOTOR_POSITION_API_Summary Summary
  * The Motor position interface for getting the speed references from Encoder Sensor
  *
- * The motor position interface can be implemented by:
- * - @ref MOTOR_POSITION
  *
  * @{
  **********************************************************************************************************************/
@@ -71,8 +69,6 @@ typedef struct e_motor_position_info
 } motor_position_info_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_position_ctrl_t
  */
 typedef void motor_position_ctrl_t;
 
@@ -87,8 +83,6 @@ typedef struct st_motor_position_cfg
 typedef struct st_motor_position_api
 {
     /** Initialize the Motor Position Module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -96,24 +90,18 @@ typedef struct st_motor_position_api
     fsp_err_t (* open)(motor_position_ctrl_t * const p_ctrl, motor_position_cfg_t const * const p_cfg);
 
     /** Close (Finish) the Motor Position Module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_position_ctrl_t * const p_ctrl);
 
     /** Reset(Stop) the Motor Position Module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_position_ctrl_t * const p_ctrl);
 
     /** Get Position data.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_PositionGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_position       Pointer to get position data
@@ -121,8 +109,6 @@ typedef struct st_motor_position_api
     fsp_err_t (* positionGet)(motor_position_ctrl_t * const p_ctrl, int16_t * const p_position);
 
     /** Set Position data from Encoder.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_PositionSet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  position_rad     Position data [radian]
@@ -130,8 +116,6 @@ typedef struct st_motor_position_api
     fsp_err_t (* positionSet)(motor_position_ctrl_t * const p_ctrl, float const position_rad);
 
     /** Set (Input) Position reference into the Motor Position Module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_PositionReferenceSet()
      *
      * @param[in]  p_ctrl                 Pointer to control structure.
      * @param[in]  position_refernce_deg  Position reference [degree]
@@ -139,8 +123,6 @@ typedef struct st_motor_position_api
     fsp_err_t (* positionReferenceSet)(motor_position_ctrl_t * const p_ctrl, int16_t const position_reference_deg);
 
     /** Set (Input) Position Control Mode.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_ControlModeSet()
      *
      * @param[in]  p_ctrl   Pointer to control structure.
      * @param[in]  mode     Position Control Mode
@@ -148,16 +130,12 @@ typedef struct st_motor_position_api
     fsp_err_t (* controlModeSet)(motor_position_ctrl_t * const p_ctrl, motor_position_ctrl_mode_t const mode);
 
     /** Calculate internal position reference
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_PositionControl()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* positionControl)(motor_position_ctrl_t * const p_ctrl);
 
     /** Calculate iq reference
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_IpdSpeedPControl()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[in]  ref_speed_rad    Speed Reference [rad/sec]
@@ -168,8 +146,6 @@ typedef struct st_motor_position_api
                                    float const speed_rad, float * const p_iq_ref);
 
     /** Get Speed Reference by P Control
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_SpeedReferencePControlGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_speed_ref      Pointer to get speed reference
@@ -177,8 +153,6 @@ typedef struct st_motor_position_api
     fsp_err_t (* speedReferencePControlGet)(motor_position_ctrl_t * const p_ctrl, float * const p_speed_ref);
 
     /** Get Speed Reference by IPD Control
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_SpeedReferenceIpdControlGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_speed_ref      Pointer to get speed reference
@@ -187,8 +161,6 @@ typedef struct st_motor_position_api
                                               float * const p_speed_ref);
 
     /** Get Speed Reference by Speed Feedforward
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_SpeedReferenceFeedforwardGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_speed_ref      Pointer to get speed reference
@@ -196,8 +168,6 @@ typedef struct st_motor_position_api
     fsp_err_t (* speedReferenceFeedforwardGet)(motor_position_ctrl_t * const p_ctrl, float * const p_speed_ref);
 
     /** Get Position information.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_InfoGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_info           Pointer to get information
@@ -205,8 +175,6 @@ typedef struct st_motor_position_api
     fsp_err_t (* infoGet)(motor_position_ctrl_t * const p_ctrl, motor_position_info_t * const p_info);
 
     /** Update Parameters for the calculation in the Motor Position Module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_POSITION_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

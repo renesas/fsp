@@ -26,8 +26,6 @@
  * @section USB_PMSC_API_Summary Summary
  * The USB PMSC interface provides USB PMSC functionality.
  *
- * The USB PMSC interface can be implemented by:
- * - @ref USB_PMSC
  *
  * @{
  **********************************************************************************************************************/

@@ -26,8 +26,6 @@
  * @section USB_HHID_API_Summary Summary
  * The USB HHID interface provides USB HHID functionality.
  *
- * The USB HHID interface can be implemented by:
- * - @ref USB_HHID
  *
  * @{
  **********************************************************************************************************************/
@@ -79,27 +77,23 @@ FSP_HEADER
 typedef struct st_usb_hhid_api
 {
     /** Get HID protocol.(USB Mouse/USB Keyboard/Other Type.)
-     * @par Implemented as
-     * - @ref R_USB_HHID_TypeGet()
      *
-     * @param[in]  p_api_ctrl      Pointer to control structure.
+     * @param[in]  p_ctrl      Pointer to control structure.
      * @param[in]  p_type          Pointer to store HID protocol value.
      * @param[in]  device_address  Device Address.
      */
-    fsp_err_t (* typeGet)(usb_ctrl_t * const p_api_ctrl, uint8_t * p_type, uint8_t device_address);
+    fsp_err_t (* typeGet)(usb_ctrl_t * const p_ctrl, uint8_t * p_type, uint8_t device_address);
 
     /** Obtains max packet size for the connected HID device.
      *  The max packet size is set to the area.
      *  Set the direction (USB_HID_IN/USB_HID_OUT).
-     * @par Implemented as
-     * - @ref R_USB_HHID_MaxPacketSizeGet()
      *
-     * @param[in]  p_api_ctrl      Pointer to control structure.
+     * @param[in]  p_ctrl      Pointer to control structure.
      * @param[in]  p_size          Pointer to the area to store the max package size.
      * @param[in]  direction       Transfer direction.
      * @param[in]  device_address  Device Address.
      */
-    fsp_err_t (* maxPacketSizeGet)(usb_ctrl_t * const p_api_ctrl, uint16_t * p_size, uint8_t direction,
+    fsp_err_t (* maxPacketSizeGet)(usb_ctrl_t * const p_ctrl, uint16_t * p_size, uint8_t direction,
                                    uint8_t device_address);
 } usb_hhid_api_t;
 
@@ -117,5 +111,5 @@ FSP_FOOTER
 #endif                                 /* USB_HHID_API_H */
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup USB_HHID_API)
+ * @} (end defgroup USB_HHID_API)
  **********************************************************************************************************************/

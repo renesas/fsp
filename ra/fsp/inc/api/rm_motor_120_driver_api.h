@@ -26,8 +26,6 @@
  * @section MOTOR_120_DRIVER_API_Summary Summary
  * The MOTOR_120_DRIVER interface for setting the PWM modulation duty
  *
- * The motor current control interface can be implemented by:
- * - @ref MOTOR_120_DRIVER
  *
  * @{
  **********************************************************************************************************************/
@@ -123,8 +121,6 @@ typedef struct st_motor_120_driver_current_status
 } motor_120_driver_current_status_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - motor_120_driver_instance_ctrl_t
  */
 typedef void motor_120_driver_ctrl_t;
 
@@ -140,8 +136,6 @@ typedef struct st_motor_120_driver_cfg
 typedef struct st_motor_120_driver_api
 {
     /** Initialize the motor 120 driver module.
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -149,40 +143,30 @@ typedef struct st_motor_120_driver_api
     fsp_err_t (* open)(motor_120_driver_ctrl_t * const p_ctrl, motor_120_driver_cfg_t const * const p_cfg);
 
     /** Close the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(motor_120_driver_ctrl_t * const p_ctrl);
 
     /** Run the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_Run()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* run)(motor_120_driver_ctrl_t * const p_ctrl);
 
     /** Stop the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_Stop()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* stop)(motor_120_driver_ctrl_t * const p_ctrl);
 
     /** Reset variables of the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* reset)(motor_120_driver_ctrl_t * const p_ctrl);
 
     /** Set (Input) phase voltage data into the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_PhaseVoltageSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  u_voltage    U phase voltage [V]
@@ -193,8 +177,6 @@ typedef struct st_motor_120_driver_api
                                   float const w_voltage);
 
     /** Set phase voltage pattern the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_PhasePatternSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  pattern      Voltage pattern
@@ -203,8 +185,6 @@ typedef struct st_motor_120_driver_api
                                   motor_120_driver_phase_pattern_t const pattern);
 
     /** Get phase current, Vdc and Va_max data from the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_CurrentGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_current_status Pointer to get data structure.
@@ -213,16 +193,12 @@ typedef struct st_motor_120_driver_api
                              motor_120_driver_current_status_t * const p_current_status);
 
     /** current offset detection from the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_CurrentOffsetCalc()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* currentOffsetCalc)(motor_120_driver_ctrl_t * const p_ctrl);
 
     /** Get the flag of finish current offset detection from the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_FlagCurrentOffsetGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_flag_offset   Flag of finish current offset detection
@@ -231,8 +207,6 @@ typedef struct st_motor_120_driver_api
                                        motor_120_driver_flag_offset_calc_t * const p_flag_offset);
 
     /** Update configuration parameters for the calculation in the motor 120 driver module
-     * @par Implemented as
-     * - @ref RM_MOTOR_120_DRIVER_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

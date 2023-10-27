@@ -21,7 +21,7 @@
 /**
   * @file    iaq_2nd_gen_ulp.h
   * @author Renesas Electronics Corporation
-  * @version 1.1.0
+  * @version 1.2.0
   * @brief   This file contains the data structure definitions and
   *          the function definitions for the 2nd Gen IAQ ULP algorithm.
   * @details The library contains an algorithm to calculate an eCO2, EtOH, TVOC and
