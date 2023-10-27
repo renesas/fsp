@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -167,8 +245,12 @@ The following build time configurations are defined in fsp_cfg/bsp/bsp_mcu_famil
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Security &gt; Exceptions &gt; Exception Response</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Security  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Security &gt; Exceptions  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Exception Response</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Non-Maskable Interrupt</li>
 <li>
@@ -177,8 +259,8 @@ Reset</li>
 </td><td>Non-Maskable Interrupt </td><td>Configure the result of a TrustZone Filter exception. This exception is generated when the TrustZone Filter detects access to a protected region.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; Exceptions &gt; BusFault, HardFault, and NMI Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">BusFault, HardFault, and NMI Target</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Non-Secure State</li>
 <li>
@@ -187,8 +269,8 @@ Secure State</li>
 </td><td>Secure State </td><td>Value for SCB-&gt;AIRCR register bit BFHFNMINS. Defines whether BusFault and NMI exceptions are Non-secure, and whether exceptions target the Non-secure HardFault exception.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; Exceptions &gt; Prioritize Secure Exceptions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Prioritize Secure Exceptions</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -197,8 +279,10 @@ Disabled</li>
 </td><td>Disabled </td><td>Value for SCB-&gt;AIRCR register bit PRIS. When enabled, all Non-secure interrupt priorities are automatically demoted by right shifting their priority by one then setting the most significant bit. As there is effectively one less bit care must be taken to ensure the prioritization of non-secure interrupts is correct.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; SRAM Accessibility &gt; SRAM Protection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Security &gt; SRAM Accessibility  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SRAM Protection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -207,8 +291,8 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether SRAMPRCR is write accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; SRAM Accessibility &gt; SRAM ECC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SRAM ECC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -217,8 +301,8 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether SRAM ECC registers are write accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; SRAM Accessibility &gt; Standby RAM</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Standby RAM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Regions 7-0 are all Secure.</li>
 <li>
@@ -241,8 +325,10 @@ Regions 7-0 are all Non-secure.</li>
 </td><td>config.bsp.fsp.tz.stbramsar.both </td><td>Defines whether Standby RAM registers are accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; BUS Accessibility &gt; Bus Security Attribution Register A</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Security &gt; BUS Accessibility  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Bus Security Attribution Register A</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -251,8 +337,8 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the Slave Bus Control Registers (BUSSCNT&lt;slave&gt;) are write accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; BUS Accessibility &gt; Bus Security Attribution Register B</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Bus Security Attribution Register B</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -261,8 +347,8 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the Bus and DMAC/DTC Error Clear Registers are write accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; System Reset Request Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">System Reset Request Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -271,8 +357,8 @@ Secure State</li>
 </td><td>Secure State </td><td>Value for SCB-&gt;AIRCR register bit SYSRESETREQS. Defines whether the SYSRESETREQ bit is functional for Non-secure use.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; Cache Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Cache Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -281,8 +367,8 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the Cache registers are write accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building protjects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; System Reset Status Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">System Reset Status Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -291,8 +377,8 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the reset status registers (RSTSRn) can be cleared from the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; Battery Backup Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Battery Backup Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Both Secure and Non-Secure State</li>
 <li>
@@ -301,24 +387,28 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the battery backup registers are accessible for the Non-secure application. If Secure State is selected, all battery backup registers are read only except for VBTBKRn registers which are both read and write protected.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr>
-<td>Security &gt; Uninitialized Non-Secure Application Fallback</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Uninitialized Non-Secure Application Fallback</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable Uninitialized Non-Secure Application Fallback</li>
 <li>
 Disable Uninitialized Non-Secure Application Fallback</li>
 </ul>
 </td><td>Enable Uninitialized Non-Secure Application Fallback </td><td>If enabled, the secure application checks if the non-secure application has been programmed in non-secure flash before branching. If the non-secure application has not been programmed, then the secure application branches to an infinite loop in non-secure RAM. This prevents an issue where the debugger may not connect if the MCU is configured in the NSECSD lifecycle state. </td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings &gt; Independent WDT  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IWDT is Disabled</li>
 <li>
 IWDT is automatically activated after a reset (Autostart mode)</li>
 </ul>
 </td><td>IWDT is Disabled </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 128 cycles</li>
 <li>
@@ -329,8 +419,8 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 2048 cycles</li>
 </ul>
 </td><td>2048 cycles </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Dedicated Clock Frequency Divisor</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dedicated Clock Frequency Divisor</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
 <li>
@@ -345,8 +435,8 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 256</li>
 </ul>
 </td><td>128 </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 75%</li>
 <li>
@@ -357,8 +447,8 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 0% (no window end position)</li>
 </ul>
 </td><td>0% (no window end position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 25%</li>
 <li>
@@ -369,32 +459,34 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 100% (no window start position)</li>
 </ul>
 </td><td>100% (no window start position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Reset Interrupt Request Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Reset Interrupt Request Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 NMI request or interrupt request is enabled</li>
 <li>
 Reset is enabled</li>
 </ul>
 </td><td>Reset is enabled </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Counting continues (Note: Device will not enter Deep Standby Mode when selected. Device will enter Software Standby Mode)</li>
 <li>
 Stop counting when in Sleep, Snooze mode, or Software Standby</li>
 </ul>
 </td><td>Stop counting when in Sleep, Snooze mode, or Software Standby </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Start Mode Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings &gt; WDT  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Start Mode Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Automatically activate WDT after a reset (auto-start mode)</li>
 <li>
 Stop WDT after a reset (register-start mode)</li>
 </ul>
 </td><td>Stop WDT after a reset (register-start mode) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1024 cycles</li>
 <li>
@@ -405,8 +497,8 @@ Stop WDT after a reset (register-start mode)</li>
 16384 cycles</li>
 </ul>
 </td><td>16384 cycles </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Clock Frequency Division Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Clock Frequency Division Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 4</li>
 <li>
@@ -421,8 +513,8 @@ Stop WDT after a reset (register-start mode)</li>
 8192</li>
 </ul>
 </td><td>128 </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 75%</li>
 <li>
@@ -433,8 +525,8 @@ Stop WDT after a reset (register-start mode)</li>
 0% (no window end position)</li>
 </ul>
 </td><td>0% (no window end position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 25%</li>
 <li>
@@ -445,32 +537,34 @@ Stop WDT after a reset (register-start mode)</li>
 100% (no window start position)</li>
 </ul>
 </td><td>100% (no window start position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Reset Interrupt Request</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Reset Interrupt Request</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 NMI</li>
 <li>
 Reset</li>
 </ul>
 </td><td>Reset </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Counting continues</li>
 <li>
 Stop counting when entering Sleep mode</li>
 </ul>
 </td><td>Stop counting when entering Sleep mode </td><td></td></tr>
-<tr>
-<td>OFS1 register settings &gt; Voltage Detection 0 Circuit Start</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS1 register settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage Detection 0 Circuit Start</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Voltage monitor 0 reset is enabled after reset</li>
 <li>
 Voltage monitor 0 reset is disabled after reset</li>
 </ul>
 </td><td>Voltage monitor 0 reset is disabled after reset </td><td></td></tr>
-<tr>
-<td>OFS1 register settings &gt; Voltage Detection 0 Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage Detection 0 Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2.94 V</li>
 <li>
@@ -479,16 +573,18 @@ Voltage monitor 0 reset is disabled after reset</li>
 2.80 V</li>
 </ul>
 </td><td>2.80 V </td><td></td></tr>
-<tr>
-<td>OFS1 register settings &gt; HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 HOCO oscillation is enabled after reset</li>
 <li>
 HOCO oscillation is disabled after reset</li>
 </ul>
 </td><td>HOCO oscillation is disabled after reset </td><td></td></tr>
-<tr>
-<td>Block Protection Settings (BPS) &gt; BPS0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Block Protection Settings (BPS)  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">BPS0</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Flash Block 0</li>
 <li>
@@ -511,8 +607,10 @@ Flash Block 8</li>
 Flash Block 9</li>
 </ul>
 </td><td>0U </td><td>Configure Block Protection Register 0 </td></tr>
-<tr>
-<td>Permanent Block Protection Settings (PBPS) &gt; PBPS0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Permanent Block Protection Settings (PBPS)  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PBPS0</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Flash Block 0</li>
 <li>
@@ -535,8 +633,10 @@ Flash Block 8</li>
 Flash Block 9</li>
 </ul>
 </td><td>0U </td><td>Configure Permanent Block Protection Register 0 </td></tr>
-<tr>
-<td>Clocks &gt; HOCO FLL Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Clocks  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">HOCO FLL Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -547,7 +647,7 @@ Disabled</li>
 The FLL function requires the subclock oscillator to be running and stabilized. When enabled and running the PLL or system clock from HOCO, the BSP will wait for both the Subclock Stabilization Time as well as the FLL Stabilization Time when setting up clocks at startup.<br />
 <br />
 When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Startup C-Cache Line Size</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 32 Bytes</li>
@@ -555,7 +655,7 @@ When FLL is enabled Software Standby and Deep Software Standby modes are not ava
 64 Bytes</li>
 </ul>
 </td><td>32 Bytes </td><td>Set the C-Cache line size configured during startup. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3 cycles</li>
@@ -579,7 +679,7 @@ When FLL is enabled Software Standby and Deep Software Standby modes are not ava
 8163 cycles</li>
 </ul>
 </td><td>8163 cycles </td><td>Number of cycles to wait for the main oscillator clock to stabilize. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Unlocked (Ignore ID)</li>
@@ -589,7 +689,7 @@ Locked with All Erase support</li>
 Locked</li>
 </ul>
 </td><td>Unlocked (Ignore ID) </td><td>When set to 'Locked with All Erase support', the ID Code must be set in the debugger to read or write data to the MCU, but the All Erase command is still accepted regardless. When set to 'Locked', all erase/download/debug access is disabled unless the ID Code is provided. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF </td><td>Set the ID Code for locking debug access. This setting is only used when the ID Code Mode is not set to Unlocked. </td></tr>
 </table>
  </p>
@@ -599,7 +699,7 @@ Locked</li>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

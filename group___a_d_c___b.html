@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,9 +239,7 @@ $(document).ready(function(){initNavTree('group___a_d_c___b.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">ADC (r_adc_b)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
 </div><!--header-->
@@ -266,7 +342,7 @@ The following build time configurations are defined in fsp_cfg/r_adc_b_cfg.h:<br
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -356,11 +432,13 @@ Digital Filter Selection</h2>
 <dl class="section note"><dt>Note</dt><dd>The digital filter must be disabled for ADC units configured to use <a class="el" href="group___a_d_c___b.html#adc-b-sar-mode">Successive Approximation Register (SAR) Mode</a> </dd>
 <dd>
 The digital filter must be enabled for ADC units configured to use <a class="el" href="group___a_d_c___b.html#adc-b-oversample-mode">Oversampling Mode</a> or <a class="el" href="group___a_d_c___b.html#r-adc-b-hybrid-mode">Hybrid Mode</a></dd></dl>
-<h2>Sample and Hold</h2>
-<p><a class="anchor" id="um_adc_api_configuring_sample_and_hold"></a>Enabling sample and hold on one or more channels instructs the ADC to perform sampling on all channels as soon as a group scan is started. Internal circuitry holds the sampled voltages until the conversion unit is ready.</p>
-<dl class="section note"><dt>Note</dt><dd>Each sample and hold unit is connected to two analog channels (0/1, 2/3 etc). When this function is enabled on both members of a pair only one of the two may be scanned at a time.</dd>
+<h2>Sample-and-Hold</h2>
+<p><a class="anchor" id="um_adc_api_configuring_sample_and_hold"></a>Enabling sample-and-hold on one or more channels instructs the ADC to perform sampling on all channels as soon as a group scan is started. Internal circuitry holds the sampled voltages until the conversion unit is ready.</p>
+<dl class="section note"><dt>Note</dt><dd>Each sample-and-hold unit is connected to two analog channels (0/1, 2/3 etc). When this function is enabled on both members of a pair only one of the two may be scanned at a time.</dd>
 <dd>
-Enabling sample and hold functionality reduces maximum scan frequency because the sample hold time is added to each scan. Refer to the hardware manual for details on the sample and hold time. Consult section 46.4 "ADC Characteristics" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</dd></dl>
+Enabling sample-and-hold functionality reduces maximum scan frequency because the sample hold time is added to each scan. Refer to the hardware manual for details on the sample-and-hold time. Consult section 46.4 "ADC Characteristics" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</dd>
+<dd>
+If you use the channel-dedicated sample-and-hold circuits in Hybrid mode, the virtual channels and the scan groups are constrained. A dummy channel must be configured as last within the group. The A/D conversion data of the channel used as the dummy conversion channel is not guaranteed. See Operation in Hybrid Mode with Channel-dedicated Sample-and-hold Curcuit section in the User Manual for more information.</dd></dl>
 <h2>Self-Diagnosis</h2>
 <p>ADC_B has a built-in self-diagnosis function that can be used to confirm the unit is working correctly. One of three self-diagnosis voltages can be converted and compared to reference values. A self-diagnosis conversion produces a signed data value indicating the ideal A/D converter result. Reference values for 16-bit data format are shown below.</p>
 <table class="doxtable">
@@ -439,14 +517,10 @@ Data Structures</h2></td></tr>
 <tr class="separator:structadc__b__scan__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structadc__b__isr__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__isr__cfg__t">adc_b_isr_cfg_t</a></td></tr>
 <tr class="separator:structadc__b__isr__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structadc__b__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__extended__cfg__t">adc_b_extended_cfg_t</a></td></tr>
+<tr class="separator:structadc__b__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structadc__b__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__instance__ctrl__t">adc_b_instance_ctrl_t</a></td></tr>
 <tr class="separator:structadc__b__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gad61be3ba9cfc8edaff74e54bb2c14b8b"><td class="memItemLeft" align="right" valign="top">typedef __PACKED_STRUCT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gad61be3ba9cfc8edaff74e54bb2c14b8b">st_adc_b_extended_cfg</a></td></tr>
-<tr class="memdesc:gad61be3ba9cfc8edaff74e54bb2c14b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">PGA Gain selection.  <a href="#gad61be3ba9cfc8edaff74e54bb2c14b8b">More...</a><br /></td></tr>
-<tr class="separator:gad61be3ba9cfc8edaff74e54bb2c14b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -492,61 +566,6 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaed54424ceb52ca54bbdf1fd9cf3193b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa21f54b5126aaed139cdea2d92ac2819"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gaa21f54b5126aaed139cdea2d92ac2819">adc_b_user_offset_table_selection_id_t</a> </td></tr>
 <tr class="separator:gaa21f54b5126aaed139cdea2d92ac2819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga09f7823bb501a0bb44e44cffd83e889e"><td class="memItemLeft" align="right" valign="top"><a id="ga09f7823bb501a0bb44e44cffd83e889e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga09f7823bb501a0bb44e44cffd83e889e">scan_group_enable</a></td></tr>
-<tr class="memdesc:ga09f7823bb501a0bb44e44cffd83e889e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan Group enable register data. <br /></td></tr>
-<tr class="separator:ga09f7823bb501a0bb44e44cffd83e889e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0846dbaa434c23c1966151e29f5188b2"><td class="memItemLeft" align="right" valign="top"><a id="ga0846dbaa434c23c1966151e29f5188b2"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga0846dbaa434c23c1966151e29f5188b2">fifo_interrupt_enable_mask</a></td></tr>
-<tr class="memdesc:ga0846dbaa434c23c1966151e29f5188b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO interrupt enable register data. <br /></td></tr>
-<tr class="separator:ga0846dbaa434c23c1966151e29f5188b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf6dc9065d0a55f6a73bc6be4b6e6ee1"><td class="memItemLeft" align="right" valign="top"><a id="gaaf6dc9065d0a55f6a73bc6be4b6e6ee1"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gaaf6dc9065d0a55f6a73bc6be4b6e6ee1">calibration_adc_state</a></td></tr>
-<tr class="memdesc:gaaf6dc9065d0a55f6a73bc6be4b6e6ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibration State register data. <br /></td></tr>
-<tr class="separator:gaaf6dc9065d0a55f6a73bc6be4b6e6ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc4163c0cf81469380f5f8cdbbe8f7fb"><td class="memItemLeft" align="right" valign="top"><a id="gabc4163c0cf81469380f5f8cdbbe8f7fb"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gabc4163c0cf81469380f5f8cdbbe8f7fb">calibration_sample_and_hold</a></td></tr>
-<tr class="memdesc:gabc4163c0cf81469380f5f8cdbbe8f7fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibration Sample and Hold register data. <br /></td></tr>
-<tr class="separator:gabc4163c0cf81469380f5f8cdbbe8f7fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga602ecdfd73323117920e86e3fc6cc675"><td class="memItemLeft" align="right" valign="top"><a id="ga602ecdfd73323117920e86e3fc6cc675"></a>
-const <a class="el" href="group___a_d_c___b.html#structadc__b__isr__cfg__t">adc_b_isr_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga602ecdfd73323117920e86e3fc6cc675">p_isr_cfg</a></td></tr>
-<tr class="memdesc:ga602ecdfd73323117920e86e3fc6cc675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to ISR configuration. <br /></td></tr>
-<tr class="separator:ga602ecdfd73323117920e86e3fc6cc675"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9b6fd7975bc656c38da7dbe625b388f"><td class="memItemLeft" align="right" valign="top"><a id="gae9b6fd7975bc656c38da7dbe625b388f"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gae9b6fd7975bc656c38da7dbe625b388f">sample_and_hold_enable_mask</a></td></tr>
-<tr class="memdesc:gae9b6fd7975bc656c38da7dbe625b388f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample and Hold enable register data. <br /></td></tr>
-<tr class="separator:gae9b6fd7975bc656c38da7dbe625b388f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07d4def60e644e18c5af8c378e72b9a6"><td class="memItemLeft" align="right" valign="top"><a id="ga07d4def60e644e18c5af8c378e72b9a6"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga07d4def60e644e18c5af8c378e72b9a6">sample_and_hold_config_012</a></td></tr>
-<tr class="memdesc:ga07d4def60e644e18c5af8c378e72b9a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample and Hold configuration register data. <br /></td></tr>
-<tr class="separator:ga07d4def60e644e18c5af8c378e72b9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga049c99fb63b8b8628bce8aafbecc2d0c"><td class="memItemLeft" align="right" valign="top"><a id="ga049c99fb63b8b8628bce8aafbecc2d0c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga049c99fb63b8b8628bce8aafbecc2d0c">sample_and_hold_config_456</a></td></tr>
-<tr class="memdesc:ga049c99fb63b8b8628bce8aafbecc2d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample and Hold configuration register data. <br /></td></tr>
-<tr class="separator:ga049c99fb63b8b8628bce8aafbecc2d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb20bf98b548f2f259f93caba5fd120f"><td class="memItemLeft" align="right" valign="top"><a id="gaeb20bf98b548f2f259f93caba5fd120f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gaeb20bf98b548f2f259f93caba5fd120f">conversion_state</a></td></tr>
-<tr class="memdesc:gaeb20bf98b548f2f259f93caba5fd120f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC 0/1 Successive Approximation Time Configuration. <br /></td></tr>
-<tr class="separator:gaeb20bf98b548f2f259f93caba5fd120f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e51787cf14b2e9a027e99766fdaa770"><td class="memItemLeft" align="right" valign="top"><a id="ga2e51787cf14b2e9a027e99766fdaa770"></a>
-int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga2e51787cf14b2e9a027e99766fdaa770">user_offset_tables</a> [8]</td></tr>
-<tr class="memdesc:ga2e51787cf14b2e9a027e99766fdaa770"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Offset Table register data. <br /></td></tr>
-<tr class="separator:ga2e51787cf14b2e9a027e99766fdaa770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21af056b1313007ee329769100c70121"><td class="memItemLeft" align="right" valign="top"><a id="ga21af056b1313007ee329769100c70121"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga21af056b1313007ee329769100c70121">user_gain_tables</a> [8]</td></tr>
-<tr class="memdesc:ga21af056b1313007ee329769100c70121"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Gain Table register data. <br /></td></tr>
-<tr class="separator:ga21af056b1313007ee329769100c70121"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21374e744c0b3a228011ec12390c4f95"><td class="memItemLeft" align="right" valign="top"><a id="ga21374e744c0b3a228011ec12390c4f95"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga21374e744c0b3a228011ec12390c4f95">limiter_clip_interrupt_enable_mask</a></td></tr>
-<tr class="memdesc:ga21374e744c0b3a228011ec12390c4f95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limiter clip interrupt enable register data. <br /></td></tr>
-<tr class="separator:ga21374e744c0b3a228011ec12390c4f95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9626afe2013c06dd3d6e89b7ca7317e"><td class="memItemLeft" align="right" valign="top"><a id="gad9626afe2013c06dd3d6e89b7ca7317e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gad9626afe2013c06dd3d6e89b7ca7317e">limiter_clip_tables</a> [8]</td></tr>
-<tr class="memdesc:gad9626afe2013c06dd3d6e89b7ca7317e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limiter clip Table register data. <br /></td></tr>
-<tr class="separator:gad9626afe2013c06dd3d6e89b7ca7317e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structadc__b__fifo__data__t" id="structadc__b__fifo__data__t"></a>
@@ -999,6 +1018,168 @@ Scan End IRQ for A/D Groups 5, 6, 7, and 8. </td></tr>
 
 </div>
 </div>
+<a name="structadc__b__extended__cfg__t" id="structadc__b__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structadc__b__extended__cfg__t">&#9670;&nbsp;</a></span>adc_b_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_b_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ADC extended configuration data </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a924fde5708e3432f563db5bfebbdc459"></a><a class="el" href="group___a_d_c___b.html#ga0cf4db0b4a952d778f684106c460b559">adc_b_pga_gain_t</a></td>
+<td class="fieldname">
+pga_gain[4]</td>
+<td class="fielddoc">
+PGA Gain selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a814b524aedfa815b636ea9020809d668"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a38e655aa8bc09479b024149332138d52"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8adc__filter__selection">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+adc_filter_selection[2]</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a9822ad8bc6c6c2c4c989041e249d7c09"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a5dd2650a92bedc8e266665fe647d2814"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0d2d586dc6283a8f1bb0e783c08bb477"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac39ff3caac87bc1c123ab4040f2d9ea0"></a>uint32_t</td>
+<td class="fieldname">
+scan_group_enable</td>
+<td class="fielddoc">
+Scan Group enable register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a085e099c1c7e9d5f0906c9a1390e18ac"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a94ffb874ce5a6bac628cdb036cc198c0"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ae2e46251988ca8c6fbe79fe925cf28a3"></a>uint16_t</td>
+<td class="fieldname">
+fifo_interrupt_enable_mask</td>
+<td class="fielddoc">
+FIFO interrupt enable register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5d1fb1c51631d13d7d85af10029d5ba0"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af0ad45af4ca208026220e3b2e59379ff"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a4153eed484ac1dc8519f2ffac996405e"></a>uint32_t</td>
+<td class="fieldname">
+calibration_adc_state</td>
+<td class="fielddoc">
+Calibration State register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="abed655691721685bde5ae9493df411dd"></a>uint32_t</td>
+<td class="fieldname">
+calibration_sample_and_hold</td>
+<td class="fielddoc">
+Calibration Sample and Hold register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1a36acac540d9031ad84c43ed01e7a1e"></a>const <a class="el" href="group___a_d_c___b.html#structadc__b__isr__cfg__t">adc_b_isr_cfg_t</a> *</td>
+<td class="fieldname">
+p_isr_cfg</td>
+<td class="fielddoc">
+Pointer to ISR configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7b6a531de52f56cdf1ec3f85ba22e7b6"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a85dc4e3f42d9b3a927ebebebd2cc75ea"></a>uint8_t</td>
+<td class="fieldname">
+sample_and_hold_enable_mask</td>
+<td class="fielddoc">
+Sample and Hold enable register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="add85edfd4423a413207a0f370d0656f4"></a>uint32_t</td>
+<td class="fieldname">
+sample_and_hold_config_012</td>
+<td class="fielddoc">
+Sample and Hold configuration register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a439d684a2ccc1e6ef3dce0506d0fa1c2"></a>uint32_t</td>
+<td class="fieldname">
+sample_and_hold_config_456</td>
+<td class="fielddoc">
+Sample and Hold configuration register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2d13e944e83a35d2953523ed2d2f935f"></a>uint32_t</td>
+<td class="fieldname">
+conversion_state</td>
+<td class="fielddoc">
+ADC 0/1 Successive Approximation Time Configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a57c9c7c711fcb3bafd2109207d8b8602"></a>int32_t</td>
+<td class="fieldname">
+user_offset_tables[8]</td>
+<td class="fielddoc">
+User Offset Table register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac92f2a3223cc6c6dc8a9c589c3222a5c"></a>uint32_t</td>
+<td class="fieldname">
+user_gain_tables[8]</td>
+<td class="fielddoc">
+User Gain Table register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae712adb6bafb1ac6ab8be92655c36ebe"></a>uint32_t</td>
+<td class="fieldname">
+limiter_clip_interrupt_enable_mask</td>
+<td class="fielddoc">
+Limiter clip interrupt enable register data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0f8c3ff1764548af5d28fedde318e38b"></a>uint32_t</td>
+<td class="fieldname">
+limiter_clip_tables[8]</td>
+<td class="fielddoc">
+Limiter clip Table register data. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structadc__b__instance__ctrl__t" id="structadc__b__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structadc__b__instance__ctrl__t">&#9670;&nbsp;</a></span>adc_b_instance_ctrl_t</h2>
 
@@ -1054,24 +1235,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memdesc:a065e088c761f6943b53847cd3a123678"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open status of ADC_B. <br /></td></tr>
 <tr class="separator:a065e088c761f6943b53847cd3a123678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="gad61be3ba9cfc8edaff74e54bb2c14b8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad61be3ba9cfc8edaff74e54bb2c14b8b">&#9670;&nbsp;</a></span>st_adc_b_extended_cfg</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef __PACKED_STRUCT <a class="el" href="group___a_d_c___b.html#gad61be3ba9cfc8edaff74e54bb2c14b8b">st_adc_b_extended_cfg</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>PGA Gain selection. </p>
-<p>ADC extended configuration data </p>
 
 </div>
 </div>
@@ -1972,7 +2135,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e">adc_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___a_d_c___a_p_i.html#a2cd8e8911dcf8c4c617fe62f185b4363">adc_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -2423,528 +2586,13 @@ The self-calibration process will disable hardware triggers that were previously
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="ga869cd79fa9c1e0f57397785611b101e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga869cd79fa9c1e0f57397785611b101e4">&#9670;&nbsp;</a></span>pga_debug_monitor_mask_b</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } pga_debug_monitor_mask_b</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>PGA monitor mode bitfield. </p>
-
-</div>
-</div>
-<a id="gaff2aa45519e69e642938e7efb95b0841"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaff2aa45519e69e642938e7efb95b0841">&#9670;&nbsp;</a></span>clock_control_data</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } clock_control_data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Clock control register data. </p>
-
-</div>
-</div>
-<a id="gadc5815c56e8ac2b517fc07745a8ca4fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadc5815c56e8ac2b517fc07745a8ca4fd">&#9670;&nbsp;</a></span>__PACKED_STRUCT <span class="overload">[1/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } __PACKED_STRUCT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ADC_B clock source selection. </p>
-
-</div>
-</div>
-<a id="gaa819c1fc86d00c2fc90a2bcb172820e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa819c1fc86d00c2fc90a2bcb172820e8">&#9670;&nbsp;</a></span>divider</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } divider</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ADC_B clock divider selection. </p>
-
-</div>
-</div>
-<a id="gaa54c45dcf946ba7e0cb229828e64ce72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa54c45dcf946ba7e0cb229828e64ce72">&#9670;&nbsp;</a></span>sync_operation_control</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } sync_operation_control</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Synchronous Operation Control register data. </p>
-
-</div>
-</div>
-<a id="ga18781be1f9da353a8ae26638ecebc7fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga18781be1f9da353a8ae26638ecebc7fd">&#9670;&nbsp;</a></span>__PACKED_STRUCT <span class="overload">[2/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } __PACKED_STRUCT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ADC_B converter mode register data. </p>
-<p>ADC_B converter mode </p>
-
-</div>
-</div>
-<a id="gaabedfc8736ffdd4a154b195f5e9bccc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaabedfc8736ffdd4a154b195f5e9bccc2">&#9670;&nbsp;</a></span>method</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">adc_b_conversion_method_t { ... } method</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ADC_B converter method. </p>
-
-</div>
-</div>
-<a id="ga9d8189e582ff882313206d07768c1258"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9d8189e582ff882313206d07768c1258">&#9670;&nbsp;</a></span>__PACKED_STRUCT <span class="overload">[3/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } __PACKED_STRUCT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Converter Selection register data for groups 0,1,2,3. </p>
-
-</div>
-</div>
-<a id="gaa5cef7345898e957e24e061ebd115685"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa5cef7345898e957e24e061ebd115685">&#9670;&nbsp;</a></span>converter_selection_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } converter_selection_1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Converter Selection register data for groups 4,5,6,7. </p>
-
-</div>
-</div>
-<a id="ga740cfd64fb4ef7308ac066e84bc3941f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga740cfd64fb4ef7308ac066e84bc3941f">&#9670;&nbsp;</a></span>converter_selection_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } converter_selection_2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Converter Selection register data for group 8. </p>
-
-</div>
-</div>
-<a id="ga15c7c7659fbba4fab42c85e4847653a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga15c7c7659fbba4fab42c85e4847653a1">&#9670;&nbsp;</a></span>fifo_enable_mask</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_enable_mask</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable register data. </p>
-
-</div>
-</div>
-<a id="ga1911929feca6d65529937ebfeea87196"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1911929feca6d65529937ebfeea87196">&#9670;&nbsp;</a></span>__PACKED_STRUCT <span class="overload">[4/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } __PACKED_STRUCT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 0. </p>
-
-</div>
-</div>
-<a id="gad5cab01be60d2e47f1c51d37a0565ab2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad5cab01be60d2e47f1c51d37a0565ab2">&#9670;&nbsp;</a></span>fifo_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 1. </p>
-
-</div>
-</div>
-<a id="ga962f3f96924423c4633f5b0e379bb4fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga962f3f96924423c4633f5b0e379bb4fa">&#9670;&nbsp;</a></span>fifo_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 2. </p>
-
-</div>
-</div>
-<a id="ga493ff5db1b27b24616bd45726e5c7a4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga493ff5db1b27b24616bd45726e5c7a4f">&#9670;&nbsp;</a></span>fifo_3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 3. </p>
-
-</div>
-</div>
-<a id="gac116c8fda0570ed84e4bedfff7b90b19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac116c8fda0570ed84e4bedfff7b90b19">&#9670;&nbsp;</a></span>fifo_4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 4. </p>
-
-</div>
-</div>
-<a id="ga757cf290aab1997ecc0ea154ea2e6131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga757cf290aab1997ecc0ea154ea2e6131">&#9670;&nbsp;</a></span>fifo_5</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_5</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 5. </p>
-
-</div>
-</div>
-<a id="ga13b96d9e811184a9917b43182c7d148f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga13b96d9e811184a9917b43182c7d148f">&#9670;&nbsp;</a></span>fifo_6</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_6</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 6. </p>
-
-</div>
-</div>
-<a id="ga3a0940a9f74a6dac38174fe3fa58ce6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3a0940a9f74a6dac38174fe3fa58ce6e">&#9670;&nbsp;</a></span>fifo_7</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_7</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 7. </p>
-
-</div>
-</div>
-<a id="gace9836ce753bcc79aa310ae34bef8d44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gace9836ce753bcc79aa310ae34bef8d44">&#9670;&nbsp;</a></span>fifo_8</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_8</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO enable for group 8. </p>
-
-</div>
-</div>
-<a id="gaa05e23d9cb977a0456a690a5fb602564"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa05e23d9cb977a0456a690a5fb602564">&#9670;&nbsp;</a></span>__PACKED_STRUCT <span class="overload">[5/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } __PACKED_STRUCT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO data threshold interrupt level register data for Group 0 and 1. </p>
-
-</div>
-</div>
-<a id="ga0e28d8b7d83fe94d56df9a44eeecc39e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0e28d8b7d83fe94d56df9a44eeecc39e">&#9670;&nbsp;</a></span>fifo_interrupt_level1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } fifo_interrupt_level1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO data threshold interrupt level register data for Group 2 and 3. </p>
-
-</div>
-</div>
-<a id="gaffc0e902c49ec30a577f966063b17d21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaffc0e902c49ec30a577f966063b17d21">&#9670;&nbsp;</a></span>fifo_interrupt_level2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } fifo_interrupt_level2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO data threshold interrupt level register data for Group 4 and 5. </p>
-
-</div>
-</div>
-<a id="gac8249c6eceb0aef75eed750cf299b80a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac8249c6eceb0aef75eed750cf299b80a">&#9670;&nbsp;</a></span>fifo_interrupt_level3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } fifo_interrupt_level3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO data threshold interrupt level register data for Group 6 and 7. </p>
-
-</div>
-</div>
-<a id="ga496edb2e66892398449d69245edb3535"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga496edb2e66892398449d69245edb3535">&#9670;&nbsp;</a></span>fifo_interrupt_level4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } fifo_interrupt_level4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO data threshold interrupt level register data for Group 8. </p>
-
-</div>
-</div>
-<a id="gabe6a14f868c682ecdc4ce059f7c95804"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabe6a14f868c682ecdc4ce059f7c95804">&#9670;&nbsp;</a></span>fifo_interrupt_level</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } fifo_interrupt_level[9]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>FIFO data threshold interrupt level. </p>
-
-</div>
-</div>
-<a id="ga8bb4dc40fbc844726a73db138ab10836"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8bb4dc40fbc844726a73db138ab10836">&#9670;&nbsp;</a></span>__PACKED_STRUCT <span class="overload">[6/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> { ... } __PACKED_STRUCT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start trigger delay register data for group 0 and 1. </p>
-
-</div>
-</div>
-<a id="ga955d8c408b93601bf1669455bc82f70d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga955d8c408b93601bf1669455bc82f70d">&#9670;&nbsp;</a></span>start_trigger_delay_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } start_trigger_delay_1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start trigger delay register data for group 2 and 3. </p>
-
-</div>
-</div>
-<a id="ga5bb75503f069ac41d8cf7afd47a23bd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5bb75503f069ac41d8cf7afd47a23bd7">&#9670;&nbsp;</a></span>start_trigger_delay_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } start_trigger_delay_2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start trigger delay register data for group 4 and 5. </p>
-
-</div>
-</div>
-<a id="ga68090d5156b0b3c26215ee02be5a1ea1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga68090d5156b0b3c26215ee02be5a1ea1">&#9670;&nbsp;</a></span>start_trigger_delay_3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } start_trigger_delay_3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start trigger delay register data for group 6 and 7. </p>
-
-</div>
-</div>
-<a id="gab2ef3af6e80880946c26c14bdd8b1d38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab2ef3af6e80880946c26c14bdd8b1d38">&#9670;&nbsp;</a></span>start_trigger_delay_4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t { ... } start_trigger_delay_4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start trigger delay register data for group 8. </p>
-
-</div>
-</div>
-<a id="ga25de8bb25b91a08ecf5330bc0477682e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga25de8bb25b91a08ecf5330bc0477682e">&#9670;&nbsp;</a></span>sampling_state_table</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t { ... } sampling_state_table[15]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sampling State Table register data. </p>
-<p>Sampling State Tables </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

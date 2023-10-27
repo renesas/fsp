@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,10 +252,7 @@ Summary</h1>
 <p>The Ethernet PHY interface supports the following features:</p><ul>
 <li>Auto negotiation support</li>
 <li>Flow control support</li>
-<li>Link status check support</li>
-</ul>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html">Ethernet (r_ether_phy)</a> </li>
+<li>Link status check support </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -293,36 +368,39 @@ Placeholder for user extension. </td></tr>
 <div class="textblock"><p>Functions implemented at the HAL layer will follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:abeae29b0ee9ded59a1737b506abdc415"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#abeae29b0ee9ded59a1737b506abdc415">open</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:abeae29b0ee9ded59a1737b506abdc415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43859adb62f78f2ffd46622ee33bf3b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a43859adb62f78f2ffd46622ee33bf3b3">close</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a43859adb62f78f2ffd46622ee33bf3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c47b46e3ac5c47080332d6e940395a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a7c47b46e3ac5c47080332d6e940395a3">startAutoNegotiate</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a7c47b46e3ac5c47080332d6e940395a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad508caaca41fbabfe2ec5bdae28d790d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ad508caaca41fbabfe2ec5bdae28d790d">linkPartnerAbilityGet</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl, uint32_t *const p_line_speed_duplex, uint32_t *const p_local_pause, uint32_t *const p_partner_pause)</td></tr>
-<tr class="separator:ad508caaca41fbabfe2ec5bdae28d790d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2afea5d0c6c80b55cfd49f249612991"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#aa2afea5d0c6c80b55cfd49f249612991">linkStatusGet</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:aa2afea5d0c6c80b55cfd49f249612991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa566d14c1e722f4b1abdd65bae92393e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e">open</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:aa566d14c1e722f4b1abdd65bae92393e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b473db67f11af9cfafc790727c0660a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a2b473db67f11af9cfafc790727c0660a">close</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a2b473db67f11af9cfafc790727c0660a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b29375fbcbb38ee52182c41e2eef170"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a2b29375fbcbb38ee52182c41e2eef170">chipInit</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a2b29375fbcbb38ee52182c41e2eef170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3277c2961f534a7b8ae6c85fc4869e07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a3277c2961f534a7b8ae6c85fc4869e07">read</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t reg_addr, uint32_t *const p_data)</td></tr>
+<tr class="separator:a3277c2961f534a7b8ae6c85fc4869e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a445821efa6ddb204376956458f0d04aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a445821efa6ddb204376956458f0d04aa">write</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t reg_addr, uint32_t data)</td></tr>
+<tr class="separator:a445821efa6ddb204376956458f0d04aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7f449454459fc8ec9a3c14c0c6238ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ae7f449454459fc8ec9a3c14c0c6238ea">startAutoNegotiate</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ae7f449454459fc8ec9a3c14c0c6238ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dd6047b8aa7ad85139ec4f4e6abb3fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a0dd6047b8aa7ad85139ec4f4e6abb3fc">linkPartnerAbilityGet</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t *const p_line_speed_duplex, uint32_t *const p_local_pause, uint32_t *const p_partner_pause)</td></tr>
+<tr class="separator:a0dd6047b8aa7ad85139ec4f4e6abb3fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2dabb88baba5326509f297e44b35f92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ae2dabb88baba5326509f297e44b35f92">linkStatusGet</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ae2dabb88baba5326509f297e44b35f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="abeae29b0ee9ded59a1737b506abdc415"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeae29b0ee9ded59a1737b506abdc415">&#9670;&nbsp;</a></span>open</h2>
+<a id="aa566d14c1e722f4b1abdd65bae92393e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa566d14c1e722f4b1abdd65bae92393e">&#9670;&nbsp;</a></span>open</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::open) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::open) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gac54aa95e5976561c6d810eb1c868048c">R_ETHER_PHY_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration structure. </td></tr>
   </table>
   </dd>
@@ -330,72 +408,131 @@ Placeholder for user extension. </td></tr>
 
 </div>
 </div>
-<a id="a43859adb62f78f2ffd46622ee33bf3b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43859adb62f78f2ffd46622ee33bf3b3">&#9670;&nbsp;</a></span>close</h2>
+<a id="a2b473db67f11af9cfafc790727c0660a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b473db67f11af9cfafc790727c0660a">&#9670;&nbsp;</a></span>close</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::close) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::close) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga6a4f3bdcd321faef43008379b2065c4b">R_ETHER_PHY_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a7c47b46e3ac5c47080332d6e940395a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c47b46e3ac5c47080332d6e940395a3">&#9670;&nbsp;</a></span>startAutoNegotiate</h2>
+<a id="a2b29375fbcbb38ee52182c41e2eef170"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b29375fbcbb38ee52182c41e2eef170">&#9670;&nbsp;</a></span>chipInit</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::startAutoNegotiate) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::chipInit) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start auto negotiation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gaca73174d76fd87100066407a8ff13147">R_ETHER_PHY_StartAutoNegotiate()</a></li>
-</ul>
-</dd></dl>
+<p>Initialize PHY-LSI.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ad508caaca41fbabfe2ec5bdae28d790d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad508caaca41fbabfe2ec5bdae28d790d">&#9670;&nbsp;</a></span>linkPartnerAbilityGet</h2>
+<a id="a3277c2961f534a7b8ae6c85fc4869e07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3277c2961f534a7b8ae6c85fc4869e07">&#9670;&nbsp;</a></span>read</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::linkPartnerAbilityGet) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl, uint32_t *const p_line_speed_duplex, uint32_t *const p_local_pause, uint32_t *const p_partner_pause)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::read) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t reg_addr, uint32_t *const p_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the partner ability. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga02b4fcbbb5e863cb759b610a7dc992bd">R_ETHER_PHY_LinkPartnerAbilityGet()</a></li>
-</ul>
-</dd></dl>
+<p>Read register value of PHY-LSI.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg_addr</td><td>Register address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Pointer to the location to store read data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a445821efa6ddb204376956458f0d04aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a445821efa6ddb204376956458f0d04aa">&#9670;&nbsp;</a></span>write</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::write) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t reg_addr, uint32_t data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write data to register of PHY-LSI.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg_addr</td><td>Register address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Data written to register. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae7f449454459fc8ec9a3c14c0c6238ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7f449454459fc8ec9a3c14c0c6238ea">&#9670;&nbsp;</a></span>startAutoNegotiate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::startAutoNegotiate) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start auto negotiation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0dd6047b8aa7ad85139ec4f4e6abb3fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dd6047b8aa7ad85139ec4f4e6abb3fc">&#9670;&nbsp;</a></span>linkPartnerAbilityGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::linkPartnerAbilityGet) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t *const p_line_speed_duplex, uint32_t *const p_local_pause, uint32_t *const p_partner_pause)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the partner ability.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_line_speed_duplex</td><td>Pointer to the location of both the line speed and the duplex. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_local_pause</td><td>Pointer to the location to store the local pause bits. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_partner_pause</td><td>Pointer to the location to store the partner pause bits. </td></tr>
@@ -405,24 +542,21 @@ Placeholder for user extension. </td></tr>
 
 </div>
 </div>
-<a id="aa2afea5d0c6c80b55cfd49f249612991"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2afea5d0c6c80b55cfd49f249612991">&#9670;&nbsp;</a></span>linkStatusGet</h2>
+<a id="ae2dabb88baba5326509f297e44b35f92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2dabb88baba5326509f297e44b35f92">&#9670;&nbsp;</a></span>linkStatusGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::linkStatusGet) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_phy_api_t::linkStatusGet) (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get Link status from PHY-LSI interface. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03">R_ETHER_PHY_LinkStatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get Link status from PHY-LSI interface.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -480,10 +614,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Control block. Allocate an instance specific control block to pass into the API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#structether__phy__instance__ctrl__t">ether_phy_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>Control block. Allocate an instance specific control block to pass into the API calls. </p>
 
 </div>
 </div>
@@ -510,6 +641,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5af3ca93247dd58484b187bba066282686"></a>ETHER_PHY_LSI_TYPE_DP83620&#160;</td><td class="fielddoc"><p>Select configuration for DP83620. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303"></a>ETHER_PHY_LSI_TYPE_ICS1894&#160;</td><td class="fielddoc"><p>Select configuration for ICS1894. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga52ba7820524fdf3472ec06b109d4e9a5ac19ab1507a515d6174f27f7af0e6de0e"></a>ETHER_PHY_LSI_TYPE_CUSTOM&#160;</td><td class="fielddoc"><p>Select configuration for User custom. </p>
 </td></tr>
 </table>
 
@@ -559,6 +692,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf227c12b47e90edc8ec5729bfccf9bfbaf909885cf5d2e9a00a3be13e8be01a02"></a>ETHER_PHY_LINK_SPEED_100F&#160;</td><td class="fielddoc"><p>Link status is 100Mbit/s and full duplex. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaf227c12b47e90edc8ec5729bfccf9bfba6fa0bd7c951c6fe0dbf873e7e2d2d74f"></a>ETHER_PHY_LINK_SPEED_1000H&#160;</td><td class="fielddoc"><p>Link status is 1000Mbit/s and half duplex. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf227c12b47e90edc8ec5729bfccf9bfba6794de8acbb549587609b9b5855a840a"></a>ETHER_PHY_LINK_SPEED_1000F&#160;</td><td class="fielddoc"><p>Link status is 1000Mbit/s and full duplex. </p>
+</td></tr>
 </table>
 
 </div>
@@ -580,6 +717,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaafbecb98180b1f07abe8449332b5a122a4a69b11865eb1f04c1e6726f34d32aeb"></a>ETHER_PHY_MII_TYPE_RMII&#160;</td><td class="fielddoc"><p>RMII. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaafbecb98180b1f07abe8449332b5a122aa10a91dcf39a722cdc50e918cce8a735"></a>ETHER_PHY_MII_TYPE_GMII&#160;</td><td class="fielddoc"><p>GMII. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafbecb98180b1f07abe8449332b5a122aef0f7560aa2acc87ebef70f9323eee53"></a>ETHER_PHY_MII_TYPE_RGMII&#160;</td><td class="fielddoc"><p>RGMII. </p>
+</td></tr>
 </table>
 
 </div>
@@ -590,7 +731,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

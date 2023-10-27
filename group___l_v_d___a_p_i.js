@@ -26,7 +26,7 @@ var group___l_v_d___a_p_i =
       [ "open", "group___l_v_d___a_p_i.html#a34231252b5969663357a5ba29971afb8", null ],
       [ "statusGet", "group___l_v_d___a_p_i.html#a45aded1845bbc43ef8b6b1e3a08f2e1c", null ],
       [ "statusClear", "group___l_v_d___a_p_i.html#a2b9134701c646b8e2295bd30aea3177d", null ],
-      [ "callbackSet", "group___l_v_d___a_p_i.html#ab0380e0e71ee1f9dab35c2de9dd5143f", null ],
+      [ "callbackSet", "group___l_v_d___a_p_i.html#aa9405d41b90122cce9c1e22086a4fcd6", null ],
       [ "close", "group___l_v_d___a_p_i.html#ad6f844f12b555da5aca1e2c8420deb2d", null ]
     ] ],
     [ "lvd_instance_t", "group___l_v_d___a_p_i.html#structlvd__instance__t", [
@@ -78,6 +78,7 @@ var group___l_v_d___a_p_i =
       [ "LVD_RESPONSE_NMI", "group___l_v_d___a_p_i.html#ggac3a698471443aa948c50dd6dc6661cdbafb0d4cd16abf017cec80877f73ad25c1", null ],
       [ "LVD_RESPONSE_INTERRUPT", "group___l_v_d___a_p_i.html#ggac3a698471443aa948c50dd6dc6661cdba018776fbff378ce085f20c8aa17279cf", null ],
       [ "LVD_RESPONSE_RESET", "group___l_v_d___a_p_i.html#ggac3a698471443aa948c50dd6dc6661cdba479d9877ab75b7dd5300494d9d6012b4", null ],
+      [ "LVD_RESPONSE_RESET_ON_RISING", "group___l_v_d___a_p_i.html#ggac3a698471443aa948c50dd6dc6661cdbaa5cfe801c07f61fd755fbff17e6db3cf", null ],
       [ "LVD_RESPONSE_NONE", "group___l_v_d___a_p_i.html#ggac3a698471443aa948c50dd6dc6661cdba462d7649ac340b68d91ae7fe4a0ab5ac", null ]
     ] ],
     [ "lvd_voltage_slope_t", "group___l_v_d___a_p_i.html#ga3e15299c4637ea5e858cd80ded8ac197", [

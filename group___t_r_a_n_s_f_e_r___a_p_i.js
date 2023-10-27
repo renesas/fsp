@@ -25,7 +25,8 @@ var group___t_r_a_n_s_f_e_r___a_p_i =
       [ "softwareStart", "group___t_r_a_n_s_f_e_r___a_p_i.html#a394ddea028013153254bafa12115dce2", null ],
       [ "softwareStop", "group___t_r_a_n_s_f_e_r___a_p_i.html#a77207de2ae81eab58858fd28ae88df06", null ],
       [ "infoGet", "group___t_r_a_n_s_f_e_r___a_p_i.html#ad18824ffdf72b5e6a0c588289620fc84", null ],
-      [ "close", "group___t_r_a_n_s_f_e_r___a_p_i.html#ade5973e7a8e994f9146e0db84bee8bf4", null ]
+      [ "close", "group___t_r_a_n_s_f_e_r___a_p_i.html#ade5973e7a8e994f9146e0db84bee8bf4", null ],
+      [ "reload", "group___t_r_a_n_s_f_e_r___a_p_i.html#a3af1d98295baf9bd92251f55c95f8868", null ]
     ] ],
     [ "transfer_instance_t", "group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t", [
       [ "p_ctrl", "group___t_r_a_n_s_f_e_r___a_p_i.html#a655547e7bbc2c8be77ac085f3417a389", null ],

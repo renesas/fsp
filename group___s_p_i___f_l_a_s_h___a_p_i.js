@@ -68,6 +68,7 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "SPI_FLASH_PROTOCOL_QPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535abf7718fe53c0e4daa1dcad6f4d6d215e", null ],
       [ "SPI_FLASH_PROTOCOL_SOPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535aa8b956dd00ae8afcb2e4497fb1b9ab58", null ],
       [ "SPI_FLASH_PROTOCOL_DOPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535afd83f451b4164b209b240ebb0f4bb158", null ],
+      [ "SPI_FLASH_PROTOCOL_1S_1S_1S", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a3066069aa9be28b050e57faa29cf5be5", null ],
       [ "SPI_FLASH_PROTOCOL_4S_4D_4D", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a54c52d62f8a1e16099da8ab9a203a1be", null ],
       [ "SPI_FLASH_PROTOCOL_8D_8D_8D", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606", null ],
       [ "SPI_FLASH_PROTOCOL_1S_2S_2S", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a6d421df12293ebbae4fa97b4cf152081", null ],
@@ -86,7 +87,9 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "SPI_FLASH_DATA_LINES_4", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaae5c8f99b61e37b40b13f52e146f0bc5a78b1e4dfcdf7632ea626d7c1d74dd317", null ]
     ] ],
     [ "spi_flash_dummy_clocks_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#gaa1e03cbf0d565f4ae7ad2e41d85802fe", [
-      [ "SPI_FLASH_DUMMY_CLOCKS_DEFAULT", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fead62f009865391c9fcd7508c3f75e9f81", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_0", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feaed09e7b9b5d0d7b7be12e3677eba59a1", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_1", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feafac1c75f76f2f0a4027b1544fecb48b4", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_2", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feab4dcd627f0f4766d0e7fbf76a2160a98", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_3", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feaca19d746031e96849279c7f9c9365f73", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_4", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea95bef5ad77102b394b5ca8bd38bb73be", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_5", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea5a76c99649b40742470d90e7b0c8c474", null ],
@@ -101,7 +104,21 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "SPI_FLASH_DUMMY_CLOCKS_14", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fead706a5a9ba8b806ffeb13adc5979823b", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_15", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea5c661aa719d0f2846d0a4a3bea4e3f37", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_16", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feab4afe95b4c411fbe7b17252fce3e9776", null ],
-      [ "SPI_FLASH_DUMMY_CLOCKS_17", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea34ec51de93041c3710730907347e29ce", null ]
+      [ "SPI_FLASH_DUMMY_CLOCKS_17", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea34ec51de93041c3710730907347e29ce", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_18", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feaccd9eab44effb89164d68dc55c73e10f", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_19", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea32e0c7ab537261464e48be07bda963f0", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_20", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea3490679f14cbe6dca290459020f75c71", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_21", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fead65e7e0db08823212d8aca1feaae5279", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_22", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea245eb3e209ead164289e776f8a1c3db5", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_23", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea27f73312dc3edb2114956dd060693c96", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_24", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feabaf62da3a1a577e312e0b0be000770cc", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_25", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea36b30b484ac7ba6d951f42664c17bccc", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_26", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea6cf608f95e25bdbde4af0fd0caa0844e", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_27", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feabf7dd140ea6e3b47246e8dd6c2b812bc", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_28", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feacf3e6ceb051173c3017ce7c715c96c77", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_29", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea76793d9f869335cb3f6c46c30539d6a9", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_30", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea047f2b71267ffaee5a6912d58854302b", null ],
+      [ "SPI_FLASH_DUMMY_CLOCKS_31", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feafaa464bb01a99230e64495288b7592c1", null ]
     ] ],
     [ "spi_flash_direct_transfer_dir_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5", null ]
 ];

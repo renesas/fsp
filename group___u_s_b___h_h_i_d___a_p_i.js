@@ -1,8 +1,8 @@
 var group___u_s_b___h_h_i_d___a_p_i =
 [
     [ "usb_hhid_api_t", "group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__api__t", [
-      [ "typeGet", "group___u_s_b___h_h_i_d___a_p_i.html#a2624c916cc5fa8bdb61bb47d02db1e7c", null ],
-      [ "maxPacketSizeGet", "group___u_s_b___h_h_i_d___a_p_i.html#ad2efecb9d87312ff91ae383fcaf46f6b", null ]
+      [ "typeGet", "group___u_s_b___h_h_i_d___a_p_i.html#a8d389924204b9b1e5d0c523089a33729", null ],
+      [ "maxPacketSizeGet", "group___u_s_b___h_h_i_d___a_p_i.html#aad9760a73b112e373022758158de1957", null ]
     ] ],
     [ "usb_hhid_instance_t", "group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__instance__t", [
       [ "p_ctrl", "group___u_s_b___h_h_i_d___a_p_i.html#a0190b5e73c5185b732f697f7d5316902", null ],

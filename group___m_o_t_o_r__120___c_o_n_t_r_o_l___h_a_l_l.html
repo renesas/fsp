@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -227,7 +305,7 @@ The following build time configurations are defined in fsp_cfg/rm_motor_120_cont
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -243,65 +321,71 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; 120-deg
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_120_control_hall0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Conduction type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_120_control_hall0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Conduction type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 First 60 degree PWM</li>
 <li>
 Complementary First 60 degree PWM</li>
 </ul>
 </td><td>First 60 degree PWM </td><td>Select conduction type </td></tr>
-<tr>
-<td>General &gt; Timeout counts (msec)</td><td>Must be a valid non-negative value.</td><td>200 </td><td>Counts to judge rotor unrotate </td></tr>
-<tr>
-<td>General &gt; Maximum voltage (V)</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Maximum output voltage (V) </td></tr>
-<tr>
-<td>General &gt; Minimum voltage (V)</td><td>Must be a valid non-negative value.</td><td>3.0 </td><td>Minimum output voltage (V) </td></tr>
-<tr>
-<td>General &gt; Speed PI decimation</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Speed PI control decimation count </td></tr>
-<tr>
-<td>General &gt; Freerun timer frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>Freerun timer frequency (MHz) </td></tr>
-<tr>
-<td>General &gt; Speed LPF</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>Speed LPF parameter </td></tr>
-<tr>
-<td>General &gt; Step of speed reference change</td><td>Must be a valid non-negative value.</td><td>0.2 </td><td>Speed ref change step </td></tr>
-<tr>
-<td>General &gt; Start reference voltage (V)</td><td>Must be a valid non-negative value.</td><td>5.8 </td><td>Reference voltage for boot mode (V) </td></tr>
-<tr>
-<td>General &gt; Hall wait counts</td><td>Must be a valid non-negative value.</td><td>12 </td><td>Wait counts of hall interrupts to start speed calculation </td></tr>
-<tr>
-<td>General &gt; Stop judge time</td><td>Must be a valid non-negative value.</td><td>1000 </td><td>Stop judge time </td></tr>
-<tr>
-<td>General &gt; Minimum limit speed (rpm)</td><td>Must be a valid non-negative value.</td><td>550 </td><td>Minimum limit speed (rpm) (mechanical angle) </td></tr>
-<tr>
-<td>General &gt; PI control KP</td><td>Must be a valid non-negative value.</td><td>0.02 </td><td>PI control gain of proportional term </td></tr>
-<tr>
-<td>General &gt; PI control KI</td><td>Must be a valid non-negative value.</td><td>0.0005 </td><td>PI control gain of integral term </td></tr>
-<tr>
-<td>General &gt; PI control limit</td><td>Must be a valid non-negative value.</td><td>24.0 </td><td>PI control limit of integral term </td></tr>
-<tr>
-<td>General &gt; Hall interrupt mask value</td><td>Must be a valid non-negative value.</td><td>15 </td><td>For limiting hall interrupt processing. Limited by the number of ADC interrupts </td></tr>
-<tr>
-<td>Motor Parameter &gt; Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
-<tr>
-<td>Motor Parameter &gt; Resistance (ohm)</td><td>Must be a valid non-negative value.</td><td>6.447 </td><td>Resistance </td></tr>
-<tr>
-<td>Motor Parameter &gt; Inductance of d-axis (H)</td><td>Must be a valid non-negative value.</td><td>0.0045 </td><td>Inductance of d-axis </td></tr>
-<tr>
-<td>Motor Parameter &gt; Inductance of q-axis (H)</td><td>Must be a valid non-negative value.</td><td>0.0045 </td><td>Inductance of q-axis </td></tr>
-<tr>
-<td>Motor Parameter &gt; Permanent magnetic flux (Wb)</td><td>Must be a valid non-negative value.</td><td>0.02159 </td><td>Permanent magnetic flux </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timeout counts (msec)</td><td>Must be a valid non-negative value.</td><td>200 </td><td>Counts to judge rotor unrotate </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum voltage (V)</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Maximum output voltage (V) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimum voltage (V)</td><td>Must be a valid non-negative value.</td><td>3.0 </td><td>Minimum output voltage (V) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed PI decimation</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Speed PI control decimation count </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Freerun timer frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>Freerun timer frequency (MHz) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Speed LPF</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>Speed LPF parameter </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Step of speed reference change</td><td>Must be a valid non-negative value.</td><td>0.2 </td><td>Speed ref change step </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Start reference voltage (V)</td><td>Must be a valid non-negative value.</td><td>5.8 </td><td>Reference voltage for boot mode (V) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Hall wait counts</td><td>Must be a valid non-negative value.</td><td>12 </td><td>Wait counts of hall interrupts to start speed calculation </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stop judge time</td><td>Must be a valid non-negative value.</td><td>1000 </td><td>Stop judge time </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimum limit speed (rpm)</td><td>Must be a valid non-negative value.</td><td>550 </td><td>Minimum limit speed (rpm) (mechanical angle) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PI control KP</td><td>Must be a valid non-negative value.</td><td>0.02 </td><td>PI control gain of proportional term </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PI control KI</td><td>Must be a valid non-negative value.</td><td>0.0005 </td><td>PI control gain of integral term </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PI control limit</td><td>Must be a valid non-negative value.</td><td>24.0 </td><td>PI control limit of integral term </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Hall interrupt mask value</td><td>Must be a valid non-negative value.</td><td>15 </td><td>For limiting hall interrupt processing. Limited by the number of ADC interrupts </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid non-negative value.</td><td>6.447 </td><td>Resistance </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance of d-axis (H)</td><td>Must be a valid non-negative value.</td><td>0.0045 </td><td>Inductance of d-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance of q-axis (H)</td><td>Must be a valid non-negative value.</td><td>0.0045 </td><td>Inductance of q-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Permanent magnetic flux (Wb)</td><td>Must be a valid non-negative value.</td><td>0.02159 </td><td>Permanent magnetic flux </td></tr>
 <tr>
 <td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Must be a valid non-negative value.</td><td>1.8 </td><td>Rotor inertia </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback function </td></tr>
-<tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback function </td></tr>
+<tr class="tree_none">
 <td>Hall sensor port U</td><td>Manual Entry</td><td>BSP_IO_PORT_04_PIN_11 </td><td>Hall sensor port U </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Hall sensor port V</td><td>Manual Entry</td><td>BSP_IO_PORT_04_PIN_10 </td><td>Hall sensor port V </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Hall sensor port W</td><td>Manual Entry</td><td>BSP_IO_PORT_04_PIN_09 </td><td>Hall sensor port W </td></tr>
 </table>
 </p>
@@ -1114,7 +1198,7 @@ For call timer callbackSet function. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

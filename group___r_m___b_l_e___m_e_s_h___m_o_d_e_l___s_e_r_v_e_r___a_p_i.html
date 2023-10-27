@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,29 +248,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___m_o_d_
 <p>Interface for Bluetooth Low Energy Mesh Model Server functions. </p>
 <h1><a class="anchor" id="RM_BLE_MESH_MODEL_SERVER_API_Summary"></a>
 Summary</h1>
-<p>The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Server (BLE MESH MODEL SERVER) middleware provides Bluetooth Low Energy Mesh Model Server functionality.</p>
-<p>The Bluetooth Low Energy Mesh Model Server interface can be implemented by:</p><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___c_o_n_f_i_g___s_r_v.html">Bluetooth Low Energy Mesh Network Config Server (rm_mesh_config_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Battery Server (rm_mesh_generic_battery_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Default Transition Time Server (rm_mesh_generic_dtt_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Level Server (rm_mesh_generic_level_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Location Server (rm_mesh_generic_loc_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___s_r_v.html">Bluetooth Low Energy Mesh Network Generic On Off Server (rm_mesh_generic_on_off_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Power Level Server (rm_mesh_generic_pl_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Power On Off Server (rm_mesh_generic_poo_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___a_d_m_i_n___p_r_o_p___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Admin Property Server (rm_mesh_generic_admin_prop_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___m_f_r___p_r_o_p___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Manufacturer Property Server (rm_mesh_generic_mfr_prop_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___u_s_e_r___p_r_o_p___s_r_v.html">Bluetooth Low Energy Mesh Network Generic User Property Server (rm_mesh_generic_user_prop_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___c_l_i_e_n_t___p_r_o_p___s_r_v.html">Bluetooth Low Energy Mesh Network Generic Client Property Server (rm_mesh_generic_client_prop_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html">Bluetooth Low Energy Mesh Network Light Control Server (rm_mesh_light_ctl_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html">Bluetooth Low Energy Mesh Network Light Hsl Server (rm_mesh_light_hsl_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html">Bluetooth Low Energy Mesh Network Light Location Server (rm_mesh_light_lc_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___s_r_v.html">Bluetooth Low Energy Mesh Network Light Lightness Server (rm_mesh_light_lightness_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___s_r_v.html">Bluetooth Low Energy Mesh Network Light Xyl Server (rm_mesh_light_xyl_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___s_r_v.html">Bluetooth Low Energy Mesh Network Scheduler Server (rm_mesh_scheduler_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___s_r_v.html">Bluetooth Low Energy Mesh Network Time Server (rm_mesh_time_srv)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___s_r_v.html">Bluetooth Low Energy Mesh Network Sensor Server (rm_mesh_sensor_srv)</a> </li>
-</ul>
+<p>The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Server (BLE MESH MODEL SERVER) middleware provides Bluetooth Low Energy Mesh Model Server functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -524,29 +580,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to open server model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___s_r_v.html#ga331fbfe3ec3561a52fb5f2313dfc575a">RM_MESH_GENERIC_BATTERY_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___s_r_v.html#gaf40038bc6c3b487cf5bcd45be4ffdfd4">RM_MESH_GENERIC_DTT_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___s_r_v.html#ga10e736cdbee7fc9c393531bac1ab2208">RM_MESH_GENERIC_LEVEL_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#ga19460f4aa53a078f4b78ba81d12a5de0">RM_MESH_GENERIC_LOC_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___s_r_v.html#gadcfc7b520e17b223a23cc5f80aa5220e">RM_MESH_GENERIC_ON_OFF_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___s_r_v.html#ga03ba26ce200317bf06b50da29ca987b9">RM_MESH_GENERIC_PL_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___s_r_v.html#ga7d8845b74127973ebe760a1689bc656e">RM_MESH_GENERIC_POO_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___a_d_m_i_n___p_r_o_p___s_r_v.html#gae59df28ef62c1b9d60a37ba32f14c01f">RM_MESH_GENERIC_ADMIN_PROP_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___c_l_i_e_n_t___p_r_o_p___s_r_v.html#ga0a741f156c9d0b0e11bb6763c25cf98f">RM_MESH_GENERIC_CLIENT_PROP_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___m_f_r___p_r_o_p___s_r_v.html#ga95e59237e92925ee388c5bdc6fa5e573">RM_MESH_GENERIC_MFR_PROP_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___u_s_e_r___p_r_o_p___s_r_v.html#gab77c14d34529b189bca0e8927d04ed1c">RM_MESH_GENERIC_USER_PROP_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#ga5207f60b44840f9dcd41577f830587d1">RM_MESH_LIGHT_CTL_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#ga612ebab68c4d2ab7016ae2a9eb2b3b17">RM_MESH_LIGHT_HSL_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#ga9a56ef5c2965836bd704a4ab96d8d0c8">RM_MESH_LIGHT_LC_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___s_r_v.html#ga5a0cd210bae3f69fa827dd815e7c8de2">RM_MESH_LIGHT_LIGHTNESS_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___s_r_v.html#ga47ced703e8362d533b98b394a3dee3ca">RM_MESH_LIGHT_XYL_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___s_r_v.html#gac670381bbc19ee75e20c840140bc224b">RM_MESH_SCHEDULER_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___s_r_v.html#ga1a8adb185eb61801dd426698407a04ac">RM_MESH_TIME_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___s_r_v.html#gaeb13598ed633572b270379e6cc7ad0ca">RM_MESH_SENSOR_SRV_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___c_o_n_f_i_g___s_r_v.html#gada582d5c309f6a786ccae464d3716456">RM_MESH_CONFIG_SRV_Open()</a></li>
-</ul>
-</dd></dl>
+<p>API to open server model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -568,29 +602,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to close server model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___s_r_v.html#ga884e0e6a7da679012cc3b3465401b90d">RM_MESH_GENERIC_BATTERY_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___s_r_v.html#ga69cb100b514b3110e0791fcf782e1096">RM_MESH_GENERIC_DTT_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___s_r_v.html#ga67bb605c916a0469c937e107a8451c18">RM_MESH_GENERIC_LEVEL_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#gafdabe7fff7a898c0088d4e4415ab0e81">RM_MESH_GENERIC_LOC_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___s_r_v.html#gafd86c9a2713a0755f152e01f31337d42">RM_MESH_GENERIC_ON_OFF_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___s_r_v.html#gafaf9333d18788f90aeb99f7277a53598">RM_MESH_GENERIC_PL_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___s_r_v.html#ga8607c80f3af6f7de6f0abce9e8db3edf">RM_MESH_GENERIC_POO_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___a_d_m_i_n___p_r_o_p___s_r_v.html#gaa3ef5e8167e4b048c11f5ae1e5c656ed">RM_MESH_GENERIC_ADMIN_PROP_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___c_l_i_e_n_t___p_r_o_p___s_r_v.html#gaf10543c4360381735a944d146dd6c690">RM_MESH_GENERIC_CLIENT_PROP_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___m_f_r___p_r_o_p___s_r_v.html#ga92bb113e7dc9f6962993caea4e5dfca5">RM_MESH_GENERIC_MFR_PROP_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___u_s_e_r___p_r_o_p___s_r_v.html#ga4685b2e1e4f814d4540881ac8741d9ac">RM_MESH_GENERIC_USER_PROP_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#ga34f89a16ede16b6ab0d4cdd48d27065c">RM_MESH_LIGHT_CTL_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#ga5ae600e6899d431b79def8e50cd8e34f">RM_MESH_LIGHT_HSL_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#gafbadcc1895fa0cb10a8a536f906dde07">RM_MESH_LIGHT_LC_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___s_r_v.html#gaff07018a2744781ea409bf29fa6ec873">RM_MESH_LIGHT_LIGHTNESS_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___s_r_v.html#ga53fc094c4e37b97876475ccec08e34c0">RM_MESH_LIGHT_XYL_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___s_r_v.html#ga8fdc1e6778de9c0cf84571244d926777">RM_MESH_SCHEDULER_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___s_r_v.html#ga8bf0103097f8ff804c12b1ede4167f47">RM_MESH_TIME_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___s_r_v.html#ga788baca9010083722c8e171bfec5d679">RM_MESH_SENSOR_SRV_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___c_o_n_f_i_g___s_r_v.html#ga63286a73ca15c27766a2db89c5c72ebb">RM_MESH_CONFIG_SRV_Close()</a></li>
-</ul>
-</dd></dl>
+<p>API to close server model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -611,28 +623,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to send reply or to update state change. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___s_r_v.html#gaf741c42b25e20d0836ffbc1c94a3ac07">RM_MESH_GENERIC_BATTERY_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___s_r_v.html#gaa4daf0782a2d8b268701f761906d4770">RM_MESH_GENERIC_LEVEL_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#ga8d02d2cc02e6cf5dceb74ab3af1e6182">RM_MESH_GENERIC_LOC_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___s_r_v.html#ga1c4e414758df9e07688a5c085fba666e">RM_MESH_GENERIC_ON_OFF_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___s_r_v.html#gaba7eb893568def6fc22261f4b0e23ed2">RM_MESH_GENERIC_PL_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___s_r_v.html#gade814c8a3edec7dc406fd3b25ba22686">RM_MESH_GENERIC_POO_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___a_d_m_i_n___p_r_o_p___s_r_v.html#gaa404a82ad6b7e60278c7971fa3783c7a">RM_MESH_GENERIC_ADMIN_PROP_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___c_l_i_e_n_t___p_r_o_p___s_r_v.html#gac7bd6a9675a88f8f5240a11dfb4b7a7d">RM_MESH_GENERIC_CLIENT_PROP_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___m_f_r___p_r_o_p___s_r_v.html#ga6a7d7e0999eed635517a9552eeb79a7a">RM_MESH_GENERIC_MFR_PROP_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___u_s_e_r___p_r_o_p___s_r_v.html#gaa24dc6276499915651a585f3ef969d1f">RM_MESH_GENERIC_USER_PROP_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#ga47aacf2721278887f92a65e93a74864e">RM_MESH_LIGHT_CTL_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#ga6d09a57feb812bad5e3415fe2af7ce69">RM_MESH_LIGHT_HSL_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#ga6e325a712b2a804f77111b8438f552c9">RM_MESH_LIGHT_LC_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___s_r_v.html#ga41299b11ae86810224785001348aef30">RM_MESH_LIGHT_LIGHTNESS_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___s_r_v.html#gacac9a4064430fcf73c25886ac076d4fc">RM_MESH_LIGHT_XYL_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___s_r_v.html#ga3237e9838bad3865707b914c2b3e2571">RM_MESH_SCHEDULER_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___s_r_v.html#ga7fc87dbf2ca3ac1a64f6e0fd6e4585df">RM_MESH_TIME_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___s_r_v.html#ga9305b874a8b25b34a580cf8dc184e408">RM_MESH_SENSOR_SRV_StateUpdate()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___c_o_n_f_i_g___s_r_v.html#gade5450a94aea3896ff93974c4d9a7167">RM_MESH_CONFIG_SRV_StateUpdate()</a></li>
-</ul>
-</dd></dl>
+<p>API to send reply or to update state change.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -696,10 +687,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BLE MESH MODEL SERVER control block. Allocate an instance specific control block to pass into the BLE mesh model server API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>rm_ble_mesh_model_server_instance_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>BLE MESH MODEL SERVER control block. Allocate an instance specific control block to pass into the BLE mesh model server API calls. </p>
 
 </div>
 </div>
@@ -821,7 +809,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

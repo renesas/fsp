@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -209,7 +287,7 @@ The following build time configurations are defined in fsp_cfg/r_ssi_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -219,7 +297,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -233,11 +311,11 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i2s0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the I2S channel. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Operating Mode (Master/Slave)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Master Mode</li>
@@ -245,7 +323,7 @@ Master Mode</li>
 Slave Mode</li>
 </ul>
 </td><td>Master Mode </td><td>Select if the MCU is I2S master or slave. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bit Depth</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 8 Bits</li>
@@ -263,7 +341,7 @@ Slave Mode</li>
 32 Bits</li>
 </ul>
 </td><td>16 Bits </td><td>Select the bit depth of one sample of audio data. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Word Length</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 8 Bits</li>
@@ -283,7 +361,7 @@ Slave Mode</li>
 256 Bits</li>
 </ul>
 </td><td>16 Bits </td><td>Select the word length of audio data. Must be at least as large as Data bits. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>WS Continue Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -291,7 +369,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable WS continue mode to output the word select (WS) pin even when transmission is idle. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bit Clock Source(available only in Master mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 External AUDIO_CLK</li>
@@ -299,15 +377,15 @@ External AUDIO_CLK</li>
 Internal AUDIO_CLK</li>
 </ul>
 </td><td>External AUDIO_CLK </td><td>Select External AUDIO_CLK for external signal to AUDIO_CLK input pin or Internal AUDIO_CLK for internal connection to MCU specific GPT channel. Please refer to the hardware manual for which GPT channel is connected to the internal signal </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bit Clock Divider(available only in Master mode)</td><td>Refer to the RA Configuration tool for available options.</td><td>Audio Clock / 1 </td><td>Select divider used to generate bit clock from audio clock. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from all three interrupt service routines (ISR). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Transmit Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit interrupt priority. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Idle/Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the Idle/Error interrupt priority. </td></tr>
 </table>
 </p>
@@ -385,10 +463,10 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the SSI in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define SSI_EXAMPLE_SAMPLES_TO_TRANSFER    (1024)</span></div><div class="line"><span class="preprocessor">#define SSI_EXAMPLE_TONE_FREQUENCY_HZ      (800)</span></div><div class="line">int16_t g_src[SSI_EXAMPLE_SAMPLES_TO_TRANSFER];</div><div class="line">int16_t g_dest[SSI_EXAMPLE_SAMPLES_TO_TRANSFER];</div><div class="line"><span class="keywordtype">void</span> ssi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Create a stereo sine wave. Using formula sample = sin(2 * pi * tone_frequency * t / sampling_frequency) */</span></div><div class="line">    uint32_t freq = SSI_EXAMPLE_TONE_FREQUENCY_HZ;</div><div class="line">    <span class="keywordflow">for</span> (uint32_t t = 0; t &lt; SSI_EXAMPLE_SAMPLES_TO_TRANSFER / 2; t += 1)</div><div class="line">    {</div><div class="line">        <span class="keywordtype">float</span> input = (((float) (freq * t)) * (M_TWOPI)) / SSI_EXAMPLE_AUDIO_SAMPLING_FREQUENCY_HZ;</div><div class="line">        g_src[2 * t]     = (int16_t) ((INT16_MAX * sinf(input)));</div><div class="line">        g_src[2 * t + 1] = (int16_t) ((INT16_MAX * sinf(input)));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___s_s_i.html#ga11eda7ae877dbff4d650b4bc5847bb72">R_SSI_Open</a>(&amp;g_i2s_ctrl, &amp;g_i2s_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Transfer data. */</span></div><div class="line">    (void) <a class="code" href="group___s_s_i.html#gaec5fe3772ecc9fca9b85126f6d2f3f49">R_SSI_WriteRead</a>(&amp;g_i2s_ctrl,</div><div class="line">                           (uint8_t *) &amp;g_src[0],</div><div class="line">                           (uint8_t *) &amp;g_dest[0],</div><div class="line">                           SSI_EXAMPLE_SAMPLES_TO_TRANSFER * <span class="keyword">sizeof</span>(int16_t));</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Streaming Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define SSI_EXAMPLE_SAMPLES_TO_TRANSFER    (1024)</span></div><div class="line"><span class="preprocessor">#define SSI_EXAMPLE_TONE_FREQUENCY_HZ      (800)</span></div><div class="line">int16_t g_src[SSI_EXAMPLE_SAMPLES_TO_TRANSFER];</div><div class="line">int16_t g_dest[SSI_EXAMPLE_SAMPLES_TO_TRANSFER];</div><div class="line"><span class="keywordtype">void</span> ssi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Create a stereo sine wave. Using formula sample = sin(2 * pi * tone_frequency * t / sampling_frequency) */</span></div><div class="line">    uint32_t freq = SSI_EXAMPLE_TONE_FREQUENCY_HZ;</div><div class="line">    <span class="keywordflow">for</span> (uint32_t t = 0; t &lt; SSI_EXAMPLE_SAMPLES_TO_TRANSFER / 2; t += 1)</div><div class="line">    {</div><div class="line">        <span class="keywordtype">float</span> input = (((float) (freq * t)) * (<span class="keywordtype">float</span>) (M_TWOPI)) / SSI_EXAMPLE_AUDIO_SAMPLING_FREQUENCY_HZ;</div><div class="line">        g_src[2 * t]     = (int16_t) ((INT16_MAX * sinf(input)));</div><div class="line">        g_src[2 * t + 1] = (int16_t) ((INT16_MAX * sinf(input)));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___s_s_i.html#ga11eda7ae877dbff4d650b4bc5847bb72">R_SSI_Open</a>(&amp;g_i2s_ctrl, &amp;g_i2s_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Transfer data. */</span></div><div class="line">    (void) <a class="code" href="group___s_s_i.html#gaec5fe3772ecc9fca9b85126f6d2f3f49">R_SSI_WriteRead</a>(&amp;g_i2s_ctrl,</div><div class="line">                           (uint8_t *) &amp;g_src[0],</div><div class="line">                           (uint8_t *) &amp;g_dest[0],</div><div class="line">                           SSI_EXAMPLE_SAMPLES_TO_TRANSFER * <span class="keyword">sizeof</span>(int16_t));</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Streaming Example</h2>
 <p>This is an example of using SSI to stream audio data. This application uses a double buffer to store PCM sine wave data. It starts transmitting in the main loop, then loads the next buffer if it is ready in the callback. If the next buffer is not ready, a flag is set in the callback so the application knows to restart transmission in the main loop.</p>
 <p>This example also checks the return code of <a class="el" href="group___s_s_i.html#ga50467e833da72f35c1dcf5f74059da18">R_SSI_Write()</a> because <a class="el" href="group___s_s_i.html#ga50467e833da72f35c1dcf5f74059da18">R_SSI_Write()</a> can return an error if a transmit overflow occurs before the FIFO is reloaded. If a transmit overflow occurs before the FIFO is reloaded, the SSI will be stopped in the error interrupt, and it cannot be restarted until the I2S_EVENT_IDLE callback is received.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define SSI_STREAMING_EXAMPLE_AUDIO_SAMPLING_FREQUENCY_HZ    (22050)</span></div><div class="line"><span class="preprocessor">#define SSI_STREAMING_EXAMPLE_SAMPLES_PER_CHUNK              (1024)</span></div><div class="line"><span class="preprocessor">#define SSI_STREAMING_EXAMPLE_TONE_FREQUENCY_HZ              (800)</span></div><div class="line"></div><div class="line">int16_t       g_stream_src[2][SSI_EXAMPLE_SAMPLES_TO_TRANSFER];</div><div class="line">uint32_t      g_buffer_index           = 0;</div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_send_data_in_main_loop = <span class="keyword">true</span>;</div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_data_ready             = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when SSI is ready for more data. */</span></div><div class="line"><span class="keywordtype">void</span> ssi_example_callback (<a class="code" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Reload the FIFO if we hit the transmit watermark or restart transmission if the SSI is idle because it was</span></div><div class="line"><span class="comment">     * stopped after a transmit FIFO overflow. */</span></div><div class="line">    <span class="keywordflow">if</span> ((<a class="code" href="group___i2_s___a_p_i.html#ggaee54a6afc2869dd7371211e8b1f9d13fa23ea8cfcfe77f00283cec425394d9dc8">I2S_EVENT_TX_EMPTY</a> == p_args-&gt;<a class="code" href="group___i2_s___a_p_i.html#a035583e3102b475a20517aca81920cd7">event</a>) || (<a class="code" href="group___i2_s___a_p_i.html#ggaee54a6afc2869dd7371211e8b1f9d13fabf494b429dd658534ea8dabc1db4c117">I2S_EVENT_IDLE</a> == p_args-&gt;<a class="code" href="group___i2_s___a_p_i.html#a035583e3102b475a20517aca81920cd7">event</a>))</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Reload FIFO and handle errors. */</span></div><div class="line">            ssi_example_write();</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Data was not ready yet, send it in the main loop. */</span></div><div class="line">            g_send_data_in_main_loop = <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Load the transmit FIFO and check for error conditions. */</span></div><div class="line"><span class="keywordtype">void</span> ssi_example_write (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Transfer data. This call is non-blocking. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_s_i.html#ga50467e833da72f35c1dcf5f74059da18">R_SSI_Write</a>(&amp;g_i2s_ctrl,</div><div class="line">                                (uint8_t *) &amp;g_stream_src[g_buffer_index][0],</div><div class="line">                                SSI_STREAMING_EXAMPLE_SAMPLES_PER_CHUNK * <span class="keyword">sizeof</span>(int16_t));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Switch the buffer after data is sent. */</span></div><div class="line">        g_buffer_index = !g_buffer_index;</div><div class="line"></div><div class="line">        <span class="comment">/* Allow loop to calculate next buffer only if transmission was successful. */</span></div><div class="line">        g_data_ready = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Getting here most likely means a transmit overflow occurred before the FIFO could be reloaded. The</span></div><div class="line"><span class="comment">         * application must wait until the SSI is idle, then restart transmission. In this example, the idle</span></div><div class="line"><span class="comment">         * callback transmits data or resets the flag g_send_data_in_main_loop. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Calculate samples. This example is just a sine wave. For this type of data, it would be better to calculate</span></div><div class="line"><span class="comment"> * one period and loop it. This example should be updated for the audio data used by the application. */</span></div><div class="line"><span class="keywordtype">void</span> ssi_example_calculate_samples (uint32_t buffer_index)</div><div class="line">{</div><div class="line">    <span class="keyword">static</span> uint32_t t = 0U;</div><div class="line"></div><div class="line">    <span class="comment">/* Create a stereo sine wave. Using formula sample = sin(2 * pi * tone_frequency * t / sampling_frequency) */</span></div><div class="line">    uint32_t freq = SSI_STREAMING_EXAMPLE_TONE_FREQUENCY_HZ;</div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; SSI_STREAMING_EXAMPLE_SAMPLES_PER_CHUNK / 2; i += 1)</div><div class="line">    {</div><div class="line">        <span class="keywordtype">float</span> input = (((float) (freq * t)) * M_TWOPI) / SSI_STREAMING_EXAMPLE_AUDIO_SAMPLING_FREQUENCY_HZ;</div><div class="line">        t++;</div><div class="line"></div><div class="line">        <span class="comment">/* Store sample twice, once for left channel and once for right channel. */</span></div><div class="line">        int16_t sample = (int16_t) ((INT16_MAX * sinf(input)));</div><div class="line">        g_stream_src[buffer_index][2 * i]     = sample;</div><div class="line">        g_stream_src[buffer_index][2 * i + 1] = sample;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Data is ready to be sent in the interrupt. */</span></div><div class="line">    g_data_ready = <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ssi_streaming_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___s_s_i.html#ga11eda7ae877dbff4d650b4bc5847bb72">R_SSI_Open</a>(&amp;g_i2s_ctrl, &amp;g_i2s_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Prepare data in a buffer that is not currently used for transmission. */</span></div><div class="line">        ssi_example_calculate_samples(g_buffer_index);</div><div class="line"></div><div class="line">        <span class="comment">/* Send data in main loop the first time, and if it was not ready in the interrupt. */</span></div><div class="line">        <span class="keywordflow">if</span> (g_send_data_in_main_loop)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Clear flag. */</span></div><div class="line">            g_send_data_in_main_loop = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">            <span class="comment">/* Reload FIFO and handle errors. */</span></div><div class="line">            ssi_example_write();</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* If the next buffer is ready, wait for the data to be sent in the interrupt. */</span></div><div class="line">        <span class="keywordflow">while</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define SSI_STREAMING_EXAMPLE_AUDIO_SAMPLING_FREQUENCY_HZ    (22050)</span></div><div class="line"><span class="preprocessor">#define SSI_STREAMING_EXAMPLE_SAMPLES_PER_CHUNK              (1024)</span></div><div class="line"><span class="preprocessor">#define SSI_STREAMING_EXAMPLE_TONE_FREQUENCY_HZ              (800)</span></div><div class="line"></div><div class="line">int16_t       g_stream_src[2][SSI_EXAMPLE_SAMPLES_TO_TRANSFER];</div><div class="line">uint32_t      g_buffer_index           = 0;</div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_send_data_in_main_loop = <span class="keyword">true</span>;</div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_data_ready             = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when SSI is ready for more data. */</span></div><div class="line"><span class="keywordtype">void</span> ssi_example_callback (<a class="code" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Reload the FIFO if we hit the transmit watermark or restart transmission if the SSI is idle because it was</span></div><div class="line"><span class="comment">     * stopped after a transmit FIFO overflow. */</span></div><div class="line">    <span class="keywordflow">if</span> ((<a class="code" href="group___i2_s___a_p_i.html#ggaee54a6afc2869dd7371211e8b1f9d13fa23ea8cfcfe77f00283cec425394d9dc8">I2S_EVENT_TX_EMPTY</a> == p_args-&gt;<a class="code" href="group___i2_s___a_p_i.html#a035583e3102b475a20517aca81920cd7">event</a>) || (<a class="code" href="group___i2_s___a_p_i.html#ggaee54a6afc2869dd7371211e8b1f9d13fabf494b429dd658534ea8dabc1db4c117">I2S_EVENT_IDLE</a> == p_args-&gt;<a class="code" href="group___i2_s___a_p_i.html#a035583e3102b475a20517aca81920cd7">event</a>))</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Reload FIFO and handle errors. */</span></div><div class="line">            ssi_example_write();</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Data was not ready yet, send it in the main loop. */</span></div><div class="line">            g_send_data_in_main_loop = <span class="keyword">true</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Load the transmit FIFO and check for error conditions. */</span></div><div class="line"><span class="keywordtype">void</span> ssi_example_write (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Transfer data. This call is non-blocking. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_s_i.html#ga50467e833da72f35c1dcf5f74059da18">R_SSI_Write</a>(&amp;g_i2s_ctrl,</div><div class="line">                                (uint8_t *) &amp;g_stream_src[g_buffer_index][0],</div><div class="line">                                SSI_STREAMING_EXAMPLE_SAMPLES_PER_CHUNK * <span class="keyword">sizeof</span>(int16_t));</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Switch the buffer after data is sent. */</span></div><div class="line">        g_buffer_index = !g_buffer_index;</div><div class="line"></div><div class="line">        <span class="comment">/* Allow loop to calculate next buffer only if transmission was successful. */</span></div><div class="line">        g_data_ready = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Getting here most likely means a transmit overflow occurred before the FIFO could be reloaded. The</span></div><div class="line"><span class="comment">         * application must wait until the SSI is idle, then restart transmission. In this example, the idle</span></div><div class="line"><span class="comment">         * callback transmits data or resets the flag g_send_data_in_main_loop. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Calculate samples. This example is just a sine wave. For this type of data, it would be better to calculate</span></div><div class="line"><span class="comment"> * one period and loop it. This example should be updated for the audio data used by the application. */</span></div><div class="line"><span class="keywordtype">void</span> ssi_example_calculate_samples (uint32_t buffer_index)</div><div class="line">{</div><div class="line">    <span class="keyword">static</span> uint32_t t = 0U;</div><div class="line"></div><div class="line">    <span class="comment">/* Create a stereo sine wave. Using formula sample = sin(2 * pi * tone_frequency * t / sampling_frequency) */</span></div><div class="line">    uint32_t freq = SSI_STREAMING_EXAMPLE_TONE_FREQUENCY_HZ;</div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; SSI_STREAMING_EXAMPLE_SAMPLES_PER_CHUNK / 2; i += 1)</div><div class="line">    {</div><div class="line">        <span class="keywordtype">float</span> input = (((float) (freq * t)) * (<span class="keywordtype">float</span>) M_TWOPI) / SSI_STREAMING_EXAMPLE_AUDIO_SAMPLING_FREQUENCY_HZ;</div><div class="line">        t++;</div><div class="line"></div><div class="line">        <span class="comment">/* Store sample twice, once for left channel and once for right channel. */</span></div><div class="line">        int16_t sample = (int16_t) ((INT16_MAX * sinf(input)));</div><div class="line">        g_stream_src[buffer_index][2 * i]     = sample;</div><div class="line">        g_stream_src[buffer_index][2 * i + 1] = sample;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Data is ready to be sent in the interrupt. */</span></div><div class="line">    g_data_ready = <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ssi_streaming_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___s_s_i.html#ga11eda7ae877dbff4d650b4bc5847bb72">R_SSI_Open</a>(&amp;g_i2s_ctrl, &amp;g_i2s_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Prepare data in a buffer that is not currently used for transmission. */</span></div><div class="line">        ssi_example_calculate_samples(g_buffer_index);</div><div class="line"></div><div class="line">        <span class="comment">/* Send data in main loop the first time, and if it was not ready in the interrupt. */</span></div><div class="line">        <span class="keywordflow">if</span> (g_send_data_in_main_loop)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Clear flag. */</span></div><div class="line">            g_send_data_in_main_loop = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">            <span class="comment">/* Reload FIFO and handle errors. */</span></div><div class="line">            ssi_example_write();</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* If the next buffer is ready, wait for the data to be sent in the interrupt. */</span></div><div class="line">        <span class="keywordflow">while</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structssi__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#structssi__instance__ctrl__t">ssi_instance_ctrl_t</a></td></tr>
@@ -888,7 +966,7 @@ Select bit clock division ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___i2_s___a_p_i.html#a48c3fdc05d5204621b8a1d5151f83cc6">i2s_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___i2_s___a_p_i.html#a99622a1df3e622b8b44450b98e616ddf">i2s_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -907,7 +985,7 @@ Select bit clock division ratio. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

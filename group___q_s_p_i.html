@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -218,7 +296,7 @@ The following build time configurations are defined in driver/r_qspi_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -228,7 +306,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Support Multiple Line Program in Extended SPI Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -242,18 +320,20 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; QSPI 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_qspi0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; SPI Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_qspi0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SPI Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Extended SPI</li>
 <li>
 QPI</li>
 </ul>
 </td><td>Extended SPI </td><td>Select the initial SPI protocol. SPI protocol can be changed in R_QSPI_Direct(). </td></tr>
-<tr>
-<td>General &gt; Address Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Address Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3</li>
 <li>
@@ -262,8 +342,8 @@ QPI</li>
 4 with 4-byte read code</li>
 </ul>
 </td><td>3 </td><td>Select the number of address bytes. Selecting '4 with 4-byte read code' converts the default read code determined in Read Mode to the 4-byte version. If 4-byte mode is selected without using 4-byte commands, the application must issue the EN4B command using R_QSPI_Direct(). </td></tr>
-<tr>
-<td>General &gt; Read Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Read Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Standard Read</li>
 <li>
@@ -278,14 +358,16 @@ Fast Read Quad Output</li>
 Fast Read Quad I/O</li>
 </ul>
 </td><td>Fast Read Quad I/O </td><td>Select the read mode for memory mapped access. </td></tr>
-<tr>
-<td>General &gt; Dummy Clocks for Fast Read</td><td>Refer to the RA Configuration tool for available options.</td><td>Default </td><td>Select the number of dummy clocks for fast read operations. Default is 6 clocks for Fast Read Quad I/O, 4 clocks for Fast Read Dual I/O, and 8 clocks for other fast read instructions including Fast Read Quad Output, Fast Read Dual Output, and Fast Read </td></tr>
-<tr>
-<td>General &gt; Page Size Bytes</td><td>Must be an integer greater than 0</td><td>256 </td><td>The maximum number of bytes allowed for a single write. </td></tr>
-<tr>
-<td>Command Definitions &gt; Page Program Command</td><td>Must be an 8-bit QSPI Page Program Command under Command Definitions</td><td>0x02 </td><td>The command to program a page. If 'Support Multiple Line Program in Extended SPI Mode' is Enabled, this command must use the same number of data lines as the selected read mode. </td></tr>
-<tr>
-<td>Command Definitions &gt; Page Program Address Lines</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Dummy Clocks for Fast Read</td><td>Refer to the RA Configuration tool for available options.</td><td>Default </td><td>Select the number of dummy clocks for fast read operations. Default is 6 clocks for Fast Read Quad I/O, 4 clocks for Fast Read Dual I/O, and 8 clocks for other fast read instructions including Fast Read Quad Output, Fast Read Dual Output, and Fast Read </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Page Size Bytes</td><td>Must be an integer greater than 0</td><td>256 </td><td>The maximum number of bytes allowed for a single write. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Command Definitions  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Page Program Command</td><td>Must be an 8-bit QSPI Page Program Command under Command Definitions</td><td>0x02 </td><td>The command to program a page. If 'Support Multiple Line Program in Extended SPI Mode' is Enabled, this command must use the same number of data lines as the selected read mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Page Program Address Lines</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
 <li>
@@ -294,34 +376,36 @@ Fast Read Quad I/O</li>
 4</li>
 </ul>
 </td><td>1 </td><td>Select the number of lines to use for the address bytes during write operations. This can be determined by referencing the datasheet for the external QSPI. It should either be 1 or match the number of data lines used for memory mapped fast read operations. </td></tr>
-<tr>
-<td>Command Definitions &gt; Write Enable Command</td><td>Must be an 8-bit QSPI Write Enable Command under Command Definitions</td><td>0x06 </td><td>The command to enable write. </td></tr>
-<tr>
-<td>Command Definitions &gt; Status Command</td><td>Must be an 8-bit QSPI Status Command under Command Definitions</td><td>0x05 </td><td>The command to query the status of a write or erase command. </td></tr>
-<tr>
-<td>Command Definitions &gt; Write Status Bit</td><td>Must be an integer between 0 and 7</td><td>0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
-<tr>
-<td>Command Definitions &gt; Sector Erase Command</td><td>Must be an 8-bit QSPI Sector Erase Command under Command Definitions</td><td>0x20 </td><td>The command to erase a sector. Set Sector Erase Size to 0 if unused. </td></tr>
-<tr>
-<td>Command Definitions &gt; Sector Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>4096 </td><td>The sector erase size. Set Sector Erase Size to 0 if Sector Erase is not supported. </td></tr>
-<tr>
-<td>Command Definitions &gt; Block Erase Command</td><td>Must be an 8-bit QSPI Block Erase Command under Command Definitions</td><td>0xD8 </td><td>The command to erase a block. Set Block Erase Size to 0 if unused. </td></tr>
-<tr>
-<td>Command Definitions &gt; Block Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>65536 </td><td>The block erase size. Set Block Erase Size to 0 if Block Erase is not supported. </td></tr>
-<tr>
-<td>Command Definitions &gt; Block Erase 32KB Command</td><td>Must be an 8-bit QSPI Block Erase 32KB Command under Command Definitions</td><td>0x52 </td><td>The command to erase a 32KB block. Set Block Erase Size to 0 if unused. </td></tr>
-<tr>
-<td>Command Definitions &gt; Block Erase 32KB Size</td><td>Must be an integer greater than or equal to 0</td><td>32768 </td><td>The block erase 32KB size. Set Block Erase 32KB Size to 0 if Block Erase 32KB is not supported. </td></tr>
-<tr>
-<td>Command Definitions &gt; Chip Erase Command</td><td>Must be an 8-bit QSPI Chip Erase Command under Command Definitions</td><td>0xC7 </td><td>The command to erase the entire chip. Set Chip Erase Command to 0 if unused. </td></tr>
-<tr>
-<td>Command Definitions &gt; XIP Enter M7-M0</td><td>Must be an 8-bit QSPI XIP Enter M7-M0 command under Command Definitions</td><td>0x20 </td><td>How to set M7-M0 to enter XIP mode. </td></tr>
-<tr>
-<td>Command Definitions &gt; XIP Exit M7-M0</td><td>Must be an 8-bit QSPI XIP Exit M7-M0 command under Command Definitions</td><td>0xFF </td><td>How to set M7-M0 exit XIP mode. </td></tr>
-<tr>
-<td>Bus Timing &gt; QSPKCLK Divisor</td><td>Refer to the RA Configuration tool for available options.</td><td>2 </td><td>Select the divisor to apply to PCLK to get QSPCLK. </td></tr>
-<tr>
-<td>Bus Timing &gt; Minimum QSSL Deselect Cycles</td><td>Refer to the RA Configuration tool for available options.</td><td>4 QSPCLK </td><td>Define the minimum number of QSPCLK cycles for QSSL to remain high beween operations. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Enable Command</td><td>Must be an 8-bit QSPI Write Enable Command under Command Definitions</td><td>0x06 </td><td>The command to enable write. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Status Command</td><td>Must be an 8-bit QSPI Status Command under Command Definitions</td><td>0x05 </td><td>The command to query the status of a write or erase command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Status Bit</td><td>Must be an integer between 0 and 7</td><td>0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Erase Command</td><td>Must be an 8-bit QSPI Sector Erase Command under Command Definitions</td><td>0x20 </td><td>The command to erase a sector. Set Sector Erase Size to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>4096 </td><td>The sector erase size. Set Sector Erase Size to 0 if Sector Erase is not supported. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase Command</td><td>Must be an 8-bit QSPI Block Erase Command under Command Definitions</td><td>0xD8 </td><td>The command to erase a block. Set Block Erase Size to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>65536 </td><td>The block erase size. Set Block Erase Size to 0 if Block Erase is not supported. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase 32KB Command</td><td>Must be an 8-bit QSPI Block Erase 32KB Command under Command Definitions</td><td>0x52 </td><td>The command to erase a 32KB block. Set Block Erase Size to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase 32KB Size</td><td>Must be an integer greater than or equal to 0</td><td>32768 </td><td>The block erase 32KB size. Set Block Erase 32KB Size to 0 if Block Erase 32KB is not supported. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Chip Erase Command</td><td>Must be an 8-bit QSPI Chip Erase Command under Command Definitions</td><td>0xC7 </td><td>The command to erase the entire chip. Set Chip Erase Command to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">XIP Enter M7-M0</td><td>Must be an 8-bit QSPI XIP Enter M7-M0 command under Command Definitions</td><td>0x20 </td><td>How to set M7-M0 to enter XIP mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">XIP Exit M7-M0</td><td>Must be an 8-bit QSPI XIP Exit M7-M0 command under Command Definitions</td><td>0xFF </td><td>How to set M7-M0 exit XIP mode. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Bus Timing  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">QSPKCLK Divisor</td><td>Refer to the RA Configuration tool for available options.</td><td>2 </td><td>Select the divisor to apply to PCLK to get QSPCLK. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimum QSSL Deselect Cycles</td><td>Refer to the RA Configuration tool for available options.</td><td>4 QSPCLK </td><td>Define the minimum number of QSPCLK cycles for QSSL to remain high beween operations. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-qspi-clock-configuration"></a>
@@ -1025,7 +1109,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

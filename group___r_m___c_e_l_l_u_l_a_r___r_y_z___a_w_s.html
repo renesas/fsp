@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -208,53 +286,53 @@ The following build time configurations are defined in aws/cellular_interface/ce
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Mobile Country Code Max Size</td><td>Value must be a positive integer</td><td>3 </td><td>Mobile country code max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Mobile Network Node Max Size</td><td>Value must be a positive integer</td><td>3 </td><td>Mobile network code max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Integrated Circuit Card Identity Max Size</td><td>Value must be a positive integer</td><td>20 </td><td>Integrated circuit card identity max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>International Mobile Subscriber Identity Max Size</td><td>Value must be a positive integer</td><td>15 </td><td>International Mobile Subscriber Identity max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Firmware Version Max Size</td><td>Value must be a positive integer</td><td>32 </td><td>Cellular module firmware version max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Hardware Version Max Size</td><td>Value must be a positive integer</td><td>12 </td><td>Cellular module hardware version max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Serial Number Max Size</td><td>Value must be a positive integer</td><td>12 </td><td>Cellular module serial number max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>International Mobile Equipment Identity Max Size</td><td>Value must be a positive integer</td><td>15 </td><td>International Mobile Equipment Identity number max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Registered Network operator Name Max Size</td><td>Value must be a positive integer</td><td>32 </td><td>Registered network operator name max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Access Point Name Max Size</td><td>Value must be a positive integer</td><td>64 </td><td>Access point name max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Packet Data Network Username Max Size</td><td>Value must be a positive integer</td><td>32 </td><td>Packet data network username max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Packet Data Network Password Max Size</td><td>Value must be a positive integer</td><td>32 </td><td>Packet data network password max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Data Network IP Address Max Size</td><td>Value must be a positive integer</td><td>40 </td><td>Cellular data network IP address max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>AT Command Max Size</td><td>Value must be a positive integer</td><td>200 </td><td>Cellular AT command max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Max Number of Sockets</td><td>Value must be a positive integer</td><td>6 </td><td>Cellular module number of socket max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Manufacturer ID Max Size</td><td>Value must be a positive integer</td><td>20 </td><td>Cellular module manufacturer ID max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Model ID Max Size</td><td>Value must be a positive integer</td><td>10 </td><td>Model ID max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>EDRX List Max Size</td><td>Value must be a positive integer</td><td>4 </td><td>EDRX list max size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>PDN Context ID Min Value</td><td>Value must be a positive integer</td><td>1 </td><td>PDN context ID min value. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>PDN Context ID Max Value</td><td>Value must be a positive integer</td><td>16 </td><td>PDN context ID max value. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>RAT Priority Count</td><td>Value must be a positive integer</td><td>3 </td><td>RAT (radio access technology) priority count. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Socket Max Send Data Length (bytes)</td><td>Value must be a positive integer</td><td>1460 </td><td>Socket max send data length. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Socket Max Receive Data Length (bytes)</td><td>Value must be a positive integer</td><td>1500 </td><td>Socket max receive data length. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>GetHostByName Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
@@ -262,11 +340,11 @@ Enabled (default)</li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables/disable GetHostByName. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Comm Interface Send Timeout (ms)</td><td>Value must be a positive integer</td><td>1000 </td><td>Cellular comm interface receive timeout in ms. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Comm Interface Receive Timeout (ms)</td><td>Value must be a positive integer</td><td>50 </td><td>Cellular comm interface receive timeout in ms. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Static Allocation Context</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -274,7 +352,7 @@ Enabled</li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Use statically allocated context. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Comm Interface Static Allocation Context</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -282,7 +360,7 @@ Enabled</li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Use statically allocated context for comm interface. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Default RAT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 GSM</li>
@@ -304,7 +382,7 @@ CATM1</li>
 NBIOT</li>
 </ul>
 </td><td>CATM1 </td><td>Default Radio Access Technology. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>GSM Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -312,7 +390,7 @@ Enabled</li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>This should be disabled when a modem doesn't support GSM or the AT+CGREG command. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Static Socket Context</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -320,20 +398,12 @@ Enabled</li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Use statically allocated socket. </td></tr>
-<tr>
-<td>Log Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Off</li>
-<li>
-Error</li>
-<li>
-Warning</li>
-<li>
-Info</li>
-<li>
-Debug</li>
-</ul>
-</td><td>Off </td><td>Log level for the cellular interface. Defaults to using printf when enabled </td></tr>
+<tr class="tree_none">
+<td>AT Command Timeout (ms)</td><td>Value must be a positive integer</td><td>5000 </td><td>Cellular common AT command timeout. </td></tr>
+<tr class="tree_none">
+<td>AT Command Raw Timeout (ms)</td><td>Value must be a positive integer</td><td>5000 </td><td>Cellular AT command raw timeout. </td></tr>
+<tr class="tree_none">
+<td>AT Command Response prefix length</td><td>Value must be a positive integer</td><td>5000 </td><td>Cellular AT command response prefix string length. </td></tr>
 </table>
 </p>
 <h2>RYZ Cellular Interface Port</h2>
@@ -342,9 +412,9 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; AW
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Module Reset Pin (Port Number)</td><td>Refer to the RA Configuration tool for available options.</td><td>00 </td><td>Specify the reset control port for the RYZ module. This property is only used in devassist. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Module Reset Pin (Pin Number)</td><td>Refer to the RA Configuration tool for available options.</td><td>00 </td><td>Specify the reset control pin for the RYZ module. This property is only used in devassist. </td></tr>
 </table>
 </p>
@@ -359,7 +429,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

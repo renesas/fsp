@@ -24,7 +24,7 @@ var group___r_m___v_e_e___a_p_i =
       [ "statusGet", "group___r_m___v_e_e___a_p_i.html#a3bdb3d09f70fca2b78380d2dfb8eefc3", null ],
       [ "refresh", "group___r_m___v_e_e___a_p_i.html#af9b151f78090db849beecfad30c734ae", null ],
       [ "format", "group___r_m___v_e_e___a_p_i.html#a8dfcc3419ebd36cf3081a6b0a87618cc", null ],
-      [ "callbackSet", "group___r_m___v_e_e___a_p_i.html#ac64776adb2da7869c3a806614639df67", null ],
+      [ "callbackSet", "group___r_m___v_e_e___a_p_i.html#a34a4e9e64c18c008336248fb9a6f9ddf", null ],
       [ "close", "group___r_m___v_e_e___a_p_i.html#ac275b976b44492bffacf67e6badcab7b", null ]
     ] ],
     [ "rm_vee_instance_t", "group___r_m___v_e_e___a_p_i.html#structrm__vee__instance__t", [

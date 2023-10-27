@@ -1,0 +1,833 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: DA16XXX Transport Layer (rm_at_transport_da16xxx_uart)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">DA16XXX Transport Layer (rm_at_transport_da16xxx_uart)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga19582d5cde4a6428144a2ed83bf1e6fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ga19582d5cde4a6428144a2ed83bf1e6fc">rm_at_transport_da16xxx_uart_callback</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *p_args)</td></tr>
+<tr class="separator:ga19582d5cde4a6428144a2ed83bf1e6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2ddbb5eb7b0116960dcbea29e3d1855"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#gac2ddbb5eb7b0116960dcbea29e3d1855">rm_at_transport_da16xxx_uartOpen</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__cfg__t">at_transport_da16xxx_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gac2ddbb5eb7b0116960dcbea29e3d1855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb122a05383ceb41b1c67743c0d77d4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#gaeb122a05383ceb41b1c67743c0d77d4c">rm_at_transport_da16xxx_uart_atCommandSendThreadSafe</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *p_at_cmd)</td></tr>
+<tr class="separator:gaeb122a05383ceb41b1c67743c0d77d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac47882953739a3f8b5ac126c848f2d45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#gac47882953739a3f8b5ac126c848f2d45">rm_at_transport_da16xxx_uart_atCommandSend</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *p_at_cmd)</td></tr>
+<tr class="separator:gac47882953739a3f8b5ac126c848f2d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga742224bce5a4516b843842493c0577ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ga742224bce5a4516b843842493c0577ae">rm_at_transport_da16xxx_uart_giveMutex</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, uint32_t mutex_flag)</td></tr>
+<tr class="separator:ga742224bce5a4516b843842493c0577ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a988afe9ec768a430a29d91a80f0cd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ga4a988afe9ec768a430a29d91a80f0cd0">rm_at_transport_da16xxx_uart_takeMutex</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, uint32_t mutex_flag)</td></tr>
+<tr class="separator:ga4a988afe9ec768a430a29d91a80f0cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b9bc4e131c8e5f099d33bb03a5df8d5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ga5b9bc4e131c8e5f099d33bb03a5df8d5">rm_at_transport_da16xxx_uart_bufferRecv</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, const char *p_data, uint32_t length, uint32_t rx_timeout)</td></tr>
+<tr class="separator:ga5b9bc4e131c8e5f099d33bb03a5df8d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47aa13c4e287db591d2c24bf554c39ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ga47aa13c4e287db591d2c24bf554c39ff">rm_at_transport_da16xxx_statusGet</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__status__t">at_transport_da16xxx_status_t</a> *p_status)</td></tr>
+<tr class="separator:ga47aa13c4e287db591d2c24bf554c39ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga863e9c45eb248ba6d16b9c951a824512"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ga863e9c45eb248ba6d16b9c951a824512">rm_at_transport_da16xxx_uartClose</a> (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga863e9c45eb248ba6d16b9c951a824512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Transport layer implementation for linking DA16XXX Drivers with Communications layer. </p>
+<h1><a class="anchor" id="r-wifi-onchip-da16xxx-transport-overview"></a>
+Overview</h1>
+<p>This Transport Layer provides an abstraction interface between the DA16XXX driver and communications layers. Currently, the module supports only UART, but will support SPI in future.</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<h2><a class="anchor" id="r-wifi-onchip-da16xxx-transport-features"></a>
+Features</h2>
+<ul>
+<li>Configuring internal send/receive buffers.</li>
+<li>Providing thread-safe access to the communications interface (mutex) when sending AT commands.</li>
+<li>Implementing AT command send function based on user communication option (UART or SPI (future)). This function must be able to check the module response.</li>
+<li>Implement a receive function based on user communication option (UART or SPI (future)). Handles income data from the communications interface and stacks it on an internal buffer.</li>
+</ul>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<h1><a class="anchor" id="r-wifi-onchip-da16xxx-transport-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_at_transport_da16xxx_uart</h2>
+The following build time configurations are defined in fsp_cfg/rm_at_transport_da16xxx_uart_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Size of RX buffer for CMD Port</td><td>Manual Entry</td><td>3000 </td><td></td></tr>
+<tr class="tree_none">
+<td>Semaphore maximum timeout</td><td>Manual Entry</td><td>10000 </td><td></td></tr>
+<tr class="tree_none">
+<td>Number of retries for AT commands</td><td>Manual Entry</td><td>10 </td><td></td></tr>
+<tr class="tree_none">
+<td>Module Reset Port</td><td>Refer to the RA Configuration tool for available options.</td><td>06 </td><td>Specify the module reset pin port for the MCU. </td></tr>
+<tr class="tree_none">
+<td>Module Reset Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>03 </td><td>Specify the module reset pin for the MCU. </td></tr>
+</table>
+</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<h2><a class="anchor" id="r-wifi-onchip-da16xxx-transport-interrupt-configuration"></a>
+Interrupt Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>.</p>
+<h2><a class="anchor" id="r-wifi-onchip-da16xxx-transport-clock-configuration"></a>
+Clock Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>.</p>
+<h2><a class="anchor" id="r-wifi-onchip-da16xxx-transport-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>.</p>
+<h1><a class="anchor" id="r-wifi-onchip-da16xxx-transport-usage_notes"></a>
+Usage Notes</h1>
+<ul>
+<li>This module is not designed to be used directly, users will access this module via the DA16XXX driver</li>
+</ul>
+<h2>Limitations</h2>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structat__transport__da16xxx__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#structat__transport__da16xxx__extended__cfg__t">at_transport_da16xxx_extended_cfg_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structat__transport__da16xxx__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#structat__transport__da16xxx__instance__ctrl__t">at_transport_da16xxx_instance_ctrl_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structat__transport__da16xxx__extended__cfg__t" id="structat__transport__da16xxx__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__extended__cfg__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>User configuration structure, used in open function </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a635b7c2c28745496c3cd8f0912034f2f"></a>const uint32_t</td>
+<td class="fieldname">
+num_uarts</td>
+<td class="fielddoc">
+Number of UART interfaces to use. </td></tr>
+<tr><td class="fieldtype">
+<a id="a26b440aee130343ccdc4b64085295302"></a>const <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> *</td>
+<td class="fieldname">
+uart_instances[AT_TRANSPORT_DA16XXX_CFG_MAX_NUMBER_UART_PORTS]</td>
+<td class="fielddoc">
+SCI UART instances. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3fbe79f3a79cb54808a5f71677d8946f"></a>const <a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+reset_pin</td>
+<td class="fielddoc">
+Reset pin used for module. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structat__transport__da16xxx__instance__ctrl__t" id="structat__transport__da16xxx__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__instance__ctrl__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AT_TRANSPORT_DA16XXX private control block. DO NOT MODIFY. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad5b24b7930161cde61d1b3b00658ca2a"><td class="memItemLeft" align="right" valign="top"><a id="ad5b24b7930161cde61d1b3b00658ca2a"></a>
+<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__cfg__t">at_transport_da16xxx_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ad5b24b7930161cde61d1b3b00658ca2a">p_cfg</a></td></tr>
+<tr class="memdesc:ad5b24b7930161cde61d1b3b00658ca2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:ad5b24b7930161cde61d1b3b00658ca2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb574af4134cbeb05b9056aac917e433"><td class="memItemLeft" align="right" valign="top"><a id="aeb574af4134cbeb05b9056aac917e433"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#aeb574af4134cbeb05b9056aac917e433">num_uarts</a></td></tr>
+<tr class="memdesc:aeb574af4134cbeb05b9056aac917e433"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of UARTS currently used for communication with module <br /></td></tr>
+<tr class="separator:aeb574af4134cbeb05b9056aac917e433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4fca4aac69f2a78856615d257516415"><td class="memItemLeft" align="right" valign="top"><a id="ab4fca4aac69f2a78856615d257516415"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ab4fca4aac69f2a78856615d257516415">curr_cmd_port</a></td></tr>
+<tr class="memdesc:ab4fca4aac69f2a78856615d257516415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current UART instance index for AT commands. <br /></td></tr>
+<tr class="separator:ab4fca4aac69f2a78856615d257516415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7627c836e2b45430339884dccb3f2ed"><td class="memItemLeft" align="right" valign="top"><a id="ad7627c836e2b45430339884dccb3f2ed"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ad7627c836e2b45430339884dccb3f2ed">open</a></td></tr>
+<tr class="memdesc:ad7627c836e2b45430339884dccb3f2ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to indicate if transport instance has been initialized. <br /></td></tr>
+<tr class="separator:ad7627c836e2b45430339884dccb3f2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6f955a83b6ec55b588a0e85b14858da"><td class="memItemLeft" align="right" valign="top"><a id="ab6f955a83b6ec55b588a0e85b14858da"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ab6f955a83b6ec55b588a0e85b14858da">cmd_rx_queue_buf</a> [AT_TRANSPORT_DA16XXX_CFG_CMD_RX_BUF_SIZE]</td></tr>
+<tr class="memdesc:ab6f955a83b6ec55b588a0e85b14858da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command port receive buffer used by byte queue // FreeRTOS. <br /></td></tr>
+<tr class="separator:ab6f955a83b6ec55b588a0e85b14858da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82bdcf12e5d7a73ea13c8b6b7bb95c7e"><td class="memItemLeft" align="right" valign="top"><a id="a82bdcf12e5d7a73ea13c8b6b7bb95c7e"></a>
+StreamBufferHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a82bdcf12e5d7a73ea13c8b6b7bb95c7e">socket_byteq_hdl</a></td></tr>
+<tr class="memdesc:a82bdcf12e5d7a73ea13c8b6b7bb95c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket stream buffer handle. <br /></td></tr>
+<tr class="separator:a82bdcf12e5d7a73ea13c8b6b7bb95c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5ba7d12fe8dec73fe64d32aa9151b8"><td class="memItemLeft" align="right" valign="top"><a id="a0c5ba7d12fe8dec73fe64d32aa9151b8"></a>
+StaticStreamBuffer_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a0c5ba7d12fe8dec73fe64d32aa9151b8">socket_byteq_struct</a></td></tr>
+<tr class="memdesc:a0c5ba7d12fe8dec73fe64d32aa9151b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold stream buffer info. <br /></td></tr>
+<tr class="separator:a0c5ba7d12fe8dec73fe64d32aa9151b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a255a93c5f2557eb1463d08aa634b7bdd"><td class="memItemLeft" align="right" valign="top"><a id="a255a93c5f2557eb1463d08aa634b7bdd"></a>
+SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a255a93c5f2557eb1463d08aa634b7bdd">tx_sem</a></td></tr>
+<tr class="memdesc:a255a93c5f2557eb1463d08aa634b7bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit binary semaphore handle. <br /></td></tr>
+<tr class="separator:a255a93c5f2557eb1463d08aa634b7bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa44d0fc37670948b9d8f0f10550a8ca"><td class="memItemLeft" align="right" valign="top"><a id="aaa44d0fc37670948b9d8f0f10550a8ca"></a>
+SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#aaa44d0fc37670948b9d8f0f10550a8ca">rx_sem</a></td></tr>
+<tr class="memdesc:aaa44d0fc37670948b9d8f0f10550a8ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive binary semaphore handle. <br /></td></tr>
+<tr class="separator:aaa44d0fc37670948b9d8f0f10550a8ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a326b99bfb4d6f8588c91ec756a3e989f"><td class="memItemLeft" align="right" valign="top"><a id="a326b99bfb4d6f8588c91ec756a3e989f"></a>
+<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__instance__t">uart_instance_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a326b99bfb4d6f8588c91ec756a3e989f">uart_instance_objects</a> [AT_TRANSPORT_DA16XXX_CFG_MAX_NUMBER_UART_PORTS]</td></tr>
+<tr class="memdesc:a326b99bfb4d6f8588c91ec756a3e989f"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART instance object. <br /></td></tr>
+<tr class="separator:a326b99bfb4d6f8588c91ec756a3e989f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f8472494acf9444c530b49712875d17"><td class="memItemLeft" align="right" valign="top"><a id="a8f8472494acf9444c530b49712875d17"></a>
+SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a8f8472494acf9444c530b49712875d17">uart_tei_sem</a> [AT_TRANSPORT_DA16XXX_CFG_MAX_NUMBER_UART_PORTS]</td></tr>
+<tr class="memdesc:a8f8472494acf9444c530b49712875d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART transmission end binary semaphore. <br /></td></tr>
+<tr class="separator:a8f8472494acf9444c530b49712875d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a6e0478e9417dc8080b1826937f6df"><td class="memItemLeft" align="right" valign="top"><a id="a65a6e0478e9417dc8080b1826937f6df"></a>
+const <a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a65a6e0478e9417dc8080b1826937f6df">reset_pin</a></td></tr>
+<tr class="memdesc:a65a6e0478e9417dc8080b1826937f6df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset pin used for module. <br /></td></tr>
+<tr class="separator:a65a6e0478e9417dc8080b1826937f6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86f440e2a20e53b15c59934630798479"><td class="memItemLeft" align="right" valign="top"><a id="a86f440e2a20e53b15c59934630798479"></a>
+bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a86f440e2a20e53b15c59934630798479">p_callback</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__callback__args__t">at_transport_da16xxx_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a86f440e2a20e53b15c59934630798479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function. <br /></td></tr>
+<tr class="separator:a86f440e2a20e53b15c59934630798479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae037592a93ea850d9903e7913eb7f04c"><td class="memItemLeft" align="right" valign="top"><a id="ae037592a93ea850d9903e7913eb7f04c"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ae037592a93ea850d9903e7913eb7f04c">p_context</a></td></tr>
+<tr class="memdesc:ae037592a93ea850d9903e7913eb7f04c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
+<tr class="separator:ae037592a93ea850d9903e7913eb7f04c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga19582d5cde4a6428144a2ed83bf1e6fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19582d5cde4a6428144a2ed83bf1e6fc">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uart_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rm_at_transport_da16xxx_uart_callback </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *&#160;</td>
+          <td class="paramname"><em>p_args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART Callback routine.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_args</td><td>Pointer to uart callback structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac2ddbb5eb7b0116960dcbea29e3d1855"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2ddbb5eb7b0116960dcbea29e3d1855">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uartOpen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_uartOpen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__cfg__t">at_transport_da16xxx_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Opens and configures the WIFI_DA16XXX Middleware module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>WIFI_DA16XXX successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_cfg or p_instance_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_OUT_OF_MEMORY</td><td>There is no more heap memory available. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_INIT_FAILED</td><td>WiFi module initialization failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaeb122a05383ceb41b1c67743c0d77d4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb122a05383ceb41b1c67743c0d77d4c">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uart_atCommandSendThreadSafe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_uart_atCommandSendThreadSafe </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *&#160;</td>
+          <td class="paramname"><em>p_at_cmd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send an AT command with testing for return response.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_at_cmd</td><td>Pointer to AT command data structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac47882953739a3f8b5ac126c848f2d45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac47882953739a3f8b5ac126c848f2d45">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uart_atCommandSend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_uart_atCommandSend </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *&#160;</td>
+          <td class="paramname"><em>p_at_cmd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send and receive an AT command with testing for return. Thread-Safe</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_at_cmd</td><td>Pointer to Transport layer instance data structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga742224bce5a4516b843842493c0577ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga742224bce5a4516b843842493c0577ae">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uart_giveMutex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_uart_giveMutex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mutex_flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Give the mutex for the send basic call.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mutex_flag</td><td>Flags for the mutex.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred giving the mutex. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4a988afe9ec768a430a29d91a80f0cd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a988afe9ec768a430a29d91a80f0cd0">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uart_takeMutex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_uart_takeMutex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mutex_flag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Take the mutex for the send basic call.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mutex_flag</td><td>Flags for the mutex.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred taking the mutex. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5b9bc4e131c8e5f099d33bb03a5df8d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b9bc4e131c8e5f099d33bb03a5df8d5">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uart_bufferRecv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t rm_at_transport_da16xxx_uart_bufferRecv </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>p_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>rx_timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receive data from stream buffer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Data length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rx_timeout</td><td>Timeout for receiving data on the buffer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">Number</td><td>of bytes pulled from Streambuffer </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>Accuracy of data is not guaranteed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga47aa13c4e287db591d2c24bf554c39ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47aa13c4e287db591d2c24bf554c39ff">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_statusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_statusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__status__t">at_transport_da16xxx_status_t</a> *&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the status of the configured DA16xxx transport.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Status stored in p_status. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga863e9c45eb248ba6d16b9c951a824512"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga863e9c45eb248ba6d16b9c951a824512">&#9670;&nbsp;</a></span>rm_at_transport_da16xxx_uartClose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> rm_at_transport_da16xxx_uartClose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the AT Transport DA16XXX Middleware module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>WIFI_DA16XXX successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_cfg or p_instance_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The Transport layer instance is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

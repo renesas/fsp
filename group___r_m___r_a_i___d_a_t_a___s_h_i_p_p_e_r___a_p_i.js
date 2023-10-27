@@ -19,8 +19,8 @@ var group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i =
     ] ],
     [ "rai_data_shipper_api_t", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__api__t", [
       [ "open", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a3753c77f850cb92447bb10e630fa77b5", null ],
-      [ "read", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a9851949b51fe47249263af1d06d6b440", null ],
-      [ "write", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a5d1d1d866da3b9290d5e27bfe8181eb1", null ],
+      [ "read", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#acddaa6872b90ef9d8fc1a55008c23ab5", null ],
+      [ "write", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#ac156dc33bfc54576cc672d786c5ad92e", null ],
       [ "close", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#aca00c1abd4e0952c92c2b9c9f6d7265b", null ]
     ] ],
     [ "rai_data_shipper_instance_t", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__instance__t", [

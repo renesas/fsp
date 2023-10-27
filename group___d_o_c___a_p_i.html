@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,8 +249,7 @@ $(document).ready(function(){initNavTree('group___d_o_c___a_p_i.html','');});
 <p>Defines the API and data structures for the DOC implementation of the Data Operation Circuit (DOC) interface.</p>
 <h1><a class="anchor" id="DOC_API_SUMMARY"></a>
 Summary</h1>
-<p>This module implements the DOC_API using the Data Operation Circuit (DOC).</p>
-<p>Implemented by: <a class="el" href="group___d_o_c.html">Data Operation Circuit (r_doc)</a> </p>
+<p>This module implements the DOC_API using the Data Operation Circuit (DOC). </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -255,7 +332,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:ab475d31f98b5c8f661eb51b3cb1a09d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45684e420b6afc4836687ce497f4a946"><td class="memItemLeft" align="right" valign="top"><a id="a45684e420b6afc4836687ce497f4a946"></a>
 IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a45684e420b6afc4836687ce497f4a946">irq</a></td></tr>
-<tr class="memdesc:a45684e420b6afc4836687ce497f4a946"><td class="mdescLeft">&#160;</td><td class="mdescRight">NVIC interrupt number assigned to this instance. <br /></td></tr>
+<tr class="memdesc:a45684e420b6afc4836687ce497f4a946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt number assigned to this instance. <br /></td></tr>
 <tr class="separator:a45684e420b6afc4836687ce497f4a946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a590908bc73ffeaf3dded64f96a5a1e"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a6a590908bc73ffeaf3dded64f96a5a1e">p_callback</a> )(<a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *p_args)</td></tr>
 <tr class="separator:a6a590908bc73ffeaf3dded64f96a5a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -354,8 +431,8 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:ac1dc79126e15b9645898828e42c93eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2544a78047cbd0f852d24da5d3f1050"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#ae2544a78047cbd0f852d24da5d3f1050">write</a> )(<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_ctrl, uint32_t data)</td></tr>
 <tr class="separator:ae2544a78047cbd0f852d24da5d3f1050"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a559e6ae7a841b6d0464232db650556"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a4a559e6ae7a841b6d0464232db650556">callbackSet</a> )(<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a4a559e6ae7a841b6d0464232db650556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7329180b5940baa737f3f486e8250364"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a7329180b5940baa737f3f486e8250364">callbackSet</a> )(<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a7329180b5940baa737f3f486e8250364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="abbbbf13adc94767c3efdb1aaa7b948ae"></a>
@@ -369,11 +446,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_o_c.html#ga49ab0814d37fe40570ef1c379a51ce0b">R_DOC_Open()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Initial configuration. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. Must be declared by user. Elements set here. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. All elements of this structure must be set by user. </td></tr>
@@ -394,11 +467,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Allow the driver to be reconfigured. Will reduce power consumption. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_o_c.html#ga00abf8118e145197cb6dad5502d4e1e0">R_DOC_Close()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Allow the driver to be reconfigured. Will reduce power consumption. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_o_c___a_p_i.html#abbbbf13adc94767c3efdb1aaa7b948ae">doc_api_t::open</a> call. </td></tr>
   </table>
@@ -418,10 +487,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Gets the result of addition/subtraction operations and stores it in the provided pointer p_result. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_o_c.html#ga70aa39aaa55dc31484304f3f4a9bcaca">R_DOC_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Gets the result of addition/subtraction operations and stores it in the provided pointer p_result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_o_c___a_p_i.html#abbbbf13adc94767c3efdb1aaa7b948ae">doc_api_t::open</a> call. </td></tr>
@@ -443,10 +509,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write to the DODIR register. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_o_c.html#ga5c87ec15a954bacc0914a4b1b21e2700">R_DOC_Write()</a></li>
-</ul>
-</dd></dl>
+<p>Write to the DODIR register.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_o_c___a_p_i.html#abbbbf13adc94767c3efdb1aaa7b948ae">doc_api_t::open</a> call. </td></tr>
@@ -457,21 +520,18 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 
 </div>
 </div>
-<a id="a4a559e6ae7a841b6d0464232db650556"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a559e6ae7a841b6d0464232db650556">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a7329180b5940baa737f3f486e8250364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7329180b5940baa737f3f486e8250364">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  doc_api_t::callbackSet) (<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  doc_api_t::callbackSet) (<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_o_c.html#gae7b76fdd85989423cbe3a241cacbe778">R_DOC_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the DOC control block. </td></tr>
@@ -535,10 +595,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>DOC control block. Allocate an instance specific control block to pass into the DOC API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="structdoc__instance__ctrl__t.html">doc_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>DOC control block. Allocate an instance specific control block to pass into the DOC API calls. </p>
 
 </div>
 </div>
@@ -603,7 +660,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

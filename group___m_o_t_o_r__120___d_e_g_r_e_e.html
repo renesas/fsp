@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -223,14 +301,80 @@ Features</h2>
 <li>Start/Stop a motor rotation</li>
 <li>Error detection (over current, over speed, over voltage, low voltage)</li>
 </ul>
-<h1><a class="anchor" id="rm-motor_120_degree-configuration"></a>
+<h2><a class="anchor" id="rm-motor_120_degree-target-hardware"></a>
+Target Hardware</h2>
+<p>The below figure shows examples of target hardware of this Motor 120-degree Module.</p>
+<div class="image">
+<img src="rm_motor_120_sensorless_hardware.png" alt="rm_motor_120_sensorless_hardware.png"/>
+<div class="caption">
+Example of target hardware of motor 120-degree sensorless</div></div>
+ <div class="image">
+<img src="rm_motor_hall_hardware.png" alt="rm_motor_hall_hardware.png"/>
+<div class="caption">
+Example of target hardware of motor 120-degree with hall sensor</div></div>
+ <h2><a class="anchor" id="rm-motor_120_degree-modulation"></a>
+Modulation</h2>
+<p>The modulation factor "m" is defined as follows.</p>
+<div class="image">
+<img src="rm_motor_sensorless_moduration.png" alt="rm_motor_sensorless_moduration.png"/>
+<div class="caption">
+Modulation factor</div></div>
+ <h2><a class="anchor" id="rm-motor_120_degree-state-transition"></a>
+State transition</h2>
+<p>The below figure shows a state transition diagram. Internal state is managed by "SYSTEM MODE".</p>
+<div class="image">
+<img src="rm_motor_sensorless_mode_transition.png" alt="rm_motor_sensorless_mode_transition.png"/>
+<div class="caption">
+State transition diagram</div></div>
+<p> (1) SYSTEM MODE "SYSTEM MODE" indicates the operating states of the system. The state transits on occurrence of each event (EVENT). "SYSTEM MODE" has 3 states that are motor drive stop (INACTIVE), motor drive (ACTIVE), and abnormal condition (ERROR).</p>
+<p>(2) EVENT When "EVENT" occurs in each "SYSTEM MODE", "SYSTEM MODE" changes as shown the table in above figure, according to that "EVENT". The occurrence factors of each event are shown below.</p>
+<table class="doxtable">
+<tr>
+<th>EVENT name </th><th>Occurrence factor  </th></tr>
+<tr>
+<td>STOP </td><td>by user operation </td></tr>
+<tr>
+<td>RUN </td><td>by user operation </td></tr>
+<tr>
+<td>ERROR </td><td>when the system detects an error </td></tr>
+<tr>
+<td>RESET </td><td>by user operation </td></tr>
+</table>
+<h2><a class="anchor" id="rm-motor_120_degree-flowchart"></a>
+Flowchart</h2>
+<p>The below figures show flowcharts of motor 120-degree module.</p>
+<div class="image">
+<img src="rm_motor_sensorless_main_flowchart.png" alt="rm_motor_sensorless_main_flowchart.png"/>
+<div class="caption">
+Main process</div></div>
+ <div class="image">
+<img src="rm_motor_120_degree_current_cyclic.png" alt="rm_motor_120_degree_current_cyclic.png"/>
+<div class="caption">
+Current control process of 120-degree sensorless</div></div>
+ <div class="image">
+<img src="rm_motor_120_degree_speed_cyclic.png" alt="rm_motor_120_degree_speed_cyclic.png"/>
+<div class="caption">
+Speed control process of 120-degree sensorless</div></div>
+ <div class="image">
+<img src="rm_motor_120_hall_current_cyclic.png" alt="rm_motor_120_hall_current_cyclic.png"/>
+<div class="caption">
+Current control process of 120-degree with hall sensor</div></div>
+ <div class="image">
+<img src="rm_motor_120_hall_speed_cyclic.png" alt="rm_motor_120_hall_speed_cyclic.png"/>
+<div class="caption">
+Speed control process of 120-degree with hall sensor</div></div>
+ <div class="image">
+<img src="rm_motor_sensorless_overcurrent_flowchart.png" alt="rm_motor_sensorless_overcurrent_flowchart.png"/>
+<div class="caption">
+Over current detection interrupt process</div></div>
+ <h1><a class="anchor" id="rm-motor_120_degree-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_motor_120_degree</h2>
 The following build time configurations are defined in fsp_cfg/rm_motor_120_degree_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -246,18 +390,22 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor 1
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_120_degree0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Limit of over current (A)</td><td>Must be a valid non-negative value.</td><td>4.0 </td><td>Limit of over current.(Detection threshold) </td></tr>
-<tr>
-<td>General &gt; Limit of over voltage (V)</td><td>Must be a valid non-negative value.</td><td>28.0 </td><td>Limit of over voltage.(Detection threshold) </td></tr>
-<tr>
-<td>General &gt; Limit of over speed (rpm)</td><td>Must be a valid non-negative value.</td><td>3000.0 </td><td>Limit of over speed.(Detection threshold) </td></tr>
-<tr>
-<td>General &gt; Limit of low voltage (V)</td><td>Must be a valid non-negative value.</td><td>14.0 </td><td>Limit of low voltage.(Detection threshold) </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_120_degree0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit of over current (A)</td><td>Must be a valid non-negative value.</td><td>4.0 </td><td>Limit of over current.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit of over voltage (V)</td><td>Must be a valid non-negative value.</td><td>28.0 </td><td>Limit of over voltage.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit of over speed (rpm)</td><td>Must be a valid non-negative value.</td><td>3000.0 </td><td>Limit of over speed.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Limit of low voltage (V)</td><td>Must be a valid non-negative value.</td><td>14.0 </td><td>Limit of low voltage.(Detection threshold) </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_120_degree-clock-configuration"></a>
@@ -265,7 +413,7 @@ Clock Configuration</h2>
 <p>This module doesn't depend on clock setting, because this module is a simple status transition process.</p>
 <h2><a class="anchor" id="rm-motor_120_degree-pin-configuration"></a>
 Pin Configuration</h2>
-<p>This module does not use I/O pins.</p>
+<p>This module does not use I/O pins. Please set used pins on configuration of each hardware modules.</p>
 <h1><a class="anchor" id="rm-motor_120_degree-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm-motor_120_degree-limitations"></a>
@@ -946,7 +1094,7 @@ Low-voltage limit (V) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

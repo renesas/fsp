@@ -4,7 +4,6 @@ var group___r_m___m_e_s_h___s_c_e_n_e___c_l_t =
     [ "RM_MESH_SCENE_CLT_Open", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#ga4312cc06961e164dcdae0fe6992855b6", null ],
     [ "RM_MESH_SCENE_CLT_Close", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#gabaf7b683de8c4cce5c0b909c4352d599", null ],
     [ "RM_MESH_SCENE_CLT_GetModelHandle", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#gaf16f19b70222f58e50d30bd62e79ad1e", null ],
-    [ "RM_MESH_SCENE_CLT_SetModelHandle", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#ga3632d955093155b19884c1aaf8a35844", null ],
     [ "RM_MESH_SCENE_CLT_SendReliablePdu", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#ga04792a8eb8e7afe5525ae6f3eadca539", null ],
     [ "RM_MESH_SCENE_CLT_Get", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#gaa49ce0171bdb9f092e81368634fe8f6f", null ],
     [ "RM_MESH_SCENE_CLT_Recall", "group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#ga1ce7955f1c0ec83d82c742af4476f5b5", null ],

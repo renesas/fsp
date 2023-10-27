@@ -40,7 +40,7 @@ var group___s_m_c_i___a_p_i =
       [ "baudSet", "group___s_m_c_i___a_p_i.html#a8d5f3d07f5f746a977e8dff3c3ee1d4c", null ],
       [ "statusGet", "group___s_m_c_i___a_p_i.html#af9ee15358ff516dc2113002475c8768a", null ],
       [ "clockControl", "group___s_m_c_i___a_p_i.html#ad5770c33d3cd5488a8b80356b03bd4b1", null ],
-      [ "callbackSet", "group___s_m_c_i___a_p_i.html#ae570700058ba091c08a81ccf4822d2cd", null ],
+      [ "callbackSet", "group___s_m_c_i___a_p_i.html#a3787b5dd3cdf7487a7ee39513013cc57", null ],
       [ "close", "group___s_m_c_i___a_p_i.html#ae15c4e9a6bd3cdc5b3d3194ec30bcf93", null ]
     ] ],
     [ "smci_instance_t", "group___s_m_c_i___a_p_i.html#structsmci__instance__t", [

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -175,7 +253,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga16df0aea75d423c36ad71e27e28f63bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified UART Comms module. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#abd464feb634b589687a0b8f55d0a078a">rm_comms_api_t::close</a>.  <a href="#ga16df0aea75d423c36ad71e27e28f63bc">More...</a><br /></td></tr>
 <tr class="separator:ga16df0aea75d423c36ad71e27e28f63bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac4c43c453030b4b51d0f06d899f8ee78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_a_r_t.html#gac4c43c453030b4b51d0f06d899f8ee78">RM_COMMS_UART_CallbackSet</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20">rm_comms_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *), void const *const p_context)</td></tr>
-<tr class="memdesc:gac4c43c453030b4b51d0f06d899f8ee78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the UART Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#a72b92d10a4deec62e00ee14a8ba17b93">rm_comms_api_t::callbackSet</a>.  <a href="#gac4c43c453030b4b51d0f06d899f8ee78">More...</a><br /></td></tr>
+<tr class="memdesc:gac4c43c453030b4b51d0f06d899f8ee78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the UART Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#af1a782cc776093ebd3e07c711cf5bad5">rm_comms_api_t::callbackSet</a>.  <a href="#gac4c43c453030b4b51d0f06d899f8ee78">More...</a><br /></td></tr>
 <tr class="separator:gac4c43c453030b4b51d0f06d899f8ee78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaff7b4d952189f5afbeb9bd728ad76950"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_a_r_t.html#gaff7b4d952189f5afbeb9bd728ad76950">RM_COMMS_UART_Read</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20">rm_comms_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
 <tr class="memdesc:gaff7b4d952189f5afbeb9bd728ad76950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a read from the UART device. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#a40779e10d71d444a436dc2382003bc0b">rm_comms_api_t::read</a>.  <a href="#gaff7b4d952189f5afbeb9bd728ad76950">More...</a><br /></td></tr>
@@ -205,7 +283,7 @@ The following build time configurations are defined in fsp_cfg/rm_comms_uart_cfg
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -221,45 +299,47 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>RTOS &gt; Write Mutex</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> RTOS  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Mutex</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Do Not Use</li>
 <li>
 Use</li>
 </ul>
 </td><td>Use </td><td>Lock device for writing in using RTOS. </td></tr>
-<tr>
-<td>RTOS &gt; Read Mutex</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Read Mutex</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Do Not Use</li>
 <li>
 Use</li>
 </ul>
 </td><td>Use </td><td>Lock device for reading in using RTOS. </td></tr>
-<tr>
-<td>RTOS &gt; Mutex Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Timeout for recursive mutex operation in using RTOS. </td></tr>
-<tr>
-<td>RTOS &gt; Write Semaphore</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mutex Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Timeout for recursive mutex operation in using RTOS. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Semaphore</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Do Not Use</li>
 <li>
 Use</li>
 </ul>
 </td><td>Use </td><td>Block writing in using RTOS. </td></tr>
-<tr>
-<td>RTOS &gt; Read Semaphore</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Read Semaphore</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Do Not Use</li>
 <li>
 Use</li>
 </ul>
 </td><td>Use </td><td>Block reading in using RTOS. </td></tr>
-<tr>
-<td>RTOS &gt; Semaphore Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Timeout for semaphore operation in using RTOS. </td></tr>
-<tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Semaphore Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Timeout for semaphore operation in using RTOS. </td></tr>
+<tr class="tree_none">
 <td>Name</td><td>Manual Entry</td><td>g_comms_uart0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. </td></tr>
 </table>
 </p>
@@ -422,7 +502,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 
-<p>Updates the UART Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#a72b92d10a4deec62e00ee14a8ba17b93">rm_comms_api_t::callbackSet</a>. </p>
+<p>Updates the UART Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#af1a782cc776093ebd3e07c711cf5bad5">rm_comms_api_t::callbackSet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
@@ -566,7 +646,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

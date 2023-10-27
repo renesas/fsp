@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -253,7 +331,7 @@ Size of erase for associated command, set to SPI_FLASH_ERASE_SIZE_CHIP_ERASE for
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a496a8bfabb1c65a308549155a903ebe1"></a>union <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#unionspi__flash__direct__transfer__t_8____unnamed____">spi_flash_direct_transfer_t</a></td>
+<a id="aa848c618976f1e87ab416a21ac1bbebc"></a>union <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#unionspi__flash__direct__transfer__t_8____unnamed____">spi_flash_direct_transfer_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -873,7 +951,7 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>SPI protocol. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a1b7d1595891e2e14a3dc9e718b5188c3"></a>SPI_FLASH_PROTOCOL_EXTENDED_SPI&#160;</td><td class="fielddoc"><p>Extended SPI mode (commands on 1 line) or 1S-1S-1S protocol mode on OSPI_B. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a1b7d1595891e2e14a3dc9e718b5188c3"></a>SPI_FLASH_PROTOCOL_EXTENDED_SPI&#160;</td><td class="fielddoc"><p>Extended SPI mode (commands on 1 line) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535abf7718fe53c0e4daa1dcad6f4d6d215e"></a>SPI_FLASH_PROTOCOL_QPI&#160;</td><td class="fielddoc"><p>QPI mode (commands on 4 lines). Note that the application must ensure the device is in QPI mode. </p>
 </td></tr>
@@ -881,17 +959,19 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535afd83f451b4164b209b240ebb0f4bb158"></a>SPI_FLASH_PROTOCOL_DOPI&#160;</td><td class="fielddoc"><p>DOPI mode (command and data on 8 lines, dual data rate). Note that the application must ensure the device is in DOPI mode. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a54c52d62f8a1e16099da8ab9a203a1be"></a>SPI_FLASH_PROTOCOL_4S_4D_4D&#160;</td><td class="fielddoc"><p>4S-4D-4D protocol mode on OSPI_B. </p>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a3066069aa9be28b050e57faa29cf5be5"></a>SPI_FLASH_PROTOCOL_1S_1S_1S&#160;</td><td class="fielddoc"><p>1S-1S-1S protocol mode </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606"></a>SPI_FLASH_PROTOCOL_8D_8D_8D&#160;</td><td class="fielddoc"><p>8D-8D-8D protocol mode on OSPI_B. </p>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a54c52d62f8a1e16099da8ab9a203a1be"></a>SPI_FLASH_PROTOCOL_4S_4D_4D&#160;</td><td class="fielddoc"><p>4S-4D-4D protocol mode </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a6d421df12293ebbae4fa97b4cf152081"></a>SPI_FLASH_PROTOCOL_1S_2S_2S&#160;</td><td class="fielddoc"><p>1S-2S-2S protocol mode on OSPI_B. </p>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606"></a>SPI_FLASH_PROTOCOL_8D_8D_8D&#160;</td><td class="fielddoc"><p>8D-8D-8D protocol mode </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a668b4a0330a7e2de10b77f25fbea4567"></a>SPI_FLASH_PROTOCOL_2S_2S_2S&#160;</td><td class="fielddoc"><p>2S-2S-2S protocol mode on OSPI_B. </p>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a6d421df12293ebbae4fa97b4cf152081"></a>SPI_FLASH_PROTOCOL_1S_2S_2S&#160;</td><td class="fielddoc"><p>1S-2S-2S protocol mode </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535acd8ffe88180ff5b8288dee7739e581a8"></a>SPI_FLASH_PROTOCOL_1S_4S_4S&#160;</td><td class="fielddoc"><p>1S-4S-4S protocol mode on OSPI_B. </p>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a668b4a0330a7e2de10b77f25fbea4567"></a>SPI_FLASH_PROTOCOL_2S_2S_2S&#160;</td><td class="fielddoc"><p>2S-2S-2S protocol mode </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05"></a>SPI_FLASH_PROTOCOL_4S_4S_4S&#160;</td><td class="fielddoc"><p>4S-4S-4S protocol mode on OSPI_B. </p>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535acd8ffe88180ff5b8288dee7739e581a8"></a>SPI_FLASH_PROTOCOL_1S_4S_4S&#160;</td><td class="fielddoc"><p>1S-4S-4S protocol mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05"></a>SPI_FLASH_PROTOCOL_4S_4S_4S&#160;</td><td class="fielddoc"><p>4S-4S-4S protocol mode </p>
 </td></tr>
 </table>
 
@@ -956,7 +1036,11 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Number of dummy cycles for fast read operations. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fead62f009865391c9fcd7508c3f75e9f81"></a>SPI_FLASH_DUMMY_CLOCKS_DEFAULT&#160;</td><td class="fielddoc"><p>Default is 6 clocks for Fast Read Quad I/O, 4 clocks for Fast Read Dual I/O, and 8 clocks for other fast read instructions including Fast Read Quad Output, Fast Read Dual Output, and Fast Read. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feaed09e7b9b5d0d7b7be12e3677eba59a1"></a>SPI_FLASH_DUMMY_CLOCKS_0&#160;</td><td class="fielddoc"><p>0 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feafac1c75f76f2f0a4027b1544fecb48b4"></a>SPI_FLASH_DUMMY_CLOCKS_1&#160;</td><td class="fielddoc"><p>1 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feab4dcd627f0f4766d0e7fbf76a2160a98"></a>SPI_FLASH_DUMMY_CLOCKS_2&#160;</td><td class="fielddoc"><p>2 dummy clocks </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feaca19d746031e96849279c7f9c9365f73"></a>SPI_FLASH_DUMMY_CLOCKS_3&#160;</td><td class="fielddoc"><p>3 dummy clocks </p>
 </td></tr>
@@ -988,6 +1072,34 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea34ec51de93041c3710730907347e29ce"></a>SPI_FLASH_DUMMY_CLOCKS_17&#160;</td><td class="fielddoc"><p>17 dummy clocks </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feaccd9eab44effb89164d68dc55c73e10f"></a>SPI_FLASH_DUMMY_CLOCKS_18&#160;</td><td class="fielddoc"><p>18 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea32e0c7ab537261464e48be07bda963f0"></a>SPI_FLASH_DUMMY_CLOCKS_19&#160;</td><td class="fielddoc"><p>19 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea3490679f14cbe6dca290459020f75c71"></a>SPI_FLASH_DUMMY_CLOCKS_20&#160;</td><td class="fielddoc"><p>20 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fead65e7e0db08823212d8aca1feaae5279"></a>SPI_FLASH_DUMMY_CLOCKS_21&#160;</td><td class="fielddoc"><p>21 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea245eb3e209ead164289e776f8a1c3db5"></a>SPI_FLASH_DUMMY_CLOCKS_22&#160;</td><td class="fielddoc"><p>22 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea27f73312dc3edb2114956dd060693c96"></a>SPI_FLASH_DUMMY_CLOCKS_23&#160;</td><td class="fielddoc"><p>23 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feabaf62da3a1a577e312e0b0be000770cc"></a>SPI_FLASH_DUMMY_CLOCKS_24&#160;</td><td class="fielddoc"><p>24 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea36b30b484ac7ba6d951f42664c17bccc"></a>SPI_FLASH_DUMMY_CLOCKS_25&#160;</td><td class="fielddoc"><p>25 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea6cf608f95e25bdbde4af0fd0caa0844e"></a>SPI_FLASH_DUMMY_CLOCKS_26&#160;</td><td class="fielddoc"><p>26 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feabf7dd140ea6e3b47246e8dd6c2b812bc"></a>SPI_FLASH_DUMMY_CLOCKS_27&#160;</td><td class="fielddoc"><p>27 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feacf3e6ceb051173c3017ce7c715c96c77"></a>SPI_FLASH_DUMMY_CLOCKS_28&#160;</td><td class="fielddoc"><p>28 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea76793d9f869335cb3f6c46c30539d6a9"></a>SPI_FLASH_DUMMY_CLOCKS_29&#160;</td><td class="fielddoc"><p>29 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802fea047f2b71267ffaee5a6912d58854302b"></a>SPI_FLASH_DUMMY_CLOCKS_30&#160;</td><td class="fielddoc"><p>30 dummy clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1e03cbf0d565f4ae7ad2e41d85802feafaa464bb01a99230e64495288b7592c1"></a>SPI_FLASH_DUMMY_CLOCKS_31&#160;</td><td class="fielddoc"><p>31 dummy clocks </p>
+</td></tr>
 </table>
 
 </div>
@@ -1013,7 +1125,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

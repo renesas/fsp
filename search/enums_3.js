@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['da16xxx_5frecv_5fstate',['da16xxx_recv_state',['../group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html#gad26fee55a12ecdfefdaa69fe4d286bb8',1,'rm_wifi_onchip_da16xxx.h']]],
-  ['da16xxx_5fsocket_5frw',['da16xxx_socket_rw',['../group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html#ga0edb598a2cfd85804897594c1f0d0f6f',1,'rm_wifi_onchip_da16xxx.h']]],
-  ['da16xxx_5fsocket_5fstatus_5ft',['da16xxx_socket_status_t',['../group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html#ga34e060980f680dd540ea8df82e0f2059',1,'rm_wifi_onchip_da16xxx.h']]],
+  ['da16xxx_5frecv_5fstate',['da16xxx_recv_state',['../group___w_i_f_i___d_a16_x_x_x.html#gad26fee55a12ecdfefdaa69fe4d286bb8',1,'rm_wifi_da16xxx.h']]],
+  ['da16xxx_5fsocket_5frw',['da16xxx_socket_rw',['../group___w_i_f_i___d_a16_x_x_x.html#ga0edb598a2cfd85804897594c1f0d0f6f',1,'rm_wifi_da16xxx.h']]],
+  ['da16xxx_5fsocket_5fstatus_5ft',['da16xxx_socket_status_t',['../group___w_i_f_i___d_a16_x_x_x.html#ga34e060980f680dd540ea8df82e0f2059',1,'rm_wifi_da16xxx.h']]],
   ['dac8_5fmode_5ft',['dac8_mode_t',['../group___d_a_c8.html#gaad896095c341ce32b42f85eee23d9c7f',1,'r_dac8.h']]],
   ['dac_5fdata_5fformat_5ft',['dac_data_format_t',['../group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591',1,'r_dac_api.h']]],
+  ['display_5fcolor_5fkeying_5ft',['display_color_keying_t',['../group___d_i_s_p_l_a_y___a_p_i.html#ga79899f7bd76e6206e3d6ac2b5cf387a8',1,'r_display_api.h']]],
   ['display_5fcolor_5forder_5ft',['display_color_order_t',['../group___d_i_s_p_l_a_y___a_p_i.html#ga1da943d9034f9b7adc58d689c04202c1',1,'r_display_api.h']]],
+  ['display_5fdata_5fswap_5ft',['display_data_swap_t',['../group___d_i_s_p_l_a_y___a_p_i.html#gad32da0cb1f3137644b4641cb445a68bc',1,'r_display_api.h']]],
   ['display_5fendian_5ft',['display_endian_t',['../group___d_i_s_p_l_a_y___a_p_i.html#gadb038a620833950fb85c4d8397230762',1,'r_display_api.h']]],
   ['display_5fevent_5ft',['display_event_t',['../group___d_i_s_p_l_a_y___a_p_i.html#gad57d6b7a15167958412454bc06bd95a8',1,'r_display_api.h']]],
   ['display_5ffade_5fcontrol_5ft',['display_fade_control_t',['../group___d_i_s_p_l_a_y___a_p_i.html#gadddaa0376991530684bf3d138868305b',1,'r_display_api.h']]],

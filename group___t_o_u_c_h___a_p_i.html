@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,10 +248,7 @@ $(document).ready(function(){initNavTree('group___t_o_u_c_h___a_p_i.html','');})
 <p>Interface for Touch Middleware functions. </p>
 <h1><a class="anchor" id="TOUCH_API_Summary"></a>
 Summary</h1>
-<p>The TOUCH interface provides TOUCH functionality.</p>
-<p>The TOUCH interface can be implemented by:</p><ul>
-<li><a class="el" href="group___t_o_u_c_h.html">Touch (rm_touch)</a> </li>
-</ul>
+<p>The TOUCH interface provides TOUCH functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -567,8 +642,8 @@ New hysteresis ratio. </td></tr>
 <tr class="separator:ade680c82b506312e6d81580424f61d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b3e8ea61183b1546611b46c2f6200e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3">padDataGet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint16_t *p_pad_rx_coordinate, uint16_t *p_pad_tx_coordinate, uint8_t *p_pad_num_touch)</td></tr>
 <tr class="separator:a6b3e8ea61183b1546611b46c2f6200e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1390fd43ac6b2e08cab0fc26b4a5360"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360">callbackSet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ad1390fd43ac6b2e08cab0fc26b4a5360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1d317102754c252e82bc3ee7762d00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a2b1d317102754c252e82bc3ee7762d00">callbackSet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a2b1d317102754c252e82bc3ee7762d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad36949e5d56501bb67dd06a47b4049c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0">close</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad36949e5d56501bb67dd06a47b4049c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57dde5098486678e08ee43e053788f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a57dde5098486678e08ee43e053788f99">sensitivityRatioGet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t">touch_sensitivity_info_t</a> *p_touch_sensitivity_info)</td></tr>
@@ -590,10 +665,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#gafa9a9e5c3000e3daedd1050fa0d942fd">RM_TOUCH_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -615,10 +687,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Scan start. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82">RM_TOUCH_ScanStart()</a></li>
-</ul>
-</dd></dl>
+<p>Scan start.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -639,10 +708,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Data get. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1">RM_TOUCH_DataGet()</a></li>
-</ul>
-</dd></dl>
+<p>Data get.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -666,10 +732,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ScanStop. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga6f542117daebc83e6b81412660c15673">RM_TOUCH_ScanStop()</a></li>
-</ul>
-</dd></dl>
+<p>ScanStop.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -690,10 +753,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>pad data get. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga4dcf4a1abe539e74de7c1c7b8387df5f">RM_TOUCH_PadDataGet()</a></li>
-</ul>
-</dd></dl>
+<p>pad data get.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -706,21 +766,18 @@ New hysteresis ratio. </td></tr>
 
 </div>
 </div>
-<a id="ad1390fd43ac6b2e08cab0fc26b4a5360"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1390fd43ac6b2e08cab0fc26b4a5360">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a2b1d317102754c252e82bc3ee7762d00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b1d317102754c252e82bc3ee7762d00">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  touch_api_t::callbackSet) (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  touch_api_t::callbackSet) (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga9222f933707c72e3f4c097d14e66072e">RM_TOUCH_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the CTSU control block. </td></tr>
@@ -744,10 +801,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5">RM_TOUCH_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -768,10 +822,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sensitivity ratio get. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga6fd2d2e83cdb935ae921b3a9191f8dbe">RM_TOUCH_SensitivityRatioGet()</a></li>
-</ul>
-</dd></dl>
+<p>Sensitivity ratio get.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -793,10 +844,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Threshold adjust. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga0671201fe00bee74d2801c13ba9c5b68">RM_TOUCH_ThresholdAdjust()</a></li>
-</ul>
-</dd></dl>
+<p>Threshold adjust.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -818,10 +866,7 @@ New hysteresis ratio. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Drift control. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#ga38994c1e8d1e874cdd34f79c0fa0b87b">RM_TOUCH_DriftControl()</a></li>
-</ul>
-</dd></dl>
+<p>Drift control.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -883,10 +928,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Control block. Allocate an instance specific control block to pass into the API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___t_o_u_c_h.html#structtouch__instance__ctrl__t">touch_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>Control block. Allocate an instance specific control block to pass into the API calls. </p>
 
 </div>
 </div>
@@ -911,7 +953,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

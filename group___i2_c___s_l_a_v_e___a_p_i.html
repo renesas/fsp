@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -172,11 +250,7 @@ $(document).ready(function(){initNavTree('group___i2_c___s_l_a_v_e___a_p_i.html'
 Summary</h1>
 <p>The I2C slave interface provides a common API for I2C HAL drivers. The I2C slave interface supports:</p><ul>
 <li>Interrupt driven transmit/receive processing</li>
-<li>Callback function support which returns a event codes</li>
-</ul>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html">I2C Slave (r_iic_slave)</a></li>
-<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html">I2C Slave (r_iic_b_slave)</a> </li>
+<li>Callback function support which returns a event codes </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -292,16 +366,23 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:a923331b5e9e6564b4246e559d66bc3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7a71b00ee0f0392feea934f395599a3"><td class="memItemLeft" align="right" valign="top"><a id="ae7a71b00ee0f0392feea934f395599a3"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#ae7a71b00ee0f0392feea934f395599a3">ipl</a></td></tr>
-<tr class="memdesc:ae7a71b00ee0f0392feea934f395599a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level for RXI, TXI and TER interrupts. <br /></td></tr>
+<tr class="memdesc:ae7a71b00ee0f0392feea934f395599a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level for receive, transmit, and transmit end interrupts. <br /></td></tr>
 <tr class="separator:ae7a71b00ee0f0392feea934f395599a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fa45eb7423e7b93f78839b2bb612776"><td class="memItemLeft" align="right" valign="top"><a id="a4fa45eb7423e7b93f78839b2bb612776"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a4fa45eb7423e7b93f78839b2bb612776">eri_ipl</a></td></tr>
-<tr class="memdesc:a4fa45eb7423e7b93f78839b2bb612776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level for ERI interrupt. <br /></td></tr>
+<tr class="memdesc:a4fa45eb7423e7b93f78839b2bb612776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level for error interrupt. <br /></td></tr>
 <tr class="separator:a4fa45eb7423e7b93f78839b2bb612776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf45b7d102061452a09f5db26bdd1148"><td class="memItemLeft" align="right" valign="top"><a id="aaf45b7d102061452a09f5db26bdd1148"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#aaf45b7d102061452a09f5db26bdd1148">clock_stretching_enable</a></td></tr>
 <tr class="memdesc:aaf45b7d102061452a09f5db26bdd1148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low Hold SCL during reception for the period between the 9th and the 1st clock cycle. <br /></td></tr>
 <tr class="separator:aaf45b7d102061452a09f5db26bdd1148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a396548dfcb29b480fc122a89c42cc9bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a396548dfcb29b480fc122a89c42cc9bc">p_transfer_tx</a></td></tr>
+<tr class="memdesc:a396548dfcb29b480fc122a89c42cc9bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">DTC instance for I2C transmit.Set to NULL if unused.  <a href="#a396548dfcb29b480fc122a89c42cc9bc">More...</a><br /></td></tr>
+<tr class="separator:a396548dfcb29b480fc122a89c42cc9bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c339fdbe177593d15cfdfdcb645ece"><td class="memItemLeft" align="right" valign="top"><a id="a16c339fdbe177593d15cfdfdcb645ece"></a>
+<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a16c339fdbe177593d15cfdfdcb645ece">p_transfer_rx</a></td></tr>
+<tr class="memdesc:a16c339fdbe177593d15cfdfdcb645ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">DTC instance for I2C receive. Set to NULL if unused. <br /></td></tr>
+<tr class="separator:a16c339fdbe177593d15cfdfdcb645ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac194239c95dc0a5a71e220937295d67c"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#ac194239c95dc0a5a71e220937295d67c">p_callback</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:ac194239c95dc0a5a71e220937295d67c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function.  <a href="#ac194239c95dc0a5a71e220937295d67c">More...</a><br /></td></tr>
 <tr class="separator:ac194239c95dc0a5a71e220937295d67c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -328,6 +409,23 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 <p>Identifier recognizable by implementation. </p>
 <p>Generic configuration </p>
+
+</div>
+</div>
+<a id="a396548dfcb29b480fc122a89c42cc9bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a396548dfcb29b480fc122a89c42cc9bc">&#9670;&nbsp;</a></span>p_transfer_tx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const* i2c_slave_cfg_t::p_transfer_tx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DTC instance for I2C transmit.Set to NULL if unused. </p>
+<p>DTC support </p>
 
 </div>
 </div>
@@ -388,8 +486,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ad9693d9cbb58cc0abb6e4e85548e4e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a7c8ec91840338adbabcea5b5400f19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a8a7c8ec91840338adbabcea5b5400f19">write</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_ctrl, uint8_t *const p_src, uint32_t const bytes)</td></tr>
 <tr class="separator:a8a7c8ec91840338adbabcea5b5400f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a527fc26638e91d2daf652c2b30b5ab5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a527fc26638e91d2daf652c2b30b5ab5a">callbackSet</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a527fc26638e91d2daf652c2b30b5ab5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaf522087321868585ab1753caa08d2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#acaf522087321868585ab1753caa08d2e">callbackSet</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:acaf522087321868585ab1753caa08d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23919938fff411b2275548e6c0dc0c7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a23919938fff411b2275548e6c0dc0c7a">close</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a23919938fff411b2275548e6c0dc0c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -405,11 +503,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Opens the I2C Slave driver and initializes the hardware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html#ga2781d08100bc6a53034347927422e206">R_IIC_SLAVE_Open()</a></li>
-<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga3ecc5e5e2481cfa4f77a18d086d10814">R_IIC_B_SLAVE_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Opens the I2C Slave driver and initializes the hardware.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. Must be declared by user. Elements are set here. </td></tr>
@@ -431,11 +525,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Performs a read operation on an I2C Slave device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html#ga62cdf56c786ad26cb09811e27d225d06">R_IIC_SLAVE_Read()</a></li>
-<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga2b520288e7fc9e4481f608164dcf0144">R_IIC_B_SLAVE_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Performs a read operation on an I2C Slave device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block set in <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a3f978820e80073c05ef95e3b1ef31601">i2c_slave_api_t::open</a> call. </td></tr>
@@ -458,11 +548,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Performs a write operation on an I2C Slave device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html#ga26692591d226125907ecd208a6d8d0fd">R_IIC_SLAVE_Write()</a></li>
-<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#gad9c8d17d33ab4cc1ee5b978370478cd7">R_IIC_B_SLAVE_Write()</a></li>
-</ul>
-</dd></dl>
+<p>Performs a write operation on an I2C Slave device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block set in <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a3f978820e80073c05ef95e3b1ef31601">i2c_slave_api_t::open</a> call. </td></tr>
@@ -474,22 +560,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a527fc26638e91d2daf652c2b30b5ab5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a527fc26638e91d2daf652c2b30b5ab5a">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="acaf522087321868585ab1753caa08d2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaf522087321868585ab1753caa08d2e">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i2c_slave_api_t::callbackSet) (<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i2c_slave_api_t::callbackSet) (<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html#gab803811cfa1a11e23b90ee9eb9e021ba">R_IIC_SLAVE_CallbackSet()</a></li>
-<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga7e697559a06f6ea2f27feafabcffa559">R_IIC_B_SLAVE_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the IIC Slave control block. </td></tr>
@@ -513,11 +595,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Closes the driver and releases the I2C Slave device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html#gae4bb6d75bb3a27d940d70592242dbbe3">R_IIC_SLAVE_Close()</a></li>
-<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga91d9d05b98c11c03bea96ab9401402d7">R_IIC_B_SLAVE_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Closes the driver and releases the I2C Slave device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block set in <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a3f978820e80073c05ef95e3b1ef31601">i2c_slave_api_t::open</a> call. </td></tr>
@@ -578,10 +656,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>I2C control block. Allocate an instance specific control block to pass into the I2C API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>iic_slave_instance_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>I2C control block. Allocate an instance specific control block to pass into the I2C API calls. </p>
 
 </div>
 </div>
@@ -669,7 +744,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

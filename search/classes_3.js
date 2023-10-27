@@ -1,7 +1,7 @@
 var searchData=
 [
   ['d1_5fdevice_5fflex',['d1_device_flex',['../structd1__device__flex.html',1,'']]],
-  ['da16xxx_5fsocket_5ft',['da16xxx_socket_t',['../group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html#structda16xxx__socket__t',1,'']]],
+  ['da16xxx_5fsocket_5ft',['da16xxx_socket_t',['../group___w_i_f_i___d_a16_x_x_x.html#structda16xxx__socket__t',1,'']]],
   ['dac8_5fextended_5fcfg_5ft',['dac8_extended_cfg_t',['../group___d_a_c8.html#structdac8__extended__cfg__t',1,'']]],
   ['dac8_5finstance_5fctrl_5ft',['dac8_instance_ctrl_t',['../group___d_a_c8.html#structdac8__instance__ctrl__t',1,'']]],
   ['dac_5fapi_5ft',['dac_api_t',['../group___d_a_c___a_p_i.html#structdac__api__t',1,'']]],
@@ -17,6 +17,8 @@ var searchData=
   ['display_5fclut_5fcfg_5ft',['display_clut_cfg_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__cfg__t',1,'']]],
   ['display_5fclut_5ft',['display_clut_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__t',1,'']]],
   ['display_5fcolor_5ft',['display_color_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__color__t',1,'']]],
+  ['display_5fcolorkeying_5fcfg_5ft',['display_colorkeying_cfg_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__cfg__t',1,'']]],
+  ['display_5fcolorkeying_5flayer_5ft',['display_colorkeying_layer_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__layer__t',1,'']]],
   ['display_5fcontrast_5ft',['display_contrast_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__contrast__t',1,'']]],
   ['display_5fcoordinate_5ft',['display_coordinate_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__coordinate__t',1,'']]],
   ['display_5fcorrection_5ft',['display_correction_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__correction__t',1,'']]],

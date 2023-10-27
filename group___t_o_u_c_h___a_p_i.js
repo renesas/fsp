@@ -55,7 +55,7 @@ var group___t_o_u_c_h___a_p_i =
       [ "dataGet", "group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0", null ],
       [ "scanStop", "group___t_o_u_c_h___a_p_i.html#ade680c82b506312e6d81580424f61d14", null ],
       [ "padDataGet", "group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3", null ],
-      [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360", null ],
+      [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#a2b1d317102754c252e82bc3ee7762d00", null ],
       [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ],
       [ "sensitivityRatioGet", "group___t_o_u_c_h___a_p_i.html#a57dde5098486678e08ee43e053788f99", null ],
       [ "thresholdAdjust", "group___t_o_u_c_h___a_p_i.html#a376608281395fb8733761e54e1682c03", null ],

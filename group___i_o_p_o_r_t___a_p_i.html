@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -160,8 +238,7 @@ $(document).ready(function(){initNavTree('group___i_o_p_o_r_t___a_p_i.html','');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">I/O Port Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
 </div><!--header-->
@@ -170,8 +247,7 @@ $(document).ready(function(){initNavTree('group___i_o_p_o_r_t___a_p_i.html','');
 <p>Interface for accessing I/O ports and configuring I/O functionality. </p>
 <h1><a class="anchor" id="IOPORT_API_SUMMARY"></a>
 Summary</h1>
-<p>The IOPort shared interface provides the ability to access the IOPorts of a device at both bit and port level. Port and pin direction can be changed.</p>
-<p>IOPORT Interface description: <a class="el" href="group___i_o_p_o_r_t.html">I/O Port (r_ioport)</a> </p>
+<p>The IOPort shared interface provides the ability to access the IOPorts of a device at both bit and port level. Port and pin direction can be changed. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -187,19 +263,10 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:gaf5da96a68757260a2cb370fec69f0836"><td class="memItemLeft" align="right" valign="top">typedef uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaf5da96a68757260a2cb370fec69f0836">ioport_size_t</a></td></tr>
-<tr class="memdesc:gaf5da96a68757260a2cb370fec69f0836"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO port size on this device.  <a href="#gaf5da96a68757260a2cb370fec69f0836">More...</a><br /></td></tr>
+<tr class="memdesc:gaf5da96a68757260a2cb370fec69f0836"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO port size.  <a href="#gaf5da96a68757260a2cb370fec69f0836">More...</a><br /></td></tr>
 <tr class="separator:gaf5da96a68757260a2cb370fec69f0836"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafc061c58bb812cb2a8f25222353634cd"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gafc061c58bb812cb2a8f25222353634cd">ioport_ctrl_t</a></td></tr>
 <tr class="separator:gafc061c58bb812cb2a8f25222353634cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaebbb969fda93422aaf1878d6f4ff8fe8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaebbb969fda93422aaf1878d6f4ff8fe8">ioport_peripheral_t</a> </td></tr>
-<tr class="separator:gaebbb969fda93422aaf1878d6f4ff8fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac617eebcb7c2c1e45fa8e04fc473e574"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gac617eebcb7c2c1e45fa8e04fc473e574">ioport_cfg_options_t</a> </td></tr>
-<tr class="separator:gac617eebcb7c2c1e45fa8e04fc473e574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga25ef8d1291cc073dd48f57b16d91c13e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#ga25ef8d1291cc073dd48f57b16d91c13e">ioport_pwpr_t</a> </td></tr>
-<tr class="separator:ga25ef8d1291cc073dd48f57b16d91c13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structioport__pin__cfg__t" id="structioport__pin__cfg__t"></a>
@@ -213,7 +280,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Pin identifier and pin PFS pin configuration value </p>
+<div class="textblock"><p>Pin identifier and pin configuration value </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -221,7 +288,7 @@ Enumerations</h2></td></tr>
 <td class="fieldname">
 pin_cfg</td>
 <td class="fielddoc">
-Pin PFS configuration - Use ioport_cfg_options_t parameters to configure. </td></tr>
+Pin configuration - Use ioport_cfg_options_t parameters to configure. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5e6a7a38da64dabdfc229f1727616bd0"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
 <td class="fieldname">
@@ -243,7 +310,7 @@ Pin identifier. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Multiple pin configuration data for loading into PFS registers by R_IOPORT_Init() </p>
+<div class="textblock"><p>Multiple pin configuration data for loading into registers by <a class="el" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open()</a> </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -258,6 +325,12 @@ Number of pins for which there is configuration data. </td></tr>
 p_pin_cfg_data</td>
 <td class="fielddoc">
 Pin configuration data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3c302ad5a452c415a6cb35ddecbe54bf"></a>const void *</td>
+<td class="fieldname">
+p_extend</td>
+<td class="fielddoc">
+Pointer to hardware extend configuration. </td></tr>
 </table>
 
 </div>
@@ -315,12 +388,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize internal driver data and initial pin configurations. Called during startup. Do not call this API during runtime. Use <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#ac962e87038418a6a525ac9f763687c19">ioport_api_t::pinsCfg</a> for runtime reconfiguration of multiple pins. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open()</a> </li>
-</ul>
-</dd></dl>
+<p>Initialize internal driver data and initial pin configurations. Called during startup. Do not call this API during runtime. Use <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#ac962e87038418a6a525ac9f763687c19">ioport_api_t::pinsCfg</a> for runtime reconfiguration of multiple pins.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. Must be declared by user. Elements set here. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration data array. </td></tr>
   </table>
   </dd>
@@ -339,10 +410,7 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the API. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga91d4fde6e5f7cdf57b99af5b5f89f1cc">R_IOPORT_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close the API.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -363,12 +431,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure multiple pins. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga3daa7097b08c7f623a741e2e481cf89f">R_IOPORT_PinsCfg()</a> </li>
-</ul>
-</dd></dl>
+<p>Configure multiple pins.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration data array. </td></tr>
   </table>
   </dd>
@@ -387,12 +453,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure settings for an individual pin. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg()</a> </li>
-</ul>
-</dd></dl>
+<p>Configure settings for an individual pin.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pin</td><td>Pin to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>Configuration options for the pin. </td></tr>
   </table>
@@ -412,12 +476,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read the event input data of the specified pin and return the level. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga01fe1fa97720d982173bf110032fa21f">R_IOPORT_PinEventInputRead()</a> </li>
-</ul>
-</dd></dl>
+<p>Read the event input data of the specified pin and return the level.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pin</td><td>Pin to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_pin_event</td><td>Pointer to return the event data. </td></tr>
   </table>
@@ -437,12 +499,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write pin event data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#gaa561f3c4df61925e4c24b420b78a5583">R_IOPORT_PinEventOutputWrite()</a> </li>
-</ul>
-</dd></dl>
+<p>Write pin event data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pin</td><td>Pin event data is to be written to. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pin_value</td><td>Level to be written to pin output event. </td></tr>
   </table>
@@ -462,12 +522,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read level of a pin. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#gadb3ad72c9add6d73eb896c58c36f34ee">R_IOPORT_PinRead()</a> </li>
-</ul>
-</dd></dl>
+<p>Read level of a pin.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pin</td><td>Pin to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_pin_value</td><td>Pointer to return the pin level. </td></tr>
   </table>
@@ -487,12 +545,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write specified level to a pin. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite()</a> </li>
-</ul>
-</dd></dl>
+<p>Write specified level to a pin.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pin</td><td>Pin to be written to. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">level</td><td>State to be written to the pin. </td></tr>
   </table>
@@ -512,14 +568,12 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the direction of one or more pins on a port. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#gab83a07936c37ad904c329f8209d735e1">R_IOPORT_PortDirectionSet()</a> </li>
-</ul>
-</dd></dl>
+<p>Set the direction of one or more pins on a port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port being configured. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">direction_values</td><td>Value controlling direction of pins on port (1 - output, 0 - input). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">direction_values</td><td>Value controlling direction of pins on port. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask controlling which pins on the port are to be configured. </td></tr>
   </table>
   </dd>
@@ -538,12 +592,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read captured event data for a port. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#gac6797f0cf13907487f66f99e3ed937b2">R_IOPORT_PortEventInputRead()</a> </li>
-</ul>
-</dd></dl>
+<p>Read captured event data for a port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event_data</td><td>Pointer to return the event data. </td></tr>
   </table>
@@ -563,12 +615,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write event output data for a port. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga8d3f8c4c90241587fee076b6fb0623ff">R_IOPORT_PortEventOutputWrite()</a> </li>
-</ul>
-</dd></dl>
+<p>Write event output data for a port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port event data will be written to. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_data</td><td>Data to be written as event data to specified port. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mask_value</td><td>Each bit set to 1 in the mask corresponds to that bit's value in event data. being written to port. </td></tr>
@@ -589,12 +639,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read states of pins on the specified port. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#gab84c08b8ac66d18c5636ebc772133e77">R_IOPORT_PortRead()</a> </li>
-</ul>
-</dd></dl>
+<p>Read states of pins on the specified port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_port_value</td><td>Pointer to return the port value. </td></tr>
   </table>
@@ -614,12 +662,10 @@ Pin configuration data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write to multiple pins on a port. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#ga31825f3f0295317e5b446d74f791cd68">R_IOPORT_PortWrite()</a> </li>
-</ul>
-</dd></dl>
+<p>Write to multiple pins on a port.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port to be written to. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to be written to the port. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask controlling which pins on the port are written to. </td></tr>
@@ -681,7 +727,7 @@ Pointer to the API structure for this instance. </td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>IO port size on this device. </p>
+<p>IO port size. </p>
 <p>IO port type used with ports </p>
 
 </div>
@@ -697,187 +743,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>IOPORT control block. Allocate an instance specific control block to pass into the IOPORT API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_o_p_o_r_t.html#structioport__instance__ctrl__t">ioport_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="gaebbb969fda93422aaf1878d6f4ff8fe8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaebbb969fda93422aaf1878d6f4ff8fe8">&#9670;&nbsp;</a></span>ioport_peripheral_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaebbb969fda93422aaf1878d6f4ff8fe8">ioport_peripheral_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Superset of all peripheral functions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a2f6455c416051e088f2339737b030b67"></a>IOPORT_PERIPHERAL_IO&#160;</td><td class="fielddoc"><p>Pin will functions as an IO pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a66b5b7838b3c4b965e06bd030e78878a"></a>IOPORT_PERIPHERAL_DEBUG&#160;</td><td class="fielddoc"><p>Pin will function as a DEBUG pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a64d1b8cceeda767076613c173c787cf9"></a>IOPORT_PERIPHERAL_AGT&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab524021406375820083226f41b14295a"></a>IOPORT_PERIPHERAL_AGTW&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a09128fc454daf266119a4f2515899c68"></a>IOPORT_PERIPHERAL_AGT1&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a85992fdc078e24d3dd245eba9e2794a0"></a>IOPORT_PERIPHERAL_GPT0&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acb7bd1929db899ee77ce971fd6c66a75"></a>IOPORT_PERIPHERAL_GPT1&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a565b54d88476fba903552efc818d06c5"></a>IOPORT_PERIPHERAL_SCI0_2_4_6_8&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a28760366d088db7869519e2bcc78de8e"></a>IOPORT_PERIPHERAL_SCI1_3_5_7_9&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acd94aa1c9a39bccb4329a4392bf8a860"></a>IOPORT_PERIPHERAL_SPI&#160;</td><td class="fielddoc"><p>Pin will function as a SPI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab770cd7374758858d40474812845564d"></a>IOPORT_PERIPHERAL_IIC&#160;</td><td class="fielddoc"><p>Pin will function as a IIC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a24f92451e2cb175211ecf3055816d3e9"></a>IOPORT_PERIPHERAL_KEY&#160;</td><td class="fielddoc"><p>Pin will function as a KEY peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a3eada69cccad3f6a386f62892ce16f7c"></a>IOPORT_PERIPHERAL_CLKOUT_COMP_RTC&#160;</td><td class="fielddoc"><p>Pin will function as a clock/comparator/RTC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0"></a>IOPORT_PERIPHERAL_CAC_AD&#160;</td><td class="fielddoc"><p>Pin will function as a CAC/ADC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a50c4e60416f5c5909fa614b3089cf200"></a>IOPORT_PERIPHERAL_BUS&#160;</td><td class="fielddoc"><p>Pin will function as a BUS peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a4009808e34e8af6f5791f1469a7dc081"></a>IOPORT_PERIPHERAL_CTSU&#160;</td><td class="fielddoc"><p>Pin will function as a CTSU peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a749d8f405d2dc05308293c8eb53bd186"></a>IOPORT_PERIPHERAL_ACMPHS&#160;</td><td class="fielddoc"><p>Pin will function as a CMPHS peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a4d5e3c2e03c9f7ab7ae2493dbbc32ebf"></a>IOPORT_PERIPHERAL_LCDC&#160;</td><td class="fielddoc"><p>Pin will function as a segment LCD peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab80e34dc5a5ce362b478eac4cf2e3c9c"></a>IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral DEn pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab81d0424499b239175c48d9f683f3fcb"></a>IOPORT_PERIPHERAL_DE_SCI1_3_5_7_9&#160;</td><td class="fielddoc"><p>Pin will function as an SCI DEn peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acc900c1e3372304244580adb42974a22"></a>IOPORT_PERIPHERAL_DALI&#160;</td><td class="fielddoc"><p>Pin will function as a DALI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acd3f5c8ec6ad2a790dbda0ca6fe828df"></a>IOPORT_PERIPHERAL_CEU&#160;</td><td class="fielddoc"><p>Pin will function as a CEU peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a153635d8d01b41c463d29d89da0fe372"></a>IOPORT_PERIPHERAL_CAN&#160;</td><td class="fielddoc"><p>Pin will function as a CAN peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a9717b9d492c8f817c8c0fc7eae8f1434"></a>IOPORT_PERIPHERAL_QSPI&#160;</td><td class="fielddoc"><p>Pin will function as a QSPI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a0ab0d9fffa96813f7e78bcd7b3e42c8f"></a>IOPORT_PERIPHERAL_SSI&#160;</td><td class="fielddoc"><p>Pin will function as an SSI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8abf3bde65f7a1ecea24a313f04af7056b"></a>IOPORT_PERIPHERAL_USB_FS&#160;</td><td class="fielddoc"><p>Pin will function as a USB full speed peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afc5008644a2fa64bd99da0ca24aeb4dc"></a>IOPORT_PERIPHERAL_USB_HS&#160;</td><td class="fielddoc"><p>Pin will function as a USB high speed peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ae00c4cc7522a48fef213912e1f67ea04"></a>IOPORT_PERIPHERAL_GPT2&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ae9f418a61b3e072e2a6b46744a12c00d"></a>IOPORT_PERIPHERAL_SDHI_MMC&#160;</td><td class="fielddoc"><p>Pin will function as an SD/MMC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad1185b58efcb7dc8c9852a1f18d91bc5"></a>IOPORT_PERIPHERAL_GPT3&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afe4d1025a70ef6bf2954f9601fd3d54a"></a>IOPORT_PERIPHERAL_ETHER_MII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet MMI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a131b2fe2c5b40032c04f1c8480bfaa86"></a>IOPORT_PERIPHERAL_GPT4&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49"></a>IOPORT_PERIPHERAL_ETHER_RMII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet RMMI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab8aa7fa82f2c3eb0ac80e20e8f918304"></a>IOPORT_PERIPHERAL_PDC&#160;</td><td class="fielddoc"><p>Pin will function as a PDC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9"></a>IOPORT_PERIPHERAL_LCD_GRAPHICS&#160;</td><td class="fielddoc"><p>Pin will function as a graphics LCD peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8adfc4164cbbca202aff659966748d4dbf"></a>IOPORT_PERIPHERAL_CAC&#160;</td><td class="fielddoc"><p>Pin will function as a CAC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d"></a>IOPORT_PERIPHERAL_TRACE&#160;</td><td class="fielddoc"><p>Pin will function as a debug trace peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a83951c39c247388f70f38287edd67a2d"></a>IOPORT_PERIPHERAL_OSPI&#160;</td><td class="fielddoc"><p>Pin will function as a OSPI peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afd795256ce7d3bc9bd58d36d1f41e294"></a>IOPORT_PERIPHERAL_CEC&#160;</td><td class="fielddoc"><p>Pin will function as a CEC peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ac44530278e8f5cd9db7c0aab1f434c18"></a>IOPORT_PERIPHERAL_PGAOUT0&#160;</td><td class="fielddoc"><p>Pin will function as a PGAOUT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8af931a6809462aee181fdb63ed0f7b405"></a>IOPORT_PERIPHERAL_PGAOUT1&#160;</td><td class="fielddoc"><p>Pin will function as a PGAOUT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad768e3b8c746f0f7b851e8605f1d37e0"></a>IOPORT_PERIPHERAL_ULPT&#160;</td><td class="fielddoc"><p>Pin will function as a ULPT peripheral pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a569ee3b30428745c75d109ece3cdd8b4"></a>IOPORT_PERIPHERAL_MIPI&#160;</td><td class="fielddoc"><p>Pin will function as a MIPI DSI peripheral pin </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gac617eebcb7c2c1e45fa8e04fc473e574"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac617eebcb7c2c1e45fa8e04fc473e574">&#9670;&nbsp;</a></span>ioport_cfg_options_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gac617eebcb7c2c1e45fa8e04fc473e574">ioport_cfg_options_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Options to configure pin functions </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb"></a>IOPORT_CFG_PORT_DIRECTION_INPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to input (default) </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97"></a>IOPORT_CFG_PORT_DIRECTION_OUTPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to output. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5"></a>IOPORT_CFG_PORT_OUTPUT_LOW&#160;</td><td class="fielddoc"><p>Sets the pin level to low. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4b93b19150d018ab8ba5ef74e2852499"></a>IOPORT_CFG_PORT_OUTPUT_HIGH&#160;</td><td class="fielddoc"><p>Sets the pin level to high. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a925954d59fa1101a4784a0d64a64d133"></a>IOPORT_CFG_PULLUP_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's internal pull-up. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a619e7ce9643c81a165dd70aea63b7fe9"></a>IOPORT_CFG_PIM_TTL&#160;</td><td class="fielddoc"><p>Enables the pin's input mode. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aa6f841964b20d6d4bfc1a8f7b2040554"></a>IOPORT_CFG_PMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's PMOS open-drain ouput. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a3b65ecea77e425c0ec1a0c29324a042b"></a>IOPORT_CFG_DRIVE_MID&#160;</td><td class="fielddoc"><p>Sets pin drive output to medium. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a3c3c46358b6255f284cc393dcaf14aca"></a>IOPORT_CFG_DRIVE_HS_HIGH&#160;</td><td class="fielddoc"><p>Sets pin drive output to high along with supporting high speed. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574af3cae5dcade8718879600432ac11136a"></a>IOPORT_CFG_DRIVE_MID_IIC&#160;</td><td class="fielddoc"><p>Sets pin to drive output needed for IIC on a 20mA port. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aec6a07e7759576dc172a9beb052cf3a0"></a>IOPORT_CFG_DRIVE_HIGH&#160;</td><td class="fielddoc"><p>Sets pin drive output to high. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a262810ba7eba1c4735f36fbebfd248bd"></a>IOPORT_CFG_EVENT_RISING_EDGE&#160;</td><td class="fielddoc"><p>Sets pin event trigger to rising edge. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574ad07a1d0d4611e8e86929fa86e0a4b99f"></a>IOPORT_CFG_EVENT_FALLING_EDGE&#160;</td><td class="fielddoc"><p>Sets pin event trigger to falling edge. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a5fd65cdd983a6ad552efba798d5aa8e6"></a>IOPORT_CFG_EVENT_BOTH_EDGES&#160;</td><td class="fielddoc"><p>Sets pin event trigger to both edges. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aec28fadf6109ec5ea80a1b1046bd25e5"></a>IOPORT_CFG_IRQ_ENABLE&#160;</td><td class="fielddoc"><p>Sets pin as an IRQ pin. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d329786cc601ca9341427dd0bed8ad8"></a>IOPORT_CFG_ANALOG_ENABLE&#160;</td><td class="fielddoc"><p>Enables pin to operate as an analog pin. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a2066555437a19b9e6e721fb494c8f5c3"></a>IOPORT_CFG_PERIPHERAL_PIN&#160;</td><td class="fielddoc"><p>Enables pin to operate as a peripheral pin. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga25ef8d1291cc073dd48f57b16d91c13e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga25ef8d1291cc073dd48f57b16d91c13e">&#9670;&nbsp;</a></span>ioport_pwpr_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#ga25ef8d1291cc073dd48f57b16d91c13e">ioport_pwpr_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga25ef8d1291cc073dd48f57b16d91c13eaf67cf250303fd4692c46717f0b7a9412"></a>IOPORT_PFS_WRITE_DISABLE&#160;</td><td class="fielddoc"><p>Disable PFS write access. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga25ef8d1291cc073dd48f57b16d91c13ea5d94e8d4ba61664a407a0d84538fc298"></a>IOPORT_PFS_WRITE_ENABLE&#160;</td><td class="fielddoc"><p>Enable PFS write access. </p>
-</td></tr>
-</table>
+<p>IOPORT control block. Allocate an instance specific control block to pass into the IOPORT API calls. </p>
 
 </div>
 </div>
@@ -887,7 +753,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

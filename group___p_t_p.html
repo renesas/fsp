@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -235,7 +313,7 @@ The following build time configurations are defined in fsp_cfg/r_ptp_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -251,57 +329,69 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; PT
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Clock Properties &gt; Priority 1</td><td>Value must in the range [0,255].</td><td>128 </td><td>Priority1 field advertised in generated announce packets. </td></tr>
-<tr>
-<td>Clock Properties &gt; Class</td><td>Value must in the range [0,255].</td><td>248 </td><td>Class field advertised in generated announce packets. </td></tr>
-<tr>
-<td>Clock Properties &gt; Accuracy</td><td>Value must in the range [0,255].</td><td>0xFE </td><td>Accuracy field advertised in generated announce packets. </td></tr>
-<tr>
-<td>Clock Properties &gt; Variance</td><td>Value must in the range [0,65535].</td><td>0xFFFF </td><td>Variance field advertised in generated announce packets. </td></tr>
-<tr>
-<td>Clock Properties &gt; Priority 2</td><td>Value must in the range [0,255].</td><td>128 </td><td>Priority2 field advertised in generated announce packets. </td></tr>
-<tr>
-<td>Clock Properties &gt; Time Source</td><td>Value must in the range [0,255].</td><td>160 </td><td>Time Source field advertised in generated announce packets. </td></tr>
-<tr>
-<td>Ethernet &gt; Multicast Filter MAC address</td><td>Must be a valid MAC address</td><td>01:1B:19:00:00:00 </td><td>In Multicast Filtered mode, only multicast addresses that match this address are received by the ETHERC EDMAC. </td></tr>
-<tr>
-<td>Ethernet &gt; Primary Destination MAC address</td><td>Must be a valid MAC address</td><td>01:1B:19:00:00:00 </td><td>The destination MAC address for primary PTP messages. </td></tr>
-<tr>
-<td>Ethernet &gt; PDelay Destination MAC address</td><td>Must be a valid MAC address</td><td>01:80:C2:00:00:0E </td><td>The destination MAC address for PDelay messages. </td></tr>
-<tr>
-<td>IP &gt; Primary Destination IP address</td><td>Must be a valid IP address</td><td>224.0.1.129 </td><td>The destination IPv4 address for primary messages. </td></tr>
-<tr>
-<td>IP &gt; PDelay Destination IP address</td><td>Must be a valid IP address</td><td>224.0.0.107 </td><td>The destination IPv4 address for PDelay messages. </td></tr>
-<tr>
-<td>IP &gt; Event Message TOS</td><td>Value must in the range [0,255].</td><td>0 </td><td>The IP packet TOS for event messages. </td></tr>
-<tr>
-<td>IP &gt; General Message TOS</td><td>Value must in the range [0,255].</td><td>0 </td><td>The IP packet TOS for general messages. </td></tr>
-<tr>
-<td>IP &gt; Primary Message TTL</td><td>Value must in the range [0,255].</td><td>1 </td><td>The IP packet TTL for primary messages. </td></tr>
-<tr>
-<td>IP &gt; PDelay Message TTL</td><td>Value must in the range [0,255].</td><td>1 </td><td>The IP packet TTL for p_delay messages. </td></tr>
-<tr>
-<td>IP &gt; Event Port</td><td>Value must in the range [0,65535].</td><td>319 </td><td>The UDP port for event messages. </td></tr>
-<tr>
-<td>IP &gt; General Port</td><td>Value must in the range [0,65535].</td><td>320 </td><td>The UDP port for general messages. </td></tr>
-<tr>
-<td>Synchronization Detection &gt; Threshold (Nanoseconds)</td><td>Value must be greater than 0.</td><td>1000000 </td><td>The minimum offsetFromMaster value required in order to synchronize with the master clock. </td></tr>
-<tr>
-<td>Synchronization Detection &gt; Count</td><td>Value must in the range [0,15].</td><td>5 </td><td>The number of times the calculated offsetFromMaster value must be less than the threshold in order to synchronize with the master clock. </td></tr>
-<tr>
-<td>Synchronization Lost Detection &gt; Threshold (Nanoseconds)</td><td>Value must be greater than 0.</td><td>10000000 </td><td>The minimum offsetFromMaster value required in order to lose synchronization with the master clock. </td></tr>
-<tr>
-<td>Synchronization Lost Detection &gt; Count</td><td>Value must in the range [0,15].</td><td>5 </td><td>The number of times the calculated offsetFromMaster value must be greater than the threshold in order to lose synchronization with the master. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>ptp0_user_callback </td><td>Called when a STCA/SYNFP event occurs, a PTP message is received, or if a Pulse Timer event occurs. </td></tr>
-<tr>
-<td>Interrupts &gt; MINT Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EPTPC MINT interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Pulse Timer Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EPTPC IPLS priority. </td></tr>
-<tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Clock Properties  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Priority 1</td><td>Value must in the range [0,255].</td><td>128 </td><td>Priority1 field advertised in generated announce packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Class</td><td>Value must in the range [0,255].</td><td>248 </td><td>Class field advertised in generated announce packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Accuracy</td><td>Value must in the range [0,255].</td><td>0xFE </td><td>Accuracy field advertised in generated announce packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Variance</td><td>Value must in the range [0,65535].</td><td>0xFFFF </td><td>Variance field advertised in generated announce packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Priority 2</td><td>Value must in the range [0,255].</td><td>128 </td><td>Priority2 field advertised in generated announce packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Time Source</td><td>Value must in the range [0,255].</td><td>160 </td><td>Time Source field advertised in generated announce packets. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Ethernet  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Multicast Filter MAC address</td><td>Must be a valid MAC address</td><td>01:1B:19:00:00:00 </td><td>In Multicast Filtered mode, only multicast addresses that match this address are received by the ETHERC EDMAC. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Primary Destination MAC address</td><td>Must be a valid MAC address</td><td>01:1B:19:00:00:00 </td><td>The destination MAC address for primary PTP messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PDelay Destination MAC address</td><td>Must be a valid MAC address</td><td>01:80:C2:00:00:0E </td><td>The destination MAC address for PDelay messages. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> IP  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Primary Destination IP address</td><td>Must be a valid IP address</td><td>224.0.1.129 </td><td>The destination IPv4 address for primary messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PDelay Destination IP address</td><td>Must be a valid IP address</td><td>224.0.0.107 </td><td>The destination IPv4 address for PDelay messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Event Message TOS</td><td>Value must in the range [0,255].</td><td>0 </td><td>The IP packet TOS for event messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">General Message TOS</td><td>Value must in the range [0,255].</td><td>0 </td><td>The IP packet TOS for general messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Primary Message TTL</td><td>Value must in the range [0,255].</td><td>1 </td><td>The IP packet TTL for primary messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PDelay Message TTL</td><td>Value must in the range [0,255].</td><td>1 </td><td>The IP packet TTL for p_delay messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Event Port</td><td>Value must in the range [0,65535].</td><td>319 </td><td>The UDP port for event messages. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">General Port</td><td>Value must in the range [0,65535].</td><td>320 </td><td>The UDP port for general messages. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Synchronization Detection  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Threshold (Nanoseconds)</td><td>Value must be greater than 0.</td><td>1000000 </td><td>The minimum offsetFromMaster value required in order to synchronize with the master clock. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Count</td><td>Value must in the range [0,15].</td><td>5 </td><td>The number of times the calculated offsetFromMaster value must be less than the threshold in order to synchronize with the master clock. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Synchronization Lost Detection  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Threshold (Nanoseconds)</td><td>Value must be greater than 0.</td><td>10000000 </td><td>The minimum offsetFromMaster value required in order to lose synchronization with the master clock. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Count</td><td>Value must in the range [0,15].</td><td>5 </td><td>The number of times the calculated offsetFromMaster value must be greater than the threshold in order to lose synchronization with the master. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>ptp0_user_callback </td><td>Called when a STCA/SYNFP event occurs, a PTP message is received, or if a Pulse Timer event occurs. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">MINT Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EPTPC MINT interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pulse Timer Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EPTPC IPLS priority. </td></tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_ptp0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Ethernet PHY Interface Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 MII</li>
@@ -309,7 +399,7 @@ MII</li>
 RMII</li>
 </ul>
 </td><td>RMII </td><td>The interface type used to communicate with the Ethernet PHY. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Frame Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Extended Promiscuous Mode</li>
@@ -321,7 +411,7 @@ Unicast and Multicast Filtered</li>
 Unicast</li>
 </ul>
 </td><td>Unicast </td><td>Selects how packets are filtered based on their destination MAC address. Packets that pass the filter are transferred to the ETHERC EDMAC. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Frame Format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Ethernet II</li>
@@ -333,9 +423,9 @@ IEEE802.3 | LLC | SNAP</li>
 IEEE802.3 | LLC | SNAP | IPv4 | UDP</li>
 </ul>
 </td><td>Ethernet II </td><td>The format of the frames that encapsulate the PTP messages. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Domain</td><td>Value must in the range [0,255].</td><td>0 </td><td>The PTP clock will only respond to clocks in its domain. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Domain Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -343,21 +433,21 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Enable </td><td>Filter out PTP messages from other clock domains. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Buffer Size</td><td>Value must in the range [64,1536].</td><td>1536 </td><td>The maximum Ethernet packet size that can be transmitted or received by the application from the EDMAC. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of transmit buffers</td><td>Value must in the range [1,16].</td><td>4 </td><td>The number of transmit buffers in the packet queue. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of receive buffers</td><td>Value must in the range [1,16].</td><td>4 </td><td>The number of receive buffers in the packet queue. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Announce message interval.</td><td>MCU Specific Options</td><td></td><td>The period of time between generated announce messages. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Sync message interval.</td><td>MCU Specific Options</td><td></td><td>The period of time between generated sync messages. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Delay_req message interval.</td><td>MCU Specific Options</td><td></td><td>The period of time between generated delay_req messages. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Message timeout</td><td>Value must be greater than 0.</td><td>4000 </td><td>The time in milliseconds needed to generate timeout events after not receiving a sync or delay_resp message. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 PCLKA / 1</li>
@@ -375,7 +465,7 @@ PCLKA / 6</li>
 REF50CK0</li>
 </ul>
 </td><td>PCLKA / 6 </td><td>The STCA clock source must be 20Mhz, 25Mhz, 50Mhz, or 100Mhz. When REF50CK0 is selected, the STCA frequency is 25Mhz. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Correction Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Clock Correction Mode 1</li>
@@ -383,7 +473,7 @@ Clock Correction Mode 1</li>
 Clock Correction Mode 2</li>
 </ul>
 </td><td>Clock Correction Mode 1 </td><td>Clock correction mode 1 corrects the local clock using the current offsetFromMaster value. Clock correction mode 2 calculates a clock gradient in order to continuously correct the local clock. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Gradient Worst10 Interval</td><td>Value must in the range [0,255].</td><td>32 </td><td>The number of sync messages to use when calculating the worst10 gradient values (Only applies to clock correction mode 2). </td></tr>
 </table>
 </p>
@@ -452,7 +542,14 @@ Usage Notes</h1>
 <td>E2E/P2P Master </td><td>Announce, Sync, Delay_resp/(PDelay_req, PDelay_resp) </td><td>delay_req/(PDelay_req, PDelay_resp) </td><td>Announce, Signaling, Management </td></tr>
 </table>
 <h2>Pulse Timers</h2>
-<p>Pulse Timers are configurable timers used to generate interrupts and ELC events. Each pulse timer has a configurable start time, pulse, and period. At the start of each timer period, a rising edge occurs. After the pulse time has elapsed, a falling edge occurs. ELC events and IRQs can be generated on rising and/or falling edges for each Pulse Timer. There are two types of interrupts generated by each Pulse Timer; MINT and IPLS. </p><h3>MINT Interrupts</h3>
+<p>Pulse Timers are configurable timers used to generate interrupts and ELC events. Each pulse timer has a configurable start time, pulse, and period. At the start of each timer period, a rising edge occurs. After the pulse time has elapsed, a falling edge occurs. ELC events and IRQs can be generated on rising and/or falling edges for each Pulse Timer. There are two types of interrupts generated by each Pulse Timer; MINT and IPLS.</p>
+<h3>ELC Events</h3>
+<p>Pulse timers may be configured to generate the following ELC events:</p><ul>
+<li>EPTPC_TIMERn_RISE - Generated on the rising edge of pulse timer channel n<sup>1</sup>.</li>
+<li>EPTPC_TIMERn_FALL - Generated on the falling edge of pulse timer channel n<sup>1</sup>.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>1. n = [0,5] corresponds to the channel of the pulse timer.</dd></dl>
+<h3>MINT Interrupts</h3>
 <p>MINT IRQs are only generated on the rising edge of a Pulse Timer channel. The callback will provide the channel number of the pulse timer that caused the interrupt. </p><h3>IPLS Interrupts</h3>
 <p>Each Pulse Timer channel can be configured as a source for generating IPLS IRQs. All of the pulse timers that are selected as IPLS sources are OR'd together and rising and falling edge IRQs can be generated from the resulting signal. Below is an example of a resulting signal from two IPLS sources. Unlike MINT interrupts, IPLS interrupts do not provide any information about which Pulse Timer caused the IRQ because the IRQs from all the Pulse Timers are OR'd together.</p>
 <div class="image">
@@ -1062,6 +1159,7 @@ Typically the clock ID is derived from the MAC address (E.g. {b1,b2,b3,0xFF,0xFE
     <tr><td class="paramname">FSP_SUCCESS</td><td>The pulse timer has been enabled. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An argument was NULL or invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>The start time must be set to a value that is later than current time. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1185,7 +1283,7 @@ Typically the clock ID is derived from the MAC address (E.g. {b1,b2,b3,0xFF,0xFE
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -175,7 +253,7 @@ The following build time configurations are defined in aws/FreeRTOSIPConfig.h:<b
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Print debug messages</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -183,7 +261,23 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>If ipconfigHAS_DEBUG_PRINTF is set to 1 then FreeRTOS_debug_printf should be defined to the function used to print out the debugging messages. </td></tr>
-<tr>
+<tr class="tree_none">
+<td>Backward Compatible Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No</li>
+<li>
+Yes </li>
+</ul>
+</td><td>Yes </td><td>Run the code in backward compatible mode </td></tr>
+<tr class="tree_none">
+<td>Enable IPV6</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable </li>
+</ul>
+</td><td>Disable </td><td>Stack supports handling IPv6 packets (including handling IPv6 header, ND, RA, and so on) when enabled </td></tr>
+<tr class="tree_none">
 <td>Print info messages</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -191,9 +285,9 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>Set to 1 to print out non debugging messages, for example the output of the FreeRTOS_netstat() command, and ping replies. If ipconfigHAS_PRINTF is set to 1 then FreeRTOS_printf should be set to the function used to print out the messages. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Byte order of the target MCU</td><td>pdFREERTOS_LITTLE_ENDIAN </td><td>pdFREERTOS_LITTLE_ENDIAN </td><td>Define the byte order of the target MCU </td></tr>
-<tr>
+<tr class="tree_none">
 <td>IP/TCP/UDP checksums</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -201,11 +295,11 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>If the network card/driver includes checksum offloading (IP/TCP/UDP checksums) then set ipconfigDRIVER_INCLUDED_RX_IP_CHECKSUM to 1 to prevent the software stack repeating the checksum calculations. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Receive Block Time</td><td>Value must be a non-negative integer</td><td>10000 </td><td>Amount of time FreeRTOS_recv() will block for. The timeouts can be set per socket, using setsockopt(). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Send Block Time</td><td>Value must be a non-negative integer</td><td>10000 </td><td>Amount of time FreeRTOS_send() will block for. The timeouts can be set per socket, using setsockopt(). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DNS caching</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -213,13 +307,13 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>DNS caching </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DNS Request Attempts</td><td>Value must be an integer</td><td>2 </td><td>When a cache is present, ipconfigDNS_REQUEST_ATTEMPTS can be kept low and also DNS may use small timeouts. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>IP stack task priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMAX_PRIORITIES - 2 </td><td>Set the priority of the task that executes the IP stack. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Stack size in words (not bytes)</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE * 5 </td><td>The size, in words (not bytes), of the stack allocated to the FreeRTOS+TCP stack. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Network Events call vApplicationIPNetworkEventHook</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -227,9 +321,9 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>vApplicationIPNetworkEventHook is called when the network connects or disconnects. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Max UDP send block time</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>15000 / portTICK_PERIOD_MS </td><td>Max UDP send block time </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Use DHCP</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -237,7 +331,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>If ipconfigUSE_DHCP is 1 then FreeRTOS+TCP will attempt to retrieve an IP address, netmask, DNS server address and gateway address from a DHCP server. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DHCP Register Hostname</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -245,7 +339,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>Register hostname when using DHCP </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DHCP Uses Unicast</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -253,15 +347,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>DHCP uses unicast. </td></tr>
-<tr>
-<td>DHCP Send Discover After Auto IP</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable </li>
-</ul>
-</td><td>Disable </td><td>DHCP Send Discover After Auto IP </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DHCP callback function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -269,15 +355,15 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>Provide an implementation of the DHCP callback function(xApplicationDHCPHook) </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Interval between transmissions</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>120000 / portTICK_PERIOD_MS </td><td>When ipconfigUSE_DHCP is set to 1, DHCP requests will be sent out at increasing time intervals until either a reply is received from a DHCP server and accepted, or the interval between transmissions reaches ipconfigMAXIMUM_DISCOVER_TX_PERIOD. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ARP Cache Entries</td><td>Value must be an integer</td><td>6 </td><td>The maximum number of entries that can exist in the ARP table at any one time </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ARP Request Retransmissions</td><td>Value must be an integer</td><td>5 </td><td>ARP requests that do not result in an ARP response will be re-transmitted a maximum of ipconfigMAX_ARP_RETRANSMISSIONS times before the ARP request is aborted. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum time before ARP table entry becomes stale</td><td>Value must be an integer</td><td>150 </td><td>The maximum time between an entry in the ARP table being created or refreshed and the entry being removed because it is stale </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Use string for IP Address</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -285,11 +371,11 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>Take an IP in decimal dot format (for example, "192.168.0.1") as its parameter FreeRTOS_inet_addr_quick() takes an IP address as four separate numerical octets (for example, 192, 168, 0, 1) as its parameters </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Total number of available network buffers</td><td>Value must be an integer</td><td>10 </td><td>Define the total number of network buffer that are available to the IP stack </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Set the maximum number of events</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS + 5 </td><td>Set the maximum number of events that can be queued for processing at any one time. The event queue must be a minimum of 5 greater than the total number of network buffers </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Enable FreeRTOS_sendto() without calling Bind</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable </li>
@@ -297,11 +383,11 @@ Enable </li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Set to 1 then calling FreeRTOS_sendto() on a socket that has not yet been bound will result in the IP stack automatically binding the socket to a port number from the range socketAUTO_PORT_ALLOCATION_START_NUMBER to 0xffff. If ipconfigALLOW_SOCKET_SEND_WITHOUT_BIND is set to 0 then calling FreeRTOS_sendto() on a socket that has not yet been bound will result in the send operation being aborted. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>TTL values for UDP packets</td><td>Value must be an integer</td><td>128 </td><td>Define the Time To Live (TTL) values used in outgoing UDP packets </td></tr>
-<tr>
+<tr class="tree_none">
 <td>TTL values for TCP packets</td><td>Value must be an integer</td><td>128 </td><td>Defines the Time To Live (TTL) values used in outgoing TCP packets </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Use TCP and all its features</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable </li>
@@ -309,7 +395,7 @@ Disable </li>
 Enable</li>
 </ul>
 </td><td>Enable </td><td>Use TCP and all its features </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Let TCP use windowing mechanism</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable </li>
@@ -317,9 +403,9 @@ Disable </li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Let TCP use windowing mechanism </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum number of bytes the payload of a network frame can contain</td><td>Value must be an integer</td><td>1500 </td><td>Maximum number of bytes the payload of a network frame can contain </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Basic DNS client or resolver</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -327,7 +413,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>Set ipconfigUSE_DNS to 1 to include a basic DNS client/resolver. DNS is used through the FreeRTOS_gethostbyname() API function. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Reply to incoming ICMP echo (ping) requests</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -335,7 +421,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>If ipconfigREPLY_TO_INCOMING_PINGS is set to 1 then the IP stack will generate replies to incoming ICMP echo (ping) requests. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>FreeRTOS_SendPingRequest() is available</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -343,7 +429,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>If ipconfigSUPPORT_OUTGOING_PINGS is set to 1 then the FreeRTOS_SendPingRequest() API function is available. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>FreeRTOS_select() (and associated) API function is available</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -351,7 +437,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>If ipconfigSUPPORT_SELECT_FUNCTION is set to 1 then the FreeRTOS_select() (and associated) API function is available </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Filter out non Ethernet II frames.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -359,7 +445,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>If ipconfigFILTER_OUT_NON_ETHERNET_II_FRAMES is set to 1 then Ethernet frames that are not in Ethernet II format will be dropped. This option is included for potential future IP stack developments </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Responsibility of the Ethernet interface to filter out packets</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -367,23 +453,15 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>If ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES is set to 1 then it is the responsibility of the Ethernet interface to filter out packets that are of no interest. </td></tr>
-<tr>
-<td>Send RST packets, when receive unknown packets.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable </li>
-</ul>
-</td><td>Enable </td><td>TCP will not send RST packets in reply to TCP unknown or out-of-order packets </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Access 32-bit fields in the IP packets</td><td>Value must be an integer</td><td>2 </td><td>To access 32-bit fields in the IP packets with 32-bit memory instructions, all packets will be stored 32-bit-aligned, plus 16-bits. This has to do with the contents of the IP-packets: all 32-bit fields are 32-bit-aligned, plus 16-bit </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Size of the pool of TCP window descriptors</td><td>Value must be an integer</td><td>240 </td><td>Define the size of the pool of TCP window descriptors </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Size of Rx buffer for TCP sockets</td><td>Value must be an integer</td><td>3000 </td><td>Define the size of Rx buffer for TCP sockets </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Size of Tx buffer for TCP sockets</td><td>Value must be an integer</td><td>3000 </td><td>Define the size of Tx buffer for TCP sockets </td></tr>
-<tr>
+<tr class="tree_none">
 <td>TCP keep-alive</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -391,9 +469,9 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>TCP keep-alive is avaiable or not </td></tr>
-<tr>
+<tr class="tree_none">
 <td>TCP keep-alive interval</td><td>Value must be an integer</td><td>120 </td><td>TCP keep-alive interval in second </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The socket semaphore to unblock the MQTT task (USER_SEMAPHORE)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -401,7 +479,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The socket semaphore to unblock the MQTT task (WAKE_CALLBACK)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -409,7 +487,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Enable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The socket semaphore to unblock the MQTT task (USE_CALLBACKS)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -417,7 +495,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The socket semaphore to unblock the MQTT task (TX_DRIVER)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -425,7 +503,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The socket semaphore to unblock the MQTT task (RX_DRIVER)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -433,7 +511,7 @@ Disable</li>
 Enable </li>
 </ul>
 </td><td>Disable </td><td>The socket semaphore is used to unblock the MQTT task </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Possible optimisation for expert users</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -450,9 +528,9 @@ Usage Notes</h1>
 <li>Configure an r_ether instance and provide a pointer to the instance of the NetworkInterface as follows:</li>
 </ul>
 <div class="fragment"><div class="line"><span class="comment">/* Reference used by the NetworkInterface to access the ethernet instance. */</span></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__instance__t">ether_instance_t</a> <span class="keyword">const</span> * gp_freertos_ether;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">/* Make it reference the configured ether instance. */</span></div><div class="line">ether_instance_t <span class="keyword">const</span> * gp_freertos_ether = &amp;g_ether_instance;</div></div><!-- fragment --><ul>
-<li>Follow the TCP stack initialization procedure as described here: <a href="https://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_Networking_Tutorial_Initialising_TCP.html">FreeRTOS+TCP Networking Tutorial: Initializing the TCP/IP Stack</a></li>
+<li>Some of the stack initialisation APIs have been deprecated as of FreeRTOS V4.0.0 onwards. Please refer to <a href="https://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_Networking_Tutorial_Initialising_TCP.updated.html">FreeRTOS+TCP Networking Tutorial: Initializing the TCP/IP Stack</a> for the new APIs supporting IPv6, Multiple Endpoints and Multiple interfaces. To use the deprecated APIs please set it to "Yes" for the stack property "Common|Backward Compatible Mode".</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>The MAC address passed to FreeRTOS_IPInit must match the MAC address configured in the r_ether instance. </dd>
+<dl class="section note"><dt>Note</dt><dd>The MAC address passed to FreeRTOS_FillEndPoint must match the MAC address configured in the r_ether instance. </dd>
 <dd>
 <code>g_ether_instance</code> must have <code>vEtherISRCallback</code> configured as the callback. </dd>
 <dd>
@@ -470,7 +548,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

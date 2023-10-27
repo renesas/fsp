@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,7 +281,7 @@ The following build time configurations are defined in fsp_cfg/r_icu_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -219,11 +297,11 @@ This module can be added to the Stacks tab via New Stack &gt; Input &gt; Externa
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_external_irq0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Channel</td><td>Value must be an integer between 0 and 15</td><td>0 </td><td>Specify the hardware channel. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Falling</li>
@@ -235,7 +313,7 @@ Both Edges</li>
 Low Level</li>
 </ul>
 </td><td>Rising </td><td>Select the signal edge or state that triggers an interrupt. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Digital Filtering</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -243,21 +321,21 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Select if the digital noise filter should be enabled. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-PCLKB / 1</li>
+PCLK / 1</li>
 <li>
-PCLKB / 8</li>
+PCLK / 8</li>
 <li>
-PCLKB / 32</li>
+PCLK / 32</li>
 <li>
-PCLKB / 64</li>
+PCLK / 64</li>
 </ul>
-</td><td>PCLKB / 64 </td><td>Select the clock divider for the digital noise filter. </td></tr>
-<tr>
+</td><td>PCLK / 64 </td><td>Select the clock divider for the digital noise filter. </td></tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided here. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the IRQn triggers </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Pin Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the PIN interrupt priority. </td></tr>
 </table>
 </p>
@@ -281,7 +359,7 @@ Usage Notes</h1>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the ICU in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ICU_IRQN_PIN    BSP_IO_PORT_02_PIN_06</span></div><div class="line"><span class="preprocessor">#define ICU_IRQN        6</span></div><div class="line"></div><div class="line"><span class="comment">/* Called from icu_irq_isr */</span></div><div class="line"><span class="keywordtype">void</span> external_irq_callback (<a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    (void) p_args;</div><div class="line"></div><div class="line">    g_external_irq_complete = 1;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> simple_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Example Configuration */</span></div><div class="line">    <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__cfg__t">external_irq_cfg_t</a> icu_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a1b7ba67ea2063df052d7cff54d642455">channel</a>       = ICU_IRQN,</div><div class="line">        .trigger       = <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2d7a4f8fd21fad6f5a671336152d46b0">EXTERNAL_IRQ_TRIG_RISING</a>,</div><div class="line">        .filter_enable = <span class="keyword">false</span>,</div><div class="line">        .pclk_div      = <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga692e093fc800ee08e3f84fae648372d8a8efd589848d944d15906446d30500c1a">EXTERNAL_IRQ_PCLK_DIV_BY_1</a>,</div><div class="line">        .p_callback    = external_irq_callback,</div><div class="line">        .p_context     = 0,</div><div class="line">        .ipl           = 0,</div><div class="line">        .irq           = (IRQn_Type) 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the external interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___i_c_u.html#ga036e85b235d213b257cae159b9eba0a3">R_ICU_ExternalIrqOpen</a>(&amp;g_icu_ctrl, &amp;icu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the external interrupt. */</span></div><div class="line">    <span class="comment">/* Enable not required when used with ELC or DMAC. */</span></div><div class="line">    err = <a class="code" href="group___i_c_u.html#ga56b7181d7a70a5b8655659d760993ad1">R_ICU_ExternalIrqEnable</a>(&amp;g_icu_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_external_irq_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ICU_IRQN_PIN    BSP_IO_PORT_02_PIN_06</span></div><div class="line"><span class="preprocessor">#define ICU_IRQN        6</span></div><div class="line"></div><div class="line"><span class="comment">/* Called from icu_irq_isr */</span></div><div class="line"><span class="keywordtype">void</span> external_irq_callback (<a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    (void) p_args;</div><div class="line"></div><div class="line">    g_external_irq_complete = 1;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> simple_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Example Configuration */</span></div><div class="line">    <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__cfg__t">external_irq_cfg_t</a> icu_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a1b7ba67ea2063df052d7cff54d642455">channel</a>          = ICU_IRQN,</div><div class="line">        .trigger          = <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2d7a4f8fd21fad6f5a671336152d46b0">EXTERNAL_IRQ_TRIG_RISING</a>,</div><div class="line">        .filter_enable    = <span class="keyword">false</span>,</div><div class="line">        .clock_source_div = <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga739b3c56a0ebe492581dc75c41fd1627a9ee6a36c6bbdc9b1069bd5e06f1a192c">EXTERNAL_IRQ_CLOCK_SOURCE_DIV_1</a>,</div><div class="line">        .p_callback       = external_irq_callback,</div><div class="line">        .p_context        = 0,</div><div class="line">        .ipl              = 0,</div><div class="line">        .irq              = (IRQn_Type) 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the external interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___i_c_u.html#ga036e85b235d213b257cae159b9eba0a3">R_ICU_ExternalIrqOpen</a>(&amp;g_icu_ctrl, &amp;icu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the external interrupt. */</span></div><div class="line">    <span class="comment">/* Enable not required when used with ELC or DMAC. */</span></div><div class="line">    err = <a class="code" href="group___i_c_u.html#ga56b7181d7a70a5b8655659d760993ad1">R_ICU_ExternalIrqEnable</a>(&amp;g_icu_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_external_irq_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structicu__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#structicu__instance__ctrl__t">icu_instance_ctrl_t</a></td></tr>
@@ -474,7 +552,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a4a407b8899a042692026e65d98535f6e">external_irq_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a36986e495396d0adb98953771245d6cd">external_irq_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -520,7 +598,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

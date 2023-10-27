@@ -27,5 +27,6 @@ var group___d_m_a_c =
     [ "R_DMAC_Enable", "group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b", null ],
     [ "R_DMAC_Disable", "group___d_m_a_c.html#ga6b64368039ad6617f091a20b5ac16206", null ],
     [ "R_DMAC_InfoGet", "group___d_m_a_c.html#gade7f6c387756ca9728194ac15f01fc43", null ],
+    [ "R_DMAC_Reload", "group___d_m_a_c.html#ga697b9273351d29eb3e0c9319dce2e382", null ],
     [ "R_DMAC_Close", "group___d_m_a_c.html#ga3423bb11f0d76dbe760ed01cf03ccd45", null ]
 ];

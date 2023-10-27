@@ -26,11 +26,11 @@ var group___l_p_m___a_p_i =
       [ "p_extend", "group___l_p_m___a_p_i.html#aba5f12284eb8a49b9ff5466fc7b0b9e0", null ]
     ] ],
     [ "lpm_api_t", "group___l_p_m___a_p_i.html#structlpm__api__t", [
-      [ "open", "group___l_p_m___a_p_i.html#a83ef7de188578486fd6ebfca1c2ff443", null ],
-      [ "close", "group___l_p_m___a_p_i.html#ae76670d2a5f1f1d3ceaa70b89dc1d893", null ],
-      [ "lowPowerReconfigure", "group___l_p_m___a_p_i.html#a98bdd7aeba1c468785755e8d19654277", null ],
-      [ "lowPowerModeEnter", "group___l_p_m___a_p_i.html#a3277e4d6aa8864e088c8f17af32c3f4b", null ],
-      [ "ioKeepClear", "group___l_p_m___a_p_i.html#a45ccc8344f1e18a62dcf78aef2f713d5", null ]
+      [ "open", "group___l_p_m___a_p_i.html#a1031cc746d15011284274cf0c7d6fed2", null ],
+      [ "close", "group___l_p_m___a_p_i.html#a57ccc1e222b46c6b8f211e81de56d487", null ],
+      [ "lowPowerReconfigure", "group___l_p_m___a_p_i.html#aa298013bd62b384202698d68fb3c6abd", null ],
+      [ "lowPowerModeEnter", "group___l_p_m___a_p_i.html#a228634f790b05412af1965f680ec0f58", null ],
+      [ "ioKeepClear", "group___l_p_m___a_p_i.html#a51f878bdfde3f90619d9253988e1c7b7", null ]
     ] ],
     [ "lpm_instance_t", "group___l_p_m___a_p_i.html#structlpm__instance__t", [
       [ "p_ctrl", "group___l_p_m___a_p_i.html#a6979923fdacc8efb14d3fb20d19bfa66", null ],

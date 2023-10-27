@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -173,10 +251,12 @@ The following build time configurations are defined in mcu-tools/include/mcuboot
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Custom mcuboot_config.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom mcuboot_config.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
-<tr>
-<td>General &gt; Upgrade Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Custom mcuboot_config.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom mcuboot_config.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Upgrade Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Swap</li>
 <li>
@@ -187,54 +267,58 @@ Overwrite Only Fast</li>
 Direct XIP</li>
 </ul>
 </td><td>Overwrite Only </td><td>Swap supports A/B image swapping with rollback. Other modes with simpler code path, which only supports overwriting the existing image with the update image (Overwrite Only) or running the newest image directly from its flash partition (Direct XIP), are also available. </td></tr>
-<tr>
-<td>General &gt; Validate Primary Image</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Validate Primary Image</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Always check the signature of the image in the primary slot before booting, even if no upgrade was performed. This is recommended if the boot time penalty is acceptable. </td></tr>
-<tr>
-<td>General &gt; Downgrade Prevention (Overwrite Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Downgrade Prevention (Overwrite Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Prevent downgrades by enforcing incrementing version numbers. When this option is set, any upgrade must have greater major version or greater minor version with equal major version. This mechanism only protects against some attacks against version downgrades (for example, a JTAG could be used to write an older version). </td></tr>
-<tr>
-<td>General &gt; Number of Images Per Application</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Number of Images Per Application</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
 <li>
 2 (TrustZone)</li>
 </ul>
 </td><td>1 </td><td>Number of separately updateable images. </td></tr>
-<tr>
-<td>General &gt; Watchdog Feed</td><td>Manual Entry</td><td></td><td>This function might be implemented if the OS / HW watchdog is enabled while doing a swap upgrade and the time it takes for a swapping is long enough to cause an unwanted reset. If implementing this, the OS main.c must also enable the watchdog (if required)! </td></tr>
-<tr>
-<td>General &gt; Measured Boot</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Watchdog Feed</td><td>Manual Entry</td><td></td><td>This function might be implemented if the OS / HW watchdog is enabled while doing a swap upgrade and the time it takes for a swapping is long enough to cause an unwanted reset. If implementing this, the OS main.c must also enable the watchdog (if required)! </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Measured Boot</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Copies the boot data into the secure RAM, intended to be used by the secure App. </td></tr>
-<tr>
-<td>General &gt; Data Sharing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Sharing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Copies the user data into the secure RAM, intended to be used by the secure App. </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; TrustZone &gt; Boot Record (Image 2)</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV for Image 2. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; TrustZone &gt; Custom (Image 2)</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; Signature Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Signing and Encryption Options  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Signing and Encryption Options &gt; TrustZone  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Boot Record (Image 2)</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV for Image 2. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Custom (Image 2)</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Signature Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -245,14 +329,14 @@ RSA 2048</li>
 RSA 3072</li>
 </ul>
 </td><td>ECDSA P-256 </td><td>Configure the signature type. </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; Boot Record</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; Custom</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; Python</td><td>Manual Entry</td><td>python </td><td>Name of the python command to use. Default is python, but can be updated to python3 for Linux or an absolute path if needed. </td></tr>
-<tr>
-<td>Signing and Encryption Options &gt; Encryption Scheme</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Boot Record</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Custom</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Python</td><td>Manual Entry</td><td>python </td><td>Name of the python command to use. Default is python, but can be updated to python3 for Linux or an absolute path if needed. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Encryption Scheme</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 ECIES-P256</li>
 <li>
@@ -261,30 +345,36 @@ RSA-OAEP (RSA 2048 only)</li>
 Encryption Disabled</li>
 </ul>
 </td><td>Encryption Disabled </td><td>Choose the encryption scheme. </td></tr>
-<tr>
-<td>Flash Layout &gt; TrustZone &gt; Non-Secure Callable Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable region of the Secure image. </td></tr>
-<tr>
-<td>Flash Layout &gt; TrustZone &gt; Non-Secure Flash Area Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the Non-Secure region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. If the Non-Secure region can be updated separately, this size must account for the header and trailer. </td></tr>
-<tr>
-<td>Flash Layout &gt; TrustZone &gt; Non-Secure Callable RAM Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable RAM region of the Secure image. </td></tr>
-<tr>
-<td>Flash Layout &gt; TrustZone &gt; Non-Secure RAM Region Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the 8192.</td><td>0x0 </td><td>Size of the Non-Secure RAM region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. </td></tr>
-<tr>
-<td>Flash Layout &gt; TrustZone &gt; Image 2 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
-<tr>
-<td>Flash Layout &gt; Bootloader Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the flash reserved for the bootloader. </td></tr>
-<tr>
-<td>Flash Layout &gt; Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x100 for Cortex-M23, 0x80 for Cortex-M4 and Cortex-M33). </td></tr>
-<tr>
-<td>Flash Layout &gt; Image 1 Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the application image 1, including the header and trailer. For TrustZone projects, enter the combined size of the Secure and Non-Secure Callable regions if the Non-Secure image can be updated separately, or enter the size of the entire image slot if Secure, Non-Secure Callable, and Non-Secure regions are updated as a single image. </td></tr>
-<tr>
-<td>Flash Layout &gt; Scratch Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the scratch area. Only required for swap update method. </td></tr>
-<tr>
-<td>Data Sharing &gt; Maximum Measured Boot Record Size (Bytes)</td><td>Value must be an integer.</td><td>0x64 </td><td>Maximum size of the boot record. </td></tr>
-<tr>
-<td>Data Sharing &gt; Shared Data Size (Bytes)</td><td>Value must be an integer.</td><td>0x380 </td><td>Size of the shared RAM area. Required for Measured Boot. </td></tr>
-<tr>
-<td>Data Sharing &gt; Shared Data Address</td><td>Value must be an integer</td><td>0x20000000 </td><td>Shared RAM start address. Required for Measured Boot. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Flash Layout  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Flash Layout &gt; TrustZone  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Non-Secure Callable Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable region of the Secure image. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Non-Secure Flash Area Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the Non-Secure region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. If the Non-Secure region can be updated separately, this size must account for the header and trailer. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Non-Secure Callable RAM Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable RAM region of the Secure image. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Non-Secure RAM Region Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the 8192.</td><td>0x0 </td><td>Size of the Non-Secure RAM region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Image 2 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bootloader Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the flash reserved for the bootloader. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x100 for Cortex-M23, 0x80 for Cortex-M4 and Cortex-M33). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Image 1 Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the application image 1, including the header and trailer. For TrustZone projects, enter the combined size of the Secure and Non-Secure Callable regions if the Non-Secure image can be updated separately, or enter the size of the entire image slot if Secure, Non-Secure Callable, and Non-Secure regions are updated as a single image. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Scratch Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the scratch area. Only required for swap update method. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Data Sharing  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Measured Boot Record Size (Bytes)</td><td>Value must be an integer.</td><td>0x64 </td><td>Maximum size of the boot record. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Shared Data Size (Bytes)</td><td>Value must be an integer.</td><td>0x380 </td><td>Size of the shared RAM area. Required for Measured Boot. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Shared Data Address</td><td>Value must be an integer</td><td>0x20000000 </td><td>Shared RAM start address. Required for Measured Boot. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-mcuboot-port-clock-configuration"></a>
@@ -350,6 +440,7 @@ Usage Notes</h1>
 </ol>
 <h2>Getting Started: Download and Debug</h2>
 <p>For projects that do not use TrustZone, debug the MCUboot project using the default configuration. Before running, load the signed image to the address specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e&sup2; studio. Upgrade images can be loaded to the upgrade image slots using the same method.</p>
+<dl class="section note"><dt>Note</dt><dd>e&sup2; studio projects targeting RA8 devices that do not use TrustZone must disable the "Set TrustZone secure/non-secure boundaries" setting (Debug Configurations &gt; Debugger &gt; Connection Settings &gt; TrustZone &gt; Set TrustZone secure/non-secure boundaries).</dd></dl>
 <p>For TrustZone projects, debug using the Secure project to ensure the IDAU is partitioned correctly when debugging in e&sup2; studio. Make the following modifications before debugging in e&sup2; studio:</p>
 <ol type="1">
 <li>In the Debug Configurations for your project, on the Startup tab, click Add... to add the MCUboot project *.elf file (Image and Symbols), and optionally the Non-Secure project *.elf file.</li>
@@ -446,7 +537,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

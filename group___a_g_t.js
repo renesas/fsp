@@ -17,6 +17,7 @@ var group___a_g_t =
       [ "AGT_CLOCK_SUBCLOCK", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1ca9656fda36718e18f399397cc0351539a", null ],
       [ "AGT_CLOCK_P402", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1cad91bcbb6c1dc31a0df73bb140170c334", null ],
       [ "AGT_CLOCK_P403", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1ca394a0f7a588d28d6057351a7500a8444", null ],
+      [ "AGT_CLOCK_P404", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1ca534208511e9735ac733c46f67a6c4110", null ],
       [ "AGT_CLOCK_AGTIO", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1caa2c8871cf9c88c9c9feb669fb78df673", null ]
     ] ],
     [ "agt_measure_t", "group___a_g_t.html#ga53f383c41ec6fc2cd240e67fab1b969f", [

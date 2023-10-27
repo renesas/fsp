@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -205,7 +283,7 @@ The following build time configurations are defined in fsp_cfg/r_lpm_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -215,7 +293,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Standby Limit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -229,42 +307,54 @@ This module can be added to the Stacks tab via New Stack &gt; Power &gt; Low Pow
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_lpm0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Low Power Mode</td><td>MCU Specific Options</td><td></td><td>Power mode to be entered. </td></tr>
-<tr>
-<td>General &gt; Output port state in standby and deep standby</td><td>MCU Specific Options</td><td></td><td>Select the state of output pins during standby. Applies to address output, data output, and other bus control output pins. </td></tr>
-<tr>
-<td>Deep Sleep and Standby Options &gt; Snooze Options (Not available on every MCU) &gt; Snooze Request Source</td><td>MCU Specific Options</td><td></td><td>Select the event that will enter snooze. </td></tr>
-<tr>
-<td>Deep Sleep and Standby Options &gt; Snooze Options (Not available on every MCU) &gt; Snooze End Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from snooze from these sources. </td></tr>
-<tr>
-<td>Deep Sleep and Standby Options &gt; Snooze Options (Not available on every MCU) &gt; DTC state in Snooze Mode</td><td>MCU Specific Options</td><td></td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Deep Sleep and Standby Options &gt; Snooze Options (Not available on every MCU) &gt; Snooze Cancel Source</td><td>MCU Specific Options</td><td></td><td>Select an interrupt source to cancel snooze. </td></tr>
-<tr>
-<td>Deep Sleep and Standby Options &gt; Wake Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from deep sleep and standby from these Sources. </td></tr>
-<tr>
-<td>RAM Retention Control (Not available on every MCU) &gt; RAM retention in Standby mode</td><td>MCU Specific Options</td><td></td><td>Select the memory regions that are retained in standby mode. </td></tr>
-<tr>
-<td>RAM Retention Control (Not available on every MCU) &gt; TCM retention in Deep Sleep and Standby modes</td><td>MCU Specific Options</td><td></td><td>Select if Tightly Coupled Memory (TCM) is retained in deep sleep and standby modes. </td></tr>
-<tr>
-<td>RAM Retention Control (Not available on every MCU) &gt; Standby RAM retention in Standby and Deep Standby modes</td><td>MCU Specific Options</td><td></td><td>Select if Standby RAM is retained in standby and deep standby modes. </td></tr>
-<tr>
-<td>Oscillator LDO Control (Not available on every MCU) &gt; PLL1 LDO State in standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state PLL1 LDO state in standby mode. </td></tr>
-<tr>
-<td>Oscillator LDO Control (Not available on every MCU) &gt; PLL2 LDO State in standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state PLL2 LDO state in standby mode. </td></tr>
-<tr>
-<td>Oscillator LDO Control (Not available on every MCU) &gt; HOCO LDO State in standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state HOCO LDO state in standby mode. </td></tr>
-<tr>
-<td>Deep Standby Options &gt; I/O Port Retention</td><td>MCU Specific Options</td><td></td><td>Select the state of the IO Pins after exiting deep standby mode. </td></tr>
-<tr>
-<td>Deep Standby Options &gt; Power-Supply Control</td><td>MCU Specific Options</td><td></td><td>Select the state of the internal power supply in deep standby mode. </td></tr>
-<tr>
-<td>Deep Standby Options &gt; Cancel Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from deep standby using these sources. </td></tr>
-<tr>
-<td>Deep Standby Options &gt; Cancel Edges</td><td>MCU Specific Options</td><td></td><td>Falling edge trigger is default. Select sources to enable wake from deep standby with rising edge. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_lpm0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Low Power Mode</td><td>MCU Specific Options</td><td></td><td>Power mode to be entered. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output port state in standby and deep standby</td><td>MCU Specific Options</td><td></td><td>Select the state of output pins during standby. Applies to address output, data output, and other bus control output pins. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Deep Sleep and Standby Options  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Deep Sleep and Standby Options &gt; Snooze Options (Not available on every MCU)  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Snooze Request Source</td><td>MCU Specific Options</td><td></td><td>Select the event that will enter snooze. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Snooze End Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from snooze from these sources. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">DTC state in Snooze Mode</td><td>MCU Specific Options</td><td></td><td>Enable wake from snooze from this source. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Snooze Cancel Source</td><td>MCU Specific Options</td><td></td><td>Select an interrupt source to cancel snooze. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Wake Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from deep sleep and standby from these Sources. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> RAM Retention Control (Not available on every MCU)  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">RAM retention in Standby mode</td><td>MCU Specific Options</td><td></td><td>Select the memory regions that are retained in standby mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">TCM retention in Deep Sleep and Standby modes</td><td>MCU Specific Options</td><td></td><td>Select if Tightly Coupled Memory (TCM) is retained in deep sleep and standby modes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Standby RAM retention in Standby and Deep Standby modes</td><td>MCU Specific Options</td><td></td><td>Select if Standby RAM is retained in standby and deep standby modes. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Oscillator LDO Control (Not available on every MCU)  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PLL1 LDO State in standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state PLL1 LDO state in standby mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PLL2 LDO State in standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state PLL2 LDO state in standby mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">HOCO LDO State in standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state HOCO LDO state in standby mode. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Deep Standby Options  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">I/O Port Retention</td><td>MCU Specific Options</td><td></td><td>Select the state of the IO Pins after exiting deep standby mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Power-Supply Control</td><td>MCU Specific Options</td><td></td><td>Select the state of the internal power supply in deep standby mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Cancel Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from deep standby using these sources. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Cancel Edges</td><td>MCU Specific Options</td><td></td><td>Falling edge trigger is default. Select sources to enable wake from deep standby with rising edge. </td></tr>
 </table>
 </p>
 <p><a class="anchor" id="um_lpm_address_bus_and_bus_control_signals_in_standby_or_deep_standby"></a><a class="anchor" id="um_lpm_internal_power_supply_control_while_in_deep_standby"></a><a class="anchor" id="um_lpm_io_port_states_deep_standby"></a><a class="anchor" id="um_lpm_module_initialization"></a><a class="anchor" id="um_lpm_s5d9_transition_to_low_power_mode"></a><a class="anchor" id="um_lpm_snooze_to_normal_transition_trigger_source"></a><a class="anchor" id="um_lpm_snooze_to_standby_transition_trigger_source"></a><a class="anchor" id="um_lpm_standby_to_snooze_transition_trigger_source"></a><a class="anchor" id="um_lpm_wake_from_deep_standby_trigger_source"></a><a class="anchor" id="um_lpm_support_deep_standby"></a><a class="anchor" id="um_lpm_support_sleep"></a><a class="anchor" id="um_lpm_support_deep_sleep"></a><a class="anchor" id="um_lpm_support_snooze"></a><a class="anchor" id="um_lpm_support_standby"></a><a class="anchor" id="um_lpm_wake_from_standby_trigger_source"></a><a class="anchor" id="um_lpm_mode_entry"></a> </p>
@@ -298,6 +388,7 @@ Limitations</h2>
 <li>When using Snooze mode with SCI0 RXD as the snooze source the system clock must be HOCO and the MOCO, Main Oscillator and PLL clocks must be turned off.<a class="anchor" id="um_lpm_snooze_sci0_clocks"></a></li>
 <li>If the main oscillator or PLL with main oscillator source is used for the system clock, the wake time from standby mode can be affected by the Main Oscillator Wait Time Setting in the MOSCWTCR register. This register setting is available to be changed through the Main Oscillator Wait Time setting in the CGC module properties. See the "Wakeup Timing and Duration" table in Electrical Characteristics for more information.</li>
 <li>When using the DC-DC regulator (where available), the MCU will temporarily switch to the LDO if Software Standby or Snooze is requested and back again when it is cancelled. Switching to the LDO incurs a 60 microsecond critical section wherein all interrupts AND peripherals are stopped. Switching back to DCDC from the LDO incurs an additional 22 microsecond critical section (peripherals running).</li>
+<li>On RA8, there are delays inserted before and after switching to a lower power mode based on BSP configuration options and current CPUCLK speed. These delays do not disable interrupts for the entire delay as required by the RA8 Hardware Manual. Interrupts should be disabled by the application when possible before sleeping to meet the requirements, or the control of interrupts and the delay should be managed by the user to ensure the requirement is fully met.</li>
 </ul>
 <h1><a class="anchor" id="r-lpm-examples"></a>
 Examples</h1>
@@ -540,7 +631,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

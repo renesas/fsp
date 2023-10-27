@@ -1,0 +1,672 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: DA16XXX AT Command Transport Layer</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">DA16XXX AT Command Transport Layer<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Abstraction interface for DA16XXX AT Command functions. </p>
+<h1><a class="anchor" id="RM_DA16XXX_TRANSPORT_API_Summary"></a>
+Summary</h1>
+<p>The DA16XXX AT Command Transport Layer interface provides functions for data communication and buffer handling over multiple communications interfaces. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structat__transport__da16xxx__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__callback__args__t">at_transport_da16xxx_callback_args_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structat__transport__da16xxx__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__cfg__t">at_transport_da16xxx_cfg_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structat__transport__da16xxx__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structat__transport__da16xxx__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__status__t">at_transport_da16xxx_status_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structat__transport__da16xxx__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__api__t">at_transport_da16xxx_api_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structat__transport__da16xxx__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__instance__t">at_transport_da16xxx_instance_t</a></td></tr>
+<tr class="separator:structat__transport__da16xxx__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0c7e405b0292639fc1c3dbe013384281"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a></td></tr>
+<tr class="separator:ga0c7e405b0292639fc1c3dbe013384281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga3a3d414ba2095a1df5de96c2cb736679"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga3a3d414ba2095a1df5de96c2cb736679">at_transport_da16xxx_event_t</a> </td></tr>
+<tr class="separator:ga3a3d414ba2095a1df5de96c2cb736679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structat__transport__da16xxx__callback__args__t" id="structat__transport__da16xxx__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__callback__args__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DA16xxx middleware callback parameter definition </p>
+</div>
+</div>
+</div>
+<a name="structat__transport__da16xxx__cfg__t" id="structat__transport__da16xxx__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__cfg__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DA16xxx middleware configuration block </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:acd268f8e30a43fadf93e201e1494e5c9"><td class="memItemLeft" align="right" valign="top"><a id="acd268f8e30a43fadf93e201e1494e5c9"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#acd268f8e30a43fadf93e201e1494e5c9">p_extend</a></td></tr>
+<tr class="memdesc:acd268f8e30a43fadf93e201e1494e5c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to extended configuration by instance of interface. <br /></td></tr>
+<tr class="separator:acd268f8e30a43fadf93e201e1494e5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a673a58cea49163b0a4d1289763dd72e2"><td class="memItemLeft" align="right" valign="top"><a id="a673a58cea49163b0a4d1289763dd72e2"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a673a58cea49163b0a4d1289763dd72e2">p_context</a></td></tr>
+<tr class="memdesc:a673a58cea49163b0a4d1289763dd72e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
+<tr class="separator:a673a58cea49163b0a4d1289763dd72e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a977e8be16b3c33354756bb066b3bd845"><td class="memItemLeft" align="right" valign="top"><a id="a977e8be16b3c33354756bb066b3bd845"></a>
+bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a977e8be16b3c33354756bb066b3bd845">p_callback</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__callback__args__t">at_transport_da16xxx_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a977e8be16b3c33354756bb066b3bd845"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function. <br /></td></tr>
+<tr class="separator:a977e8be16b3c33354756bb066b3bd845"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structat__transport__da16xxx__data__t" id="structat__transport__da16xxx__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__data__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DA16xxx data structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acb9b09b0d2c44f4cb6063c23a614bba6"></a>uint8_t *</td>
+<td class="fieldname">
+p_at_cmd_string</td>
+<td class="fielddoc">
+Pointer to ATCMD string. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5a85680044035ba644c115ba1f087db3"></a>uint32_t</td>
+<td class="fieldname">
+at_cmd_string_length</td>
+<td class="fielddoc">
+ATCMD string length. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2c2b9027feec98a5000b87aec033b781"></a>uint8_t *</td>
+<td class="fieldname">
+p_response_buffer</td>
+<td class="fielddoc">
+Pointer to ATCMD response buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0d06396d957b2beb955c9f6c32c20ff4"></a>uint32_t</td>
+<td class="fieldname">
+response_buffer_size</td>
+<td class="fielddoc">
+ATCMD response buffer string length. </td></tr>
+<tr><td class="fieldtype">
+<a id="a872091867f8c89ad41058baf9c82ac8b"></a>uint32_t</td>
+<td class="fieldname">
+timeout_ms</td>
+<td class="fielddoc">
+ATCMD timeout in ms. </td></tr>
+<tr><td class="fieldtype">
+<a id="a283d611890d23d7d3544d53d81959be2"></a>const char *</td>
+<td class="fieldname">
+p_expect_code</td>
+<td class="fielddoc">
+Expected string in the ATCMD response. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0db16b4b9f8d5b4cb7268b3a14f20cee"></a>uint32_t</td>
+<td class="fieldname">
+comm_ch_id</td>
+<td class="fielddoc">
+Communication channel ID. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structat__transport__da16xxx__status__t" id="structat__transport__da16xxx__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__status__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DA16xxx status indicators </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af37870eba93a2ab0bcfc085e79871bd2"></a>bool</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+True if driver is open. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structat__transport__da16xxx__api__t" id="structat__transport__da16xxx__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__api__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AT Command APIs </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aeeb5bd41aff573edbcfbc031526d42be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#aeeb5bd41aff573edbcfbc031526d42be">open</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__cfg__t">at_transport_da16xxx_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:aeeb5bd41aff573edbcfbc031526d42be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5b3dede6d910f6e1f826d46b1cd43b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#aae5b3dede6d910f6e1f826d46b1cd43b">close</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:aae5b3dede6d910f6e1f826d46b1cd43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dc3bf9d5a9f7bff4bd072a8d8e56734"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a1dc3bf9d5a9f7bff4bd072a8d8e56734">atCommandSendThreadSafe</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *p_at_cmd)</td></tr>
+<tr class="separator:a1dc3bf9d5a9f7bff4bd072a8d8e56734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54d8af36fc15d7e177220da7357090de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a54d8af36fc15d7e177220da7357090de">atCommandSend</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *p_at_cmd)</td></tr>
+<tr class="separator:a54d8af36fc15d7e177220da7357090de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a1b05e8399acc04d11b13ceec5160f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a9a1b05e8399acc04d11b13ceec5160f3">giveMutex</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, uint32_t mutex_flag)</td></tr>
+<tr class="separator:a9a1b05e8399acc04d11b13ceec5160f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87cdf1848d5520af0bb4129fdf389175"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a87cdf1848d5520af0bb4129fdf389175">takeMutex</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, uint32_t mutex_flag)</td></tr>
+<tr class="separator:a87cdf1848d5520af0bb4129fdf389175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8b655e0d2c34b7a76c35aaed18ab296"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ae8b655e0d2c34b7a76c35aaed18ab296">statusGet</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__status__t">at_transport_da16xxx_status_t</a> *p_status)</td></tr>
+<tr class="separator:ae8b655e0d2c34b7a76c35aaed18ab296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a620d5904ad70450fd78e0e868f6f57f3"><td class="memItemLeft" align="right" valign="top">size_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#a620d5904ad70450fd78e0e868f6f57f3">bufferRecv</a> )(<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, const char *p_data, uint32_t length, uint32_t rx_timeout)</td></tr>
+<tr class="separator:a620d5904ad70450fd78e0e868f6f57f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="aeeb5bd41aff573edbcfbc031526d42be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeeb5bd41aff573edbcfbc031526d42be">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::open) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__cfg__t">at_transport_da16xxx_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open at cmd instance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aae5b3dede6d910f6e1f826d46b1cd43b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5b3dede6d910f6e1f826d46b1cd43b">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::close) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close at cmd instance. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1dc3bf9d5a9f7bff4bd072a8d8e56734"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dc3bf9d5a9f7bff4bd072a8d8e56734">&#9670;&nbsp;</a></span>atCommandSendThreadSafe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::atCommandSendThreadSafe) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *p_at_cmd)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>at cmd send thread safe. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_at_cmd</td><td>Pointer to AT command data structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a54d8af36fc15d7e177220da7357090de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54d8af36fc15d7e177220da7357090de">&#9670;&nbsp;</a></span>atCommandSend</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::atCommandSend) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__data__t">at_transport_da16xxx_data_t</a> *p_at_cmd)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>at cmd send. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_at_cmd</td><td>Pointer to AT command data structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9a1b05e8399acc04d11b13ceec5160f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a1b05e8399acc04d11b13ceec5160f3">&#9670;&nbsp;</a></span>giveMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::giveMutex) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, uint32_t mutex_flag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Give the mutex. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mutex_flag</td><td>TX/RX Flags for the mutex. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a87cdf1848d5520af0bb4129fdf389175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87cdf1848d5520af0bb4129fdf389175">&#9670;&nbsp;</a></span>takeMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::takeMutex) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, uint32_t mutex_flag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Take the mutex . </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mutex_flag</td><td>TX/RX Flags for the mutex. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae8b655e0d2c34b7a76c35aaed18ab296"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8b655e0d2c34b7a76c35aaed18ab296">&#9670;&nbsp;</a></span>statusGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  at_transport_da16xxx_api_t::statusGet) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__status__t">at_transport_da16xxx_status_t</a> *p_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the status of the configured DA16xxx transport.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Pointer to store current status. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a620d5904ad70450fd78e0e868f6f57f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a620d5904ad70450fd78e0e868f6f57f3">&#9670;&nbsp;</a></span>bufferRecv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t(*  at_transport_da16xxx_api_t::bufferRecv) (<a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a> *const p_ctrl, const char *p_data, uint32_t length, uint32_t rx_timeout)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receive data from stream buffer. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to Transport layer instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Data length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rx_timeout</td><td>Timeout for receiving data on the buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">trigger_level</td><td>Trigger level for stream buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structat__transport__da16xxx__instance__t" id="structat__transport__da16xxx__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structat__transport__da16xxx__instance__t">&#9670;&nbsp;</a></span>at_transport_da16xxx_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct at_transport_da16xxx_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga0c7e405b0292639fc1c3dbe013384281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0c7e405b0292639fc1c3dbe013384281">&#9670;&nbsp;</a></span>at_transport_da16xxx_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga0c7e405b0292639fc1c3dbe013384281">at_transport_da16xxx_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>At transport control block. Allocate an instance specific control block to pass into the Communications API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga3a3d414ba2095a1df5de96c2cb736679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a3d414ba2095a1df5de96c2cb736679">&#9670;&nbsp;</a></span>at_transport_da16xxx_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga3a3d414ba2095a1df5de96c2cb736679">at_transport_da16xxx_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event in the callback function </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

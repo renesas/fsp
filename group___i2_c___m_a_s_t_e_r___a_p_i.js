@@ -29,8 +29,8 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
       [ "write", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab2ca2f7ee7e55628bcdd9e3492d7dfd2", null ],
       [ "abort", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a0a0800aaa24f36b2eac8b315a0c5437e", null ],
       [ "slaveAddressSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a6e1d2e41f4dc058c06c1f5aae0c7bce5", null ],
-      [ "callbackSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a1a0c2ac15d2c2eb6a50baed682498620", null ],
-      [ "statusGet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a518c35fc22e49d6969fb6e15aa1e09cd", null ],
+      [ "callbackSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#aab666b9c130b25efdc4b354e62e91c40", null ],
+      [ "statusGet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a165fd3df3df2c5dacbfd5c75b9685181", null ],
       [ "close", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a7d093cf28da6a99e56dbeb7b82ad3f5f", null ]
     ] ],
     [ "i2c_master_instance_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t", [

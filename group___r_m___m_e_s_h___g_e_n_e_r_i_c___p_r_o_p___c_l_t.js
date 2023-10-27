@@ -4,7 +4,6 @@ var group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t =
     [ "RM_MESH_GENERIC_PROP_CLT_Open", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga094c7b36d45f3184e09759681703354c", null ],
     [ "RM_MESH_GENERIC_PROP_CLT_Close", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga57e9a739cb85aa1641da82e5c5d13907", null ],
     [ "RM_MESH_GENERIC_PROP_CLT_GetModelHandle", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga16c7b35ee9483327868e7be237bf1112", null ],
-    [ "RM_MESH_GENERIC_PROP_CLT_SetModelHandle", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga792947721a61a24bc433e3e93a772635", null ],
     [ "RM_MESH_GENERIC_PROP_CLT_SendReliablePdu", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#gaa6c05467f9cfb17df747d5c6d0e25b45", null ],
     [ "RM_MESH_GENERIC_PROP_CLT_UserPropertiesGet", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#gac92438d848b44cc701bcdead90608b48", null ],
     [ "RM_MESH_GENERIC_PROP_CLT_UserPropertyGet", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga7306b6bc37144d0ca6f51dbbf5c5089a", null ],

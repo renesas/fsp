@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,7 +252,7 @@ When combined with a USB peripheral control driver and media driver, it enables 
 Features</h2>
 <p>The r_usb_pmsc module has the following key features:</p><ul>
 <li>Storage command control using the BOT protocol</li>
-<li>Supports SFF-8070i (ATAPI)</li>
+<li>Supports only SFF-8070i (ATAPI) Interface Sub-Class</li>
 <li>Response to mass storage device class requests from a USB host</li>
 </ul>
 <h1><a class="anchor" id="r-usb_pmsc-configuration"></a>
@@ -184,7 +262,7 @@ The following build time configurations are defined in fsp_cfg/r_usb_pmsc_cfg.h:
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Bulk Input Transfer Pipe</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 USB PIPE1</li>
@@ -198,7 +276,7 @@ USB PIPE4</li>
 USB PIPE5</li>
 </ul>
 </td><td>USB PIPE4 </td><td>Select the USB pipe to use for bulk input transfers. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bulk Output Transfer Pipe</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 USB PIPE1</li>
@@ -212,13 +290,13 @@ USB PIPE4</li>
 USB PIPE5</li>
 </ul>
 </td><td>USB PIPE5 </td><td>Select the USB pipe to use for bulk output transfers. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Vendor Information</td><td>Vendor Information must be 8 bytes long; pad with spaces if shorter.</td><td>Vendor </td><td>Specify the vendor information field (part of the Inquiry command response). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Product Information</td><td>Product Information must be 16 bytes long; pad with spaces if shorter.</td><td>Mass Storage </td><td>Specify the product information field (part of the Inquiry command response). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Product Revision Level</td><td>Product Revision Level must be 4 bytes long; pad with spaces if shorter.</td><td>1.00 </td><td>Specify the product revision level field (part of the Inquiry command response). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Sector size</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 512</li>
@@ -226,7 +304,7 @@ USB PIPE5</li>
 4096</li>
 </ul>
 </td><td>512 </td><td>Specifies the sector size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of Transfer Sectors</td><td>Please enter a number between 1 and 255.</td><td>8 </td><td>Specify the maximum sector size to request with one data transfer. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; USB PMSC (r_usb_pmsc)</h2>
@@ -234,7 +312,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_pmsc0 </td><td>Module name. </td></tr>
 </table>
 </p>
@@ -308,7 +386,7 @@ Examples</h1>
 <object type="image/svg+xml" data="r_usb_pmsc_operating_environment.svg">r_usb_pmsc_operating_environment.svg</object>
 <div class="caption">
 Example Operating Environment</div></div>
- <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name    : usb_apl_callback</span></div><div class="line"><span class="comment"> * Description      : Callback function for Application program</span></div><div class="line"><span class="comment"> * Arguments        : usb_event_info_t *p_api_event    : Control structure for USB API.</span></div><div class="line"><span class="comment"> *                  : usb_hdl_t        cur_task        : Task Handle</span></div><div class="line"><span class="comment"> *                  : uint8_t          usb_state       : USB_ON(USB_STATUS_REQUEST) / USB_OFF</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> usb_apl_callback (usb_event_info_t * p_api_event, usb_hdl_t cur_task, <a class="code" href="group___u_s_b___a_p_i.html#ga647c9ea8cc8c82a26dcec32f7749c73d">usb_onoff_t</a> usb_state)</div><div class="line">{</div><div class="line">    (void) usb_state;</div><div class="line">    (void) cur_task;</div><div class="line"></div><div class="line">    xQueueSend(g_apl_mbx_hdl, (<span class="keyword">const</span> <span class="keywordtype">void</span> *) &amp;p_api_event, (TickType_t) (0));</div><div class="line">}                                      <span class="comment">/* End of function usb_apl_callback */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#endif </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> usb_pmsc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    usb_event_info_t usb_event;</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">    usb_event_info_t * p_mess;</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> event;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)                </span><span class="comment">/* FreeRTOS */</span><span class="preprocessor"></span></div><div class="line">        xQueueReceive(g_apl_mbx_hdl, (<span class="keywordtype">void</span> *) &amp;p_mess, portMAX_DELAY);</div><div class="line"></div><div class="line">        event_info = *p_mess;</div><div class="line">        <span class="keyword">event</span>      = event_info.event;</div><div class="line"><span class="preprocessor">#else                                  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;usb_event, &amp;event);</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">            {</div><div class="line"><span class="preprocessor">#if USB_SUPPORT_LPW == USB_APL_ENABLE</span></div><div class="line"></div><div class="line"><span class="comment">// @@                low_power_mcu();</span></div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* USB_SUPPORT_LPW == USB_APL_ENABLE */</span><span class="preprocessor"></span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pmsc-descriptor"></a>
+ <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name    : usb_apl_callback</span></div><div class="line"><span class="comment"> * Description      : Callback function for Application program</span></div><div class="line"><span class="comment"> * Arguments        : usb_event_info_t *p_api_event    : Control structure for USB API.</span></div><div class="line"><span class="comment"> *                  : usb_hdl_t        cur_task        : Task Handle</span></div><div class="line"><span class="comment"> *                  : uint8_t          usb_state       : USB_ON(USB_STATUS_REQUEST) / USB_OFF</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> usb_apl_callback (usb_event_info_t * p_api_event, usb_hdl_t cur_task, <a class="code" href="group___u_s_b___a_p_i.html#ga647c9ea8cc8c82a26dcec32f7749c73d">usb_onoff_t</a> usb_state)</div><div class="line">{</div><div class="line">    (void) usb_state;</div><div class="line">    (void) cur_task;</div><div class="line"></div><div class="line">    xQueueSend(g_apl_mbx_hdl, (<span class="keyword">const</span> <span class="keywordtype">void</span> *) &amp;p_api_event, (TickType_t) (0));</div><div class="line">}                                      <span class="comment">/* End of function usb_apl_callback */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#endif </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> usb_pmsc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    usb_event_info_t usb_event;</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">    usb_event_info_t * p_mess;</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> event;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a71c50854a60a443915487767eac07b01">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)                </span><span class="comment">/* FreeRTOS */</span><span class="preprocessor"></span></div><div class="line">        xQueueReceive(g_apl_mbx_hdl, (<span class="keywordtype">void</span> *) &amp;p_mess, portMAX_DELAY);</div><div class="line"></div><div class="line">        event_info = *p_mess;</div><div class="line">        <span class="keyword">event</span>      = event_info.event;</div><div class="line"><span class="preprocessor">#else                                  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ab9275462e1796a4c109af0dbf7424b4c">eventGet</a>(&amp;usb_event, &amp;event);</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">            {</div><div class="line"><span class="preprocessor">#if USB_SUPPORT_LPW == USB_APL_ENABLE</span></div><div class="line"></div><div class="line"><span class="comment">// @@                low_power_mcu();</span></div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* USB_SUPPORT_LPW == USB_APL_ENABLE */</span><span class="preprocessor"></span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pmsc-descriptor"></a>
 Descriptor</h1>
 <p>A template for PMSC descriptors can be found in ra/fsp/src/r_usb_pmsc/r_usb_pmsc_descriptor.c.template. Also, please be sure to use your vendor ID.</p>
 </div><!-- contents -->
@@ -317,7 +395,7 @@ Descriptor</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

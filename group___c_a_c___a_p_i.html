@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,8 +248,7 @@ $(document).ready(function(){initNavTree('group___c_a_c___a_p_i.html','');});
 <p>Interface for clock frequency accuracy measurements. </p>
 <h1><a class="anchor" id="CAC_API_SUMMARY"></a>
 Summary</h1>
-<p>The interface for the clock frequency accuracy measurement circuit (CAC) peripheral is used to check a system clock frequency with a reference clock signal by counting the number of pulses of the clock to be measured.</p>
-<p>Implemented by: <a class="el" href="group___c_a_c.html">Clock Accuracy Circuit (r_cac)</a> </p>
+<p>The interface for the clock frequency accuracy measurement circuit (CAC) peripheral is used to check a system clock frequency with a reference clock signal by counting the number of pulses of the clock to be measured. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -403,10 +480,10 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a0127958a35cee5c81d568f22a5aae493"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad536fdf0808d540e48dc31c4291dd5fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#ad536fdf0808d540e48dc31c4291dd5fb">stopMeasurement</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad536fdf0808d540e48dc31c4291dd5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d499ef68436aa97f82a9db46e63f10c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a9d499ef68436aa97f82a9db46e63f10c">read</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, uint16_t *const p_counter)</td></tr>
-<tr class="separator:a9d499ef68436aa97f82a9db46e63f10c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6de25562a974da096794f16f1d801f1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a6de25562a974da096794f16f1d801f1b">callbackSet</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a6de25562a974da096794f16f1d801f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6d120c2fa73011a153e05dbfe62571d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#ab6d120c2fa73011a153e05dbfe62571d">read</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, uint32_t *const p_counter)</td></tr>
+<tr class="separator:ab6d120c2fa73011a153e05dbfe62571d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77566d160b545ebc3172e5ded7fffbc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a77566d160b545ebc3172e5ded7fffbc3">callbackSet</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a77566d160b545ebc3172e5ded7fffbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60344482e6c3f0086e96fbf860e626be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a60344482e6c3f0086e96fbf860e626be">close</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a60344482e6c3f0086e96fbf860e626be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -472,14 +549,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a9d499ef68436aa97f82a9db46e63f10c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d499ef68436aa97f82a9db46e63f10c">&#9670;&nbsp;</a></span>read</h2>
+<a id="ab6d120c2fa73011a153e05dbfe62571d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6d120c2fa73011a153e05dbfe62571d">&#9670;&nbsp;</a></span>read</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cac_api_t::read) (<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, uint16_t *const p_counter)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cac_api_t::read) (<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, uint32_t *const p_counter)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -493,21 +570,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a6de25562a974da096794f16f1d801f1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6de25562a974da096794f16f1d801f1b">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a77566d160b545ebc3172e5ded7fffbc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77566d160b545ebc3172e5ded7fffbc3">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cac_api_t::callbackSet) (<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cac_api_t::callbackSet) (<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_a_c.html#ga98efa851bbc34d394b17399d2b855d3e">R_CAC_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___c_a_c___a_p_i.html#abdbdc14966f569783485d5058fc2338a">cac_api_t::open</a> call </td></tr>
@@ -591,10 +665,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CAC control block. Allocate an instance specific control block to pass into the CAC API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_a_c.html#structcac__instance__ctrl__t">cac_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>CAC control block. Allocate an instance specific control block to pass into the CAC API calls. </p>
 
 </div>
 </div>
@@ -780,7 +851,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -175,9 +253,8 @@ Summary</h1>
 <li>Dot clock source selection (internal or external) and frequency divider.</li>
 <li>Blending of multiple graphics layers on the background screen.</li>
 <li>Color correction (brightness/configuration/gamma correction).</li>
-<li>Interrupts and callback function.</li>
+<li>Interrupts and callback function. </li>
 </ul>
-<p>Implemented by: <a class="el" href="group___g_l_c_d_c.html">Graphics LCD (r_glcdc)</a> </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -199,6 +276,10 @@ Data Structures</h2></td></tr>
 <tr class="separator:structdisplay__gamma__correction__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structdisplay__clut__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__t">display_clut_t</a></td></tr>
 <tr class="separator:structdisplay__clut__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdisplay__colorkeying__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__cfg__t">display_colorkeying_cfg_t</a></td></tr>
+<tr class="separator:structdisplay__colorkeying__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdisplay__colorkeying__layer__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__layer__t">display_colorkeying_layer_t</a></td></tr>
+<tr class="separator:structdisplay__colorkeying__layer__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structdisplay__input__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__input__cfg__t">display_input_cfg_t</a></td></tr>
 <tr class="separator:structdisplay__input__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structdisplay__output__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__output__cfg__t">display_output_cfg_t</a></td></tr>
@@ -249,6 +330,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:gadddaa0376991530684bf3d138868305b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga341e5e266bec8689fe658a36e41e717c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga341e5e266bec8689fe658a36e41e717c">display_fade_status_t</a> </td></tr>
 <tr class="separator:ga341e5e266bec8689fe658a36e41e717c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79899f7bd76e6206e3d6ac2b5cf387a8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga79899f7bd76e6206e3d6ac2b5cf387a8">display_color_keying_t</a> </td></tr>
+<tr class="separator:ga79899f7bd76e6206e3d6ac2b5cf387a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad32da0cb1f3137644b4641cb445a68bc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gad32da0cb1f3137644b4641cb445a68bc">display_data_swap_t</a> </td></tr>
+<tr class="separator:gad32da0cb1f3137644b4641cb445a68bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structdisplay__timing__t" id="structdisplay__timing__t"></a>
@@ -558,6 +643,57 @@ p_clut</td>
 Address of the area storing the CLUT data (in ARGB8888 format) </td></tr>
 </table>
 
+</div>
+</div>
+<a name="structdisplay__colorkeying__cfg__t" id="structdisplay__colorkeying__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdisplay__colorkeying__cfg__t">&#9670;&nbsp;</a></span>display_colorkeying_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct display_colorkeying_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Color Keying setting </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae7ab83891871ee1ac3feff4812efd20d"></a><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__color__t">display_color_t</a></td>
+<td class="fieldname">
+src_color</td>
+<td class="fielddoc">
+Source color. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac455511fa3368d96b6ea93e3361af472"></a><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__color__t">display_color_t</a></td>
+<td class="fieldname">
+dst_color</td>
+<td class="fielddoc">
+Destination color. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2db8a9d0c35e95ee07cfc24fd896e0c7"></a><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga79899f7bd76e6206e3d6ac2b5cf387a8">display_color_keying_t</a></td>
+<td class="fieldname">
+enable_ckey</td>
+<td class="fielddoc">
+Select enable or disable. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdisplay__colorkeying__layer__t" id="structdisplay__colorkeying__layer__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdisplay__colorkeying__layer__t">&#9670;&nbsp;</a></span>display_colorkeying_layer_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct display_colorkeying_layer_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Color Keying layer setting </p>
+</div>
 </div>
 </div>
 <a name="structdisplay__input__cfg__t" id="structdisplay__input__cfg__t"></a>
@@ -989,7 +1125,7 @@ Size of CLUT entry to be updated. </td></tr>
 <td class="fieldname">
 state</td>
 <td class="fielddoc">
-Status of GLCDC module. </td></tr>
+Status of display module. </td></tr>
 <tr><td class="fieldtype">
 <a id="a25afab0ed85e1453eb6a3aa07c1db10a"></a><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga341e5e266bec8689fe658a36e41e717c">display_fade_status_t</a></td>
 <td class="fieldname">
@@ -1032,6 +1168,8 @@ Status of fade-in/fade-out status. </td></tr>
 <tr class="separator:a5a2c9cd2bae48a2a69da0bbc45cb340f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf095eb456db9e413a39ce5cb6042ced"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#adf095eb456db9e413a39ce5cb6042ced">clutEdit</a> )(<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a> layer, uint8_t index, uint32_t color)</td></tr>
 <tr class="separator:adf095eb456db9e413a39ce5cb6042ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa694c063096d84506f63d604c6c18b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#a3aa694c063096d84506f63d604c6c18b">colorKeySet</a> )(<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__layer__t">display_colorkeying_layer_t</a> key_cfg, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a> layer)</td></tr>
+<tr class="separator:a3aa694c063096d84506f63d604c6c18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58901881db804c805aa9dbe363200393"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#a58901881db804c805aa9dbe363200393">statusGet</a> )(<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t">display_status_t</a> *const p_status)</td></tr>
 <tr class="separator:a58901881db804c805aa9dbe363200393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1047,11 +1185,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open display device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga61603db8684d31ac86b2960096c91f58">R_GLCDC_Open()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Open display device. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. Must be declared by user. Value set here. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to display configuration structure. All elements of this structure must be set by user. </td></tr>
@@ -1072,11 +1206,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close display device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga77bc7980b821bebed7cc20dbb427dfd9">R_GLCDC_Close()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Close display device. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
   </table>
@@ -1096,11 +1226,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Display start. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga0e8a7d17184b405e6caae3ba21857baa">R_GLCDC_Start()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Display start. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
   </table>
@@ -1120,11 +1246,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Display stop. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga769f53407aca261a4d68eefca3406436">R_GLCDC_Stop()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Display stop. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
   </table>
@@ -1144,11 +1266,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Change layer parameters at runtime. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga661142a24277860146762914af644242">R_GLCDC_LayerChange()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Change layer parameters at runtime. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to run-time layer configuration structure. </td></tr>
@@ -1170,11 +1288,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Change layer framebuffer pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga0d020f73e547ae005c666638a0dff427">R_GLCDC_BufferChange()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Change layer framebuffer pointer. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">framebuffer</td><td>Pointer to desired framebuffer. </td></tr>
@@ -1196,11 +1310,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Color correction. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga9d0754a6820a3a189c270f8da8677b72">R_GLCDC_ColorCorrection()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Color correction. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>Pointer to color correction configuration structure. </td></tr>
@@ -1221,11 +1331,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set CLUT for display device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#gaaabcf5b43ea6cb821c0cddee78172cc5">R_GLCDC_ClutUpdate()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Set CLUT for display device. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_clut_cfg</td><td>Pointer to CLUT configuration structure. </td></tr>
@@ -1247,16 +1353,34 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set CLUT element for display device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#gadae3a06f170b361c175a49a9961298e9">R_GLCDC_ClutEdit()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Set CLUT element for display device. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">layer</td><td>Layer number corresponding to the CLUT. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>CLUT element index. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>Desired CLUT index color. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3aa694c063096d84506f63d604c6c18b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aa694c063096d84506f63d604c6c18b">&#9670;&nbsp;</a></span>colorKeySet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  display_api_t::colorKeySet) (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__layer__t">display_colorkeying_layer_t</a> key_cfg, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a> layer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure color keying. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_cfg</td><td>Pointer to color keying configuration. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">layer</td><td>Layer to apply color keying. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1274,11 +1398,7 @@ Status of fade-in/fade-out status. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get status for display device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___g_l_c_d_c.html#ga1ba1f4b003e8045aefaa604f4eb5954f">R_GLCDC_StatusGet()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Get status for display device. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to display interface control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">status</td><td>Pointer to display interface status structure. </td></tr>
@@ -1339,10 +1459,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Display control block. Allocate an instance specific control block to pass into the display API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>glcdc_instance_ctrl_tDisplay control block </li>
-</ul>
-</dd></dl>
+<p>Display control block. Allocate an instance specific control block to pass into the display API calls.Display control block </p>
 
 </div>
 </div>
@@ -1409,6 +1526,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="ggad57d6b7a15167958412454bc06bd95a8a6bdf44d99bd6b7dc6dd3aecda33612fe"></a>DISPLAY_EVENT_GR2_UNDERFLOW&#160;</td><td class="fielddoc"><p>Graphics frame2 underflow occurs. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad57d6b7a15167958412454bc06bd95a8a58d8e2c4cb6839e1ed549e9d7d680c74"></a>DISPLAY_EVENT_LINE_DETECTION&#160;</td><td class="fielddoc"><p>Designated line is processed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad57d6b7a15167958412454bc06bd95a8abb55679ae02740210745f5bba4bb6297"></a>DISPLAY_EVENT_FRAME_END&#160;</td><td class="fielddoc"><p>Frame end is processed. </p>
 </td></tr>
 </table>
 
@@ -1602,13 +1721,49 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga79899f7bd76e6206e3d6ac2b5cf387a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga79899f7bd76e6206e3d6ac2b5cf387a8">&#9670;&nbsp;</a></span>display_color_keying_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga79899f7bd76e6206e3d6ac2b5cf387a8">display_color_keying_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Color Keying enable or disable </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga79899f7bd76e6206e3d6ac2b5cf387a8ae54ee56c1436bf5a7496a289577a6f5a"></a>DISPLAY_COLOR_KEYING_DISABLE&#160;</td><td class="fielddoc"><p>Color keying disable. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga79899f7bd76e6206e3d6ac2b5cf387a8a933977ca512b907003fe9951555bfcb2"></a>DISPLAY_COLOR_KEYING_ENABLE&#160;</td><td class="fielddoc"><p>Color keying enable. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad32da0cb1f3137644b4641cb445a68bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad32da0cb1f3137644b4641cb445a68bc">&#9670;&nbsp;</a></span>display_data_swap_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gad32da0cb1f3137644b4641cb445a68bc">display_data_swap_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data swap settings </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

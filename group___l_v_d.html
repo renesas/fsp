@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Low Voltage Detection (r_lvd)</title>
+<title>RA Flexible Software Package Documentation: /PVD Low/Programmable Voltage Detection  (r_lvd)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +240,7 @@ $(document).ready(function(){initNavTree('group___l_v_d.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Low Voltage Detection (r_lvd)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___m_o_d_u_l_e_s.html">Monitoring</a></div></div>  </div>
+<div class="title">/PVD Low/Programmable Voltage Detection (r_lvd)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___m_o_d_u_l_e_s.html">Monitoring</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -180,7 +258,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga9548fb81b4659985ce9aed2343a2e34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the LVD peripheral on RA MCUs. This module implements the <a class="el" href="group___l_v_d___a_p_i.html">Low Voltage Detection Interface</a>. </p>
+<p>Driver for the LVD and PVD peripherals on RA MCUs. This module implements the <a class="el" href="group___l_v_d___a_p_i.html">Low Voltage Detection Interface</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>In the below usage notes, "LVD" refers to both LVD and PVD.</dd></dl>
 <h1><a class="anchor" id="r-lvd-overview"></a>
 Overview</h1>
 <p>The Low Voltage Detection module configures the voltage monitors to detect when a power supply pin or a voltage detector pin voltages crosses a specified threshold.</p>
@@ -194,19 +273,19 @@ Features</h2>
 <li>NMI or maskable interrupt can be configured (NMI support for Voltage Monitor 1 &amp; Voltage Monitor 2 only).</li>
 </ul>
 </li>
-<li>Rising, falling, or both edge event detection</li>
-<li>Support for resetting the MCU when V<sub>CC</sub> falls below configured threshold.</li>
+<li>Voltage monitor interrupt generation condition can be configured (rising, falling, or both edge event detection).</li>
+<li>Support for resetting the MCU when V<sub>CC</sub> falls below/rises above configured threshold.</li>
 </ul>
 </li>
 </ul>
 <h1><a class="anchor" id="r-lvd-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_lvd_reset"></a><a class="anchor" id="um_lvd_voltage_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_threshold"></a><a class="anchor" id="um_lvd_voltage_monitor"></a><a class="anchor" id="um_lvd_digital_filter"></a> <h2>Build Time Configurations for r_lvd</h2>
+<p><a class="anchor" id="um_lvd_reset"></a><a class="anchor" id="um_lvd_reset_on_rising"></a><a class="anchor" id="um_lvd_voltage_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_threshold"></a><a class="anchor" id="um_lvd_voltage_monitor"></a><a class="anchor" id="um_lvd_digital_filter"></a> <h2>Build Time Configurations for r_lvd</h2>
 The following build time configurations are defined in fsp_cfg/r_lvd_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -217,32 +296,22 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Monitoring &gt; Low Voltage Detection (r_lvd)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Low Voltage Detection (r_lvd). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for Monitoring &gt; Low/Programmable Voltage Detection (r_lvd)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Low/Programmable Voltage Detection (r_lvd). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_lvd0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Monitor Number</td><td>MCU Specific Options</td><td></td><td>Select the LVD monitor. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Digital Filter</td><td>MCU Specific Options</td><td></td><td>Enable the digital filter and select the digital filter clock divider. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Voltage Threshold</td><td>MCU Specific Options</td><td></td><td>Select the low voltage detection threshold. </td></tr>
-<tr>
-<td>Detection Response</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Maskable interrupt</li>
-<li>
-Non-maskable interrupt</li>
-<li>
-Reset MCU (Only available for falling edge)</li>
-<li>
-No response (Voltage monitor status will be polled)</li>
-</ul>
-</td><td>No response (Voltage monitor status will be polled) </td><td>Select what happens when the voltage crosses the threshold voltage. </td></tr>
-<tr>
+<tr class="tree_none">
+<td>Detection Response</td><td>MCU Specific Options</td><td></td><td>Select what happens when the voltage crosses the threshold voltage. </td></tr>
+<tr class="tree_none">
 <td>Voltage Slope</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Falling voltage</li>
@@ -251,8 +320,8 @@ Rising voltage</li>
 <li>
 Rising or falling voltage</li>
 </ul>
-</td><td>Falling voltage </td><td>Select detection on rising voltage, falling voltage or both. </td></tr>
-<tr>
+</td><td>Falling voltage </td><td>Select interrupt generation on rising voltage, falling voltage or both. </td></tr>
+<tr class="tree_none">
 <td>Negation Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Delay from reset</li>
@@ -260,9 +329,9 @@ Delay from reset</li>
 Delay from voltage returning to normal range</li>
 </ul>
 </td><td>Delay from reset </td><td>Negation of the monitor signal can either be delayed from the reset event or from voltage returning to normal range. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Monitor Interrupt Callback</td><td>Name must be a valid C symbol.</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LVD Monitor Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the LVD Monitor interrupt priority. </td></tr>
 </table>
 </p>
@@ -286,7 +355,7 @@ Usage Notes</h1>
 <ul>
 <li>The digital filter must be disabled when using voltage monitors in Software Standby or Deep Software Standby.</li>
 <li>Deep Software Standby mode is not possible if the voltage monitor is configured to reset the MCU.</li>
-<li>When the detection response is set to reset, only voltage falling edge detection is possible.</li>
+<li>Reset generated by the VCC-rise detection is supported only on devices with PVD.</li>
 </ul>
 <h1><a class="anchor" id="r-lvd-examples"></a>
 Examples</h1>
@@ -482,7 +551,7 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___l_v_d___a_p_i.html#ab0380e0e71ee1f9dab35c2de9dd5143f">lvd_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___l_v_d___a_p_i.html#aa9405d41b90122cce9c1e22086a4fcd6">lvd_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -534,7 +603,7 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

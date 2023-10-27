@@ -1,8 +1,8 @@
 var group___u_s_b___h_m_s_c___a_p_i =
 [
     [ "usb_hmsc_api_t", "group___u_s_b___h_m_s_c___a_p_i.html#structusb__hmsc__api__t", [
-      [ "storageCommand", "group___u_s_b___h_m_s_c___a_p_i.html#a21c1e8ad8a3d24399a017885dc1d6dba", null ],
-      [ "driveNumberGet", "group___u_s_b___h_m_s_c___a_p_i.html#a2ed33f95b316a6208e9cd0ad5a2455bb", null ],
+      [ "storageCommand", "group___u_s_b___h_m_s_c___a_p_i.html#ae4d864cc1a211cd668698e37a3702a4b", null ],
+      [ "driveNumberGet", "group___u_s_b___h_m_s_c___a_p_i.html#ae2305ac56ee9fadbea08b0035f19290b", null ],
       [ "storageReadSector", "group___u_s_b___h_m_s_c___a_p_i.html#ae20932b0d37c7a0ccc1a21749622b578", null ],
       [ "storageWriteSector", "group___u_s_b___h_m_s_c___a_p_i.html#af66944380f8a58067ad847c840adda3e", null ],
       [ "semaphoreGet", "group___u_s_b___h_m_s_c___a_p_i.html#a49a36c9bb87b760437e6b95de40ca428", null ],

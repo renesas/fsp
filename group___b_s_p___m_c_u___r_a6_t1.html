@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,16 +248,20 @@ The following build time configurations are defined in fsp_cfg/bsp/bsp_mcu_famil
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings &gt; Independent WDT  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IWDT is Disabled</li>
 <li>
 IWDT is automatically activated after a reset (Autostart mode)</li>
 </ul>
 </td><td>IWDT is Disabled </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 128 cycles</li>
 <li>
@@ -190,8 +272,8 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 2048 cycles</li>
 </ul>
 </td><td>2048 cycles </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Dedicated Clock Frequency Divisor</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dedicated Clock Frequency Divisor</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
 <li>
@@ -206,8 +288,8 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 256</li>
 </ul>
 </td><td>128 </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 75%</li>
 <li>
@@ -218,8 +300,8 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 0% (no window end position)</li>
 </ul>
 </td><td>0% (no window end position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 25%</li>
 <li>
@@ -230,32 +312,34 @@ IWDT is automatically activated after a reset (Autostart mode)</li>
 100% (no window start position)</li>
 </ul>
 </td><td>100% (no window start position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Reset Interrupt Request Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Reset Interrupt Request Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 NMI request or interrupt request is enabled</li>
 <li>
 Reset is enabled</li>
 </ul>
 </td><td>Reset is enabled </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; Independent WDT &gt; Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Counting continues (Note: Device will not enter Deep Standby Mode when selected. Device will enter Software Standby Mode)</li>
 <li>
 Stop counting when in Sleep, Snooze mode, or Software Standby</li>
 </ul>
 </td><td>Stop counting when in Sleep, Snooze mode, or Software Standby </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Start Mode Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings &gt; WDT  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Start Mode Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Automatically activate WDT after a reset (auto-start mode)</li>
 <li>
 Stop WDT after a reset (register-start mode)</li>
 </ul>
 </td><td>Stop WDT after a reset (register-start mode) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1024 cycles</li>
 <li>
@@ -266,8 +350,8 @@ Stop WDT after a reset (register-start mode)</li>
 16384 cycles</li>
 </ul>
 </td><td>16384 cycles </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Clock Frequency Division Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Clock Frequency Division Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 4</li>
 <li>
@@ -282,8 +366,8 @@ Stop WDT after a reset (register-start mode)</li>
 8192</li>
 </ul>
 </td><td>128 </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 75%</li>
 <li>
@@ -294,8 +378,8 @@ Stop WDT after a reset (register-start mode)</li>
 0% (no window end position)</li>
 </ul>
 </td><td>0% (no window end position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 25%</li>
 <li>
@@ -306,32 +390,34 @@ Stop WDT after a reset (register-start mode)</li>
 100% (no window start position)</li>
 </ul>
 </td><td>100% (no window start position) </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Reset Interrupt Request</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Reset Interrupt Request</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 NMI</li>
 <li>
 Reset</li>
 </ul>
 </td><td>Reset </td><td></td></tr>
-<tr>
-<td>OFS0 register settings &gt; WDT &gt; Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Counting continues</li>
 <li>
 Stop counting when entering Sleep mode</li>
 </ul>
 </td><td>Stop counting when entering Sleep mode </td><td></td></tr>
-<tr>
-<td>OFS1 register settings &gt; Voltage Detection 0 Circuit Start</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS1 register settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage Detection 0 Circuit Start</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Voltage monitor 0 reset is enabled after reset</li>
 <li>
 Voltage monitor 0 reset is disabled after reset</li>
 </ul>
 </td><td>Voltage monitor 0 reset is disabled after reset </td><td></td></tr>
-<tr>
-<td>OFS1 register settings &gt; Voltage Detection 0 Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage Detection 0 Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2.94 V</li>
 <li>
@@ -340,88 +426,92 @@ Voltage monitor 0 reset is disabled after reset</li>
 2.80 V</li>
 </ul>
 </td><td>2.80 V </td><td></td></tr>
-<tr>
-<td>OFS1 register settings &gt; HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 HOCO oscillation is enabled after reset</li>
 <li>
 HOCO oscillation is disabled after reset</li>
 </ul>
 </td><td>HOCO oscillation is disabled after reset </td><td></td></tr>
-<tr>
-<td>MPU &gt; Enable or disable PC Region 0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> MPU  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable or disable PC Region 0</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
-<tr>
-<td>MPU &gt; PC0 Start</td><td>Value must be an integer between 0 and 0xFFFFFFFC</td><td>0xFFFFFFFC </td><td></td></tr>
-<tr>
-<td>MPU &gt; PC0 End</td><td>Value must be an integer between 0x00000003 and 0xFFFFFFFF</td><td>0xFFFFFFFF </td><td></td></tr>
-<tr>
-<td>MPU &gt; Enable or disable PC Region 1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PC0 Start</td><td>Value must be an integer between 0 and 0xFFFFFFFC</td><td>0xFFFFFFFC </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PC0 End</td><td>Value must be an integer between 0x00000003 and 0xFFFFFFFF</td><td>0xFFFFFFFF </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable or disable PC Region 1</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
-<tr>
-<td>MPU &gt; PC1 Start</td><td>Value must be an integer between 0 and 0xFFFFFFFC</td><td>0xFFFFFFFC </td><td></td></tr>
-<tr>
-<td>MPU &gt; PC1 End</td><td>Value must be an integer between 0x00000003 and 0xFFFFFFFF</td><td>0xFFFFFFFF </td><td></td></tr>
-<tr>
-<td>MPU &gt; Enable or disable Memory Region 0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PC1 Start</td><td>Value must be an integer between 0 and 0xFFFFFFFC</td><td>0xFFFFFFFC </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PC1 End</td><td>Value must be an integer between 0x00000003 and 0xFFFFFFFF</td><td>0xFFFFFFFF </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable or disable Memory Region 0</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 0 Start</td><td>Value must be an integer between 0 and 0x00FFFFFC</td><td>0x00FFFFFC </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 0 End</td><td>Value must be an integer between 0x00000003 and 0x00FFFFFF</td><td>0x00FFFFFF </td><td></td></tr>
-<tr>
-<td>MPU &gt; Enable or disable Memory Region 1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 0 Start</td><td>Value must be an integer between 0 and 0x00FFFFFC</td><td>0x00FFFFFC </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 0 End</td><td>Value must be an integer between 0x00000003 and 0x00FFFFFF</td><td>0x00FFFFFF </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable or disable Memory Region 1</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 1 Start</td><td>Value must be an integer between 0x1FF00000 and 0x200FFFFC</td><td>0x200FFFFC </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 1 End</td><td>Value must be an integer between 0x1FF00003 and 0x200FFFFF</td><td>0x200FFFFF </td><td></td></tr>
-<tr>
-<td>MPU &gt; Enable or disable Memory Region 2</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 1 Start</td><td>Value must be an integer between 0x1FF00000 and 0x200FFFFC</td><td>0x200FFFFC </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 1 End</td><td>Value must be an integer between 0x1FF00003 and 0x200FFFFF</td><td>0x200FFFFF </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable or disable Memory Region 2</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 2 Start</td><td>Value must be an integer between 0x400C0000 and 0x400DFFFC or between 0x40100000 and 0x407FFFFC</td><td>0x407FFFFC </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 2 End</td><td>Value must be an integer between 0x400C0003 and 0x400DFFFF or between 0x40100003 and 0x407FFFFF</td><td>0x407FFFFF </td><td></td></tr>
-<tr>
-<td>MPU &gt; Enable or disable Memory Region 3</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 2 Start</td><td>Value must be an integer between 0x400C0000 and 0x400DFFFC or between 0x40100000 and 0x407FFFFC</td><td>0x407FFFFC </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 2 End</td><td>Value must be an integer between 0x400C0003 and 0x400DFFFF or between 0x40100003 and 0x407FFFFF</td><td>0x407FFFFF </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable or disable Memory Region 3</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 3 Start</td><td>Value must be an integer between 0x400C0000 and 0x400DFFFC or between 0x40100000 and 0x407FFFFC</td><td>0x400DFFFC </td><td></td></tr>
-<tr>
-<td>MPU &gt; Memory Region 3 End</td><td>Value must be an integer between 0x400C0003 and 0x400DFFFF or between 0x40100003 and 0x407FFFFF</td><td>0x400DFFFF </td><td></td></tr>
-<tr>
-<td>Clocks &gt; HOCO FLL Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 3 Start</td><td>Value must be an integer between 0x400C0000 and 0x400DFFFC or between 0x40100000 and 0x407FFFFC</td><td>0x400DFFFC </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Region 3 End</td><td>Value must be an integer between 0x400C0003 and 0x400DFFFF or between 0x40100003 and 0x407FFFFF</td><td>0x400DFFFF </td><td></td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Clocks  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">HOCO FLL Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -432,7 +522,7 @@ Disabled</li>
 The FLL function requires the subclock oscillator to be running and stabilized. When enabled and running the PLL or system clock from HOCO, the BSP will wait for both the Subclock Stabilization Time as well as the FLL Stabilization Time when setting up clocks at startup.<br />
 <br />
 When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 35 cycles</li>
@@ -454,7 +544,7 @@ When FLL is enabled Software Standby and Deep Software Standby modes are not ava
 8163 cycles</li>
 </ul>
 </td><td>8163 cycles </td><td>Number of cycles to wait for the main oscillator clock to stabilize. Drive capability automatic switching function is by default disabled. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Unlocked (Ignore ID)</li>
@@ -464,7 +554,7 @@ Locked with All Erase support</li>
 Locked</li>
 </ul>
 </td><td>Unlocked (Ignore ID) </td><td>When set to 'Locked with All Erase support', the ID Code must be set in the debugger to read or write data to the MCU, but the All Erase command is still accepted regardless. When set to 'Locked', all erase/download/debug access is disabled unless the ID Code is provided. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF </td><td>Set the ID Code for locking debug access. This setting is only used when the ID Code Mode is not set to Unlocked. </td></tr>
 </table>
  </p>
@@ -482,7 +572,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum elc_event_t</td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -496,7 +586,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

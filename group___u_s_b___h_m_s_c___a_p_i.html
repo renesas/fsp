@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -169,10 +247,7 @@ $(document).ready(function(){initNavTree('group___u_s_b___h_m_s_c___a_p_i.html',
 <p>Interface for USB HMSC functions. </p>
 <h1><a class="anchor" id="USB_HMSC_API_Summary"></a>
 Summary</h1>
-<p>The USB HMSC interface provides USB HMSC functionality.</p>
-<p>The USB HMSC interface can be implemented by:</p><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html">USB HMSC (r_usb_hmsc)</a> </li>
-</ul>
+<p>The USB HMSC interface provides USB HMSC functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -201,10 +276,10 @@ Enumerations</h2></td></tr>
 <div class="textblock"><p>USB HMSC functions implemented at the HAL layer will follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a21c1e8ad8a3d24399a017885dc1d6dba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a21c1e8ad8a3d24399a017885dc1d6dba">storageCommand</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td></tr>
-<tr class="separator:a21c1e8ad8a3d24399a017885dc1d6dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ed33f95b316a6208e9cd0ad5a2455bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a2ed33f95b316a6208e9cd0ad5a2455bb">driveNumberGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, uint8_t *p_drive, uint8_t destination)</td></tr>
-<tr class="separator:a2ed33f95b316a6208e9cd0ad5a2455bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d864cc1a211cd668698e37a3702a4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#ae4d864cc1a211cd668698e37a3702a4b">storageCommand</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td></tr>
+<tr class="separator:ae4d864cc1a211cd668698e37a3702a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2305ac56ee9fadbea08b0035f19290b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#ae2305ac56ee9fadbea08b0035f19290b">driveNumberGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, uint8_t *p_drive, uint8_t destination)</td></tr>
+<tr class="separator:ae2305ac56ee9fadbea08b0035f19290b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae20932b0d37c7a0ccc1a21749622b578"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#ae20932b0d37c7a0ccc1a21749622b578">storageReadSector</a> )(uint16_t drive_number, uint8_t *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
 <tr class="separator:ae20932b0d37c7a0ccc1a21749622b578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af66944380f8a58067ad847c840adda3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#af66944380f8a58067ad847c840adda3e">storageWriteSector</a> )(uint16_t drive_number, uint8_t const *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
@@ -215,24 +290,21 @@ Enumerations</h2></td></tr>
 <tr class="separator:a216bd4362becd0e4baa2616a40f72d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a21c1e8ad8a3d24399a017885dc1d6dba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21c1e8ad8a3d24399a017885dc1d6dba">&#9670;&nbsp;</a></span>storageCommand</h2>
+<a id="ae4d864cc1a211cd668698e37a3702a4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4d864cc1a211cd668698e37a3702a4b">&#9670;&nbsp;</a></span>storageCommand</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::storageCommand) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::storageCommand) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Processing for MassStorage(ATAPI) command. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html#gae5cbef3743893d8c35aa9fe45c9d6651">R_USB_HMSC_StorageCommand()</a></li>
-</ul>
-</dd></dl>
+<p>Processing for MassStorage(ATAPI) command.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*buf</td><td>Pointer to the buffer area to store the transfer data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">command</td><td>ATAPI command. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Represents a device address. </td></tr>
@@ -242,24 +314,21 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ed33f95b316a6208e9cd0ad5a2455bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ed33f95b316a6208e9cd0ad5a2455bb">&#9670;&nbsp;</a></span>driveNumberGet</h2>
+<a id="ae2305ac56ee9fadbea08b0035f19290b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2305ac56ee9fadbea08b0035f19290b">&#9670;&nbsp;</a></span>driveNumberGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::driveNumberGet) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, uint8_t *p_drive, uint8_t destination)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::driveNumberGet) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, uint8_t *p_drive, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get number of Storage drive. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html#gaccfdc1d2f97f244fcfbb94c52b03dc3b">R_USB_HMSC_DriveNumberGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get number of Storage drive.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_drive</td><td>Store address for Drive No. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Represents a device address. </td></tr>
   </table>
@@ -279,10 +348,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read sector information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html#gaa79dafa161ab34b91125136493f4a547">R_USB_HMSC_StorageReadSector()</a></li>
-</ul>
-</dd></dl>
+<p>Read sector information.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">drive_number</td><td>Drive number. </td></tr>
@@ -306,10 +372,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write sector information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html#ga87590ff490e5f422294773bfbc8ab1ce">R_USB_HMSC_StorageWriteSector()</a></li>
-</ul>
-</dd></dl>
+<p>Write sector information.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">drive_number</td><td>Drive number. </td></tr>
@@ -333,10 +396,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get Semaphore. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html#ga7320b74cf0e524e1ab5f038c80663fda">R_USB_HMSC_SemaphoreGet()</a> </li>
-</ul>
-</dd></dl>
+<p>Get Semaphore. </p>
 
 </div>
 </div>
@@ -351,10 +411,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Release Semaphore. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html#ga06eed41115834790213c720d27cf2a1e">R_USB_HMSC_SemaphoreRelease()</a> </li>
-</ul>
-</dd></dl>
+<p>Release Semaphore. </p>
 
 </div>
 </div>
@@ -442,7 +499,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

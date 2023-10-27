@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -315,7 +393,7 @@ The following build time configurations are defined in fsp_cfg/rm_ble_abs_cfg.h:
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -325,21 +403,21 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Default (BSP) </td><td>Specify whether to include code for API parameter checking. Valid settings include. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Debug Public Address</td><td>Must be a valid device address</td><td>FF:FF:FF:50:90:74 </td><td>Public Address of firmware initial value. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Debug Random Address</td><td>Must be a valid device address</td><td>FF:FF:FF:FF:FF:FF </td><td>Random Address of firmware initial value. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum number of connections</td><td>Value must be an integer between 1 and 7, and lower than the value defined in ble module.</td><td>7 </td><td>Maximum number of connections. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum connection data length</td><td>Value must be an integer between 27 and 251, and lower than the value defined in ble module.</td><td>251 </td><td>Maximum connection data length. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum advertising data length</td><td>Value must be an integer between 31 and 1650, and lower than the value defined in ble module.</td><td>1650 </td><td>Maximum advertising data length. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum advertising set number</td><td>Value must be an integer between 1 and 4, and lower than the value defined in ble module.</td><td>4 </td><td>Maximum advertising set number. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum periodic sync set number.</td><td>Value must be an integer between 1 and 2, and lower than the value defined in ble module.</td><td>2 </td><td>Maximum periodic sync set number. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Store Security Data</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -347,11 +425,11 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Store Security Data in DataFlash. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Data Flash Block for Security Data</td><td>Value must be an integer between 0 and 7, and lower than the value defined in ble module.</td><td>0 </td><td>Data Flash Block for Security Data Management. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Remote Device Bonding Number</td><td>Value must be an integer between 1 and 7, and lower than the value defined in ble module.</td><td>7 </td><td>Number of remote device bonding information. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Connection Event Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -359,7 +437,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Connection event start notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Connection Event Close Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -367,7 +445,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Connection event close notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Advertising Event Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -375,7 +453,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Advertising event start notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Advertising Event Close Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -383,7 +461,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Advertising event close notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Scanning Event Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -391,7 +469,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Scanning event start notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Scanning Event Close Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -399,7 +477,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Scanning event close notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Initiating Event Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -407,7 +485,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Initiating event start notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Initiating Event Close Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -415,7 +493,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set Initiating event close notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>RF Deep Sleep Start Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -423,7 +501,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set RF_DEEP_SLEEP start notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>RF Deep Sleep Wakeup Notify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -431,9 +509,9 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set RF_DEEP_SLEEP wakeup notify enable/disable. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bluetooth dedicated clock</td><td>Value must be an integer between 0 and 15, and lower than the value defined in ble module.</td><td>6 </td><td>Load capacitance adjustment. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DC-DC converter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -441,7 +519,7 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Set DC-DC converter for RF part. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Slow Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Use RF_LOCO</li>
@@ -449,7 +527,7 @@ Use RF_LOCO</li>
 Use External 32.768kHz</li>
 </ul>
 </td><td>Use RF_LOCO </td><td>Set slow clock source for RF part. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>MCU CLKOUT Port</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 P109</li>
@@ -457,7 +535,7 @@ P109</li>
 P205</li>
 </ul>
 </td><td>P109 </td><td>When BLE_ABS_CFG_RF_EXTERNAL_32K_ENABLE = 1, Set port of MCU CLKOUT. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>MCU CLKOUT Frequency Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 MCU CLKOUT frequency 32.768kHz</li>
@@ -465,9 +543,9 @@ MCU CLKOUT frequency 32.768kHz</li>
 MCU CLKOUT frequency 16.384kHz</li>
 </ul>
 </td><td>MCU CLKOUT frequency 32.768kHz </td><td>When BLE_ABS_CFG_RF_EXTERNAL_32K_ENABLE = 1, set frequency output from CLKOUT of MCU part. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Sleep Clock Accuracy(SCA)</td><td>Value must be an integer between 0 and 500, and lower than the value defined in ble module.</td><td>250 </td><td>When BLE_ABS_CFG_RF_EXTERNAL_32K_ENABLE = 1, set Sleep Clock Accuracy(SCA) for RF slow clock. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Transmission Power Maximum Value</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 max +0dBm</li>
@@ -475,7 +553,7 @@ max +0dBm</li>
 max +4dBm</li>
 </ul>
 </td><td>max +4dBm </td><td>Set transmission power maximum value. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Transmission Power Default Value</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 High 0dBm(Transmission Power Maximum Value = +0dBm) / +4dBm(Transmission Power Maximum Value = +4dBm)</li>
@@ -485,7 +563,7 @@ Mid 0dBm(Transmission Power Maximum Value = +0dBm) / 0dBm(Transmission Power Max
 Low -18dBm(Transmission Power Maximum Value = +0dBm) / -20dBm(Transmission Power Maximum Value = +4dBm)</li>
 </ul>
 </td><td>High 0dBm(Transmission Power Maximum Value = +0dBm) / +4dBm(Transmission Power Maximum Value = +4dBm) </td><td>Set default transmit power. Default transmit power is dependent on the configuration of Maximum transmission power(BLE_ABS_CFG_RF_DEF_TX_POW). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>CLKOUT_RF Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No output</li>
@@ -497,7 +575,7 @@ No output</li>
 1MHz output</li>
 </ul>
 </td><td>No output </td><td>Set CLKOUT_RF output setting. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>RF_DEEP_SLEEP Transition</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
@@ -505,15 +583,15 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Enable </td><td>Set RF_DEEP_SLEEP transition. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>MCU Main Clock Frequency</td><td>Value must be an integer between 1000 and 20000, and lower than the value defined in ble module.</td><td>8000 </td><td>Set MCU Main Clock Frequency (kHz). Set clock source according to your board environment. HOCO: don't care. / Main Clock: 1000 to 20000 kHz / PLL Circuit: 4000 to 12500 kHz  </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Code Flash(ROM) Device Data Block</td><td>Value must be an integer between -1 and 255, and lower than the value defined in ble module.</td><td>255 </td><td>Device specific data block on Code Flash (ROM). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Device Specific Data Flash Block</td><td>Value must be an integer between -1 and 7, and lower than the value defined in ble module.</td><td>-1 </td><td>Device specific data block on E2 Data Flash. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>MTU Size Configured</td><td>Value must be an integer between 23 and 247, and lower than the value defined in ble module.</td><td>247 </td><td>MTU Size configured by GATT MTU exchange procedure. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Timer Slot Maximum Number</td><td>Value must be an integer between 1 and 10, and lower than the value defined in ble module.</td><td>10 </td><td>The maximum number of timer slot. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; BLE Abstraction (rm_ble_abs)</h2>
@@ -521,24 +599,28 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; BL
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_ble_abs0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Gap callback</td><td>Name must be a valid C symbol</td><td>gap_cb </td><td>A user callback function must be provided if the BLE_ABS is configured to generate a GAP. If QE is used, set to NULL. </td></tr>
-<tr>
-<td>General &gt; Vendor specific callback</td><td>Name must be a valid C symbol</td><td>vs_cb </td><td>A user callback function must be provided if the BLE_ABS is configured to generate a Vendor Specific. If QE is used, set to NULL. </td></tr>
-<tr>
-<td>General &gt; GATT server callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gatts_cb_param </td><td>Set GATT server callback parameter. If QE is used, set to NULL. </td></tr>
-<tr>
-<td>General &gt; GATT server callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
-<tr>
-<td>General &gt; GATT client callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gattc_cb_param </td><td>Set GATT client callback parameter. If QE is used, set to NULL. </td></tr>
-<tr>
-<td>General &gt; GATT client callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
-<tr>
-<td>Security &gt; Pairing parameters</td><td>Name must be a valid C symbol</td><td>gs_abs_pairing_param </td><td>Set pairing parameters. </td></tr>
-<tr>
-<td>Security &gt; IO capabilities of local device.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_ble_abs0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Gap callback</td><td>Name must be a valid C symbol</td><td>gap_cb </td><td>A user callback function must be provided if the BLE_ABS is configured to generate a GAP. If QE is used, set to NULL. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Vendor specific callback</td><td>Name must be a valid C symbol</td><td>vs_cb </td><td>A user callback function must be provided if the BLE_ABS is configured to generate a Vendor Specific. If QE is used, set to NULL. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT server callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gatts_cb_param </td><td>Set GATT server callback parameter. If QE is used, set to NULL. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT server callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT client callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gattc_cb_param </td><td>Set GATT client callback parameter. If QE is used, set to NULL. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT client callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Security  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pairing parameters</td><td>Name must be a valid C symbol</td><td>gs_abs_pairing_param </td><td>Set pairing parameters. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">IO capabilities of local device.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 BLE_GAP_IOCAP_DISPLAY_ONLY</li>
 <li>
@@ -551,24 +633,24 @@ BLE_GAP_IOCAP_NOINPUT_NOOUTPUT</li>
 BLE_GAP_IOCAP_KEYBOARD_DISPLAY</li>
 </ul>
 </td><td>BLE_GAP_IOCAP_NOINPUT_NOOUTPUT </td><td>Select IO capabilities of local device. </td></tr>
-<tr>
-<td>Security &gt; MITM protection policy.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">MITM protection policy.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 BLE_GAP_SEC_MITM_BEST_EFFORT</li>
 <li>
 BLE_GAP_SEC_MITM_STRICT</li>
 </ul>
 </td><td>BLE_GAP_SEC_MITM_BEST_EFFORT </td><td>Select MITM protection policy. </td></tr>
-<tr>
-<td>Security &gt; Determine whether to accept only Secure Connections or not.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Determine whether to accept only Secure Connections or not.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 BLE_GAP_SC_BEST_EFFORT</li>
 <li>
 BLE_GAP_SC_STRICT</li>
 </ul>
 </td><td>BLE_GAP_SC_BEST_EFFORT </td><td>Select determine whether to accept only Secure Connections or not. </td></tr>
-<tr>
-<td>Security &gt; Type of keys to be distributed from local device.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Type of keys to be distributed from local device.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 BLE_GAP_KEY_DIST_ENCKEY</li>
 <li>
@@ -577,8 +659,8 @@ BLE_GAP_KEY_DIST_IDKEY</li>
 BLE_GAP_KEY_DIST_SIGNKEY</li>
 </ul>
 </td><td></td><td>Select type of keys to be distributed from local device. </td></tr>
-<tr>
-<td>Security &gt; Type of keys which local device requests a remote device to distribute.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Type of keys which local device requests a remote device to distribute.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 BLE_GAP_KEY_DIST_ENCKEY</li>
 <li>
@@ -587,10 +669,12 @@ BLE_GAP_KEY_DIST_IDKEY</li>
 BLE_GAP_KEY_DIST_SIGNKEY</li>
 </ul>
 </td><td></td><td>Set type of keys which local device requests a remote device to distribute. </td></tr>
-<tr>
-<td>Security &gt; Maximum LTK size.</td><td>Valid range is 7 - 16</td><td>16 </td><td>Set Maximum LTK size. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback provided when an ISR occurs</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when BLE ABS ISR occurs </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum LTK size.</td><td>Valid range is 7 - 16</td><td>16 </td><td>Set Maximum LTK size. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback provided when an ISR occurs</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when BLE ABS ISR occurs </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm_ble_abs-clock-configuration"></a>
@@ -653,7 +737,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a9f73e1cb4d741f8cebedbfbde2b51c6f"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
+<a id="a37addd386f0835ad52ba4a158d80a538"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
 <td class="fieldname">
 advertising_parameter</td>
 <td class="fielddoc">
@@ -1666,7 +1750,7 @@ Pointer to the BLE ABS configuration block. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

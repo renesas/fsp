@@ -1,0 +1,643 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: CAPTURE Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___c_a_p_t_u_r_e___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">CAPTURE Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for CAPTURE functions. </p>
+<h1><a class="anchor" id="CAPTURE_API_SUMMARY"></a>
+Summary</h1>
+<p>The CAPTURE interface provides the functionality for capturing an image from an image sensor/camera. When a capture is complete a capture complete interrupt is triggered. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structcapture__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a></td></tr>
+<tr class="separator:structcapture__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcapture__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a></td></tr>
+<tr class="separator:structcapture__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcapture__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a></td></tr>
+<tr class="separator:structcapture__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcapture__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__api__t">capture_api_t</a></td></tr>
+<tr class="separator:structcapture__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcapture__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__instance__t">capture_instance_t</a></td></tr>
+<tr class="separator:structcapture__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2536cb848b975ad6e7aa5f4e74e14cb9"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga2536cb848b975ad6e7aa5f4e74e14cb9">capture_event_t</a></td></tr>
+<tr class="separator:ga2536cb848b975ad6e7aa5f4e74e14cb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88f5da2d588dd739a6e0017384812211"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a></td></tr>
+<tr class="separator:ga88f5da2d588dd739a6e0017384812211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga78c056ce06c80a7d9381d8ca184ee6ab"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga78c056ce06c80a7d9381d8ca184ee6ab">capture_state_t</a> </td></tr>
+<tr class="separator:ga78c056ce06c80a7d9381d8ca184ee6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structcapture__status__t" id="structcapture__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcapture__status__t">&#9670;&nbsp;</a></span>capture_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct capture_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAPTURE status </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a1c4ad7a02f5c52f382a93b1f1da83efe"></a><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga78c056ce06c80a7d9381d8ca184ee6ab">capture_state_t</a></td>
+<td class="fieldname">
+state</td>
+<td class="fielddoc">
+Current state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a441cc219089d5dfef5ac2e85bce0808d"></a>uint32_t *</td>
+<td class="fieldname">
+p_buffer</td>
+<td class="fielddoc">
+Pointer to active buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0f21e805f6b9507b03c6b4b97d5bbbd1"></a>uint32_t</td>
+<td class="fieldname">
+data_size</td>
+<td class="fielddoc">
+Size of data written to provided buffer. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structcapture__callback__args__t" id="structcapture__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcapture__callback__args__t">&#9670;&nbsp;</a></span>capture_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct capture_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAPTURE callback function parameter data </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae6ef34b8317e856d0d84b45231fc52db"></a><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga2536cb848b975ad6e7aa5f4e74e14cb9">capture_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event causing the callback. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa110c0d1f3a306148fdc89938cee6460"></a>uint8_t *</td>
+<td class="fieldname">
+p_buffer</td>
+<td class="fielddoc">
+Pointer to buffer that contains captured data. </td></tr>
+<tr><td class="fieldtype">
+<a id="acd3c14a1c00eeacfa2eb0f65a37ebf31"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. Set in <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> function in <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structcapture__cfg__t" id="structcapture__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcapture__cfg__t">&#9670;&nbsp;</a></span>capture_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct capture_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAPTURE configuration parameters. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a0fc5dd7195e4a8e744a16b15471d4ed1"><td class="memItemLeft" align="right" valign="top"><a id="a0fc5dd7195e4a8e744a16b15471d4ed1"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a0fc5dd7195e4a8e744a16b15471d4ed1">x_capture_start_pixel</a></td></tr>
+<tr class="memdesc:a0fc5dd7195e4a8e744a16b15471d4ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal position to start capture. <br /></td></tr>
+<tr class="separator:a0fc5dd7195e4a8e744a16b15471d4ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b4a5c6729d7cd08e581010072d0dd3"><td class="memItemLeft" align="right" valign="top"><a id="a93b4a5c6729d7cd08e581010072d0dd3"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a93b4a5c6729d7cd08e581010072d0dd3">x_capture_pixels</a></td></tr>
+<tr class="memdesc:a93b4a5c6729d7cd08e581010072d0dd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of horizontal pixels to capture. <br /></td></tr>
+<tr class="separator:a93b4a5c6729d7cd08e581010072d0dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a689f4aad6ca56f753146afad9e2f6382"><td class="memItemLeft" align="right" valign="top"><a id="a689f4aad6ca56f753146afad9e2f6382"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a689f4aad6ca56f753146afad9e2f6382">y_capture_start_pixel</a></td></tr>
+<tr class="memdesc:a689f4aad6ca56f753146afad9e2f6382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertical position to start capture. <br /></td></tr>
+<tr class="separator:a689f4aad6ca56f753146afad9e2f6382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67a18472f1dc816be88ab1e4b35a3864"><td class="memItemLeft" align="right" valign="top"><a id="a67a18472f1dc816be88ab1e4b35a3864"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a67a18472f1dc816be88ab1e4b35a3864">y_capture_pixels</a></td></tr>
+<tr class="memdesc:a67a18472f1dc816be88ab1e4b35a3864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of vertical lines/pixels to capture. <br /></td></tr>
+<tr class="separator:a67a18472f1dc816be88ab1e4b35a3864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1de73c3720c90585ce65b2a236e209a"><td class="memItemLeft" align="right" valign="top"><a id="ac1de73c3720c90585ce65b2a236e209a"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ac1de73c3720c90585ce65b2a236e209a">bytes_per_pixel</a></td></tr>
+<tr class="memdesc:ac1de73c3720c90585ce65b2a236e209a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes per pixel. <br /></td></tr>
+<tr class="separator:ac1de73c3720c90585ce65b2a236e209a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0d1d6be97b6e457572f74736dcdeb51"><td class="memItemLeft" align="right" valign="top"><a id="aa0d1d6be97b6e457572f74736dcdeb51"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#aa0d1d6be97b6e457572f74736dcdeb51">p_callback</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:aa0d1d6be97b6e457572f74736dcdeb51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CAPTURE transfer ISR occurs. <br /></td></tr>
+<tr class="separator:aa0d1d6be97b6e457572f74736dcdeb51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1208e6c13e764823da8b6e12c811cfd2"><td class="memItemLeft" align="right" valign="top"><a id="a1208e6c13e764823da8b6e12c811cfd2"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a1208e6c13e764823da8b6e12c811cfd2">p_context</a></td></tr>
+<tr class="memdesc:a1208e6c13e764823da8b6e12c811cfd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed to callback function. <br /></td></tr>
+<tr class="separator:a1208e6c13e764823da8b6e12c811cfd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39fad13fcc68879ba15ab75a223aa7d4"><td class="memItemLeft" align="right" valign="top"><a id="a39fad13fcc68879ba15ab75a223aa7d4"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a39fad13fcc68879ba15ab75a223aa7d4">p_extend</a></td></tr>
+<tr class="memdesc:a39fad13fcc68879ba15ab75a223aa7d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension parameter for hardware specific settings. <br /></td></tr>
+<tr class="separator:a39fad13fcc68879ba15ab75a223aa7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structcapture__api__t" id="structcapture__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcapture__api__t">&#9670;&nbsp;</a></span>capture_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct capture_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAPTURE functions implemented at the HAL layer will follow this API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad9446bd1d2cdd092c2467fead2d436d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">open</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ad9446bd1d2cdd092c2467fead2d436d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a67c2ec8ab248f375326a14bd476b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a9a67c2ec8ab248f375326a14bd476b37">close</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a9a67c2ec8ab248f375326a14bd476b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4bb5bd99af525a14f75fb1422d92ae9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ac4bb5bd99af525a14f75fb1422d92ae9">captureStart</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, uint8_t *const p_buffer)</td></tr>
+<tr class="separator:ac4bb5bd99af525a14f75fb1422d92ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cd5ee5ded7aaf45445f6c594c98081e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a4cd5ee5ded7aaf45445f6c594c98081e">callbackSet</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a4cd5ee5ded7aaf45445f6c594c98081e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66812a782c5871df038b2e34a7c4d13e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a66812a782c5871df038b2e34a7c4d13e">statusGet</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *p_status)</td></tr>
+<tr class="separator:a66812a782c5871df038b2e34a7c4d13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="ad9446bd1d2cdd092c2467fead2d436d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9446bd1d2cdd092c2467fead2d436d4">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  capture_api_t::open) (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial configuration.</p>
+<dl class="section note"><dt>Note</dt><dd>To reconfigure after calling this function, call <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a9a67c2ec8ab248f375326a14bd476b37">capture_api_t::close</a> first. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9a67c2ec8ab248f375326a14bd476b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a67c2ec8ab248f375326a14bd476b37">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  capture_api_t::close) (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the driver and allows reconfiguration. May reduce power consumption.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac4bb5bd99af525a14f75fb1422d92ae9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4bb5bd99af525a14f75fb1422d92ae9">&#9670;&nbsp;</a></span>captureStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  capture_api_t::captureStart) (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, uint8_t *const p_buffer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start a capture.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>New pointer to store captured image data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4cd5ee5ded7aaf45445f6c594c98081e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cd5ee5ded7aaf45445f6c594c98081e">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  capture_api_t::callbackSet) (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the CAPTURE control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a66812a782c5871df038b2e34a7c4d13e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66812a782c5871df038b2e34a7c4d13e">&#9670;&nbsp;</a></span>statusGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  capture_api_t::statusGet) (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *p_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check scan status.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Pointer to store current status in </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structcapture__instance__t" id="structcapture__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcapture__instance__t">&#9670;&nbsp;</a></span>capture_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct capture_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6ec23b479dba123e9ce9eca61ae6ac32"></a><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8e4a9d3f4b69e8506b885f1ca91380d9"></a><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1f48a7609557ef3eb635282ae09beb7f"></a><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__api__t">capture_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga2536cb848b975ad6e7aa5f4e74e14cb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2536cb848b975ad6e7aa5f4e74e14cb9">&#9670;&nbsp;</a></span>capture_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga2536cb848b975ad6e7aa5f4e74e14cb9">capture_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CAPTURE callback event ID - see implimentation for details </p>
+
+</div>
+</div>
+<a id="ga88f5da2d588dd739a6e0017384812211"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga88f5da2d588dd739a6e0017384812211">&#9670;&nbsp;</a></span>capture_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CAPTURE control block. Allocate an instance specific control block to pass into the CAPTURE API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga78c056ce06c80a7d9381d8ca184ee6ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78c056ce06c80a7d9381d8ca184ee6ab">&#9670;&nbsp;</a></span>capture_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga78c056ce06c80a7d9381d8ca184ee6ab">capture_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CAPTURE states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga78c056ce06c80a7d9381d8ca184ee6aba5760d8fab50145ba5c949306d46151f5"></a>CAPTURE_STATE_IDLE&#160;</td><td class="fielddoc"><p>CAPTURE is idle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78c056ce06c80a7d9381d8ca184ee6abac4b6289d24072949526ad79a4cb30a4d"></a>CAPTURE_STATE_IN_PROGRESS&#160;</td><td class="fielddoc"><p>CAPTURE capture in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78c056ce06c80a7d9381d8ca184ee6aba7d86e57637099a4dafedb8eee4c76caf"></a>CAPTURE_STATE_BUSY&#160;</td><td class="fielddoc"><p>CAPTURE reset in progress. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

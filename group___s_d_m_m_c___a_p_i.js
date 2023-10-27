@@ -53,7 +53,7 @@ var group___s_d_m_m_c___a_p_i =
       [ "ioIntEnable", "group___s_d_m_m_c___a_p_i.html#a3a7228d697b714229e37a1bf54352f5a", null ],
       [ "statusGet", "group___s_d_m_m_c___a_p_i.html#a5bb1be42ac391c9016bd3f6efb3a6b68", null ],
       [ "erase", "group___s_d_m_m_c___a_p_i.html#adeb37ae1b226f926ffe36f5dc19f47b2", null ],
-      [ "callbackSet", "group___s_d_m_m_c___a_p_i.html#a7e8903825189ff782fd28316f49d6e7e", null ],
+      [ "callbackSet", "group___s_d_m_m_c___a_p_i.html#afa41f67009d31e59c090024c86186ba8", null ],
       [ "close", "group___s_d_m_m_c___a_p_i.html#a36c443d21eb54717d3658aada3ba1720", null ]
     ] ],
     [ "sdmmc_instance_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__instance__t", [

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -240,7 +318,7 @@ The following build time configurations are defined in fsp_cfg/rm_ob1203_cfg.h:<
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -256,20 +334,20 @@ This module can be added to the Stacks tab via New Stack &gt; Sensor &gt; OB1203
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Manual Entry</td><td>g_ob1203_sensor0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Semaphore Timeout (RTOS only)</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Set timeout for blocking in using RTOS. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Comms I2C Callback</td><td>Name must be a valid C symbol</td><td>ob1203_comms_i2c_callback </td><td>A user COMMS I2C callback function can be provided. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>IRQ Callback</td><td>Name must be a valid C symbol</td><td>ob1203_irq_callback </td><td>A user IRQ callback function can be provided. </td></tr>
 </table>
  <h2>Configurations for Sensor &gt; OB1203 Light mode (rm_ob1203)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Operation Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 LS mode</li>
@@ -277,7 +355,7 @@ LS mode</li>
 CS mode</li>
 </ul>
 </td><td>LS mode </td><td>Set operation mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Threshold</li>
@@ -285,7 +363,7 @@ Threshold</li>
 Variation</li>
 </ul>
 </td><td>Threshold </td><td>Set interrupt type. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Interrupt Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Clear channel</li>
@@ -297,9 +375,9 @@ Red channel (CS mode only)</li>
 Blue channel (CS mode only)</li>
 </ul>
 </td><td>Clear channel </td><td>Set interrupt source. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The Number of Similar Consecutive Interrupt Events</td><td>Value must be a non-negative integer</td><td>0x02 </td><td>The number of similar consecutive Light mode interrupt events that must occur before the interrupt is asserted (4bits). Min = 0x0 and Max = 0xF </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Sleep after Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -307,7 +385,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set sleep after interrupt. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
@@ -317,13 +395,13 @@ Disabled</li>
 6</li>
 </ul>
 </td><td>3 </td><td>Set gain for detection range. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Resolution and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Resolution:18bit. Measurement Period:100ms </td><td>Set resolution and measurement period. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Upper Threshold</td><td>Value must be a non-negative integer</td><td>0x00CCC </td><td>Set upper threshold value (20bits). Min = 0x00000 and Max = 0xFFFFF. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Lower Threshold</td><td>Value must be a non-negative integer</td><td>0x00000 </td><td>Set lower threshold value (20bits). Min = 0x00000 and Max = 0xFFFFF. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Variance Threshold</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 +/- 8 counts</li>
@@ -348,7 +426,7 @@ Disabled</li>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Normal</li>
@@ -356,9 +434,9 @@ Normal</li>
 Logic</li>
 </ul>
 </td><td>Normal </td><td>Set interrupt type. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>The Number of Similar Consecutive Interrupt Events</td><td>Value must be a non-negative integer</td><td>0x02 </td><td>The number of similar consecutive Proximity mode interrupt events that must occur before the interrupt is asserted (4bits). Min = 0x0 and Max = 0xF </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Sleep after Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -366,7 +444,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set sleep after interrupt. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
@@ -378,9 +456,9 @@ Disabled</li>
 4</li>
 </ul>
 </td><td>1 </td><td>Set gain of ADC output and noise. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LED Current</td><td>Value must be a non-negative integer</td><td>0x100 </td><td>Set Current for LED (10bits). Min = 0x000 and Max = 0x3FF </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LED Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IR LED first, Red LED second</li>
@@ -388,7 +466,7 @@ IR LED first, Red LED second</li>
 Red LED first, IR LED second</li>
 </ul>
 </td><td>IR LED first, Red LED second </td><td>Set LED order. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LED Analog Cancellation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (50% offset of the full-scale value)</li>
@@ -396,9 +474,9 @@ Enabled (50% offset of the full-scale value)</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set analog cancellation level. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LED Digital Cancellation</td><td>Value must be a non-negative integer</td><td>0x100 </td><td>Set digital cancellation level (16bits). Min = 0x0000 and Max = 0xFFFF </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of LED pulses</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1 pulse</li>
@@ -414,9 +492,9 @@ Disabled</li>
 32 pulses</li>
 </ul>
 </td><td>8 pulses </td><td>Set number of LED pulses. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Pulse Width and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Pulse width:42us. Measurement Period:100ms </td><td>Set pulse width and measurement period. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Moving Average</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -424,18 +502,18 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set moving average. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Hysteresis</td><td>Value must be a non-negative integer</td><td>0x00 </td><td>Set hysteresis level (7bits). Min = 0x00 and Max = 0x7F. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Upper Threshold</td><td>Value must be a non-negative integer</td><td>0x0600 </td><td>Set upper threshold value (16bits). Min = 0x0000 and Max = 0xFFFF. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Lower Threshold</td><td>Value must be a non-negative integer</td><td>0x0000 </td><td>Set lower threshold value (16bits). Min = 0x0000 and Max = 0xFFFF. </td></tr>
 </table>
  <h2>Configurations for Sensor &gt; OB1203 PPG mode (rm_ob1203)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Operation Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 PPG1 mode</li>
@@ -443,7 +521,7 @@ PPG1 mode</li>
 PPG2 mode</li>
 </ul>
 </td><td>PPG2 mode </td><td>Set operation mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Data</li>
@@ -451,7 +529,7 @@ Data</li>
 FIFO Almost Full</li>
 </ul>
 </td><td>Data </td><td>Set interrupt type. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
@@ -463,11 +541,11 @@ FIFO Almost Full</li>
 4</li>
 </ul>
 </td><td>1 </td><td>Set gain of ADC output and noise. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>IR LED Current</td><td>Value must be a non-negative integer</td><td>0x366 </td><td>Set Current for IR LED (10bits). Min = 0x000 and Max = 0x3FF </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Red LED Current</td><td>Value must be a non-negative integer</td><td>0x1B3 </td><td>Set Current for Red LED (9bits). Min = 0x000 and Max = 0x1FF </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Power Save Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -475,7 +553,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set power save mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LED Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IR LED first, Red LED second</li>
@@ -483,7 +561,7 @@ IR LED first, Red LED second</li>
 Red LED first, IR LED second</li>
 </ul>
 </td><td>IR LED first, Red LED second </td><td>Set LED order. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>IR LED Analog Cancellation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (50% offset of the full-scale value)</li>
@@ -491,7 +569,7 @@ Enabled (50% offset of the full-scale value)</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set analog cancellation level. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Red LED Analog Cancellation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (50% offset of the full-scale value)</li>
@@ -499,7 +577,7 @@ Enabled (50% offset of the full-scale value)</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set analog cancellation level. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of Averaged PPG Samples</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1 (No averaging)</li>
@@ -515,9 +593,9 @@ Disabled</li>
 32 consecutives samples are averaged</li>
 </ul>
 </td><td>8 consecutives samples are averaged </td><td>Set number of averaged for PPG samples. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Pulse Width and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Pulse width:130us. Measurement Period:1.25ms </td><td>Set pulse width and measurement period. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>FIFO Rollover</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -525,39 +603,43 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set FIFO rollover. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>FIFO Almost Full Value</td><td>Value must be a non-negative integer</td><td>0x0C </td><td>Set the number of empty FIFO words when the FIFO almost full interrupt is issued (4bits). Min = 0x0 and Max = 0xF. In PPG2 Mode, only even values must be used. </td></tr>
 </table>
  <h2>Configurations for Sensor &gt; OB1203 Light Proximity mode (rm_ob1203)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Device Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Device Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Light mode</li>
 <li>
 Proximity mode</li>
 </ul>
 </td><td>Light mode </td><td>Select an operation mode using device interrupt. </td></tr>
-<tr>
-<td>Light mode &gt; Operation Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Light mode  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Operation Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 LS mode</li>
 <li>
 CS mode</li>
 </ul>
 </td><td>LS mode </td><td>Set operation mode. </td></tr>
-<tr>
-<td>Light mode &gt; Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Threshold</li>
 <li>
 Variation</li>
 </ul>
 </td><td>Threshold </td><td>Set interrupt type. </td></tr>
-<tr>
-<td>Light mode &gt; Interrupt Source</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Clear channel</li>
 <li>
@@ -568,18 +650,18 @@ Red channel (CS mode only)</li>
 Blue channel (CS mode only)</li>
 </ul>
 </td><td>Clear channel </td><td>Set interrupt source. </td></tr>
-<tr>
-<td>Light mode &gt; The Number of Similar Consecutive Interrupt Events</td><td>Value must be a non-negative integer</td><td>0x02 </td><td>The number of similar consecutive Light mode interrupt events that must occur before the interrupt is asserted (4bits). Min = 0x0 and Max = 0xF </td></tr>
-<tr>
-<td>Light mode &gt; Sleep after Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">The Number of Similar Consecutive Interrupt Events</td><td>Value must be a non-negative integer</td><td>0x02 </td><td>The number of similar consecutive Light mode interrupt events that must occur before the interrupt is asserted (4bits). Min = 0x0 and Max = 0xF </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sleep after Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set sleep after interrupt. </td></tr>
-<tr>
-<td>Light mode &gt; Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
 <li>
@@ -588,14 +670,14 @@ Disabled</li>
 6</li>
 </ul>
 </td><td>3 </td><td>Set gain for detection range. </td></tr>
-<tr>
-<td>Light mode &gt; Resolution and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Resolution:18bit. Measurement Period:100ms </td><td>Set resolution and measurement period. </td></tr>
-<tr>
-<td>Light mode &gt; Upper Threshold</td><td>Value must be a non-negative integer</td><td>0x00CCC </td><td>Set upper threshold value (20bits). Min = 0x00000 and Max = 0xFFFFF. </td></tr>
-<tr>
-<td>Light mode &gt; Lower Threshold</td><td>Value must be a non-negative integer</td><td>0x00000 </td><td>Set lower threshold value (20bits). Min = 0x00000 and Max = 0xFFFFF. </td></tr>
-<tr>
-<td>Light mode &gt; Variance Threshold</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resolution and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Resolution:18bit. Measurement Period:100ms </td><td>Set resolution and measurement period. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Upper Threshold</td><td>Value must be a non-negative integer</td><td>0x00CCC </td><td>Set upper threshold value (20bits). Min = 0x00000 and Max = 0xFFFFF. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Lower Threshold</td><td>Value must be a non-negative integer</td><td>0x00000 </td><td>Set lower threshold value (20bits). Min = 0x00000 and Max = 0xFFFFF. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Variance Threshold</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 +/- 8 counts</li>
 <li>
@@ -614,26 +696,28 @@ Disabled</li>
 +/- 1024 counts</li>
 </ul>
 </td><td>+/- 128 counts </td><td>Set variance threshold. New data varies by selected counts compared to previous result. </td></tr>
-<tr>
-<td>Proximity mode &gt; Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Proximity mode  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Normal</li>
 <li>
 Logic</li>
 </ul>
 </td><td>Normal </td><td>Set interrupt type. </td></tr>
-<tr>
-<td>Proximity mode &gt; The Number of Similar Consecutive Interrupt Events</td><td>Value must be a non-negative integer</td><td>0x02 </td><td>The number of similar consecutive Proximity mode interrupt events that must occur before the interrupt is asserted (4bits). Min = 0x0 and Max = 0xF </td></tr>
-<tr>
-<td>Proximity mode &gt; Sleep after Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">The Number of Similar Consecutive Interrupt Events</td><td>Value must be a non-negative integer</td><td>0x02 </td><td>The number of similar consecutive Proximity mode interrupt events that must occur before the interrupt is asserted (4bits). Min = 0x0 and Max = 0xF </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sleep after Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set sleep after interrupt. </td></tr>
-<tr>
-<td>Proximity mode &gt; Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
 <li>
@@ -644,28 +728,28 @@ Disabled</li>
 4</li>
 </ul>
 </td><td>1 </td><td>Set gain of ADC output and noise. </td></tr>
-<tr>
-<td>Proximity mode &gt; LED Current</td><td>Value must be a non-negative integer</td><td>0x100 </td><td>Set Current for LED (10bits). Min = 0x000 and Max = 0x3FF </td></tr>
-<tr>
-<td>Proximity mode &gt; LED Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LED Current</td><td>Value must be a non-negative integer</td><td>0x100 </td><td>Set Current for LED (10bits). Min = 0x000 and Max = 0x3FF </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LED Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IR LED first, Red LED second</li>
 <li>
 Red LED first, IR LED second</li>
 </ul>
 </td><td>IR LED first, Red LED second </td><td>Set LED order. </td></tr>
-<tr>
-<td>Proximity mode &gt; LED Analog Cancellation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LED Analog Cancellation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (50% offset of the full-scale value)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set analog cancellation level. </td></tr>
-<tr>
-<td>Proximity mode &gt; LED Digital Cancellation</td><td>Value must be a non-negative integer</td><td>0x100 </td><td>Set digital cancellation level (16bits). Min = 0x0000 and Max = 0xFFFF </td></tr>
-<tr>
-<td>Proximity mode &gt; Number of LED pulses</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">LED Digital Cancellation</td><td>Value must be a non-negative integer</td><td>0x100 </td><td>Set digital cancellation level (16bits). Min = 0x0000 and Max = 0xFFFF </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Number of LED pulses</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1 pulse</li>
 <li>
@@ -680,22 +764,22 @@ Disabled</li>
 32 pulses</li>
 </ul>
 </td><td>8 pulses </td><td>Set number of LED pulses. </td></tr>
-<tr>
-<td>Proximity mode &gt; Pulse Width and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Pulse width:42us. Measurement Period:100ms </td><td>Set pulse width and measurement period. </td></tr>
-<tr>
-<td>Proximity mode &gt; Moving Average</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pulse Width and Measurement Period</td><td>Refer to the RA Configuration tool for available options.</td><td>Pulse width:42us. Measurement Period:100ms </td><td>Set pulse width and measurement period. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Moving Average</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set moving average. </td></tr>
-<tr>
-<td>Proximity mode &gt; Hysteresis</td><td>Value must be a non-negative integer</td><td>0x00 </td><td>Set hysteresis level (7bits). Min = 0x00 and Max = 0x7F. </td></tr>
-<tr>
-<td>Proximity mode &gt; Upper Threshold</td><td>Value must be a non-negative integer</td><td>0x0600 </td><td>Set upper threshold value (16bits). Min = 0x0000 and Max = 0xFFFF. </td></tr>
-<tr>
-<td>Proximity mode &gt; Lower Threshold</td><td>Value must be a non-negative integer</td><td>0x0000 </td><td>Set lower threshold value (16bits). Min = 0x0000 and Max = 0xFFFF. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Hysteresis</td><td>Value must be a non-negative integer</td><td>0x00 </td><td>Set hysteresis level (7bits). Min = 0x00 and Max = 0x7F. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Upper Threshold</td><td>Value must be a non-negative integer</td><td>0x0600 </td><td>Set upper threshold value (16bits). Min = 0x0000 and Max = 0xFFFF. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Lower Threshold</td><td>Value must be a non-negative integer</td><td>0x0000 </td><td>Set lower threshold value (16bits). Min = 0x0000 and Max = 0xFFFF. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-ob1203-pin-configuration"></a>
@@ -1859,7 +1943,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

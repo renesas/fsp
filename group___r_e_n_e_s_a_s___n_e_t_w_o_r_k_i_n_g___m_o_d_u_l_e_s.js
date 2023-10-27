@@ -12,6 +12,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "BLE Driver (r_ble_extended)", "group___b_l_e___e_x_t_e_n_d_e_d.html", null ],
     [ "Bluetooth Low Energy Mesh Network Modules", "group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s" ],
     [ "Cellular Comm Interface on UART (rm_cellular_comm_uart_aws)", "group___r_m___c_e_l_l_u_l_a_r___c_o_m_m___u_a_r_t___a_w_s.html", "group___r_m___c_e_l_l_u_l_a_r___c_o_m_m___u_a_r_t___a_w_s" ],
+    [ "DA16XXX Transport Layer (rm_at_transport_da16xxx_uart)", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t" ],
     [ "Ethernet (r_ether)", "group___e_t_h_e_r.html", "group___e_t_h_e_r" ],
     [ "Ethernet (r_ether_phy)", "group___e_t_h_e_r___p_h_y.html", "group___e_t_h_e_r___p_h_y" ],
     [ "FreeRTOS+TCP Wrapper to r_ether (rm_freertos_plus_tcp)", "group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html", null ],
@@ -21,6 +22,6 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "On Chip MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x" ],
     [ "PTP (r_ptp)", "group___p_t_p.html", "group___p_t_p" ],
     [ "SPP BLE Abstraction (rm_ble_abs_spp)", "group___b_l_e___a_b_s___s_p_p.html", null ],
-    [ "WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)", "group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html", "group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x" ],
+    [ "WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)", "group___w_i_f_i___d_a16_x_x_x.html", "group___w_i_f_i___d_a16_x_x_x" ],
     [ "WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x" ]
 ];

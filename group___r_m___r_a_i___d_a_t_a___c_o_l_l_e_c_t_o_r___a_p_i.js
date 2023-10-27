@@ -40,13 +40,13 @@ var group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i =
     ] ],
     [ "rai_data_collector_api_t", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__api__t", [
       [ "open", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a1d91365ceebb5e62e3cdce1be7692803", null ],
-      [ "snapshotChannelRegister", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a6091f9105a74cf770763b1c689c663eb", null ],
+      [ "snapshotChannelRegister", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a7ae7d2f5ae2c8f86bbef223881bf4d86", null ],
       [ "bufferRelease", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a590d88eb0da4ce601d816d501f1fbb39", null ],
       [ "bufferReset", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a7b44e69907b8e7268e13cb159a588010", null ],
       [ "snapshotStart", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#af00493088166dc34e71c3dbd9527e8e1", null ],
       [ "snapshotStop", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a9a3ef0b220bf597ac65d6a43a363ffeb", null ],
-      [ "channelBufferGet", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a951f80ffd3ceb4543555a7e4f33eae6d", null ],
-      [ "channelWrite", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a374f35742bc4e56f50dffb7680e16d99", null ],
+      [ "channelBufferGet", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a05addc08744793ed04426f85257eff31", null ],
+      [ "channelWrite", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a4cb42b2d9d9e9f64d124a235f6de2044", null ],
       [ "close", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ae2684a3c4a080607290da7601c715d0c", null ]
     ] ],
     [ "rai_data_collector_instance_t", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__instance__t", [

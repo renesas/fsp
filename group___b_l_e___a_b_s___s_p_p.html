@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -215,7 +293,7 @@ The following build time configurations are defined in fsp_cfg/rm_ble_abs_spp_cf
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -225,19 +303,19 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Default (BSP) </td><td>Specify whether to include code for API parameter checking. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Reset Port</td><td>Refer to the RA Configuration tool for available options.</td><td>03 </td><td>Specify the module reset pin port for the MCU. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Reset Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>10 </td><td>Specify the module reset pin for the MCU. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>UART/SPI Select Port (PB5)</td><td>Refer to the RA Configuration tool for available options.</td><td>03 </td><td>Specify the module PB5 (UART/SPI select) port for the MCU. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>UART/SPI Select Pin (PB5)</td><td>Refer to the RA Configuration tool for available options.</td><td>11 </td><td>Specify the module PB5 (UART/SPI select) pin for the MCU. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>SPI Software SSL Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the port to use for controlling SSL using the ioport module. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>SPI Software SSL Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the pin to use for controlling SSL using the ioport module. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Transmit Power Level (in dBm)</td><td>Refer to the RA Configuration tool for available options.</td><td>4.57 </td><td>Specify the module transmit power in dBm. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; SPP BLE Abstraction (rm_ble_abs_spp)</h2>
@@ -245,20 +323,22 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; SP
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_ble_abs0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; GAP callback</td><td>Name must be a valid C symbol</td><td>gap_cb </td><td>If QE is used, set to "gap_cb". </td></tr>
-<tr>
-<td>General &gt; Vendor specific callback</td><td>Name must be a valid C symbol</td><td>vs_cb </td><td>If QE is used, set to "vs_cb". </td></tr>
-<tr>
-<td>General &gt; GATT server callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gatts_cb_param </td><td>If QE is used, set to "gs_abs_gattc_cb_param". </td></tr>
-<tr>
-<td>General &gt; GATT server callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
-<tr>
-<td>General &gt; GATT client callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gattc_cb_param </td><td>Set GATT client callback parameter. If QE is used, set to "gs_abs_gattc_cb_param". </td></tr>
-<tr>
-<td>General &gt; GATT client callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_ble_abs0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GAP callback</td><td>Name must be a valid C symbol</td><td>gap_cb </td><td>If QE is used, set to "gap_cb". </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Vendor specific callback</td><td>Name must be a valid C symbol</td><td>vs_cb </td><td>If QE is used, set to "vs_cb". </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT server callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gatts_cb_param </td><td>If QE is used, set to "gs_abs_gattc_cb_param". </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT server callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT client callback parameter</td><td>Name must be a valid C symbol</td><td>gs_abs_gattc_cb_param </td><td>Set GATT client callback parameter. If QE is used, set to "gs_abs_gattc_cb_param". </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GATT client callback number</td><td>Must be a valid number</td><td>2 </td><td>The number of GATT Server callback functions. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm_ble_abs_spp-pin-configuration"></a>
@@ -341,7 +421,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

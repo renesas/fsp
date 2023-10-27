@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,8 +248,7 @@ $(document).ready(function(){initNavTree('group___a_d_c___a_p_i.html','');});
 <p>Interface for A/D Converters. </p>
 <h1><a class="anchor" id="ADC_API_SUMMARY"></a>
 Summary</h1>
-<p>The ADC interface provides standard ADC functionality including one-shot mode (single scan), continuous scan and group scan. It also allows configuration of hardware and software triggers for starting scans. After each conversion an interrupt can be triggered, and if a callback function is provided, the call back is invoked with the appropriate event information.</p>
-<p>Implemented by: <a class="el" href="group___a_d_c.html">ADC (r_adc)</a> </p>
+<p>The ADC interface provides standard ADC functionality including one-shot mode (single scan), continuous scan and group scan. It also allows configuration of hardware and software triggers for starting scans. After each conversion an interrupt can be triggered, and if a callback function is provided, the call back is invoked with the appropriate event information. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -276,13 +353,13 @@ Placeholder for user data. </td></tr>
 <td class="fieldname">
 channel</td>
 <td class="fielddoc">
-Channel of conversion result. Only valid for r_adc ADC_EVENT_CONVERSION_COMPLETE. </td></tr>
+Channel of conversion result. </td></tr>
 <tr><td class="fieldtype">
 <a id="a50ca40e036fb0058265aca9e500911c0"></a>uint64_t</td>
 <td class="fieldname">
 channel_mask</td>
 <td class="fielddoc">
-Channel mask for conversion result. Only valid for r_adc_b. </td></tr>
+Channel mask for conversion result. Only valid for r_adc_b and r_sdadc_b. </td></tr>
 <tr><td class="fieldtype">
 <a id="a2e4f7b7ce1a5858b39f7a85ad16ab655"></a><a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a></td>
 <td class="fieldname">
@@ -332,7 +409,7 @@ elc_peripheral</td>
 <td class="fielddoc">
 Name of the peripheral in the ELC list. </td></tr>
 <tr><td class="fieldtype">
-<a id="a06d242e573821f38b3a7543dd9eb5548"></a><a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+<a id="a06d242e573821f38b3a7543dd9eb5548"></a><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
 <td class="fieldname">
 elc_event</td>
 <td class="fielddoc">
@@ -401,6 +478,10 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#aba6e98fa10321ce7c1b6a7173b0b0d8b">scan_end_b_irq</a></td></tr>
 <tr class="memdesc:aba6e98fa10321ce7c1b6a7173b0b0d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan end group B IRQ number. <br /></td></tr>
 <tr class="separator:aba6e98fa10321ce7c1b6a7173b0b0d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac6c18163aca50f9dc288ac08f2edee"><td class="memItemLeft" align="right" valign="top"><a id="a6ac6c18163aca50f9dc288ac08f2edee"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a6ac6c18163aca50f9dc288ac08f2edee">scan_end_c_irq</a></td></tr>
+<tr class="memdesc:a6ac6c18163aca50f9dc288ac08f2edee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan end group C IRQ number. <br /></td></tr>
+<tr class="separator:a6ac6c18163aca50f9dc288ac08f2edee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa41f2d4a44ef47bfa9c33777cc7ff35a"><td class="memItemLeft" align="right" valign="top"><a id="aa41f2d4a44ef47bfa9c33777cc7ff35a"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#aa41f2d4a44ef47bfa9c33777cc7ff35a">scan_end_ipl</a></td></tr>
 <tr class="memdesc:aa41f2d4a44ef47bfa9c33777cc7ff35a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan end interrupt priority. <br /></td></tr>
@@ -409,6 +490,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#ab82e85d4750158ef07146b6c8145e347">scan_end_b_ipl</a></td></tr>
 <tr class="memdesc:ab82e85d4750158ef07146b6c8145e347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan end group B interrupt priority. <br /></td></tr>
 <tr class="separator:ab82e85d4750158ef07146b6c8145e347"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5e230f8dd33c81d381547b0eec041af"><td class="memItemLeft" align="right" valign="top"><a id="ab5e230f8dd33c81d381547b0eec041af"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#ab5e230f8dd33c81d381547b0eec041af">scan_end_c_ipl</a></td></tr>
+<tr class="memdesc:ab5e230f8dd33c81d381547b0eec041af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan end group C interrupt priority. <br /></td></tr>
+<tr class="separator:ab5e230f8dd33c81d381547b0eec041af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e6dc3fd369994f549bf634f482fa4ae"><td class="memItemLeft" align="right" valign="top"><a id="a0e6dc3fd369994f549bf634f482fa4ae"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a0e6dc3fd369994f549bf634f482fa4ae">p_callback</a> )(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a0e6dc3fd369994f549bf634f482fa4ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function; set to NULL for none. <br /></td></tr>
@@ -459,8 +544,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a1020d90e58d3bf86cee2f46a62e62fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a305b2c2466cd88fdddf6134db542dc7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">offsetSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t const offset)</td></tr>
 <tr class="separator:a305b2c2466cd88fdddf6134db542dc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d081aba32f84d62e7d48389b1d10b3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e">callbackSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a8d081aba32f84d62e7d48389b1d10b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cd8e8911dcf8c4c617fe62f185b4363"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a2cd8e8911dcf8c4c617fe62f185b4363">callbackSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a2cd8e8911dcf8c4c617fe62f185b4363"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cce8ff1af572c11ef31442f2679124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a83cce8ff1af572c11ef31442f2679124">close</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a83cce8ff1af572c11ef31442f2679124"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc68017ee284386b5d13c027bc10bf87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87">infoGet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *const p_adc_info)</td></tr>
@@ -478,12 +563,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize ADC Unit; apply power, set the operational mode, trigger sources, interrupt priority, and configurations common to all channels and sensors. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#gaa70d037030e931e9645d0d13caa9fd5b">R_ADC_B_Open()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga57663247dadf8d0ca835f1d674985e8b">R_SDADC_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initialize ADC Unit; apply power, set the operational mode, trigger sources, interrupt priority, and configurations common to all channels and sensors.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Configure peripheral clocks, ADC pins and IRQs prior to calling this function. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -506,12 +586,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure the scan including the channels, groups, and scan triggers to be used for the unit that was initialized in the open call. Some configurations are not supported for all implementations. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b">R_ADC_B_ScanCfg()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga0a7002fc86458bbd74ac178bbaaaff68">R_SDADC_ScanCfg()</a></li>
-</ul>
-</dd></dl>
+<p>Configure the scan including the channels, groups, and scan triggers to be used for the unit that was initialized in the open call. Some configurations are not supported for all implementations. See implementation for details.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -533,11 +608,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start the scan (in case of a software trigger), or enable the hardware trigger. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga21a9d4b48c9a260b4515572e3f6cacdd">R_SDADC_ScanStart()</a></li>
-</ul>
-</dd></dl>
+<p>Start the scan (in case of a software trigger), or enable the hardware trigger.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -558,10 +629,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start the scan group (in case of a software trigger), or enable the hardware trigger. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869">R_ADC_B_ScanGroupStart()</a></li>
-</ul>
-</dd></dl>
+<p>Start the scan group (in case of a software trigger), or enable the hardware trigger.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -583,11 +651,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop the ADC scan (in case of a software trigger), or disable the hardware trigger. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga9b5242c153c6320a564ed9ffd324f144">R_ADC_ScanStop()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga35cdadbf61f92ee76fbbc3c5584b850b">R_SDADC_ScanStop()</a></li>
-</ul>
-</dd></dl>
+<p>Stop the ADC scan (in case of a software trigger), or disable the hardware trigger.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -608,12 +672,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check scan status. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga676b1c7f1ccceda288cbb2ad79a14ff2">R_ADC_StatusGet()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#gaebb38f07bd7922342597c2d453957433">R_SDADC_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Check scan status.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -635,12 +694,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read ADC conversion result. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#gad6bfc8395b53a96ee89f266fc940e2da">R_ADC_Read()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#gaf6af5f96116f06d57982fb1cdc8d416b">R_SDADC_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Read ADC conversion result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -663,12 +717,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read ADC conversion result into a 32-bit word. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga905e1cd6ff8ca4aaf91ee63529dc0d0d">R_ADC_Read32()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#gab9fd1b2a5e37b74bed0f5595f5a951e1">R_ADC_B_Read32()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga77dc084a35379f65d2e2084e9a9c5806">R_SDADC_Read32()</a></li>
-</ul>
-</dd></dl>
+<p>Read ADC conversion result into a 32-bit word.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -691,12 +740,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calibrate ADC or associated PGA (programmable gain amplifier). The driver may require implementation specific arguments to the p_extend input. Not supported for all implementations. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#gac73578543d084faf58d17474dbaad23a">R_ADC_Calibrate()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga9c8c90f3182823e0b8a76fab5612d181">R_SDADC_Calibrate()</a></li>
-</ul>
-</dd></dl>
+<p>Calibrate ADC or associated PGA (programmable gain amplifier). The driver may require implementation specific arguments to the p_extend input. Not supported for all implementations. See implementation for details.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -718,10 +762,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set offset for input PGA configured for differential input. Not supported for all implementations. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_d_a_d_c.html#gaf89d5f194cf841e12f1db6f869a4cf18">R_SDADC_OffsetSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set offset for input PGA configured for differential input. Not supported for all implementations. See implementation for details.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -733,22 +774,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a8d081aba32f84d62e7d48389b1d10b3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d081aba32f84d62e7d48389b1d10b3e">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a2cd8e8911dcf8c4c617fe62f185b4363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cd8e8911dcf8c4c617fe62f185b4363">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::callbackSet) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::callbackSet) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga9110aa7c0d36661e561641f522eeb737">R_ADC_CallbackSet()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811">R_ADC_B_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the ADC control block. </td></tr>
@@ -772,12 +809,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the specified A/D unit. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga499187b3067534e42a57239ead111797">R_ADC_Close()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#ga71489a9abc0c25e0e2329d78c358cc3c">R_ADC_B_Close()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#gacd3903592611777a4bdd0bf0e6488da8">R_SDADC_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the specified A/D unit.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -798,12 +830,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return the ADC data register address of the first (lowest number) channel and the total number of bytes to be read in order for the DTC/DMAC to read the conversion results of all configured channels. Return the temperature sensor calibration and slope data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___a_d_c.html#ga1cc44d84e1dd1cad8fdafe1e91a3b6d0">R_ADC_InfoGet()</a></li>
-<li><a class="el" href="group___a_d_c___b.html#ga8989d65eac9cb46cf9f571a941149a26">R_ADC_B_InfoGet()</a></li>
-<li><a class="el" href="group___s_d_a_d_c.html#ga4f0d9f978b33d4bf19d6522ea3701032">R_SDADC_InfoGet()</a></li>
-</ul>
-</dd></dl>
+<p>Return the ADC data register address of the first (lowest number) channel and the total number of bytes to be read in order for the DTC/DMAC to read the conversion results of all configured channels. Return the temperature sensor calibration and slope data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
@@ -989,6 +1016,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a8f67ee666423bc068d379ae85da36252"></a>ADC_EVENT_SCAN_COMPLETE_GROUP_B&#160;</td><td class="fielddoc"><p>Group B scan complete. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847ab7538351ad7e4ed3d866212b0e3b3099"></a>ADC_EVENT_SCAN_COMPLETE_GROUP_C&#160;</td><td class="fielddoc"><p>Group C scan complete. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847ae8d9c9c99ceb10f095bb4449fd2706b1"></a>ADC_EVENT_CALIBRATION_COMPLETE&#160;</td><td class="fielddoc"><p>Calibration complete. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847aa3091bf90a88f96ed9b5a6ab499680bb"></a>ADC_EVENT_CONVERSION_COMPLETE&#160;</td><td class="fielddoc"><p>Conversion complete. </p>
@@ -1008,6 +1037,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a0194955f4f59f8d6952adc058539632b"></a>ADC_EVENT_WINDOW_COMPARE_A&#160;</td><td class="fielddoc"><p>Window A comparison condition met. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847ab32572630797968579adeed03f19bcd3"></a>ADC_EVENT_WINDOW_COMPARE_B&#160;</td><td class="fielddoc"><p>Window B comparison condition met. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a7cfc303adbef8d07936d89275852ded3"></a>ADC_EVENT_ZERO_CROSS_DETECTION&#160;</td><td class="fielddoc"><p>Zero-cross detection interrupt. </p>
 </td></tr>
 </table>
 
@@ -1271,7 +1302,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

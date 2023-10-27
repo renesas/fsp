@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,10 +249,7 @@ $(document).ready(function(){initNavTree('group___c_g_c___a_p_i.html','');});
 <h1><a class="anchor" id="CGC_API_SUMMARY"></a>
 Summary</h1>
 <p>The CGC interface provides the ability to configure and use all of the CGC module's capabilities. Among the capabilities is the selection of several clock sources to use as the system clock source. Additionally, the system clocks can be divided down to provide a wide range of frequencies for various system and peripheral needs.</p>
-<p>Clock stability can be checked and clocks may also be stopped to save power when not needed. The API has a function to return the frequency of the system and system peripheral clocks at run time. There is also a feature to detect when the main oscillator has stopped, with the option of calling a user provided callback function.</p>
-<p>The CGC interface is implemented by:</p><ul>
-<li><a class="el" href="group___c_g_c.html">Clock Generation Circuit (r_cgc)</a> </li>
-</ul>
+<p>Clock stability can be checked and clocks may also be stopped to save power when not needed. The API has a function to return the frequency of the system and system peripheral clocks at run time. There is also a feature to detect when the main oscillator has stopped, with the option of calling a user provided callback function. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -210,6 +285,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga2e1a2208bb6a8c30053b9034596f73d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga78ac772149fadd3ec1fb21dc674e2b8d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d">cgc_sys_clock_div_t</a> </td></tr>
 <tr class="separator:ga78ac772149fadd3ec1fb21dc674e2b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga690d20c82a1f6794452a6743cc98e807"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga690d20c82a1f6794452a6743cc98e807">cgc_pin_output_control_t</a> </td></tr>
+<tr class="separator:ga690d20c82a1f6794452a6743cc98e807"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7499fcdfd9aafe4ca695e26e2d69175d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga7499fcdfd9aafe4ca695e26e2d69175d">cgc_usb_clock_div_t</a> </td></tr>
 <tr class="separator:ga7499fcdfd9aafe4ca695e26e2d69175d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga67f8525be602a7cce075f0b33d5f2ad8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ga67f8525be602a7cce075f0b33d5f2ad8">cgc_clock_change_t</a> </td></tr>
@@ -327,7 +404,14 @@ PLL divisor for output clock R. </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Configuration options. </p>
-</div>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ab4c5874fb3bb170c8ad6099bef25911b"><td class="memItemLeft" align="right" valign="top"><a id="ab4c5874fb3bb170c8ad6099bef25911b"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ab4c5874fb3bb170c8ad6099bef25911b">p_extend</a></td></tr>
+<tr class="memdesc:ab4c5874fb3bb170c8ad6099bef25911b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension parameter for hardware specific settings. <br /></td></tr>
+<tr class="separator:ab4c5874fb3bb170c8ad6099bef25911b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
 </div>
 </div>
 <a name="structcgc__clocks__cfg__t" id="structcgc__clocks__cfg__t"></a>
@@ -404,6 +488,12 @@ State of PLL. </td></tr>
 pll2_state</td>
 <td class="fielddoc">
 State of PLL2. </td></tr>
+<tr><td class="fieldtype">
+<a id="a327c971f398f6d4552280319e37a3cf4"></a><a class="el" href="group___c_g_c___a_p_i.html#ga67f8525be602a7cce075f0b33d5f2ad8">cgc_clock_change_t</a></td>
+<td class="fieldname">
+subosc_state</td>
+<td class="fielddoc">
+State of Sub oscillator. </td></tr>
 </table>
 
 </div>
@@ -442,8 +532,8 @@ State of PLL2. </td></tr>
 <tr class="separator:a7df2f7359a1521bf0d6ae79eaa8d396a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adec8be986fe880ef29ecc2eed9e89f41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#adec8be986fe880ef29ecc2eed9e89f41">oscStopStatusClear</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:adec8be986fe880ef29ecc2eed9e89f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c1d9877fcd835e19c7c573218580b5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b">callbackSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a9c1d9877fcd835e19c7c573218580b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6320b1734cebe9041c65aa581ecb1c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ae6320b1734cebe9041c65aa581ecb1c4">callbackSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ae6320b1734cebe9041c65aa581ecb1c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13a62b83132e592aa8c9e0071312633a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a">close</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a13a62b83132e592aa8c9e0071312633a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -459,11 +549,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Initial configuration </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration </td></tr>
@@ -484,11 +570,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure all system clocks. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga203fc7fb47f71f67b1ce1c17cea0ec04">R_CGC_ClocksCfg()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Configure all system clocks. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_clock_cfg</td><td>Pointer to desired configuration of system clocks </td></tr>
@@ -509,11 +591,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start a clock. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga9c6dbd3c1987e7b4b24c1e9a481ce24d">R_CGC_ClockStart()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Start a clock. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Clock source to start </td></tr>
@@ -535,11 +613,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop a clock. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga6f3141746cc5f5662df296769487e224">R_CGC_ClockStop()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Stop a clock. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>The clock source to stop </td></tr>
@@ -560,11 +634,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check the stability of the selected clock. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga37d44db762e24e44085a7c07228acaf9">R_CGC_ClockCheck()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Check the stability of the selected clock. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Which clock source to check for stability </td></tr>
@@ -585,11 +655,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the system clock. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga7f14fdc1ec5733550f503bd6868f98cd">R_CGC_SystemClockSet()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Set the system clock. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Clock source to set as system clock </td></tr>
@@ -611,11 +677,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the system clock information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga52e037474dd1e9ebd92c3e3746517557">R_CGC_SystemClockGet()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Get the system clock information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_clock_source</td><td>Returns the current system clock </td></tr>
@@ -637,15 +699,9 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable and optionally register a callback for Main Oscillator stop detection. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga1991738554628217261f4044dea44c1b">R_CGC_OscStopDetectEnable()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Enable and optionally register a callback for Main Oscillator stop detection. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function that will be called by the NMI interrupt when an oscillation stop is detected. If the second argument is "false", then this argument can be NULL. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable/disable Oscillation Stop Detection </td></tr>
   </table>
   </dd>
 </dl>
@@ -663,11 +719,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disable Main Oscillator stop detection. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga1a02897dd353e879f32de19f7a4fd283">R_CGC_OscStopDetectDisable()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Disable Main Oscillator stop detection. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
   </table>
@@ -687,11 +739,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear the oscillator stop detection flag. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga00fa9cabb71b0cc504aa413c0d48b916">R_CGC_OscStopStatusClear()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Clear the oscillator stop detection flag. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
   </table>
@@ -700,21 +748,18 @@ State of PLL2. </td></tr>
 
 </div>
 </div>
-<a id="a9c1d9877fcd835e19c7c573218580b5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c1d9877fcd835e19c7c573218580b5b">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="ae6320b1734cebe9041c65aa581ecb1c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6320b1734cebe9041c65aa581ecb1c4">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::callbackSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::callbackSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#ga300b8011ca9bd0c77130c60c3874d7a4">R_CGC_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the CGC control block. </td></tr>
@@ -738,11 +783,7 @@ State of PLL2. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the CGC driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#gaf4a220e7ffbeb997676ba5d84a8c7983">R_CGC_Close()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Close the CGC driver. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
   </table>
@@ -802,10 +843,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CGC control block. Allocate an instance specific control block to pass into the CGC API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___c_g_c.html#structcgc__instance__ctrl__t">cgc_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>CGC control block. Allocate an instance specific control block to pass into the CGC API calls. </p>
 
 </div>
 </div>
@@ -823,7 +861,11 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Events that can trigger a callback function </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadcb54f13e507fc97c6a86fa6f587ecb6a6da7ad2d21e0d5f8a621237748cfb251"></a>CGC_EVENT_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillator stop detection has caused the event. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadcb54f13e507fc97c6a86fa6f587ecb6acedb39a0dab2b5a440119399aa39ef6e"></a>CGC_EVENT_OSC_STOP_DETECT_NMI&#160;</td><td class="fielddoc"><p>Main oscillator stop detection has caused the NMI event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadcb54f13e507fc97c6a86fa6f587ecb6aa9d1bbaf1d28507fec6fe8a1f2a07ca3"></a>CGC_EVENT_OSC_STOP_DETECT_MAIN_OSC&#160;</td><td class="fielddoc"><p>Main oscillator stop detection has caused the interrupt event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadcb54f13e507fc97c6a86fa6f587ecb6a69236fe2c1e57a2995720d5d9cd220ed"></a>CGC_EVENT_OSC_STOP_DETECT_SUBCLOCK&#160;</td><td class="fielddoc"><p>Subclock oscillator stop detection has caused the interrupt event. </p>
 </td></tr>
 </table>
 
@@ -929,7 +971,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>System clock divider vlues - The individually selectable divider of each of the system clocks, ICLK, BCLK, FCLK, PCLKS A-D. </p>
+<p>System clock divider values - The individually selectable divider of each of the system clocks, ICLK, BCLK, FCLK, PCLKS A-D. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326"></a>CGC_SYS_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>System clock divided by 1. </p>
 </td></tr>
@@ -944,6 +986,29 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dadd88ebecf942a2a5d0ee88cbadec6bdf"></a>CGC_SYS_CLOCK_DIV_32&#160;</td><td class="fielddoc"><p>System clock divided by 32. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9"></a>CGC_SYS_CLOCK_DIV_64&#160;</td><td class="fielddoc"><p>System clock divided by 64. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dac3d14ab764b2f8801dab6b51ce2be2aa"></a>CGC_SYS_CLOCK_DIV_3&#160;</td><td class="fielddoc"><p>System clock divided by 3 (BCLK only) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga690d20c82a1f6794452a6743cc98e807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga690d20c82a1f6794452a6743cc98e807">&#9670;&nbsp;</a></span>cgc_pin_output_control_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_g_c___a_p_i.html#ga690d20c82a1f6794452a6743cc98e807">cgc_pin_output_control_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pin output control enable/disable (SDCLK, BCLK). </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga690d20c82a1f6794452a6743cc98e807a34afcfcb969128211ffc32a1d92997d8"></a>CGC_PIN_OUTPUT_CONTROL_ENABLE&#160;</td><td class="fielddoc"><p>Enable pin output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga690d20c82a1f6794452a6743cc98e807af21199a2c4ab6e94549c748bb8f50633"></a>CGC_PIN_OUTPUT_CONTROL_DISABLE&#160;</td><td class="fielddoc"><p>Disable pin output. </p>
 </td></tr>
 </table>
 
@@ -962,7 +1027,9 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>USB clock divider values </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7499fcdfd9aafe4ca695e26e2d69175daa43aeeddede23cf878960c4349084100"></a>CGC_USB_CLOCK_DIV_3&#160;</td><td class="fielddoc"><p>Divide USB source clock by 3. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7499fcdfd9aafe4ca695e26e2d69175da7210845fb9ce95edcb92ba794457f9cb"></a>CGC_USB_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>Divide USB source clock by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7499fcdfd9aafe4ca695e26e2d69175daa43aeeddede23cf878960c4349084100"></a>CGC_USB_CLOCK_DIV_3&#160;</td><td class="fielddoc"><p>Divide USB source clock by 3. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7499fcdfd9aafe4ca695e26e2d69175da57f3291c0937bee6bb9bac686278d1e9"></a>CGC_USB_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>Divide USB source clock by 4. </p>
 </td></tr>
@@ -1001,7 +1068,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

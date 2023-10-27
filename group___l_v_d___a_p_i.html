@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,10 +248,7 @@ $(document).ready(function(){initNavTree('group___l_v_d___a_p_i.html','');});
 <p>Interface for Low Voltage Detection. </p>
 <h1><a class="anchor" id="LVD_API_SUMMARY"></a>
 Summary</h1>
-<p>The LVD driver provides functions for configuring the LVD voltage monitors and detectors.</p>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___l_v_d.html">Low Voltage Detection (r_lvd)</a> </li>
-</ul>
+<p>The LVD driver provides functions for configuring the LVD voltage monitors and detectors. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -505,8 +580,8 @@ Placeholder for user data. </td></tr>
 <tr class="separator:a45aded1845bbc43ef8b6b1e3a08f2e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b9134701c646b8e2295bd30aea3177d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#a2b9134701c646b8e2295bd30aea3177d">statusClear</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a2b9134701c646b8e2295bd30aea3177d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0380e0e71ee1f9dab35c2de9dd5143f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#ab0380e0e71ee1f9dab35c2de9dd5143f">callbackSet</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ab0380e0e71ee1f9dab35c2de9dd5143f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9405d41b90122cce9c1e22086a4fcd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#aa9405d41b90122cce9c1e22086a4fcd6">callbackSet</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:aa9405d41b90122cce9c1e22086a4fcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6f844f12b555da5aca1e2c8420deb2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#ad6f844f12b555da5aca1e2c8420deb2d">close</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad6f844f12b555da5aca1e2c8420deb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -522,11 +597,7 @@ Placeholder for user data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes a low voltage detection driver according to the passed-in configuration structure. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Initializes a low voltage detection driver according to the passed-in configuration structure. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure for the driver instance </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the configuration structure for the driver instance </td></tr>
@@ -547,11 +618,7 @@ Placeholder for user data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the current state of the monitor, (threshold crossing detected, voltage currently above or below threshold). Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_v_d.html#gae1af63498d91ee2ced63246e477faa8c">R_LVD_StatusGet()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Get the current state of the monitor, (threshold crossing detected, voltage currently above or below threshold). Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control structure for the driver instance </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_lvd_status</td><td>Pointer to a <a class="el" href="group___l_v_d___a_p_i.html#structlvd__status__t">lvd_status_t</a> structure </td></tr>
@@ -572,11 +639,7 @@ Placeholder for user data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clears the latched status of the monitor. Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_v_d.html#ga2f8bf11a148ad673457d5afcabb85d7d">R_LVD_StatusClear()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Clears the latched status of the monitor. Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control structure for the driver instance </td></tr>
   </table>
@@ -585,21 +648,18 @@ Placeholder for user data. </td></tr>
 
 </div>
 </div>
-<a id="ab0380e0e71ee1f9dab35c2de9dd5143f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0380e0e71ee1f9dab35c2de9dd5143f">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="aa9405d41b90122cce9c1e22086a4fcd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9405d41b90122cce9c1e22086a4fcd6">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lvd_api_t::callbackSet) (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lvd_api_t::callbackSet) (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_v_d.html#ga94ba46485f3f278ae20933892941b795">R_LVD_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LVD control block. </td></tr>
@@ -623,11 +683,7 @@ Placeholder for user data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disables the LVD peripheral. Closes the driver instance. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_v_d.html#ga9548fb81b4659985ce9aed2343a2e34c">R_LVD_Close()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Disables the LVD peripheral. Closes the driver instance. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control structure for the driver instance </td></tr>
   </table>
@@ -687,10 +743,7 @@ Pointer to the API structure for this interface instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>LVD control block. Allocate an instance specific control block to pass into the LVD API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_v_d.html#structlvd__instance__ctrl__t">lvd_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>LVD control block. Allocate an instance specific control block to pass into the LVD API calls. </p>
 
 </div>
 </div>
@@ -803,7 +856,9 @@ Pointer to the API structure for this interface instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac3a698471443aa948c50dd6dc6661cdba018776fbff378ce085f20c8aa17279cf"></a>LVD_RESPONSE_INTERRUPT&#160;</td><td class="fielddoc"><p>Maskable interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac3a698471443aa948c50dd6dc6661cdba479d9877ab75b7dd5300494d9d6012b4"></a>LVD_RESPONSE_RESET&#160;</td><td class="fielddoc"><p>Reset. </p>
+<tr><td class="fieldname"><a id="ggac3a698471443aa948c50dd6dc6661cdba479d9877ab75b7dd5300494d9d6012b4"></a>LVD_RESPONSE_RESET&#160;</td><td class="fielddoc"><p>Reset on VCC-fall. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3a698471443aa948c50dd6dc6661cdbaa5cfe801c07f61fd755fbff17e6db3cf"></a>LVD_RESPONSE_RESET_ON_RISING&#160;</td><td class="fielddoc"><p>Reset on VCC-rise. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac3a698471443aa948c50dd6dc6661cdba462d7649ac340b68d91ae7fe4a0ab5ac"></a>LVD_RESPONSE_NONE&#160;</td><td class="fielddoc"><p>No response, status must be requested via statusGet function. </p>
 </td></tr>
@@ -822,7 +877,7 @@ Pointer to the API structure for this interface instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The direction from which Vcc must cross the threshold to trigger a detection (rising, falling, or both). </p>
+<p>The direction from which VCC must cross the threshold to trigger a detection (rising, falling, or both). </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3e15299c4637ea5e858cd80ded8ac197a3c4094b7f91b544a7b5115ef86c44589"></a>LVD_VOLTAGE_SLOPE_RISING&#160;</td><td class="fielddoc"><p>When VCC &gt;= Vdet2 (rise) is detected. </p>
 </td></tr>
@@ -930,7 +985,7 @@ Pointer to the API structure for this interface instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

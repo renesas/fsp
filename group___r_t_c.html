@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -228,7 +306,7 @@ The following build time configurations are defined in fsp_cfg/r_rtc_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -238,7 +316,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Set Source Clock in Open</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -252,9 +330,9 @@ This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Realti
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rtc0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Sub-Clock</li>
@@ -262,9 +340,9 @@ Sub-Clock</li>
 LOCO</li>
 </ul>
 </td><td>LOCO </td><td>Select the RTC clock source. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Frequency Comparision Value (LOCO)</td><td>Value must be a positive integer between 7 and 511</td><td>255 </td><td>Frequency comparison value when using LOCO </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Automatic Adjustment Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -272,7 +350,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Enable/ Disable the Error Adjustment mode </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Automatic Adjustment Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 10 Seconds</li>
@@ -282,7 +360,7 @@ Disabled</li>
 NONE</li>
 </ul>
 </td><td>10 Seconds </td><td>Select the Error Adjustment Period for Automatic Adjustment </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Adjustment Type (Plus-Minus)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 NONE</li>
@@ -292,15 +370,15 @@ Addition</li>
 Subtraction</li>
 </ul>
 </td><td>NONE </td><td>Select the Error Adjustment type </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Error Adjustment Value</td><td>Value must be a positive integer less than equal to 63</td><td>0 </td><td>Specify the Adjustment Value (the number of sub-clock cycles) from the prescaler </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Alarm Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the alarm interrupt priority. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Period Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the period interrupt priority. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Carry Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the carry interrupt priority. </td></tr>
 </table>
 </p>
@@ -338,6 +416,13 @@ Limitations</h2>
 <li>Binary-count mode is not supported.</li>
 <li>The <a class="el" href="group___r_t_c.html#gaabcfafd522c18288ac274f6b56f76366">R_RTC_CalendarTimeGet()</a> cannot be used from an interrupt that has higher priority than the carry interrupt. Also, it must not be called with interrupts disabled globally, as this API internally uses carry interrupt for its processing. API may return incorrect time if this is done.</li>
 </ul>
+<h2><a class="anchor" id="r-rtc-vrtc-domain"></a>
+VRTC-Domain</h2>
+<p>VRTC-domain provides power supply to SOSC and RTC on devices with IRTC:</p><ul>
+<li>In case VRTC-domain is invalid, SOSC and RTC will be in undetermined state. Any operation related to RTC and sub-clock should be avoided.</li>
+<li>When VRTC-domain becomes valid again, application is responsible to reinitialize SOSC and RTC. Sub-clock initialization can be done by calling R_BSP_SubclockInitialize().</li>
+<li>BSP provides R_BSP_SubclockStatusGet() to check the status of VRTC domain. But, it is recommended to use LVD to monitor VRTC domain change. Please refer to <a class="el" href="group___l_v_d.html">/PVD Low/Programmable Voltage Detection (r_lvd)</a> module for more details.</li>
+</ul>
 <h1><a class="anchor" id="r-rtc-examples"></a>
 Examples</h1>
 <h2>RTC Basic Example</h2>
@@ -350,7 +435,9 @@ Examples</h1>
 <p>This is an example of alarm interrupt in RTC.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_alarm_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Open the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the RTC clock source. Can be skipped if &quot;Set Source Clock in Open&quot; property is enabled. */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaa08e35bcfca849283de15698beb6b150">R_RTC_ClockSourceSet</a>(&amp;g_rtc0_ctrl);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga5c39b02432cedcb7a29ae8bdc8fcefb8">R_RTC_CalendarAlarmSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the Alarm interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Error Adjustment example</h2>
 <p>This is an example of modifying error adjustment in RTC.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Open the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the RTC clock source. Can be skipped if &quot;Set Source Clock in Open&quot; property is enabled. */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaa08e35bcfca849283de15698beb6b150">R_RTC_ClockSourceSet</a>(&amp;g_rtc0_ctrl);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Open the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the RTC clock source. Can be skipped if &quot;Set Source Clock in Open&quot; property is enabled. */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaa08e35bcfca849283de15698beb6b150">R_RTC_ClockSourceSet</a>(&amp;g_rtc0_ctrl);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC with VRTC-domain example</h2>
+<p>This is an example of calling RTC API on devices with VRTC-domain.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_RTC_IS_IRTC</span></div><div class="line"><span class="keywordtype">void</span> rtc_vrtc_domain_checking_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>       err        = FSP_SUCCESS;</div><div class="line">    <span class="keyword">static</span> uint32_t rtc_opened = 0;</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        err = R_BSP_SubclockStatusGet();</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* RTC API should not be called. */</span></div><div class="line"></div><div class="line">            <span class="comment">/* Try to initialize SOSC. */</span></div><div class="line">            err = R_BSP_SubclockInitialize();</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Delay for sub-clock oscillation stabilization time */</span></div><div class="line">                <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* VRTC-domain reset will not initialize RTC registers. */</span></div><div class="line">            <span class="keywordflow">if</span> (0 == rtc_opened)</div><div class="line">            {</div><div class="line">                err        = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line">                rtc_opened = (FSP_SUCCESS == err) ? 1 : 0;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Other RTC API can be called if needed. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrtc__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#structrtc__extended__cfg__t">rtc_extended_cfg_t</a></td></tr>
@@ -844,7 +931,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

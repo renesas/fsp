@@ -23,7 +23,7 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "UART Communication Device (rm_comms_uart)", "group___r_m___c_o_m_m_s___u_a_r_t.html", "group___r_m___c_o_m_m_s___u_a_r_t" ],
     [ "USB (r_usb_basic)", "group___u_s_b.html", "group___u_s_b" ],
     [ "USB Composite (r_usb_composite)", "group___u_s_b___c_o_m_p_o_s_i_t_e.html", null ],
-    [ "USB HCDC (r_usb_hcdc)", "group___u_s_b___h_c_d_c.html", null ],
+    [ "USB HCDC (r_usb_hcdc)", "group___u_s_b___h_c_d_c.html", "group___u_s_b___h_c_d_c" ],
     [ "USB HHID (r_usb_hhid)", "group___u_s_b___h_h_i_d.html", "group___u_s_b___h_h_i_d" ],
     [ "USB HMSC (r_usb_hmsc)", "group___u_s_b___h_m_s_c.html", "group___u_s_b___h_m_s_c" ],
     [ "USB Host Vendor class (r_usb_hvnd)", "group___u_s_b___h_v_n_d.html", null ],

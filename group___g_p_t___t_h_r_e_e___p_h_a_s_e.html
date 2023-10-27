@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -204,7 +282,7 @@ The following build time configurations are defined in fsp_cfg/r_gpt_three_phase
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -220,10 +298,12 @@ This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Three-
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_three_phase0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_three_phase0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Triangle-Wave Symmetric PWM</li>
 <li>
@@ -234,12 +314,12 @@ Triangle-Wave Asymmetric PWM (Mode 3)</li>
 </td><td>Triangle-Wave Symmetric PWM </td><td>Mode selection.<br />
 Triangle-Wave Symmetric PWM: Generates symmetric PWM waveforms with duty cycle determined by compare match set during a crest interrupt and updated at the next trough.<br />
 Triangle-Wave Asymmetric PWM: Generates asymmetric PWM waveforms with duty cycle determined by compare match set during a crest/trough interrupt and updated at the next trough/crest. </td></tr>
-<tr>
-<td>General &gt; Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>15 </td><td>Specify the timer period in units selected below. Setting the period to 0x100000000 raw counts results in the maximum period. Set the period to 0x100000000 raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000, which will use a divider of 1024 with the maximum period.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>15 </td><td>Specify the timer period in units selected below. Setting the period to 0x100000000 raw counts results in the maximum period. Set the period to 0x100000000 raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000, which will use a divider of 1024 with the maximum period.<br />
 <br />
 If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the generated <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structures for each timer. </td></tr>
-<tr>
-<td>General &gt; Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Raw Counts</li>
 <li>
@@ -256,14 +336,14 @@ Hertz</li>
 Kilohertz</li>
 </ul>
 </td><td>Kilohertz </td><td>Unit of the period specified above </td></tr>
-<tr>
-<td>General &gt; GPT U-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>0 </td><td>Specify the GPT channel for U signal output. </td></tr>
-<tr>
-<td>General &gt; GPT V-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>1 </td><td>Specify the GPT channel for V signal output. </td></tr>
-<tr>
-<td>General &gt; GPT W-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>2 </td><td>Specify the GPT channel for W signal output. </td></tr>
-<tr>
-<td>General &gt; Callback Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GPT U-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>0 </td><td>Specify the GPT channel for U signal output. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GPT V-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>1 </td><td>Specify the GPT channel for V signal output. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GPT W-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>2 </td><td>Specify the GPT channel for W signal output. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 U-Channel</li>
 <li>
@@ -272,34 +352,38 @@ V-Channel</li>
 W-Channel</li>
 </ul>
 </td><td>U-Channel </td><td>Specify the GPT channel to set a callback for when using R_GPT_THREE_PHASE_CallbackSet. </td></tr>
-<tr>
-<td>General &gt; Buffer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Buffer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Single Buffer</li>
 <li>
 Double Buffer</li>
 </ul>
 </td><td>Single Buffer </td><td>When Double Buffer is selected the 'duty_buffer' array in <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__duty__cycle__t">three_phase_duty_cycle_t</a> is used as a buffer for the 'duty' array. This allows setting the duty cycle for the next two crest/trough events in asymmetric mode with only one call to R_GPT_THREE_PHASE_DutyCycleSet. </td></tr>
-<tr>
-<td>General &gt; GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
-<tr>
-<td>General &gt; GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
-<tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
-<tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra Features  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; Dead Time  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-gpt-three_phase-clock-configuration"></a>
@@ -548,7 +632,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback for the GPT U-channel with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ab9207f40fa1512f415d7968004a8310a">three_phase_api_t::callbackSet</a>.</p>
+<p>Updates the user callback for the GPT U-channel with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a554fd0df3e9a3c1e09a81daf956f2244">three_phase_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -593,7 +677,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

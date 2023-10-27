@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -181,6 +259,8 @@ Overview</h1>
 <td>SCE5B </td><td>RA6T2 </td></tr>
 <tr>
 <td>AES Engine </td><td>RA2A1, RA2E1, RA2E2, RA2L1 </td></tr>
+<tr>
+<td>RSIP7 </td><td>RA8M1 </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>NetX Crypto hardware acceleration is unsupported on 'SCE5' and 'AES Engine' crypto peripherals listed above. </dd></dl>
 <h2><a class="anchor" id="rm-netx-secure-crypto-features"></a>
@@ -265,7 +345,7 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_net
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Standalone Usage</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Use Standalone Crypto Only</li>
@@ -273,7 +353,7 @@ Use Standalone Crypto Only</li>
 Use with TLS</li>
 </ul>
 </td><td>Use Standalone Crypto Only </td><td>Defines NX_CRYPTO_STANDALONE_ENABLE. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum RSA Modulus size (bits)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1024</li>
@@ -291,35 +371,47 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_net
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Hardware Acceleration &gt; Hash &gt; SHA256/224</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT. </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Cipher &gt; AES</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECC &gt; ECC</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECC &gt; ECDSA Scratch Buffer Size (Bytes)</td><td>Value must be an integer</td><td>3016 </td><td>Sets value of NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECC &gt; ECDH Scratch Buffer Size (Bytes)</td><td>Value must be an integer</td><td>2464 </td><td>Sets value of NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA</td><td>MCU Specific Options</td><td></td><td>Enables/Disables RSA HW support </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 2048 (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT to allow HW support </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 3072 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT to allow HW support </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 4096 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables RSA NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT to allow HW support </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA Scratch Buffer Size (Bytes)</td><td>MCU Specific Options</td><td></td><td>Sets value of NX_CRYPTO_RSA_SCRATCH_BUFFER_SIZE </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; TRNG</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Hash  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SHA256/224</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Cipher  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">AES</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Public Key Cryptography (PKC)  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECC  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">ECC</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">ECDSA Scratch Buffer Size (Bytes)</td><td>Value must be an integer</td><td>3016 </td><td>Sets value of NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">ECDH Scratch Buffer Size (Bytes)</td><td>Value must be an integer</td><td>2464 </td><td>Sets value of NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">RSA</td><td>MCU Specific Options</td><td></td><td>Enables/Disables RSA HW support </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">RSA 2048 (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT to allow HW support </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">RSA 3072 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT to allow HW support </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">RSA 4096 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables RSA NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT to allow HW support </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">RSA Scratch Buffer Size (Bytes)</td><td>MCU Specific Options</td><td></td><td>Sets value of NX_CRYPTO_RSA_SCRATCH_BUFFER_SIZE </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">TRNG</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_TRNG_ALT. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Standalone Usage</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Use Standalone Crypto Only</li>
@@ -442,7 +534,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

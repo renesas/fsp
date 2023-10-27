@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,55 +248,55 @@ $(document).ready(function(){initNavTree('group___r_m___z_m_o_d4_x_x_x.html','')
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga2d4f33091a3b32dc0bda323c24a4eb15">RM_ZMOD4XXX_Open</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="memdesc:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when start a measurement and when measurement data is stale data. Sends the slave address to the zmod4xxx and start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5ba1799ed3669a41fd7f0f436706367b">rm_zmod4xxx_api_t::open</a>.  <a href="#ga2d4f33091a3b32dc0bda323c24a4eb15">More...</a><br /></td></tr>
+<tr class="memdesc:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when start a measurement and when measurement data is stale data. Sends the slave address to the zmod4xxx and start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a9839a07b96c79990f08d8720890e8da8">rm_zmod4xxx_api_t::open</a>.  <a href="#ga2d4f33091a3b32dc0bda323c24a4eb15">More...</a><br /></td></tr>
 <tr class="separator:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga564266f1fd972d2a4b0d607925a8be48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48">RM_ZMOD4XXX_Close</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:ga564266f1fd972d2a4b0d607925a8be48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">rm_zmod4xxx_api_t::close</a>.  <a href="#ga564266f1fd972d2a4b0d607925a8be48">More...</a><br /></td></tr>
+<tr class="memdesc:ga564266f1fd972d2a4b0d607925a8be48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8858935263e54d095b16b998cebcf40d">rm_zmod4xxx_api_t::close</a>.  <a href="#ga564266f1fd972d2a4b0d607925a8be48">More...</a><br /></td></tr>
 <tr class="separator:ga564266f1fd972d2a4b0d607925a8be48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21bde6c18d166c38790d044a3325d7b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga21bde6c18d166c38790d044a3325d7b9">RM_ZMOD4XXX_MeasurementStart</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:ga21bde6c18d166c38790d044a3325d7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af9e1e5ff4fd276f7d7bfeb341854b0c2">rm_zmod4xxx_api_t::measurementStart</a>.  <a href="#ga21bde6c18d166c38790d044a3325d7b9">More...</a><br /></td></tr>
+<tr class="memdesc:ga21bde6c18d166c38790d044a3325d7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a47041454b1b699ca178a5156c6a79aac">rm_zmod4xxx_api_t::measurementStart</a>.  <a href="#ga21bde6c18d166c38790d044a3325d7b9">More...</a><br /></td></tr>
 <tr class="separator:ga21bde6c18d166c38790d044a3325d7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1a9e4762c544db1dc924fdff62bf9cc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga1a9e4762c544db1dc924fdff62bf9cc7">RM_ZMOD4XXX_MeasurementStop</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:ga1a9e4762c544db1dc924fdff62bf9cc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when stop a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5cf69c31fc52e26757bedf1ec76581f3">rm_zmod4xxx_api_t::measurementStop</a>.  <a href="#ga1a9e4762c544db1dc924fdff62bf9cc7">More...</a><br /></td></tr>
+<tr class="memdesc:ga1a9e4762c544db1dc924fdff62bf9cc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when stop a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abcdce084970e22641ee7151ae45ecee7">rm_zmod4xxx_api_t::measurementStop</a>.  <a href="#ga1a9e4762c544db1dc924fdff62bf9cc7">More...</a><br /></td></tr>
 <tr class="separator:ga1a9e4762c544db1dc924fdff62bf9cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaad8d1b8d7b71762b60c6078f9059bf1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaad8d1b8d7b71762b60c6078f9059bf1d">RM_ZMOD4XXX_StatusCheck</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:gaad8d1b8d7b71762b60c6078f9059bf1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when polling is used. It reads the status of sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a27c6d482aef38fe699598bd294eae220">rm_zmod4xxx_api_t::statusCheck</a>.  <a href="#gaad8d1b8d7b71762b60c6078f9059bf1d">More...</a><br /></td></tr>
+<tr class="memdesc:gaad8d1b8d7b71762b60c6078f9059bf1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when polling is used. It reads the status of sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa00282b7e3e0551c96618e19b7b1ee4b">rm_zmod4xxx_api_t::statusCheck</a>.  <a href="#gaad8d1b8d7b71762b60c6078f9059bf1d">More...</a><br /></td></tr>
 <tr class="separator:gaad8d1b8d7b71762b60c6078f9059bf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gafabd01cfcb93ac2bcdc4378dc94ec804">RM_ZMOD4XXX_Read</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data)</td></tr>
-<tr class="memdesc:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8f0e582715db0dc1589f314944c2a41a">rm_zmod4xxx_api_t::read</a>.  <a href="#gafabd01cfcb93ac2bcdc4378dc94ec804">More...</a><br /></td></tr>
+<tr class="memdesc:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a25a326294be7c8d65f6918ba532fb09f">rm_zmod4xxx_api_t::read</a>.  <a href="#gafabd01cfcb93ac2bcdc4378dc94ec804">More...</a><br /></td></tr>
 <tr class="separator:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ee9369b728a5687fcc637114b563875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga3ee9369b728a5687fcc637114b563875">RM_ZMOD4XXX_Iaq1stGenDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t">rm_zmod4xxx_iaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:ga3ee9369b728a5687fcc637114b563875"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6e96d0abcbc4a4479d92d6e8e8d410de">rm_zmod4xxx_api_t::iaq1stGenDataCalculate</a>.  <a href="#ga3ee9369b728a5687fcc637114b563875">More...</a><br /></td></tr>
+<tr class="memdesc:ga3ee9369b728a5687fcc637114b563875"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84760f27fa7ca93259cf43597772c781">rm_zmod4xxx_api_t::iaq1stGenDataCalculate</a>.  <a href="#ga3ee9369b728a5687fcc637114b563875">More...</a><br /></td></tr>
 <tr class="separator:ga3ee9369b728a5687fcc637114b563875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa2b8de7170ff85a0f991dfdb6fb71317"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaa2b8de7170ff85a0f991dfdb6fb71317">RM_ZMOD4XXX_Iaq2ndGenDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:gaa2b8de7170ff85a0f991dfdb6fb71317"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af1ff5841c01173a03ff6ccb7bd731ddc">rm_zmod4xxx_api_t::iaq2ndGenDataCalculate</a>.  <a href="#gaa2b8de7170ff85a0f991dfdb6fb71317">More...</a><br /></td></tr>
+<tr class="memdesc:gaa2b8de7170ff85a0f991dfdb6fb71317"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a88ffe068c172b8719782357b16cbe937">rm_zmod4xxx_api_t::iaq2ndGenDataCalculate</a>.  <a href="#gaa2b8de7170ff85a0f991dfdb6fb71317">More...</a><br /></td></tr>
 <tr class="separator:gaa2b8de7170ff85a0f991dfdb6fb71317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed61c1d9714552e574a4e6037d926180"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaed61c1d9714552e574a4e6037d926180">RM_ZMOD4XXX_OdorDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:gaed61c1d9714552e574a4e6037d926180"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aed55023e17ab93d307606c0d880df721">rm_zmod4xxx_api_t::odorDataCalculate</a>.  <a href="#gaed61c1d9714552e574a4e6037d926180">More...</a><br /></td></tr>
+<tr class="memdesc:gaed61c1d9714552e574a4e6037d926180"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92c5b2fd0fba637202780d8423b170dc">rm_zmod4xxx_api_t::odorDataCalculate</a>.  <a href="#gaed61c1d9714552e574a4e6037d926180">More...</a><br /></td></tr>
 <tr class="separator:gaed61c1d9714552e574a4e6037d926180"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf200a9dc7ca8bf0601c2a2b96c341ecf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaf200a9dc7ca8bf0601c2a2b96c341ecf">RM_ZMOD4XXX_SulfurOdorDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:gaf200a9dc7ca8bf0601c2a2b96c341ecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af2123328d6c1ced0cc62d9c98f5a8a7a">rm_zmod4xxx_api_t::sulfurOdorDataCalculate</a>.  <a href="#gaf200a9dc7ca8bf0601c2a2b96c341ecf">More...</a><br /></td></tr>
+<tr class="memdesc:gaf200a9dc7ca8bf0601c2a2b96c341ecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af8d15ec491a454d5d120f21aa41e8f9f">rm_zmod4xxx_api_t::sulfurOdorDataCalculate</a>.  <a href="#gaf200a9dc7ca8bf0601c2a2b96c341ecf">More...</a><br /></td></tr>
 <tr class="separator:gaf200a9dc7ca8bf0601c2a2b96c341ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeafe7943df31f237ac45310796df64b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaeafe7943df31f237ac45310796df64b2">RM_ZMOD4XXX_Oaq1stGenDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:gaeafe7943df31f237ac45310796df64b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad56aa9708d3f48a92253eeda652edede">rm_zmod4xxx_api_t::oaq1stGenDataCalculate</a>.  <a href="#gaeafe7943df31f237ac45310796df64b2">More...</a><br /></td></tr>
+<tr class="memdesc:gaeafe7943df31f237ac45310796df64b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a49bdc7ca88b2859fd18b3d33890d32bd">rm_zmod4xxx_api_t::oaq1stGenDataCalculate</a>.  <a href="#gaeafe7943df31f237ac45310796df64b2">More...</a><br /></td></tr>
 <tr class="separator:gaeafe7943df31f237ac45310796df64b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33">RM_ZMOD4XXX_Oaq2ndGenDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911">rm_zmod4xxx_api_t::oaq2ndGenDataCalculate</a>.  <a href="#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33">More...</a><br /></td></tr>
+<tr class="memdesc:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae56592403602103a28a5d1e13d6dec03">rm_zmod4xxx_api_t::oaq2ndGenDataCalculate</a>.  <a href="#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33">More...</a><br /></td></tr>
 <tr class="separator:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadaee5fde2afbb40e28f40b1de50daf45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gadaee5fde2afbb40e28f40b1de50daf45">RM_ZMOD4XXX_RaqDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:gadaee5fde2afbb40e28f40b1de50daf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa05768468433346424e7c695a0e0a4ed">rm_zmod4xxx_api_t::raqDataCalculate</a>.  <a href="#gadaee5fde2afbb40e28f40b1de50daf45">More...</a><br /></td></tr>
+<tr class="memdesc:gadaee5fde2afbb40e28f40b1de50daf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a557c09febce20b7bd5e1e7418d760f9a">rm_zmod4xxx_api_t::raqDataCalculate</a>.  <a href="#gadaee5fde2afbb40e28f40b1de50daf45">More...</a><br /></td></tr>
 <tr class="separator:gadaee5fde2afbb40e28f40b1de50daf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga88a9173f1eb50d4c2f7ca7b310c98957"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga88a9173f1eb50d4c2f7ca7b310c98957">RM_ZMOD4XXX_RelIaqDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__rel__iaq__data__t">rm_zmod4xxx_rel_iaq_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:ga88a9173f1eb50d4c2f7ca7b310c98957"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1923a191333769644eb59d939c58a90d">rm_zmod4xxx_api_t::relIaqDataCalculate</a>.  <a href="#ga88a9173f1eb50d4c2f7ca7b310c98957">More...</a><br /></td></tr>
+<tr class="memdesc:ga88a9173f1eb50d4c2f7ca7b310c98957"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a417eb9005c2cabc805e5176bd409b838">rm_zmod4xxx_api_t::relIaqDataCalculate</a>.  <a href="#ga88a9173f1eb50d4c2f7ca7b310c98957">More...</a><br /></td></tr>
 <tr class="separator:ga88a9173f1eb50d4c2f7ca7b310c98957"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c5aac5f58a3e8053557d02e3e781f3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga0c5aac5f58a3e8053557d02e3e781f3b">RM_ZMOD4XXX_PbaqDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__pbaq__data__t">rm_zmod4xxx_pbaq_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="memdesc:ga0c5aac5f58a3e8053557d02e3e781f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abee913c06f4f6ca942bb3124a729c944">rm_zmod4xxx_api_t::pbaqDataCalculate</a>.  <a href="#ga0c5aac5f58a3e8053557d02e3e781f3b">More...</a><br /></td></tr>
+<tr class="memdesc:ga0c5aac5f58a3e8053557d02e3e781f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a32c2fe41b4db79301c8a1b294809a25d">rm_zmod4xxx_api_t::pbaqDataCalculate</a>.  <a href="#ga0c5aac5f58a3e8053557d02e3e781f3b">More...</a><br /></td></tr>
 <tr class="separator:ga0c5aac5f58a3e8053557d02e3e781f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477">RM_ZMOD4XXX_TemperatureAndHumiditySet</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td></tr>
-<tr class="memdesc:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>.  <a href="#ga5a6c9c9dcb25bc3964b07ed7fe002477">More...</a><br /></td></tr>
+<tr class="memdesc:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1240e62119dd4d148dd4ec393e234447">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>.  <a href="#ga5a6c9c9dcb25bc3964b07ed7fe002477">More...</a><br /></td></tr>
 <tr class="separator:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac455a0f48d2eb704341bd83bb37fff94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94">RM_ZMOD4XXX_DeviceErrorCheck</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:gac455a0f48d2eb704341bd83bb37fff94"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">rm_zmod4xxx_api_t::deviceErrorCheck</a>.  <a href="#gac455a0f48d2eb704341bd83bb37fff94">More...</a><br /></td></tr>
+<tr class="memdesc:gac455a0f48d2eb704341bd83bb37fff94"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a96bea17094f7a5933ab13d77d7d86699">rm_zmod4xxx_api_t::deviceErrorCheck</a>.  <a href="#gac455a0f48d2eb704341bd83bb37fff94">More...</a><br /></td></tr>
 <tr class="separator:gac455a0f48d2eb704341bd83bb37fff94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -247,7 +325,7 @@ The following build time configurations are defined in fsp_cfg/rm_zmod4xxx_cfg.h
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -263,11 +341,11 @@ This module can be added to the Stacks tab via New Stack &gt; Sensor &gt; ZMOD4X
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Name</td><td>Manual Entry</td><td>g_zmod4xxx_sensor0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_zmod4xxx_sensor0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
 <td>Comms I2C Callback</td><td>Name must be a valid C symbol</td><td>zmod4xxx_comms_i2c_callback </td><td>A user COMMS I2C callback function can be provided. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>IRQ Callback</td><td>Name must be a valid C symbol</td><td>zmod4xxx_irq_callback </td><td>A user IRQ callback function can be provided. </td></tr>
 </table>
 </p>
@@ -538,7 +616,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when start a measurement and when measurement data is stale data. Sends the slave address to the zmod4xxx and start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5ba1799ed3669a41fd7f0f436706367b">rm_zmod4xxx_api_t::open</a>. </p>
+<p>This function should be called when start a measurement and when measurement data is stale data. Sends the slave address to the zmod4xxx and start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a9839a07b96c79990f08d8720890e8da8">rm_zmod4xxx_api_t::open</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
@@ -569,7 +647,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">rm_zmod4xxx_api_t::close</a>. </p>
+<p>This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8858935263e54d095b16b998cebcf40d">rm_zmod4xxx_api_t::close</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
@@ -597,7 +675,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af9e1e5ff4fd276f7d7bfeb341854b0c2">rm_zmod4xxx_api_t::measurementStart</a>. </p>
+<p>This function should be called when start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a47041454b1b699ca178a5156c6a79aac">rm_zmod4xxx_api_t::measurementStart</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
@@ -627,7 +705,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when stop a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5cf69c31fc52e26757bedf1ec76581f3">rm_zmod4xxx_api_t::measurementStop</a>. </p>
+<p>This function should be called when stop a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abcdce084970e22641ee7151ae45ecee7">rm_zmod4xxx_api_t::measurementStop</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
@@ -657,7 +735,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when polling is used. It reads the status of sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a27c6d482aef38fe699598bd294eae220">rm_zmod4xxx_api_t::statusCheck</a>. </p>
+<p>This function should be called when polling is used. It reads the status of sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa00282b7e3e0551c96618e19b7b1ee4b">rm_zmod4xxx_api_t::statusCheck</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
@@ -697,7 +775,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8f0e582715db0dc1589f314944c2a41a">rm_zmod4xxx_api_t::read</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a25a326294be7c8d65f6918ba532fb09f">rm_zmod4xxx_api_t::read</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -744,7 +822,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6e96d0abcbc4a4479d92d6e8e8d410de">rm_zmod4xxx_api_t::iaq1stGenDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84760f27fa7ca93259cf43597772c781">rm_zmod4xxx_api_t::iaq1stGenDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -788,7 +866,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af1ff5841c01173a03ff6ccb7bd731ddc">rm_zmod4xxx_api_t::iaq2ndGenDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a88ffe068c172b8719782357b16cbe937">rm_zmod4xxx_api_t::iaq2ndGenDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -832,7 +910,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aed55023e17ab93d307606c0d880df721">rm_zmod4xxx_api_t::odorDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92c5b2fd0fba637202780d8423b170dc">rm_zmod4xxx_api_t::odorDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -876,7 +954,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af2123328d6c1ced0cc62d9c98f5a8a7a">rm_zmod4xxx_api_t::sulfurOdorDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af8d15ec491a454d5d120f21aa41e8f9f">rm_zmod4xxx_api_t::sulfurOdorDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -920,7 +998,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad56aa9708d3f48a92253eeda652edede">rm_zmod4xxx_api_t::oaq1stGenDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a49bdc7ca88b2859fd18b3d33890d32bd">rm_zmod4xxx_api_t::oaq1stGenDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -964,7 +1042,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911">rm_zmod4xxx_api_t::oaq2ndGenDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae56592403602103a28a5d1e13d6dec03">rm_zmod4xxx_api_t::oaq2ndGenDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -1008,7 +1086,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa05768468433346424e7c695a0e0a4ed">rm_zmod4xxx_api_t::raqDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a557c09febce20b7bd5e1e7418d760f9a">rm_zmod4xxx_api_t::raqDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -1052,7 +1130,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1923a191333769644eb59d939c58a90d">rm_zmod4xxx_api_t::relIaqDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a417eb9005c2cabc805e5176bd409b838">rm_zmod4xxx_api_t::relIaqDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -1096,7 +1174,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abee913c06f4f6ca942bb3124a729c944">rm_zmod4xxx_api_t::pbaqDataCalculate</a>. </p>
+<p>This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a32c2fe41b4db79301c8a1b294809a25d">rm_zmod4xxx_api_t::pbaqDataCalculate</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -1140,7 +1218,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>. </p>
+<p>This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1240e62119dd4d148dd4ec393e234447">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -1168,7 +1246,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">rm_zmod4xxx_api_t::deviceErrorCheck</a>. </p>
+<p>This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a96bea17094f7a5933ab13d77d7d86699">rm_zmod4xxx_api_t::deviceErrorCheck</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
@@ -1188,7 +1266,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

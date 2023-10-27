@@ -18,6 +18,8 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "ipl", "group___i2_c___s_l_a_v_e___a_p_i.html#ae7a71b00ee0f0392feea934f395599a3", null ],
       [ "eri_ipl", "group___i2_c___s_l_a_v_e___a_p_i.html#a4fa45eb7423e7b93f78839b2bb612776", null ],
       [ "clock_stretching_enable", "group___i2_c___s_l_a_v_e___a_p_i.html#aaf45b7d102061452a09f5db26bdd1148", null ],
+      [ "p_transfer_tx", "group___i2_c___s_l_a_v_e___a_p_i.html#a396548dfcb29b480fc122a89c42cc9bc", null ],
+      [ "p_transfer_rx", "group___i2_c___s_l_a_v_e___a_p_i.html#a16c339fdbe177593d15cfdfdcb645ece", null ],
       [ "p_callback", "group___i2_c___s_l_a_v_e___a_p_i.html#ac194239c95dc0a5a71e220937295d67c", null ],
       [ "p_context", "group___i2_c___s_l_a_v_e___a_p_i.html#a6cc910e14348a5c42bb4ffbf41dad5ba", null ],
       [ "p_extend", "group___i2_c___s_l_a_v_e___a_p_i.html#a6b56336af0eaf92db7006a028876c575", null ]
@@ -26,7 +28,7 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "open", "group___i2_c___s_l_a_v_e___a_p_i.html#a3f978820e80073c05ef95e3b1ef31601", null ],
       [ "read", "group___i2_c___s_l_a_v_e___a_p_i.html#ad9693d9cbb58cc0abb6e4e85548e4e18", null ],
       [ "write", "group___i2_c___s_l_a_v_e___a_p_i.html#a8a7c8ec91840338adbabcea5b5400f19", null ],
-      [ "callbackSet", "group___i2_c___s_l_a_v_e___a_p_i.html#a527fc26638e91d2daf652c2b30b5ab5a", null ],
+      [ "callbackSet", "group___i2_c___s_l_a_v_e___a_p_i.html#acaf522087321868585ab1753caa08d2e", null ],
       [ "close", "group___i2_c___s_l_a_v_e___a_p_i.html#a23919938fff411b2275548e6c0dc0c7a", null ]
     ] ],
     [ "i2c_slave_instance_t", "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__instance__t", [

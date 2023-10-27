@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -320,7 +398,7 @@ FSP Interface Configuration Structure</h3>
 <h3><a class="anchor" id="fsp-interface-api-structure"></a>
 FSP Interface API Structure</h3>
 <p>All interfaces include an API structure which contains function pointers for all the supported interface functions. An example structure for the DAC is shown below.</p>
- <div class="fragment"><div class="line">typedef struct st_dac_api</div><div class="line">{</div><div class="line">    /** Initial configuration.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Open()</div><div class="line">     * - @ref R_DAC8_Open()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.</div><div class="line">     * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.</div><div class="line">     */</div><div class="line">    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);</div><div class="line"></div><div class="line">    /** Close the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Close()</div><div class="line">     * - @ref R_DAC8_Close()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Write sample value to the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Write()</div><div class="line">     * - @ref R_DAC8_Write()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     * @param[in]   value      Sample value to be written to the D/A Converter.</div><div class="line">     */</div><div class="line">    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);</div><div class="line"></div><div class="line">    /** Start the D/A Converter if it has not been started yet.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Start()</div><div class="line">     * - @ref R_DAC8_Start()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Stop the D/A Converter if the converter is running.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Stop()</div><div class="line">     * - @ref R_DAC8_Stop()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);</div><div class="line">} dac_api_t;</div></div><!-- fragment --></p>
+ <div class="fragment"><div class="line">typedef struct st_dac_api</div><div class="line">{</div><div class="line">    /** Initial configuration.</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.</div><div class="line">     * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.</div><div class="line">     */</div><div class="line">    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);</div><div class="line"></div><div class="line">    /** Close the D/A Converter.</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Write sample value to the D/A Converter.</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     * @param[in]   value      Sample value to be written to the D/A Converter.</div><div class="line">     */</div><div class="line">    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);</div><div class="line"></div><div class="line">    /** Start the D/A Converter if it has not been started yet.</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Stop the D/A Converter if the converter is running.</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);</div><div class="line">} dac_api_t;</div></div><!-- fragment --></p>
 <p>The API structure is what allows for modules to easily be swapped in and out for other modules that are instances of the same interface. Let's look at an example application using the DAC interface above.</p>
 <p>RA MCUs have an internal DAC peripheral. If the DAC API structure in the DAC interface is not used the application can make calls directly into the module. In the example below the application is making calls to the <a class="el" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write()</a> function which is provided in the r_dac module.</p>
 <div class="image">
@@ -476,7 +554,7 @@ Create a Module Instance in the RA Configuration Editor</h3>
 <h3><a class="anchor" id="use-the-instance-api"></a>
 Use the Instance API in the Application</h3>
 <p>Call the module's <code>&lt;MODULE&gt;_Open()</code> function. Pass pointers to the generated control structure and configuration structure. The names of these structures are based on the 'Name' field provided in the configuration editor. The control structure is <code>&lt;Name&gt;_ctrl</code> and the configuration structure is <code>&lt;Name&gt;_cfg</code>. An example <code>&lt;MODULE&gt;_Open()</code> call for an r_rtc module instance named <code>g_clock</code> is:</p>
-<div class="fragment"><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_clock_ctrl, &amp;g_clock_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>Each layer in the FSP Stack is responsible for calling the API functions of its dependencies. This means that users are only responsible for calling the API functions at the layer at which they are interfacing. Using the example above of a SPI module with a DTC dependency, the application uses only SPI APIs. The application starts by calling <a class="el" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open()</a>. Internally, the SPI module opens the DTC. It locates <a class="el" href="group___d_t_c.html#gad2bd9d74b22d0f3e109130385ac8904e">R_DTC_Open()</a> by accessing the dependent transfer interface function pointers from the pointers DTC instances (<a class="el" href="group___s_p_i___a_p_i.html#a312e4358f12551a3f7aaa5f0a09c0501" title="To use SPI DTC/DMA write transfer, link a DTC/DMA instance here. Set to NULL if unused. ">spi_cfg_t::p_transfer_tx</a> and <a class="el" href="group___s_p_i___a_p_i.html#ab38fb6af687bdf7e0ea9143499849bc6" title="To use SPI DTC/DMA read transfer, link a DTC/DMA instance here. Set to NULL if unused. ">spi_cfg_t::p_transfer_rx</a>) to open the DTC.</dd></dl>
+<div class="fragment"><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_clock_ctrl, &amp;g_clock_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>Each layer in the FSP Stack is responsible for calling the API functions of its dependencies. This means that users are only responsible for calling the API functions at the layer at which they are interfacing. Using the example above of a SPI module with a DTC dependency, the application uses only SPI APIs. The application starts by calling <a class="el" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open()</a>. Internally, the SPI module opens the DTC. It locates <a class="el" href="group___d_t_c.html#gad2bd9d74b22d0f3e109130385ac8904e">R_DTC_Open()</a> by accessing the dependent transfer interface function pointers from the pointers DTC instances (<a class="el" href="group___s_p_i___a_p_i.html#a312e4358f12551a3f7aaa5f0a09c0501" title="To use SPI DTC/DMAC write transfer, link a transfer instance here. Set to NULL if unused...">spi_cfg_t::p_transfer_tx</a> and <a class="el" href="group___s_p_i___a_p_i.html#ab38fb6af687bdf7e0ea9143499849bc6" title="To use SPI DTC/DMAC read transfer, link a transfer instance here. Set to NULL if unused. ">spi_cfg_t::p_transfer_rx</a>) to open the DTC.</dd></dl>
 <p>Refer to the module usage notes for example code to help get started with any particular module. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -484,7 +562,7 @@ Use the Instance API in the Application</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

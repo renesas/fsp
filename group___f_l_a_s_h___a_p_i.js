@@ -43,7 +43,7 @@ var group___f_l_a_s_h___a_p_i =
       [ "updateFlashClockFreq", "group___f_l_a_s_h___a_p_i.html#ae357c91afece41b956ece618eb82c1a1", null ],
       [ "startupAreaSelect", "group___f_l_a_s_h___a_p_i.html#af01c458da5ffbd29ee404ccc5e8e6869", null ],
       [ "bankSwap", "group___f_l_a_s_h___a_p_i.html#a27dd022e07eebb8750e1a1be7f80563f", null ],
-      [ "callbackSet", "group___f_l_a_s_h___a_p_i.html#adc5094e84cb696f0a1d954f8a25dfbee", null ]
+      [ "callbackSet", "group___f_l_a_s_h___a_p_i.html#a4331435bca9f94b04d2c5e11ce92e7c7", null ]
     ] ],
     [ "flash_instance_t", "group___f_l_a_s_h___a_p_i.html#structflash__instance__t", [
       [ "p_ctrl", "group___f_l_a_s_h___a_p_i.html#a59f329f1271b1a71a0c5de0e01a5d916", null ],

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -225,7 +303,7 @@ The following build time configurations are defined in fsp_cfg/rm_ble_mesh_cfg.h
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -241,106 +319,132 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Bl
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name Must Be a Valid C Symbol</td><td>g_rm_ble_mesh0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Channel Number</td><td>Invalid Channel Number</td><td>0 </td><td>Select channel corresponding to the channel number of the hardware. </td></tr>
-<tr>
-<td>Bearer &gt; Network Interface Number</td><td>Invalid Network Interface Number</td><td>2 </td><td>Network interfaces number. </td></tr>
-<tr>
-<td>Bearer &gt; Provisioning Interface Number</td><td>Invalid Provisioning Interface Number</td><td>2 </td><td>Provisioning interfaces number. </td></tr>
-<tr>
-<td>Provisioning &gt; Unprovisioned Device Beacon Timeout in Milliseconds</td><td>Invalid Unprovisioned Device Beacon Timeout in Milliseconds</td><td>200 </td><td>Unprovisioned device beacon timeout in milliseconds. </td></tr>
-<tr>
-<td>Network &gt; Network Cache Size</td><td>Invalid Network Cache Size</td><td>10 </td><td>Network cache size. </td></tr>
-<tr>
-<td>Network &gt; Network Sequence Number Cache Size</td><td>Invalid Network Sequence Number Cache Size</td><td>32 </td><td>Network sequence number cache size. </td></tr>
-<tr>
-<td>Network &gt; Maximum Number of Subnet</td><td>Invalid Maximum Number of Subnets</td><td>4 </td><td>Maximum number of subnets </td></tr>
-<tr>
-<td>Network &gt; Maximum Number of Device Key</td><td>Invalid Maximum Number of Device Keys</td><td>4 </td><td>Maximum number of device keys. </td></tr>
-<tr>
-<td>Network &gt; Proxy Filter List Size</td><td>Invalid Proxy Filter List Size</td><td>2 </td><td>Maximum number of addresses present in each proxy filter list. </td></tr>
-<tr>
-<td>Network &gt; Network Sequence Number Block Size</td><td>Invalid Network Sequence Number Block Size</td><td>2048 </td><td>The distance between the network sequence numbers, for every persistent storage write. </td></tr>
-<tr>
-<td>Network &gt; Network Transmit Count for Network Packets</td><td>Invalid Network Transmit Count for Network Packets</td><td>1 </td><td>Network transmit count for network packets. </td></tr>
-<tr>
-<td>Network &gt; Network Interval Steps for Network Packets</td><td>Invalid Network Interval Steps for Network Packets</td><td>4 </td><td>Network interval steps for network packets. </td></tr>
-<tr>
-<td>Network &gt; Network Transmit Count for Relayed Packets</td><td>Invalid Network Transmit Count for Relayed Packets</td><td>0 </td><td>Network transmit count for relayed packets. </td></tr>
-<tr>
-<td>Network &gt; Network Interval Steps for Relayed Packets</td><td>Invalid Network Interval Steps for Relayed Packets</td><td>9 </td><td>Network interval steps for relayed packets. </td></tr>
-<tr>
-<td>Network &gt; Proxy ADV Network ID Timeout for Each Subnet in Milliseconds.</td><td>Invalid Proxy ADV Network ID Timeout</td><td>100 </td><td>Proxy ADV network ID timeout for each subnet in milliseconds. </td></tr>
-<tr>
-<td>Network &gt; Proxy ADV Node Identity Timeout for Each Subnet in Milliseconds</td><td>Invalid Proxy ADV Node Identity Timeout for Each Subnet in Milliseconds</td><td>300 </td><td>Proxy ADV node identity timeout for each subnet in milliseconds. </td></tr>
-<tr>
-<td>Network &gt; Proxy ADV Node Identity Overall Time Period in Seconds</td><td>Invalid Proxy ADV Node Identity Overall Time Period in Seconds</td><td>60 </td><td>Proxy ADV node identity overall time period in seconds. </td></tr>
-<tr>
-<td>Network &gt; Maximum Number of Queued Messages for Transmission</td><td>Invalid Maximum Number of Queued Messages for Transmission</td><td>64 </td><td>Maximum number of queued messages for transmission. </td></tr>
-<tr>
-<td>Transport &gt; Maximum Number of LPN</td><td>Invalid Maximum Number of LPNs</td><td>1 </td><td>Maximum number of LPNs. </td></tr>
-<tr>
-<td>Transport &gt; Replay Protection Cache Size</td><td>Invalid Replay Protection Cache Size</td><td>10 </td><td>Replay protection cache size. </td></tr>
-<tr>
-<td>Transport &gt; Reassembled Cache Size</td><td>Invalid Reassembled Cache Size</td><td>8 </td><td>Reassembled cach size. </td></tr>
-<tr>
-<td>Transport &gt; Friend Poll Retry Count</td><td>Invalid Friend Poll Retry Count</td><td>10 </td><td>Friend poll retry count. </td></tr>
-<tr>
-<td>Transport &gt; Maximum Number of Segmentation and Reassembly Context</td><td>Invalid Maximum Number of Segmentation and Reassembly Context</td><td>8 </td><td>Number of segmentation and reassembly contexts. </td></tr>
-<tr>
-<td>Transport &gt; Lower Transport Segment Transmission Timeout in Milliseconds</td><td>Invalid Lower Transport Segment Transmission Timeout in Milliseconds</td><td>300 </td><td>Lower transport segment transmission timeout in milliseconds. </td></tr>
-<tr>
-<td>Transport &gt; Lower Transport Segment Re-Transmission Count</td><td>Invalid Lower Transport Segment Re-Transmission Count</td><td>2 </td><td>Lower transport segment re-transmission count. </td></tr>
-<tr>
-<td>Transport &gt; Lower Transport Acknowledgement Timeout in Milliseconds</td><td>Invalid Lower Transport Acknowledgement Timeout in Milliseconds</td><td>200 </td><td>Lower transport acknowledgement timeout in milliseconds. </td></tr>
-<tr>
-<td>Transport &gt; Lower Transport Incomplete Timeout in Seconds</td><td>Invalid Lower Transport Incomplete Timeout in Seconds</td><td>20 </td><td>Lower transport incomplete timeout in seconds. </td></tr>
-<tr>
-<td>Transport &gt; Friendship Receive Window</td><td>Invalid Friendship Receive Window</td><td>100 </td><td>Friendship receive window. </td></tr>
-<tr>
-<td>Transport &gt; Maximum Number of Friend Message Queue</td><td>Invalid Maximum Number of Friend Messages Queue</td><td>15 </td><td>Maximum number of messages that the friend is capabale to queue for a single Low Power Node. </td></tr>
-<tr>
-<td>Transport &gt; Maximum Number of Friend Subscription List</td><td>Invalid Maximum Number of Friend Subscription List</td><td>8 </td><td>Maximum number of subscription addresses that the friend is capable to store for a single Low Power Node. </td></tr>
-<tr>
-<td>Transport &gt; Friend Clear Confirmation Timeout in Milliseconds</td><td>Invalid Friend Clear Confirmation Timeout in Milliseconds</td><td>1000 </td><td>Friend clear confirmation timeout in milliseconds. </td></tr>
-<tr>
-<td>Transport &gt; Friend Clear Retry Count</td><td>Invalid Friend Clear Retry Count</td><td>5 </td><td>Friend clear retry count. </td></tr>
-<tr>
-<td>Transport &gt; Friendship Retry Timeout in Milliseconds</td><td>Invalid Friendship Retry Timeout in Milliseconds</td><td>1200 </td><td>Friendship retry timeout in milliseconds. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Element</td><td>Invalid Maximum Number of Element</td><td>4 </td><td>Maximum number of elements. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Model</td><td>Invalid Maximum Number of Model</td><td>60 </td><td>Maximum number of models. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Application</td><td>Invalid Maximum Number of Application</td><td>8 </td><td>Maximum number of applications (keys) the device can store information about. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Virtual Address</td><td>Invalid Maximum Number of Virtual Address</td><td>8 </td><td>Maximum number of virtual addresses the device can store information about. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Non-Virtual Address</td><td>Invalid Maximum Number of Non-Virtual Address</td><td>8 </td><td>Maximum number of non-virtual addresses the device can store information about. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Transition Timers</td><td>Invalid Maximum Number of Transition Timers</td><td>5 </td><td>Maximum number of transition timers. </td></tr>
-<tr>
-<td>Access &gt; Maximum Number of Periodic Step Timers</td><td>Invalid Maximum Number of Periodic Step Timers</td><td>5 </td><td>Maximum number of periodic step timers. </td></tr>
-<tr>
-<td>Foundation &gt; Config Server Secure Network Beacon Interval</td><td>Invalid Config Server Secure Network Beacon Interval</td><td>10 </td><td>Config server secure network beacon interval. </td></tr>
-<tr>
-<td>Foundation &gt; Maximum Number of Health Server Instance</td><td>Invalid Maximum Number of Health Server Instance</td><td>2 </td><td>Maximum number of health server instances. </td></tr>
-<tr>
-<td>Model &gt; Maximum Number of Light Lightness Controller Server Instance</td><td>Invalid Maximum Number of Light Lightness Controller Server Instance</td><td>1 </td><td>Maximum number of light lightness controller server instances. </td></tr>
-<tr>
-<td>ID &gt; Company ID</td><td>Invalid Company ID</td><td>0x0036 </td><td>Company ID. </td></tr>
-<tr>
-<td>ID &gt; Product ID</td><td>Invalid Product ID</td><td>0x0001 </td><td>Product ID. </td></tr>
-<tr>
-<td>ID &gt; Vendor ID</td><td>Invalid Vendor ID</td><td>0x0100 </td><td>Vendor ID. </td></tr>
-<tr>
-<td>Platform &gt; Storage &gt; Block Number</td><td>Invalid Block Number</td><td>5 </td><td>Block number. </td></tr>
-<tr>
-<td>Platform &gt; Memory Pool &gt; Memory Pool Size</td><td>Invalid Memory Pool Size</td><td>0x4000 </td><td>Memory pool size. </td></tr>
-<tr>
-<td>Platform &gt; Logging &gt; Packet Bitfield</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name Must Be a Valid C Symbol</td><td>g_rm_ble_mesh0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel Number</td><td>Invalid Channel Number</td><td>0 </td><td>Select channel corresponding to the channel number of the hardware. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Bearer  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Interface Number</td><td>Invalid Network Interface Number</td><td>2 </td><td>Network interfaces number. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Provisioning Interface Number</td><td>Invalid Provisioning Interface Number</td><td>2 </td><td>Provisioning interfaces number. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Provisioning  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Unprovisioned Device Beacon Timeout in Milliseconds</td><td>Invalid Unprovisioned Device Beacon Timeout in Milliseconds</td><td>200 </td><td>Unprovisioned device beacon timeout in milliseconds. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Network  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Cache Size</td><td>Invalid Network Cache Size</td><td>10 </td><td>Network cache size. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Sequence Number Cache Size</td><td>Invalid Network Sequence Number Cache Size</td><td>32 </td><td>Network sequence number cache size. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Subnet</td><td>Invalid Maximum Number of Subnets</td><td>4 </td><td>Maximum number of subnets </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Device Key</td><td>Invalid Maximum Number of Device Keys</td><td>4 </td><td>Maximum number of device keys. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Proxy Filter List Size</td><td>Invalid Proxy Filter List Size</td><td>2 </td><td>Maximum number of addresses present in each proxy filter list. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Sequence Number Block Size</td><td>Invalid Network Sequence Number Block Size</td><td>2048 </td><td>The distance between the network sequence numbers, for every persistent storage write. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Transmit Count for Network Packets</td><td>Invalid Network Transmit Count for Network Packets</td><td>1 </td><td>Network transmit count for network packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Interval Steps for Network Packets</td><td>Invalid Network Interval Steps for Network Packets</td><td>4 </td><td>Network interval steps for network packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Transmit Count for Relayed Packets</td><td>Invalid Network Transmit Count for Relayed Packets</td><td>0 </td><td>Network transmit count for relayed packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Network Interval Steps for Relayed Packets</td><td>Invalid Network Interval Steps for Relayed Packets</td><td>9 </td><td>Network interval steps for relayed packets. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Proxy ADV Network ID Timeout for Each Subnet in Milliseconds.</td><td>Invalid Proxy ADV Network ID Timeout</td><td>100 </td><td>Proxy ADV network ID timeout for each subnet in milliseconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Proxy ADV Node Identity Timeout for Each Subnet in Milliseconds</td><td>Invalid Proxy ADV Node Identity Timeout for Each Subnet in Milliseconds</td><td>300 </td><td>Proxy ADV node identity timeout for each subnet in milliseconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Proxy ADV Node Identity Overall Time Period in Seconds</td><td>Invalid Proxy ADV Node Identity Overall Time Period in Seconds</td><td>60 </td><td>Proxy ADV node identity overall time period in seconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Queued Messages for Transmission</td><td>Invalid Maximum Number of Queued Messages for Transmission</td><td>64 </td><td>Maximum number of queued messages for transmission. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Transport  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of LPN</td><td>Invalid Maximum Number of LPNs</td><td>1 </td><td>Maximum number of LPNs. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Replay Protection Cache Size</td><td>Invalid Replay Protection Cache Size</td><td>10 </td><td>Replay protection cache size. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reassembled Cache Size</td><td>Invalid Reassembled Cache Size</td><td>8 </td><td>Reassembled cach size. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Friend Poll Retry Count</td><td>Invalid Friend Poll Retry Count</td><td>10 </td><td>Friend poll retry count. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Segmentation and Reassembly Context</td><td>Invalid Maximum Number of Segmentation and Reassembly Context</td><td>8 </td><td>Number of segmentation and reassembly contexts. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Lower Transport Segment Transmission Timeout in Milliseconds</td><td>Invalid Lower Transport Segment Transmission Timeout in Milliseconds</td><td>300 </td><td>Lower transport segment transmission timeout in milliseconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Lower Transport Segment Re-Transmission Count</td><td>Invalid Lower Transport Segment Re-Transmission Count</td><td>2 </td><td>Lower transport segment re-transmission count. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Lower Transport Acknowledgement Timeout in Milliseconds</td><td>Invalid Lower Transport Acknowledgement Timeout in Milliseconds</td><td>200 </td><td>Lower transport acknowledgement timeout in milliseconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Lower Transport Incomplete Timeout in Seconds</td><td>Invalid Lower Transport Incomplete Timeout in Seconds</td><td>20 </td><td>Lower transport incomplete timeout in seconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Friendship Receive Window</td><td>Invalid Friendship Receive Window</td><td>100 </td><td>Friendship receive window. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Friend Message Queue</td><td>Invalid Maximum Number of Friend Messages Queue</td><td>15 </td><td>Maximum number of messages that the friend is capabale to queue for a single Low Power Node. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Friend Subscription List</td><td>Invalid Maximum Number of Friend Subscription List</td><td>8 </td><td>Maximum number of subscription addresses that the friend is capable to store for a single Low Power Node. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Friend Clear Confirmation Timeout in Milliseconds</td><td>Invalid Friend Clear Confirmation Timeout in Milliseconds</td><td>1000 </td><td>Friend clear confirmation timeout in milliseconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Friend Clear Retry Count</td><td>Invalid Friend Clear Retry Count</td><td>5 </td><td>Friend clear retry count. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Friendship Retry Timeout in Milliseconds</td><td>Invalid Friendship Retry Timeout in Milliseconds</td><td>1200 </td><td>Friendship retry timeout in milliseconds. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Access  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Element</td><td>Invalid Maximum Number of Element</td><td>4 </td><td>Maximum number of elements. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Model</td><td>Invalid Maximum Number of Model</td><td>60 </td><td>Maximum number of models. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Application</td><td>Invalid Maximum Number of Application</td><td>8 </td><td>Maximum number of applications (keys) the device can store information about. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Virtual Address</td><td>Invalid Maximum Number of Virtual Address</td><td>8 </td><td>Maximum number of virtual addresses the device can store information about. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Non-Virtual Address</td><td>Invalid Maximum Number of Non-Virtual Address</td><td>8 </td><td>Maximum number of non-virtual addresses the device can store information about. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Transition Timers</td><td>Invalid Maximum Number of Transition Timers</td><td>5 </td><td>Maximum number of transition timers. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Periodic Step Timers</td><td>Invalid Maximum Number of Periodic Step Timers</td><td>5 </td><td>Maximum number of periodic step timers. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Foundation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Config Server Secure Network Beacon Interval</td><td>Invalid Config Server Secure Network Beacon Interval</td><td>10 </td><td>Config server secure network beacon interval. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Health Server Instance</td><td>Invalid Maximum Number of Health Server Instance</td><td>2 </td><td>Maximum number of health server instances. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Model  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Number of Light Lightness Controller Server Instance</td><td>Invalid Maximum Number of Light Lightness Controller Server Instance</td><td>1 </td><td>Maximum number of light lightness controller server instances. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> ID  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Company ID</td><td>Invalid Company ID</td><td>0x0036 </td><td>Company ID. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Product ID</td><td>Invalid Product ID</td><td>0x0001 </td><td>Product ID. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Vendor ID</td><td>Invalid Vendor ID</td><td>0x0100 </td><td>Vendor ID. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Platform  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Platform &gt; Storage  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Block Number</td><td>Invalid Block Number</td><td>5 </td><td>Block number. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Platform &gt; Memory Pool  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Memory Pool Size</td><td>Invalid Memory Pool Size</td><td>0x4000 </td><td>Memory pool size. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Platform &gt; Logging  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Packet Bitfield</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Network</li>
 <li>
@@ -351,8 +455,8 @@ Upper Trans</li>
 Access</li>
 </ul>
 </td><td></td><td>Specifies if this is included in the packet_bitfield mask. </td></tr>
-<tr>
-<td>Platform &gt; Logging &gt; Module Info Bitfield</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Module Info Bitfield</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Network</li>
 <li>
@@ -363,8 +467,8 @@ Upper Trans</li>
 Access</li>
 </ul>
 </td><td></td><td>Specifies if this is included in the module information bitfield mask. </td></tr>
-<tr>
-<td>Platform &gt; Logging &gt; Generic Log Bitfield</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Generic Log Bitfield</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Network</li>
 <li>
@@ -375,8 +479,8 @@ Upper Trans</li>
 Access</li>
 </ul>
 </td><td></td><td>Specifies if this is included in the generic log bitfield mask. </td></tr>
-<tr>
-<td>Platform &gt; Logging &gt; function</td><td>Name Must Be a Valid C Symbol</td><td>NULL </td><td></td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">function</td><td>Name Must Be a Valid C Symbol</td><td>NULL </td><td></td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm_ble_mesh-clock-configuration"></a>
@@ -793,7 +897,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

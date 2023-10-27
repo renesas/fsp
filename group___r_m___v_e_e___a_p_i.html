@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,8 +248,7 @@ $(document).ready(function(){initNavTree('group___r_m___v_e_e___a_p_i.html','');
 <p>Interface for Virtual EEPROM access. </p>
 <h1><a class="anchor" id="RM_VEE_API_SUMMARY"></a>
 Summary</h1>
-<p>The Virtual EEPROM Port configures a fail-safe key value store designed for microcontrollers on top of a lower level storage device.</p>
-<p>Implemented by: <a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html">Virtual EEPROM on Flash (rm_vee_flash)</a> </p>
+<p>The Virtual EEPROM Port configures a fail-safe key value store designed for microcontrollers on top of a lower level storage device. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -309,8 +386,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:af9b151f78090db849beecfad30c734ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dfcc3419ebd36cf3081a6b0a87618cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#a8dfcc3419ebd36cf3081a6b0a87618cc">format</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_ctrl, uint8_t const *const p_ref_data)</td></tr>
 <tr class="separator:a8dfcc3419ebd36cf3081a6b0a87618cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac64776adb2da7869c3a806614639df67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#ac64776adb2da7869c3a806614639df67">callbackSet</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ac64776adb2da7869c3a806614639df67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34a4e9e64c18c008336248fb9a6f9ddf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#a34a4e9e64c18c008336248fb9a6f9ddf">callbackSet</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a34a4e9e64c18c008336248fb9a6f9ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac275b976b44492bffacf67e6badcab7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#ac275b976b44492bffacf67e6badcab7b">close</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ac275b976b44492bffacf67e6badcab7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -326,10 +403,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes the driver’s internal structures and opens the Flash driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga0885b69e4ef4e799b16bdb9c1d249069">RM_VEE_FLASH_Open</a></li>
-</ul>
-</dd></dl>
+<p>Initializes the driver’s internal structures and opens the Flash driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. Must be declared by user. Elements set here. </td></tr>
@@ -351,10 +425,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Writes a record to data flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga27506a17c4f64623faf38e0d62e93d1d">RM_VEE_FLASH_RecordWrite</a></li>
-</ul>
-</dd></dl>
+<p>Writes a record to data flash.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -378,10 +449,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function gets the pointer to the most recent version of a record specified by ID. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gaf60cb683369284d0f6b906ba5072638a">RM_VEE_FLASH_RecordPtrGet</a></li>
-</ul>
-</dd></dl>
+<p>This function gets the pointer to the most recent version of a record specified by ID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -405,10 +473,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Writes new Reference data to the reference update area. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gaad6041978efe46f6837f5dfaf9073d94">RM_VEE_FLASH_RefDataWrite</a></li>
-</ul>
-</dd></dl>
+<p>Writes new Reference data to the reference update area.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -430,10 +495,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Gets a pointer to the most recent reference data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gac480d1c5846266ed2f08b433a54b3a6e">RM_VEE_FLASH_RefDataPtrGet</a></li>
-</ul>
-</dd></dl>
+<p>Gets a pointer to the most recent reference data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -455,10 +517,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the current status of the VEE driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gab0d810d4a3f5a77252dd1ec52c4e5771">RM_VEE_FLASH_StatusGet</a></li>
-</ul>
-</dd></dl>
+<p>Get the current status of the VEE driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -480,10 +539,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Manually start a refresh operation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gad89e131abdeaefd6c8b2f0112d5c8258">RM_VEE_FLASH_Refresh</a></li>
-</ul>
-</dd></dl>
+<p>Manually start a refresh operation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -504,10 +560,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Format the Virtual EEPROM. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gaae419ce998756f27e146e07cb14a0e3d">RM_VEE_FLASH_Format</a></li>
-</ul>
-</dd></dl>
+<p>Format the Virtual EEPROM.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
@@ -518,21 +571,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="ac64776adb2da7869c3a806614639df67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac64776adb2da7869c3a806614639df67">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a34a4e9e64c18c008336248fb9a6f9ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34a4e9e64c18c008336248fb9a6f9ddf">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_vee_api_t::callbackSet) (<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_vee_api_t::callbackSet) (<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga419220f67800797b2a9cc7bb9cefb463">RM_VEE_FLASH_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___r_m___v_e_e___a_p_i.html#a5f9d456c3dfb6ee20259e591e8279b62">rm_vee_api_t::open</a> call. </td></tr>
@@ -556,10 +606,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Closes the module and lower level storage device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga187bcacce62402406aa6a0a5a9b2c3ed">RM_VEE_FLASH_Close</a></li>
-</ul>
-</dd></dl>
+<p>Closes the module and lower level storage device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___r_m___v_e_e___a_p_i.html#a5f9d456c3dfb6ee20259e591e8279b62">rm_vee_api_t::open</a> call. </td></tr>
@@ -620,10 +667,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Virtual EEPROM API control block. Allocate an instance specific control block to pass into the VEE API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#structrm__vee__flash__instance__ctrl__t">rm_vee_flash_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>Virtual EEPROM API control block. Allocate an instance specific control block to pass into the VEE API calls. </p>
 
 </div>
 </div>
@@ -660,7 +704,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

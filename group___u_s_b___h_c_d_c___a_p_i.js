@@ -41,6 +41,21 @@ var group___u_s_b___h_c_d_c___a_p_i =
     [ "usb_hcdc_breakduration_t", "group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__breakduration__t", [
       [ "wtime_ms", "group___u_s_b___h_c_d_c___a_p_i.html#a5b61f0a1261321788aece9da9606dda5", null ]
     ] ],
+    [ "usb_hcdc_device_info_t", "group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__device__info__t", [
+      [ "vendor_id", "group___u_s_b___h_c_d_c___a_p_i.html#a7c5fcd352bdf555d157746a35b8a88f2", null ],
+      [ "product_id", "group___u_s_b___h_c_d_c___a_p_i.html#a014f55646ca6be6b9a75cf2975fd314e", null ],
+      [ "subclass", "group___u_s_b___h_c_d_c___a_p_i.html#af3850f3c943ab11958d77f6843ca3270", null ]
+    ] ],
+    [ "usb_hcdc_api_t", "group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__api__t", [
+      [ "controlDataRead", "group___u_s_b___h_c_d_c___a_p_i.html#ac9b358a4a2b0fc1ba0180222c8c6826a", null ],
+      [ "deviceRegister", "group___u_s_b___h_c_d_c___a_p_i.html#a07d498d43d36cdd4279fe4eb743b373f", null ],
+      [ "infoGet", "group___u_s_b___h_c_d_c___a_p_i.html#a7c50f014d1737dafe67314f3352f156e", null ]
+    ] ],
+    [ "usb_hcdc_instance_t", "group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__instance__t", [
+      [ "p_ctrl", "group___u_s_b___h_c_d_c___a_p_i.html#a3967985bd55643026820b11c8a3facb5", null ],
+      [ "p_cfg", "group___u_s_b___h_c_d_c___a_p_i.html#a2b2c05b3db5d6faea9d7bcef8d133c60", null ],
+      [ "p_api", "group___u_s_b___h_c_d_c___a_p_i.html#abafaa1310e329a4c48bfbd4c2d1ec329", null ]
+    ] ],
     [ "usb_hcdc_data_bit_t", "group___u_s_b___h_c_d_c___a_p_i.html#gab219f0f6daf3dfd72efea91ecb9136b3", [
       [ "USB_HCDC_DATA_BIT_7", "group___u_s_b___h_c_d_c___a_p_i.html#ggab219f0f6daf3dfd72efea91ecb9136b3a13e8e2853dd89a8e675c554b2fbe0a35", null ],
       [ "USB_HCDC_DATA_BIT_8", "group___u_s_b___h_c_d_c___a_p_i.html#ggab219f0f6daf3dfd72efea91ecb9136b3ac769dd73d437e7f4e178853f7d648c78", null ]

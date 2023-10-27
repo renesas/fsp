@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,10 +252,7 @@ Summary</h1>
 <li>Interrupt driven transmit/receive processing</li>
 <li>Callback function with returned event code</li>
 <li>Runtime baud-rate change (baud = 1/ETU)</li>
-<li>Hardware resource locking during a transaction</li>
-</ul>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html">SMCI (r_sci_smci)</a> </li>
+<li>Hardware resource locking during a transaction </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -449,8 +524,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:af9ee15358ff516dc2113002475c8768a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5770c33d3cd5488a8b80356b03bd4b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_m_c_i___a_p_i.html#ad5770c33d3cd5488a8b80356b03bd4b1">clockControl</a> )(<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_ctrl, bool clock_enable)</td></tr>
 <tr class="separator:ad5770c33d3cd5488a8b80356b03bd4b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae570700058ba091c08a81ccf4822d2cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_m_c_i___a_p_i.html#ae570700058ba091c08a81ccf4822d2cd">callbackSet</a> )(<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ae570700058ba091c08a81ccf4822d2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3787b5dd3cdf7487a7ee39513013cc57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_m_c_i___a_p_i.html#a3787b5dd3cdf7487a7ee39513013cc57">callbackSet</a> )(<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a3787b5dd3cdf7487a7ee39513013cc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae15c4e9a6bd3cdc5b3d3194ec30bcf93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_m_c_i___a_p_i.html#ae15c4e9a6bd3cdc5b3d3194ec30bcf93">close</a> )(<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ae15c4e9a6bd3cdc5b3d3194ec30bcf93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -466,10 +541,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open Smart Card Interface Mode (SMCI) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#ga05be62c30141f682d49a90eb4302e167">R_SCI_SMCI_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open Smart Card Interface Mode (SMCI)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. Must be declared by user. Value set here. </td></tr>
@@ -491,10 +563,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read from Smart Card device. The read buffer is used until the read is complete. When a transfer is complete, the callback is called with event SMCI_EVENT_RX_COMPLETE. Bytes received outside an active transfer are received in the callback function with event SMCI_EVENT_RX_CHAR. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#ga01e8705f673194e6dd12504d21351510">R_SCI_SMCI_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Read from Smart Card device. The read buffer is used until the read is complete. When a transfer is complete, the callback is called with event SMCI_EVENT_RX_COMPLETE. Bytes received outside an active transfer are received in the callback function with event SMCI_EVENT_RX_CHAR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block for the channel. </td></tr>
@@ -517,10 +586,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write to Smart Card device. The write buffer is used until write is complete. Do not overwrite write buffer contents until the write is finished. When the write is complete (all bytes are fully transmitted on the wire), the callback called with event SMCI_EVENT_TX_COMPLETE. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#gad02034ac85b6154383c9cdcd42b278c6">R_SCI_SMCI_Write()</a></li>
-</ul>
-</dd></dl>
+<p>Write to Smart Card device. The write buffer is used until write is complete. Do not overwrite write buffer contents until the write is finished. When the write is complete (all bytes are fully transmitted on the wire), the callback called with event SMCI_EVENT_TX_COMPLETE.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -543,10 +609,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Change the peripheral settings based on provided transfer mode and data convention type </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#gab49a2b71354a30df79c1d19c7479200d">R_SCI_SMCI_TransferModeSet()</a></li>
-</ul>
-</dd></dl>
+<p>Change the peripheral settings based on provided transfer mode and data convention type</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -569,10 +632,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Change baud rate. </p><dl class="section warning"><dt>Warning</dt><dd>Calling this API aborts any in-progress transmission and disables reception until the new baud settings have been applied.</dd></dl>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#gae93d0d470c41b66250dc452bf2907b22">R_SCI_SMCI_BaudSet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -594,10 +653,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the driver specific information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#ga3d600ae7699ba4988e007a03aa28c93e">R_SCI_SMCI_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get the driver specific information.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -619,10 +675,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable or disable the SMCI clock to control the start of the activation or de-activation </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#ga64d56497dd40550887bfdffa9edc7089">R_SCI_SMCI_ClockControl()</a></li>
-</ul>
-</dd></dl>
+<p>Enable or disable the SMCI clock to control the start of the activation or de-activation</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -633,21 +686,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="ae570700058ba091c08a81ccf4822d2cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae570700058ba091c08a81ccf4822d2cd">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a3787b5dd3cdf7487a7ee39513013cc57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3787b5dd3cdf7487a7ee39513013cc57">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  smci_api_t::callbackSet) (<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  smci_api_t::callbackSet) (<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and callback memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>SMCI_CallbackSet()</li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and callback memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -671,10 +721,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close SMCI device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_i___s_m_c_i.html#ga2dd22a1d0b7720dbe84a888897320c8c">R_SCI_SMCI_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close SMCI device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SMCI control block. </td></tr>
@@ -735,10 +782,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Smart Card Interface control block. Allocate an instance specific control block to pass into the SMCI API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>smci_instance_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>Smart Card Interface control block. Allocate an instance specific control block to pass into the SMCI API calls. </p>
 
 </div>
 </div>
@@ -939,7 +983,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

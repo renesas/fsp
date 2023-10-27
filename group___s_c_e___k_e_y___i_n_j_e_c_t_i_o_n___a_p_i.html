@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -168,10 +246,7 @@ $(document).ready(function(){initNavTree('group___s_c_e___k_e_y___i_n_j_e_c_t_i_
 <p>Interface for key injection by Secure Crypto Engine (SCE) functions. </p>
 <h1><a class="anchor" id="SCE_API_Summary"></a>
 Summary</h1>
-<p>The SCE key injection interface provides SCE functionality.</p>
-<p>The SCE key injection interface can be implemented by:</p><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html">Secure Key Injection (r_sce_key_injection)</a> </li>
-</ul>
+<p>The SCE key injection interface provides SCE functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -272,10 +347,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 128-bit AES wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gac8c3f0ec5cfb1386f50fbd5826c95aca">R_SCE_AES128_InitialKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 128-bit AES wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -300,10 +372,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 192-bit AES wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gad0f8b7da083d8147e9b2b641cf5e8657">R_SCE_AES192_InitialKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 192-bit AES wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -328,10 +397,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit AES wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gae2a760d36f38eef802cce273d81c0d94">R_SCE_AES256_InitialKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit AES wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -356,10 +422,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs key update key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gad8ddf78088c0ad7fec59fbfcc7a099e7">R_SCE_KeyUpdateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs key update key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">wrapped_user_factory_programming_key</td><td>Provisioning key wrapped by the DLM server </td></tr>
@@ -383,10 +446,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API updates 128-bit AES wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga70332d016ebe0ff5207847d3d8654468">R_SCE_AES128_EncryptedKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API updates 128-bit AES wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -410,10 +470,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API updates 192-bit AES wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga25fa436402163587db692170b8d94abf">R_SCE_AES192_EncryptedKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API updates 192-bit AES wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -437,10 +494,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit AES wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga75cb36583cd4dbe9bf03ef35f0b6e23f">R_SCE_AES256_EncryptedKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit AES wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -464,10 +518,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 2048-bit RSA public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga0cd79d55aad16ae02949d4aedb3ab69e">R_SCE_RSA2048_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 2048-bit RSA public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -492,10 +543,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 3072-bit RSA public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gaad2e7aabd78369d5f8d2fd0278b6ffa7">R_SCE_RSA3072_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 3072-bit RSA public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -520,10 +568,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 4096-bit RSA public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gaa757d2c900385256a775fd5079e3d68d">R_SCE_RSA4096_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 4096-bit RSA public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -548,10 +593,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 2048-bit RSA private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga42aacc70589a00c200c36ff6cc4541d1">R_SCE_RSA2048_InitialPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 2048-bit RSA private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -576,10 +618,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 2048-bit RSA public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga3607a174c81b25bd0c835f6259416632">R_SCE_RSA2048_EncryptedPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 2048-bit RSA public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -603,10 +642,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 2048-bit RSA private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gabb3cfcbeaeb47094d70514e246da25e9">R_SCE_RSA2048_EncryptedPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 2048-bit RSA private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -630,10 +666,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga1640caf8264f1d2271027ceed1fb2d9b">R_SCE_ECC_secp256r1_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -658,10 +691,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga4048fb371ff6f4d148435d6ef7c74cb9">R_SCE_ECC_secp256k1_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -686,10 +716,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga93e067899dd22ce9f30585e2891fdaa4">R_SCE_ECC_secp384r1_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -714,10 +741,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gaa8f1d3a254a20854a6f2e5139a5e8f0b">R_SCE_ECC_secp256r1_InitialPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -742,10 +766,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga2091d5fd301dedd455b2f906daf326a4">R_SCE_ECC_secp256k1_InitialPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -770,10 +791,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga2840545fd568739c8c771785c45a47ab">R_SCE_ECC_secp384r1_InitialPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -798,10 +816,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gae56a6dc11e6fdbdcec8e1b2caa9a1986">R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -825,10 +840,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gaf0757f95aa1a550d63d9be9151742293">R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -852,10 +864,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gad191cd434c43c01ad4a515fcce2b5f7e">R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -879,10 +888,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gac66329da68b419ff8b460db713f7b10a">R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -906,10 +912,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga21553d21b431640069a6fa2458b0f7ed">R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -933,10 +936,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga27f6b6a10c3019355ada9f0ec4d84c4a">R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -960,10 +960,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit Brainpool ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga0546d0c8a9eecf8f061dd2327b667706">R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit Brainpool ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -988,10 +985,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit Brainpool ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga6d1be095f2c12dd0127a5333ab68947f">R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit Brainpool ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -1016,10 +1010,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit Brainpool ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gafe5bec8572c9d44db55e95a20e2cd312">R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit Brainpool ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -1044,10 +1035,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit Brainpool ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#ga210e302666164e0d8339d0010c2e1a5e">R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit Brainpool ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type whether encrypted_key or plain key </td></tr>
@@ -1072,10 +1060,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gad7c71e894d01806372dbcbc276bdcd15">R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -1099,10 +1084,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 256-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gab951aaca8ae950fef46d102a5cceb77c">R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 256-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -1126,10 +1108,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit ECC public wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gada8d15ab4a3adbe2e691e3b32a2ea7b9">R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit ECC public wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -1153,10 +1132,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 384-bit ECC private wrapped key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html#gab942f4db18f3fd84da4ca7ce29e236e3">R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap()</a></li>
-</ul>
-</dd></dl>
+<p>This API outputs 384-bit ECC private wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">initial_vector</td><td>Initialization vector when generating encrypted_key </td></tr>
@@ -1178,7 +1154,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

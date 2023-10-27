@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -235,7 +313,7 @@ The following build time configurations are defined in fsp_cfg/r_jpeg_cfg.h:<br 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -245,7 +323,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected, code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Decode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -253,7 +331,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>If selected, code for decoding JPEG images is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Encode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -268,52 +346,60 @@ This module can be added to the Stacks tab via New Stack &gt; Graphics &gt; JPEG
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_jpeg0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Default mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_jpeg0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Default mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Decode</li>
 <li>
 Encode</li>
 </ul>
 </td><td>Decode </td><td>Set the mode to use when calling R_JPEG_Open. This parameter is only used when both Encode and Decode support are enabled. </td></tr>
-<tr>
-<td>Decode &gt; Input byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the input data for decoding. </td></tr>
-<tr>
-<td>Decode &gt; Output byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the output data for decoding. </td></tr>
-<tr>
-<td>Decode &gt; Output color format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Decode  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the input data for decoding. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the output data for decoding. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output color format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 ARGB8888 (32-bit)</li>
 <li>
 RGB565 (16-bit)</li>
 </ul>
 </td><td>RGB565 (16-bit) </td><td>Select the output pixel format for decode operations. </td></tr>
-<tr>
-<td>Decode &gt; Output alpha (ARGB8888 only)</td><td>Value must be an 8-bit integer (0-255)</td><td>255 </td><td>Specify the alpha value to apply to each output pixel when ARGB8888 format is chosen. </td></tr>
-<tr>
-<td>Decode &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called from the interrupt service routine (ISR) each time a related IRQ triggers. </td></tr>
-<tr>
-<td>Encode &gt; Horizontal resolution</td><td>Value cannot be greater than 65535 and must be a non-negative integer divisible by 16</td><td>480 </td><td>Horizontal resolution of the raw image (in pixels). This value can be configured at runtime via R_JPEG_ImageSizeSet. </td></tr>
-<tr>
-<td>Encode &gt; Vertical resolution</td><td>Value cannot be greater than 65535 and must be a non-negative integer divisible by 8</td><td>272 </td><td>Vertical resolution of the raw image. This value can be configured at runtime via R_JPEG_ImageSizeSet. </td></tr>
-<tr>
-<td>Encode &gt; Horizontal stride</td><td>Value cannot be greater than 65535 and must be a non-negative integer</td><td>480 </td><td>Horizontal stride of the raw image buffer (in pixels). This value can be configured at runtime via R_JPEG_ImageSizeSet. </td></tr>
-<tr>
-<td>Encode &gt; Input byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the input data for encoding. </td></tr>
-<tr>
-<td>Encode &gt; Output byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the output data for encoding. </td></tr>
-<tr>
-<td>Encode &gt; Reset interval</td><td>Value cannot be greater than 65535 and must be a non-negative integer</td><td>512 </td><td>Set the number of MCUs between RST markers. A value of 0 will disable DRI and RST marker output. </td></tr>
-<tr>
-<td>Encode &gt; Quality factor</td><td>Value must be between 1 and 100 and must be an integer</td><td>50 </td><td>Set the quality factor for encoding (1-100). Lower values produce smaller images at the cost of image quality. </td></tr>
-<tr>
-<td>Encode &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called from the interrupt service routine (ISR) each time a related IRQ triggers. </td></tr>
-<tr>
-<td>Interrupts &gt; Decode Process Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the decompression interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Data Transfer Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the data transfer interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output alpha (ARGB8888 only)</td><td>Value must be an 8-bit integer (0-255)</td><td>255 </td><td>Specify the alpha value to apply to each output pixel when ARGB8888 format is chosen. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called from the interrupt service routine (ISR) each time a related IRQ triggers. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Encode  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Horizontal resolution</td><td>Value cannot be greater than 65535 and must be a non-negative integer divisible by 16</td><td>480 </td><td>Horizontal resolution of the raw image (in pixels). This value can be configured at runtime via R_JPEG_ImageSizeSet. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Vertical resolution</td><td>Value cannot be greater than 65535 and must be a non-negative integer divisible by 8</td><td>272 </td><td>Vertical resolution of the raw image. This value can be configured at runtime via R_JPEG_ImageSizeSet. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Horizontal stride</td><td>Value cannot be greater than 65535 and must be a non-negative integer</td><td>480 </td><td>Horizontal stride of the raw image buffer (in pixels). This value can be configured at runtime via R_JPEG_ImageSizeSet. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the input data for encoding. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output byte order</td><td>MCU Specific Options</td><td></td><td>Select the byte order of the output data for encoding. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reset interval</td><td>Value cannot be greater than 65535 and must be a non-negative integer</td><td>512 </td><td>Set the number of MCUs between RST markers. A value of 0 will disable DRI and RST marker output. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Quality factor</td><td>Value must be between 1 and 100 and must be an integer</td><td>50 </td><td>Set the quality factor for encoding (1-100). Lower values produce smaller images at the cost of image quality. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called from the interrupt service routine (ISR) each time a related IRQ triggers. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Decode Process Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the decompression interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Transfer Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the data transfer interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-jpeg-clock-configuration"></a>
@@ -1011,7 +1097,7 @@ The JPEG decoding operation automatically starts after both the input buffer and
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

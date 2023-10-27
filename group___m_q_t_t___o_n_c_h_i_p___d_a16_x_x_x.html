@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -195,8 +273,9 @@ Overview</h1>
 <p>The DA16XXX module supports the following modules:</p>
 <ul>
 <li>DA16200</li>
+<li>DA16600</li>
 </ul>
-<p>Refer to <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a>.</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
 <h2><a class="anchor" id="r-mqtt-onchip-da16xxx-features"></a>
 Features</h2>
 <p>The MQTT Onchip da16xxx Middleware driver supplies these features:</p>
@@ -213,7 +292,7 @@ The following build time configurations are defined in fsp_cfg/rm_mqtt_onchip_da
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -223,36 +302,36 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Size of MQTT RX buffer</td><td>Must be an integer greater than 0</td><td>512 </td><td>Size in bytes of the MQTT buffer used for receiving subscribed data. Must be an integer greater than 0. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Size of MQTT TX buffer</td><td>Must be an integer greater than 200 and less than 2064</td><td>512 </td><td>Size in bytes of the MQTT buffer used for sending commands and publishing data. Maximum publishing length is 2063 bytes </td></tr>
 </table>
 </p>
-<p>Refer to <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a>.</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
 <p>Note: This module provides the basic configurations in the FSP Configurator required to connect to an MQTT broker such as credential information (user, password, client key, etc.), publish/subscribe topics, and optional configurations as required. The user can then copy these configurations to a new structure if they want to connect to a new endpoint/make changes to the configurations dynamically.</p>
 <h2><a class="anchor" id="r-mqtt-onchip-da16xxx-interrupt-configuration"></a>
 Interrupt Configuration</h2>
-<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a>.</p>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
 <h2><a class="anchor" id="r-mqtt-onchip-da16xxx-clock-configuration"></a>
 Clock Configuration</h2>
 <p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>.</p>
 <h2><a class="anchor" id="r-mqtt-onchip-da16xxx-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a></p>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a></p>
 <h1><a class="anchor" id="r-mqtt-onchip-da16xxx-usage_notes"></a>
 Usage Notes</h1>
-<p>Refer to <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a>.</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
 <ul>
+<li>This module is not a standalone module - ensure that the WiFi module APIs are invoked first to configure the DA16XXX module and connect to an Access Point before using the MQTT module where the default buffer size for incoming TLS is 6KB and outgoing TLS is 4KB.</li>
 <li>When the user intends to use secure TLS in their application, they need to provide certificates (root certificate authority, client certificate, and private key) in a header file</li>
 <li>The user must provide certificate macro names in the FSP Configurator properties, as well as the name of the header file (to link the module, certificates, and header together)</li>
 <li>If the user provides these credentials in the Configurator, they must create a new header file in their /src/ folder with the same name as they provided in the Configurator properties. When the code is generated, a build error will occur if the header file is not created</li>
 <li>If only using username and password, these fields can be left blank (default), and a header file does not need to be created</li>
 </ul>
 <h2>Limitations</h2>
-<p>Refer to <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___d_a16_x_x_x.html">WiFi Onchip DA16XXX Driver using r_sci_uart (rm_wifi_onchip_da16xxx)</a>.</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
 <ul>
-<li>This module is not a standalone module - ensure that the WiFi module APIs are invoked first to configure the DA16XXX module and connect to an Access Point before using the MQTT module</li>
 <li>Ensure that DA16XXX SDK version v3.2.6 or later is being used, where the default buffer size for incoming TLS is 6KB and outgoing TLS is 4KB. Using earlier versions may result in failure to connect to an MQTT broker with TLS (unless buffer size settings are altered manually)</li>
 <li>For publish/subscribe topics, a separate QoS level cannot be set per topic - only one QoS level can be set which applies to all messages</li>
 <li>Currently the module only supports unsecured MQTT with username/password or secure MQTT/TLS with certificates (root CA, client certificate, and private key). The module does not accept username/password with certificates.</li>
@@ -1048,7 +1127,7 @@ Pointer to p_cfg for MQTT. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

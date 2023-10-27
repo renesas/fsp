@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -267,7 +345,8 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#building-and-testing-the-project">Building and Testing the Project</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#primer-trustzone-project-development">Primer: Arm TrustZone Project Development</a><ul><li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of Arm TrustZone Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
+<li class="level1"><a href="#primer-trustzone-project-development">Primer: Arm TrustZone Project Development</a><ul><li class="level2"><a href="#target-device">Target Device</a></li>
+<li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of Arm TrustZone Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
 <li class="level3"><a href="#calling-from-secure-to-non-secure">Calling from Secure to Non-Secure</a></li>
 </ul>
 </li>
@@ -305,7 +384,8 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level2"><a href="#idau-registers">IDAU registers</a><ul><li class="level3"><a href="#sci-boot-mode">SCI Boot Mode</a></li>
 <li class="level3"><a href="#dlm-states">DLM States</a></li>
-<li class="level3"><a href="#non-dlm-devices">Non-DLM Devices</a></li>
+<li class="level3"><a href="#alt-dlm-states">Devices with Alternate DLM States</a></li>
+<li class="level3"><a href="#non-dlm-devices">Devices without DLM</a></li>
 </ul>
 </li>
 <li class="level2"><a href="#debug">Debug</a><ul><li class="level3"><a href="#non-secure-debug">Non-Secure Debug</a></li>
@@ -410,7 +490,7 @@ Installing e² studio, platform installer and the FSP package</h3>
 <p>Detailed installation instructions for e&sup2; studio and FSP are available on the Renesas website <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a>. Review the release notes for e&sup2; studio to ensure that the e&sup2; studio version supports the selected FSP version. The starting version of the installer includes all features of the RA MCUs.</p>
 <h3><a class="anchor" id="choosing-a-toolchain"></a>
 Choosing a Toolchain</h3>
-<p>e&sup2; studio can work with several toolchains and toolchain versions such as the GNU Arm compiler and Arm AC6. A version of the GNU Arm compiler is included in the e&sup2; studio installer and has been verified to run with the FSP version.</p>
+<p>e&sup2; studio can work with several toolchains and toolchain versions such as the GNU Arm compiler, Arm AC6, and LLVM Embedded Toolchain for Arm. Versions of the GNU Arm and LLVM compilers verified for use with FSP are included in the e&sup2; studio installer.</p>
 <h3><a class="anchor" id="licensing"></a>
 Licensing</h3>
 <p>FSP licensing includes full source code, limited to Renesas hardware only.</p>
@@ -937,11 +1017,15 @@ Debugging the Project</h2>
 <dl class="section note"><dt>Note</dt><dd>For details on using J-Link and connecting the board to the PC, see the Quick Start Guide included in the RA MCU Kit.</dd></dl>
 <h2><a class="anchor" id="modifying-toolchain-settings"></a>
 Modifying Toolchain Settings</h2>
-<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e&sup2; studio through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU Arm toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
+<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e&sup2; studio through the menu <b>Project &gt; Properties &gt; C/C++ Build &gt; Settings</b> when the project is selected. The following screenshots show the settings dialogs for the GNU Arm and LLVM toolchains. The dialog looks slightly different depending upon the toolchain being used.</p>
 <div class="image">
 <img src="sd-e2-proj-toolchain.png" alt="sd-e2-proj-toolchain.png"/>
 <div class="caption">
-e&sup2; studio Project toolchain settings</div></div>
+e&sup2; studio Project toolchain settings for GNU Arm</div></div>
+ <div class="image">
+<img src="sd-e2-proj-toolchain-llvm.png" alt="sd-e2-proj-toolchain-llvm.png"/>
+<div class="caption">
+e&sup2; studio Project toolchain settings for LLVM</div></div>
 <p> The scope for the settings is project scope which means that the settings are valid only for the project being modified.</p>
 <p>The settings for the linker which control the location of the various memory sections are contained in a script file specific for the device being used. This script file is included in the project when it is created and is found in the script folder (for example, <code>/script/a6m3.ld</code>).</p>
 <h2><a class="anchor" id="creating-ra-project-with-arm-compiler-6-in-e2-studio"></a>
@@ -1493,13 +1577,14 @@ Debug configuration</div></div>
 <h1><a class="anchor" id="primer-trustzone-project-development"></a>
 Primer: Arm TrustZone Project Development</h1>
 <p>This section will introduce the user to the tools supporting Arm® TrustZone® technology configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA Arm TrustZone projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first Arm TrustZone development. A background knowledge of e&sup2; studio and RA device hardware is expected.</p>
-<h2>Target Device</h2>
-<p>RA Cortex®-M33 devices with Arm TrustZone security extension. As shown in the following table, most RA devices that include TrustZone support also support Device Lifecycle Management (DLM).</p>
+<h2><a class="anchor" id="target-device"></a>
+Target Device</h2>
+<p>RA Cortex®-M33 and Cortex®-M85 devices with Arm TrustZone security extension. As shown in the following table, most RA devices that include TrustZone support also support Device Lifecycle Management (DLM).</p>
 <table class="doxtable">
 <tr>
-<th>MCU Groups with TrustZone and DLM </th><th>MCU Groups with TrustZone and no DLM  </th></tr>
+<th>MCU Groups with TrustZone and DLM </th><th>MCU Groups with TrustZone and no DLM </th><th>MCU Groups with TrustZone and Alternate DLM  </th></tr>
 <tr>
-<td>RA4M2, RA4M3, RA6M4, RA6M5, RA4E1, RA6E1, RA6T2 </td><td>RA4E2, RA6E2, RA4T1, RA6T3 </td></tr>
+<td>RA4E1, RA4M2, RA4M3, RA6E1, RA6M4, RA6M5, RA6T2 </td><td>RA4E2, RA4T1, RA6E2, RA6T3 </td><td>RA8M1 </td></tr>
 </table>
 <h2><a class="anchor" id="renesas-implementation-of-arm-trustzone-technology"></a>
 Renesas Implementation of Arm TrustZone Technology</h2>
@@ -1646,7 +1731,7 @@ Secure Bundle (Split)</h4>
 <p>A Secure Bundle will ONLY include linker memory ranges, symbol references, and details of locked Secure peripheral configuration settings but no access to Secure source code (API header files will be included as necessary).</p>
 <p>The Secure bundle file (*.SBD) must be supplied to the Non-Secure developer by the Secure project developer.</p>
 <p>The development engineer will typically not have access to the Secure project or <code>.elf</code> file which MUST be pre-programmed or provisioned into the target MCU.</p>
-<p>For devices that support DLM, the DLM state of target device should then be switched to NSECSD (see section 6.2) before the device is provided to the non-secure developer.</p>
+<p>For devices that support DLM, the DLM state of the target device should then be switched to NSECSD (see section 6.2) before the device is provided to the non-secure developer.</p>
 <p>This is often referred to as "Split model" where a basic security set up is developed by a Secure team and then passed to the Non-Secure team in the same facility or at a third party. The Non-Secure team has no access to the Secure source code and cannot directly access Secure peripherals, data, or APIs.</p>
 <h3><a class="anchor" id="debug-configurations"></a>
 Debug Configurations</h3>
@@ -1754,6 +1839,10 @@ RA TrustZone Device Current Status</div></div>
 <img src="tz-ren-dev-partition-mgr-b.png" alt="tz-ren-dev-partition-mgr-b.png"/>
 <div class="caption">
 Renesas Device Partition Manager</div></div>
+<p>In e&sup2; studio, when manually setting partitions, make sure to disable setting partitions in the debug configuration to prevent the settings from being overridden when a debug session is launched.</p>
+<div class="image">
+<img src="tz-set-boundaries.png" alt="tz-set-boundaries.png"/>
+</div>
  <h3><a class="anchor" id="sci-boot-mode"></a>
 SCI Boot Mode</h3>
 <p>Example of MD mode pin connection to debugger connector (from EK schematic).</p>
@@ -1779,10 +1868,30 @@ Lifecycle Stages and Debug Levels</div></div>
 <li>DBG1: The debugger connection is allowed, and restricted to access only Non-Secure memory regions and peripherals</li>
 <li>DBG0: The debugger connection is not allowed</li>
 </ul>
-<p>Transitions for one state to another can be performed using the Renesas Flash Programmer (RFP, see section below) or using the Renesas Device Partition Manager (limited number of states possible). It is possible to secure transitions between states using authentication keys. For more information on DLM states and transitions (device specific), please refer to device user manual.</p>
+<p>State transitions can be performed using the Renesas Flash Programmer (RFP, see section below) or using the Renesas Device Partition Manager (limited number of states possible). It is possible to secure transitions between states using authentication keys. For more information on DLM states and transitions (device specific), please refer to device user manual.</p>
+<h3><a class="anchor" id="alt-dlm-states"></a>
+Devices with Alternate DLM States</h3>
+<p>Some devices have an alternate implementation of Device Lifecycle Management (See <a class="el" href="_s_t_a_r_t__d_e_v.html#target-device">Target Device</a>). While the concept is the same, the DLM states are a little different. The following illustration shows the lifecycle definitions and capability in each lifecycle.</p>
+<div class="image">
+<img src="tz-alt-lifecycle-stages.png" alt="tz-alt-lifecycle-stages.png"/>
+<div class="caption">
+Lifecycle Stages</div></div>
+<p> Note: All authentication key exchange and transitioning to LCK_BOOT, and RMA_REQ is only managed by Renesas Flash Programmer (RFP) or other production programming tools, and NOT within e&sup2; studio.</p>
+<div class="image">
+<img src="tz-alt-lifecycle-stages-debug-levels.png" alt="tz-alt-lifecycle-stages-debug-levels.png"/>
+<div class="caption">
+Lifecycle Stages and Debug Levels</div></div>
+<p> There are three authentication levels. The available authentication levels change according to the lifecycle state and determine the memory and resources that are accessible by the debugger.</p>
+<ul>
+<li>AL2: The debugger connection is allowed, and no restriction to access memories and peripherals</li>
+<li>AL1: The debugger connection is allowed, and restricted to access only Non-Secure memory regions and peripherals</li>
+<li>AL0: The debugger connection is not allowed</li>
+</ul>
+<p>State transitions can be performed using the Renesas Flash Programmer (RFP, see section below) or using the Renesas Device Partition Manager (limited number of states possible). It is possible to secure transitions between states using authentication keys. For more information on DLM states and transitions (device specific), please refer to device user manual.</p>
+<p>In addition to having different DLM States, these devices also handle memory partitioning differently. Code Flash and Data Flash partitions are divided into secure and non-secure regions using SCI or USB boot mode commands. All other memory regions are set in IDAU and SAU registers in the secure application during the BSP startup procedure. All memory regions and peripherals that are configured as non-secure must be accessed using an aliased non-secure address. This non-secure address is calcualted by setting bit 28 in the address.</p>
 <h3><a class="anchor" id="non-dlm-devices"></a>
-Non-DLM Devices</h3>
-<p>For devices that do not use DLM, the IDAU registers are programmed by secure application code at startup. Devices that do not use DLM do not support IDAU register programming using boot mode commands.</p>
+Devices without DLM</h3>
+<p>For devices that do not have DLM, the IDAU registers are programmed by secure application code at startup. Devices without DLM do not support IDAU register programming using boot mode commands.</p>
 <h2><a class="anchor" id="debug"></a>
 Debug</h2>
 <p>By default, devices supporting DLM will be in SSD mode and so allow access to Secure and Non-Secure partitions. In this mode both Secure and Non-Secure <code>.elf</code> files will be downloaded.</p>
@@ -2057,7 +2166,7 @@ Notes and Restrictions</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

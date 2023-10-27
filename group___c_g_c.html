@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -253,7 +331,7 @@ The following build time configurations are defined in fsp_cfg/r_cgc_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -269,10 +347,56 @@ This module can be added to the Stacks tab via New Stack &gt; System &gt; Clock 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Sub Clock Oscillation Stop Detection Settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable sub clock oscillator stop detection via the SOSC_STOP interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Oscillation Stop Detection for Sub Clock enabled. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sub Clock Oscillation Stop Detection Time</td><td>Manual Entry</td><td>0 </td><td>These bits specify the oscillation stop detection time. It is detected that oscillation has stopped when oscillation has been stopped for (A-2) to (A+1) clock cycles, where A refers to the time specified by these bits. Oscillation stop detection time = Low-speed on-chip oscillator clock (LOCO) cycle x ((value of OSDCCMP) + 1). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sub Clock Oscillation Stop Detection Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>[Optional] Select the interrupt priority for the Sub Clock Oscillation Stop Detection interrupt. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Main Oscillation Stop Detection Settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable main clock oscillator stop detection via the MOSC_STOP interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Oscillation Stop Detection for Main Clock enabled. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Main Oscillation Stop Detection Time</td><td>Manual Entry</td><td>0 </td><td>These bits specify the oscillation stop detection time. It is detected that oscillation has stopped when oscillation has been stopped for (A - 2) to (A + 1) clock cycles, where A refers to the time specified by these bits. Oscillation stop detection time = High speed on-chip oscillator clock (HOCO) cycle x ((value of OSDCCMP) + 1). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Main Oscillation Stop Detection Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>[Optional] Select the interrupt priority for the Main Oscillation Stop Detection interrupt. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Oscillator Stop Detection Settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock Switch Enable for Oscillation Stop Detected of SDADCCLK</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>The OSTDCSE bit specifies the source clock of the 24-bit Sigma-delta A/D Converter Clock switched to HOCO when oscillation stop detected. </td></tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_cgc0 </td><td>Module name. </td></tr>
-<tr>
-<td>NMI Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided if oscillation stop detection is used. If this callback function is provided, it is called from the NMI handler if the main oscillator stops. </td></tr>
+<tr class="tree_none">
+<td>Enable main oscillator stop detection via the NMI interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Oscillation Stop Detection for System Clock enabled. </td></tr>
+<tr class="tree_none">
+<td>Oscillation Stop Detection Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided if oscillation stop detection for System Clock/Main Oscillation/Sub Clock Oscillation is used. If this callback function is provided, it is called from the NMI handler if the main oscillator stops. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-cgc-clock-configuration"></a>
@@ -285,9 +409,21 @@ Pin Configuration</h2>
 <p>The functionality of the subclock external oscillator pins XCIN and XCOUT is fixed.</p>
 <h1><a class="anchor" id="r-cgc-usage_notes"></a>
 Usage Notes</h1>
-<h2><a class="anchor" id="r-cgc-nmi-interrupt"></a>
-NMI Interrupt</h2>
-<p>The CGC timer uses the NMI for oscillation stop detection of the main oscillator after R_CGC_OscStopDetectEnable is called. The NMI is enabled by default. No special configuration is required. When the NMI is triggered, the callback function registered during <a class="el" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open()</a> is called.</p>
+<h2><a class="anchor" id="r-cgc-oscillation-stop-detection"></a>
+Oscillation Stop Detection</h2>
+<p>CGC driver supports following oscillation stop detection function.</p>
+<h3>NMI Interrupt</h3>
+<p>The CGC driver uses the NMI for oscillation stop detection of the main oscillator after R_CGC_OscStopDetectEnable is called. The NMI is enabled by default. No special configuration is required. When the NMI is triggered, the callback function registered during <a class="el" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open()</a> is called.</p>
+<h3>Main Oscillator Stop Detection Interrupt</h3>
+<p>A main clock oscillation stop detection interrupt (MOSTD_STOP) is generated when the Oscillation Stop Detection for Main Clock is enabled. The main oscillation stop detection interrupt is a maskable interrupt. When the MOSTD_STOP is triggered, the callback function registered during <a class="el" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open()</a> is called.</p>
+<h3>Subclk Oscillator Stop Detection Interrupt</h3>
+<p>A sub clock oscillation stop detection interrupt (SOSC_STOP) is generated when the Oscillation Stop Detection for Sub Clock is enabled. The sub clock oscillation stop detection interrupt is a maskable interrupt. When the SOSC_STOP is triggered, the callback function registered during <a class="el" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open()</a> is called.</p>
+<h3>ADC Clock Switching</h3>
+<p>When Clock Switch Enable for Oscillation Stop Detected is set.</p>
+<ul>
+<li>When MOSC stop is detected when MOSC is selected for SDADCCLK, SDADCCLK is switched to HOCO.</li>
+<li>When SOSC stop is detected when PLL is selected for SDADCCLK, SDADCCLK is switched to HOCO.</li>
+</ul>
 <h2><a class="anchor" id="r-cgc-subclock-stop-start"></a>
 Starting or Stopping the Subclock</h2>
 <p>If the Subclock Populated property is set to Populated on the BSP configuration tab, then the subclock is started in the BSP startup routine. Otherwise, it is stopped in the BSP startup routine. Starting and stopping the subclock at runtime is not recommended since the stabilization requirements typically negate the negligible power savings.</p>
@@ -726,6 +862,7 @@ the internal clocks".</p>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_LOW_VOLTAGE_MODE</td><td>Settings not allowed in low voltage mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>RA2E2 do not support this feature. </td></tr>
   </table>
   </dd>
 </dl>
@@ -754,6 +891,7 @@ the internal clocks".</p>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_OSC_STOP_DETECTED</td><td>The Oscillation stop detect status flag is set. Under this condition it is not possible to disable the Oscillation stop detection function. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>RA2E2 do not support this feature. </td></tr>
   </table>
   </dd>
 </dl>
@@ -786,6 +924,7 @@ the internal clocks".</p>
     <tr><td class="paramname">FSP_ERR_CLOCK_INACTIVE</td><td>Main oscillator must be running to clear the oscillation stop detection flag. </td></tr>
     <tr><td class="paramname">FSP_ERR_OSC_STOP_CLOCK_ACTIVE</td><td>The Oscillation Detect Status flag cannot be cleared if the Main Osc or PLL is set as the system clock. Change the system clock before attempting to clear this bit. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_HW_CONDITION</td><td>Oscillation stop status was not cleared. Check preconditions and try again. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>RA2E2 do not support this feature. </td></tr>
   </table>
   </dd>
 </dl>
@@ -829,7 +968,7 @@ the internal clocks".</p>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b">cgc_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___c_g_c___a_p_i.html#ae6320b1734cebe9041c65aa581ecb1c4">cgc_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -875,7 +1014,7 @@ the internal clocks".</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

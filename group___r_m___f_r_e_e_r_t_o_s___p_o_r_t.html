@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -180,18 +258,20 @@ The following build time configurations are defined in aws/FreeRTOSConfig.h:<br 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Custom FreeRTOSConfig.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom FreeRTOSConfig.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
-<tr>
-<td>General &gt; Use Preemption</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Custom FreeRTOSConfig.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom FreeRTOSConfig.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Preemption</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set to Enabled to use the preemptive RTOS scheduler, or Disabled to use the cooperative RTOS scheduler. </td></tr>
-<tr>
-<td>General &gt; Use Port Optimised Task Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Port Optimised Task Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -211,36 +291,36 @@ Is used when Use Port Optimized Task Selection is Enabled.<br />
 Relies on one or more architecture specific assembly instructions (typically a Count Leading Zeros [CLZ] or equivalent instruction) so can only be used with the architecture for which it was specifically written.<br />
 Is more efficient than the generic method.<br />
 Typically imposes a limit of 32 on the maximum number of available priorities. </td></tr>
-<tr>
-<td>General &gt; Use Tickless Idle</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Tickless Idle</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set Use Tickless Idle to Enabled to use the low power tickless mode, or Disabled to keep the tick interrupt running at all times. Low power tickless implementations are not provided for all FreeRTOS ports. </td></tr>
-<tr>
-<td>General &gt; Cpu Clock Hz</td><td>Manual Entry</td><td>SystemCoreClock </td><td>Enter the frequency in Hz at which the internal clock that drives the peripheral used to generate the tick interrupt will be executing - this is normally the same clock that drives the internal CPU clock. This value is required in order to correctly configure timer peripherals. </td></tr>
-<tr>
-<td>General &gt; Tick Rate Hz</td><td>Must be an integer and greater than 0</td><td>1000 </td><td>The frequency of the RTOS tick interrupt.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Cpu Clock Hz</td><td>Manual Entry</td><td>SystemCoreClock </td><td>Enter the frequency in Hz at which the internal clock that drives the peripheral used to generate the tick interrupt will be executing - this is normally the same clock that drives the internal CPU clock. This value is required in order to correctly configure timer peripherals. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Tick Rate Hz</td><td>Must be an integer and greater than 0</td><td>1000 </td><td>The frequency of the RTOS tick interrupt.<br />
 The tick interrupt is used to measure time. Therefore a higher tick frequency means time can be measured to a higher resolution. However, a high tick frequency also means that the RTOS kernel will use more CPU time so be less efficient. The RTOS demo applications all use a tick rate of 1000Hz. This is used to test the RTOS kernel and is higher than would normally be required.<br />
 <br />
 More than one task can share the same priority. The RTOS scheduler will share processor time between tasks of the same priority by switching between the tasks during each RTOS tick. A high tick rate frequency will therefore also have the effect of reducing the 'time slice' given to each task. </td></tr>
-<tr>
-<td>General &gt; Max Priorities</td><td>Must be an integer and greater than 0</td><td>5 </td><td>The number of priorities available to the application tasks. Any number of tasks can share the same priority.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Priorities</td><td>Must be an integer and greater than 0</td><td>5 </td><td>The number of priorities available to the application tasks. Any number of tasks can share the same priority.<br />
 Each available priority consumes RAM within the RTOS kernel so this value should not be set any higher than actually required by your application. </td></tr>
-<tr>
-<td>General &gt; Minimal Stack Size</td><td>Must be an integer and greater than 0</td><td>128 </td><td>The size of the stack used by the idle task. Generally this should not be reduced from the value set in the FreeRTOSConfig.h file provided with the demo application for the port you are using.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimal Stack Size</td><td>Must be an integer and greater than 0</td><td>128 </td><td>The size of the stack used by the idle task. Generally this should not be reduced from the value set in the FreeRTOSConfig.h file provided with the demo application for the port you are using.<br />
 Like the stack size parameter to the xTaskCreate() and xTaskCreateStatic() functions, the stack size is specified in words, not bytes. If each item placed on the stack is 32-bits, then a stack size of 100 means 400 bytes (each 32-bit stack item consuming 4 bytes). </td></tr>
-<tr>
-<td>General &gt; Max Task Name Len</td><td>Must be an integer and greater than 0</td><td>16 </td><td>The maximum permissible length of the descriptive name given to a task when the task is created. The length is specified in the number of characters including the NULL termination byte. </td></tr>
-<tr>
-<td>General &gt; Use 16-bit Ticks</td><td>Disabled</td><td>Disabled </td><td>Time is measured in 'ticks' - which is the number of times the tick interrupt has executed since the RTOS kernel was started. The tick count is held in a variable of type TickType_t.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Task Name Len</td><td>Must be an integer and greater than 0</td><td>16 </td><td>The maximum permissible length of the descriptive name given to a task when the task is created. The length is specified in the number of characters including the NULL termination byte. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use 16-bit Ticks</td><td>Disabled</td><td>Disabled </td><td>Time is measured in 'ticks' - which is the number of times the tick interrupt has executed since the RTOS kernel was started. The tick count is held in a variable of type TickType_t.<br />
 Defining configUSE_16_BIT_TICKS as 1 causes TickType_t to be defined (typedef'ed) as an unsigned 16bit type. Defining configUSE_16_BIT_TICKS as 0 causes TickType_t to be defined (typedef'ed) as an unsigned 32bit type.<br />
 <br />
 Using a 16-bit type will greatly improve performance on 8- and 16-bit architectures, but limits the maximum specifiable time period to 65535 'ticks'. Therefore, assuming a tick frequency of 250Hz, the maximum time a task can delay or block when a 16bit counter is used is 262 seconds, compared to 17179869 seconds when using a 32-bit counter. </td></tr>
-<tr>
-<td>General &gt; Idle Should Yield</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Idle Should Yield</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -261,8 +341,8 @@ If appropriate, using an idle hook in place of separate tasks at the idle priori
 Creating all application tasks at a priority greater than the idle priority.<br />
 Setting Idle Should Yield to Disabled.<br />
 Setting Idle Should Yield to Disabled prevents the idle task from yielding processing time until the end of its time slice. This ensure all tasks at the idle priority are allocated an equal amount of processing time (if none of the tasks get pre-empted) - but at the cost of a greater proportion of the total processing time being allocated to the idle task. </td></tr>
-<tr>
-<td>General &gt; Use Task Notifications</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Task Notifications</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -272,53 +352,53 @@ Disabled</li>
 Setting Use Task Notifications to Disabled will exclude direct to task notification functionality and its associated API from the build.<br />
 <br />
 Each task consumes 8 additional bytes of RAM when direct to task notifications are included in the build. </td></tr>
-<tr>
-<td>General &gt; Use Mutexes</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Mutexes</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set to Enabled to include mutex functionality in the build, or Disabled to omit mutex functionality from the build. Readers should familiarise themselves with the differences between mutexes and binary semaphores in relation to the FreeRTOS functionality. </td></tr>
-<tr>
-<td>General &gt; Use Recursive Mutexes</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Recursive Mutexes</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set to Enabled to include recursive mutex functionality in the build, or Disabled to omit recursive mutex functionality from the build. </td></tr>
-<tr>
-<td>General &gt; Use Counting Semaphores</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Counting Semaphores</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set to Enabled to include counting semaphore functionality in the build, or Disabled to omit counting semaphore functionality from the build. </td></tr>
-<tr>
-<td>General &gt; Queue Registry Size</td><td>Must be an integer and greater than 0</td><td>10 </td><td>The queue registry has two purposes, both of which are associated with RTOS kernel aware debugging:<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Queue Registry Size</td><td>Must be an integer and greater than 0</td><td>10 </td><td>The queue registry has two purposes, both of which are associated with RTOS kernel aware debugging:<br />
 It allows a textual name to be associated with a queue for easy queue identification within a debugging GUI.<br />
 It contains the information required by a debugger to locate each registered queue and semaphore.<br />
 The queue registry has no purpose unless you are using a RTOS kernel aware debugger. Registry Size defines the maximum number of queues and semaphores that can be registered. Only those queues and semaphores that you want to view using a RTOS kernel aware debugger need be registered. See the API reference documentation for vQueueAddToRegistry() and vQueueUnregisterQueue() for more information. </td></tr>
-<tr>
-<td>General &gt; Use Queue Sets</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Queue Sets</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set to Enabled to include queue set functionality (the ability to block, or pend, on multiple queues and semaphores), or Disabled to omit queue set functionality. </td></tr>
-<tr>
-<td>General &gt; Use Time Slicing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Time Slicing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If Use Time Slicing is Enabled, FreeRTOS uses prioritised preemptive scheduling with time slicing. That means the RTOS scheduler will always run the highest priority task that is in the Ready state, and will switch between tasks of equal priority on every RTOS tick interrupt. If Use Time Slicing is Disabled then the RTOS scheduler will still run the highest priority task that is in the Ready state, but will not switch between tasks of equal priority just because a tick interrupt has occurred. </td></tr>
-<tr>
-<td>General &gt; Use Newlib Reentrant</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Newlib Reentrant</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -326,23 +406,23 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If Use Newlib Reentrant is Enabled then a newlib reent structure will be allocated for each created task.<br />
 Note Newlib support has been included by popular demand, but is not used by the FreeRTOS maintainers themselves. FreeRTOS is not responsible for resulting newlib operation. User must be familiar with newlib and must provide system-wide implementations of the necessary stubs. Be warned that (at the time of writing) the current newlib design implements a system-wide malloc() that must be provided with locks. </td></tr>
-<tr>
-<td>General &gt; Enable Backward Compatibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable Backward Compatibility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>The FreeRTOS.h header file includes a set of #define macros that map the names of data types used in versions of FreeRTOS prior to version 8.0.0 to the names used in FreeRTOS version 8.0.0. The macros allow application code to update the version of FreeRTOS they are built against from a pre 8.0.0 version to a post 8.0.0 version without modification. Setting Enable Backward Compatibility to Disabled in FreeRTOSConfig.h excludes the macros from the build, and in so doing allowing validation that no pre version 8.0.0 names are being used. </td></tr>
-<tr>
-<td>General &gt; Num Thread Local Storage Pointers</td><td>Must be an integer and greater than 0</td><td>5 </td><td>Sets the number of indexes in each task's thread local storage array. </td></tr>
-<tr>
-<td>General &gt; Stack Depth Type</td><td>Manual Entry</td><td>uint32_t </td><td>Sets the type used to specify the stack depth in calls to xTaskCreate(), and various other places stack sizes are used (for example, when returning the stack high water mark).<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Num Thread Local Storage Pointers</td><td>Must be an integer and greater than 0</td><td>5 </td><td>Sets the number of indexes in each task's thread local storage array. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stack Depth Type</td><td>Manual Entry</td><td>uint32_t </td><td>Sets the type used to specify the stack depth in calls to xTaskCreate(), and various other places stack sizes are used (for example, when returning the stack high water mark).<br />
 Older versions of FreeRTOS specified stack sizes using variables of type UBaseType_t, but that was found to be too restrictive on 8-bit microcontrollers. Stack Depth Type removes that restriction by enabling application developers to specify the type to use. </td></tr>
-<tr>
-<td>General &gt; Message Buffer Length Type</td><td>Manual Entry</td><td>size_t </td><td>FreeRTOS Message buffers use variables of type Message Buffer Length Type to store the length of each message. If Message Buffer Length Type is not defined then it will default to size_t. If the messages stored in a message buffer will never be larger than 255 bytes then defining Message Buffer Length Type to uint8_t will save 3 bytes per message on a 32-bit microcontroller. Likewise if the messages stored in a message buffer will never be larger than 65535 bytes then defining Message Buffer Length Type to uint16_t will save 2 bytes per message on a 32-bit microcontroller. </td></tr>
-<tr>
-<td>General &gt; Library Max Syscall Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The highest interrupt priority that can be used by any interrupt service routine that makes calls to interrupt safe FreeRTOS API functions. DO NOT CALL INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER PRIORITY THAN THIS! (higher priorities are lower numeric values)<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Message Buffer Length Type</td><td>Manual Entry</td><td>size_t </td><td>FreeRTOS Message buffers use variables of type Message Buffer Length Type to store the length of each message. If Message Buffer Length Type is not defined then it will default to size_t. If the messages stored in a message buffer will never be larger than 255 bytes then defining Message Buffer Length Type to uint8_t will save 3 bytes per message on a 32-bit microcontroller. Likewise if the messages stored in a message buffer will never be larger than 65535 bytes then defining Message Buffer Length Type to uint16_t will save 2 bytes per message on a 32-bit microcontroller. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Library Max Syscall Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The highest interrupt priority that can be used by any interrupt service routine that makes calls to interrupt safe FreeRTOS API functions. DO NOT CALL INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER PRIORITY THAN THIS! (higher priorities are lower numeric values)<br />
 <br />
 Below is explanation for macros that are set based on this value from FreeRTOS website.<br />
 <br />
@@ -359,8 +439,8 @@ Interrupts that do not call API functions can execute at priorities above config
 A special note for Arm Cortex-M users: Please read the page dedicated to interrupt priority settings on Arm Cortex-M devices. As a minimum, remember that Arm Cortex-M cores use numerically low priority numbers to represent HIGH priority interrupts, which can seem counter-intuitive and is easy to forget! If you wish to assign an interrupt a low priority do NOT assign it a priority of 0 (or other low numeric value) as this can result in the interrupt actually having the highest priority in the system - and therefore potentially make your system crash if this priority is above configMAX_SYSCALL_INTERRUPT_PRIORITY.<br />
 <br />
 The lowest priority on a Arm Cortex-M core is in fact 255 - however different Arm Cortex-M vendors implement a different number of priority bits and supply library functions that expect priorities to be specified in different ways. For example, on the RA6M3 the lowest priority you can specify is 15 - and the highest priority you can specify is 0. </td></tr>
-<tr>
-<td>General &gt; Assert</td><td>Manual Entry</td><td>assert(x) </td><td>The semantics of the configASSERT() macro are the same as the standard C assert() macro. An assertion is triggered if the parameter passed into configASSERT() is zero.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Assert</td><td>Manual Entry</td><td>assert(x) </td><td>The semantics of the configASSERT() macro are the same as the standard C assert() macro. An assertion is triggered if the parameter passed into configASSERT() is zero.<br />
 configASSERT() is called throughout the FreeRTOS source files to check how the application is using FreeRTOS. It is highly recommended to develop FreeRTOS applications with configASSERT() defined.<br />
 <br />
 The example definition (shown at the top of the file and replicated below) calls vAssertCalled(), passing in the file name and line number of the triggering configASSERT() call (__FILE__ and __LINE__ are standard macros provided by most compilers). This is just for demonstration as vAssertCalled() is not a FreeRTOS function, configASSERT() can be defined to take whatever action the application writer deems appropriate.<br />
@@ -376,8 +456,8 @@ If running FreeRTOS under the control of a debugger, then configASSERT() can be 
 <br />
 /* Define configASSERT() to disable interrupts and sit in a loop. */<br />
 #define configASSERT( ( x ) ) if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ); } </td></tr>
-<tr>
-<td>General &gt; Include Application Defined Privileged Functions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Include Application Defined Privileged Functions</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -400,16 +480,18 @@ BaseType_t xRunningPrivileged = prvRaisePrivilege();<br />
  portRESET_PRIVILEGE( xRunningPrivileged );<br />
 }<br />
 This technique should only be use during development, and not deployment, as it circumvents the memory protection. </td></tr>
-<tr>
-<td>Hooks &gt; Use Idle Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Hooks  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Idle Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set to Enabled if you wish to use an idle hook, or Disabled to omit an idle hook. </td></tr>
-<tr>
-<td>Hooks &gt; Use Malloc Failed Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Malloc Failed Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -421,8 +503,8 @@ The malloc() failed hook function is a hook (or callback) function that, if defi
 If Use Malloc Failed Hook is Enabled then the application must define a malloc() failed hook function. If Use Malloc Failed Hook is set to Dosab;ed then the malloc() failed hook function will not be called, even if one is defined. Malloc() failed hook functions must have the name and prototype shown below.<br />
 <br />
 void vApplicationMallocFailedHook( void ); </td></tr>
-<tr>
-<td>Hooks &gt; Use Daemon Task Startup Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Daemon Task Startup Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -430,48 +512,60 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If Use Timers and Use Daemon Task Startup Hook are both Enabled then the application must define a hook function that has the exact name and prototype as shown below. The hook function will be called exactly once when the RTOS daemon task (also known as the timer service task) executes for the first time. Any application initialisation code that needs the RTOS to be running can be placed in the hook function.<br />
 void void vApplicationDaemonTaskStartupHook( void ); </td></tr>
-<tr>
-<td>Hooks &gt; Use Tick Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Tick Hook</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set to Enabled if you wish to use an tick hook, or Disabled to omit an tick hook. </td></tr>
-<tr>
-<td>Hooks &gt; Check For Stack Overflow</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Check For Stack Overflow</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>The stack overflow detection page describes the use of this parameter. This is not recommended for RA MCUs with hardware stack monitor support. RA MCU designs should enable the RA hardware stack monitor instead. </td></tr>
-<tr>
-<td>Stats &gt; Use Trace Facility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Stats  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Trace Facility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set to Enabled if you wish to include additional structure members and functions to assist with execution visualisation and tracing. </td></tr>
-<tr>
-<td>Stats &gt; Use Stats Formatting Functions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Stats Formatting Functions</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Set Use Trace Facility and Use Stats Formatting Functions to Enabled to include the vTaskList() and vTaskGetRunTimeStats() functions in the build. Setting either to Disabled will omit vTaskList() and vTaskGetRunTimeStates() from the build. </td></tr>
-<tr>
-<td>Stats &gt; Generate Run Time Stats</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Generate Run Time Stats</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>The Run Time Stats page describes the use of this parameter. </td></tr>
-<tr>
-<td>Memory Allocation &gt; Support Static Allocation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Memory Allocation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clear Memory on Free</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If set to 1, then blocks of memory allocated using pvPortMalloc() will be cleared when freed using vPortFree() </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Support Static Allocation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -539,8 +633,8 @@ supply the RAM used by the Idle and Timer Service tasks if Support Static Alloca
 is Enabled.<br />
 <br />
 See the Static Vs Dynamic Memory Allocation page for more information. </td></tr>
-<tr>
-<td>Memory Allocation &gt; Support Dynamic Allocation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Support Dynamic Allocation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -550,11 +644,11 @@ Disabled</li>
 If Support Dynamic Allocation is set to 0 then RTOS objects can only be created using RAM provided by the application writer.<br />
 <br />
 See the Static Vs Dynamic Memory Allocation page for more information. </td></tr>
-<tr>
-<td>Memory Allocation &gt; Total Heap Size</td><td>Must be an integer and greater than 0</td><td>1024 </td><td>The total amount of RAM available in the FreeRTOS heap.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Total Heap Size</td><td>Must be an integer and greater than 0</td><td>1024 </td><td>The total amount of RAM available in the FreeRTOS heap.<br />
 This value will only be used if Support Dynamic Allocation is Enabled and the application makes use of one of the sample memory allocation schemes provided in the FreeRTOS source code download. See the memory configuration section for further details. </td></tr>
-<tr>
-<td>Memory Allocation &gt; Application Allocated Heap</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Application Allocated Heap</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -564,170 +658,176 @@ Disabled</li>
 If heap_1.c, heap_2.c or heap_4.c is used, and Application Allocated Heap is Enabled, then the application writer must provide a uint8_t array with the exact name and dimension as shown below. The array will be used as the FreeRTOS heap. How the array is placed at a specific memory location is dependent on the compiler being used - refer to your compiler's documentation.<br />
 <br />
 uint8_t ucHeap[ configTOTAL_HEAP_SIZE ]; </td></tr>
-<tr>
-<td>Timers &gt; Use Timers</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Timers  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Timers</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set to Enabled to include software timer functionality, or Disabled to omit software timer functionality. See the FreeRTOS software timers page for a full description. </td></tr>
-<tr>
-<td>Timers &gt; Timer Task Priority</td><td>Must be an integer and greater than 0</td><td>3 </td><td>Sets the priority of the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
-<tr>
-<td>Timers &gt; Timer Queue Length</td><td>Must be an integer and greater than 0</td><td>10 </td><td>Sets the length of the software timer command queue. See the FreeRTOS software timers page for a full description. </td></tr>
-<tr>
-<td>Timers &gt; Timer Task Stack Depth</td><td>Must be an integer and greater than 0</td><td>128 </td><td>Sets the stack depth allocated to the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
-<tr>
-<td>Optional Functions &gt; vTaskPrioritySet() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Task Priority</td><td>Must be an integer and greater than 0</td><td>3 </td><td>Sets the priority of the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Queue Length</td><td>Must be an integer and greater than 0</td><td>10 </td><td>Sets the length of the software timer command queue. See the FreeRTOS software timers page for a full description. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Task Stack Depth</td><td>Must be an integer and greater than 0</td><td>128 </td><td>Sets the stack depth allocated to the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Optional Functions  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">vTaskPrioritySet() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include vTaskPrioritySet() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; uxTaskPriorityGet() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">uxTaskPriorityGet() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include uxTaskPriorityGet() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; vTaskDelete() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">vTaskDelete() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include vTaskDelete() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; vTaskSuspend() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">vTaskSuspend() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include vTaskSuspend() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xResumeFromISR() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xResumeFromISR() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include xResumeFromISR() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; vTaskDelayUntil() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">vTaskDelayUntil() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include vTaskDelayUntil() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; vTaskDelay() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">vTaskDelay() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include vTaskDelay() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTaskGetSchedulerState() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTaskGetSchedulerState() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include xTaskGetSchedulerState() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTaskGetCurrentTaskHandle() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTaskGetCurrentTaskHandle() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include xTaskGetCurrentTaskHandle() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; uxTaskGetStackHighWaterMark() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">uxTaskGetStackHighWaterMark() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include uxTaskGetStackHighWaterMark() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTaskGetIdleTaskHandle() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTaskGetIdleTaskHandle() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include xTaskGetIdleTaskHandle() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; eTaskGetState() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">eTaskGetState() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include eTaskGetState() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xEventGroupSetBitFromISR() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xEventGroupSetBitFromISR() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include xEventGroupSetBitFromISR() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTimerPendFunctionCall() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTimerPendFunctionCall() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include xTimerPendFunctionCall() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTaskAbortDelay() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTaskAbortDelay() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include xTaskAbortDelay() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTaskGetHandle() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTaskGetHandle() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include xTaskGetHandle() function in build </td></tr>
-<tr>
-<td>Optional Functions &gt; xTaskResumeFromISR() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">xTaskResumeFromISR() Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Include xTaskResumeFromISR() function in build </td></tr>
-<tr>
-<td>RA &gt; Hardware Stack Monitor</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> RA  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Hardware Stack Monitor</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Include RA stack monitor </td></tr>
-<tr>
-<td>Logging &gt; Print String Function</td><td>Manual Entry</td><td>printf(x) </td><td></td></tr>
-<tr>
-<td>Logging &gt; Logging Max Message Length</td><td>Manual Entry</td><td>192 </td><td></td></tr>
-<tr>
-<td>Logging &gt; Logging Include Time and Task Name</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Logging  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Print String Function</td><td>Manual Entry</td><td>vLoggingPrint(x) </td><td></td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Logging Include Time and Task Name</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
@@ -756,6 +856,7 @@ Stack Monitor Underflow Detection</h3>
 <h2><a class="anchor" id="r-freertos-port-low-power-modes"></a>
 Low Power Modes</h2>
 <p><a class="anchor" id="um_freertos_low_power"></a>When FreeRTOS is configured to use tickless idle, the idle task executes WFI() when no task is ready to run. If the MCU is configured to enter software standby mode or deep software standby mode when the idle task executes WFI(), the RA FreeRTOS port changes the low power mode to sleep mode so the idle task can wake from SysTick. The low power mode settings are restored when the MCU wakes from sleep mode.</p>
+<p>On RA8, there are delays inserted before and after switching to a lower power mode based on BSP configuration options and current CPUCLK speed. These delays do not disable interrupts for the entire delay as required by the RA8 Hardware Manual. Interrupts should be disabled by the application when possible before sleeping to meet the requirements, or the control of interrupts and the delay should be managed by the user to ensure the requirement is fully met.</p>
 <h2><a class="anchor" id="r-freertos-port-trustzone-integration"></a>
 TrustZone Integration</h2>
 <p><a class="anchor" id="um_freertos_port_trustzone"></a>When using an RTOS in a TrustZone project, Arm recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the task has allocated a secure context (using portALLOCATE_SECURE_CONTEXT).</p>
@@ -764,7 +865,7 @@ TrustZone Integration</h2>
 Examples</h1>
 <h2>Stack Monitor Example</h2>
 <p>This is an example of using the stack monitor in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_BSP_HAS_SP_MON</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback (<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(irq);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[0].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle main stack monitor error here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[1].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle process stack monitor error here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Register a callback to be called when the stack goes outside the allocated stack area. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d">BSP_GRP_IRQ_MPU_STACK</a>, stack_monitor_callback);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Allocate stack space to return from UsageFault. */</span></div><div class="line">uint32_t g_stack_overflow_exception_stack[8] BSP_ALIGN_VARIABLE(<a class="code" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a>) BSP_PLACE_IN_SECTION(</div><div class="line">    BSP_SECTION_STACK);</div><div class="line"></div><div class="line"><span class="comment">/* MCUs that do not have an SPMON stack monitor use PSPLIM to detect stack overflows. When a stack overflow error</span></div><div class="line"><span class="comment"> * occurs, the UsageFault_Handler fires if it has been enabled. */</span></div><div class="line"><span class="keywordtype">void</span> UsageFault_Handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">register</span> uint32_t cfsr = SCB-&gt;CFSR;</div><div class="line">    <span class="keywordflow">if</span> (cfsr &amp; SCB_CFSR_STKOF_Msk)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update PSP and PSPLIM to point to an exception stack frame allocated for stack overflows. */</span></div><div class="line">        <span class="keyword">register</span> uint32_t * p_exception_stack_frame = (uint32_t *) (&amp;g_stack_overflow_exception_stack);</div><div class="line">        __set_PSP((uint32_t) p_exception_stack_frame);</div><div class="line">        __set_PSPLIM((uint32_t) p_exception_stack_frame);</div><div class="line"></div><div class="line">        <span class="comment">/* Clear XPSR, only set T-bit. */</span></div><div class="line">        p_exception_stack_frame[7] = 1U &lt;&lt; 24;</div><div class="line"></div><div class="line">        <span class="comment">/* Set PC to stack overflow error while loop. When execution returns from the UsageFault, it will go to the</span></div><div class="line"><span class="comment">         * stack_overflow_error_occurred function. It cannot return to the location where the fault occurred because</span></div><div class="line"><span class="comment">         * the MCU does not save the exception stack frame to the stack when a stack overflow error occurs. */</span></div><div class="line">        p_exception_stack_frame[6] = (uint32_t) stack_overflow_error_occurred;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Clear flags. */</span></div><div class="line">    SCB-&gt;CFSR = cfsr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* This function is called from UsageFault_Handler after a stack overflow occurs. */</span></div><div class="line"><span class="keywordtype">void</span> stack_overflow_error_occurred (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When recovering from a stack overflow, move the task to a while(1) loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable usage fault. */</span></div><div class="line">    SCB-&gt;SHCSR |= SCB_SHCSR_USGFAULTENA_Msk;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>TrustZone Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_BSP_HAS_SP_MON</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback (<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(irq);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[0].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle main stack monitor error here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[1].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle process stack monitor error here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Register a callback to be called when the stack goes outside the allocated stack area. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d">BSP_GRP_IRQ_MPU_STACK</a>, stack_monitor_callback);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Allocate stack space to return from UsageFault. */</span></div><div class="line">uint32_t g_stack_overflow_exception_stack[8] BSP_ALIGN_VARIABLE(<a class="code" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a>) BSP_PLACE_IN_SECTION(</div><div class="line">    BSP_SECTION_STACK);</div><div class="line"></div><div class="line"><span class="comment">/* MCUs that do not have an SPMON stack monitor use PSPLIM to detect stack overflows. When a stack overflow error</span></div><div class="line"><span class="comment"> * occurs, the UsageFault_Handler fires if it has been enabled. */</span></div><div class="line"><span class="keywordtype">void</span> UsageFault_Handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">register</span> uint32_t cfsr = SCB-&gt;CFSR;</div><div class="line">    <span class="keywordflow">if</span> (cfsr &amp; SCB_CFSR_STKOF_Msk)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update PSP and PSPLIM to point to an exception stack frame allocated for stack overflows. */</span></div><div class="line">        <span class="keyword">register</span> uint32_t * p_exception_stack_frame = (uint32_t *) (&amp;g_stack_overflow_exception_stack);</div><div class="line">        __set_PSP((uint32_t) p_exception_stack_frame);</div><div class="line">        __set_PSPLIM((uint32_t) p_exception_stack_frame);</div><div class="line"></div><div class="line">        <span class="comment">/* Clear XPSR, only set T-bit. */</span></div><div class="line">        p_exception_stack_frame[7] = 1U &lt;&lt; 24;</div><div class="line"></div><div class="line">        <span class="comment">/* Set PC to stack overflow error while loop. When execution returns from the UsageFault, it will go to the</span></div><div class="line"><span class="comment">         * stack_overflow_error_occurred function. It cannot return to the location where the fault occurred because</span></div><div class="line"><span class="comment">         * the MCU does not save the exception stack frame to the stack when a stack overflow error occurs. */</span></div><div class="line">        p_exception_stack_frame[6] = (uint32_t) stack_overflow_error_occurred;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Clear flags. */</span></div><div class="line">    SCB-&gt;CFSR = cfsr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* This function is called from UsageFault_Handler after a stack overflow occurs. */</span></div><div class="line"><span class="keywordtype">void</span> stack_overflow_error_occurred (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When recovering from a stack overflow, move the task to a while(1) loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable usage fault. */</span></div><div class="line">    SCB-&gt;SHCSR |= SCB_SHCSR_USGFAULTENA_Msk;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>TrustZone Example</h2>
 <p>This is an example of calling portALLOCATE_SECURE_CONTEXT before calling any non-secure callable functions in a task.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_trustzone_task_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When FreeRTOS is used in a non-secure TrustZone application, portALLOCATE_SECURE_CONTEXT must be called prior</span></div><div class="line"><span class="comment">     * to calling any non-secure callable function in a task. The parameter is unused in the FSP implementation. */</span></div><div class="line">    portALLOCATE_SECURE_CONTEXT(0);</div><div class="line"></div><div class="line">    rm_freertos_port_nsc_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -772,7 +873,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

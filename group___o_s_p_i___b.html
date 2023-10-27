@@ -1,0 +1,1576 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: OSPI Flash (r_ospi_b)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___o_s_p_i___b.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">OSPI Flash (r_ospi_b)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html">Storage</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga9134500bd9ee50551e218a81868f5b1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga9134500bd9ee50551e218a81868f5b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae419ec1af4afc888da2d59403ca8225a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gae419ec1af4afc888da2d59403ca8225a">R_OSPI_B_DirectWrite</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t const *const p_src, uint32_t const bytes, bool const read_after_write)</td></tr>
+<tr class="separator:gae419ec1af4afc888da2d59403ca8225a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0f52f7bbbbf2f94305f6334ad06b2d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gad0f52f7bbbbf2f94305f6334ad06b2d8">R_OSPI_B_DirectRead</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
+<tr class="separator:gad0f52f7bbbbf2f94305f6334ad06b2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b42dbc86db7f4c82ed640620743c609"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td></tr>
+<tr class="separator:ga7b42dbc86db7f4c82ed640620743c609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15282e9d7ef4d8c5471be859da55dd4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga15282e9d7ef4d8c5471be859da55dd4a">R_OSPI_B_XipEnter</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga15282e9d7ef4d8c5471be859da55dd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96bc15adf392eccfa44eed3fb91fa7ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga96bc15adf392eccfa44eed3fb91fa7ef">R_OSPI_B_XipExit</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga96bc15adf392eccfa44eed3fb91fa7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabeb33594cd4d4f031f090857a7b3832b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t const *const p_src, uint8_t *const p_dest, uint32_t byte_count)</td></tr>
+<tr class="separator:gabeb33594cd4d4f031f090857a7b3832b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga043d8c26f4d9c08a145bec1a3df4a2a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga043d8c26f4d9c08a145bec1a3df4a2a2">R_OSPI_B_Erase</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_device_address, uint32_t byte_count)</td></tr>
+<tr class="separator:ga043d8c26f4d9c08a145bec1a3df4a2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5936464390d82c29e2d03f6c04880e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gae5936464390d82c29e2d03f6c04880e2">R_OSPI_B_StatusGet</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> *const p_status)</td></tr>
+<tr class="separator:gae5936464390d82c29e2d03f6c04880e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga353dc5f34b95e0fac9f4f3074e52df70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga353dc5f34b95e0fac9f4f3074e52df70">R_OSPI_B_BankSet</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint32_t bank)</td></tr>
+<tr class="separator:ga353dc5f34b95e0fac9f4f3074e52df70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39b3c250a591ffd092cd6ded8c45249c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> spi_protocol)</td></tr>
+<tr class="separator:ga39b3c250a591ffd092cd6ded8c45249c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4070e46f2fadda4ec4cb8b8f023c1a00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga4070e46f2fadda4ec4cb8b8f023c1a00">R_OSPI_B_Close</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga4070e46f2fadda4ec4cb8b8f023c1a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3441de6c487a640fae584248007a3a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6">R_OSPI_B_AutoCalibrate</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gac3441de6c487a640fae584248007a3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the OSPI_B peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html">SPI Flash Interface</a>. </p>
+<h1><a class="anchor" id="r-ospi-b-overview"></a>
+Overview</h1>
+<p>The OSPI_B peripheral supports xSPI (or OSPI) compatible external memory devices, and it interfaces with these devices to perform data I/O Operations. The OSPI_B peripheral does not support addressable devices, so all connected memory devices must be connected to an individual chip-select pin. Please note that this document will reference the xSPI protocol to which OSPI is a subset. The OSPI_B peripheral is compatible with a variety of xSPI protocol operating modes.</p>
+<h2><a class="anchor" id="r-ospi-b-features"></a>
+Features</h2>
+<p>The OSPI_B driver has the following key features to support the <b>xSPI</b> device:</p><ul>
+<li>Perform data I/O Operation in both SPI and DOPI modes<a class="anchor" id="um_ospi_spi"></a><a class="anchor" id="um_ospi_opi"></a></li>
+<li>Direct memory-mapped access to the xSPI device memory up to 256 MB.</li>
+<li>Can be configured with xSPI devices on either of the 2 channels</li>
+<li>Programming the xSPI device using combination write (up to 64 bytes)<a class="anchor" id="um_ospi_page_program"></a></li>
+<li>Erasing the xSPI device<a class="anchor" id="um_ospi_erase"></a></li>
+<li>Sending device specific commands and reading back responses of up to 8 bytes<a class="anchor" id="um_ospi_direct_transfer"></a></li>
+<li>3 byte addressing for SPI<a class="anchor" id="um_ospi_3byte_address"></a></li>
+<li>4 byte addressing for SPI and DOPI<a class="anchor" id="um_ospi_4byte_address"></a></li>
+<li>Auto-calibration for DOPI mode<a class="anchor" id="um_ospi_autocalibration"></a></li>
+</ul>
+<p>Additional build-time features:</p><ul>
+<li>Optional (build-time) DMAC support for data transmission when used with OSPI_B.<a class="anchor" id="um_ospi_optional_dmac_support_for_data_transmission"></a></li>
+<li>Optional (build-time) XiP support for entering/exiting XiP mode of the target device.<a class="anchor" id="um_ospi_xip_mode"></a></li>
+<li>Optional (build-time) Data-strobe (DS) auto-calibration support for target devices using the DS signal.</li>
+<li>Optional (build-time) Decryption on the fly (DOTF)<a class="anchor" id="um_ospi_dotf"></a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>For OSPI_B, use of DMAC for data transmission is strongly recommended. Without the use of DMAC, due to the high-speed hardware design of the OSPI peripheral, data transmission can be sensitive to timing variance, which could cause software-based memory-mapped operations to fail unexpectedly.</dd></dl>
+<h1><a class="anchor" id="r-ospi-b-configuration"></a>
+Configuration</h1>
+<h2>OSPI_B Flash:</h2>
+<p><h2>Build Time Configurations for r_ospi_b</h2>
+The following build time configurations are defined in fsp_cfg/r_ospi_b_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Memory-mapping Support  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Prefetch Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Enable </td><td>Enable prefetch function on memory-mapped reads. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Combination Function</td><td>Refer to the RA Configuration tool for available options.</td><td>64 Byte </td><td>Enable combination function on memory-mapped writes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">XiP Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable the use of XiP enter and exit codes. </td></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>DMAC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DMAC support for the OSPI module. </td></tr>
+<tr class="tree_none">
+<td>Autocalibration Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DS autocalibration for dual-data-rate modes. </td></tr>
+<tr class="tree_none">
+<td>DOTF Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DOTF support for the OSPI module. </td></tr>
+</table>
+ <h2>Configurations for Storage &gt; OSPI Flash (r_ospi_b)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI Flash (r_ospi_b).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_ospi0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Channel should be 0 or 1</td><td>0 </td><td>Specify the OSPI chip select line to use. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Initial Protocol Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+SPI (1S-1S-1S)</li>
+<li>
+DSPI (1S-2S-2S)</li>
+<li>
+DSPI (2S-2S-2S)</li>
+<li>
+QSPI (1S-4S-4S)</li>
+<li>
+QSPI (4S-4S-4S)</li>
+<li>
+QSPI (4S-4D-4D)</li>
+<li>
+Dual data rate OPI (8D-8D-8D)</li>
+</ul>
+</td><td>SPI (1S-1S-1S) </td><td>Select the initial protocol mode of the xSPI target device. Please see the documentation for examples of changing the protocol mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Initial Address Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+3</li>
+<li>
+4</li>
+</ul>
+</td><td>4 </td><td>Select the number of address bytes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Status Bit</td><td>Must be an integer between 0 and 7</td><td>0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Enable Bit</td><td>Must be an integer between 0 and 7</td><td>1 </td><td>Which bit contains the write enable status returned from the Write Enable Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>4096 </td><td>The sector erase size. Set Sector Erase Size to 0 if Sector Erase is not supported. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>262144 </td><td>The block erase size. Set Block Erase Size to 0 if Block Erase is not supported. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Set Table</td><td>Must be a vaild C symbol</td><td></td><td>Specify the custom command set table (<a class="el" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a>[]) to use. If provided, all properties for High-speed Mode will be ignored. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Set Table Length</td><td>Length must be an integer greater than or equal to zero.</td><td>0 </td><td>Length of the custom command set table. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Defaults  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Defaults &gt; Command Definitions  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Page Program Command</td><td>Must be a 8-bit OSPI Page Program Command under SPI Mode|Command Definitions</td><td>0x12 </td><td>Default command to program a page. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Read Command</td><td>Must be a 8-bit OSPI Read Command under SPI Mode|Command Definitions</td><td>0x13 </td><td>Default command to read. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under SPI Mode|Command Definitions</td><td>0x06 </td><td>Default command to enable write. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Command</td><td>Must be a 16-bit OSPI Status Command under SPI Mode|Command Definitions</td><td>0x05 </td><td>Default command to query the status of a write or erase command. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Defaults &gt; Erase Command Definitions  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sector Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0x2121 </td><td>Default command to erase a sector. The lowwer byte will be used for 1-byte commands. Set to 0 if unused. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Block Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0xDCDC </td><td>Default command to erase a block. The lowwer byte will be used for 1-byte commands. Set to 0 if unused. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Chip Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0x6060 </td><td>Default command to erase the entire chip. The lowwer byte will be used for 1-byte commands. Set to 0 if unused. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Defaults &gt; Dummy Cycles  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Memory Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>0 </td><td>Default memory read dummy cycles </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>0 </td><td>Default status read dummy cycles </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> High-speed Mode  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> High-speed Mode &gt; Auto-Calibration  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data latching delay</td><td>Must be a valid non-negative integer with maximum configurable value of 0x1F</td><td>0x08 </td><td>If auto-calibration support is enabled, set this to 0 to trigger auto-calibration when appropriate. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Auto-Calibration Address</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFFFFFFFF</td><td>0x00 </td><td>Set the address of the read/write destination to be performed for auto-calibration. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> High-speed Mode &gt; Command Definitions  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Page Program Command</td><td>Must be a 16-bit OSPI Page Program Command under High-speed Mode|Command Definitions</td><td>0x1212 </td><td>The command to program a page in OPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dual Read Command</td><td>Must be a 16-bit OSPI Dual Read Command under High-speed Mode|Command Definitions</td><td>0xEEEE </td><td>The command to read in High-speed mode (8DTRD). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under High-speed Mode|Command Definitions</td><td>0x0606 </td><td>The command to enable write in OPI mode. Set to 0 to ignore. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Command</td><td>Must be a 16-bit OSPI Status Command under High-speed Mode|Command Definitions</td><td>0x0505 </td><td>The command to query the status of a write or erase command in OPI mode. Set to 0 to ignore. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sector Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0 </td><td>The command to erase a sector for high-speed mode. Set to 0 if unused. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Block Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0 </td><td>The command to erase a block for high-speed mode. Set to 0 if unused. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Chip Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0 </td><td>The command to erase the entire chip for high-speed mode. Set to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+SPI (1S-1S-1S)</li>
+<li>
+DSPI (1S-2S-2S)</li>
+<li>
+DSPI (2S-2S-2S)</li>
+<li>
+QSPI (1S-4S-4S)</li>
+<li>
+QSPI (4S-4S-4S)</li>
+<li>
+QSPI (4S-4D-4D)</li>
+<li>
+Dual data rate OPI (8D-8D-8D)</li>
+</ul>
+</td><td>Dual data rate OPI (8D-8D-8D) </td><td>Select the High-Speed xSPI protocol. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Length Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1</li>
+<li>
+2</li>
+</ul>
+</td><td>2 </td><td>Command length in bytes </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>20 </td><td>Memory read dummy cycles </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Status Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>3 </td><td>Status read dummy cycles </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Chip Select Timing Setting  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Interval</td><td>Refer to the RA Configuration tool for available options.</td><td>2 </td><td>Command execution interval setting in OCTACLK units </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No Extension</li>
+<li>
+1 Cycle</li>
+</ul>
+</td><td>No Extension </td><td>Signal pull-up timing setting in OCTACLK units </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No Extension</li>
+<li>
+1 Cycle</li>
+</ul>
+</td><td>No Extension </td><td>Signal pull-down timing setting in OCTACLK units </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> XiP Mode  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">XiP Enter Code</td><td>Must be an integer between 0 and 255</td><td>0 </td><td>XiP enter code. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">XiP Exit Code</td><td>Must be an integer between 0 and 255</td><td>0 </td><td>XiP exit code. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> DOTF  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_ospi_dotf </td><td>DOTF Configuration name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">AES Key</td><td>Name must be a valid C symbol</td><td>g_ospi_dotf_key </td><td>Name of Key variable. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">AES IV</td><td>Name must be a valid C symbol</td><td>g_ospi_dotf_iv </td><td>Name of IV variable </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">AES Key Length</td><td>MCU Specific Options</td><td></td><td>Select AES key length </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Decryption start address</td><td>Value must be an integer between 0x80000000 and 0x9FFFFFFF</td><td>0x90000000 </td><td>OSPI decryption start address </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Decryption end address</td><td>Value must be an integer between 0x80000000 and 0x9FFFFFFF</td><td>0x90001FFF </td><td>OSPI decryption end address </td></tr>
+</table>
+</p>
+<dl class="section note"><dt>Note</dt><dd>The user is expected to modify the command definitions based on the xSPI chip and SPI communication mode. The default mode is SPI mode and default erase commands are set for DOPI mode based on Infineon S28HS256.</dd></dl>
+<h2><a class="anchor" id="r-ospi-b-clock-configuration"></a>
+Clock Configuration</h2>
+<p>PCLKB is the Octal-SPI bus interface, and PCLKA is used to set OSPI registers.</p>
+<p>The signals to the xSPI target device are derived from OCTASPICLK. The OMSCLK signal is OCTASPICLK / 2. Data can be output at the OCTASPICLK rate if protocol mode is set to a Dual Data Rate mode (8D-8D-8D or 4S-4D-4D).</p>
+<p>The PCLKB, PCLKA, and OCTASPICLK frequencies can be set on the <b>Clocks</b> tab of the RA Configuration editor.</p>
+<h2><a class="anchor" id="r-ospi-b-pin-configuration"></a>
+Pin Configuration</h2>
+<p>The following pins are available to connect to an external OSPI device:</p><ul>
+<li>OMSCLK: OSPI clock output (OCTASPICLK / 2)</li>
+<li>OMDQS: OSPI data strobe signal</li>
+<li>OMCS0: OSPI device 0 select</li>
+<li>OMCS1: OSPI device 1 select</li>
+<li>OMSIO0: Data 0 I/O</li>
+<li>OMSIO1: Data 1 I/O</li>
+<li>OMSIO2: Data 2 I/O</li>
+<li>OMSIO3: Data 3 I/O</li>
+<li>OMSIO4: Data 4 I/O</li>
+<li>OMSIO5: Data 5 I/O</li>
+<li>OMSIO6: Data 6 I/O</li>
+<li>OMSIO7: Data 7 I/O</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Data pins must be configured with IOPORT_CFG_DRIVE_HS_HIGH. </dd>
+<dd>
+Chip Select pins should be configured with at least IOPORT_CFG_DRIVE_MEDIUM.</dd></dl>
+<h1><a class="anchor" id="r-ospi-b-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-ospi-b-usage_notes-for-octaflash-interfacing"></a>
+Usage Notes for xSPI support</h2>
+<p>After <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> completes successfully, the xSPI device contents are mapped to address 0x80000000 (bank CS0) or 0x90000000 (bank CS1) and can be read like on-chip flash. Bank CS0 is only accessible from OSPI_B channel/slave 0 and likewise, bank CS1 is only accessible from OSPI_B channel/slave 1. Bank CS0 and CS1 support up to 256&#160;MB of address space each.</p>
+<h3><a class="anchor" id="r-ospi-b-auto-calibration-octaflash"></a>
+Auto-calibration</h3>
+<p>If support is enabled, auto-calibration procedures are triggered automatically when the 'Data latching delay' field in the configurator properties is set to 0. The user application is responsible for setting the appropriate preamble pattern before calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> when using a data strobe (DS) mode or changing the SPI protocol to a DS mode using the <a class="el" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet()</a> API. The appropriate preamble pattern can be written to the desired address using the <a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a> API while in simple SPI mode (recommended), or a non-DS mode. Ensure that the same address is passed through the configurator. If the xSPI device is already in a DS mode, the preamble pattern must be programmed using the debugger before calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a>.</p>
+<p>The preamble pattern is expected to be <code>{ 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x08, 0x00, 0x00, 0xF7, 0xFF, 0x00, 0x08, 0xF7, 0x00, 0xF7 }</code>.</p>
+<h3><a class="anchor" id="r-ospi-b-chip-select-latencies-octaflash"></a>
+Chip Select Latencies</h3>
+<p>Chip select latencies can be set through the configurator. The default settings support SPI at minimum latency. In case the driver is opened in SPI mode and will be switched to DOPI mode later using <a class="el" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet()</a>, please select latencies required for DOPI before calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a>.</p>
+<h3><a class="anchor" id="r-ospi-b-xip-support"></a>
+XiP Support</h3>
+<p>OSPI_B supports eXecute in Place (XiP) modes of operation. This can be used for read-only memory-mapped accesses to reduce overall read latency by skipping the command sequence in the xSPI transaction. Separate XiP enter and exit codes may be specified for either attached target device. Upon calling <a class="el" href="group___o_s_p_i___b.html#ga15282e9d7ef4d8c5471be859da55dd4a">R_OSPI_B_XipEnter()</a>, the associated memory region for the target device is switched to read-only mode and the enter code sent to the device. Calling <a class="el" href="group___o_s_p_i___b.html#ga96bc15adf392eccfa44eed3fb91fa7ef">R_OSPI_B_XipExit()</a> will transmit the exit code and transition the memory region back to read-write access.</p>
+<p>Only one flash device should be used after entering XiP mode. Once entered, XiP codes will be transmitted to all attached devices.</p>
+<h2><a class="anchor" id="r-ospi-b-octaflash-commands-octaflash"></a>
+xSPI Commands</h2>
+<p>Command sets and erase commands may be specified individually for each supported protocol mode. By default, the configurator only supports an alternative command set for DOPI (8D-8D-8D) mode. The command sets cannot be changed during run-time. The appropriate command set will be selected when changing protocol modes. If a command set is not found, it defaults to the SPI command set.</p>
+<p>If custom DOPI erase commands are not specified, ensure the erase commands are the appropriate 2-byte DOPI commands. The lower byte will be used for 1-byte command protocols.</p>
+<h2><a class="anchor" id="r-ospi-b-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the OSPI_B driver: </p>
+<h3><a class="anchor" id="r-ospi-b-limitations-octaflash"></a>
+OSPI_B</h3>
+<ul>
+<li>Problems may occur with using CS0/bank0. OSPI_B channel 1 with CS1/bank1 has been tested and confirmed working.</li>
+<li>Prefetch and combination support for memory-mapped access is applied globally to all slave devices.</li>
+<li>Combination writes are limited to a maximum of 64 bytes. The user should verify the write has completed before attempting to write more bytes.</li>
+<li>Writing to the memory-mapped regions with the CPU is restricted to 64-bit accesses with 8-byte destination alignments. This restriction is not applicable to other bus masters (e.g. DTC or DMAC).</li>
+<li>When using Arm LLVM ensure any read-only (<code>const</code>) data used with <code><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a></code> is word (4-byte) aligned if the DMAC is not being used. If parameter checking is enabled, the source pointer alignment will be verified for calls to <code><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a></code>.</li>
+<li>Take care to restrict concurrent accesses of the OSPI memory area. Collisions on the bus can occur if other bus masters attempt to write to the OSPI memory area while another master is reading the OSPI memory area.</li>
+<li>When using 8D-8D-8D mode, care should be taken to access on even-aligned addresses. Problems may occur if odd address alignment is used. This restriction applies to all bus masters using OSPI_B.</li>
+</ul>
+<h1><a class="anchor" id="r-ospi-b-examples"></a>
+Examples</h1>
+<h2>OSPI Flash:</h2>
+<h3>Basic Example</h3>
+<p><a class="anchor" id="um_ospi_sections"></a> This is a basic example of minimal use of the OSPI in an application with OctaFlash.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_B_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_B_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_B_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .code_in_ospi section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.code_in_ospi&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instancee */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    r_ospi_b_example_spi_to_dopi();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Reading Status Register Example (R_OSPI_B_DirectTransfer)</h3>
+<p>This is an example of using R_OSPI_B_DirectWrite followed by R_OSPI_B_DirectRead to send the read status register command and read back the status register from the device.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_STATUS_REGISTER    (0x05U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_direct_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> ospi_b_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_TEST_READ_STATUS_COMMAND_SPI_MODE,</div><div class="line">        .address        = 0U,</div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 0U,</div><div class="line">        .data_length    = 0U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read Status Register */</span></div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>     = OSPI_B_TEST_READ_STATUS_COMMAND_SPI_MODE;</div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a5e3c48eb88187944722f745231f955f3">data_length</a> = 1U;</div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if Write Enable is set */</span></div><div class="line">    <span class="keywordflow">if</span> (OSPI_B_WEN_BIT_MASK != (ospi_b_test_direct_transfer.data &amp; OSPI_B_WEN_BIT_MASK))</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Auto-calibration Example (R_OSPI_B_DirectTransfer, R_OSPI_B_Write, R_OSPI_B_SpiProtocolSet)</h3>
+<p>This is an example of using R_OSPI_B_SpiProtocolSet to change the operating mode from SPI to DOPI and allow the driver to initiate auto-calibration.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_B_DOPI_PREAMBLE_PATTERN_LENGTH_BYTES    (16U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_EXAMPLE_PREAMBLE_ADDRESS              (0x90000000U) </span><span class="comment">/* Device connected to CS1 */</span><span class="preprocessor"></span></div><div class="line"><span class="keyword">const</span> uint8_t g_preamble_bytes[OSPI_B_DOPI_PREAMBLE_PATTERN_LENGTH_BYTES] =</div><div class="line">{</div><div class="line">    0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x08, 0x00, 0x00, 0xF7, 0xFF, 0x00, 0x08, 0xF7, 0x00, 0xF7</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ospi_b_example_wait_until_wip (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>          err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> status;</div><div class="line">    status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a> = <span class="keyword">true</span>;</div><div class="line">    uint32_t timeout = UINT32_MAX;</div><div class="line">    <span class="keywordflow">while</span> ((status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a>) &amp;&amp; (--timeout))</div><div class="line">    {</div><div class="line"></div><div class="line">        err = <a class="code" href="group___o_s_p_i___b.html#gae5936464390d82c29e2d03f6c04880e2">R_OSPI_B_StatusGet</a>(&amp;g_ospi0_ctrl, &amp;status);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 == timeout)</div><div class="line">    {</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_auto_calibrate_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <span class="comment">/* Set data_latch_delay_clocks to 0x0 to enable auto-calibration */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    uint8_t * preamble_pattern_addr = (uint8_t *) OSPI_B_EXAMPLE_PREAMBLE_ADDRESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write</a>(&amp;g_ospi0_ctrl, g_preamble_bytes, preamble_pattern_addr, OSPI_B_EXAMPLE_PREAMBLE_ADDRESS);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait until write has been completed */</span></div><div class="line">    ospi_b_example_wait_until_wip();</div><div class="line"></div><div class="line">    <span class="comment">/* Change from SPI to DOPI mode */</span></div><div class="line">    r_ospi_b_example_spi_to_dopi();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Octaclk Update Example (R_OSPI_B_SpiProtocolSet)</h3>
+<p>This is an example of using R_BSP_OctaclkUpdate to change the Octal-SPI clock frequency during run time. The OCTACLK frequency must be updated before calling the R_OSPI_B_SpiProtocolSet with appropriate clock source and divider settings required to be set for the new SPI protocol mode. Ensure that the clock source selected is started.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_example_change_omclk (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Ensure clock source (PLL2 in this example) is running before changing the OCTACLK frequency */</span></div><div class="line">    bsp_octaclk_settings_t octaclk_settings;</div><div class="line">    octaclk_settings.source_clock = BSP_CLOCKS_CLOCK_PLL2;</div><div class="line">    octaclk_settings.divider      = BSP_CLOCKS_OCTACLK_DIV_2;</div><div class="line">    R_BSP_OctaclkUpdate(&amp;octaclk_settings);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Change Protocol Mode Example (R_OSPI_B_DirectTransfer, R_OSPI_B_SpiProtocolSet)</h3>
+<p>This is an example of using R_OSPI_B_DirectTransfer to change the attached flash device to a new protocol mode during run time.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_ospi_b_example_spi_to_dopi (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    r_ospi_b_write_enable_and_verify();</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> ospi_b_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_COMMAND_WRITE_REGISTER_SPI_MODE,</div><div class="line">        .address        = OSPI_B_CFR5V_ADDRESS,</div><div class="line">        .data           = OSPI_B_DOPI_REGISTER_SETTING,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 3U,</div><div class="line">        .data_length    = 1U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* The OctaFlash chip is in SPI mode. Change DOPI mode */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(&amp;g_ospi0_ctrl,</div><div class="line">                                            &amp;ospi_b_test_direct_transfer,</div><div class="line">                                            SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change OMCLK appropriately. */</span></div><div class="line">    ospi_b_example_change_omclk();</div><div class="line"></div><div class="line">    <span class="comment">/* Transition the OSPI peripheral to DOPI mode. This will initiate auto calibration as MDTR is 0 */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet</a>(&amp;g_ospi0_ctrl, <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535afd83f451b4164b209b240ebb0f4bb158">SPI_FLASH_PROTOCOL_DOPI</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Verify that the chip is in requested OPI mode */</span></div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>      = OSPI_B_COMMAND_READ_REGISTER_SPI_MODE;</div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ad4a653cf90fd97dc9d0a5f8fce3c3795">dummy_cycles</a> = 3U;</div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (OSPI_B_DOPI_REGISTER_SETTING != ospi_b_test_direct_transfer.data)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Using a Custom xSPI Command Set Example</h3>
+<p>This is an example of using custom command sets for 8D-8D-8D and 4S-4S-4S protocol modes.</p>
+<div class="fragment"><div class="line"></div><div class="line"><a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a>       g_ospi0_cfg_w_table;</div><div class="line"><a class="code" href="group___o_s_p_i___b.html#structospi__b__extended__cfg__t">ospi_b_extended_cfg_t</a> g_ospi0_ext_w_table;</div><div class="line"></div><div class="line"><span class="comment">/* Custom two-byte erase commands. */</span></div><div class="line"><a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t">spi_flash_erase_command_t</a> g_2B_erase_commands[] =</div><div class="line">{</div><div class="line">    {.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a27f37ac5d1f031fd33f3b2ff5b914751">command</a> = OSPI_B_TEST_BLOCK_ERASE_COMMAND_DOPI_MODE,  .size = OSPI_B_TEST_BLOCK_ERASE_SIZE   },</div><div class="line">    {.command = OSPI_B_TEST_SECTOR_ERASE_COMMAND_DOPI_MODE, .size = OSPI_B_TEST_SECTOR_ERASE_SIZE  },</div><div class="line">    {.command = OSPI_B_TEST_CHIP_ERASE_COMMAND_DOPI_MODE,   .size = SPI_FLASH_ERASE_SIZE_CHIP_ERASE},</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Custom command sets. */</span></div><div class="line"><a class="code" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a> g_command_sets[] =</div><div class="line">{</div><div class="line">    <span class="comment">/* 8D-8D-8D example with inverted lower command byte. */</span></div><div class="line">    {</div><div class="line">        .<a class="code" href="group___o_s_p_i___b.html#a71f30710dcb8f6a40f5254d408f38216">protocol</a>                  = <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>,</div><div class="line">        .command_bytes             = <a class="code" href="group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a165af2425e8e2fbcc301f0c7081cf9e2">OSPI_B_COMMAND_BYTES_2</a>,</div><div class="line">        .read_command              = OSPI_B_TEST_READ_COMMAND_DOPI_MODE,</div><div class="line">        .page_program_command      = OSPI_B_TEST_PROGRAM_COMMAND_DOPI_MODE,</div><div class="line">        .write_enable_command      = OSPI_B_TEST_WRITE_ENABLE_COMMAND_DOPI_MODE,</div><div class="line">        .status_command            = OSPI_B_TEST_STATUS_COMMAND_DOPI_MODE,</div><div class="line">        .read_dummy_cycles         = 20U,</div><div class="line">        .program_dummy_cycles      = 0U,</div><div class="line">        .status_dummy_cycles       = 3U,</div><div class="line">        .erase_command_list_length = <span class="keyword">sizeof</span>(g_2B_erase_commands) / <span class="keyword">sizeof</span>(g_2B_erase_commands[0]),</div><div class="line">        .p_erase_command_list      = g_2B_erase_commands,</div><div class="line">    },</div><div class="line"></div><div class="line">    <span class="comment">/* 4S-4S-4S example with different .read_command and dummy cycles. */</span></div><div class="line">    {</div><div class="line">        .protocol                  = <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05">SPI_FLASH_PROTOCOL_4S_4S_4S</a>,</div><div class="line">        .command_bytes             = <a class="code" href="group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a6aa3fcd6c65bf42cb3ee95b050fe12dd">OSPI_B_COMMAND_BYTES_1</a>,</div><div class="line">        .read_command              = OSPI_B_TEST_READ_COMMAND_QSPI_MODE,</div><div class="line">        .page_program_command      = OSPI_B_TEST_PROGRAM_COMMAND_QSPI_MODE,</div><div class="line">        .write_enable_command      = OSPI_B_TEST_WRITE_ENABLE_COMMAND_QSPI_MODE,</div><div class="line">        .status_command            = OSPI_B_TEST_STATUS_COMMAND_QSPI_MODE,</div><div class="line">        .read_dummy_cycles         = 10U,</div><div class="line">        .program_dummy_cycles      = 0U,</div><div class="line">        .status_dummy_cycles       = 1U,</div><div class="line">        .erase_command_list_length = 0U,</div><div class="line">        .p_erase_command_list      = NULL, <span class="comment">// Use the common erase definitions.</span></div><div class="line">    },</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_command_table_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instance.</span></div><div class="line"><span class="comment">     * Specify `g_command_sets` using the configurator. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change SPI to DOPI mode */</span></div><div class="line">    r_ospi_b_example_spi_to_dopi();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line"></div><div class="line">    <span class="comment">/* Change SPI to QSPI mode */</span></div><div class="line">    r_ospi_b_example_spi_to_qspi();</div><div class="line"></div><div class="line">    <span class="comment">/* Read data from an external device, this time in QSPI mode. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* Run the example function again in QSPI mode. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>OSPI Data and IAR</h3>
+<p>When using the IAR compiler, OSPI data must be <code>const</code> qualified to be downloaded by the debugger.</p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structospi__b__timing__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#structospi__b__timing__setting__t">ospi_b_timing_setting_t</a></td></tr>
+<tr class="separator:structospi__b__timing__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structospi__b__xspi__command__set__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a></td></tr>
+<tr class="separator:structospi__b__xspi__command__set__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structospi__b__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#structospi__b__extended__cfg__t">ospi_b_extended_cfg_t</a></td></tr>
+<tr class="separator:structospi__b__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structospi__b__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#structospi__b__instance__ctrl__t">ospi_b_instance_ctrl_t</a></td></tr>
+<tr class="separator:structospi__b__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga76971feb991ff5a55ffdc3e1c6834c1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f">ospi_b_device_number_t</a> </td></tr>
+<tr class="separator:ga76971feb991ff5a55ffdc3e1c6834c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bf54e3468d5d4de83db9e021bdbb2d3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga4bf54e3468d5d4de83db9e021bdbb2d3">ospi_b_command_bytes_t</a> </td></tr>
+<tr class="separator:ga4bf54e3468d5d4de83db9e021bdbb2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga570e0018e1e0dd225038e20f4a56d041"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga570e0018e1e0dd225038e20f4a56d041">ospi_b_command_interval_clocks_t</a> </td></tr>
+<tr class="separator:ga570e0018e1e0dd225038e20f4a56d041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga910082046980b0d68cf3927d2a465e4b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga910082046980b0d68cf3927d2a465e4b">ospi_b_command_cs_pullup_clocks_t</a> </td></tr>
+<tr class="separator:ga910082046980b0d68cf3927d2a465e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6aad607f2de843932644cf1137eeeac"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gab6aad607f2de843932644cf1137eeeac">ospi_b_command_cs_pulldown_clocks_t</a> </td></tr>
+<tr class="separator:gab6aad607f2de843932644cf1137eeeac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga131fd33e93249afc3733475ad2786a3b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga131fd33e93249afc3733475ad2786a3b">ospi_b_prefetch_function_t</a> </td></tr>
+<tr class="separator:ga131fd33e93249afc3733475ad2786a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d821ba8f342427fa60390abdf6cdf87"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga7d821ba8f342427fa60390abdf6cdf87">ospi_b_combination_function_t</a> </td></tr>
+<tr class="separator:ga7d821ba8f342427fa60390abdf6cdf87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structospi__b__timing__setting__t" id="structospi__b__timing__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structospi__b__timing__setting__t">&#9670;&nbsp;</a></span>ospi_b_timing_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ospi_b_timing_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Memory mapped timing </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af0e0540243e26295aabcca09b184cd50"></a><a class="el" href="group___o_s_p_i___b.html#ga570e0018e1e0dd225038e20f4a56d041">ospi_b_command_interval_clocks_t</a></td>
+<td class="fieldname">
+command_to_command_interval</td>
+<td class="fielddoc">
+Interval between 2 consecutive commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="a603a91ae60d9fa42498306e0275c6f55"></a><a class="el" href="group___o_s_p_i___b.html#ga910082046980b0d68cf3927d2a465e4b">ospi_b_command_cs_pullup_clocks_t</a></td>
+<td class="fieldname">
+cs_pullup_lag</td>
+<td class="fielddoc">
+Duration to de-assert CS line after the last command. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac8f8a74990e7ffb6f9efc1b36a5c6ad0"></a><a class="el" href="group___o_s_p_i___b.html#gab6aad607f2de843932644cf1137eeeac">ospi_b_command_cs_pulldown_clocks_t</a></td>
+<td class="fieldname">
+cs_pulldown_lead</td>
+<td class="fielddoc">
+Duration to assert CS line before the first command. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structospi__b__xspi__command__set__t" id="structospi__b__xspi__command__set__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structospi__b__xspi__command__set__t">&#9670;&nbsp;</a></span>ospi_b_xspi_command_set_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ospi_b_xspi_command_set_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Command set used for a protocol mode other than normal (1S-1S-1S) SPI. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a71f30710dcb8f6a40f5254d408f38216"></a><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a></td>
+<td class="fieldname">
+protocol</td>
+<td class="fielddoc">
+Protocol mode associated with this command set. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac84822e6456c6d507ed77584d0bbeac1"></a><a class="el" href="group___o_s_p_i___b.html#ga4bf54e3468d5d4de83db9e021bdbb2d3">ospi_b_command_bytes_t</a></td>
+<td class="fieldname">
+command_bytes</td>
+<td class="fielddoc">
+Number of command bytes for each command code. </td></tr>
+<tr><td class="fieldtype">
+<a id="a00f83d7b93418be05caa4310ee86b065"></a>uint16_t</td>
+<td class="fieldname">
+read_command</td>
+<td class="fielddoc">
+Read command. </td></tr>
+<tr><td class="fieldtype">
+<a id="afc0516d6e75a20ee38af5b7b0ec1cacc"></a>uint16_t</td>
+<td class="fieldname">
+page_program_command</td>
+<td class="fielddoc">
+Page program/write command. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6a3858f70d10ad02727a77db3dc7812e"></a>uint16_t</td>
+<td class="fieldname">
+write_enable_command</td>
+<td class="fielddoc">
+Command to enable write or erase, set to 0x00 to ignore. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaa8203b5b53605fee6a89d155f2d3281"></a>uint16_t</td>
+<td class="fieldname">
+status_command</td>
+<td class="fielddoc">
+Command to read the write status, set to 0x00 to ignore. </td></tr>
+<tr><td class="fieldtype">
+<a id="aefcc9d11688943faff97d79d0a7580b8"></a>uint8_t</td>
+<td class="fieldname">
+read_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for read commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6322dc0be297d305d55ec25632687a55"></a>uint8_t</td>
+<td class="fieldname">
+program_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for page program commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae881924edab459fec5c1f0a4519ad77a"></a>uint8_t</td>
+<td class="fieldname">
+status_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for status read commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="aae9c7600948325fee2a608401bc9cb64"></a>uint8_t</td>
+<td class="fieldname">
+erase_command_list_length</td>
+<td class="fielddoc">
+Length of erase command list. </td></tr>
+<tr><td class="fieldtype">
+<a id="a217341c7053972988f074c9808bbd6a7"></a><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t">spi_flash_erase_command_t</a> const  *</td>
+<td class="fieldname">
+p_erase_command_list</td>
+<td class="fielddoc">
+List of all erase commands and associated sizes. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structospi__b__extended__cfg__t" id="structospi__b__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structospi__b__extended__cfg__t">&#9670;&nbsp;</a></span>ospi_b_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ospi_b_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>OSPI_B Extended configuration. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7e2e7c493d3ca31a1dde6b4307e4d725"></a><a class="el" href="group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f">ospi_b_device_number_t</a></td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Device number to be used for memory device. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6cf36a43b286b455e32b5d3557662966"></a><a class="el" href="group___o_s_p_i___b.html#structospi__b__timing__setting__t">ospi_b_timing_setting_t</a> const  *</td>
+<td class="fieldname">
+p_timing_settings</td>
+<td class="fielddoc">
+Memory-mapped timing settings. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab4ba701e001b8c55acd29a756d504573"></a><a class="el" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a> const  *</td>
+<td class="fieldname">
+p_xspi_command_set_list</td>
+<td class="fielddoc">
+Additional protocol command sets; if additional protocol commands set are not used set this to NULL. </td></tr>
+<tr><td class="fieldtype">
+<a id="a11d239f0bf324daf621f8125442a1351"></a>uint8_t</td>
+<td class="fieldname">
+xspi_command_set_list_length</td>
+<td class="fielddoc">
+Number of additional protocol command set defined. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8562f207c43dc832c1f78ac06f9b522a"></a>uint8_t *</td>
+<td class="fieldname">
+p_autocalibration_preamble_pattern_addr</td>
+<td class="fielddoc">
+OctaFlash memory address holding the preamble pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="af914eb67d0d2dda9e70770c54ef6d283"></a>uint8_t</td>
+<td class="fieldname">
+data_latch_delay_clocks</td>
+<td class="fielddoc">
+Specify delay between OM_DQS and OM_DQS Strobe. Set to 0 to auto-calibrate. Typical value is 0x80. </td></tr>
+<tr><td class="fieldtype">
+<a id="a61141668e0ed6019ecabfaba780f2cf0"></a><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *</td>
+<td class="fieldname">
+p_lower_lvl_transfer</td>
+<td class="fielddoc">
+DMA Transfer instance used for data transmission. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4bfc8375b7a10512fed0694b9bb801a1"></a>uint8_t</td>
+<td class="fieldname">
+read_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for read commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2e0c01bff80f18b8f0535dde912693c0"></a>uint8_t</td>
+<td class="fieldname">
+program_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for page program commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa3bd97568f04755e775e5f49746cc79d"></a>uint8_t</td>
+<td class="fieldname">
+status_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for status read commands. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structospi__b__instance__ctrl__t" id="structospi__b__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structospi__b__instance__ctrl__t">&#9670;&nbsp;</a></span>ospi_b_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ospi_b_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Instance control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a75a4468493abb92f6bf484ed93718f6f">spi_flash_api_t::open</a> is called </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga76971feb991ff5a55ffdc3e1c6834c1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga76971feb991ff5a55ffdc3e1c6834c1f">&#9670;&nbsp;</a></span>ospi_b_device_number_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f">ospi_b_device_number_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI Flash chip select </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga76971feb991ff5a55ffdc3e1c6834c1fa92f8ffbf2e66985d3809b4e4b538be6b"></a>OSPI_B_DEVICE_NUMBER_0&#160;</td><td class="fielddoc"><p>Device connected to Chip-Select 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76971feb991ff5a55ffdc3e1c6834c1fa0f6cd25fb2ea2323c39f116ea0f60643"></a>OSPI_B_DEVICE_NUMBER_1&#160;</td><td class="fielddoc"><p>Device connected to Chip-Select 1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga4bf54e3468d5d4de83db9e021bdbb2d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4bf54e3468d5d4de83db9e021bdbb2d3">&#9670;&nbsp;</a></span>ospi_b_command_bytes_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga4bf54e3468d5d4de83db9e021bdbb2d3">ospi_b_command_bytes_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI flash number of command code bytes. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4bf54e3468d5d4de83db9e021bdbb2d3a6aa3fcd6c65bf42cb3ee95b050fe12dd"></a>OSPI_B_COMMAND_BYTES_1&#160;</td><td class="fielddoc"><p>Command codes are 1 byte long. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4bf54e3468d5d4de83db9e021bdbb2d3a165af2425e8e2fbcc301f0c7081cf9e2"></a>OSPI_B_COMMAND_BYTES_2&#160;</td><td class="fielddoc"><p>Command codes are 2 bytes long. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga570e0018e1e0dd225038e20f4a56d041"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga570e0018e1e0dd225038e20f4a56d041">&#9670;&nbsp;</a></span>ospi_b_command_interval_clocks_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga570e0018e1e0dd225038e20f4a56d041">ospi_b_command_interval_clocks_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI frame to frame interval </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041aa3297766c58c3d622fc90a296fe13de8"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_1&#160;</td><td class="fielddoc"><p>1 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a23a043628c6910bb166caa362c90066f"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_2&#160;</td><td class="fielddoc"><p>2 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041ace3a2305b1596b80d1f39e912194054b"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_3&#160;</td><td class="fielddoc"><p>3 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a17d7e54ee6efffe299524d685a0f3e16"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_4&#160;</td><td class="fielddoc"><p>4 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a8af9eb95b1b676874ce2229d51df9b3f"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_5&#160;</td><td class="fielddoc"><p>5 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a907b1266492c3ed833c3a6029cbdbd1d"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_6&#160;</td><td class="fielddoc"><p>6 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a25e06717470ce3ad18dbba19f66cd0dc"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_7&#160;</td><td class="fielddoc"><p>7 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041ad8f151924a7de41b649373d3845a95df"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_8&#160;</td><td class="fielddoc"><p>8 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041aae9cfe00744d313e74f635bf1cfb3654"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_9&#160;</td><td class="fielddoc"><p>9 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041ae5b870aaac797d738d8a1043b753353d"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_10&#160;</td><td class="fielddoc"><p>10 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a5cc48e74fa430db86fa2ce1beaa72630"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_11&#160;</td><td class="fielddoc"><p>11 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041aeacb60ba48f417c39ff708755a5c5eaa"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_12&#160;</td><td class="fielddoc"><p>12 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a803540312e867e64f3cd939e95b42490"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_13&#160;</td><td class="fielddoc"><p>13 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a01d97278b32aa4403ce0b4c3153385fd"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_14&#160;</td><td class="fielddoc"><p>14 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a3982fcadc8c47ab6265b820e179c5346"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_15&#160;</td><td class="fielddoc"><p>15 interval clocks </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga570e0018e1e0dd225038e20f4a56d041a39cbd91fd8f8d4d441f96db680090654"></a>OSPI_B_COMMAND_INTERVAL_CLOCKS_16&#160;</td><td class="fielddoc"><p>16 interval clocks </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga910082046980b0d68cf3927d2a465e4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga910082046980b0d68cf3927d2a465e4b">&#9670;&nbsp;</a></span>ospi_b_command_cs_pullup_clocks_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga910082046980b0d68cf3927d2a465e4b">ospi_b_command_cs_pullup_clocks_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI chip select de-assertion duration </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga910082046980b0d68cf3927d2a465e4ba974ee50a3742b03de4bfabe3364ef903"></a>OSPI_B_COMMAND_CS_PULLUP_CLOCKS_NO_EXTENSION&#160;</td><td class="fielddoc"><p>CS asserting No extension. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga910082046980b0d68cf3927d2a465e4ba47e862894eb5a341163a1eb726976124"></a>OSPI_B_COMMAND_CS_PULLUP_CLOCKS_1&#160;</td><td class="fielddoc"><p>CS asserting Extend 1 cycle. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab6aad607f2de843932644cf1137eeeac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6aad607f2de843932644cf1137eeeac">&#9670;&nbsp;</a></span>ospi_b_command_cs_pulldown_clocks_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#gab6aad607f2de843932644cf1137eeeac">ospi_b_command_cs_pulldown_clocks_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI chip select assertion duration </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab6aad607f2de843932644cf1137eeeacae46135ac72afa0bea87eccfb6ecce566"></a>OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_NO_EXTENSION&#160;</td><td class="fielddoc"><p>CS negating No extension. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab6aad607f2de843932644cf1137eeeaca4fa5ffc6899c6e6d8cb69168c3e8627c"></a>OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_1&#160;</td><td class="fielddoc"><p>CS negating Extend 1 cycle. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga131fd33e93249afc3733475ad2786a3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga131fd33e93249afc3733475ad2786a3b">&#9670;&nbsp;</a></span>ospi_b_prefetch_function_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga131fd33e93249afc3733475ad2786a3b">ospi_b_prefetch_function_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prefetch function settings </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga131fd33e93249afc3733475ad2786a3ba7c4c7495152f1c522f914833daac9877"></a>OSPI_B_PREFETCH_FUNCTION_DISABLE&#160;</td><td class="fielddoc"><p>Prefetch function disable. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga131fd33e93249afc3733475ad2786a3baa55d93dc648aaa44af7e46d996fef6c9"></a>OSPI_B_PREFETCH_FUNCTION_ENABLE&#160;</td><td class="fielddoc"><p>Prefetch function enable. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7d821ba8f342427fa60390abdf6cdf87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d821ba8f342427fa60390abdf6cdf87">&#9670;&nbsp;</a></span>ospi_b_combination_function_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga7d821ba8f342427fa60390abdf6cdf87">ospi_b_combination_function_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Combination function settings </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a5bd421f37fe950db1c67ecd1b5f8f166"></a>OSPI_B_COMBINATION_FUNCTION_DISABLE&#160;</td><td class="fielddoc"><p>Combination function disable. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87ab50cce32e55529ec5226a08496438e5b"></a>OSPI_B_COMBINATION_FUNCTION_4BYTE&#160;</td><td class="fielddoc"><p>Combine up to 4 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87aa9a341e65e9d10337b58b3a1d3126119"></a>OSPI_B_COMBINATION_FUNCTION_8BYTE&#160;</td><td class="fielddoc"><p>Combine up to 8 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a1f7c4ee0b25af1190d5d5560e609abe6"></a>OSPI_B_COMBINATION_FUNCTION_12BYTE&#160;</td><td class="fielddoc"><p>Combine up to 12 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87aa10a7205b373799998172ff1a507177c"></a>OSPI_B_COMBINATION_FUNCTION_16BYTE&#160;</td><td class="fielddoc"><p>Combine up to 16 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87ad10a3a7c69946554f59e57b8a8ec2440"></a>OSPI_B_COMBINATION_FUNCTION_20BYTE&#160;</td><td class="fielddoc"><p>Combine up to 20 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a02bbe0905eef2a7363c74b52fb84c2a3"></a>OSPI_B_COMBINATION_FUNCTION_24BYTE&#160;</td><td class="fielddoc"><p>Combine up to 24 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a4c45fbb0021afb121eaa7c40fdd35e9b"></a>OSPI_B_COMBINATION_FUNCTION_28BYTE&#160;</td><td class="fielddoc"><p>Combine up to 28 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87ad963958401829eac618f5109cb0e1723"></a>OSPI_B_COMBINATION_FUNCTION_32BYTE&#160;</td><td class="fielddoc"><p>Combine up to 32 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a0eb3bcc5ce232c18334b15593a1308a7"></a>OSPI_B_COMBINATION_FUNCTION_36BYTE&#160;</td><td class="fielddoc"><p>Combine up to 36 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a080c813d4d96c7f4f460cf2534fb2698"></a>OSPI_B_COMBINATION_FUNCTION_40BYTE&#160;</td><td class="fielddoc"><p>Combine up to 40 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a45adb20dd50f49645f3c97e571cab3bd"></a>OSPI_B_COMBINATION_FUNCTION_44BYTE&#160;</td><td class="fielddoc"><p>Combine up to 44 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a3d1971534dcbb7ac481140e4447e9dcc"></a>OSPI_B_COMBINATION_FUNCTION_48BYTE&#160;</td><td class="fielddoc"><p>Combine up to 48 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87ac250c9d3fe55f92f55fc2fd98b4927fb"></a>OSPI_B_COMBINATION_FUNCTION_52BYTE&#160;</td><td class="fielddoc"><p>Combine up to 52 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a25da316829b1720e1e4d263b0c64547d"></a>OSPI_B_COMBINATION_FUNCTION_56BYTE&#160;</td><td class="fielddoc"><p>Combine up to 56 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a485cfef768ecd41267d535233429d76e"></a>OSPI_B_COMBINATION_FUNCTION_60BYTE&#160;</td><td class="fielddoc"><p>Combine up to 60 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a2cac3d12b16db8e64d1065eceeb31ab2"></a>OSPI_B_COMBINATION_FUNCTION_64BYTE&#160;</td><td class="fielddoc"><p>Combine up to 64 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d821ba8f342427fa60390abdf6cdf87a65f73049ac27e6a8fe5b1c27f1bce385"></a>OSPI_B_COMBINATION_FUNCTION_2BYTE&#160;</td><td class="fielddoc"><p>Combine up to 2 bytes. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga9134500bd9ee50551e218a81868f5b1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9134500bd9ee50551e218a81868f5b1a">&#9670;&nbsp;</a></span>R_OSPI_B_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open the xSPI device. After the driver is open, the xSPI device can be accessed like internal flash memory.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a75a4468493abb92f6bf484ed93718f6f">spi_flash_api_t::open</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_ctrl or p_cfg is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Driver has already been opened with the same p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CALIBRATE_FAILED</td><td>Failed to perform auto-calibrate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae419ec1af4afc888da2d59403ca8225a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae419ec1af4afc888da2d59403ca8225a">&#9670;&nbsp;</a></span>R_OSPI_B_DirectWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_DirectWrite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>read_after_write</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes raw data directly to the OctaFlash. API not supported. Use R_OSPI_B_DirectTransfer</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#aebfa0317034f04f53b6b788da0debe80">spi_flash_api_t::directWrite</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported by OSPI. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad0f52f7bbbbf2f94305f6334ad06b2d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad0f52f7bbbbf2f94305f6334ad06b2d8">&#9670;&nbsp;</a></span>R_OSPI_B_DirectRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_DirectRead </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads raw data directly from the OctaFlash. API not supported. Use R_OSPI_B_DirectTransfer.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a4b3bfefb3b1ff0580fe1cce97b81c56f">spi_flash_api_t::directRead</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported by OSPI. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7b42dbc86db7f4c82ed640620743c609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7b42dbc86db7f4c82ed640620743c609">&#9670;&nbsp;</a></span>R_OSPI_B_DirectTransfer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_DirectTransfer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_transfer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a>&#160;</td>
+          <td class="paramname"><em>direction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read/Write raw data directly with the OctaFlash.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a875857cdb3d6ebf0971115737b9e2989">spi_flash_api_t::directTransfer</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The flash was programmed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga15282e9d7ef4d8c5471be859da55dd4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga15282e9d7ef4d8c5471be859da55dd4a">&#9670;&nbsp;</a></span>R_OSPI_B_XipEnter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_XipEnter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enters XIP (execute in place) mode.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a48a9a0db1f5bcb24acc9cc1cea14f0ab">spi_flash_api_t::xipEnter</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>XiP mode was entered successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>XiP support is not enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga96bc15adf392eccfa44eed3fb91fa7ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga96bc15adf392eccfa44eed3fb91fa7ef">&#9670;&nbsp;</a></span>R_OSPI_B_XipExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_XipExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exits XIP (execute in place) mode.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a00317079cf31b5311592d0845caa4d8a">spi_flash_api_t::xipExit</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>XiP mode was entered successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>XiP support is not enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabeb33594cd4d4f031f090857a7b3832b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabeb33594cd4d4f031f090857a7b3832b">&#9670;&nbsp;</a></span>R_OSPI_B_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>byte_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Program a page of data to the flash.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a35480fe077054fff8bd41c67dbce88fb">spi_flash_api_t::write</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The flash was programmed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl, p_dest or p_src is NULL, or byte_count crosses a page boundary. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Insufficient space remaining in page or write length is not a multiple of CPU access size when not using the DMAC. </td></tr>
+    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Another Write/Erase transaction is in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Write operation failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ADDRESS</td><td>Destination or source is not aligned to CPU access alignment when not using the DMAC. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga043d8c26f4d9c08a145bec1a3df4a2a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga043d8c26f4d9c08a145bec1a3df4a2a2">&#9670;&nbsp;</a></span>R_OSPI_B_Erase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_Erase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_device_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>byte_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Erase a block or sector of flash. The byte_count must exactly match one of the erase sizes defined in <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a>. For chip erase, byte_count must be SPI_FLASH_ERASE_SIZE_CHIP_ERASE.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a4fb48ee9af80243cf7f8f966b4c6c56e">spi_flash_api_t::erase</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The command to erase the flash was executed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl or p_device_address is NULL, byte_count doesn't match an erase size defined in <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a>, or byte_count is set to 0. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>The device is busy. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Write operation failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae5936464390d82c29e2d03f6c04880e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae5936464390d82c29e2d03f6c04880e2">&#9670;&nbsp;</a></span>R_OSPI_B_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the write or erase status of the flash.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a36600006109effd5c9d47283a7760ce6">spi_flash_api_t::statusGet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The write status is in p_status. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl or p_status is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga353dc5f34b95e0fac9f4f3074e52df70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga353dc5f34b95e0fac9f4f3074e52df70">&#9670;&nbsp;</a></span>R_OSPI_B_BankSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_BankSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bank</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Selects the bank to access. Use ospi_b_bank_select_t as the bank value.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae581e587fb514ab784257d07a77d6b32">spi_flash_api_t::bankSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is unsupported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga39b3c250a591ffd092cd6ded8c45249c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39b3c250a591ffd092cd6ded8c45249c">&#9670;&nbsp;</a></span>R_OSPI_B_SpiProtocolSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_SpiProtocolSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a>&#160;</td>
+          <td class="paramname"><em>spi_protocol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the SPI protocol.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a423e63cd15ce3984410c2f5cdf717e35">spi_flash_api_t::spiProtocolSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>SPI protocol updated on MPU peripheral. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CALIBRATE_FAILED</td><td>Failed to perform auto-calibrate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4070e46f2fadda4ec4cb8b8f023c1a00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4070e46f2fadda4ec4cb8b8f023c1a00">&#9670;&nbsp;</a></span>R_OSPI_B_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close the OSPI driver module.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a28bdae798428b85222739a0b9fd43a15">spi_flash_api_t::close</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac3441de6c487a640fae584248007a3a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac3441de6c487a640fae584248007a3a6">&#9670;&nbsp;</a></span>R_OSPI_B_AutoCalibrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_AutoCalibrate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AutoCalibrate the OSPI_B DS signal.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ac78c55ffe2b7d99681612ce796a384c5">spi_flash_api_t::autoCalibrate</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Autocalibration completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Autocalibration support is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CALIBRATE_FAILED</td><td>Failed to perform auto-calibrate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

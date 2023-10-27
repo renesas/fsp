@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -227,7 +305,7 @@ The following build time configurations are defined in fsp_cfg/rm_motor_sense_ha
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -243,41 +321,45 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor A
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_angle0 </td><td>Module name. </td></tr>
-<tr>
-<td>Hall sensor &gt; U phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_12_PIN_04 </td><td>Hall sensor port U </td></tr>
-<tr>
-<td>Hall sensor &gt; V phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_12_PIN_05 </td><td>Hall sensor port V </td></tr>
-<tr>
-<td>Hall sensor &gt; W phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_01 </td><td>Hall sensor port W </td></tr>
-<tr>
-<td>Hall sensor &gt; sensor pattern #1</td><td>Manual Entry</td><td>1 </td><td>Hall sensor pattern #1 </td></tr>
-<tr>
-<td>Hall sensor &gt; sensor pattern #2</td><td>Manual Entry</td><td>5 </td><td>Hall sensor pattern #2 </td></tr>
-<tr>
-<td>Hall sensor &gt; sensor pattern #3</td><td>Manual Entry</td><td>4 </td><td>Hall sensor pattern #3 </td></tr>
-<tr>
-<td>Hall sensor &gt; sensor pattern #4</td><td>Manual Entry</td><td>6 </td><td>Hall sensor pattern #4 </td></tr>
-<tr>
-<td>Hall sensor &gt; sensor pattern #5</td><td>Manual Entry</td><td>2 </td><td>Hall sensor pattern #5 </td></tr>
-<tr>
-<td>Hall sensor &gt; sensor pattern #6</td><td>Manual Entry</td><td>3 </td><td>Hall sensor pattern #6 </td></tr>
-<tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_angle0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Hall sensor  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">U phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_12_PIN_04 </td><td>Hall sensor port U </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">V phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_12_PIN_05 </td><td>Hall sensor port V </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">W phase input port</td><td>Manual Entry</td><td>BSP_IO_PORT_11_PIN_01 </td><td>Hall sensor port W </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #1</td><td>Manual Entry</td><td>1 </td><td>Hall sensor pattern #1 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #2</td><td>Manual Entry</td><td>5 </td><td>Hall sensor pattern #2 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #3</td><td>Manual Entry</td><td>4 </td><td>Hall sensor pattern #3 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #4</td><td>Manual Entry</td><td>6 </td><td>Hall sensor pattern #4 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #5</td><td>Manual Entry</td><td>2 </td><td>Hall sensor pattern #5 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #6</td><td>Manual Entry</td><td>3 </td><td>Hall sensor pattern #6 </td></tr>
+<tr class="tree_none">
 <td>PWM Carrier Frequency (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>PWM Carrier Frequency </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Correction parameter of rotor angle</td><td>Must be a valid value</td><td>0.0F </td><td>Correction parameter of rotor angle </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Default counts of carrier interrupt</td><td>Must be a valid non-negative value.</td><td>300U </td><td>Default counts of carrier interrupt during a period of Hall signal change </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Maximum counts of one rotation</td><td>Must be a valid non-negative value.</td><td>500U </td><td>Maximum counts of carrier interrupt during one rotor rotation </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Target value for pseudo speed (rad/s)</td><td>Must be a valid non-negative value.</td><td>100.0 </td><td>Target value for pseudo speed (rad/s). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Target time until the pseudo speed update reaches (msec)</td><td>Must be a valid non-negative value.</td><td>300.0 </td><td>Target time until the pseudo speed update reaches (msec). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Rotation counts to start speed estimation</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Rotation counts to start of speed estimation. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Carrier counts at startup</td><td>Must be a valid non-negative value.</td><td>400 </td><td>Carrier counts to wait the start timing of pseudo speed update </td></tr>
 </table>
 </p>
@@ -1073,7 +1155,7 @@ p_cfg</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

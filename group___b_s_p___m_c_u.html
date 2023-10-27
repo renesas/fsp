@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -183,8 +261,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga4e0c522c1bb26af24accaf20e6b87d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ad7a5e3ee69cb6db6a6b9111ba898bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc">NMI_Handler</a> (void)</td></tr>
 <tr class="separator:ga6ad7a5e3ee69cb6db6a6b9111ba898bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq, void(*p_callback)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq))</td></tr>
-<tr class="separator:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6a9c6b74983237446de75a9d9b65e752"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752">R_BSP_RegisterProtectEnable</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga8f69caf459fd80173db15fdee8bc6fa3">bsp_reg_protect_t</a> regs_to_protect)</td></tr>
 <tr class="separator:ga6a9c6b74983237446de75a9d9b65e752"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1bb35164e7e044bd1878a4ce015199c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3">R_BSP_RegisterProtectDisable</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga8f69caf459fd80173db15fdee8bc6fa3">bsp_reg_protect_t</a> regs_to_unprotect)</td></tr>
@@ -205,18 +281,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga4a93d5890f795fc7bbb2d85040a73bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf3219448adfd1531cf69f68697ab184b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a> (uint32_t delay, <a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a> units)</td></tr>
 <tr class="separator:gaf3219448adfd1531cf69f68697ab184b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73859f9b8df6981b869024d0b9a86bdb"><td class="memItemLeft" align="right" valign="top">BSP_TFU_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga73859f9b8df6981b869024d0b9a86bdb">__sinf</a> (float angle)</td></tr>
-<tr class="separator:ga73859f9b8df6981b869024d0b9a86bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64ff048b8398edee6c87652cce7553fd"><td class="memItemLeft" align="right" valign="top">BSP_TFU_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga64ff048b8398edee6c87652cce7553fd">__cosf</a> (float angle)</td></tr>
-<tr class="separator:ga64ff048b8398edee6c87652cce7553fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2fdd7030166ab85ca5bd585be0fba4f8"><td class="memItemLeft" align="right" valign="top">BSP_TFU_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga2fdd7030166ab85ca5bd585be0fba4f8">__sincosf</a> (float angle, float *sin, float *cos)</td></tr>
-<tr class="separator:ga2fdd7030166ab85ca5bd585be0fba4f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47132d9b15462b6fa520d6612e49a7c2"><td class="memItemLeft" align="right" valign="top">BSP_TFU_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga47132d9b15462b6fa520d6612e49a7c2">__atan2f</a> (float y_cord, float x_cord)</td></tr>
-<tr class="separator:ga47132d9b15462b6fa520d6612e49a7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacfd4a6d1bfb10481a6bf97427b88b665"><td class="memItemLeft" align="right" valign="top">BSP_TFU_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gacfd4a6d1bfb10481a6bf97427b88b665">__hypotf</a> (float x_cord, float y_cord)</td></tr>
-<tr class="separator:gacfd4a6d1bfb10481a6bf97427b88b665"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24bdcc94ec3b4abfc959e3e375f99b37"><td class="memItemLeft" align="right" valign="top">BSP_TFU_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga24bdcc94ec3b4abfc959e3e375f99b37">__atan2hypotf</a> (float y_cord, float x_cord, float *atan2, float *hypot)</td></tr>
-<tr class="separator:ga24bdcc94ec3b4abfc959e3e375f99b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq, void(*p_callback)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq))</td></tr>
+<tr class="separator:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The BSP is responsible for getting the MCU from reset to the user's application. Before reaching the user's application, the BSP sets up the stacks, heap, clocks, interrupts, C runtime environment, and stack monitor. </p>
@@ -255,6 +321,10 @@ Functions</h2></td></tr>
 <a href="#octaclock-update">Octal-SPI Clock Update</a> </li>
 <li>
 <a href="#board-features">Board Specific Features</a> </li>
+<li>
+<a href="#limited-dcache-support">Limited D-Cache Support</a> </li>
+<li>
+<a href="#non-cacheable-buffer-placement-example">Non-Cacheable Buffer Placement Example</a> </li>
 <li>
 <a href="#bsp-configuration">Configuration</a> </li>
 </ul>
@@ -376,16 +446,21 @@ OctaClock Update</h3>
 Sealing the Main Stack (TrustZone Secure Projects)</h2>
 <p>In TrustZone secure projects, the BSP seals the main stack by placing the value 0xFEF5EDA5 above the stack top. For more information, refer to section 3.5 "Sealing a Stack" in "Secure software guidelines for ARMv8-M": <a href="https://developer.arm.com/documentation/100720/0300">https://developer.arm.com/documentation/100720/0300</a>.</p>
 <p><a class="anchor" id="um_bsp_tz_seal_msp"></a> </p>
-<h1><a class="anchor" id="board-features"></a>
-Board Specific Features</h1>
-<p>The BSP will call the board's initialization function (bsp_init) which can initialize board specific features. Possible board features are listed below.</p>
+<h1><a class="anchor" id="limited-dcache-support"></a>
+Limited D-Cache Support</h1>
+<p>For MCUs with Cortex-M85 cores with D-Cache, limited support is available for enabling the D-Cache and automatically configuring predefined non-cacheable regions via the MPU during BSP initialization. For these MCUs, D-Cache is disabled by default because certain existing drivers do not support data coherency with D-Cache enabled. Enabling the D-Cache requires that data coherency be considered in any circumstance where a core interacts with other bus members.</p>
+<h2><a class="anchor" id="non-cacheable-buffer-placement-example"></a>
+Non-Cacheable Buffer Placement Example</h2>
+<p>The predefined non-cacheable regions configured by the MPU when D-Cache is enabled can be used to contain data that should not be cached, ensuring data coherency for that data. To use the predefined non-cacheable regions, place the data into the corresponding non-cacheable section defined by the linker script for the chosen toolchain. The predefined non-cacheable regions are not initialized by the BSP.</p>
+<p>Use one of the <code>.nocache</code> sections to place non-cacheable data. </p><pre class="fragment">uint8_t uncached_uninitialized_buffer_sram[1024] BSP_PLACE_IN_SECTION(".nocache");
+</pre><p>Section names differ by data region and compiler. Names predefined by the BSP are shown below.</p>
 <table class="doxtable">
 <tr>
-<th>Board Feature </th><th>Description  </th></tr>
+<th>Region </th><th>Name (GCC, IAR, LLVM) </th><th>Name (AC6)  </th></tr>
 <tr>
-<td>SDRAM Support </td><td>The BSP will initialize SDRAM if the board supports it </td></tr>
+<td>SRAM </td><td><code>.nocache</code> </td><td><code>.bss.nocache</code> </td></tr>
 <tr>
-<td>QSPI Support </td><td>The BSP will initialize QSPI if the board supports it and put it into ROM mode. Use the R_QSPI module to write and erase the QSPI chip. </td></tr>
+<td>SDRAM </td><td><code>.nocache_sdram</code> </td><td><code>.bss.nocache_sdram</code> </td></tr>
 </table>
 <h1><a class="anchor" id="bsp-configuration"></a>
 Configuration</h1>
@@ -395,17 +470,17 @@ The following build time configurations are defined in fsp_cfg/bsp/bsp_cfg.h:<br
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Main stack size (bytes)</td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF</td><td>0x400 </td><td>Set the size of the main program stack.<br />
 <br />
 NOTE: This entry is for the main stack. When using an RTOS, thread stacks can be configured in the properties for each thread. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Heap size (bytes)</td><td>Value must be 0 or an integer multiple of 8 between 8 and 0xFFFFFFFF.</td><td>0 </td><td>The main heap is disabled by default. Set the heap size to a positive integer divisible by 8 to enable it.<br />
 <br />
 A minimum of 4K (0x1000) is recommended if standard library functions are to be used. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>MCU Vcc (mV)</td><td>Value must between 0 and 5500 (5.5V)</td><td>3300 </td><td>Some peripherals require different settings based on the supplied voltage. Entering Vcc here (in mV) allows the relevant driver modules to configure the associated peripherals accordingly. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -413,7 +488,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, parameter checking for the BSP is turned on. In addition, any modules whose parameter checking configuration is set to 'Default (BSP)' will perform parameter checking as well. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Assert Failures</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Return FSP_ERR_ASSERTION</li>
@@ -425,7 +500,7 @@ Use assert() to Halt Execution</li>
 Disable checks that would return FSP_ERR_ASSERTION</li>
 </ul>
 </td><td>Return FSP_ERR_ASSERTION </td><td>Define the behavior of the <a class="el" href="group___b_s_p___m_c_u.html#gaa4fa8ae9390afa996af2dabee6552732">FSP_ASSERT()</a> macro. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Error Log</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Error Log</li>
@@ -433,7 +508,7 @@ No Error Log</li>
 Errors Logged via fsp_error_log</li>
 </ul>
 </td><td>No Error Log </td><td>Specify error logging behavior. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Registers not Reset Values during Startup</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -441,7 +516,7 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, registers are assumed to be set to their reset value during startup. Enable this if another application such as a bootloader or Secure project has already configured the clocks before the startup code runs. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Main Oscillator Populated</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Populated</li>
@@ -449,7 +524,7 @@ Populated</li>
 Not Populated</li>
 </ul>
 </td><td>Populated </td><td>Select whether or not there is a main oscillator (XTAL) on the board. This setting can be overridden in board_cfg.h. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>PFS Protect</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -457,7 +532,7 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Enabled </td><td>Keep the PFS registers locked when they are not being modified. If disabled they will be unlocked during startup. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>C Runtime Initialization </td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -465,7 +540,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Select if the C runtime initialization in the BSP is to be used. If disabled, use the BSP_WARM_START_POST_CLOCK event to run user defined equivalent. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Early BSP Initialization </td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -473,7 +548,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable this option to use BSP functions before C runtime initialization (BSP_WARM_START_RESET or BSP_WARM_START_POST_CLOCK). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Main Oscillator Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 External Oscillator</li>
@@ -481,7 +556,7 @@ External Oscillator</li>
 Crystal or Resonator</li>
 </ul>
 </td><td>Crystal or Resonator </td><td>Select the main oscillator clock source. This setting can be overridden in board_cfg.h </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Subclock Populated</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Populated</li>
@@ -489,7 +564,7 @@ Populated</li>
 Not Populated</li>
 </ul>
 </td><td>Populated </td><td>Select whether or not there is a subclock crystal on the board. This setting can be overridden in board_cfg.h. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Subclock Drive (Drive capacitance availability varies by MCU)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Standard/Normal mode</li>
@@ -501,7 +576,7 @@ Low power mode 2</li>
 Low power mode 3</li>
 </ul>
 </td><td>Standard/Normal mode </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>1000 </td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab or if the HOCO FLL function is enabled. This setting can be overridden in board_cfg.h </td></tr>
 </table>
 </p>
@@ -513,6 +588,8 @@ Modules</h2></td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a2_e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_e1.html">RA2E1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a2_e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_e2.html">RA2E2</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a2_e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_e3.html">RA2E3</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a2_l1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html">RA2L1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -550,9 +627,13 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a6_t3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_t3.html">RA6T3</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a8_m1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_m1.html">RA8M1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:gadecec24d538312129b60def6152f5992"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a></td></tr>
+<tr class="separator:gadecec24d538312129b60def6152f5992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae685ec20bc3579295878f1586478b54c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a></td></tr>
 <tr class="separator:gae685ec20bc3579295878f1586478b54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f428b0e243466083b74ab49b25bea8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga0f428b0e243466083b74ab49b25bea8c">FSP_LOG_PRINT</a>(X)</td></tr>
@@ -577,15 +658,13 @@ Macros</h2></td></tr>
 <tr class="separator:gaf0a730b79b5bbe76759b6e8efafe2000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2edfa2301d2ada75a9418be0e146e2bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga2edfa2301d2ada75a9418be0e146e2bb">R_BSP_MODULE_STOP</a>(ip,  channel)</td></tr>
 <tr class="separator:ga2edfa2301d2ada75a9418be0e146e2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadecec24d538312129b60def6152f5992"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a></td></tr>
-<tr class="separator:gadecec24d538312129b60def6152f5992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gafd98e2a6f080d6a52a3ef72e3d731b2b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a> </td></tr>
-<tr class="separator:gafd98e2a6f080d6a52a3ef72e3d731b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f69caf459fd80173db15fdee8bc6fa3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga8f69caf459fd80173db15fdee8bc6fa3">bsp_reg_protect_t</a> </td></tr>
 <tr class="separator:ga8f69caf459fd80173db15fdee8bc6fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd98e2a6f080d6a52a3ef72e3d731b2b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a> </td></tr>
+<tr class="separator:gafd98e2a6f080d6a52a3ef72e3d731b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6fe6dc3c0813eeae8665430a31c005b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> </td></tr>
 <tr class="separator:ga6fe6dc3c0813eeae8665430a31c005b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf256033060ec55ab7b466ae3205f5bcf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf256033060ec55ab7b466ae3205f5bcf">fsp_priv_source_clock_t</a> </td></tr>
@@ -603,6 +682,21 @@ Variables</h2></td></tr>
 <tr class="separator:ga4244c3a2d457987d4a9ab21738c8c617"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gadecec24d538312129b60def6152f5992"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadecec24d538312129b60def6152f5992">&#9670;&nbsp;</a></span>BSP_STACK_ALIGNMENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP_STACK_ALIGNMENT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stacks (and heap) must be sized and aligned to an integer multiple of this number. </p>
+
+</div>
+</div>
 <a id="gae685ec20bc3579295878f1586478b54c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gae685ec20bc3579295878f1586478b54c">&#9670;&nbsp;</a></span>BSP_IRQ_DISABLED</h2>
 
@@ -859,45 +953,7 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gadecec24d538312129b60def6152f5992"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadecec24d538312129b60def6152f5992">&#9670;&nbsp;</a></span>BSP_STACK_ALIGNMENT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP_STACK_ALIGNMENT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Stacks (and heap) must be sized and aligned to an integer multiple of this number. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="gafd98e2a6f080d6a52a3ef72e3d731b2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafd98e2a6f080d6a52a3ef72e3d731b2b">&#9670;&nbsp;</a></span>bsp_delay_units_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Available delay units for <a class="el" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay()</a>. These are ultimately used to calculate a total # of microseconds </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d"></a>BSP_DELAY_UNITS_SECONDS&#160;</td><td class="fielddoc"><p>Requested delay amount is in seconds. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913"></a>BSP_DELAY_UNITS_MILLISECONDS&#160;</td><td class="fielddoc"><p>Requested delay amount is in milliseconds. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae"></a>BSP_DELAY_UNITS_MICROSECONDS&#160;</td><td class="fielddoc"><p>Requested delay amount is in microseconds. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a id="ga8f69caf459fd80173db15fdee8bc6fa3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8f69caf459fd80173db15fdee8bc6fa3">&#9670;&nbsp;</a></span>bsp_reg_protect_t</h2>
 
@@ -918,6 +974,29 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aa0d59a00dd2ad61700675b0516ae7a7a"></a>BSP_REG_PROTECT_LVD&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the LVD: LVCMPCR, LVDLVLR, LVD1CR0, LVD1CR1, LVD1SR, LVD2CR0, LVD2CR1, LVD2SR. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aeb5f9f0105bb14618e461c354622b94a"></a>BSP_REG_PROTECT_SAR&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the security function. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gafd98e2a6f080d6a52a3ef72e3d731b2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd98e2a6f080d6a52a3ef72e3d731b2b">&#9670;&nbsp;</a></span>bsp_delay_units_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Available delay units for <a class="el" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay()</a>. These are ultimately used to calculate a total # of microseconds </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d"></a>BSP_DELAY_UNITS_SECONDS&#160;</td><td class="fielddoc"><p>Requested delay amount is in seconds. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913"></a>BSP_DELAY_UNITS_MILLISECONDS&#160;</td><td class="fielddoc"><p>Requested delay amount is in milliseconds. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae"></a>BSP_DELAY_UNITS_MICROSECONDS&#160;</td><td class="fielddoc"><p>Requested delay amount is in microseconds. </p>
 </td></tr>
 </table>
 
@@ -989,33 +1068,51 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Which interrupts can have callbacks registered. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282"></a>BSP_GRP_IRQ_WDT_ERROR&#160;</td><td class="fielddoc"><p>WDT underflow/refresh error has occurred. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282"></a>BSP_GRP_IRQ_WDT_ERROR&#160;</td><td class="fielddoc"><p>WDT underflow/refresh error has occurred. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a73d715e6454b59d168076be06d10bdec"></a>BSP_GRP_IRQ_LVD1&#160;</td><td class="fielddoc"><p>Voltage monitoring 1 interrupt. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a73d715e6454b59d168076be06d10bdec"></a>BSP_GRP_IRQ_LVD1&#160;</td><td class="fielddoc"><p>Voltage monitoring 1 interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a7d4a1c4259e5adef56020e11feba783f"></a>BSP_GRP_IRQ_VBATT&#160;</td><td class="fielddoc"><p>VBATT monitor interrupt. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a7d4a1c4259e5adef56020e11feba783f"></a>BSP_GRP_IRQ_VBATT&#160;</td><td class="fielddoc"><p>VBATT monitor interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a4388b6f380176202a8803b3d1d403061"></a>BSP_GRP_IRQ_RAM_PARITY&#160;</td><td class="fielddoc"><p>RAM Parity Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a4388b6f380176202a8803b3d1d403061"></a>BSP_GRP_IRQ_RAM_PARITY&#160;</td><td class="fielddoc"><p>RAM Parity Error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a6681a937a641a05f5ecf4a06f9373181"></a>BSP_GRP_IRQ_RAM_ECC&#160;</td><td class="fielddoc"><p>RAM ECC Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6681a937a641a05f5ecf4a06f9373181"></a>BSP_GRP_IRQ_RAM_ECC&#160;</td><td class="fielddoc"><p>RAM ECC Error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2ac05e7dbdac89cad200a792c1d773cbaf"></a>BSP_GRP_IRQ_MPU_BUS_SLAVE&#160;</td><td class="fielddoc"><p>MPU Bus Slave Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ac05e7dbdac89cad200a792c1d773cbaf"></a>BSP_GRP_IRQ_MPU_BUS_SLAVE&#160;</td><td class="fielddoc"><p>MPU Bus Slave Error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a5cec065daea65700340c0d5bce0d4f08"></a>BSP_GRP_IRQ_MPU_BUS_MASTER&#160;</td><td class="fielddoc"><p>MPU Bus Master Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a5cec065daea65700340c0d5bce0d4f08"></a>BSP_GRP_IRQ_MPU_BUS_MASTER&#160;</td><td class="fielddoc"><p>MPU Bus Master Error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d"></a>BSP_GRP_IRQ_MPU_STACK&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d"></a>BSP_GRP_IRQ_MPU_STACK&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2ace309a082976d961a018cf8a90001694"></a>BSP_GRP_IRQ_TRUSTZONE&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ace309a082976d961a018cf8a90001694"></a>BSP_GRP_IRQ_TRUSTZONE&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2abd05693e6764333ec5010ef6f102277d"></a>BSP_GRP_IRQ_CACHE_PARITY&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abd05693e6764333ec5010ef6f102277d"></a>BSP_GRP_IRQ_CACHE_PARITY&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282"></a>BSP_GRP_IRQ_WDT_ERROR&#160;</td><td class="fielddoc"><p>WDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a73d715e6454b59d168076be06d10bdec"></a>BSP_GRP_IRQ_LVD1&#160;</td><td class="fielddoc"><p>Voltage monitoring 1 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6b144cfec9387e8320632484e8e775da"></a>BSP_GRP_IRQ_MPU_BUS_TZF&#160;</td><td class="fielddoc"><p>MPU Bus or TrustZone Filter Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab255184fb96484f560129b75b4bfe90f"></a>BSP_GRP_IRQ_COMMON_MEMORY&#160;</td><td class="fielddoc"><p>SRAM ECC or SRAM Parity Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
 </td></tr>
 </table>
 
@@ -1662,49 +1759,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gaed27ea47f0c85a1af9bb515600d5e2ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaed27ea47f0c85a1af9bb515600d5e2ba">&#9670;&nbsp;</a></span>R_BSP_GroupIrqWrite()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_BSP_GroupIrqWrite </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a>&#160;</td>
-          <td class="paramname"><em>irq</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void(*)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)&#160;</td>
-          <td class="paramname"><em>p_callback</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Register a callback function for supported interrupts. If NULL is passed for the callback argument then any previously registered callbacks are unregistered.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt for which to register a callback. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Pointer to function to call when interrupt occurs.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback registered </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Callback pointer is NULL </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga6a9c6b74983237446de75a9d9b65e752"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6a9c6b74983237446de75a9d9b65e752">&#9670;&nbsp;</a></span>R_BSP_RegisterProtectEnable()</h2>
 
@@ -1953,89 +2007,23 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
 
 </div>
 </div>
-<a id="ga73859f9b8df6981b869024d0b9a86bdb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga73859f9b8df6981b869024d0b9a86bdb">&#9670;&nbsp;</a></span>__sinf()</h2>
+<a id="gaed27ea47f0c85a1af9bb515600d5e2ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaed27ea47f0c85a1af9bb515600d5e2ba">&#9670;&nbsp;</a></span>R_BSP_GroupIrqWrite()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">BSP_TFU_INLINE float __sinf </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_BSP_GroupIrqWrite </td>
           <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>angle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculates sine of the given angle. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">angle</td><td>The value of an angle in radian.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">Sine</td><td>value of an angle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga64ff048b8398edee6c87652cce7553fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga64ff048b8398edee6c87652cce7553fd">&#9670;&nbsp;</a></span>__cosf()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BSP_TFU_INLINE float __cosf </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>angle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculates cosine of the given angle. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">angle</td><td>The value of an angle in radian.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">Cosine</td><td>value of an angle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga2fdd7030166ab85ca5bd585be0fba4f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2fdd7030166ab85ca5bd585be0fba4f8">&#9670;&nbsp;</a></span>__sincosf()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BSP_TFU_INLINE void __sincosf </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>angle</em>, </td>
+          <td class="paramtype"><a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a>&#160;</td>
+          <td class="paramname"><em>irq</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>sin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>cos</em>&#160;</td>
+          <td class="paramtype">void(*)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)&#160;</td>
+          <td class="paramname"><em>p_callback</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2044,142 +2032,18 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculates sine and cosine of the given angle. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Register a callback function for supported interrupts. If NULL is passed for the callback argument then any previously registered callbacks are unregistered.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">angle</td><td>The value of an angle in radian. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">sin</td><td>Sine value of an angle. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">cos</td><td>Cosine value of an angle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga47132d9b15462b6fa520d6612e49a7c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga47132d9b15462b6fa520d6612e49a7c2">&#9670;&nbsp;</a></span>__atan2f()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BSP_TFU_INLINE float __atan2f </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>y_cord</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>x_cord</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculates the arc tangent based on given X-cordinate and Y-cordinate values. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">y_cord</td><td>Y-Axis cordinate value. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x_cord</td><td>X-Axis cordinate value.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq</td><td>Interrupt for which to register a callback. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Pointer to function to call when interrupt occurs.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">Arc</td><td>tangent for given values. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="gacfd4a6d1bfb10481a6bf97427b88b665"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacfd4a6d1bfb10481a6bf97427b88b665">&#9670;&nbsp;</a></span>__hypotf()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BSP_TFU_INLINE float __hypotf </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>x_cord</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>y_cord</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculates the hypotenuse based on given X-cordinate and Y-cordinate values. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">y_cord</td><td>Y-cordinate value. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x_cord</td><td>X-cordinate value.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">Hypotenuse</td><td>for given values. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga24bdcc94ec3b4abfc959e3e375f99b37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga24bdcc94ec3b4abfc959e3e375f99b37">&#9670;&nbsp;</a></span>__atan2hypotf()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">BSP_TFU_INLINE void __atan2hypotf </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>y_cord</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>x_cord</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>atan2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>hypot</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculates the arc tangent and hypotenuse based on given X-cordinate and Y-cordinate values. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">y_cord</td><td>Y-cordinate value. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x_cord</td><td>X-cordinate value. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">atan2</td><td>Arc tangent for given values. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">hypot</td><td>Hypotenuse for given values. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback registered </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Callback pointer is NULL </td></tr>
   </table>
   </dd>
 </dl>
@@ -2208,7 +2072,7 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -213,7 +291,7 @@ The following build time configurations are defined in fsp_cfg/rm_motor_driver_c
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -223,7 +301,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>ADC_B Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -231,7 +309,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Select ADC_B module support. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Shared ADC support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -239,7 +317,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Select Shared ADC support. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Supported Motor Number</td><td>Must be greater than 1.</td><td>1 </td><td></td></tr>
 </table>
  <h2>Configurations for Motor &gt; ADC and PWM Modulation (rm_motor_driver)</h2>
@@ -247,10 +325,12 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; ADC and
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_driver0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_driver0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1 shunt</li>
 <li>
@@ -259,106 +339,110 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; ADC and
 3 shunt</li>
 </ul>
 </td><td>2 shunt </td><td>Select shunt type </td></tr>
-<tr>
-<td>General &gt; Modulation method</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Modulation method</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 SVPWM</li>
 <li>
 SPWM</li>
 </ul>
 </td><td>SVPWM </td><td>Select PWM modulation method </td></tr>
-<tr>
-<td>General &gt; PWM output port UP</td><td>Manual Entry</td><td>0 </td><td>PWM output port UP </td></tr>
-<tr>
-<td>General &gt; PWM output port UN</td><td>Manual Entry</td><td>0 </td><td>PWM output port UN </td></tr>
-<tr>
-<td>General &gt; PWM output port VP</td><td>Manual Entry</td><td>0 </td><td>PWM output port VP </td></tr>
-<tr>
-<td>General &gt; PWM output port VN</td><td>Manual Entry</td><td>0 </td><td>PWM output port VN </td></tr>
-<tr>
-<td>General &gt; PWM output port WP</td><td>Manual Entry</td><td>0 </td><td>PWM output port WP </td></tr>
-<tr>
-<td>General &gt; PWM output port WN</td><td>Manual Entry</td><td>0 </td><td>PWM output port WN </td></tr>
-<tr>
-<td>General &gt; PWM Timer Frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
-<tr>
-<td>General &gt; PWM Carrier Period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
-<tr>
-<td>General &gt; Dead Time (Raw Counts)</td><td>Must be a valid non-negative value.</td><td>240 </td><td>GPT PWM dead time </td></tr>
-<tr>
-<td>General &gt; Current Range (A)</td><td>Must be a valid value</td><td>27.5F </td><td>Current range to measure(Maximum input current) </td></tr>
-<tr>
-<td>General &gt; Voltage Range (V)</td><td>Must be a valid value</td><td>111.0F </td><td>Voltage range to measure(Maximum input Main Line Voltage) </td></tr>
-<tr>
-<td>General &gt; Counts for current offset measurement</td><td>Must be a valid non-negative value.</td><td>500 </td><td>How many times to measure current offset </td></tr>
-<tr>
-<td>General &gt; A/D conversion channel for U Phase current</td><td>Value must be a supported channel number</td><td>0 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
-<tr>
-<td>General &gt; A/D conversion channel for W Phase current</td><td>Value must be a supported channel number</td><td>2 </td><td>Specify the A/D channel for W phase current (channel availability varies by MCU) </td></tr>
-<tr>
-<td>General &gt; A/D conversion channel for Main Line Voltage</td><td>Value must be a supported channel number</td><td>5 </td><td>Specify the A/D channel for main line voltage (channel availability varies by MCU) </td></tr>
-<tr>
-<td>General &gt; A/D conversion channel for V Phase current</td><td>Value must be a supported channel number</td><td>1 </td><td>Specify the A/D channel for V phase current (channel availability varies by MCU) </td></tr>
-<tr>
-<td>General &gt; A/D conversion channel for sin signal</td><td>Value must be a supported channel number</td><td>27 </td><td>Specify the A/D channel for sin signal of induction sensor (channel availability varies by MCU) </td></tr>
-<tr>
-<td>General &gt; A/D conversion channel for cos signal</td><td>Value must be a supported channel number</td><td>28 </td><td>Specify the A/D channel for cos signal of induction sensor (channel availability varies by MCU) </td></tr>
-<tr>
-<td>General &gt; Using ADC Scan Group</td><td>Manual Entry</td><td>0 </td><td>For MCUs with ADC_B, select the scan group used. </td></tr>
-<tr>
-<td>General &gt; A/D conversion unit for U Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for U phase current (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; A/D conversion unit for W Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for W phase current (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; A/D conversion unit for main line voltage</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for main line voltage (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; A/D conversion unit for V Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; A/D conversion unit for sin signal</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for sin signal of induction sensor (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; A/D conversion unit for cos signal</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for cos signal of induction sensor (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; ADC interrupt module</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM output port UP</td><td>Manual Entry</td><td>0 </td><td>PWM output port UP </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM output port UN</td><td>Manual Entry</td><td>0 </td><td>PWM output port UN </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM output port VP</td><td>Manual Entry</td><td>0 </td><td>PWM output port VP </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM output port VN</td><td>Manual Entry</td><td>0 </td><td>PWM output port VN </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM output port WP</td><td>Manual Entry</td><td>0 </td><td>PWM output port WP </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM output port WN</td><td>Manual Entry</td><td>0 </td><td>PWM output port WN </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM Timer Frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM Carrier Period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Dead Time (Raw Counts)</td><td>Must be a valid non-negative value.</td><td>240 </td><td>GPT PWM dead time </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current Range (A)</td><td>Must be a valid value</td><td>27.5F </td><td>Current range to measure(Maximum input current) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage Range (V)</td><td>Must be a valid value</td><td>111.0F </td><td>Voltage range to measure(Maximum input Main Line Voltage) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Counts for current offset measurement</td><td>Must be a valid non-negative value.</td><td>500 </td><td>How many times to measure current offset </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion channel for U Phase current</td><td>Value must be a supported channel number</td><td>0 </td><td>Specify the A/D channel for U phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion channel for W Phase current</td><td>Value must be a supported channel number</td><td>2 </td><td>Specify the A/D channel for W phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion channel for Main Line Voltage</td><td>Value must be a supported channel number</td><td>5 </td><td>Specify the A/D channel for main line voltage (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion channel for V Phase current</td><td>Value must be a supported channel number</td><td>1 </td><td>Specify the A/D channel for V phase current (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion channel for sin signal</td><td>Value must be a supported channel number</td><td>27 </td><td>Specify the A/D channel for sin signal of induction sensor (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion channel for cos signal</td><td>Value must be a supported channel number</td><td>28 </td><td>Specify the A/D channel for cos signal of induction sensor (channel availability varies by MCU) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Using ADC Scan Group</td><td>Manual Entry</td><td>0 </td><td>For MCUs with ADC_B, select the scan group used. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for U Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for U phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for W Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for W phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for main line voltage</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for main line voltage (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for V Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for sin signal</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for sin signal of induction sensor (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for cos signal</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for cos signal of induction sensor (only valid with adc module) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ADC interrupt module</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1st</li>
 <li>
 2nd</li>
 </ul>
 </td><td>1st </td><td>Select from which module ADC intterupt happens (only valid with adc module) </td></tr>
-<tr>
-<td>General &gt; Adjustment value to current A/D</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Value to adjust 1shunt A/D double buffer </td></tr>
-<tr>
-<td>General &gt; Minimum difference of PWM duty</td><td>Must be a valid non-negative value.</td><td>300 </td><td>Minimum difference of PWM duty </td></tr>
-<tr>
-<td>General &gt; Adjustment delay of A/D conversion</td><td>Must be a valid non-negative value.</td><td>240 </td><td>Adjustment delay of A/D conversion </td></tr>
-<tr>
-<td>General &gt; Input Voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Input voltage </td></tr>
-<tr>
-<td>General &gt; Resolution of A/D conversion</td><td>Must be a valid Resolution of ADC.</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
-<tr>
-<td>General &gt; Offset of A/D conversion for current</td><td>Must be a valid non-negative value.</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
-<tr>
-<td>General &gt; Conversion level of A/D conversion for voltage</td><td>Must be a valid value</td><td>0.66F </td><td>Conversion level of A/D conversion for voltage </td></tr>
-<tr>
-<td>General &gt; GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Adjustment value to current A/D</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Value to adjust 1shunt A/D double buffer </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimum difference of PWM duty</td><td>Must be a valid non-negative value.</td><td>300 </td><td>Minimum difference of PWM duty </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Adjustment delay of A/D conversion</td><td>Must be a valid non-negative value.</td><td>240 </td><td>Adjustment delay of A/D conversion </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input Voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Input voltage </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resolution of A/D conversion</td><td>Must be a valid Resolution of ADC.</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Offset of A/D conversion for current</td><td>Must be a valid non-negative value.</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Conversion level of A/D conversion for voltage</td><td>Must be a valid value</td><td>0.66F </td><td>Conversion level of A/D conversion for voltage </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level High </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
-<tr>
-<td>General &gt; GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level High </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
-<tr>
-<td>Modulation &gt; Maximum Duty</td><td>Must be a valid value</td><td>0.9375F </td><td>Maximum duty of PWM </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Modulation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Duty</td><td>Must be a valid value</td><td>0.9375F </td><td>Maximum duty of PWM </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_driver-clock-configuration"></a>
@@ -807,7 +891,7 @@ p_shared_instance_ctrl</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

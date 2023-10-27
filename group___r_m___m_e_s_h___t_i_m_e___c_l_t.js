@@ -4,7 +4,6 @@ var group___r_m___m_e_s_h___t_i_m_e___c_l_t =
     [ "RM_MESH_TIME_CLT_Open", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga5e3ac17cef8bbbd6c629a988fbec8634", null ],
     [ "RM_MESH_TIME_CLT_Close", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#gaba20e64e606398d0e40fbd9de83a7199", null ],
     [ "RM_MESH_TIME_CLT_GetModelHandle", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga9f9ce66e29efb7b8ac14299e43c29f63", null ],
-    [ "RM_MESH_TIME_CLT_SetModelHandle", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga7d77f400de19b8f7e4734cfa335420f1", null ],
     [ "RM_MESH_TIME_CLT_SendReliablePdu", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga438124325a5fccefc6fc35062b20f569", null ],
     [ "RM_MESH_TIME_CLT_Get", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#gad67980f140bfa4aa2cc65d92f42403e3", null ],
     [ "RM_MESH_TIME_CLT_Set", "group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#gaec22b2dde51eb212df29e754f83af7fb", null ],

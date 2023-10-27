@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -179,200 +257,212 @@ The following build time configurations are defined in fsp_cfg/azure/tx/tx_user.
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Custom tx_user.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom tx_user.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
-<tr>
-<td>General &gt; Error Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Custom tx_user.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom tx_user.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>The ThreadX basic API error checking can be bypassed by compiling with the symbol TX_DISABLE_ERROR_CHECKING defined. </td></tr>
-<tr>
-<td>General &gt; Max Priorities</td><td>Value must be a multiple of 32 and in range 32 to 1024 or empty</td><td>32 </td><td>Define the priority levels for ThreadX. Legal values range from 32 to 1024 and MUST be evenly divisible by 32. </td></tr>
-<tr>
-<td>General &gt; Minimum Stack</td><td>Value must be greater than 0 or empty</td><td>200 </td><td>Define the minimum stack for a ThreadX thread on this processor. If the size supplied during thread creation is less than this value, the thread create call will return an error. </td></tr>
-<tr>
-<td>General &gt; Stack Filling</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Priorities</td><td>Value must be a multiple of 32 and in range 32 to 1024 or empty</td><td>32 </td><td>Define the priority levels for ThreadX. Legal values range from 32 to 1024 and MUST be evenly divisible by 32. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minimum Stack</td><td>Value must be greater than 0 or empty</td><td>200 </td><td>Define the minimum stack for a ThreadX thread on this processor. If the size supplied during thread creation is less than this value, the thread create call will return an error. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stack Filling</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Determine is stack filling is enabled. By default, ThreadX stack filling is enabled, which places an 0xEF pattern in each byte of each thread's stack. This is used by debuggers with ThreadX-awareness and by the ThreadX run-time stack checking feature. </td></tr>
-<tr>
-<td>General &gt; Preemption Threshold</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Preemption Threshold</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Determine if preemption-threshold should be disabled. By default, preemption-threshold is disabled. If the application does not use preemption-threshold, it may be disabled to reduce code size and improve performance. </td></tr>
-<tr>
-<td>General &gt; Notify Callbacks</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Notify Callbacks</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Determine if the notify callback option should be disabled. By default, notify callbacks are disabled. If the application does not use notify callbacks, they may be disabled to reduce code size and improve performance. </td></tr>
-<tr>
-<td>General &gt; Inline Thread Resume Suspend</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inline Thread Resume Suspend</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Determine if the tx_thread_resume and tx_thread_suspend services should have their internal code in-line. This results in a larger image, but improves the performance of the thread resume and suspend services. </td></tr>
-<tr>
-<td>General &gt; Not Interruptable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Not Interruptable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Determine if the internal ThreadX code is non-interruptable. This results in smaller code size and less processing overhead, but increases the interrupt lockout time. </td></tr>
-<tr>
-<td>General &gt; IAR Library Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">IAR Library Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable IAR library support (IAR compiler only). When IAR Library Support is Enabled, enable the linker option --threaded_lib. In the IAR IDE, this can be enabled in Project &gt; Options &gt; General Options &gt; Library Configuration &gt; Enable thread support in library. </td></tr>
-<tr>
-<td>General &gt; BSD Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">BSD Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Defines TX_THREAD_EXTENSION_1 to bsd_err_no in order to support NXD BSD. </td></tr>
-<tr>
-<td>General &gt; FileX Pointer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">FileX Pointer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Determine if there is a FileX pointer in the thread control block. By default, the pointer is there for legacy/backwards compatibility. The pointer must also be there for applications using FileX. Disable this to save space in the thread control block. </td></tr>
-<tr>
-<td>Timer &gt; Timer Ticks Per Second</td><td>Value must be greater than 0 or empty</td><td>100 </td><td>Define the number of times the system timer runs per second. Default is 100 ticks per second, which results in a tick every 10ms. </td></tr>
-<tr>
-<td>Timer &gt; Timer Thread Stack Size</td><td>Value must be greater than 0 or empty</td><td>1024 </td><td>Define the system timer thread's default stack size and priority. These are only applicable if TX_TIMER_PROCESS_IN_ISR is disabled. </td></tr>
-<tr>
-<td>Timer &gt; Timer Thread Priority</td><td>Value must be greater than 0 or empty</td><td>0 </td><td>Define the system timer thread's default stack size and priority. These are only applicable if TX_TIMER_PROCESS_IN_ISR is disabled. </td></tr>
-<tr>
-<td>Timer &gt; Timer Process In ISR</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Timer  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Ticks Per Second</td><td>Value must be greater than 0 or empty</td><td>100 </td><td>Define the number of times the system timer runs per second. Default is 100 ticks per second, which results in a tick every 10ms. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Thread Stack Size</td><td>Value must be greater than 0 or empty</td><td>1024 </td><td>Define the system timer thread's default stack size and priority. These are only applicable if TX_TIMER_PROCESS_IN_ISR is disabled. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Thread Priority</td><td>Value must be greater than 0 or empty</td><td>0 </td><td>Define the system timer thread's default stack size and priority. These are only applicable if TX_TIMER_PROCESS_IN_ISR is disabled. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Process In ISR</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Determine if timer expirations (application timers, timeouts, and tx_thread_sleep calls should be processed within the a system timer thread or directly in the timer ISR. When disabled, the timer thread is used. When enabled, timer expiration processing is done directly from the timer ISR, thereby eliminating the timer thread control block, stack, and context switching to activate it. </td></tr>
-<tr>
-<td>Timer &gt; Reactivate Inline</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reactivate Inline</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Determine if in-line timer reactivation should be used within the timer expiration processing. By default, this is disabled and a function call is used. When enabled, reactivating is performed in-line resulting in faster timer processing but slightly larger code size. </td></tr>
-<tr>
-<td>Timer &gt; Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Determine if no timer processing is required. This option will help eliminate the timer processing when not needed. </td></tr>
-<tr>
-<td>Trace &gt; Event Trace</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Trace  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Event Trace</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Determine if the trace event logging code should be enabled. This causes slight increases in code size and overhead, but provides the ability to generate system trace information which is available for viewing in TraceX. </td></tr>
-<tr>
-<td>Trace &gt; Trace Buffer Name</td><td>Name must be a valid C symbol</td><td>g_tx_trace_buffer </td><td>Name of trace buffer symbol, only used if Event Trace is enabled. </td></tr>
-<tr>
-<td>Trace &gt; Memory section for Trace Buffer</td><td>Manual Entry</td><td>.bss </td><td>Specify the memory section where the Trace Buffer will be allocated, only used if Event Trace is enabled. To view TraceX data, export this buffer as raw binary data to a file (.trx extension recommended) and open it with Microsoft Azure RTOS TraceX. </td></tr>
-<tr>
-<td>Trace &gt; Trace Buffer Size</td><td>Value must be greater than 0</td><td>65536 </td><td>Trace buffer size in bytes, only used if Event Trace is enabled </td></tr>
-<tr>
-<td>Trace &gt; Trace Buffer Number of Registries</td><td>Value must be greater than 0</td><td>30 </td><td>Number of registries available to TraceX, only used if Event Trace is enabled </td></tr>
-<tr>
-<td>Performance &gt; Block Pool Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Trace Buffer Name</td><td>Name must be a valid C symbol</td><td>g_tx_trace_buffer </td><td>Name of trace buffer symbol, only used if Event Trace is enabled. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory section for Trace Buffer</td><td>Manual Entry</td><td>.bss </td><td>Specify the memory section where the Trace Buffer will be allocated, only used if Event Trace is enabled. To view TraceX data, export this buffer as raw binary data to a file (.trx extension recommended) and open it with Microsoft Azure RTOS TraceX. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Trace Buffer Size</td><td>Value must be greater than 0</td><td>65536 </td><td>Trace buffer size in bytes, only used if Event Trace is enabled </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Trace Buffer Number of Registries</td><td>Value must be greater than 0</td><td>30 </td><td>Number of registries available to TraceX, only used if Event Trace is enabled </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Performance  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Pool Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers block pool performance information. </td></tr>
-<tr>
-<td>Performance &gt; Byte Pool Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Byte Pool Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers byte pool performance information. </td></tr>
-<tr>
-<td>Performance &gt; Event Flags Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Event Flags Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers event flags performance information. </td></tr>
-<tr>
-<td>Performance &gt; Mutex Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mutex Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers mutex performance information. </td></tr>
-<tr>
-<td>Performance &gt; Queue Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Queue Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers queue performance information. </td></tr>
-<tr>
-<td>Performance &gt; Semaphore Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Semaphore Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers semaphore performance information. </td></tr>
-<tr>
-<td>Performance &gt; Thread Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Thread Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers thread performance information. </td></tr>
-<tr>
-<td>Performance &gt; Timer Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Timer Performance Info</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled, ThreadX gathers timer performance information. </td></tr>
-<tr>
-<td>RA &gt; Hardware Thread Stack Monitoring</td><td>MCU Specific Options</td><td></td><td>Use RA Hardware Stack Monitors to monitor thread stacks for overflow. Not available on MCUs that support PSPLIM. </td></tr>
-<tr>
-<td>Interrupts &gt; SysTick Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the Systick interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Maximum Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The maximum priority (lowest numerical value) an interrupt can have and use scheduler services. Interrupts with higher priority can interrupt most scheduler critical sections. Setting this to Priority 0 (highest) disables this feature. This feature is not available on MCUs that do not have the BASEPRI register. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> RA  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Hardware Thread Stack Monitoring</td><td>MCU Specific Options</td><td></td><td>Use RA Hardware Stack Monitors to monitor thread stacks for overflow. Not available on MCUs that support PSPLIM. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SysTick Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the Systick interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Maximum Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The maximum priority (lowest numerical value) an interrupt can have and use scheduler services. Interrupts with higher priority can interrupt most scheduler critical sections. Setting this to Priority 0 (highest) disables this feature. This feature is not available on MCUs that do not have the BASEPRI register. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-threadx-port-clock-configuration"></a>
@@ -394,6 +484,7 @@ Hardware Stack Monitor</h2>
 <h2><a class="anchor" id="r-threadx-port-low-power-modes"></a>
 Low Power Modes</h2>
 <p><a class="anchor" id="um_threadx_port_low_power_mode_in_idle_loop"></a>The idle processing executes WFI() when no thread is ready to run. If the MCU is configured to enter software standby mode or deep software standby mode when the idle processing executes WFI(), the RA ThreadX port changes the low power mode to sleep mode so the idle processing can wake from SysTick. The low power mode settings are restored when the MCU wakes from sleep mode.</p>
+<p>On RA8, there are delays inserted before and after switching to a lower power mode based on BSP configuration options and current CPUCLK speed. These delays do not disable interrupts for the entire delay as required by the RA8 Hardware Manual. Interrupts should be disabled by the application when possible before sleeping to meet the requirements, or the control of interrupts and the delay should be managed by the user to ensure the requirement is fully met.</p>
 <h2><a class="anchor" id="r-threadx-port-trustzone-integration"></a>
 TrustZone Integration</h2>
 <p><a class="anchor" id="um_threadx_port_trustzone"></a>When using an RTOS in a TrustZone project, Arm recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the thread has allocated a secure context (using tx_thread_secure_stack_allocate).</p>
@@ -402,7 +493,7 @@ TrustZone Integration</h2>
 Examples</h1>
 <h2>Stack Monitor Example</h2>
 <p>This is an example of using the stack monitor in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_BSP_HAS_SP_MON</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback(<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq);</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback (<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(irq);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[0].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle main stack monitor error here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[1].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle process stack monitor error here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_threadx_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Register a callback to be called when the stack goes outside the allocated stack area. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d">BSP_GRP_IRQ_MPU_STACK</a>, stack_monitor_callback);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Allocate stack space to return from UsageFault. */</span></div><div class="line">uint32_t g_stack_overflow_exception_stack[8] BSP_ALIGN_VARIABLE(<a class="code" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a>) BSP_PLACE_IN_SECTION(</div><div class="line">    BSP_SECTION_STACK);</div><div class="line"></div><div class="line"><span class="comment">/* MCUs that do not have an SPMON stack monitor use PSPLIM to detect stack overflows. When a stack overflow error</span></div><div class="line"><span class="comment"> * occurs, the UsageFault_Handler fires if it has been enabled. */</span></div><div class="line"><span class="keywordtype">void</span> UsageFault_Handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">register</span> uint32_t cfsr = SCB-&gt;CFSR;</div><div class="line">    <span class="keywordflow">if</span> (cfsr &amp; SCB_CFSR_STKOF_Msk)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update PSP and PSPLIM to point to an exception stack frame allocated for stack overflows. */</span></div><div class="line">        <span class="keyword">register</span> uint32_t * p_exception_stack_frame = (uint32_t *) (&amp;g_stack_overflow_exception_stack);</div><div class="line">        __set_PSP((uint32_t) p_exception_stack_frame);</div><div class="line">        __set_PSPLIM((uint32_t) p_exception_stack_frame);</div><div class="line"></div><div class="line">        <span class="comment">/* Clear XPSR, only set T-bit. */</span></div><div class="line">        p_exception_stack_frame[7] = 1U &lt;&lt; 24;</div><div class="line"></div><div class="line">        <span class="comment">/* Set PC to stack overflow error while loop. When execution returns from the UsageFault, it will go to the</span></div><div class="line"><span class="comment">         * stack_overflow_error_occurred function. It cannot return to the location where the fault occurred because</span></div><div class="line"><span class="comment">         * the MCU does not save the exception stack frame to the stack when a stack overflow error occurs. */</span></div><div class="line">        p_exception_stack_frame[6] = (uint32_t) stack_overflow_error_occurred;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Clear flags. */</span></div><div class="line">    SCB-&gt;CFSR = cfsr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* This function is called from UsageFault_Handler after a stack overflow occurs. */</span></div><div class="line"><span class="keywordtype">void</span> stack_overflow_error_occurred (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When recovering from a stack overflow, move the thread to a while(1) loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_threadx_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable usage fault. */</span></div><div class="line">    SCB-&gt;SHCSR |= SCB_SHCSR_USGFAULTENA_Msk;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>TrustZone Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_BSP_HAS_SP_MON</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback(<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq);</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback (<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(irq);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[0].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle main stack monitor error here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[1].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle process stack monitor error here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_threadx_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Register a callback to be called when the stack goes outside the allocated stack area. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d">BSP_GRP_IRQ_MPU_STACK</a>, stack_monitor_callback);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Allocate stack space to return from UsageFault. */</span></div><div class="line">uint32_t g_stack_overflow_exception_stack[8] BSP_ALIGN_VARIABLE(<a class="code" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a>) BSP_PLACE_IN_SECTION(</div><div class="line">    BSP_SECTION_STACK);</div><div class="line"></div><div class="line"><span class="comment">/* MCUs that do not have an SPMON stack monitor use PSPLIM to detect stack overflows. When a stack overflow error</span></div><div class="line"><span class="comment"> * occurs, the UsageFault_Handler fires if it has been enabled. */</span></div><div class="line"><span class="keywordtype">void</span> UsageFault_Handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">register</span> uint32_t cfsr = SCB-&gt;CFSR;</div><div class="line">    <span class="keywordflow">if</span> (cfsr &amp; SCB_CFSR_STKOF_Msk)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update PSP and PSPLIM to point to an exception stack frame allocated for stack overflows. */</span></div><div class="line">        <span class="keyword">register</span> uint32_t * p_exception_stack_frame = (uint32_t *) (&amp;g_stack_overflow_exception_stack);</div><div class="line">        __set_PSP((uint32_t) p_exception_stack_frame);</div><div class="line">        __set_PSPLIM((uint32_t) p_exception_stack_frame);</div><div class="line"></div><div class="line">        <span class="comment">/* Clear XPSR, only set T-bit. */</span></div><div class="line">        p_exception_stack_frame[7] = 1U &lt;&lt; 24;</div><div class="line"></div><div class="line">        <span class="comment">/* Set PC to stack overflow error while loop. When execution returns from the UsageFault, it will go to the</span></div><div class="line"><span class="comment">         * stack_overflow_error_occurred function. It cannot return to the location where the fault occurred because</span></div><div class="line"><span class="comment">         * the MCU does not save the exception stack frame to the stack when a stack overflow error occurs. */</span></div><div class="line">        p_exception_stack_frame[6] = (uint32_t) stack_overflow_error_occurred;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Clear flags. */</span></div><div class="line">    SCB-&gt;CFSR = cfsr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* This function is called from UsageFault_Handler after a stack overflow occurs. */</span></div><div class="line"><span class="keywordtype">void</span> stack_overflow_error_occurred (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When recovering from a stack overflow, move the thread to a while(1) loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_threadx_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable usage fault. */</span></div><div class="line">    SCB-&gt;SHCSR |= SCB_SHCSR_USGFAULTENA_Msk;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>TrustZone Example</h2>
 <p>This is an example of calling tx_thread_secure_stack_allocate before calling any non-secure callable functions in a thread.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keyword">extern</span> TX_THREAD * _tx_thread_current_ptr;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_threadx_port_trustzone_thread_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When ThreadX is used in a non-secure TrustZone application, tx_thread_secure_stack_allocate must be called prior</span></div><div class="line"><span class="comment">     * to calling any non-secure callable function in a thread. The first parameter is a pointer to the thread control block.</span></div><div class="line"><span class="comment">     * This function can be called when the thread is created or in the thread before an non-secure callable function is</span></div><div class="line"><span class="comment">     * called. The second parameter is unused in the FSP implementation. */</span></div><div class="line">    UINT status = tx_thread_secure_stack_allocate(_tx_thread_current_ptr, 0);</div><div class="line">    assert(TX_SUCCESS == status);</div><div class="line"></div><div class="line">    rm_threadx_port_nsc_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -410,7 +501,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

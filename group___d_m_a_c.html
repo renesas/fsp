@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -185,6 +263,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6b64368039ad6617f091a20b5ac16206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gade7f6c387756ca9728194ac15f01fc43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#gade7f6c387756ca9728194ac15f01fc43">R_DMAC_InfoGet</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__properties__t">transfer_properties_t</a> *const p_info)</td></tr>
 <tr class="separator:gade7f6c387756ca9728194ac15f01fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga697b9273351d29eb3e0c9319dce2e382"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ga697b9273351d29eb3e0c9319dce2e382">R_DMAC_Reload</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const num_transfers)</td></tr>
+<tr class="separator:ga697b9273351d29eb3e0c9319dce2e382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3423bb11f0d76dbe760ed01cf03ccd45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ga3423bb11f0d76dbe760ed01cf03ccd45">R_DMAC_Close</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga3423bb11f0d76dbe760ed01cf03ccd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -217,7 +297,7 @@ The following build time configurations are defined in fsp_cfg/r_dmac_cfg.h:<br 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -233,13 +313,13 @@ This module can be added to the Stacks tab via New Stack &gt; Transfer &gt; Tran
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_transfer0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the hardware channel. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Mode</td><td>MCU Specific Options</td><td></td><td>Select the transfer mode. Normal: One transfer per activation, transfer ends after Number of Transfers; Repeat: One transfer per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks; Block: Number of Blocks per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Transfer Size</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1 Byte</li>
@@ -249,7 +329,7 @@ This module can be added to the Stacks tab via New Stack &gt; Transfer &gt; Tran
 4 Bytes</li>
 </ul>
 </td><td>2 Bytes </td><td>Select the transfer size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Destination Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Fixed</li>
@@ -261,7 +341,7 @@ Incremented</li>
 Decremented</li>
 </ul>
 </td><td>Fixed </td><td>Select the address mode for the destination. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Source Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Fixed</li>
@@ -273,7 +353,7 @@ Incremented</li>
 Decremented</li>
 </ul>
 </td><td>Fixed </td><td>Select the address mode for the source. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Repeat Area (Unused in Normal Mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Destination</li>
@@ -281,23 +361,23 @@ Destination</li>
 Source</li>
 </ul>
 </td><td>Source </td><td>Select the repeat area. Either the source or destination address resets to its initial value after completing Number of Transfers in Repeat or Block mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Destination Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer destination pointer. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Source Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer source pointer. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of Transfers</td><td>Value must be a non-negative integer</td><td>1 </td><td>Specify the number of transfers for repeat and normal mode or block size for repeat-block transfer mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of Blocks (Valid only in Repeat,Block or Repeat-Block Mode)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the number of blocks to transfer in Repeat,Block or Repeat-Block mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Activation Source</td><td>MCU Specific Options</td><td></td><td>Select the DMAC transfer start event. If no ELC event is chosen then software start can be used. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback that is called at the end of the transfer. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Context</td><td>Manual Entry</td><td>NULL </td><td>Pointer to the context structure passed through the callback argument. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Transfer End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transfer end interrupt priority. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Interrupt Frequency</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Interrupt after all transfers have completed</li>
@@ -307,7 +387,7 @@ Interrupt after each block, or repeat size is transfered</li>
 </td><td>Interrupt after all transfers have completed </td><td>Select to have interrupt after each transfer or after last transfer. </td></tr>
 <tr>
 <td>Offset value (Valid only when address mode is \'Offset\')</td><td>Value must be a 24 bit signed integer.</td><td>1 </td><td>Offset value is added to the address after each transfer. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Source Buffer Size</td><td>Value must be a non-negative integer with a maximum configurable value of 65535.</td><td>1 </td><td>Specify the size of whole source buffer (valid only for Repeat-Block transfer mode with source address update mode other than offset addition). </td></tr>
 </table>
 </p>
@@ -547,7 +627,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:a4d8669f5a4263d19902385b7e6b48262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a54c3a163ff659e26a6f7ed319f4777"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#a6a54c3a163ff659e26a6f7ed319f4777">src_buffer_size</a></td></tr>
 <tr class="separator:a6a54c3a163ff659e26a6f7ed319f4777"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae520b30cee620c91a4aa4d123ef437bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ae520b30cee620c91a4aa4d123ef437bc">activation_source</a></td></tr>
+<tr class="memitem:ae520b30cee620c91a4aa4d123ef437bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ae520b30cee620c91a4aa4d123ef437bc">activation_source</a></td></tr>
 <tr class="separator:ae520b30cee620c91a4aa4d123ef437bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1aa5df5a650e272348c4bd6c71ad4392"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#a1aa5df5a650e272348c4bd6c71ad4392">p_callback</a> )(<a class="el" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> *cb_data)</td></tr>
 <tr class="separator:a1aa5df5a650e272348c4bd6c71ad4392"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -577,7 +657,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> dmac_extended_cfg_t::activation_source</td>
+          <td class="memname"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> dmac_extended_cfg_t::activation_source</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -978,6 +1058,53 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
+<a id="ga697b9273351d29eb3e0c9319dce2e382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga697b9273351d29eb3e0c9319dce2e382">&#9670;&nbsp;</a></span>R_DMAC_Reload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DMAC_Reload </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>num_transfers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>To update next transfer information without interruption during transfer.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This feature is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga3423bb11f0d76dbe760ed01cf03ccd45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3423bb11f0d76dbe760ed01cf03ccd45">&#9670;&nbsp;</a></span>R_DMAC_Close()</h2>
 
@@ -1011,7 +1138,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

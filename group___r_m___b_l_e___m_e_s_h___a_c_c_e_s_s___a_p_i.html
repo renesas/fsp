@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -172,10 +250,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___a_c_c_
 <p>Interface for Bluetooth Low Energy Mesh Access functions. </p>
 <h1><a class="anchor" id="RM_BLE_MESH_ACCESS_API_Summary"></a>
 Summary</h1>
-<p>The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Network Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality.</p>
-<p>The Bluetooth Low Energy Mesh Network Access interface can be implemented by:</p><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html">Bluetooth Low Energy Mesh Network Access (rm_ble_mesh_access)</a> </li>
-</ul>
+<p>The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Network Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
@@ -286,7 +361,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a1b4d878f5caff8e937b27ae76dd1b65e"></a>union <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#unionrm__ble__mesh__access__model__id__t_8____unnamed____">rm_ble_mesh_access_model_id_t</a></td>
+<a id="a46c97f951e053b95cb21ba82916600ce"></a>union <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#unionrm__ble__mesh__access__model__id__t_8____unnamed____">rm_ble_mesh_access_model_id_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1258,10 +1333,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open access middleware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gad7aa350d1bf98749f1188177725e8075">RM_BLE_MESH_ACCESS_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open access middleware.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1283,10 +1355,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close access middleware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gad84a44d80221fc689423706715f5deec">RM_BLE_MESH_ACCESS_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close access middleware.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1307,10 +1376,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register a model with the access layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga8c66b5818644b2a784df708901c04f38">RM_BLE_MESH_ACCESS_RegisterModel()</a></li>
-</ul>
-</dd></dl>
+<p>Register a model with the access layer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1333,10 +1399,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get element handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga348c0188e664ad6f1c347271d355b932">RM_BLE_MESH_ACCESS_GetElementHandle()</a></li>
-</ul>
-</dd></dl>
+<p>Get element handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1359,10 +1422,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get element handle for a given model handle </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga96c2b3dbe7e3478a5eb36c70f7e3f6a1">RM_BLE_MESH_ACCESS_GetElementHandleForModelHandle()</a></li>
-</ul>
-</dd></dl>
+<p>Get element handle for a given model handle</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1385,10 +1445,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get model handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gab864851fc1f73009aec9ee640efa41f2">RM_BLE_MESH_ACCESS_GetModelHandle()</a></li>
-</ul>
-</dd></dl>
+<p>Get model handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1412,10 +1469,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to publish access layer message. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga28c49d348d709251bab9a5c3aae1197d">RM_BLE_MESH_ACCESS_Publish()</a></li>
-</ul>
-</dd></dl>
+<p>API to publish access layer message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1439,10 +1493,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to reliably publish access layer message. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gadb68d5591a89599a8d4fbe7912790543">RM_BLE_MESH_ACCESS_ReliablePublish()</a></li>
-</ul>
-</dd></dl>
+<p>API to reliably publish access layer message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1466,10 +1517,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to reply to access layer message. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga56bca99dfbe4720ba5220de475c3d458">RM_BLE_MESH_ACCESS_Reply()</a></li>
-</ul>
-</dd></dl>
+<p>API to reply to access layer message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1493,10 +1541,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to reply to access layer message and optionally also to publish. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gab08e7eed2faefacd1bacd5ed4bbf30ba">RM_BLE_MESH_ACCESS_ReplyAndPublish()</a></li>
-</ul>
-</dd></dl>
+<p>API to reply to access layer message and optionally also to publish.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1520,10 +1565,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to send access PDUs. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga8f9ca23ee264513b64cb66b107a17204">RM_BLE_MESH_ACCESS_SendPdu()</a></li>
-</ul>
-</dd></dl>
+<p>API to send access PDUs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1546,10 +1588,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get composition data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac4503a256251cf4d352a31a9b92f31ca">RM_BLE_MESH_ACCESS_GetCompositionData()</a></li>
-</ul>
-</dd></dl>
+<p>Get composition data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1571,10 +1610,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To reset a node. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac000dbda8ce66615e1b7bf0603c7f1da">RM_BLE_MESH_ACCESS_Reset()</a></li>
-</ul>
-</dd></dl>
+<p>To reset a node.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1595,10 +1631,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get the number of elements in local node. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaf777577c2588d2ae18745b803628278b">RM_BLE_MESH_ACCESS_GetElementCount()</a></li>
-</ul>
-</dd></dl>
+<p>To get the number of elements in local node.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1620,10 +1653,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set primary unicast address. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaafa9aea8a72296bbc4fa589c8a1e659a">RM_BLE_MESH_ACCESS_SetPrimaryUnicastAddress()</a></li>
-</ul>
-</dd></dl>
+<p>To set primary unicast address.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1645,10 +1675,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get primary unicast address. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga0af19d1da635b5c784e169a6a9acaec8">RM_BLE_MESH_ACCESS_GetPrimaryUnicastAddress()</a></li>
-</ul>
-</dd></dl>
+<p>To get primary unicast address.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1670,10 +1697,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set default TTL. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaae312021a708982cb81dfdf80e4ee194">RM_BLE_MESH_ACCESS_SetDefaultTtl()</a></li>
-</ul>
-</dd></dl>
+<p>To set default TTL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1695,10 +1719,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get default TTL. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga6cc8c86cd04b25e43eacc82754ae4297">RM_BLE_MESH_ACCESS_GetDefaultTtl()</a></li>
-</ul>
-</dd></dl>
+<p>To get default TTL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1720,10 +1741,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set IV Index. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga3508efaee83a5ad642e50a5777e762c5">RM_BLE_MESH_ACCESS_SetIvIndex()</a></li>
-</ul>
-</dd></dl>
+<p>To set IV Index.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1746,10 +1764,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get IV Index. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga2297027b4e429fffce1014df4a756b67">RM_BLE_MESH_ACCESS_GetIvIndex()</a></li>
-</ul>
-</dd></dl>
+<p>To get IV Index.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1772,10 +1787,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get IV Index by IVI. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac9b423e72fc4ed26494ce4dc02580b37">RM_BLE_MESH_ACCESS_GetIvIndexByIvi()</a></li>
-</ul>
-</dd></dl>
+<p>To get IV Index by IVI.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1798,10 +1810,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To enable/disable a feature. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaf3835a01c870c20f4352a4837b02b556">RM_BLE_MESH_ACCESS_SetFeaturesField()</a></li>
-</ul>
-</dd></dl>
+<p>To enable/disable a feature.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1824,10 +1833,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get state of a feature. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gacf02f565397f6cebcde7624fe3065a47">RM_BLE_MESH_ACCESS_GetFeaturesField()</a></li>
-</ul>
-</dd></dl>
+<p>To get state of a feature.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1850,10 +1856,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get state of all features. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga60870034b6d17c64b64ea1d34a1f751a">RM_BLE_MESH_ACCESS_GetFeatures()</a></li>
-</ul>
-</dd></dl>
+<p>To get state of all features.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1875,10 +1878,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get friendship role of the node. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga5f2047145530dc1b977334c1c040dc2a">RM_BLE_MESH_ACCESS_GetFriendshipRole()</a></li>
-</ul>
-</dd></dl>
+<p>To get friendship role of the node.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1900,10 +1900,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set friendship role of the node. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaf8f3fa2cccecad502fd8a58410e99aaa">RM_BLE_MESH_ACCESS_SetFriendshipRole()</a></li>
-</ul>
-</dd></dl>
+<p>To set friendship role of the node.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1925,10 +1922,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To add Device Key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga3a4a6604f4cb7b64d798480888250a48">RM_BLE_MESH_ACCESS_AddDeviceKey()</a></li>
-</ul>
-</dd></dl>
+<p>To add Device Key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1952,10 +1946,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Device Key. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga31eadea04747a119c38f42239ae3b54e">RM_BLE_MESH_ACCESS_GetDeviceKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get Device Key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1978,10 +1969,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To remove all Device Keys. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gabe84c59b32cccb72cbdb956a9d7041f9">RM_BLE_MESH_ACCESS_RemoveAllDeviceKeys()</a></li>
-</ul>
-</dd></dl>
+<p>To remove all Device Keys.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2002,10 +1990,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get list of Provisioned Device List. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga603a4a706d0b6450103903983be6c5aa">RM_BLE_MESH_ACCESS_GetProvisionedDeviceList()</a></li>
-</ul>
-</dd></dl>
+<p>To get list of Provisioned Device List.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2028,10 +2013,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Device Key Handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gad6584b67b30ca94b6fee37cfe2f491cf">RM_BLE_MESH_ACCESS_GetDeviceKeyHandle()</a></li>
-</ul>
-</dd></dl>
+<p>To get Device Key Handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2054,10 +2036,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get AppKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga5cbedf75d2f679a5307650abe06af989">RM_BLE_MESH_ACCESS_GetAppKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get AppKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2081,10 +2060,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To add/update NetKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga86d41b73765e7b36fbf4ba1e630d031e">RM_BLE_MESH_ACCESS_AddUpdateNetkey()</a></li>
-</ul>
-</dd></dl>
+<p>To add/update NetKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2108,10 +2084,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To add Security Credential of a LPN or the Friend. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga566166b9ed784683da85f1db5c94725c">RM_BLE_MESH_ACCESS_AddFriendSecurityCredential()</a></li>
-</ul>
-</dd></dl>
+<p>To add Security Credential of a LPN or the Friend.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2135,10 +2108,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To delete the Security Credential of a LPN or the Friend. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga9a7afbd28c38502f644963d32bd3f2dc">RM_BLE_MESH_ACCESS_DeleteFriendSecurityCredential()</a></li>
-</ul>
-</dd></dl>
+<p>To delete the Security Credential of a LPN or the Friend.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2161,10 +2131,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To find a Subnet associated with the NetKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac4ecd2db5e80fb4677ef78b7ced5ba90">RM_BLE_MESH_ACCESS_FindSubnet()</a></li>
-</ul>
-</dd></dl>
+<p>To find a Subnet associated with the NetKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2187,10 +2154,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To find the Master Subnet associated with the friend security credential, identified by Friend Subnet Handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga9e1c271131600d51587926b7546cee49">RM_BLE_MESH_ACCESS_FindMasterSubnet()</a></li>
-</ul>
-</dd></dl>
+<p>To find the Master Subnet associated with the friend security credential, identified by Friend Subnet Handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2213,10 +2177,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To delete NetKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac56c885d08cf03c13904a36844d78f1e">RM_BLE_MESH_ACCESS_DeleteNetKey()</a></li>
-</ul>
-</dd></dl>
+<p>To delete NetKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2238,10 +2199,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get NetKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga1bbe7c6c2c0dd9a42977ede59753532a">RM_BLE_MESH_ACCESS_GetNetKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get NetKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2264,10 +2222,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get list of all known NetKeys. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac9d1d04e8cd317bc5a0f7075c8896e4f">RM_BLE_MESH_ACCESS_GetNetKeyIndexList()</a></li>
-</ul>
-</dd></dl>
+<p>To get list of all known NetKeys.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2290,10 +2245,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To search for NID. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaf47b2987b162b09437050a6fd64e1a2c">RM_BLE_MESH_ACCESS_LookUpNid()</a></li>
-</ul>
-</dd></dl>
+<p>To search for NID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2317,10 +2269,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To search for Network ID. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga533553210b72a55dc449367c828c7dbc">RM_BLE_MESH_ACCESS_LookUpNetworkId()</a></li>
-</ul>
-</dd></dl>
+<p>To search for Network ID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2344,10 +2293,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To search for AID. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga01db896f852dcb9b43838aead21b1b97">RM_BLE_MESH_ACCESS_LookUpAid()</a></li>
-</ul>
-</dd></dl>
+<p>To search for AID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2371,10 +2317,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set Provisioning Data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gafb0d10eefd7b9fdac3d3372304ddd860">RM_BLE_MESH_ACCESS_SetProvisioningData()</a></li>
-</ul>
-</dd></dl>
+<p>Set Provisioning Data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2396,10 +2339,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get NID associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga4a9c1a6a36eb2e4b6e9c050197025b69">RM_BLE_MESH_ACCESS_GetSubnetNid()</a></li>
-</ul>
-</dd></dl>
+<p>To get NID associated with a subnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2422,10 +2362,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get privacy Key associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga21d278ab6a93d1e6f027172223719ee5">RM_BLE_MESH_ACCESS_GetSubnetPrivacyKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get privacy Key associated with a subnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2448,10 +2385,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Network ID associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga6377c2f85e13f344d0627350c30e4b5f">RM_BLE_MESH_ACCESS_GetSubnetNetworkId()</a></li>
-</ul>
-</dd></dl>
+<p>To get Network ID associated with a subnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2474,10 +2408,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Beacon Key associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gae5fe219f3278d60deba484afc1d9bf83">RM_BLE_MESH_ACCESS_GetSubnetBeaconKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get Beacon Key associated with a subnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2500,10 +2431,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Identity Key associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaa6dc54c75b1659b9a20d253a9d370fca">RM_BLE_MESH_ACCESS_GetSubnetIdentityKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get Identity Key associated with a subnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2526,10 +2454,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Encryption Key associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaccf357c2ee9f5f3df86c84d58ef46e1b">RM_BLE_MESH_ACCESS_GetSubnetEncryptionKey()</a></li>
-</ul>
-</dd></dl>
+<p>To get Encryption Key associated with a subnet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2552,10 +2477,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Node Identity. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga5c158a126e34ddbf4c4832d9176e0b51">RM_BLE_MESH_ACCESS_GetNodeIdentity()</a></li>
-</ul>
-</dd></dl>
+<p>To get Node Identity.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2578,10 +2500,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set Node Identity. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gae704bd7e854748475657405890c75955">RM_BLE_MESH_ACCESS_SetNodeIdentity()</a></li>
-</ul>
-</dd></dl>
+<p>To set Node Identity.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2604,10 +2523,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Key refresh phase. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac9885ebc2431d15c10dccbb37cccd0e8">RM_BLE_MESH_ACCESS_GetKeyRefreshPhase()</a></li>
-</ul>
-</dd></dl>
+<p>To get Key refresh phase.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2630,10 +2546,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set Key refresh phase. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga20b168552d81ed88bfb1022b16864b71">RM_BLE_MESH_ACCESS_SetKeyRefreshPhase()</a></li>
-</ul>
-</dd></dl>
+<p>To set Key refresh phase.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2656,10 +2569,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set Network/Relay Transmit state. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga6cd7506d4101294e411169d95f2e5a73">RM_BLE_MESH_ACCESS_SetTransmitState()</a></li>
-</ul>
-</dd></dl>
+<p>To set Network/Relay Transmit state.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2682,10 +2592,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Network/Relay Transmit state. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gafa542edf81594b60e6758f9e18991b17">RM_BLE_MESH_ACCESS_GetTransmitState()</a></li>
-</ul>
-</dd></dl>
+<p>To get Network/Relay Transmit state.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2708,10 +2615,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To add AppKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga08e5f53cab713e48499ad9fe799f4e9a">RM_BLE_MESH_ACCESS_AddAppKey()</a></li>
-</ul>
-</dd></dl>
+<p>To add AppKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2735,10 +2639,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To update/delete AppKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gafd856c3018592656a6f189f1f7dcf14b">RM_BLE_MESH_ACCESS_UpdateAppKey()</a></li>
-</ul>
-</dd></dl>
+<p>To update/delete AppKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2762,10 +2663,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To update/delete AppKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga6a2ca99217884f547bf2bc438be28fc4">RM_BLE_MESH_ACCESS_DeleteAppKey()</a></li>
-</ul>
-</dd></dl>
+<p>To update/delete AppKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2789,10 +2687,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get AppKey Handle for a given AppKey Index. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga2b55c81d407816660cec46dea0123b6b">RM_BLE_MESH_ACCESS_GetAppKeyHandle()</a></li>
-</ul>
-</dd></dl>
+<p>To get AppKey Handle for a given AppKey Index.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2817,10 +2712,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get list of all known AppKeys. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga4197a3e4202a42dadfe8428dd4c93ce5">RM_BLE_MESH_ACCESS_GetAppKeyIndexList()</a></li>
-</ul>
-</dd></dl>
+<p>To get list of all known AppKeys.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2844,10 +2736,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To bind a model with an AppKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga731f0d0e93358eb6d69d3b0da727a947">RM_BLE_MESH_ACCESS_BindModelWithAppKey()</a></li>
-</ul>
-</dd></dl>
+<p>To bind a model with an AppKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2870,10 +2759,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To unbind a model with an AppKey. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga98e27f3e7df8427e359958b25c4b5cea">RM_BLE_MESH_ACCESS_UnbindModelWithAppKey()</a></li>
-</ul>
-</dd></dl>
+<p>To unbind a model with an AppKey.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2896,10 +2782,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get list of all AppKeys associated with a model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gabaa134eb677e2173a41105f846b64dcf">RM_BLE_MESH_ACCESS_GetModelAppKeyList()</a></li>
-</ul>
-</dd></dl>
+<p>To get list of all AppKeys associated with a model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2923,10 +2806,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set Publication information associated with a model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga416160c4d53fd4f284a54657f9f0de6e">RM_BLE_MESH_ACCESS_SetModelPublication()</a></li>
-</ul>
-</dd></dl>
+<p>To set Publication information associated with a model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2949,10 +2829,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set Publication Fast Period Divisor information associated with a model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga85abcd2fe25d50807b483d67f8da6d1e">RM_BLE_MESH_ACCESS_SetModelPublicationPeriodDivisor()</a></li>
-</ul>
-</dd></dl>
+<p>To set Publication Fast Period Divisor information associated with a model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2975,10 +2852,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Publication information associated with a model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gab7ca12b3a5ec04b587f73e04384eefb3">RM_BLE_MESH_ACCESS_GetModelPublication()</a></li>
-</ul>
-</dd></dl>
+<p>To get Publication information associated with a model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3001,10 +2875,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To add an address to a model subscription list. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga2067d6fe5c0ca90215aa040d6cb1d626">RM_BLE_MESH_ACCESS_AddModelSubscription()</a></li>
-</ul>
-</dd></dl>
+<p>To add an address to a model subscription list.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3027,10 +2898,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To delete an address to a model subscription list. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gafe0ad1b8ac173d9a69f1247249320c7d">RM_BLE_MESH_ACCESS_DeleteModelSubscription()</a></li>
-</ul>
-</dd></dl>
+<p>To delete an address to a model subscription list.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3053,10 +2921,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To discard a model subscription list. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga001207cd9fb8eed7163985f5e2ddbbac">RM_BLE_MESH_ACCESS_DeleteAllModelSubscription()</a></li>
-</ul>
-</dd></dl>
+<p>To discard a model subscription list.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3078,10 +2943,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get list of subscription addresses of a model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gaab7af0247d0b0c7d8078e1d7b6e0e467">RM_BLE_MESH_ACCESS_GetModelSubscriptionList()</a></li>
-</ul>
-</dd></dl>
+<p>To get list of subscription addresses of a model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3105,10 +2967,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get list of subscription addresses of all the models. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga84f7265109b073afd0c0022b3a5ddcf9">RM_BLE_MESH_ACCESS_GetAllModelSubscriptionList()</a></li>
-</ul>
-</dd></dl>
+<p>To get list of subscription addresses of all the models.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3131,10 +2990,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To check if valid element address to receive a packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga1f99369bcfb760a17f97243180e1d07b">RM_BLE_MESH_ACCESS_IsValidElementAddress()</a></li>
-</ul>
-</dd></dl>
+<p>To check if valid element address to receive a packet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3156,10 +3012,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To check if Fixed Group Address in receive packet to be processed. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gabd3715a87c361ce855272c2293ee6c80">RM_BLE_MESH_ACCESS_IsFixedGroupAddressToBeProcessed()</a></li>
-</ul>
-</dd></dl>
+<p>To check if Fixed Group Address in receive packet to be processed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3181,10 +3034,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To check if valid subscription address to receive a packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga873b0f1f5549e561147f720a166a5ccb">RM_BLE_MESH_ACCESS_IsValidSubscriptionAddress()</a></li>
-</ul>
-</dd></dl>
+<p>To check if valid subscription address to receive a packet.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3206,10 +3056,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set the IV Update Test Mode feature. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga9ae4473281be3d82c01712b59b180075">RM_BLE_MESH_ACCESS_EnableIvUpdateTestMode()</a></li>
-</ul>
-</dd></dl>
+<p>To set the IV Update Test Mode feature.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -3437,10 +3284,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BLE MESH ACCESS control block. Allocate an instance specific control block to pass into the BLE MESH ACCESS API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#structrm__ble__mesh__access__instance__ctrl__t">rm_ble_mesh_access_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>BLE MESH ACCESS control block. Allocate an instance specific control block to pass into the BLE MESH ACCESS API calls. </p>
 
 </div>
 </div>
@@ -4214,7 +4058,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

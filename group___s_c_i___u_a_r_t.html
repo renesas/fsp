@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -216,7 +294,7 @@ The following build time configurations are defined in fsp_cfg/r_sci_uart_cfg.h:
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -226,7 +304,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>FIFO Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -234,7 +312,7 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable FIFO support for the SCI_UART module. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -242,7 +320,7 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable DTC support for the SCI_UART module. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Flow Control Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -250,7 +328,7 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable RS232 and RS-485 flow control support using a user provided pin. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>RS-485 Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -264,12 +342,14 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_uart0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the SCI channel. </td></tr>
-<tr>
-<td>General &gt; Data Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_uart0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the SCI channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 8bits</li>
 <li>
@@ -278,8 +358,8 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 9bits</li>
 </ul>
 </td><td>8bits </td><td>Select the number of bits per word. </td></tr>
-<tr>
-<td>General &gt; Parity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Parity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -288,58 +368,66 @@ Odd</li>
 Even</li>
 </ul>
 </td><td>None </td><td>Select the parity mode. </td></tr>
-<tr>
-<td>General &gt; Stop Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stop Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1bit</li>
 <li>
 2bits</li>
 </ul>
 </td><td>1bit </td><td>Select the number of stop bits. </td></tr>
-<tr>
-<td>Baud &gt; Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Baud  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
 <br />
 If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
-<tr>
-<td>Baud &gt; Baud Rate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Baud Rate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Enabling baud rate modulation reduces the percent error of the actual baud rate with respect to the requested baud rate. It does this by modulating the number of cycles per clock, so some bits are slightly longer than others. </td></tr>
-<tr>
-<td>Baud &gt; Max Error (%)</td><td>Must be a valid non-negative integer with a maximum configurable value of 100</td><td>5 </td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider using less accurate alternative register settings.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Error (%)</td><td>Must be a valid non-negative integer with a maximum configurable value of 100</td><td>5 </td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider using less accurate alternative register settings.<br />
 <br />
 NOTE: The baud calculation does not show an error in the tool if this percent error was not achieved. The calculated percent error is recorded in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
-<tr>
-<td>Flow Control &gt; CTS/RTS Selection</td><td>MCU Specific Options</td><td></td><td>Select either CTS or RTS function on the CTSn_RTSn pin of SCI channel n or select CTS function on CTSn pin and RTS function on CTSn_RTSn pin of SCI channel n (Available on selected MCUs and channels). </td></tr>
-<tr>
-<td>Flow Control &gt; Software RTS Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin port for the MCU. </td></tr>
-<tr>
-<td>Flow Control &gt; Software RTS Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin for the MCU. </td></tr>
-<tr>
-<td>Extra &gt; RS-485 &gt; DE Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Flow Control  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">CTS/RTS Selection</td><td>MCU Specific Options</td><td></td><td>Select either CTS or RTS function on the CTSn_RTSn pin of SCI channel n or select CTS function on CTSn pin and RTS function on CTSn_RTSn pin of SCI channel n (Available on selected MCUs and channels). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Software RTS Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin port for the MCU. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Software RTS Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin for the MCU. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra &gt; RS-485  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">DE Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Enable or disable the DE pin for use in RS-485 half-duplex mode. </td></tr>
-<tr>
-<td>Extra &gt; RS-485 &gt; DE Pin Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">DE Pin Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Active Low</li>
 <li>
 Active High</li>
 </ul>
 </td><td>Active High </td><td>Select the polarity of the DE pin. </td></tr>
-<tr>
-<td>Extra &gt; RS-485 &gt; DE Port Number</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>GPIO output port number to use for generating the DE signal. </td></tr>
-<tr>
-<td>Extra &gt; RS-485 &gt; DE Pin Number</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>GPIO output pin number to use for generating the DE signal. </td></tr>
-<tr>
-<td>Extra &gt; Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">DE Port Number</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>GPIO output port number to use for generating the DE signal. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">DE Pin Number</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>GPIO output pin number to use for generating the DE signal. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Internal Clock</li>
 <li>
@@ -350,40 +438,42 @@ External Clock 8x baud rate</li>
 External Clock 16x baud rate</li>
 </ul>
 </td><td>Internal Clock </td><td>Selection of the clock source to be used in the baud-rate clock generator. When internal clock is used the baud rate can be output on the SCK pin. </td></tr>
-<tr>
-<td>Extra &gt; Start bit detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Start bit detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Falling Edge</li>
 <li>
 Low Level</li>
 </ul>
 </td><td>Falling Edge </td><td>Start bit detected as falling edge or low level. </td></tr>
-<tr>
-<td>Extra &gt; Noise Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Noise Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
 <li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
-<tr>
-<td>Extra &gt; Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 One</li>
 <li>
 Max</li>
 </ul>
 </td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
-<tr>
-<td>Interrupts &gt; Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Transmit Data Empty Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit Data Empty Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-sci-uart-clock-configuration"></a>
@@ -398,6 +488,8 @@ Clock Configuration</h2>
 <td>RA2E1</td><td>PCLKB</td></tr>
 <tr>
 <td>RA2E2</td><td>PCLKB</td></tr>
+<tr>
+<td>RA2E3</td><td>PCLKB</td></tr>
 <tr>
 <td>RA2L1</td><td>PCLKB</td></tr>
 <tr>
@@ -1016,7 +1108,7 @@ RS-485 settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a51b74df27fb26e85700d9524cdfc7c01">uart_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acfd849190deedb8f9c35bed54dccc111">uart_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1252,7 +1344,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

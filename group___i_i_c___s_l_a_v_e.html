@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -199,6 +277,10 @@ Features</h2>
 <li><a class="anchor" id="um_iic_slave_clock_stretching"></a> Clock stretching is supported and can be implemented via callbacks.</li>
 <li><a class="anchor" id="um_iic_slave_callback_to_notify_data_length"></a> Provides Transmission/Reception transaction size in the callback.</li>
 <li><a class="anchor" id="um_iic_slave_notify_the_generated_event"></a>I2C Slave can notify the following events via callbacks: Transmission/Reception Request, Transmission/Reception Request for more data, Transmission/Reception Completion, Error Condition.</li>
+<li>Additional build-time features:<ul>
+<li><a class="anchor" id="um_iic_slave_optional_dtc_support_for_data_transfer"></a>Optional (build time) DTC support for read and write respectively.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="anchor" id="r-iic_slave-configuration"></a>
 Configuration</h1>
@@ -207,7 +289,7 @@ The following build time configurations are defined in fsp_cfg/r_iic_slave_cfg.h
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -217,21 +299,31 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>DTC on Transmission and Reception</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; I2C Slave (r_iic_slave)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; I2C Slave (r_iic_slave). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Interrupt Priority Level &gt; Transmit, Receive, and Transmit End</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for TXI, RXI, and TEI interrupts. </td></tr>
-<tr>
-<td>Interrupt Priority Level &gt; Error</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for ERI interrupt. </td></tr>
-<tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupt Priority Level  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit, Receive, and Transmit End</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for TXI, RXI, and TEI interrupts. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for ERI interrupt. </td></tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i2c_slave0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the IIC channel. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Rate</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Standard</li>
@@ -243,7 +335,7 @@ Fast-mode plus</li>
 </td><td>Standard </td><td>Select the transfer rate.<br />
 <br />
 If the delay for the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated delay is printed in a comment in the generated <a class="el" href="group___i_i_c___s_l_a_v_e.html#structiic__slave__extended__cfg__t">iic_slave_extended_cfg_t</a> structure. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Internal Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 PCLKB / 1</li>
@@ -263,7 +355,7 @@ PCLKB / 64</li>
 PCLKB / 128</li>
 </ul>
 </td><td>PCLKB / 1 </td><td>Select the internal reference clock for IIC slave. The internal reference clock is used only to determine the clock frequency of the noise filter samples. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Digital Noise Filter Stage Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -277,9 +369,9 @@ Single-stage filter</li>
 4-stage filter</li>
 </ul>
 </td><td>3-stage filter </td><td>Select the number of digital filter stages for IIC Slave. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Slave Address</td><td>Value must be non-negative</td><td>0x08 </td><td>Specify the slave address. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>General Call</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -287,7 +379,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Allows the slave to respond to general call address: 0x00. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 7-Bit</li>
@@ -295,7 +387,7 @@ Disabled</li>
 10-Bit</li>
 </ul>
 </td><td>7-Bit </td><td>Select the slave address mode. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Clock Stretching</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -303,7 +395,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Configure Clock Stretching. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) to report I2C Slave transaction events and status. </td></tr>
 </table>
 </p>
@@ -374,7 +466,8 @@ IIC Slave Rate Calculation</h2>
 </ul>
 <h2>Limitations</h2>
 <ul>
-<li>When 'Clock Stretching' configuration is enabled, the receive operation will not utilize the double buffer arrangement in hardware for a continuous read. This means that the read operation would happen in single byte units such that the active master would send the next byte only when the slave has read the current byte of data. </li>
+<li>When 'Clock Stretching' configuration is enabled, the receive operation will not utilize the double buffer arrangement in hardware for a continuous read. This means that the read operation would happen in single byte units such that the active master would send the next byte only when the slave has read the current byte of data.</li>
+<li>When DTC is enabled, the clock frequency supply for DTC must be configured greater than the "Internal Reference Clock" of the slave. </li>
 </ul>
 <h1><a class="anchor" id="r-iic_slave-examples"></a>
 Examples</h1>
@@ -487,7 +580,8 @@ I2C Clock settings. </td></tr>
 <li>extended parameter is NULL.</li>
 <li>Callback parameter is NULL.</li>
 <li>Set the rate to fast mode plus on a channel which does not support it.</li>
-<li>Invalid IRQ number assigned </li>
+<li>Invalid IRQ number assigned</li>
+<li>transfer instance in p_cfg is NULL when DTC support enabled </li>
 </ol>
 </td></tr>
   </table>
@@ -535,6 +629,7 @@ I2C Clock settings. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl, bytes or p_dest is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Another transfer was in progress. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Device is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Invalid size when reading data via DTC. </td></tr>
   </table>
   </dd>
 </dl>
@@ -580,6 +675,7 @@ I2C Clock settings. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl or p_src is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Another transfer was in progress. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Device is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Invalid size when writing data via DTC. </td></tr>
   </table>
   </dd>
 </dl>
@@ -623,7 +719,7 @@ I2C Clock settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a527fc26638e91d2daf652c2b30b5ab5a">i2c_slave_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#acaf522087321868585ab1753caa08d2e">i2c_slave_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -669,7 +765,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

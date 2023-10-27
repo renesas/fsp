@@ -25,7 +25,7 @@ var group___w_d_t___a_p_i =
       [ "statusClear", "group___w_d_t___a_p_i.html#af66d798489c7ace801fee8b5a9c833c2", null ],
       [ "counterGet", "group___w_d_t___a_p_i.html#a724c02d7265d5eaa846cf97a3556f5d6", null ],
       [ "timeoutGet", "group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925", null ],
-      [ "callbackSet", "group___w_d_t___a_p_i.html#a28dc9b161653da57c10267f775bda125", null ]
+      [ "callbackSet", "group___w_d_t___a_p_i.html#a0237b5cdf9261e1b80bc085b3a6e5583", null ]
     ] ],
     [ "wdt_instance_t", "group___w_d_t___a_p_i.html#structwdt__instance__t", [
       [ "p_ctrl", "group___w_d_t___a_p_i.html#ac301430918784342b3f136d2afc705a7", null ],
@@ -76,8 +76,9 @@ var group___w_d_t___a_p_i =
     ] ],
     [ "wdt_status_t", "group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935", [
       [ "WDT_STATUS_NO_ERROR", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46", null ],
-      [ "WDT_STATUS_UNDERFLOW_ERROR", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935af462767cbf65a6d23725aab201ab05ee", null ],
+      [ "WDT_STATUS_UNDERFLOW", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a67430b92ca3930bb185d76449309004b", null ],
       [ "WDT_STATUS_REFRESH_ERROR", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a4b045e0cf22adf889286b3184bb212bf", null ],
-      [ "WDT_STATUS_UNDERFLOW_AND_REFRESH_ERROR", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935ae49ea1e31c6a71b8acf1617f144dfcad", null ]
+      [ "WDT_STATUS_UNDERFLOW_AND_REFRESH_ERROR", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935ae49ea1e31c6a71b8acf1617f144dfcad", null ],
+      [ "WDT_STATUS_OVERFLOW", "group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935ad930e4c90d18d3d5caebe11d602dd630", null ]
     ] ]
 ];

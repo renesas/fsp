@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,11 +248,7 @@ $(document).ready(function(){initNavTree('group___s_p_i___a_p_i.html','');});
 <p>Interface for SPI communications. </p>
 <h1><a class="anchor" id="SPI_API_SUMMARY"></a>
 Summary</h1>
-<p>Provides a common interface for communication using the SPI Protocol.</p>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___s_p_i.html">SPI (r_spi)</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html">SPI (r_sci_spi)</a> </li>
-</ul>
+<p>Provides a common interface for communication using the SPI Protocol. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -335,11 +409,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:a91d7ce46956168e975b7c9f5fc738724"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a312e4358f12551a3f7aaa5f0a09c0501"><td class="memItemLeft" align="right" valign="top"><a id="a312e4358f12551a3f7aaa5f0a09c0501"></a>
 <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#a312e4358f12551a3f7aaa5f0a09c0501">p_transfer_tx</a></td></tr>
-<tr class="memdesc:a312e4358f12551a3f7aaa5f0a09c0501"><td class="mdescLeft">&#160;</td><td class="mdescRight">To use SPI DTC/DMA write transfer, link a DTC/DMA instance here. Set to NULL if unused. <br /></td></tr>
+<tr class="memdesc:a312e4358f12551a3f7aaa5f0a09c0501"><td class="mdescLeft">&#160;</td><td class="mdescRight">To use SPI DTC/DMAC write transfer, link a transfer instance here. Set to NULL if unused. <br /></td></tr>
 <tr class="separator:a312e4358f12551a3f7aaa5f0a09c0501"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab38fb6af687bdf7e0ea9143499849bc6"><td class="memItemLeft" align="right" valign="top"><a id="ab38fb6af687bdf7e0ea9143499849bc6"></a>
 <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#ab38fb6af687bdf7e0ea9143499849bc6">p_transfer_rx</a></td></tr>
-<tr class="memdesc:ab38fb6af687bdf7e0ea9143499849bc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">To use SPI DTC/DMA read transfer, link a DTC/DMA instance here. Set to NULL if unused. <br /></td></tr>
+<tr class="memdesc:ab38fb6af687bdf7e0ea9143499849bc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">To use SPI DTC/DMAC read transfer, link a transfer instance here. Set to NULL if unused. <br /></td></tr>
 <tr class="separator:ab38fb6af687bdf7e0ea9143499849bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9becc8fedef1f029e6adc788611a276"><td class="memItemLeft" align="right" valign="top"><a id="ae9becc8fedef1f029e6adc788611a276"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#ae9becc8fedef1f029e6adc788611a276">p_callback</a> )(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *p_args)</td></tr>
@@ -379,8 +453,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:af053cb19a14773a51d1e060c5a624555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ed153d8e5e54e417fda95b044ac2fd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#a6ed153d8e5e54e417fda95b044ac2fd6">writeRead</a> )(<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_ctrl, void const *p_src, void *p_dest, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
 <tr class="separator:a6ed153d8e5e54e417fda95b044ac2fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01c7aacdcdf219dcfa88c2b40e7d25b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1">callbackSet</a> )(<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a01c7aacdcdf219dcfa88c2b40e7d25b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3409ec3b694f2d68043360f466c31ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#ad3409ec3b694f2d68043360f466c31ce">callbackSet</a> )(<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ad3409ec3b694f2d68043360f466c31ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa23ca0243886b64c90aa17744d72aee5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___a_p_i.html#aa23ca0243886b64c90aa17744d72aee5">close</a> )(<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:aa23ca0243886b64c90aa17744d72aee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -396,12 +470,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize a channel for SPI communication mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open()</a></li>
-<li><a class="el" href="group___s_p_i___b.html#gab338db9c94dc09edc2ceddf87904845d">R_SPI_B_Open()</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html#ga9ce8ace26bb551a1ad4b320202c894ec">R_SCI_SPI_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initialize a channel for SPI communication mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to user-provided storage for the control block. </td></tr>
@@ -423,18 +492,13 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Receive data from a SPI device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#ga9427801ef2c771a88fad0ab4524d7d42">R_SPI_Read()</a></li>
-<li><a class="el" href="group___s_p_i___b.html#gabcc557f95c75b12b462962f6c709e229">R_SPI_B_Read()</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html#ga9fdab8bddaabefc2116cc078c207bc4f">R_SCI_SPI_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Receive data from a SPI device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control block for the channel. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_dest</td><td>Pointer to destination buffer into which data will be copied that is received from a SPI device. It is the responsibility of the caller to ensure that adequate space is available to hold the requested data count. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Number of units of data to be transferred (unit size specified by the bit_width). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Data bit width to be transferred. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_dest</td><td>Pointer to destination buffer into which data will be copied that is received from a SPI device. It is the responsibility of the caller to ensure that adequate space is available to hold the requested data count. </td></tr>
   </table>
   </dd>
 </dl>
@@ -452,12 +516,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Transmit data to a SPI device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#ga97b928cbe1a9df78d4ab5ff69732dbcd">R_SPI_Write()</a></li>
-<li><a class="el" href="group___s_p_i___b.html#ga2adf0b091362e84b71f1bd3a1d821f40">R_SPI_B_Write()</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html#ga7f7f0fbe5dc85ac7dac6c5676965e432">R_SCI_SPI_Write()</a></li>
-</ul>
-</dd></dl>
+<p>Transmit data to a SPI device.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control block for the channel. </td></tr>
@@ -481,12 +540,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Simultaneously transmit data to a SPI device while receiving data from a SPI device (full duplex). </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead()</a></li>
-<li><a class="el" href="group___s_p_i___b.html#ga44658a0ea656e093e0eac61186aef274">R_SPI_B_WriteRead()</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html#ga061962640303cb50a61285212571a85a">R_SCI_SPI_WriteRead()</a></li>
-</ul>
-</dd></dl>
+<p>Simultaneously transmit data to a SPI device while receiving data from a SPI device (full duplex).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control block for the channel. </td></tr>
@@ -500,23 +554,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a01c7aacdcdf219dcfa88c2b40e7d25b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01c7aacdcdf219dcfa88c2b40e7d25b1">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="ad3409ec3b694f2d68043360f466c31ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3409ec3b694f2d68043360f466c31ce">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_api_t::callbackSet) (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_api_t::callbackSet) (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#ga2812fdb85312afcc52ef06c97f41fceb">R_SPI_CallbackSet()</a></li>
-<li><a class="el" href="group___s_p_i___b.html#ga588348788f8ed3f933befc5a1cbe9b90">R_SPI_B_CallbackSet()</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html#ga9980c52ccbe2e8e2f4e21888ca7a0d95">R_SCI_SPI_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SPI control block. </td></tr>
@@ -540,12 +589,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Remove power to the SPI channel designated by the handle and disable the associated interrupts. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#ga2130d38f52a95911a8f0cec6018ec041">R_SPI_Close()</a></li>
-<li><a class="el" href="group___s_p_i___b.html#ga8e700b9cda9c467dde6090fb4c4a6969">R_SPI_B_Close()</a></li>
-<li><a class="el" href="group___s_c_i___s_p_i.html#ga80b7c1f5e687731bbc3de8df267a1c15">R_SCI_SPI_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Remove power to the SPI channel designated by the handle and disable the associated interrupts.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the control block for the channel. </td></tr>
@@ -606,12 +650,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>SPI control block. Allocate an instance specific control block to pass into the SPI API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_p_i.html#structspi__instance__ctrl__t">spi_instance_ctrl_t</a></li>
-<li><a class="el" href="group___s_p_i___b.html#structspi__b__instance__ctrl__t">spi_b_instance_ctrl_t</a></li>
-<li><a class="el" href="structsci__spi__instance__ctrl__t.html">sci_spi_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>SPI control block. Allocate an instance specific control block to pass into the SPI API calls. </p>
 
 </div>
 </div>
@@ -639,21 +678,21 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090"></a>SPI_BIT_WIDTH_8_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 8 bits (byte) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf0519b353e4cfb4440088212f4aca8cc"></a>SPI_BIT_WIDTH_9_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 9 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf0519b353e4cfb4440088212f4aca8cc"></a>SPI_BIT_WIDTH_9_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 9 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf1aefd864f4f60e49990d4fad936ce21"></a>SPI_BIT_WIDTH_10_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 10 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf1aefd864f4f60e49990d4fad936ce21"></a>SPI_BIT_WIDTH_10_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 10 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda88f58430f3fecf9a39ec42943e0bb733"></a>SPI_BIT_WIDTH_11_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 11 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda88f58430f3fecf9a39ec42943e0bb733"></a>SPI_BIT_WIDTH_11_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 11 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda1a4f404e28d648b608c5711b5552090b"></a>SPI_BIT_WIDTH_12_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 12 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda1a4f404e28d648b608c5711b5552090b"></a>SPI_BIT_WIDTH_12_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 12 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda75ce94ca33921b755ff60ae3cf781d2a"></a>SPI_BIT_WIDTH_13_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 13 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda75ce94ca33921b755ff60ae3cf781d2a"></a>SPI_BIT_WIDTH_13_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 13 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda8de43c8612ae97eaf447c95718e7f461"></a>SPI_BIT_WIDTH_14_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 14 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda8de43c8612ae97eaf447c95718e7f461"></a>SPI_BIT_WIDTH_14_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 14 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda05c6f46ea4bb0182d526a6bf451d68e1"></a>SPI_BIT_WIDTH_15_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 15 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda05c6f46ea4bb0182d526a6bf451d68e1"></a>SPI_BIT_WIDTH_15_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 15 bits (halfword) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda62f8d41fec9f532ac41463037534e582"></a>SPI_BIT_WIDTH_16_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 16 bits (word) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda62f8d41fec9f532ac41463037534e582"></a>SPI_BIT_WIDTH_16_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 16 bits (halfword) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaaf752ab8e386cd474ee33d83df10ad88"></a>SPI_BIT_WIDTH_17_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 17 bits (word) </p>
 </td></tr>
@@ -661,17 +700,17 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf8e4023bcac026b1d1930114105da401"></a>SPI_BIT_WIDTH_19_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 19 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaa0e0e171fd2f36e3fa41cfb960842396"></a>SPI_BIT_WIDTH_20_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 20 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaa0e0e171fd2f36e3fa41cfb960842396"></a>SPI_BIT_WIDTH_20_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 20 bits (word) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdad0a9bce1bfca6895716ee32d198f949d"></a>SPI_BIT_WIDTH_21_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 21 bits (word) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda2b1e938b3bb827bcacb1a6d74f4c60f7"></a>SPI_BIT_WIDTH_22_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 22 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda303f3f218214fd2a69e4fc2511974024"></a>SPI_BIT_WIDTH_23_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 23 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda303f3f218214fd2a69e4fc2511974024"></a>SPI_BIT_WIDTH_23_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 23 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda5696f5183bed267a4d0023bdc19bb357"></a>SPI_BIT_WIDTH_24_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 24 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda5696f5183bed267a4d0023bdc19bb357"></a>SPI_BIT_WIDTH_24_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 24 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda6d44c4678bc27af2e39a8a22e78e6cf0"></a>SPI_BIT_WIDTH_25_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 25 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda6d44c4678bc27af2e39a8a22e78e6cf0"></a>SPI_BIT_WIDTH_25_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 25 bits (word) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda56b072a3333dd1637f9b1488f7fb208b"></a>SPI_BIT_WIDTH_26_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 26 bits (word) </p>
 </td></tr>
@@ -681,11 +720,11 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda09bb056981764315ea1d3f979f453129"></a>SPI_BIT_WIDTH_29_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 29 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda0b55867d8d019e07982c011e04f1f4ac"></a>SPI_BIT_WIDTH_30_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 30 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fda0b55867d8d019e07982c011e04f1f4ac"></a>SPI_BIT_WIDTH_30_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 30 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdabe79ca891b6f1b7b60317f5425a6b9cf"></a>SPI_BIT_WIDTH_31_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 31 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdabe79ca891b6f1b7b60317f5425a6b9cf"></a>SPI_BIT_WIDTH_31_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 31 bits (word) </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf69633d9ed10c0d07cea1ded1b562aed"></a>SPI_BIT_WIDTH_32_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 32 bits (longword) </p>
+<tr><td class="fieldname"><a id="gga6ba4a8eef274a5b227fc2ab6ee61f8fdaf69633d9ed10c0d07cea1ded1b562aed"></a>SPI_BIT_WIDTH_32_BITS&#160;</td><td class="fielddoc"><p>Data bit width is 32 bits (word) </p>
 </td></tr>
 </table>
 
@@ -835,7 +874,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

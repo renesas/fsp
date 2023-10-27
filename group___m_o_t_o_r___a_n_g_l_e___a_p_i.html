@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,13 +248,7 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___a_n_g_l_e___a_p_i.
 <p>Interface for motor angle and speed calculation functions. </p>
 <h1><a class="anchor" id="MOTOR_ANGLE_API_Summary"></a>
 Summary</h1>
-<p>The Motor angle interface calculates the rotor angle and rotational speed from other data.</p>
-<p>The motor angle interface can be implemented by:</p><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html">Motor Angle (rm_motor_estimate)</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html">Motor Angle (rm_motor_sense_encoder)</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html">Motor Angle and Speed Calculation with induction sensor (rm_motor_sense_induction)</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html">Motor Angle and Speed Calculation with Hall sensors (rm_motor_sense_hall)</a> </li>
-</ul>
+<p>The Motor angle interface calculates the rotor angle and rotational speed from other data. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -420,13 +492,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaab7c6d5f78d470f2ee26a0038c892ff4">RM_MOTOR_ESTIMATE_Open()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga872e1083c53f27b82a0c1e6140b77916">RM_MOTOR_SENSE_ENCODER_Open()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga1fd3fac372f7de88264c5611a29a92fc">RM_MOTOR_SENSE_INDUCTION_Open()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gadb4a26bdb6e60c6c67af298474f780b5">RM_MOTOR_SENSE_HALL_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initialize the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -448,13 +514,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close (Finish) the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga0ab013eca12b1baa07e8425778220774">RM_MOTOR_ESTIMATE_Close()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaba0c9a99fae3a271c5a80e75a7acc747">RM_MOTOR_SENSE_ENCODER_Close()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga21759ae4d9f32b4e6d7f8219f074736f">RM_MOTOR_SENSE_INDUCTION_Close()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga7022b4b563ce450ab72a8f8b79d0bea3">RM_MOTOR_SENSE_HALL_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close (Finish) the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -475,13 +535,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reset the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gab74cafc810856e1ba9197199ada9defe">RM_MOTOR_ESTIMATE_Reset()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gadae598aac0a4cf1924e9abb98aa22340">RM_MOTOR_SENSE_ENCODER_Reset()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga00734dfdb517184b8995c0263aeff390">RM_MOTOR_SENSE_INDUCTION_Reset()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga6dd96429df444e36a84cf76c288b3f10">RM_MOTOR_SENSE_HALL_Reset()</a></li>
-</ul>
-</dd></dl>
+<p>Reset the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -502,13 +556,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set (Input) Current &amp; Voltage Reference data into the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaf08f0ac2cd66b7eae0bc0339e148121f">RM_MOTOR_ESTIMATE_CurrentSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaccdf1dc37bd74676ad140595d17c702f">RM_MOTOR_SENSE_ENCODER_CurrentSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga0a7238790cc22bf13842539040b8aa20">RM_MOTOR_SENSE_INDUCTION_CurrentSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga1325634e8b16fc80b15d72d8e5c8def8">RM_MOTOR_SENSE_HALL_CurrentSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set (Input) Current &amp; Voltage Reference data into the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -531,13 +579,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set (Input) Speed Information into the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaf371ca48f84228a55966e8c6ff7b510c">RM_MOTOR_ESTIMATE_SpeedSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga19d69547a77cf49e6a06079715c49e13">RM_MOTOR_SENSE_ENCODER_SpeedSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga6dfd8995ccd0b6eda688f2f4314a73c1">RM_MOTOR_SENSE_INDUCTION_SpeedSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga78dd79f002692781f2b78d0d3ac304e1">RM_MOTOR_SENSE_HALL_SpeedSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set (Input) Speed Information into the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -560,13 +602,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the flag of PI Control runs. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga3069a2a3350193c0894eda657016baa4">RM_MOTOR_ESTIMATE_FlagPiCtrlSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga990617d4a8f9afc689ec3a2c66f6755c">RM_MOTOR_SENSE_ENCODER_FlagPiCtrlSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#gafae84f7653b2897214663f7e464f0e14">RM_MOTOR_SENSE_INDUCTION_FlagPiCtrlSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga6cdf31e5724846c119dd8265165832a2">RM_MOTOR_SENSE_HALL_FlagPiCtrlSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set the flag of PI Control runs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -588,13 +624,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate internal parameters of encoder process. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga5aff1a699995c8ba8f55f8e5813fd488">RM_MOTOR_ESTIMATE_InternalCalculate()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga5fdccb46cbbb87404c66be9476619569">RM_MOTOR_SENSE_ENCODER_InternalCalculate()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga67abb2322d111bc3f7b171b5a6bba363">RM_MOTOR_SENSE_INDUCTION_InternalCalculate()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gadf550f3a155ab668ae67aedfca2c94e0">RM_MOTOR_SENSE_HALL_InternalCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate internal parameters of encoder process.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -615,13 +645,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get rotor angle and rotational speed from the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga762a451cee6f7dfa4430afa8f8b11819">RM_MOTOR_ESTIMATE_AngleSpeedGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gabfdb1bac4344e5839477a7190240bca7">RM_MOTOR_SENSE_ENCODER_AngleSpeedGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga0bf8225bba306f72ba1e35aa43e513d7">RM_MOTOR_SENSE_INDUCTION_AngleSpeedGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga2cc655f53b4f79e198bd06b446b24a7d">RM_MOTOR_SENSE_HALL_AngleSpeedGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get rotor angle and rotational speed from the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -645,13 +669,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Angle Adjustment Process. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga26831e2a843a85a5ad6d1bb2f743f4ca">RM_MOTOR_ESTIMATE_AngleAdjust()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaa8d9fbed3f6a00c577f1bf245ec22950">RM_MOTOR_SENSE_ENCODER_AngleAdjust()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#gaa380c68e8403b42026d158e51dad762b">RM_MOTOR_SENSE_INDUCTION_AngleAdjust()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gaddb4d9f210be7ef723ff1ef2702a4ffe">RM_MOTOR_SENSE_HALL_AngleAdjust()</a></li>
-</ul>
-</dd></dl>
+<p>Angle Adjustment Process.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -672,12 +690,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>DEPRECATED Encoder Cyclic Process. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga5bd8dc2cee1b6630cd57f112aa52353a">RM_MOTOR_ESTIMATE_EncoderCyclic()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga2f090bf0e113cf9cb539cb03d718394c">RM_MOTOR_SENSE_ENCODER_EncoderCyclic()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga5a36e0b66c0faa585fad87f91952bc1f">RM_MOTOR_SENSE_HALL_EncoderCyclic()</a></li>
-</ul>
-</dd></dl>
+<p>DEPRECATED Encoder Cyclic Process.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -698,12 +711,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cyclic Process. please </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaedc38884e6e77db365a67670acb8f2d">RM_MOTOR_ESTIMATE_CyclicProcess()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga4df75c639320b2b404307b06aa663bef">RM_MOTOR_SENSE_ENCODER_CyclicProcess()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#gae8cbad17f800b3bf95e3b0c661b6663b">RM_MOTOR_SENSE_INDUCTION_CyclicProcess()</a></li>
-</ul>
-</dd></dl>
+<p>Cyclic Process. please</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -724,12 +732,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set sensor A/D data into the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga88d72479420ca5e424018e1e9f566493">RM_MOTOR_ESTIMATE_SensorDataSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga3af6a806c1ff7032c46431e2737385f6">RM_MOTOR_SENSE_ENCODER_SensorDataSet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#gaa79cd6d2c50ed21a0ca8d00176d97561">RM_MOTOR_SENSE_INDUCTION_SensorDataSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set sensor A/D data into the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -751,13 +754,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get estimated d/q-axis component from the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga859290e2a7cf91a48d0e2852790b3811">RM_MOTOR_ESTIMATE_EstimatedComponentGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gac6288e2d4ee07e4d81d09e79769196ce">RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga2159fad93e3ec42553a8e244f87ab392">RM_MOTOR_SENSE_INDUCTION_EstimatedComponentGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gaca39b538aee9218fb999136d5a364d79">RM_MOTOR_SENSE_HALL_EstimatedComponentGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get estimated d/q-axis component from the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -780,13 +777,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get Encoder Calculate Information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga112f36bdb669ddaa125b3df710038bb3">RM_MOTOR_ESTIMATE_InfoGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gad59eec5ae3ec9e350a7c14bb497c1e44">RM_MOTOR_SENSE_ENCODER_InfoGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#gacde9766b43279107c4ecad2b78469cbc">RM_MOTOR_SENSE_INDUCTION_InfoGet()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gaca72d2cf36676497a26d03a8571a7fe5">RM_MOTOR_SENSE_HALL_InfoGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get Encoder Calculate Information.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -808,12 +799,7 @@ Openloop d-axis current. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Update Parameters for the calculation in the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaa47afb770dc694652a2d9a9e8f03acb">RM_MOTOR_ESTIMATE_ParameterUpdate()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaacd5bd7ee906994af6be5ca6c33a238b">RM_MOTOR_SENSE_ENCODER_ParameterUpdate()</a></li>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gabdca4d03fb6731ff7321c1222df4e3d3">RM_MOTOR_SENSE_HALL_ParameterUpdate()</a></li>
-</ul>
-</dd></dl>
+<p>Update Parameters for the calculation in the Motor_Angle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -875,10 +861,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Motor Angle Control block. Allocate an instance specific control block to pass into the API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>motor_angle_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>Motor Angle Control block. Allocate an instance specific control block to pass into the API calls. </p>
 
 </div>
 </div>
@@ -954,7 +937,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

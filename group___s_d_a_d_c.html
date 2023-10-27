@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -247,7 +325,7 @@ The following build time configurations are defined in fsp_cfg/r_sdadc_cfg.h:<br
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -263,9 +341,9 @@ This module can be added to the Stacks tab via New Stack &gt; Analog &gt; ADC (r
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_adc0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Single Scan</li>
@@ -273,7 +351,7 @@ Single Scan</li>
 Continuous Scan</li>
 </ul>
 </td><td>Continuous Scan </td><td>In single scan mode, all channels are converted once per start trigger, and conversion stops after all enabled channels are scanned. In continuous scan mode, conversion starts after a start trigger, then continues until stopped in software. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Resolution</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 16 Bit</li>
@@ -281,7 +359,7 @@ Continuous Scan</li>
 24 Bit</li>
 </ul>
 </td><td>24 Bit </td><td>Select 24-bit or 16-bit resolution. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Alignment</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Right</li>
@@ -289,9 +367,9 @@ Right</li>
 Left</li>
 </ul>
 </td><td>Right </td><td>Select left or right alignment. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Trigger</td><td>MCU Specific Options</td><td></td><td>Select conversion start trigger. Conversion can be started in software, or conversion can be started when a hardware event occurs if the hardware event is linked to the SDADC peripheral using the ELC API. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Vref Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Internal</li>
@@ -299,7 +377,7 @@ Internal</li>
 External</li>
 </ul>
 </td><td>Internal </td><td>Vref can be source internally and output on the SBIAS pin, or Vref can be input from VREFI. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Vref Voltage</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 0.8 V</li>
@@ -321,20 +399,20 @@ External</li>
 2.4 V</li>
 </ul>
 </td><td>1.0 V </td><td>Select Vref voltage. If Vref is input externally, the voltage on VREFI must match the voltage selected within 3%. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Enter the name of the callback function to be called when conversion completes or a scan ends. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Conversion End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>[Required] Select the interrupt priority for the conversion end interrupt. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Scan End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>[Optional] Select the interrupt priority for the scan end interrupt. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Calibration End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>[Optional] Select the interrupt priority for the calibration end interrupt. </td></tr>
 </table>
  <h2>Configurations for Analog &gt; SDADC Channel Configuration (r_sdadc)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Input</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Differential</li>
@@ -342,7 +420,7 @@ Differential</li>
 Single Ended</li>
 </ul>
 </td><td>Differential </td><td>Select differential or single-ended input. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Stage 1 Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
@@ -356,7 +434,7 @@ Single Ended</li>
 8</li>
 </ul>
 </td><td>1 </td><td>Select the gain for stage 1 of the PGA. Must be 1 for single-ended input. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Stage 2 Gain</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
@@ -368,7 +446,7 @@ Single Ended</li>
 8</li>
 </ul>
 </td><td>1 </td><td>Select the gain for stage 2 of the PGA. Must be 1 for single-ended input. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Oversampling Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 64</li>
@@ -384,7 +462,7 @@ Single Ended</li>
 2048</li>
 </ul>
 </td><td>256 </td><td>Select the oversampling ratio for the PGA. Must be 256 for single-ended input. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Polarity (Valid for Single-Ended Input Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Positive</li>
@@ -392,7 +470,7 @@ Positive</li>
 Negative</li>
 </ul>
 </td><td>Positive </td><td>Select positive or negative polarity for single-ended input. VBIAS (1.0 V typical) is connected on the opposite input. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Conversions to Average per Result</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Do Not Average (Interrupt after Each Conversion)</li>
@@ -406,7 +484,7 @@ Average 32</li>
 Average 64</li>
 </ul>
 </td><td>Do Not Average (Interrupt after Each Conversion) </td><td>Select the number of conversions to average for each result. The ADC_EVENT_CONVERSION_END event occurs after each average, or after each individual conversion if averaging is disabled. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Invert (Valid for Negative Single-Ended Input Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Result Not Inverted</li>
@@ -414,7 +492,7 @@ Result Not Inverted</li>
 Result Inverted</li>
 </ul>
 </td><td>Result Not Inverted </td><td>Select whether to invert negative single-ended input. When the result is inverted, the lowest measurable voltage gives a result of 0, and the highest measurable voltage gives a result of 2^resolution - 1. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of Conversions Per Scan</td><td>Refer to the RA Configuration tool for available options.</td><td>1 </td><td>Number of conversions on this channel before AUTOSCAN moves to the next channel. When all conversions of all channels are complete, the ADC_EVENT_SCAN_END event occurs. </td></tr>
 </table>
 </p>
@@ -1365,7 +1443,7 @@ Do not use this API if the conversion end interrupt (SDADC0_ADI) is used to trig
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -50,5 +50,6 @@ var searchData=
   ['agt_5foutput_5fpin_5ft',['agt_output_pin_t',['../group___a_g_t.html#gab3f3aa0cc9a2951751e76f493dd429eb',1,'r_agt.h']]],
   ['agt_5fpin_5fcfg_5ft',['agt_pin_cfg_t',['../group___a_g_t.html#gabb88a55a2156cdd322947f71189da627',1,'r_agt.h']]],
   ['agt_5ftrigger_5fedge_5ft',['agt_trigger_edge_t',['../group___a_g_t.html#ga1d568085c1ce9738b532fde46c47d908',1,'r_agt.h']]],
+  ['at_5ftransport_5fda16xxx_5fevent_5ft',['at_transport_da16xxx_event_t',['../group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#ga3a3d414ba2095a1df5de96c2cb736679',1,'rm_at_transport_da16xxx.h']]],
   ['audio_5fplayback_5fevent_5ft',['audio_playback_event_t',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#ga937592eccbaa6ebe521017d834580610',1,'rm_audio_playback_api.h']]]
 ];

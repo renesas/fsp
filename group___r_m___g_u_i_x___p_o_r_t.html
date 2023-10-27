@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -214,27 +292,31 @@ The following build time configurations are defined in fsp_cfg/azure/gx/gx_user.
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Hardware Acceleration &gt; JPEG Codec Support</td><td>MCU Specific Options</td><td></td><td>Select whether or not to use the JPEG Codec for hardware acceleration. </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; DRW Engine Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">JPEG Codec Support</td><td>MCU Specific Options</td><td></td><td>Select whether or not to use the JPEG Codec for hardware acceleration. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DRW Engine Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Select whether or not to use the DRW Engine for hardware acceleration. </td></tr>
-<tr>
-<td>Hardware Acceleration &gt; Max DRW Operations</td><td>Value must be a positive integer</td><td>85 </td><td>Specifies the maximum number of DRW operations before flushing the display list. Reducing this value may reduce the peak heap used by the application but may reduce performance. </td></tr>
-<tr>
-<td>Internal Thread &gt; Stack Size</td><td>Value must be greater than zero</td><td>4096 </td><td>GUIX internal thread stack size in bytes. Must be greater than zero. </td></tr>
-<tr>
-<td>Internal Thread &gt; Priority</td><td>Value must be between 0 to 31</td><td>30 </td><td>Priority of the GUIX Internal Thread. The value must be between 0 to 31. </td></tr>
-<tr>
-<td>Internal Thread &gt; Time Slice</td><td>Value must be in range 0 to 0xFFFFFFFF</td><td>10 </td><td>Time Slice value of the GUIX Internal Thread. The value must be between 0 (TX_NO_TIME_SLICE) to 0xFFFFFFFF. </td></tr>
-<tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max DRW Operations</td><td>Value must be a positive integer</td><td>85 </td><td>Specifies the maximum number of DRW operations before flushing the display list. Reducing this value may reduce the peak heap used by the application but may reduce performance. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Internal Thread  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stack Size</td><td>Value must be greater than zero</td><td>4096 </td><td>GUIX internal thread stack size in bytes. Must be greater than zero. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Priority</td><td>Value must be between 0 to 31</td><td>30 </td><td>Priority of the GUIX Internal Thread. The value must be between 0 to 31. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Time Slice</td><td>Value must be in range 0 to 0xFFFFFFFF</td><td>10 </td><td>Time Slice value of the GUIX Internal Thread. The value must be between 0 (TX_NO_TIME_SLICE) to 0xFFFFFFFF. </td></tr>
+<tr class="tree_none">
 <td>System Timer (ms)</td><td>Value must be greater than or equal to 10</td><td>20 </td><td>GUIX system timer period (GX_SYSTEM_TIMER_MS). This value will be internally converted to RTOS ticks and will be rounded down to the next smallest multiple of the RTOS tick period (1000 / TX_TIMER_TICKS_PER_SECOND). </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Multithread Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -242,7 +324,7 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Enabled </td><td>Must be enabled if GUIX functions are called from multiple threads. Set to Disabled when calling GUIX from only one thread to reduce system overhead. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>UTF8 Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -250,9 +332,9 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Enabled </td><td>Select whether to enable or disable support for UTF8 characters. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Event Queue Size</td><td>Value must be greater than zero</td><td>48 </td><td>Maximum number of events in the GUIX event queue. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Enable GX_WIDGET User Data</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -266,7 +348,7 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_gui
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>DRW Buffer Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -279,8 +361,10 @@ Disabled</li>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Display Rotation &gt; Screen Orientation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Display Rotation  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Screen Orientation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -291,25 +375,27 @@ FLIP (180 degrees)</li>
 CCW (270 degrees)</li>
 </ul>
 </td><td>None </td><td>Select the display orientation specified in the GUIX Studio project. The Canvas Buffer must be enabled when rotating 180 degrees (FLIP). </td></tr>
-<tr>
-<td>Display Rotation &gt; Use Canvas Buffer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Use Canvas Buffer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When screen rotation is set to 180 degrees (FLIP), a canvas buffer must be used. The canvas buffer size will be the same as a frame buffer for the display module. </td></tr>
-<tr>
-<td>Display Rotation &gt; Canvas Buffer Memory Section</td><td>This property must be a valid section name</td><td>bss </td><td>Specify the memory section where the GUIX Canvas Buffer will be allocated. </td></tr>
-<tr>
-<td>JPEG Decoding &gt; Work Buffer Size</td><td>Must be a positive integer greater than 0</td><td>0xC800 </td><td>Specify the JPEG work buffer size in bytes. A larger buffer can reduce JPEG decode/draw times. The buffer will not be allocated if JPEG Codec support is disabled.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Canvas Buffer Memory Section</td><td>This property must be a valid section name</td><td>bss </td><td>Specify the memory section where the GUIX Canvas Buffer will be allocated. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> JPEG Decoding  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Work Buffer Size</td><td>Must be a positive integer greater than 0</td><td>0xC800 </td><td>Specify the JPEG work buffer size in bytes. A larger buffer can reduce JPEG decode/draw times. The buffer will not be allocated if JPEG Codec support is disabled.<br />
 <br />
 Unless you are sure of the subsampling used in and the size of the input JPEG images it is recommended to allocate at least 16 framebuffer lines of memory. </td></tr>
-<tr>
-<td>JPEG Decoding &gt; Buffer Memory Section</td><td>This property must be a valid section name</td><td>bss </td><td>Specify the memory section where the JPEG Work Buffer will be allocated. </td></tr>
-<tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Buffer Memory Section</td><td>This property must be a valid section name</td><td>bss </td><td>Specify the memory section where the JPEG Work Buffer will be allocated. </td></tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_guix_port0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Target Display Layer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Graphics Layer 1</li>
@@ -317,7 +403,7 @@ Graphics Layer 1</li>
 Graphics Layer 2</li>
 </ul>
 </td><td>Graphics Layer 1 </td><td>Specify which graphics screen to inherit the buffer and display dimensions from. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback Function</td><td>Must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called when Display events occur. </td></tr>
 </table>
 </p>
@@ -496,7 +582,7 @@ Error code if RM_GUIX_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

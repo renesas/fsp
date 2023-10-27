@@ -29,16 +29,16 @@ var group___e_t_h_e_r___a_p_i =
       [ "p_extend", "group___e_t_h_e_r___a_p_i.html#a2d76a15c4de55427a96f762727816558", null ]
     ] ],
     [ "ether_api_t", "group___e_t_h_e_r___a_p_i.html#structether__api__t", [
-      [ "open", "group___e_t_h_e_r___a_p_i.html#ae75458ac2a31861195b73120676d670c", null ],
-      [ "close", "group___e_t_h_e_r___a_p_i.html#a1c0bc3caef73e0a216c2fe2edc4fff4b", null ],
-      [ "read", "group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a", null ],
-      [ "bufferRelease", "group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6", null ],
-      [ "rxBufferUpdate", "group___e_t_h_e_r___a_p_i.html#aa714b8287d1cef38d8442850dd9b9fb5", null ],
-      [ "write", "group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233", null ],
-      [ "linkProcess", "group___e_t_h_e_r___a_p_i.html#a125ca4ee69c6c63e1db42708324c0fb3", null ],
-      [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad", null ],
-      [ "txStatusGet", "group___e_t_h_e_r___a_p_i.html#a6fde51a3fef6b43ed0fada563fadfb4e", null ],
-      [ "callbackSet", "group___e_t_h_e_r___a_p_i.html#adf0c97c99905ea98b0225d2525008f4e", null ]
+      [ "open", "group___e_t_h_e_r___a_p_i.html#aa0c703be12efe73efdd0d47168239470", null ],
+      [ "close", "group___e_t_h_e_r___a_p_i.html#a84ae3c1816a60c8fc45ccc2084805088", null ],
+      [ "read", "group___e_t_h_e_r___a_p_i.html#a58975a11436cc5980698b6e843eea3f3", null ],
+      [ "bufferRelease", "group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5", null ],
+      [ "rxBufferUpdate", "group___e_t_h_e_r___a_p_i.html#a6d088fd3b1a5326af7bedad146491d74", null ],
+      [ "write", "group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51", null ],
+      [ "linkProcess", "group___e_t_h_e_r___a_p_i.html#ae11e3e3521df4c3efe6e0dafecddee72", null ],
+      [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#acde8967c0512722ca73a1596daf654ea", null ],
+      [ "txStatusGet", "group___e_t_h_e_r___a_p_i.html#ad52cabec533efaaef3258caade1e0640", null ],
+      [ "callbackSet", "group___e_t_h_e_r___a_p_i.html#aaeb0eaa99a7a62dfa5b65494db7f1ab4", null ]
     ] ],
     [ "ether_instance_t", "group___e_t_h_e_r___a_p_i.html#structether__instance__t", [
       [ "p_ctrl", "group___e_t_h_e_r___a_p_i.html#a013ed407826d291e797c6b5eb44eb5ba", null ],

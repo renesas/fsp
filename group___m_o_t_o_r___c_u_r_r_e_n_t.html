@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -226,7 +304,7 @@ The following build time configurations are defined in fsp_cfg/rm_motor_current_
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -242,10 +320,12 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor C
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_current0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Sensor type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_current0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sensor type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Sensorless</li>
 <li>
@@ -256,8 +336,8 @@ Induction</li>
 Hall</li>
 </ul>
 </td><td>Sensorless </td><td>Select sensor type </td></tr>
-<tr>
-<td>General &gt; Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1 shunt</li>
 <li>
@@ -266,64 +346,70 @@ Hall</li>
 3 shunt</li>
 </ul>
 </td><td>2 shunt </td><td>Select shunt type </td></tr>
-<tr>
-<td>General &gt; Current control decimation</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Decimation of current control. </td></tr>
-<tr>
-<td>General &gt; PWM carrier frequency (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>PWM carrier frequency. </td></tr>
-<tr>
-<td>General &gt; Input voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
-<tr>
-<td>General &gt; Sample delay compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current control decimation</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Decimation of current control. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM carrier frequency (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>PWM carrier frequency. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input voltage (V)</td><td>Must be a valid value</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sample delay compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
 </td><td>Enable </td><td>Select enable/disable sample delay compensation. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
 </td><td>Enable </td><td>Select enable/disable voltage error compensation. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of voltage 1</td><td>Must be a valid value</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of voltage 2</td><td>Must be a valid value</td><td>0.945F </td><td>Voltage error compensation table of voltage. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of voltage 3</td><td>Must be a valid value</td><td>1.054F </td><td>Voltage error compensation table of voltage. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of voltage 4</td><td>Must be a valid value</td><td>1.109F </td><td>Voltage error compensation table of voltage. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of voltage 5</td><td>Must be a valid value</td><td>1.192F </td><td>Voltage error compensation table of voltage. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of current 1</td><td>Must be a valid value</td><td>0.013F </td><td>Voltage error compensation table of current. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of current 2</td><td>Must be a valid value</td><td>0.049F </td><td>Voltage error compensation table of current. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of current 3</td><td>Must be a valid value</td><td>0.080F </td><td>Voltage error compensation table of current. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of current 4</td><td>Must be a valid value</td><td>0.184F </td><td>Voltage error compensation table of current. </td></tr>
-<tr>
-<td>General &gt; Voltage error compensation table of current 5</td><td>Must be a valid value</td><td>0.751F </td><td>Voltage error compensation table of current. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
-<tr>
-<td>Design Parameter &gt; Current PI loop omega (Hz)</td><td>Must be a valid value</td><td>300.0F </td><td>Current PI loop omega </td></tr>
-<tr>
-<td>Design Parameter &gt; Current PI loop zeta</td><td>Must be a valid value</td><td>1.0F </td><td>Current PI loop zeta </td></tr>
-<tr>
-<td>Motor Parameter &gt; Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
-<tr>
-<td>Motor Parameter &gt; Resistance (ohm)</td><td>Must be a valid value</td><td>8.5F </td><td>Resistance </td></tr>
-<tr>
-<td>Motor Parameter &gt; Inductance of d-axis (H)</td><td>Must be a valid value</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
-<tr>
-<td>Motor Parameter &gt; Inductance of q-axis (H)</td><td>Must be a valid value</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
-<tr>
-<td>Motor Parameter &gt; Permanent magnetic flux (Wb)</td><td>Must be a valid value</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of voltage 1</td><td>Must be a valid value</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of voltage 2</td><td>Must be a valid value</td><td>0.945F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of voltage 3</td><td>Must be a valid value</td><td>1.054F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of voltage 4</td><td>Must be a valid value</td><td>1.109F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of voltage 5</td><td>Must be a valid value</td><td>1.192F </td><td>Voltage error compensation table of voltage. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of current 1</td><td>Must be a valid value</td><td>0.013F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of current 2</td><td>Must be a valid value</td><td>0.049F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of current 3</td><td>Must be a valid value</td><td>0.080F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of current 4</td><td>Must be a valid value</td><td>0.184F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Voltage error compensation table of current 5</td><td>Must be a valid value</td><td>0.751F </td><td>Voltage error compensation table of current. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Design Parameter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current PI loop omega (Hz)</td><td>Must be a valid value</td><td>300.0F </td><td>Current PI loop omega </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current PI loop zeta</td><td>Must be a valid value</td><td>1.0F </td><td>Current PI loop zeta </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid value</td><td>8.5F </td><td>Resistance </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance of d-axis (H)</td><td>Must be a valid value</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance of q-axis (H)</td><td>Must be a valid value</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Permanent magnetic flux (Wb)</td><td>Must be a valid value</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
 <td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Must be a valid value</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 </table>
@@ -858,7 +944,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

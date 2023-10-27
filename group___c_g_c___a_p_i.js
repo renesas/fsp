@@ -13,7 +13,9 @@ var group___c_g_c___a_p_i =
       [ "out_div_r", "group___c_g_c___a_p_i.html#a97d2800fcc1ea6299076d21563fa7f0f", null ]
     ] ],
     [ "cgc_divider_cfg_t", "group___c_g_c___a_p_i.html#structcgc__divider__cfg__t", null ],
-    [ "cgc_cfg_t", "group___c_g_c___a_p_i.html#structcgc__cfg__t", null ],
+    [ "cgc_cfg_t", "group___c_g_c___a_p_i.html#structcgc__cfg__t", [
+      [ "p_extend", "group___c_g_c___a_p_i.html#ab4c5874fb3bb170c8ad6099bef25911b", null ]
+    ] ],
     [ "cgc_clocks_cfg_t", "group___c_g_c___a_p_i.html#structcgc__clocks__cfg__t", [
       [ "system_clock", "group___c_g_c___a_p_i.html#a654bf74a6f5fa9b5b278f4bd1144658c", null ],
       [ "pll_cfg", "group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253", null ],
@@ -24,7 +26,8 @@ var group___c_g_c___a_p_i =
       [ "hoco_state", "group___c_g_c___a_p_i.html#a12aa92642ebaa4e7abb3ba767d59e90e", null ],
       [ "mainosc_state", "group___c_g_c___a_p_i.html#ab2a7b402ef0700179bbc3cc303ecb6b3", null ],
       [ "pll_state", "group___c_g_c___a_p_i.html#ac83f91bc046e3cc482b538b59fe41923", null ],
-      [ "pll2_state", "group___c_g_c___a_p_i.html#a1210d7b93c6177b79e1bed0c4aa283b9", null ]
+      [ "pll2_state", "group___c_g_c___a_p_i.html#a1210d7b93c6177b79e1bed0c4aa283b9", null ],
+      [ "subosc_state", "group___c_g_c___a_p_i.html#a327c971f398f6d4552280319e37a3cf4", null ]
     ] ],
     [ "cgc_api_t", "group___c_g_c___a_p_i.html#structcgc__api__t", [
       [ "open", "group___c_g_c___a_p_i.html#a8a967529fe693526df739cef3d44554b", null ],
@@ -37,7 +40,7 @@ var group___c_g_c___a_p_i =
       [ "oscStopDetectEnable", "group___c_g_c___a_p_i.html#ac5a6467d7f29870c48a7f4e0cc16f3fa", null ],
       [ "oscStopDetectDisable", "group___c_g_c___a_p_i.html#a7df2f7359a1521bf0d6ae79eaa8d396a", null ],
       [ "oscStopStatusClear", "group___c_g_c___a_p_i.html#adec8be986fe880ef29ecc2eed9e89f41", null ],
-      [ "callbackSet", "group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b", null ],
+      [ "callbackSet", "group___c_g_c___a_p_i.html#ae6320b1734cebe9041c65aa581ecb1c4", null ],
       [ "close", "group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a", null ]
     ] ],
     [ "cgc_instance_t", "group___c_g_c___a_p_i.html#structcgc__instance__t", [
@@ -47,7 +50,9 @@ var group___c_g_c___a_p_i =
     ] ],
     [ "cgc_ctrl_t", "group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7", null ],
     [ "cgc_event_t", "group___c_g_c___a_p_i.html#gadcb54f13e507fc97c6a86fa6f587ecb6", [
-      [ "CGC_EVENT_OSC_STOP_DETECT", "group___c_g_c___a_p_i.html#ggadcb54f13e507fc97c6a86fa6f587ecb6a6da7ad2d21e0d5f8a621237748cfb251", null ]
+      [ "CGC_EVENT_OSC_STOP_DETECT_NMI", "group___c_g_c___a_p_i.html#ggadcb54f13e507fc97c6a86fa6f587ecb6acedb39a0dab2b5a440119399aa39ef6e", null ],
+      [ "CGC_EVENT_OSC_STOP_DETECT_MAIN_OSC", "group___c_g_c___a_p_i.html#ggadcb54f13e507fc97c6a86fa6f587ecb6aa9d1bbaf1d28507fec6fe8a1f2a07ca3", null ],
+      [ "CGC_EVENT_OSC_STOP_DETECT_SUBCLOCK", "group___c_g_c___a_p_i.html#ggadcb54f13e507fc97c6a86fa6f587ecb6a69236fe2c1e57a2995720d5d9cd220ed", null ]
     ] ],
     [ "cgc_clock_t", "group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6", [
       [ "CGC_CLOCK_HOCO", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6aa095d545b0a585466b727a9ec0311b36", null ],
@@ -81,9 +86,15 @@ var group___c_g_c___a_p_i =
       [ "CGC_SYS_CLOCK_DIV_8", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daecead8b5b6ef0f7fc4e0c684720736b4", null ],
       [ "CGC_SYS_CLOCK_DIV_16", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da5fb7e35f2b14f47d71fc3ddce999d9a9", null ],
       [ "CGC_SYS_CLOCK_DIV_32", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dadd88ebecf942a2a5d0ee88cbadec6bdf", null ],
-      [ "CGC_SYS_CLOCK_DIV_64", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9", null ]
+      [ "CGC_SYS_CLOCK_DIV_64", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9", null ],
+      [ "CGC_SYS_CLOCK_DIV_3", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dac3d14ab764b2f8801dab6b51ce2be2aa", null ]
+    ] ],
+    [ "cgc_pin_output_control_t", "group___c_g_c___a_p_i.html#ga690d20c82a1f6794452a6743cc98e807", [
+      [ "CGC_PIN_OUTPUT_CONTROL_ENABLE", "group___c_g_c___a_p_i.html#gga690d20c82a1f6794452a6743cc98e807a34afcfcb969128211ffc32a1d92997d8", null ],
+      [ "CGC_PIN_OUTPUT_CONTROL_DISABLE", "group___c_g_c___a_p_i.html#gga690d20c82a1f6794452a6743cc98e807af21199a2c4ab6e94549c748bb8f50633", null ]
     ] ],
     [ "cgc_usb_clock_div_t", "group___c_g_c___a_p_i.html#ga7499fcdfd9aafe4ca695e26e2d69175d", [
+      [ "CGC_USB_CLOCK_DIV_2", "group___c_g_c___a_p_i.html#gga7499fcdfd9aafe4ca695e26e2d69175da7210845fb9ce95edcb92ba794457f9cb", null ],
       [ "CGC_USB_CLOCK_DIV_3", "group___c_g_c___a_p_i.html#gga7499fcdfd9aafe4ca695e26e2d69175daa43aeeddede23cf878960c4349084100", null ],
       [ "CGC_USB_CLOCK_DIV_4", "group___c_g_c___a_p_i.html#gga7499fcdfd9aafe4ca695e26e2d69175da57f3291c0937bee6bb9bac686278d1e9", null ],
       [ "CGC_USB_CLOCK_DIV_5", "group___c_g_c___a_p_i.html#gga7499fcdfd9aafe4ca695e26e2d69175da5c77b4e770cff2b1c0806afb099b506b", null ]

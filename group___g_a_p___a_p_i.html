@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -334,6 +412,93 @@ Functions</h2></td></tr>
 <tr class="memitem:gac83a44568ee8d498514df80338705e1d"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gac83a44568ee8d498514df80338705e1d">R_BLE_GAP_ReplyLtkReq</a> (uint16_t conn_hdl, uint16_t ediv, uint8_t *p_peer_rand, uint8_t response)</td></tr>
 <tr class="memdesc:gac83a44568ee8d498514df80338705e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reply the LTK request from a remote device.  <a href="#gac83a44568ee8d498514df80338705e1d">More...</a><br /></td></tr>
 <tr class="separator:gac83a44568ee8d498514df80338705e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac71839093528bb13c94529f860a4128b"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gac71839093528bb13c94529f860a4128b">R_BLE_GAP_SetCteConnlessParam</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__t">st_ble_gap_cte_connless_t</a> *cte_param)</td></tr>
+<tr class="memdesc:gac71839093528bb13c94529f860a4128b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parameters for the transmission of Constant Tone Extensions in any periodic advertising.  <a href="#gac71839093528bb13c94529f860a4128b">More...</a><br /></td></tr>
+<tr class="separator:gac71839093528bb13c94529f860a4128b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c611c163b258d3cf5b9f7e37f311294"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga7c611c163b258d3cf5b9f7e37f311294">R_BLE_GAP_EnableCteConnless</a> (uint16_t adv_hdl, uint8_t enable)</td></tr>
+<tr class="memdesc:ga7c611c163b258d3cf5b9f7e37f311294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable Constant Tone Extensions in periodic advertising identified by the adv_hdl.  <a href="#ga7c611c163b258d3cf5b9f7e37f311294">More...</a><br /></td></tr>
+<tr class="separator:ga7c611c163b258d3cf5b9f7e37f311294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47be0d3814285b562b1c581f20d88ced"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga47be0d3814285b562b1c581f20d88ced">R_BLE_GAP_StartCteConnlessRecv</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__recv__t">st_ble_gap_cte_connless_recv_t</a> *p_cte_recv)</td></tr>
+<tr class="memdesc:ga47be0d3814285b562b1c581f20d88ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable sampling received Constant Tone Extension fields.  <a href="#ga47be0d3814285b562b1c581f20d88ced">More...</a><br /></td></tr>
+<tr class="separator:ga47be0d3814285b562b1c581f20d88ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83f8ea38ce246d392be9bdac93a6dc7d"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga83f8ea38ce246d392be9bdac93a6dc7d">R_BLE_GAP_StopCteConnlessRecv</a> (uint16_t sync_hdl)</td></tr>
+<tr class="memdesc:ga83f8ea38ce246d392be9bdac93a6dc7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable sampling received Constant Tone Extension fields.  <a href="#ga83f8ea38ce246d392be9bdac93a6dc7d">More...</a><br /></td></tr>
+<tr class="separator:ga83f8ea38ce246d392be9bdac93a6dc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ea8a1b77291da1b56b1c83ca5aad18c"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga5ea8a1b77291da1b56b1c83ca5aad18c">R_BLE_GAP_SetCteConnParam</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__t">st_ble_gap_cte_conn_t</a> *p_cte_param)</td></tr>
+<tr class="memdesc:ga5ea8a1b77291da1b56b1c83ca5aad18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parameters for the transmission of Constant Tone Extensions in ACL link.  <a href="#ga5ea8a1b77291da1b56b1c83ca5aad18c">More...</a><br /></td></tr>
+<tr class="separator:ga5ea8a1b77291da1b56b1c83ca5aad18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa115294780802f1e71b81e4187502a7d"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gaa115294780802f1e71b81e4187502a7d">R_BLE_GAP_EnableCteConnRsp</a> (uint16_t conn_hdl, uint8_t enable)</td></tr>
+<tr class="memdesc:gaa115294780802f1e71b81e4187502a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable Constant Tone Extensions Transmission in ACL link by conn_hdl.  <a href="#gaa115294780802f1e71b81e4187502a7d">More...</a><br /></td></tr>
+<tr class="separator:gaa115294780802f1e71b81e4187502a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb6706ad6d0ba3b7a029b9d6ca4ff265"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gabb6706ad6d0ba3b7a029b9d6ca4ff265">R_BLE_GAP_SetCteConnRecvParam</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rx__param__t">st_ble_gap_cte_conn_rx_param_t</a> *p_cte_param)</td></tr>
+<tr class="memdesc:gabb6706ad6d0ba3b7a029b9d6ca4ff265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parameters for the receiving of Constant Tone Extensions in ACL link. and start sampling.  <a href="#gabb6706ad6d0ba3b7a029b9d6ca4ff265">More...</a><br /></td></tr>
+<tr class="separator:gabb6706ad6d0ba3b7a029b9d6ca4ff265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04594ca0d25db81badc90b84114891e7"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga04594ca0d25db81badc90b84114891e7">R_BLE_GAP_StopCteConnRecvSampling</a> (uint16_t conn_hdl)</td></tr>
+<tr class="memdesc:ga04594ca0d25db81badc90b84114891e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop sampling of Constant Tone Extensions on the specified connection.  <a href="#ga04594ca0d25db81badc90b84114891e7">More...</a><br /></td></tr>
+<tr class="separator:ga04594ca0d25db81badc90b84114891e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbe19912e5d591d4af0271a9c2206d79"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gabbe19912e5d591d4af0271a9c2206d79">R_BLE_GAP_StartCteConnReq</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__req__t">st_ble_gap_cte_conn_req_t</a> *p_req)</td></tr>
+<tr class="memdesc:gabbe19912e5d591d4af0271a9c2206d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parameters and start sending request of Constant Tone Extensions in ACL link to peer.  <a href="#gabbe19912e5d591d4af0271a9c2206d79">More...</a><br /></td></tr>
+<tr class="separator:gabbe19912e5d591d4af0271a9c2206d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c7ed8eb852ab6c10eb0a82099a7cb2d"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga1c7ed8eb852ab6c10eb0a82099a7cb2d">R_BLE_GAP_StopCteConnReq</a> (uint16_t handle)</td></tr>
+<tr class="memdesc:ga1c7ed8eb852ab6c10eb0a82099a7cb2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop sending request of Constant Tone Extensions in ACL link to peer.  <a href="#ga1c7ed8eb852ab6c10eb0a82099a7cb2d">More...</a><br /></td></tr>
+<tr class="separator:ga1c7ed8eb852ab6c10eb0a82099a7cb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e63d2f3f421dcf3bebf36a6b493be4d"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga0e63d2f3f421dcf3bebf36a6b493be4d">R_BLE_GAP_SetDefaultSubrate</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__subrate__param__t">st_ble_gap_subrate_param_t</a> *p_subrate_param)</td></tr>
+<tr class="memdesc:ga0e63d2f3f421dcf3bebf36a6b493be4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the initial values for the acceptable parameters for subrating requests,.  <a href="#ga0e63d2f3f421dcf3bebf36a6b493be4d">More...</a><br /></td></tr>
+<tr class="separator:ga0e63d2f3f421dcf3bebf36a6b493be4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef6de6dbee49836c35d24d521f07f6da"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gaef6de6dbee49836c35d24d521f07f6da">R_BLE_GAP_RequestSubrate</a> (uint16_t conn_hdl, <a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__subrate__param__t">st_ble_gap_subrate_param_t</a> *p_subrate_param)</td></tr>
+<tr class="memdesc:gaef6de6dbee49836c35d24d521f07f6da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a change to the subrating factor other parameters applied to an existing connection using the Connection Subrate Update procedure.  <a href="#gaef6de6dbee49836c35d24d521f07f6da">More...</a><br /></td></tr>
+<tr class="separator:gaef6de6dbee49836c35d24d521f07f6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58c5717dea9c1a5df495bdc5ab9484cb"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga58c5717dea9c1a5df495bdc5ab9484cb">R_BLE_GAP_StartPerdAdvSetInfoTransfer</a> (uint16_t adv_hdl, uint16_t conn_hdl, uint16_t service_data)</td></tr>
+<tr class="memdesc:ga58c5717dea9c1a5df495bdc5ab9484cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function starts Periodic advertising adv set info transfer to the connection.  <a href="#ga58c5717dea9c1a5df495bdc5ab9484cb">More...</a><br /></td></tr>
+<tr class="separator:ga58c5717dea9c1a5df495bdc5ab9484cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae61ff29d8ecff0a749cacc97554b6331"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gae61ff29d8ecff0a749cacc97554b6331">R_BLE_GAP_StartPerdAdvSyncTransfer</a> (uint16_t sync_hdl, uint16_t conn_hdl, uint16_t service_data)</td></tr>
+<tr class="memdesc:gae61ff29d8ecff0a749cacc97554b6331"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function starts Periodic advertising sync transfer.  <a href="#gae61ff29d8ecff0a749cacc97554b6331">More...</a><br /></td></tr>
+<tr class="separator:gae61ff29d8ecff0a749cacc97554b6331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga980badd3d69965050a59cfc648318f99"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga980badd3d69965050a59cfc648318f99">R_BLE_GAP_SetPerdAdvSyncTransferParam</a> (uint16_t conn_hdl, st_ble_gap_past_param_t *p_past_param)</td></tr>
+<tr class="memdesc:ga980badd3d69965050a59cfc648318f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function starts to accept Periodic advertising sync transfer from the connection.  <a href="#ga980badd3d69965050a59cfc648318f99">More...</a><br /></td></tr>
+<tr class="separator:ga980badd3d69965050a59cfc648318f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga195e00b4d9e83245a1329d6c110d4d1d"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga195e00b4d9e83245a1329d6c110d4d1d">R_BLE_GAP_SetDefPerdAdvSyncTransferParam</a> (st_ble_gap_past_param_t *p_past_param)</td></tr>
+<tr class="memdesc:ga195e00b4d9e83245a1329d6c110d4d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set the default parameter of Periodic advertising sync transfer for all subsequent connection. It does not affect any existing connection.  <a href="#ga195e00b4d9e83245a1329d6c110d4d1d">More...</a><br /></td></tr>
+<tr class="separator:ga195e00b4d9e83245a1329d6c110d4d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64c172b5379f7b199d6491f528338443"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga64c172b5379f7b199d6491f528338443">R_BLE_GAP_ReadAntennaInfo</a> (void)</td></tr>
+<tr class="memdesc:ga64c172b5379f7b199d6491f528338443"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function read the switching rates, the sampling rates, the number of antennae, and the maximum length of a transmitted Constant Tone Extension.  <a href="#ga64c172b5379f7b199d6491f528338443">More...</a><br /></td></tr>
+<tr class="separator:ga64c172b5379f7b199d6491f528338443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga898d303150412c52f9371a3d3a19916a"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga898d303150412c52f9371a3d3a19916a">R_BLE_GAP_ReceiverTest</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__recv__test__param__t">st_ble_gap_recv_test_param_t</a> *p_rx_test_param)</td></tr>
+<tr class="memdesc:ga898d303150412c52f9371a3d3a19916a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a test where the DUT receives test reference packets at a fixed interval. The tester generates the test reference packets.  <a href="#ga898d303150412c52f9371a3d3a19916a">More...</a><br /></td></tr>
+<tr class="separator:ga898d303150412c52f9371a3d3a19916a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1c50099f01b87b5a1fb4bfd438b2ad6"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gab1c50099f01b87b5a1fb4bfd438b2ad6">R_BLE_GAP_TransmitterTest</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__trans__test__param__t">st_ble_gap_trans_test_param_t</a> *p_tx_test_param)</td></tr>
+<tr class="memdesc:gab1c50099f01b87b5a1fb4bfd438b2ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a test where the DUT generates test reference packets at a fixed interval. The Controller shall transmit at the power level indicated by the TX_Power_Level parameter.  <a href="#gab1c50099f01b87b5a1fb4bfd438b2ad6">More...</a><br /></td></tr>
+<tr class="separator:gab1c50099f01b87b5a1fb4bfd438b2ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23db393a942577f2743393529b2188b1"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga23db393a942577f2743393529b2188b1">R_BLE_GAP_ModifySleepClockAccuracy</a> (uint8_t act)</td></tr>
+<tr class="memdesc:ga23db393a942577f2743393529b2188b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">request that the Controller changes its sleep clock accuracy for testing purposes. It should not be used under other circumstances.  <a href="#ga23db393a942577f2743393529b2188b1">More...</a><br /></td></tr>
+<tr class="separator:ga23db393a942577f2743393529b2188b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4458d68d009b2da07e1d1cb5ea14ffa"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gaf4458d68d009b2da07e1d1cb5ea14ffa">R_BLE_GAP_ReadRemoteTransmitPowerLevel</a> (uint16_t conn_hdl, uint8_t phy)</td></tr>
+<tr class="memdesc:gaf4458d68d009b2da07e1d1cb5ea14ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the transmit power level used by the remote device.  <a href="#gaf4458d68d009b2da07e1d1cb5ea14ffa">More...</a><br /></td></tr>
+<tr class="separator:gaf4458d68d009b2da07e1d1cb5ea14ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga749c72744b6a22df14426a69f27a7279"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga749c72744b6a22df14426a69f27a7279">R_BLE_GAP_SetPathLossReportingParam</a> (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__set__path__loss__rpt__param__t">st_ble_gap_set_path_loss_rpt_param_t</a> *p_loss_rpt_param)</td></tr>
+<tr class="memdesc:ga749c72744b6a22df14426a69f27a7279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the path loss threshold reporting parameters for the ACL connection identified.  <a href="#ga749c72744b6a22df14426a69f27a7279">More...</a><br /></td></tr>
+<tr class="separator:ga749c72744b6a22df14426a69f27a7279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8baf3d1f1cd7dec47bccd1cefe95888f"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga8baf3d1f1cd7dec47bccd1cefe95888f">R_BLE_GAP_SetPathLossReportingEnable</a> (uint16_t conn_hdl, uint8_t enable)</td></tr>
+<tr class="memdesc:ga8baf3d1f1cd7dec47bccd1cefe95888f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable path loss reporting for the ACL connection.  <a href="#ga8baf3d1f1cd7dec47bccd1cefe95888f">More...</a><br /></td></tr>
+<tr class="separator:ga8baf3d1f1cd7dec47bccd1cefe95888f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0e83b1e1e2d3ba44ca9a4ffb95ee121"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gad0e83b1e1e2d3ba44ca9a4ffb95ee121">R_BLE_GAP_SetTransmitPowerReportingEnable</a> (uint16_t conn_hdl, uint8_t local_enable, uint8_t remote_enable)</td></tr>
+<tr class="memdesc:gad0e83b1e1e2d3ba44ca9a4ffb95ee121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the transmit power level changing report.  <a href="#gad0e83b1e1e2d3ba44ca9a4ffb95ee121">More...</a><br /></td></tr>
+<tr class="separator:gad0e83b1e1e2d3ba44ca9a4ffb95ee121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1126512aab40b3ba3d8e671485b6dfa6"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga1126512aab40b3ba3d8e671485b6dfa6">R_BLE_GAP_SetDataRelatedAddrChanges</a> (uint8_t adv_hdl, uint8_t change_reason)</td></tr>
+<tr class="memdesc:ga1126512aab40b3ba3d8e671485b6dfa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies circumstances when the Controller shall refresh any Resolvable Private Address.  <a href="#ga1126512aab40b3ba3d8e671485b6dfa6">More...</a><br /></td></tr>
+<tr class="separator:ga1126512aab40b3ba3d8e671485b6dfa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00b1087eb1fe88696e581f93f3aa5686"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga00b1087eb1fe88696e581f93f3aa5686">R_BLE_GAP_TestEnd</a> (void)</td></tr>
+<tr class="memdesc:ga00b1087eb1fe88696e581f93f3aa5686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop any test which is in progress. The Num_Packets for a transmitter test shall be reported as 0x0000. The Num_Packets is an unsigned number and contains the number of received packets.  <a href="#ga00b1087eb1fe88696e581f93f3aa5686">More...</a><br /></td></tr>
+<tr class="separator:ga00b1087eb1fe88696e581f93f3aa5686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6985def8885cb2bd675ed6979f69511f"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga6985def8885cb2bd675ed6979f69511f">R_BLE_GAP_ReqPeerSCA</a> (uint16_t conn_hdl)</td></tr>
+<tr class="memdesc:ga6985def8885cb2bd675ed6979f69511f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the Sleep Clock Accuracy (SCA) of the peer device.  <a href="#ga6985def8885cb2bd675ed6979f69511f">More...</a><br /></td></tr>
+<tr class="separator:ga6985def8885cb2bd675ed6979f69511f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87708b719621f194e1dbd6143152b33f"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga87708b719621f194e1dbd6143152b33f">R_BLE_GAP_EnhancedReadTxPowerLevel</a> (uint16_t conn_hdl, uint8_t phy)</td></tr>
+<tr class="memdesc:ga87708b719621f194e1dbd6143152b33f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the current and maximum transmit power levels of the local Controller on the ACL connection identified by the Connection_Handle parameter and the PHY indicated by the PHY parameter.  <a href="#ga87708b719621f194e1dbd6143152b33f">More...</a><br /></td></tr>
+<tr class="separator:ga87708b719621f194e1dbd6143152b33f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga814991ba8ed2ced8b585d57bd80d61e0"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga814991ba8ed2ced8b585d57bd80d61e0">R_BLE_GAP_SetHostFeat</a> (uint8_t bit_number, uint8_t bit_value)</td></tr>
+<tr class="memdesc:ga814991ba8ed2ced8b585d57bd80d61e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set or clear a bit controlled by the Host in the Link Layer FeatureSet stored in the Controller.  <a href="#ga814991ba8ed2ced8b585d57bd80d61e0">More...</a><br /></td></tr>
+<tr class="separator:ga814991ba8ed2ced8b585d57bd80d61e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>(end addtogroup BLE_API) </p>
@@ -397,6 +562,36 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structst__ble__gap__oob__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__oob__data__t">st_ble_gap_oob_data_t</a></td></tr>
 <tr class="memdesc:structst__ble__gap__oob__data__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Oob data received from the remote device. This is used in <a class="el" href="group___g_a_p___a_p_i.html#ga7b4a5496ce352b302662ea86204e2d7d" title="Set the oob data from a remote device. ">R_BLE_GAP_SetRemOobData()</a>.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__oob__data__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gap__oob__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__antenna__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__antenna__info__t">st_ble_gap_cte_antenna_info_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__antenna__info__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the parameters used in R_BLE_GAP_GetAntennaInfo().  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__antenna__info__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__antenna__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__recv__test__param__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__recv__test__param__t">st_ble_gap_recv_test_param_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__recv__test__param__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the parameters used in <a class="el" href="group___g_a_p___a_p_i.html#ga898d303150412c52f9371a3d3a19916a" title="Start a test where the DUT receives test reference packets at a fixed interval. The tester generates ...">R_BLE_GAP_ReceiverTest()</a>  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__recv__test__param__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__recv__test__param__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__trans__test__param__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__trans__test__param__t">st_ble_gap_trans_test_param_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__trans__test__param__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the parameters used in <a class="el" href="group___g_a_p___a_p_i.html#gab1c50099f01b87b5a1fb4bfd438b2ad6" title="Start a test where the DUT generates test reference packets at a fixed interval. The Controller shall...">R_BLE_GAP_TransmitterTest()</a>.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__trans__test__param__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__trans__test__param__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__set__path__loss__rpt__param__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__set__path__loss__rpt__param__t">st_ble_gap_set_path_loss_rpt_param_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__set__path__loss__rpt__param__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the parameters used in <a class="el" href="group___g_a_p___a_p_i.html#ga749c72744b6a22df14426a69f27a7279" title="Set the path loss threshold reporting parameters for the ACL connection identified. ">R_BLE_GAP_SetPathLossReportingParam()</a>.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__set__path__loss__rpt__param__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__set__path__loss__rpt__param__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__connless__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__t">st_ble_gap_cte_connless_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__connless__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connectionless CTE param  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__connless__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__conn__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__t">st_ble_gap_cte_conn_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__conn__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connection CTE param  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__conn__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__connless__recv__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__recv__t">st_ble_gap_cte_connless_recv_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__connless__recv__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connectionless CTE receive param  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__recv__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__connless__recv__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__conn__rx__param__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rx__param__t">st_ble_gap_cte_conn_rx_param_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__conn__rx__param__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connection CTE receive param  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rx__param__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__conn__rx__param__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__conn__req__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__req__t">st_ble_gap_cte_conn_req_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__conn__req__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connection CTE request  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__req__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__conn__req__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__subrate__param__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__subrate__param__t">st_ble_gap_subrate_param_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__subrate__param__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">subrating param  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__subrate__param__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__subrate__param__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structst__ble__gap__ver__num__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__ver__num__t">st_ble_gap_ver_num_t</a></td></tr>
 <tr class="memdesc:structst__ble__gap__ver__num__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version number of host stack.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__ver__num__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gap__ver__num__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -529,6 +724,36 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structst__ble__gap__bond__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__bond__info__t">st_ble_gap_bond_info_t</a></td></tr>
 <tr class="memdesc:structst__ble__gap__bond__info__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bonding information used in <a class="el" href="group___g_a_p___a_p_i.html#gac78f7a4de986fd46e53ccde20a493557" title="Set the bonding information stored in non-volatile memory to the host stack. ">R_BLE_GAP_SetBondInfo()</a>.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__bond__info__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gap__bond__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__cte__iq__sample__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__cte__iq__sample__t">st_cte_iq_sample_t</a></td></tr>
+<tr class="memdesc:structst__cte__iq__sample__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTE IQ sample data.  <a href="group___g_a_p___a_p_i.html#structst__cte__iq__sample__t">More...</a><br /></td></tr>
+<tr class="separator:structst__cte__iq__sample__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__connless__rept__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__rept__t">st_ble_gap_cte_connless_rept_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__connless__rept__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connectionless CTE data report  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__rept__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__connless__rept__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__cte__conn__rept__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rept__t">st_ble_gap_cte_conn_rept_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__cte__conn__rept__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">connection CTE data report  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rept__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__cte__conn__rept__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__subrate__upd__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__subrate__upd__t">st_ble_subrate_upd_t</a></td></tr>
+<tr class="memdesc:structst__ble__subrate__upd__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">subrating update event  <a href="group___g_a_p___a_p_i.html#structst__ble__subrate__upd__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__subrate__upd__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__past__est__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__past__est__evt__t">st_ble_gap_past_est_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__past__est__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__past__est__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__past__est__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__tx__power__reporting__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__tx__power__reporting__evt__t">st_ble_gap_tx_power_reporting_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__tx__power__reporting__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__tx__power__reporting__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__tx__power__reporting__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__pass__loss__thr__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__pass__loss__thr__evt__t">st_ble_gap_pass_loss_thr_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__pass__loss__thr__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that a path loss report has been received.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__pass__loss__thr__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__pass__loss__thr__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__req__peer__sca__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__req__peer__sca__evt__t">st_ble_gap_req_peer_sca_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__req__peer__sca__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that a SCA request to a remote device has been completed.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__req__peer__sca__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__req__peer__sca__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__dtm__test__end__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__dtm__test__end__evt__t">st_ble_gap_dtm_test_end_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__dtm__test__end__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">report of dtm transmit/receive test end  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__dtm__test__end__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__dtm__test__end__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gap__enhanced__read__tx__power__level__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__enhanced__read__tx__power__level__evt__t">st_ble_gap_enhanced_read_tx_power_level_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gap__enhanced__read__tx__power__level__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power level report of remove device.  <a href="group___g_a_p___a_p_i.html#structst__ble__gap__enhanced__read__tx__power__level__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gap__enhanced__read__tx__power__level__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -1079,6 +1304,30 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga4b1a7d4a3b24a59143f01bde60f3c7e2">BLE_GAP_SEC_DEL_REM_ALL</a></td></tr>
 <tr class="memdesc:ga4b1a7d4a3b24a59143f01bde60f3c7e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all remote device keys. <br /></td></tr>
 <tr class="separator:ga4b1a7d4a3b24a59143f01bde60f3c7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae47753d437a9d9b114c71444724b2298"><td class="memItemLeft" align="right" valign="top"><a id="gae47753d437a9d9b114c71444724b2298"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gae47753d437a9d9b114c71444724b2298">BLE_GAP_CTE_DISABLED</a></td></tr>
+<tr class="memdesc:gae47753d437a9d9b114c71444724b2298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable CTE transmission or receive. <br /></td></tr>
+<tr class="separator:gae47753d437a9d9b114c71444724b2298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8376c55facbf6f3d449e06495097d77f"><td class="memItemLeft" align="right" valign="top"><a id="ga8376c55facbf6f3d449e06495097d77f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga8376c55facbf6f3d449e06495097d77f">BLE_GAP_CTE_ENABLED</a></td></tr>
+<tr class="memdesc:ga8376c55facbf6f3d449e06495097d77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable CTE transmission or receive. <br /></td></tr>
+<tr class="separator:ga8376c55facbf6f3d449e06495097d77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c0fd4c310a3327454b435c0f60b3de1"><td class="memItemLeft" align="right" valign="top"><a id="ga5c0fd4c310a3327454b435c0f60b3de1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a></td></tr>
+<tr class="memdesc:ga5c0fd4c310a3327454b435c0f60b3de1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max antenna number. <br /></td></tr>
+<tr class="separator:ga5c0fd4c310a3327454b435c0f60b3de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac182f706f06495d9105fcd2e557b9524"><td class="memItemLeft" align="right" valign="top"><a id="gac182f706f06495d9105fcd2e557b9524"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#gac182f706f06495d9105fcd2e557b9524">BLE_GAP_CTE_TYPE_AOA</a></td></tr>
+<tr class="memdesc:gac182f706f06495d9105fcd2e557b9524"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTE type AoA. <br /></td></tr>
+<tr class="separator:gac182f706f06495d9105fcd2e557b9524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bd88ffac2989f4800d408fbc20f1c03"><td class="memItemLeft" align="right" valign="top"><a id="ga6bd88ffac2989f4800d408fbc20f1c03"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga6bd88ffac2989f4800d408fbc20f1c03">BLE_GAP_CTE_TYPE_AOD_1US</a></td></tr>
+<tr class="memdesc:ga6bd88ffac2989f4800d408fbc20f1c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTE type AoD with slot of 1 us. <br /></td></tr>
+<tr class="separator:ga6bd88ffac2989f4800d408fbc20f1c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cf42db868245561fe9db9a94b375c37"><td class="memItemLeft" align="right" valign="top"><a id="ga8cf42db868245561fe9db9a94b375c37"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___a_p_i.html#ga8cf42db868245561fe9db9a94b375c37">BLE_GAP_CTE_TYPE_AOD_2US</a></td></tr>
+<tr class="memdesc:ga8cf42db868245561fe9db9a94b375c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTE type AoD with slot of 2 us. <br /></td></tr>
+<tr class="separator:ga8cf42db868245561fe9db9a94b375c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -2441,6 +2690,476 @@ OOB rand used in Secure Connections. </td></tr>
 
 </div>
 </div>
+<a name="structst__ble__gap__cte__antenna__info__t" id="structst__ble__gap__cte__antenna__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__antenna__info__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_antenna_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_antenna_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This is the parameters used in R_BLE_GAP_GetAntennaInfo(). </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__recv__test__param__t" id="structst__ble__gap__recv__test__param__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__recv__test__param__t">&#9670;&nbsp;</a></span>st_ble_gap_recv_test_param_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_recv_test_param_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This is the parameters used in <a class="el" href="group___g_a_p___a_p_i.html#ga898d303150412c52f9371a3d3a19916a" title="Start a test where the DUT receives test reference packets at a fixed interval. The tester generates ...">R_BLE_GAP_ReceiverTest()</a> </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a67ae111e20e0539bc27ef7d19339f073"></a>uint8_t</td>
+<td class="fieldname">
+rx_ch</td>
+<td class="fielddoc">
+RF channel. </td></tr>
+<tr><td class="fieldtype">
+<a id="a02fe308d4d8ae53ddb2bf11bf2247495"></a>uint8_t</td>
+<td class="fieldname">
+phy</td>
+<td class="fielddoc">
+The transmitter PHY of packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="addc90b399053084153b57e2018c19353"></a>uint8_t</td>
+<td class="fieldname">
+mod_idx</td>
+<td class="fielddoc">
+Whether or not the Controller should assume the receiver has a stable modulation index. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3a1f5bd7f1f6e0551659f86797f5b808"></a>uint8_t</td>
+<td class="fieldname">
+expect_cte_len</td>
+<td class="fielddoc">
+Expected length of the Constant Tone Extensions in received test reference packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="a377c981ef374c6e68c25f97d2aef0054"></a>uint8_t</td>
+<td class="fieldname">
+expect_cte_type</td>
+<td class="fielddoc">
+Expected type of the Constant Tone Extensions in received test reference packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae79ebe88a037eed90bd94fd839750661"></a>uint8_t</td>
+<td class="fieldname">
+slot_duration</td>
+<td class="fielddoc">
+Switching and sampling slots durations. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7700002bd3c6abf90ba6e4e11335e55a"></a>uint8_t</td>
+<td class="fieldname">
+switch_pattern_len</td>
+<td class="fielddoc">
+The number of Antenna IDs in the pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="a421d866924d8f9eb4daef241d3642f8a"></a>uint8_t</td>
+<td class="fieldname">
+ant_ids[<a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a>]</td>
+<td class="fielddoc">
+Antenna ID in the pattern. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__trans__test__param__t" id="structst__ble__gap__trans__test__param__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__trans__test__param__t">&#9670;&nbsp;</a></span>st_ble_gap_trans_test_param_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_trans_test_param_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This is the parameters used in <a class="el" href="group___g_a_p___a_p_i.html#gab1c50099f01b87b5a1fb4bfd438b2ad6" title="Start a test where the DUT generates test reference packets at a fixed interval. The Controller shall...">R_BLE_GAP_TransmitterTest()</a>. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0b54dd852cf6a0df93ed51586808e58f"></a>uint8_t</td>
+<td class="fieldname">
+tx_ch</td>
+<td class="fielddoc">
+RF channel. </td></tr>
+<tr><td class="fieldtype">
+<a id="a61fedaf973650854ef439893ca76b04a"></a>uint8_t</td>
+<td class="fieldname">
+test_data_len</td>
+<td class="fielddoc">
+Length of the Payload of the test reference packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="a328181f46d68ded50d7a255a389e9d0d"></a>uint8_t</td>
+<td class="fieldname">
+packet_payload</td>
+<td class="fielddoc">
+Contents of the Payload of the test reference packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="a663410739f10246504ec8f9e4f0d0db7"></a>uint8_t</td>
+<td class="fieldname">
+phy</td>
+<td class="fielddoc">
+The transmitter PHY of packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3ebc35120d623edb4046d438fe1c7120"></a>uint8_t</td>
+<td class="fieldname">
+cte_len</td>
+<td class="fielddoc">
+Length of the Constant Tone Extension in the test reference packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5a632e3235fccf2e2b2cb3f60df66ab0"></a>uint8_t</td>
+<td class="fieldname">
+cte_type</td>
+<td class="fielddoc">
+Type of the Constant Tone Extension in the test reference packets. </td></tr>
+<tr><td class="fieldtype">
+<a id="adda322526cc8181ef8164da506275b98"></a>uint8_t</td>
+<td class="fieldname">
+switch_pattern_len</td>
+<td class="fielddoc">
+The number of Antenna IDs in the pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad1b269fbdac7b8565453dfb18f6a62a2"></a>uint8_t</td>
+<td class="fieldname">
+ant_ids[<a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a>]</td>
+<td class="fielddoc">
+Antenna ID in the pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6297e8e69d169966f26ede0664b642d8"></a>int8_t</td>
+<td class="fieldname">
+tx_power_level</td>
+<td class="fielddoc">
+Transmit power level to be used by the transmitter. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__set__path__loss__rpt__param__t" id="structst__ble__gap__set__path__loss__rpt__param__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__set__path__loss__rpt__param__t">&#9670;&nbsp;</a></span>st_ble_gap_set_path_loss_rpt_param_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_set_path_loss_rpt_param_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This is the parameters used in <a class="el" href="group___g_a_p___a_p_i.html#ga749c72744b6a22df14426a69f27a7279" title="Set the path loss threshold reporting parameters for the ACL connection identified. ">R_BLE_GAP_SetPathLossReportingParam()</a>. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a06bda320064cd4b53b138663bdb97974"></a>uint16_t</td>
+<td class="fieldname">
+conn_hdl</td>
+<td class="fielddoc">
+Connection handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a68ad4a4aa326766e70bde852993c8519"></a>uint8_t</td>
+<td class="fieldname">
+high_thr</td>
+<td class="fielddoc">
+High threshold for the path loss. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad6ba120ffe066261fda31f2c7e8cc0f2"></a>uint8_t</td>
+<td class="fieldname">
+high_hys</td>
+<td class="fielddoc">
+Hysteresis value for the high threshold. </td></tr>
+<tr><td class="fieldtype">
+<a id="a037a70354d3078861e5175eca51a91f6"></a>uint8_t</td>
+<td class="fieldname">
+low_thr</td>
+<td class="fielddoc">
+Low threshold for the path loss. </td></tr>
+<tr><td class="fieldtype">
+<a id="a67f63069a667f00c5bb7f2fd61291d6e"></a>uint8_t</td>
+<td class="fieldname">
+low_hys</td>
+<td class="fielddoc">
+Hysteresis value for the low threshold. </td></tr>
+<tr><td class="fieldtype">
+<a id="a905d3bee8932fefd25ccfe3c7155378a"></a>uint16_t</td>
+<td class="fieldname">
+min_time_spent</td>
+<td class="fielddoc">
+Minimum time in number of connection events to be observed once the path loss crosses the threshold before an event is generated. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__cte__connless__t" id="structst__ble__gap__cte__connless__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__connless__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_connless_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_connless_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connectionless CTE param </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a58a41e6908562285976e293fcdf0f752"></a>uint16_t</td>
+<td class="fieldname">
+adv_hdl</td>
+<td class="fielddoc">
+For connectionless CTE handle is the Sync handle identifying the Periodic Sync that has been established. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9115f9fd32b1f2bc6030a7896ff01ae4"></a>uint8_t</td>
+<td class="fieldname">
+cte_len</td>
+<td class="fielddoc">
+<p>Length of CTE in 8us units. Range: 0x02 to 0x14 </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab1c58fe4d54186f3c36453205ff3e885"></a>uint8_t</td>
+<td class="fieldname">
+cte_type</td>
+<td class="fielddoc">
+CTE type. <p>Allowed values are: BLE_GAP_CTE_TYPE_AOA BLE_GAP_CTE_TYPE_AOD_1US BLE_GAP_CTE_TYPE_AOD_2US </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a3a4c28f4bbf1e28cff3465d2dff38232"></a>uint8_t</td>
+<td class="fieldname">
+cte_count</td>
+<td class="fielddoc">
+<p>Number of CTE to transmit in each periodic adv interval. Range: 0x01 to 0x10 </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab43dbe09d95ec5595da1808fba858392"></a>uint8_t</td>
+<td class="fieldname">
+pattern_len</td>
+<td class="fielddoc">
+<p>Number of Antenna IDs in the switch pattern. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a6d59ee69e3094f280f6aa5107475336e"></a>uint8_t</td>
+<td class="fieldname">
+ant_ids[<a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a>]</td>
+<td class="fielddoc">
+<p>List of antenna IDs in the pattern. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__cte__conn__t" id="structst__ble__gap__cte__conn__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__conn__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_conn_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_conn_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connection CTE param </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afe5e73967b6b29fd54b639e0f61deb77"></a>uint16_t</td>
+<td class="fieldname">
+conn_hdl</td>
+<td class="fielddoc">
+The ACL connection handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a212ae6600f3b52e63b6920321f972e0e"></a>uint8_t</td>
+<td class="fieldname">
+allow_cte_types</td>
+<td class="fielddoc">
+bitfield of CTE types that are allowed <p>bit should be one or compose of: BLE_GAP_CTE_TYPE_AOA (bit 0) BLE_GAP_CTE_TYPE_AOD_1US (bit 1) BLE_GAP_CTE_TYPE_AOD_2US (bit 2) </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0c801de0f01ca4602082a12e0b60d86a"></a>uint8_t</td>
+<td class="fieldname">
+pattern_len</td>
+<td class="fielddoc">
+<p>Number of Antenna IDs in the switch pattern. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa9840e19bb13f4a2d47a52c2d4622fc2"></a>uint8_t</td>
+<td class="fieldname">
+ant_ids[<a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a>]</td>
+<td class="fielddoc">
+<p>List of antenna IDs in the pattern. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__cte__connless__recv__t" id="structst__ble__gap__cte__connless__recv__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__connless__recv__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_connless_recv_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_connless_recv_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connectionless CTE receive param </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7ecf132410f7eee34e30ba596d219f59"></a>uint16_t</td>
+<td class="fieldname">
+sync_hdl</td>
+<td class="fielddoc">
+Periodic Sync that has been established for CTE. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6436d853c3661a67c33410e5b855aad9"></a>uint8_t</td>
+<td class="fieldname">
+cte_type</td>
+<td class="fielddoc">
+CTE type. <p>CTE type should be get from <a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__perd__adv__rept__t" title="Periodic Advertising Report. ">st_ble_gap_perd_adv_rept_t</a> of BLE_GAP_EVENT_ADV_REPT_IND event in connectionless CTE, or get from ACL connection in connection CTE. The slot_durations, pattern_len, and ant_ids parameters are only used when receiving an AoA Constant Tone Extension and do not affect the reception of an AoD Constant Tone Extension. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a4442c57e9456464f4f3ebd40b0a3b22e"></a>uint8_t</td>
+<td class="fieldname">
+max_cte_count</td>
+<td class="fielddoc">
+Max number of CTEs to receive. Min is 1, max is 10, 0 means receive continuously. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0088dc6bfc142f4b110a8ff097824b3d"></a>uint8_t</td>
+<td class="fieldname">
+slot_durations</td>
+<td class="fielddoc">
+<p>Antenna switching slots. 1 for 1us or 2 for 2us </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a4f300064d99e61b6e18271cf7601a3bf"></a>uint8_t</td>
+<td class="fieldname">
+pattern_len</td>
+<td class="fielddoc">
+Length of antenna switch pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="a511f9e6455d71fcebc08c9ff08bfe95f"></a>uint8_t</td>
+<td class="fieldname">
+ant_ids[<a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a>]</td>
+<td class="fielddoc">
+Antenna switch pattern. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__cte__conn__rx__param__t" id="structst__ble__gap__cte__conn__rx__param__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__conn__rx__param__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_conn_rx_param_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_conn_rx_param_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connection CTE receive param </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa1cba63ff055e31227c1e111269cd47e"></a>uint16_t</td>
+<td class="fieldname">
+conn_hdl</td>
+<td class="fielddoc">
+For connection CTE handle is the ACL connection handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6b6d7b707ceb979309c87c48c2e8b5d3"></a>uint8_t</td>
+<td class="fieldname">
+slot_durations</td>
+<td class="fielddoc">
+<p>Antenna switching slots. 1 for 1us or 2 for 2us </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ae337be9b25b53dce3410810ab7382ee1"></a>uint8_t</td>
+<td class="fieldname">
+pattern_len</td>
+<td class="fielddoc">
+Length of antenna switch pattern. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac0e2787b8b8f1057de9cc7ed1736728e"></a>uint8_t</td>
+<td class="fieldname">
+ant_ids[<a class="el" href="group___g_a_p___a_p_i.html#ga5c0fd4c310a3327454b435c0f60b3de1">BLE_GAP_CTE_MAX_ANTENNA</a>]</td>
+<td class="fielddoc">
+Antenna switch pattern. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__cte__conn__req__t" id="structst__ble__gap__cte__conn__req__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__conn__req__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_conn_req_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_conn_req_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connection CTE request </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a490712eb44a6c1a3a42745f268d36212"></a>uint16_t</td>
+<td class="fieldname">
+conn_hdl</td>
+<td class="fielddoc">
+For connection CTE handle is the ACL connection handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a30d4374a5c29733af3396522e00d802f"></a>uint16_t</td>
+<td class="fieldname">
+interval</td>
+<td class="fielddoc">
+Requested interval for initiating the CTE Request procedure. <p>Value 0x0 means, run the procedure once. Other values are intervals in number of connection events, to run the command periodically. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a23d96dba94db0905985b7d81e1d791b6"></a>uint8_t</td>
+<td class="fieldname">
+cte_length</td>
+<td class="fielddoc">
+<p>Requested length of the CTE in 8 us units. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac89a849924cff3b3f8aca134a0e72a7a"></a>uint8_t</td>
+<td class="fieldname">
+cte_type</td>
+<td class="fielddoc">
+Requested type of the CTE. <p>Allowed values are BLE_GAP_CTE_TYPE_AOA, BLE_GAP_CTE_TYPE_AOD_1US and BLE_GAP_CTE_TYPE_AOD_2US </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__subrate__param__t" id="structst__ble__gap__subrate__param__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__subrate__param__t">&#9670;&nbsp;</a></span>st_ble_gap_subrate_param_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_subrate_param_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>subrating param </p>
+</div>
+</div>
+</div>
 <a name="structst__ble__gap__ver__num__t" id="structst__ble__gap__ver__num__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__ver__num__t">&#9670;&nbsp;</a></span>st_ble_gap_ver_num_t</h2>
 
@@ -2929,11 +3648,23 @@ RSSI(in dBm). <p>Valid range is -127 &lt;= rssi &lt;= 20 and 127.<br />
  If rssi is 127, it means that RSSI could not be retrieved. </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ad2d5c99785a174eaff3735b7a2e729f6"></a>uint8_t</td>
+<a id="a00265d901ccc0f3f04cb7253726403a0"></a>uint8_t</td>
 <td class="fieldname">
-rfu</td>
+cte_type</td>
 <td class="fielddoc">
-Reserved for future use. </td></tr>
+Type of Constant Tone Extension in the periodic advertising packets. <table class="doxtable">
+<tr>
+<th align="left">value </th><th align="left">description  </th></tr>
+<tr>
+<td align="left">0x00 </td><td align="left">AoA Constant Tone Extension. </td></tr>
+<tr>
+<td align="left">0x01 </td><td align="left">AoD Constant Tone Extension with 1 μs slots. </td></tr>
+<tr>
+<td align="left">0x02 </td><td align="left">AoD Constant Tone Extension with 2 μs slots. </td></tr>
+<tr>
+<td align="left">0xFF </td><td align="left">No Constant Tone Extension. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ad1c6efec49e33cab1134d53c2ea27484"></a>uint8_t</td>
 <td class="fieldname">
@@ -2999,7 +3730,7 @@ Data type. <table class="doxtable">
 <p>If the BLE Protocol Stack library type is "extended", the adv_rpt_type field in a Legacy Advertising Report event is 0x01. </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a id="aa07b6d61a862bf0c34e2de2f1d776ac7"></a>union <a class="el" href="group___g_a_p___a_p_i.html#unionst__ble__gap__adv__rept__evt__t_8param">st_ble_gap_adv_rept_evt_t</a></td>
+<a id="abc5133209cd08a23bc22ad41f4b07f06"></a>union <a class="el" href="group___g_a_p___a_p_i.html#unionst__ble__gap__adv__rept__evt__t_8param">st_ble_gap_adv_rept_evt_t</a></td>
 <td class="fieldname">
 param</td>
 <td class="fielddoc">
@@ -4531,6 +5262,214 @@ Keys distributed from the remote device in paring. </td></tr>
 
 </div>
 </div>
+<a name="structst__cte__iq__sample__t" id="structst__cte__iq__sample__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__cte__iq__sample__t">&#9670;&nbsp;</a></span>st_cte_iq_sample_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_cte_iq_sample_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CTE IQ sample data. </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__cte__connless__rept__t" id="structst__ble__gap__cte__connless__rept__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__connless__rept__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_connless_rept_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_connless_rept_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connectionless CTE data report </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__cte__conn__rept__t" id="structst__ble__gap__cte__conn__rept__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__cte__conn__rept__t">&#9670;&nbsp;</a></span>st_ble_gap_cte_conn_rept_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_cte_conn_rept_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>connection CTE data report </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__subrate__upd__t" id="structst__ble__subrate__upd__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__subrate__upd__t">&#9670;&nbsp;</a></span>st_ble_subrate_upd_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_subrate_upd_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>subrating update event </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__past__est__evt__t" id="structst__ble__gap__past__est__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__past__est__evt__t">&#9670;&nbsp;</a></span>st_ble_gap_past_est_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_past_est_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa1ad81405926fcc5997d45d4907a3fbd"></a>uint16_t</td>
+<td class="fieldname">
+conn_hdl</td>
+<td class="fielddoc">
+<p>Periodic Advertising Sync Transfer options </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a263738a0a0154424b0eb525b6890e198"></a>uint16_t</td>
+<td class="fieldname">
+service_data</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a99279903c182af64d387ae45f735d76d"></a><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__sync__est__evt__t">st_ble_gap_sync_est_evt_t</a></td>
+<td class="fieldname">
+sync</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__tx__power__reporting__evt__t" id="structst__ble__gap__tx__power__reporting__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__tx__power__reporting__evt__t">&#9670;&nbsp;</a></span>st_ble_gap_tx_power_reporting_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_tx_power_reporting_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that. </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__pass__loss__thr__evt__t" id="structst__ble__gap__pass__loss__thr__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__pass__loss__thr__evt__t">&#9670;&nbsp;</a></span>st_ble_gap_pass_loss_thr_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_pass_loss_thr_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that a path loss report has been received. </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__req__peer__sca__evt__t" id="structst__ble__gap__req__peer__sca__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__req__peer__sca__evt__t">&#9670;&nbsp;</a></span>st_ble_gap_req_peer_sca_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_req_peer_sca_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that a SCA request to a remote device has been completed. </p>
+</div>
+</div>
+</div>
+<a name="structst__ble__gap__dtm__test__end__evt__t" id="structst__ble__gap__dtm__test__end__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__dtm__test__end__evt__t">&#9670;&nbsp;</a></span>st_ble_gap_dtm_test_end_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_dtm_test_end_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>report of dtm transmit/receive test end </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="adcfc0243198de88fb88bd3408889c9e9"></a>uint16_t</td>
+<td class="fieldname">
+recv_cnt</td>
+<td class="fielddoc">
+the number of received packets </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gap__enhanced__read__tx__power__level__evt__t" id="structst__ble__gap__enhanced__read__tx__power__level__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gap__enhanced__read__tx__power__level__evt__t">&#9670;&nbsp;</a></span>st_ble_gap_enhanced_read_tx_power_level_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gap_enhanced_read_tx_power_level_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Power level report of remove device. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ad144c97ec49261480cd46be04b48bc24"></a>uint16_t</td>
+<td class="fieldname">
+handle</td>
+<td class="fielddoc">
+Indicate an ACL connection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a366c710a0811373b9386c40d620bac1b"></a>uint8_t</td>
+<td class="fieldname">
+phy</td>
+<td class="fielddoc">
+PHY. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2635a17d9819f4a34da3c9507827deba"></a>int8_t</td>
+<td class="fieldname">
+crt_tx_power_level</td>
+<td class="fielddoc">
+Current transmit power level. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0b5bd8bee03fd360bba958c026d15945"></a>int8_t</td>
+<td class="fieldname">
+max_tx_power_level</td>
+<td class="fielddoc">
+Maximum transmit power level. </td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga49b4250b2230cea15e06b11d90738f92"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga49b4250b2230cea15e06b11d90738f92">&#9670;&nbsp;</a></span>BLE_BD_ADDR_LEN</h2>
@@ -5943,6 +6882,132 @@ Keys distributed from the remote device in paring. </td></tr>
 </dl>
 <h2>Event Data:</h2>
 <p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__sc__oob__data__evt__t" title="This structure notifies that OOB data for Secure Connections has been generated by R_BLE_GAP_CreateSc...">st_ble_gap_sc_oob_data_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a1c0c7353955b88b49edb0248d580cc5b"></a>BLE_GAP_EVENT_CTE_CONN_REQ_FAILED&#160;</td><td class="fielddoc"><p>An connectionless CTE IQ sample is reported. </p>
+<h2>result</h2>
+<p>0x0000 Response without CTE info other Rejected by remote peer</p>
+<h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a45aceb76002828aab404788123b4de88"></a>BLE_GAP_EVENT_CTE_CONNLESS_REPT&#160;</td><td class="fielddoc"><p>An connectionless CTE IQ sample is reported. </p>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__rept__t" title="connectionless CTE data report ">st_ble_gap_cte_connless_rept_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ab052b80318e12a429b0d52f7c0bb0a05"></a>BLE_GAP_EVENT_CTE_CONN_REPT&#160;</td><td class="fielddoc"><p>An connection CTE IQ sample is reported. </p>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rept__t" title="connection CTE data report ">st_ble_gap_cte_conn_rept_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a8ae05701f5ce86c081c1ce644e6c03dd"></a>BLE_GAP_EVENT_SUBRATE_CHANGE&#160;</td><td class="fielddoc"><p>a Connection Subrate Update procedure has completed and some parameters of the specified connection have changed. </p>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__subrate__upd__t" title="subrating update event ">st_ble_subrate_upd_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a6ca1c9846e525154121f88c7d753236f"></a>BLE_GAP_EVENT_PAST_RECV&#160;</td><td class="fielddoc"><p>This event notifies that it has received periodic advertising synchronization information from the device referred to by the Connection_Handle parameter </p><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__past__est__evt__t" title="This structure notifies that. ">st_ble_gap_past_est_evt_t</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aa9eaf7b7e355a11840f158d83f3e5ce1"></a>BLE_GAP_EVENT_TX_POWER_REPT&#160;</td><td class="fielddoc"><p>Transmit power level report. </p>
+<p>This event is a report of the transmit power level on the ACL connection identified by the conn_hdl</p>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__tx__power__reporting__evt__t" title="This structure notifies that. ">st_ble_gap_tx_power_reporting_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a5eeb2a32ca6206354b60b2107a61bce4"></a>BLE_GAP_EVENT_PATH_LOSS_THR&#160;</td><td class="fielddoc"><p>Report a path loss threshold crossing on the ACL connection identified by the Connection_Handle parameter. </p>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__pass__loss__thr__evt__t" title="This structure notifies that a path loss report has been received. ">st_ble_gap_pass_loss_thr_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aca986b77f5d051f4b902c22c733d9ea4"></a>BLE_GAP_EVENT_REQ_PEER_SCA_COMP&#160;</td><td class="fielddoc"><p>Indicates that the HCI_LE_Request_Peer_SCA command has been completed. </p><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__req__peer__sca__evt__t" title="This structure notifies that a SCA request to a remote device has been completed. ...">st_ble_gap_req_peer_sca_evt_t</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a168d9782ce945ee4e9d786b0b6f9048e"></a>BLE_GAP_EVENT_CTE_SET_CONNLESS_PARAM_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a772b63f1b3f124f2d27c0d8e36e9210b"></a>BLE_GAP_EVENT_CTE_CONNLESS_TX_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ae0320a464f8bc987ea4d4079de96ca1a"></a>BLE_GAP_EVENT_CTE_CONNLESS_TX_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ab62fb085245e3c53e181c02f003962da"></a>BLE_GAP_EVENT_CTE_CONNLESS_RX_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__sync__hdl__evt__t" title="This structure notifies that a GAP Event that includes only sync handle has occurred. ">st_ble_gap_sync_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a46764b44042b700faf40024bebd405ec"></a>BLE_GAP_EVENT_CTE_CONNLESS_RX_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__sync__hdl__evt__t" title="This structure notifies that a GAP Event that includes only sync handle has occurred. ">st_ble_gap_sync_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ac7df4a83bafb5724d7f777efd3676fdf"></a>BLE_GAP_EVENT_CTE_SET_CONN_PARAM_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791afc3cec80ce71ec31218dd6e2559180bc"></a>BLE_GAP_EVENT_CTE_SET_CONN_RSP_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ae124316e278501923ccfafaf9602c233"></a>BLE_GAP_EVENT_CTE_SET_CONN_RSP_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a1540ada5664c78174030f9e80589444f"></a>BLE_GAP_EVENT_CTE_SET_CONN_RECV_PARAM_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a68eccd129dbbe125b2ca6ad2bd04ac16"></a>BLE_GAP_EVENT_CTE_CONN_REQ_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ac0af0d17d9f59dcd60909ae38648c8db"></a>BLE_GAP_EVENT_CTE_CONN_REQ_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ab4e1bd10fb31e7c71cc17e6c33ed25fe"></a>BLE_GAP_EVENT_SET_DEF_SUBRATE_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a6ecb654d05ca7a48ac58abc1f32b6438"></a>BLE_GAP_EVENT_REQ_SUBRATE_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a0b8a4c75023720f491d4a1c06c7556b4"></a>BLE_GAP_EVENT_PAST_START_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a8821fc089097a9a11e813940c59e8d8d"></a>BLE_GAP_EVENT_PAST_SET_PARAM_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a26a0000f1f96dcccc99aa19a18de8413"></a>BLE_GAP_EVENT_PAST_SET_DEF_PARAM_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aaf09da2a9a1e3c5221a8cfc2defb14af"></a>BLE_GAP_EVENT_UPD_SCA_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a9b9c6e2ab875bd884ad0906434668d68"></a>BLE_GAP_EVENT_READ_REMOTE_TX_POWER_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ae71d2e8381e655f8ec6f4e99db4330d4"></a>BLE_GAP_EVENT_SET_PATHLOSS_REPT_PARAM_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a09cdb16e03f1e88d19e5a22493be1135"></a>BLE_GAP_EVENT_PATHLOSS_REPT_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aa04022903a638cd6a6af9000ce476a9a"></a>BLE_GAP_EVENT_PATHLOSS_REPT_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a57e039548d50c7080baa88264e76dd60"></a>BLE_GAP_EVENT_LOCAL_TX_POWER_REPT_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a12ef521e6afffed6a259fa83a8470fb0"></a>BLE_GAP_EVENT_LOCAL_TX_POWER_REPT_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791ad22c51dad6270a963964a0901e73a434"></a>BLE_GAP_EVENT_REMOTE_TX_POWER_REPT_ON&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aaa47dd2219d12cbccea7d1eeedf0cfe9"></a>BLE_GAP_EVENT_REMOTE_TX_POWER_REPT_OFF&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__conn__hdl__evt__t" title="This structure notifies that a GAP Event that includes only connection handle has occurred...">st_ble_gap_conn_hdl_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aa825fb9e9c018dce7edc6c62d519eacd"></a>BLE_GAP_EVENT_SET_RPA_UPD_REASON_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aa5bb85c11d4d1855fe036a825294882c"></a>BLE_GAP_EVENT_DTM_RX_TEST_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a470f36e32002b36bfb4151a4440913e2"></a>BLE_GAP_EVENT_DTM_TX_TEST_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791aca55b71df06d44d14a0e0100f4679b4c"></a>BLE_GAP_EVENT_DTM_TEST_END_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__dtm__test__end__evt__t" title="report of dtm transmit/receive test end ">st_ble_gap_dtm_test_end_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791af4c3941dafd3bd7c83aa0a347a546140"></a>BLE_GAP_EVENT_ENHANCED_READ_TX_POWER_LEVEL_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__enhanced__read__tx__power__level__evt__t" title="Power level report of remove device. ">st_ble_gap_enhanced_read_tx_power_level_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2663e6d4f0cb98892400997e4479791a9b6ff9652bc54899025e64a983ba7594"></a>BLE_GAP_EVENT_SET_HOST_FEAT_COMP&#160;</td><td class="fielddoc"><h2>Event Data:</h2>
+<p>None </p>
 </td></tr>
 </table>
 
@@ -8568,13 +9633,1102 @@ Figure 1.3</div></div>
 
 </div>
 </div>
+<a id="gac71839093528bb13c94529f860a4128b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac71839093528bb13c94529f860a4128b">&#9670;&nbsp;</a></span>R_BLE_GAP_SetCteConnlessParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetCteConnlessParam </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__t">st_ble_gap_cte_connless_t</a> *&#160;</td>
+          <td class="paramname"><em>cte_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the parameters for the transmission of Constant Tone Extensions in any periodic advertising. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cte_param</td><td>parameters of type, length, and antenna switching pattern. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7c611c163b258d3cf5b9f7e37f311294"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c611c163b258d3cf5b9f7e37f311294">&#9670;&nbsp;</a></span>R_BLE_GAP_EnableCteConnless()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_EnableCteConnless </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>adv_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable Constant Tone Extensions in periodic advertising identified by the adv_hdl. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">adv_hdl</td><td>handle of the periodic advertising which carries the CTE info. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable or disable address resolution function. <table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gae47753d437a9d9b114c71444724b2298" title="Disable CTE transmission or receive. ">BLE_GAP_CTE_DISABLED(0x00)</a> </td><td align="left">Disable connectionless CTE transmission </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga8376c55facbf6f3d449e06495097d77f" title="Enable CTE transmission or receive. ">BLE_GAP_CTE_ENABLED(0x01)</a> </td><td align="left">Enable connectionless CTE transmission </td></tr>
+</table>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga47be0d3814285b562b1c581f20d88ced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47be0d3814285b562b1c581f20d88ced">&#9670;&nbsp;</a></span>R_BLE_GAP_StartCteConnlessRecv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StartCteConnlessRecv </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__connless__recv__t">st_ble_gap_cte_connless_recv_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cte_recv</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable sampling received Constant Tone Extension fields. </p>
+<p>Application should receive BLE_GAP_EVENT_CTE_CONNLESS_REPT event. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cte_recv</td><td>antenna switching pattern and switching and sampling slot durations to be used. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga83f8ea38ce246d392be9bdac93a6dc7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83f8ea38ce246d392be9bdac93a6dc7d">&#9670;&nbsp;</a></span>R_BLE_GAP_StopCteConnlessRecv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StopCteConnlessRecv </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>sync_hdl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable sampling received Constant Tone Extension fields. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sync_hdl</td><td>handle of the periodic advertising sync which carries the CTE info. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5ea8a1b77291da1b56b1c83ca5aad18c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5ea8a1b77291da1b56b1c83ca5aad18c">&#9670;&nbsp;</a></span>R_BLE_GAP_SetCteConnParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetCteConnParam </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__t">st_ble_gap_cte_conn_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cte_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the parameters for the transmission of Constant Tone Extensions in ACL link. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cte_param</td><td>parameters of type, length, and antenna switching pattern. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa115294780802f1e71b81e4187502a7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa115294780802f1e71b81e4187502a7d">&#9670;&nbsp;</a></span>R_BLE_GAP_EnableCteConnRsp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_EnableCteConnRsp </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable Constant Tone Extensions Transmission in ACL link by conn_hdl. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>handle of the ACL link which carries the CTE info. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable or disable address resolution function. <table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gae47753d437a9d9b114c71444724b2298" title="Disable CTE transmission or receive. ">BLE_GAP_CTE_DISABLED(0x00)</a> </td><td align="left">Disable connectionless CTE transmission </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga8376c55facbf6f3d449e06495097d77f" title="Enable CTE transmission or receive. ">BLE_GAP_CTE_ENABLED(0x01)</a> </td><td align="left">Enable connectionless CTE transmission </td></tr>
+</table>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabb6706ad6d0ba3b7a029b9d6ca4ff265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb6706ad6d0ba3b7a029b9d6ca4ff265">&#9670;&nbsp;</a></span>R_BLE_GAP_SetCteConnRecvParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetCteConnRecvParam </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__rx__param__t">st_ble_gap_cte_conn_rx_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cte_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the parameters for the receiving of Constant Tone Extensions in ACL link. and start sampling. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cte_param</td><td>parameters of type, length, and antenna switching pattern. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga04594ca0d25db81badc90b84114891e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga04594ca0d25db81badc90b84114891e7">&#9670;&nbsp;</a></span>R_BLE_GAP_StopCteConnRecvSampling()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StopCteConnRecvSampling </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop sampling of Constant Tone Extensions on the specified connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>handle of the ACL link which carries the CTE info. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabbe19912e5d591d4af0271a9c2206d79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabbe19912e5d591d4af0271a9c2206d79">&#9670;&nbsp;</a></span>R_BLE_GAP_StartCteConnReq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StartCteConnReq </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__cte__conn__req__t">st_ble_gap_cte_conn_req_t</a> *&#160;</td>
+          <td class="paramname"><em>p_req</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the parameters and start sending request of Constant Tone Extensions in ACL link to peer. </p>
+<p>If the request does not receive a CTE Response PDU with CTE info, BLE_GAP_EVENT_CTE_CONN_REQ_FAILED event is sent to application. Otherwise application should receive BLE_GAP_EVENT_CTE_CONN_REPT event. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_req</td><td>parameters connection CTE request. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1c7ed8eb852ab6c10eb0a82099a7cb2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1c7ed8eb852ab6c10eb0a82099a7cb2d">&#9670;&nbsp;</a></span>R_BLE_GAP_StopCteConnReq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StopCteConnReq </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop sending request of Constant Tone Extensions in ACL link to peer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>handle of the ACL link which carries the CTE info. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0e63d2f3f421dcf3bebf36a6b493be4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0e63d2f3f421dcf3bebf36a6b493be4d">&#9670;&nbsp;</a></span>R_BLE_GAP_SetDefaultSubrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetDefaultSubrate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__subrate__param__t">st_ble_gap_subrate_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_subrate_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the initial values for the acceptable parameters for subrating requests,. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_subrate_param</td><td>default parameters of subrate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaef6de6dbee49836c35d24d521f07f6da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaef6de6dbee49836c35d24d521f07f6da">&#9670;&nbsp;</a></span>R_BLE_GAP_RequestSubrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_RequestSubrate </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__subrate__param__t">st_ble_gap_subrate_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_subrate_param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Request a change to the subrating factor other parameters applied to an existing connection using the Connection Subrate Update procedure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>handle of the ACL link which carries the CTE info. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_subrate_param</td><td>request parameters of subrate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga58c5717dea9c1a5df495bdc5ab9484cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga58c5717dea9c1a5df495bdc5ab9484cb">&#9670;&nbsp;</a></span>R_BLE_GAP_StartPerdAdvSetInfoTransfer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StartPerdAdvSetInfoTransfer </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>adv_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>service_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function starts Periodic advertising adv set info transfer to the connection. </p>
+<p>Send synchronization information about the periodic advertising in an advertising set to a connected device. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">adv_hdl</td><td>Identifies the advertising set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Connection handle identifying the remote device. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_data</td><td>A value provided by the application for use by the application of the peer device. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae61ff29d8ecff0a749cacc97554b6331"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae61ff29d8ecff0a749cacc97554b6331">&#9670;&nbsp;</a></span>R_BLE_GAP_StartPerdAdvSyncTransfer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_StartPerdAdvSyncTransfer </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>sync_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>service_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function starts Periodic advertising sync transfer. </p>
+<p>send synchronization information about the periodic advertising train identified by the Sync_Handle parameter to a connected device. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sync_hdl</td><td>Sync handle identifying the Periodic Sync that has been established. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Connection handle identifying the remote device. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_data</td><td>A value provided by the application for use by the application of the peer device. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga980badd3d69965050a59cfc648318f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga980badd3d69965050a59cfc648318f99">&#9670;&nbsp;</a></span>R_BLE_GAP_SetPerdAdvSyncTransferParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetPerdAdvSyncTransferParam </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">st_ble_gap_past_param_t *&#160;</td>
+          <td class="paramname"><em>p_past_param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function starts to accept Periodic advertising sync transfer from the connection. </p>
+<p>This API call enables BLE_GAP_EVENT_PAST_RECV event.n</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Connection handle identifying the remote device. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_past_param</td><td>Periodic advertising sync transfer parameters. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga195e00b4d9e83245a1329d6c110d4d1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga195e00b4d9e83245a1329d6c110d4d1d">&#9670;&nbsp;</a></span>R_BLE_GAP_SetDefPerdAdvSyncTransferParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetDefPerdAdvSyncTransferParam </td>
+          <td>(</td>
+          <td class="paramtype">st_ble_gap_past_param_t *&#160;</td>
+          <td class="paramname"><em>p_past_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function set the default parameter of Periodic advertising sync transfer for all subsequent connection. It does not affect any existing connection. </p>
+<p>This API call enables BLE_GAP_EVENT_PAST_RECV event.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_past_param</td><td>Periodic advertising sync transfer parameters. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga64c172b5379f7b199d6491f528338443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64c172b5379f7b199d6491f528338443">&#9670;&nbsp;</a></span>R_BLE_GAP_ReadAntennaInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_ReadAntennaInfo </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function read the switching rates, the sampling rates, the number of antennae, and the maximum length of a transmitted Constant Tone Extension. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+    <tr><td class="paramname">BLE_ERR_UNSPECIFIED(0x0013)</td><td>Unspecified error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga898d303150412c52f9371a3d3a19916a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga898d303150412c52f9371a3d3a19916a">&#9670;&nbsp;</a></span>R_BLE_GAP_ReceiverTest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_ReceiverTest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__recv__test__param__t">st_ble_gap_recv_test_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_rx_test_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start a test where the DUT receives test reference packets at a fixed interval. The tester generates the test reference packets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rx_test_param</td><td>receiver test parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab1c50099f01b87b5a1fb4bfd438b2ad6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab1c50099f01b87b5a1fb4bfd438b2ad6">&#9670;&nbsp;</a></span>R_BLE_GAP_TransmitterTest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_TransmitterTest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__trans__test__param__t">st_ble_gap_trans_test_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_tx_test_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start a test where the DUT generates test reference packets at a fixed interval. The Controller shall transmit at the power level indicated by the TX_Power_Level parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tx_test_param</td><td>transmitter test parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga23db393a942577f2743393529b2188b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga23db393a942577f2743393529b2188b1">&#9670;&nbsp;</a></span>R_BLE_GAP_ModifySleepClockAccuracy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_ModifySleepClockAccuracy </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>act</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>request that the Controller changes its sleep clock accuracy for testing purposes. It should not be used under other circumstances. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">act</td><td>Switch to a more/less accurate clock. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf4458d68d009b2da07e1d1cb5ea14ffa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf4458d68d009b2da07e1d1cb5ea14ffa">&#9670;&nbsp;</a></span>R_BLE_GAP_ReadRemoteTransmitPowerLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_ReadRemoteTransmitPowerLevel </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>phy</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the transmit power level used by the remote device. </p>
+<p>BLE_GAP_EVENT_TX_POWER_REPT is received as a result when R_BLE_GAP_SetTransmitPowerReportingEnable is enabled. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">phy</td><td>The transmitter PHY of packets. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga749c72744b6a22df14426a69f27a7279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga749c72744b6a22df14426a69f27a7279">&#9670;&nbsp;</a></span>R_BLE_GAP_SetPathLossReportingParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetPathLossReportingParam </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___g_a_p___a_p_i.html#structst__ble__gap__set__path__loss__rpt__param__t">st_ble_gap_set_path_loss_rpt_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_loss_rpt_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the path loss threshold reporting parameters for the ACL connection identified. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_loss_rpt_param</td><td>parameter for path loss report. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8baf3d1f1cd7dec47bccd1cefe95888f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8baf3d1f1cd7dec47bccd1cefe95888f">&#9670;&nbsp;</a></span>R_BLE_GAP_SetPathLossReportingEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetPathLossReportingEnable </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable path loss reporting for the ACL connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Reporting enable/disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad0e83b1e1e2d3ba44ca9a4ffb95ee121"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad0e83b1e1e2d3ba44ca9a4ffb95ee121">&#9670;&nbsp;</a></span>R_BLE_GAP_SetTransmitPowerReportingEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetTransmitPowerReportingEnable </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>local_enable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>remote_enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable the transmit power level changing report. </p>
+<p>Enable or disable the reporting to the local Host of transmit power level changes in the local and remote Controllers for the ACL connection identified by the Connection_Handle parameter. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">local_enable</td><td>Local transmit power reports enable/disable. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">remote_enable</td><td>Remote transmit power reports enable/disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1126512aab40b3ba3d8e671485b6dfa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1126512aab40b3ba3d8e671485b6dfa6">&#9670;&nbsp;</a></span>R_BLE_GAP_SetDataRelatedAddrChanges()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetDataRelatedAddrChanges </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>adv_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>change_reason</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specifies circumstances when the Controller shall refresh any Resolvable Private Address. </p>
+<p>Specifies circumstances when the Controller shall refresh any Resolvable Private Addresss used by the advertising set identified by the Advertising_Handle parameter, whether or not the address timeout period has been reached. This function may be used while advertising is enabled. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">adv_hdl</td><td>Used to identify an advertising set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">change_reason</td><td>reason(s) for refreshing addresses. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga00b1087eb1fe88696e581f93f3aa5686"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00b1087eb1fe88696e581f93f3aa5686">&#9670;&nbsp;</a></span>R_BLE_GAP_TestEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_TestEnd </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop any test which is in progress. The Num_Packets for a transmitter test shall be reported as 0x0000. The Num_Packets is an unsigned number and contains the number of received packets. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6985def8885cb2bd675ed6979f69511f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6985def8885cb2bd675ed6979f69511f">&#9670;&nbsp;</a></span>R_BLE_GAP_ReqPeerSCA()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_ReqPeerSCA </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the Sleep Clock Accuracy (SCA) of the peer device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Indicate an ACL connection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga87708b719621f194e1dbd6143152b33f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga87708b719621f194e1dbd6143152b33f">&#9670;&nbsp;</a></span>R_BLE_GAP_EnhancedReadTxPowerLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_EnhancedReadTxPowerLevel </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_hdl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>phy</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the current and maximum transmit power levels of the local Controller on the ACL connection identified by the Connection_Handle parameter and the PHY indicated by the PHY parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_hdl</td><td>Indicate an ACL connection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">phy</td><td>Indicate PHY. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga814991ba8ed2ced8b585d57bd80d61e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga814991ba8ed2ced8b585d57bd80d61e0">&#9670;&nbsp;</a></span>R_BLE_GAP_SetHostFeat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_GAP_SetHostFeat </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>bit_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>bit_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set or clear a bit controlled by the Host in the Link Layer FeatureSet stored in the Controller. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_number</td><td>Bit position in the FeatureSet </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_value</td><td>Value of the bit </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

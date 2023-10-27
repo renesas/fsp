@@ -12,11 +12,14 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "p_extend", "group___e_t_h_e_r___p_h_y___a_p_i.html#a53025f3bbf4ba6d1e5666eb6b2a390e7", null ]
     ] ],
     [ "ether_phy_api_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__api__t", [
-      [ "open", "group___e_t_h_e_r___p_h_y___a_p_i.html#abeae29b0ee9ded59a1737b506abdc415", null ],
-      [ "close", "group___e_t_h_e_r___p_h_y___a_p_i.html#a43859adb62f78f2ffd46622ee33bf3b3", null ],
-      [ "startAutoNegotiate", "group___e_t_h_e_r___p_h_y___a_p_i.html#a7c47b46e3ac5c47080332d6e940395a3", null ],
-      [ "linkPartnerAbilityGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#ad508caaca41fbabfe2ec5bdae28d790d", null ],
-      [ "linkStatusGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa2afea5d0c6c80b55cfd49f249612991", null ]
+      [ "open", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e", null ],
+      [ "close", "group___e_t_h_e_r___p_h_y___a_p_i.html#a2b473db67f11af9cfafc790727c0660a", null ],
+      [ "chipInit", "group___e_t_h_e_r___p_h_y___a_p_i.html#a2b29375fbcbb38ee52182c41e2eef170", null ],
+      [ "read", "group___e_t_h_e_r___p_h_y___a_p_i.html#a3277c2961f534a7b8ae6c85fc4869e07", null ],
+      [ "write", "group___e_t_h_e_r___p_h_y___a_p_i.html#a445821efa6ddb204376956458f0d04aa", null ],
+      [ "startAutoNegotiate", "group___e_t_h_e_r___p_h_y___a_p_i.html#ae7f449454459fc8ec9a3c14c0c6238ea", null ],
+      [ "linkPartnerAbilityGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#a0dd6047b8aa7ad85139ec4f4e6abb3fc", null ],
+      [ "linkStatusGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#ae2dabb88baba5326509f297e44b35f92", null ]
     ] ],
     [ "ether_phy_instance_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t", [
       [ "p_ctrl", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa038161c98da2c0d2149e2a76416b7de", null ],
@@ -29,7 +32,8 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "ETHER_PHY_LSI_TYPE_KSZ8091RNB", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a0b6ce5fcecaa476b673310ed1369c3a3", null ],
       [ "ETHER_PHY_LSI_TYPE_KSZ8041", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a29cbe6685ab800c244b58a82fcdfc89e", null ],
       [ "ETHER_PHY_LSI_TYPE_DP83620", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af3ca93247dd58484b187bba066282686", null ],
-      [ "ETHER_PHY_LSI_TYPE_ICS1894", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303", null ]
+      [ "ETHER_PHY_LSI_TYPE_ICS1894", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303", null ],
+      [ "ETHER_PHY_LSI_TYPE_CUSTOM", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5ac19ab1507a515d6174f27f7af0e6de0e", null ]
     ] ],
     [ "ether_phy_flow_control_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#ga113895595732b38ac87e4efecacb87de", [
       [ "ETHER_PHY_FLOW_CONTROL_DISABLE", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea7bf987185751192bc208fd008e45b2a2", null ],
@@ -40,10 +44,14 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "ETHER_PHY_LINK_SPEED_10H", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba5cee7908e75732d124fc39dce354a124", null ],
       [ "ETHER_PHY_LINK_SPEED_10F", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf2ebb34cc153d82857065c0ba8372144", null ],
       [ "ETHER_PHY_LINK_SPEED_100H", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba2684a2689b58013359ba1808441acb6d", null ],
-      [ "ETHER_PHY_LINK_SPEED_100F", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf909885cf5d2e9a00a3be13e8be01a02", null ]
+      [ "ETHER_PHY_LINK_SPEED_100F", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf909885cf5d2e9a00a3be13e8be01a02", null ],
+      [ "ETHER_PHY_LINK_SPEED_1000H", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba6fa0bd7c951c6fe0dbf873e7e2d2d74f", null ],
+      [ "ETHER_PHY_LINK_SPEED_1000F", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba6794de8acbb549587609b9b5855a840a", null ]
     ] ],
     [ "ether_phy_mii_type_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#gaafbecb98180b1f07abe8449332b5a122", [
       [ "ETHER_PHY_MII_TYPE_MII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122ac5d63c5121e9f1c56dd5677a1b920d55", null ],
-      [ "ETHER_PHY_MII_TYPE_RMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122a4a69b11865eb1f04c1e6726f34d32aeb", null ]
+      [ "ETHER_PHY_MII_TYPE_RMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122a4a69b11865eb1f04c1e6726f34d32aeb", null ],
+      [ "ETHER_PHY_MII_TYPE_GMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122aa10a91dcf39a722cdc50e918cce8a735", null ],
+      [ "ETHER_PHY_MII_TYPE_RGMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122aef0f7560aa2acc87ebef70f9323eee53", null ]
     ] ]
 ];

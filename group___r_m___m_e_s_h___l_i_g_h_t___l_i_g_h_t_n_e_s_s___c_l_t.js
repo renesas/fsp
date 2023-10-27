@@ -4,7 +4,6 @@ var group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t =
     [ "RM_MESH_LIGHT_LIGHTNESS_CLT_Open", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#gac1d64e78ffdee12cb84fc0026e72c6e1", null ],
     [ "RM_MESH_LIGHT_LIGHTNESS_CLT_Close", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#gabd98524f6845fde5cd5d0b603cbc7a53", null ],
     [ "RM_MESH_LIGHT_LIGHTNESS_CLT_GetModelHandle", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga37c9588d5cf8f15f1acc555938da2972", null ],
-    [ "RM_MESH_LIGHT_LIGHTNESS_CLT_SetModelHandle", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga3edc593e26c31dbd5c0ad33be0355633", null ],
     [ "RM_MESH_LIGHT_LIGHTNESS_CLT_SendReliablePdu", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga54bd72e587e515935eea890643e1cacb", null ],
     [ "RM_MESH_LIGHT_LIGHTNESS_CLT_Get", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga2f4edcef1a1e4ff036cec44b7dad458f", null ],
     [ "RM_MESH_LIGHT_LIGHTNESS_CLT_Set", "group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga19e62963fa274110d2cb6fd4ff1cbfa9", null ],

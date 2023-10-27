@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -206,11 +284,11 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="ad58380dc39c1d257fc9128dda007865d"></a><a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> const</td>
+<a id="ad58380dc39c1d257fc9128dda007865d"></a><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> const</td>
 <td class="fieldname">
 link[ELC_PERIPHERAL_NUM]</td>
 <td class="fielddoc">
-Event link register (ELSR) settings. </td></tr>
+Event link register settings. </td></tr>
 </table>
 
 </div>
@@ -235,7 +313,7 @@ Event link register (ELSR) settings. </td></tr>
 <tr class="separator:a4ca08e8e0db93700e8e4f651f4492977"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5201eaeb1fbc56f6c78b9db34fb580e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_c___a_p_i.html#a5201eaeb1fbc56f6c78b9db34fb580e3">softwareEventGenerate</a> )(<a class="el" href="group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596">elc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_l_c___a_p_i.html#ga5fed76c06664ddad69c5a7ccb0330f0e">elc_software_event_t</a> event_num)</td></tr>
 <tr class="separator:a5201eaeb1fbc56f6c78b9db34fb580e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05af30d0ca7743f5a033b10d664ded59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_c___a_p_i.html#a05af30d0ca7743f5a033b10d664ded59">linkSet</a> )(<a class="el" href="group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596">elc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_l_c___a_p_i.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> peripheral, <a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> signal)</td></tr>
+<tr class="memitem:a05af30d0ca7743f5a033b10d664ded59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_c___a_p_i.html#a05af30d0ca7743f5a033b10d664ded59">linkSet</a> )(<a class="el" href="group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596">elc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_l_c___a_p_i.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> peripheral, <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> signal)</td></tr>
 <tr class="separator:a05af30d0ca7743f5a033b10d664ded59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aded8ab0cdd59a636f2a5cc60313c54c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_c___a_p_i.html#aded8ab0cdd59a636f2a5cc60313c54c5">linkBreak</a> )(<a class="el" href="group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596">elc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_l_c___a_p_i.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> peripheral)</td></tr>
 <tr class="separator:aded8ab0cdd59a636f2a5cc60313c54c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -256,10 +334,7 @@ Event link register (ELSR) settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize all links in the Event Link Controller. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initialize all links in the Event Link Controller.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -281,10 +356,7 @@ Event link register (ELSR) settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disable all links in the Event Link Controller and close the API. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#gac5e6b998138cc28bcbd8b17a5eb26674">R_ELC_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Disable all links in the Event Link Controller and close the API.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -305,10 +377,7 @@ Event link register (ELSR) settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Generate a software event in the Event Link Controller. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate()</a></li>
-</ul>
-</dd></dl>
+<p>Generate a software event in the Event Link Controller.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -326,14 +395,11 @@ Event link register (ELSR) settings. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  elc_api_t::linkSet) (<a class="el" href="group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596">elc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_l_c___a_p_i.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> peripheral, <a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> signal)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  elc_api_t::linkSet) (<a class="el" href="group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596">elc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_l_c___a_p_i.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> peripheral, <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> signal)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create a single event link. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet()</a></li>
-</ul>
-</dd></dl>
+<p>Create a single event link.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -356,10 +422,7 @@ Event link register (ELSR) settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Break an event link. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#ga2b2ed9cb9e86bf6c75d85977c4c135ff">R_ELC_LinkBreak()</a></li>
-</ul>
-</dd></dl>
+<p>Break an event link.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -381,10 +444,7 @@ Event link register (ELSR) settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable the operation of the Event Link Controller. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable()</a></li>
-</ul>
-</dd></dl>
+<p>Enable the operation of the Event Link Controller.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -405,10 +465,7 @@ Event link register (ELSR) settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disable the operation of the Event Link Controller. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#gad52f538fbce405f18a46f6e42cce9ebf">R_ELC_Disable()</a></li>
-</ul>
-</dd></dl>
+<p>Disable the operation of the Event Link Controller.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -469,10 +526,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ELC control block. Allocate an instance specific control block to pass into the ELC API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_l_c.html#structelc__instance__ctrl__t">elc_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>ELC control block. Allocate an instance specific control block to pass into the ELC API calls. </p>
 
 </div>
 </div>
@@ -519,7 +573,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

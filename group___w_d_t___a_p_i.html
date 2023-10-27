@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,11 +248,7 @@ $(document).ready(function(){initNavTree('group___w_d_t___a_p_i.html','');});
 <p>Interface for watch dog timer functions. </p>
 <h1><a class="anchor" id="WDT_API_Summary"></a>
 Summary</h1>
-<p>The WDT interface for the Watchdog Timer (WDT) peripheral provides watchdog functionality including resetting the device or generating an interrupt.</p>
-<p>The watchdog timer interface can be implemented by:</p><ul>
-<li><a class="el" href="group___w_d_t.html">Watchdog (r_wdt)</a></li>
-<li><a class="el" href="group___i_w_d_t.html">Independent Watchdog (r_iwdt)</a> </li>
-</ul>
+<p>The WDT interface for the Watchdog Timer (WDT) peripheral provides watchdog functionality including resetting the device or generating an interrupt. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -298,7 +372,7 @@ Timeout period in units of watchdog clock ticks. </td></tr>
 <tr class="separator:a5f9d35ace3a2cca8b1b8ae834aae70cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa3b53f7c79a5f385cc6a8f987623b10"><td class="memItemLeft" align="right" valign="top"><a id="aaa3b53f7c79a5f385cc6a8f987623b10"></a>
 <a class="el" href="group___w_d_t___a_p_i.html#ga7624d80dde311cb1289f558ea464fa63">wdt_reset_control_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#aaa3b53f7c79a5f385cc6a8f987623b10">reset_control</a></td></tr>
-<tr class="memdesc:aaa3b53f7c79a5f385cc6a8f987623b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select NMI or reset generated on underflow. <br /></td></tr>
+<tr class="memdesc:aaa3b53f7c79a5f385cc6a8f987623b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select NMI/IRQ or reset generated on underflow. <br /></td></tr>
 <tr class="separator:aaa3b53f7c79a5f385cc6a8f987623b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4be884c6982d93cdb759e8d3994b62a3"><td class="memItemLeft" align="right" valign="top"><a id="a4be884c6982d93cdb759e8d3994b62a3"></a>
 <a class="el" href="group___w_d_t___a_p_i.html#ga803dd68cafce3a3d9ca5630b8c4838da">wdt_stop_control_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a4be884c6982d93cdb759e8d3994b62a3">stop_control</a></td></tr>
@@ -306,7 +380,7 @@ Timeout period in units of watchdog clock ticks. </td></tr>
 <tr class="separator:a4be884c6982d93cdb759e8d3994b62a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a123b3dbdef324ba5e27939fef7575cb6"><td class="memItemLeft" align="right" valign="top"><a id="a123b3dbdef324ba5e27939fef7575cb6"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a123b3dbdef324ba5e27939fef7575cb6">p_callback</a> )(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:a123b3dbdef324ba5e27939fef7575cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a WDT NMI ISR occurs. <br /></td></tr>
+<tr class="memdesc:a123b3dbdef324ba5e27939fef7575cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a WDT ISR occurs. <br /></td></tr>
 <tr class="separator:a123b3dbdef324ba5e27939fef7575cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d1afa07628f9a7c0b9e3c74206d44e9"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a7d1afa07628f9a7c0b9e3c74206d44e9">p_context</a></td></tr>
 <tr class="separator:a7d1afa07628f9a7c0b9e3c74206d44e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -360,8 +434,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a724c02d7265d5eaa846cf97a3556f5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2b6d848e8be0ff1a0a1be43289ad925"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925">timeoutGet</a> )(<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_ctrl, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__timeout__values__t">wdt_timeout_values_t</a> *const p_timeout)</td></tr>
 <tr class="separator:ac2b6d848e8be0ff1a0a1be43289ad925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28dc9b161653da57c10267f775bda125"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a28dc9b161653da57c10267f775bda125">callbackSet</a> )(<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a28dc9b161653da57c10267f775bda125"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0237b5cdf9261e1b80bc085b3a6e5583"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a0237b5cdf9261e1b80bc085b3a6e5583">callbackSet</a> )(<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a0237b5cdf9261e1b80bc085b3a6e5583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="af03fc1703319e1adacabc412c7e3de31"></a>
@@ -375,11 +449,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize the WDT in register start mode. In auto-start mode with NMI output it registers the NMI callback. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open()</a></li>
-<li><a class="el" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initialize the WDT in register start mode. In auto-start mode (Supported devices only) with NMI output it registers the NMI callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -401,11 +471,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Refresh the watchdog timer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh()</a></li>
-<li><a class="el" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh()</a></li>
-</ul>
-</dd></dl>
+<p>Refresh the watchdog timer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -426,11 +492,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read the status of the WDT. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#ga17bf328598042575cbe4f126f59bbc1b">R_WDT_StatusGet()</a></li>
-<li><a class="el" href="group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d">R_IWDT_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Read the status of the WDT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -452,11 +514,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear the status flags of the WDT. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#gacd5b9ff42df96b9fd4603dda47b946cb">R_WDT_StatusClear()</a></li>
-<li><a class="el" href="group___i_w_d_t.html#gaca4ac4abef1b4d4b3dd2982bc1b19278">R_IWDT_StatusClear()</a></li>
-</ul>
-</dd></dl>
+<p>Clear the status flags of the WDT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -478,11 +536,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read the current WDT counter value. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#gaf6b4f726ecfe6795c7887dc1226450ca">R_WDT_CounterGet()</a></li>
-<li><a class="el" href="group___i_w_d_t.html#ga5e86ba83718eb70e72bfb892c39ddbb4">R_IWDT_CounterGet()</a></li>
-</ul>
-</dd></dl>
+<p>Read the current WDT counter value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -504,11 +558,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read the watchdog timeout values. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#gac6e98a5b526d81651da1ffeda3f70263">R_WDT_TimeoutGet()</a></li>
-<li><a class="el" href="group___i_w_d_t.html#ga7e029c3f446f09d7de668eb49709b439">R_IWDT_TimeoutGet()</a></li>
-</ul>
-</dd></dl>
+<p>Read the watchdog timeout values.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -519,27 +569,24 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a28dc9b161653da57c10267f775bda125"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28dc9b161653da57c10267f775bda125">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a0237b5cdf9261e1b80bc085b3a6e5583"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0237b5cdf9261e1b80bc085b3a6e5583">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  wdt_api_t::callbackSet) (<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  wdt_api_t::callbackSet) (<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#ga602ed1a63b61c46df822059ab6a5395e">R_WDT_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the WDT control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -597,11 +644,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>WDT control block. Allocate an instance specific control block to pass into the WDT API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___w_d_t.html#structwdt__instance__ctrl__t">wdt_instance_ctrl_t</a></li>
-<li><a class="el" href="group___i_w_d_t.html#structiwdt__instance__ctrl__t">iwdt_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>WDT control block. Allocate an instance specific control block to pass into the WDT API calls. </p>
 
 </div>
 </div>
@@ -737,7 +780,7 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>WDT Counter underflow and refresh error control. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7624d80dde311cb1289f558ea464fa63a9025ac51aeed3fac87e3733965b06215"></a>WDT_RESET_CONTROL_NMI&#160;</td><td class="fielddoc"><p>NMI request when counter underflows. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7624d80dde311cb1289f558ea464fa63a9025ac51aeed3fac87e3733965b06215"></a>WDT_RESET_CONTROL_NMI&#160;</td><td class="fielddoc"><p>NMI/IRQ request when counter underflows. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7624d80dde311cb1289f558ea464fa63a71f32c409072999582d4e4afb789b096"></a>WDT_RESET_CONTROL_RESET&#160;</td><td class="fielddoc"><p>Reset request when counter underflows. </p>
 </td></tr>
@@ -781,11 +824,13 @@ Pointer to the API structure for this instance. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46"></a>WDT_STATUS_NO_ERROR&#160;</td><td class="fielddoc"><p>No status flags set. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga46c1d04f78b75ad1ad21314cac574935af462767cbf65a6d23725aab201ab05ee"></a>WDT_STATUS_UNDERFLOW_ERROR&#160;</td><td class="fielddoc"><p>Underflow flag set. </p>
+<tr><td class="fieldname"><a id="gga46c1d04f78b75ad1ad21314cac574935a67430b92ca3930bb185d76449309004b"></a>WDT_STATUS_UNDERFLOW&#160;</td><td class="fielddoc"><p>Underflow flag set. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga46c1d04f78b75ad1ad21314cac574935a4b045e0cf22adf889286b3184bb212bf"></a>WDT_STATUS_REFRESH_ERROR&#160;</td><td class="fielddoc"><p>Refresh error flag set. Refresh outside of permitted window. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga46c1d04f78b75ad1ad21314cac574935ae49ea1e31c6a71b8acf1617f144dfcad"></a>WDT_STATUS_UNDERFLOW_AND_REFRESH_ERROR&#160;</td><td class="fielddoc"><p>Underflow and refresh error flags set. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga46c1d04f78b75ad1ad21314cac574935ad930e4c90d18d3d5caebe11d602dd630"></a>WDT_STATUS_OVERFLOW&#160;</td><td class="fielddoc"><p>Overflow flag set. </p>
 </td></tr>
 </table>
 
@@ -797,7 +842,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

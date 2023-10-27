@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -200,7 +278,7 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_lev
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -210,7 +288,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>Selects if code for parameter checking is to be included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Write Verify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -218,20 +296,20 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>When enabled reads back data written to SPI memory in order to verify it. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Page Buffer Size (bytes)</td><td>Size should be greater than zero</td><td>256 </td><td>When direct read is enabled in LevelX a situation can occur where the driver has to write to SPI memory with the source locaiton also being within the SPI memory address range. In this situation the driver needs a buffer that is at least the same size as a page in order to temporarily store data to write out. </td></tr>
 </table>
  <h2>Configurations for Storage &gt; LevelX NOR Port (rm_levelx_nor_spi)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_levelx_nor_spi0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Memory Start Adress Offset (bytes)</td><td>Offset should be greater than or equal to zero</td><td>0 </td><td>Enter the starting offset to use in the SPI memory. The starting address for LevelX memory will be the SPI memory base address plus this offset. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Memory Size (bytes)</td><td>Size should be greater than zero</td><td>33554432 </td><td>Enter the size that the LevelX Memory should be. This can be smaller than the SPI memory size in order to use a subset of SPI memory. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Poll Status Count</td><td>Poll Status Count should be greater than or equal to zero</td><td>0xFFFFFFFF </td><td>Number of times to poll for operation complete status for blocking memory operations. </td></tr>
 </table>
  <h2>Build Time Configurations for lx</h2>
@@ -239,45 +317,49 @@ The following build time configurations are defined in fsp_cfg/azure/lx/lx_user.
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>NOR &gt; Direct Read</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> NOR  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Direct Read</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>When enabled, this option bypasses the NOR flash driver read routine in favor or reading the NOR memory directly, resulting in a significant performance increase. </td></tr>
-<tr>
-<td>NOR &gt; Free Sector Data Verify</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Free Sector Data Verify</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, this causes the LevelX NOR instance open logic to verify free NOR sectors are all ones. </td></tr>
-<tr>
-<td>NOR &gt; Extended Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Extended Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables the extended NOR cache. </td></tr>
-<tr>
-<td>NOR &gt; Extended Cache Size</td><td>Manual Entry</td><td></td><td>If not set this value defaults to 8, which represents a maximum of 8 sectors that can be cached in a NOR instance. </td></tr>
-<tr>
-<td>NOR &gt; Sector Mapping Cache Size</td><td>Value must be greater than or equal to 8 and a power of 2, or empty</td><td></td><td>If not set this value defaults to 16 and defines the logical sector mapping cache size. Large values improve performance, but cost memory. The minimum size is 8 and all values must be a power of 2. </td></tr>
-<tr>
-<td>NAND &gt; Sector Mapping Cache Size</td><td>Value must be greater than or equal to 8 and a power of 2, or empty</td><td></td><td>If not set this value defaults to 128 and defines the logical sector mapping cache size. Large values improve performance, but cost memory. The minimum size is 8 and all values must be a power of 2. </td></tr>
-<tr>
-<td>NAND &gt; Flash Direct Mapping Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Extended Cache Size</td><td>Manual Entry</td><td></td><td>If not set this value defaults to 8, which represents a maximum of 8 sectors that can be cached in a NOR instance. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Mapping Cache Size</td><td>Value must be greater than or equal to 8 and a power of 2, or empty</td><td></td><td>If not set this value defaults to 16 and defines the logical sector mapping cache size. Large values improve performance, but cost memory. The minimum size is 8 and all values must be a power of 2. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> NAND  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Mapping Cache Size</td><td>Value must be greater than or equal to 8 and a power of 2, or empty</td><td></td><td>If not set this value defaults to 128 and defines the logical sector mapping cache size. Large values improve performance, but cost memory. The minimum size is 8 and all values must be a power of 2. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Flash Direct Mapping Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, this creates a direct mapping cache, such that there are no cache misses. It also required that LX_NAND_SECTOR_MAPPING_CACHE_SIZE represents the exact number of total pages in your flash device. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Thread Safe</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -285,7 +367,7 @@ Enabled</li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, this makes LevelX thread-safe by using a ThreadX mutex object throughout the API. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Standalone Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -803,7 +885,7 @@ Used to determine if module is initialized. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

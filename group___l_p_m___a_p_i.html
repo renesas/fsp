@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,10 +249,7 @@ $(document).ready(function(){initNavTree('group___l_p_m___a_p_i.html','');});
 <h1><a class="anchor" id="LPM_API_SUMMARY"></a>
 Summary</h1>
 <p>This section defines the API for the LPM (Low Power Mode) Driver. The LPM Driver provides functions for controlling power consumption by configuring and transitioning to a low power mode. The LPM driver supports configuration of MCU low power modes using the LPM hardware peripheral. The LPM driver supports low power modes deep standby, standby, sleep, and snooze.</p>
-<dl class="section note"><dt>Note</dt><dd>Not all low power modes are available on all MCUs.</dd></dl>
-<p>The LPM interface is implemented by:</p><ul>
-<li><a class="el" href="group___l_p_m.html">Low Power Modes (r_lpm)</a> </li>
-</ul>
+<dl class="section note"><dt>Note</dt><dd>Not all low power modes are available on all MCUs. </dd></dl>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -420,69 +495,60 @@ p_extend</td>
 <div class="textblock"><p>LPM driver structure. General LPM functions implemented at the HAL layer will follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a83ef7de188578486fd6ebfca1c2ff443"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a83ef7de188578486fd6ebfca1c2ff443">open</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:a83ef7de188578486fd6ebfca1c2ff443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae76670d2a5f1f1d3ceaa70b89dc1d893"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ae76670d2a5f1f1d3ceaa70b89dc1d893">close</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:ae76670d2a5f1f1d3ceaa70b89dc1d893"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98bdd7aeba1c468785755e8d19654277"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a98bdd7aeba1c468785755e8d19654277">lowPowerReconfigure</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:a98bdd7aeba1c468785755e8d19654277"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3277e4d6aa8864e088c8f17af32c3f4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a3277e4d6aa8864e088c8f17af32c3f4b">lowPowerModeEnter</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a3277e4d6aa8864e088c8f17af32c3f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45ccc8344f1e18a62dcf78aef2f713d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a45ccc8344f1e18a62dcf78aef2f713d5">ioKeepClear</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a45ccc8344f1e18a62dcf78aef2f713d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1031cc746d15011284274cf0c7d6fed2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a1031cc746d15011284274cf0c7d6fed2">open</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a1031cc746d15011284274cf0c7d6fed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57ccc1e222b46c6b8f211e81de56d487"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a57ccc1e222b46c6b8f211e81de56d487">close</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a57ccc1e222b46c6b8f211e81de56d487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa298013bd62b384202698d68fb3c6abd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#aa298013bd62b384202698d68fb3c6abd">lowPowerReconfigure</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:aa298013bd62b384202698d68fb3c6abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a228634f790b05412af1965f680ec0f58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a228634f790b05412af1965f680ec0f58">lowPowerModeEnter</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a228634f790b05412af1965f680ec0f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f878bdfde3f90619d9253988e1c7b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a51f878bdfde3f90619d9253988e1c7b7">ioKeepClear</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a51f878bdfde3f90619d9253988e1c7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a83ef7de188578486fd6ebfca1c2ff443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83ef7de188578486fd6ebfca1c2ff443">&#9670;&nbsp;</a></span>open</h2>
+<a id="a1031cc746d15011284274cf0c7d6fed2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1031cc746d15011284274cf0c7d6fed2">&#9670;&nbsp;</a></span>open</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::open) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::open) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialization function </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open()</a> </li>
-</ul>
-</dd></dl>
+<p>Initialization function </p>
 
 </div>
 </div>
-<a id="ae76670d2a5f1f1d3ceaa70b89dc1d893"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae76670d2a5f1f1d3ceaa70b89dc1d893">&#9670;&nbsp;</a></span>close</h2>
+<a id="a57ccc1e222b46c6b8f211e81de56d487"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57ccc1e222b46c6b8f211e81de56d487">&#9670;&nbsp;</a></span>close</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::close) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::close) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialization function </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_p_m.html#ga1310be82317a24695db2816a6db55330">R_LPM_Close()</a> </li>
-</ul>
-</dd></dl>
+<p>Initialization function </p>
 
 </div>
 </div>
-<a id="a98bdd7aeba1c468785755e8d19654277"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98bdd7aeba1c468785755e8d19654277">&#9670;&nbsp;</a></span>lowPowerReconfigure</h2>
+<a id="aa298013bd62b384202698d68fb3c6abd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa298013bd62b384202698d68fb3c6abd">&#9670;&nbsp;</a></span>lowPowerReconfigure</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::lowPowerReconfigure) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::lowPowerReconfigure) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure a low power mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure()</a></li>
-</ul>
-</dd></dl>
+<p>Configure a low power mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. All elements of this structure must be set by user. </td></tr>
@@ -492,40 +558,33 @@ p_extend</td>
 
 </div>
 </div>
-<a id="a3277e4d6aa8864e088c8f17af32c3f4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3277e4d6aa8864e088c8f17af32c3f4b">&#9670;&nbsp;</a></span>lowPowerModeEnter</h2>
+<a id="a228634f790b05412af1965f680ec0f58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a228634f790b05412af1965f680ec0f58">&#9670;&nbsp;</a></span>lowPowerModeEnter</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::lowPowerModeEnter) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::lowPowerModeEnter) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enter low power mode (sleep/standby/deep standby) using WFI macro. Function will return after waking from low power mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter()</a> </li>
-</ul>
-</dd></dl>
+<p>Enter low power mode (sleep/standby/deep standby) using WFI macro. Function will return after waking from low power mode. </p>
 
 </div>
 </div>
-<a id="a45ccc8344f1e18a62dcf78aef2f713d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45ccc8344f1e18a62dcf78aef2f713d5">&#9670;&nbsp;</a></span>ioKeepClear</h2>
+<a id="a51f878bdfde3f90619d9253988e1c7b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f878bdfde3f90619d9253988e1c7b7">&#9670;&nbsp;</a></span>ioKeepClear</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::ioKeepClear) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lpm_api_t::ioKeepClear) (<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear the IOKEEP bit after deep software standby.</p><ul>
-<li><dl class="section user"><dt>Implemented as</dt><dd></dd></dl>
-</li>
-<li><a class="el" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear()</a> </li>
-</ul>
+<p>Clear the IOKEEP bit after deep software standby. </p>
 
 </div>
 </div>
@@ -580,10 +639,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>LPM control block. Allocate an instance specific control block to pass into the LPM API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___l_p_m.html#structlpm__instance__ctrl__t">lpm_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>LPM control block. Allocate an instance specific control block to pass into the LPM API calls. </p>
 
 </div>
 </div>
@@ -1184,7 +1240,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

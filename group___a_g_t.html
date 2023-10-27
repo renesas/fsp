@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,7 +315,7 @@ The following build time configurations are defined in fsp_cfg/r_agt_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -247,7 +325,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Pin Output Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -255,7 +333,7 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>If selected code for outputting a waveform to a pin is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Pin Input Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -269,14 +347,16 @@ This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Timer,
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Counter Bit Width</td><td>MCU Specific Options</td><td></td><td>Counter register bit width (16-bit or 32-bit)) </td></tr>
-<tr>
-<td>General &gt; Channel</td><td>Channel number must be a non-negative integer</td><td>0 </td><td>Physical hardware channel. </td></tr>
-<tr>
-<td>General &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Counter Bit Width</td><td>MCU Specific Options</td><td></td><td>Counter register bit width (16-bit or 32-bit)) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Channel number must be a non-negative integer</td><td>0 </td><td>Physical hardware channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Periodic</li>
 <li>
@@ -285,14 +365,14 @@ One-Shot</li>
 PWM</li>
 </ul>
 </td><td>Periodic </td><td>Mode selection. Note: One-shot mode is implemented in software. ISR's must be enabled for one shot even if callback is unused. </td></tr>
-<tr>
-<td>General &gt; Period</td><td>Value must be non-negative</td><td>0x10000 </td><td>Specify the timer period based on the selected unit.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period</td><td>Value must be non-negative</td><td>0x10000 </td><td>Specify the timer period based on the selected unit.<br />
 <br />
 When the unit is set to 'Raw Counts', setting the period to 0x100000000 (32-bit) or 0x10000 (16-bit) results in the maximum period at the lowest divisor (fastest timer tick). Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) for a free running timer, pulse width measurement or pulse period measurement. Setting the period higher will automatically select a higher divider; the period can be set up to 0x800000000 (32-bit) or 0x80000 (16-bit) when counting from PCLKB or 0x8000000000 (32-bit) or 0x800000 (16-bit) when counting from LOCO/subclock, which will use a divider of 8 or 128 respectively with the maximum period.<br />
 <br />
 If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
-<tr>
-<td>General &gt; Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Raw Counts</li>
 <li>
@@ -309,12 +389,14 @@ Hertz</li>
 Kilohertz</li>
 </ul>
 </td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
-<tr>
-<td>General &gt; Count Source</td><td>MCU Specific Options</td><td></td><td>AGT counter clock source. NOTE: The divisor is calculated automatically based on the selected period. See agt_count_source_t documentation for details. </td></tr>
-<tr>
-<td>Output &gt; Duty Cycle Percent (only applicable in PWM mode)</td><td>Value must be between 0 and 100</td><td>50 </td><td>Specify the timer duty cycle percent. Only used in PWM mode. </td></tr>
-<tr>
-<td>Output &gt; AGTOA Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Count Source</td><td>MCU Specific Options</td><td></td><td>AGT counter clock source. NOTE: The divisor is calculated automatically based on the selected period. See agt_clock_t documentation for details. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Duty Cycle Percent (only applicable in PWM mode)</td><td>Value must be between 0 and 100</td><td>50 </td><td>Specify the timer duty cycle percent. Only used in PWM mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">AGTOA Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
@@ -323,8 +405,8 @@ Start Level Low</li>
 Start Level High</li>
 </ul>
 </td><td>Disabled </td><td>Configure AGTOA output. </td></tr>
-<tr>
-<td>Output &gt; AGTOB Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">AGTOB Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
@@ -333,8 +415,8 @@ Start Level Low</li>
 Start Level High</li>
 </ul>
 </td><td>Disabled </td><td>Configure AGTOB output. </td></tr>
-<tr>
-<td>Output &gt; AGTO Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">AGTO Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
@@ -343,8 +425,10 @@ Start Level Low</li>
 Start Level High</li>
 </ul>
 </td><td>Disabled </td><td>Configure AGTO output. </td></tr>
-<tr>
-<td>Input &gt; Measurement Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Measurement Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Measure Disabled</li>
 <li>
@@ -355,8 +439,8 @@ Measure High Level Pulse Width</li>
 Measure Pulse Period</li>
 </ul>
 </td><td>Measure Disabled </td><td>Select if the AGT should be used to measure pulse width or pulse period. In high level pulse width measurement mode, the AGT counts when AGTIO is high and starts counting immediately in the middle of a pulse if AGTIO is high when <a class="el" href="group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d">R_AGT_Start()</a> is called. In low level pulse width measurement mode, the AGT counts when AGTIO is low and could start counting in the middle of a pulse if AGTIO is low when <a class="el" href="group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d">R_AGT_Start()</a> is called. </td></tr>
-<tr>
-<td>Input &gt; Input Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Filter</li>
 <li>
@@ -367,8 +451,8 @@ Filter sampled at PCLKB / 8</li>
 Filter sampled at PCLKB / 32</li>
 </ul>
 </td><td>No Filter </td><td>Input filter, applies AGTIO in pulse period measurement, pulse width measurement, or event counter mode. The filter requires the signal to be at the same level for 3 successive reads at the specified filter frequency. </td></tr>
-<tr>
-<td>Input &gt; Enable Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable Pin Not Used</li>
 <li>
@@ -377,8 +461,8 @@ Enable Pin Active Low</li>
 Enable Pin Active High</li>
 </ul>
 </td><td>Enable Pin Not Used </td><td>Select active edge for the AGTEE pin if used. Only applies if the count source is P402, P403 or AGTIO. </td></tr>
-<tr>
-<td>Input &gt; Trigger Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Trigger Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Trigger Edge Rising</li>
 <li>
@@ -387,10 +471,12 @@ Trigger Edge Falling</li>
 Trigger Edge Both</li>
 </ul>
 </td><td>Trigger Edge Rising </td><td>Select the trigger edge. Applies if measurement mode is pulse period, or if the count source is P402, P403, or AGTIO. Do not select Trigger Edge Both with pulse period measurement. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the timer period elapses. </td></tr>
-<tr>
-<td>Interrupts &gt; Underflow Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer interrupt priority. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the timer period elapses. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Underflow Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-agt-clock-configuration"></a>
@@ -600,6 +686,8 @@ Counter bit width. </td></tr>
 <tr><td class="fieldname"><a id="gga5281c5967b6830f430bdf20ac9424f1cad91bcbb6c1dc31a0df73bb140170c334"></a>AGT_CLOCK_P402&#160;</td><td class="fielddoc"><p>Counts events on P402, events are counted in deep software standby mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga5281c5967b6830f430bdf20ac9424f1ca394a0f7a588d28d6057351a7500a8444"></a>AGT_CLOCK_P403&#160;</td><td class="fielddoc"><p>Counts events on P403, events are counted in deep software standby mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5281c5967b6830f430bdf20ac9424f1ca534208511e9735ac733c46f67a6c4110"></a>AGT_CLOCK_P404&#160;</td><td class="fielddoc"><p>Counts events on P404, events are counted in deep software standby mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga5281c5967b6830f430bdf20ac9424f1caa2c8871cf9c88c9c9feb669fb78df673"></a>AGT_CLOCK_AGTIO&#160;</td><td class="fielddoc"><p>Counts events on AGTIOn, events are not counted in software standby modes. </p>
 </td></tr>
@@ -1143,7 +1231,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a1b2c51a519145c2482ca2fb6b4b3d749">timer_api_t::callbackSet</a>.</p>
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ad2569f06e8034790e7b363142d93a816">timer_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1189,7 +1277,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

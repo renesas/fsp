@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -187,6 +265,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaaabcf5b43ea6cb821c0cddee78172cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadae3a06f170b361c175a49a9961298e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_l_c_d_c.html#gadae3a06f170b361c175a49a9961298e9">R_GLCDC_ClutEdit</a> (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_api_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a> layer, uint8_t index, uint32_t color)</td></tr>
 <tr class="separator:gadae3a06f170b361c175a49a9961298e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90e788cd13261f633af7a67bc551f82a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_l_c_d_c.html#ga90e788cd13261f633af7a67bc551f82a">R_GLCDC_ColorKeySet</a> (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_api_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__layer__t">display_colorkeying_layer_t</a> key_cfg, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a> layer)</td></tr>
+<tr class="separator:ga90e788cd13261f633af7a67bc551f82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1ba1f4b003e8045aefaa604f4eb5954f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_l_c_d_c.html#ga1ba1f4b003e8045aefaa604f4eb5954f">R_GLCDC_StatusGet</a> (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_api_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t">display_status_t</a> *const p_status)</td></tr>
 <tr class="separator:ga1ba1f4b003e8045aefaa604f4eb5954f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -227,7 +307,7 @@ The following build time configurations are defined in fsp_cfg/r_glcdc_cfg.h:<br
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -237,7 +317,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected, code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Color Correction</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 On</li>
@@ -252,34 +332,44 @@ This module can be added to the Stacks tab via New Stack &gt; Graphics &gt; Grap
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_display0 </td><td>Module name. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback Function</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be defined here. </td></tr>
-<tr>
-<td>Interrupts &gt; Line Detect Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the line detect (Vsync) interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Underflow 1 Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the underflow interrupt priority for layer 1. </td></tr>
-<tr>
-<td>Interrupts &gt; Underflow 2 Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the underflow interrupt priority for layer 2. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_display0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback Function</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be defined here. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Line Detect Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the line detect (Vsync) interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Underflow 1 Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the underflow interrupt priority for layer 1. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Underflow 2 Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the underflow interrupt priority for layer 2. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 1  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 1 &gt; General  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Yes</li>
 <li>
 No</li>
 </ul>
 </td><td>Yes </td><td>Specify Used if the graphics layer 1 is used. If so a framebuffer will be automatically generated based on the specified height and horizontal stride. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Horizontal size</td><td>Value must be between 16 and 2040</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Vertical size</td><td>Value must be between 16 and 2043</td><td>854 </td><td>Specify the number of vertical pixels. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Horizontal position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4091</td><td>0 </td><td>Specify the horizontal offset in pixels of the graphics layer from the background layer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Vertical position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4094</td><td>0 </td><td>Specify the vertical offset in pixels of the graphics layer from the background layer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Horizontal size</td><td>Value must be an integer from 16 to 2040</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Vertical size</td><td>Value must be an integer from 16 to 2043</td><td>854 </td><td>Specify the number of vertical pixels. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Horizontal position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4091</td><td>0 </td><td>Specify the horizontal offset in pixels of the graphics layer from the background layer. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Vertical position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4094</td><td>0 </td><td>Specify the vertical offset in pixels of the graphics layer from the background layer. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 ARGB8888 (32-bit)</li>
 <li>
@@ -298,40 +388,48 @@ CLUT4 (4-bit)</li>
 CLUT1 (1-bit)</li>
 </ul>
 </td><td>RGB565 (16-bit) </td><td>Specify the graphics layer Input format. If selecting CLUT formats, you must write the CLUT table data before starting output. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; General &gt; Line descending mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Line descending mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Select Used if the framebuffer starts from the bottom of the line. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Background Color &gt; Alpha</td><td>Value must be between 0 and 255</td><td>255 </td><td>Based on the alpha value, either the graphics Layer 2 (foreground graphics layer) is blended into the graphics Layer 1 (background graphics layer) or the graphics Layer 1 is blended into the monochrome background layer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Background Color &gt; Red</td><td>Value must be between 0 and 255</td><td>255 </td><td>Red component of the background color for layer 1. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Background Color &gt; Green</td><td>Value must be between 0 and 255</td><td>255 </td><td>Green component of the background color for layer 1. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Background Color &gt; Blue</td><td>Value must be between 0 and 255</td><td>255 </td><td>Blue component of the background color for layer 1. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Framebuffer name</td><td>This property must be a valid C symbol</td><td>fb_background </td><td>Specify the name for the framebuffer for Layer 1. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 1. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.sdram </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Line Repeat &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 1 &gt; Background Color  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Alpha</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Based on the alpha value, either the graphics Layer 2 (foreground graphics layer) is blended into the graphics Layer 1 (background graphics layer) or the graphics Layer 1 is blended into the monochrome background layer. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Red</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Red component of the background color for layer 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Green</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Green component of the background color for layer 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Blue</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Blue component of the background color for layer 1. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 1 &gt; Framebuffer  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Framebuffer name</td><td>This property must be a valid C symbol</td><td>fb_background </td><td>Specify the name for the framebuffer for Layer 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Number of framebuffers</td><td>Must be a valid non-negative integer</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Section for framebuffer allocation</td><td>Manual Entry</td><td>.sdram </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 1 &gt; Line Repeat  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 On</li>
 <li>
 Off</li>
 </ul>
 </td><td>Off </td><td>Select On if the display will be repeated from a smaller section of the framebuffer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Line Repeat &gt; Repeat count</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535 i.e (vertical size) x (lines repeat times) must be equal to the panel vertical size</td><td>0 </td><td>Specify the number of times the image is repeated. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Fading &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Repeat count</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535 i.e (vertical size) x (lines repeat times) must be equal to the panel vertical size</td><td>0 </td><td>Specify the number of times the image is repeated. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 1 &gt; Fading  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -340,26 +438,30 @@ Fade-in</li>
 Fade-out</li>
 </ul>
 </td><td>None </td><td>Select the fade method. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 1 &gt; Fading &gt; Speed</td><td>Value must be between 0 and 255</td><td>0 </td><td>Specify the number of frames for the fading transition to complete. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Speed</td><td>Value must be an integer from 0 to 255</td><td>0 </td><td>Specify the number of frames for the fading transition to complete. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 2  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 2 &gt; General  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Yes</li>
 <li>
 No</li>
 </ul>
 </td><td>No </td><td>Specify Used if the graphics layer 2 is used. If so a framebuffer will be automatically generated based on the specified height and horizontal stride. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Horizontal size</td><td>Value must be between 16 and 2040</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Vertical size</td><td>Value must be between 16 and 2043</td><td>854 </td><td>Specify the number of vertical pixels. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Horizontal position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4091</td><td>0 </td><td>Specify the horizontal offset in pixels of the graphics layer from the background layer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Vertical position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4094</td><td>0 </td><td>Specify the vertical offset in pixels of the graphics layer from the background layer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Horizontal size</td><td>Value must be be an integer from 16 to 2040</td><td>480 </td><td>Specify the number of horizontal pixels. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Vertical size</td><td>Value must be be an integer from 16 to 2043</td><td>854 </td><td>Specify the number of vertical pixels. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Horizontal position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4091</td><td>0 </td><td>Specify the horizontal offset in pixels of the graphics layer from the background layer. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Vertical position</td><td>Must be a valid non-negative integer with a maximum configurable value of 4094</td><td>0 </td><td>Specify the vertical offset in pixels of the graphics layer from the background layer. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 ARGB8888 (32-bit)</li>
 <li>
@@ -378,40 +480,48 @@ CLUT4 (4-bit)</li>
 CLUT1 (1-bit)</li>
 </ul>
 </td><td>RGB565 (16-bit) </td><td>Specify the graphics layer Input format. If selecting CLUT formats, you must write the CLUT table data before starting output. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; General &gt; Line descending mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Line descending mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Select Used if the framebuffer starts from the bottom of the line. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Background Color &gt; Alpha</td><td>Value must be between 0 and 255</td><td>255 </td><td>Based on the alpha value, either the graphics Layer 2 (foreground graphics layer) is blended into the graphics Layer 1 (background graphics layer) or the graphics Layer 1 is blended into the monochrome background layer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Background Color &gt; Red</td><td>Value must be between 0 and 255</td><td>255 </td><td>Red component of the background color for layer 2. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Background Color &gt; Green</td><td>Value must be between 0 and 255</td><td>255 </td><td>Green component of the background color for layer 2. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Background Color &gt; Blue</td><td>Value must be between 0 and 255</td><td>255 </td><td>Blue component of the background color for layer 2. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Framebuffer name</td><td>This property must be a valid C symbol</td><td>fb_foreground </td><td>Specify the name for the framebuffer for Layer 2. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 2. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.sdram </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Line Repeat &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 2 &gt; Background Color  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Alpha</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Based on the alpha value, either the graphics Layer 2 (foreground graphics layer) is blended into the graphics Layer 1 (background graphics layer) or the graphics Layer 1 is blended into the monochrome background layer. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Red</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Red component of the background color for layer 2. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Green</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Green component of the background color for layer 2. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Blue</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Blue component of the background color for layer 2. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 2 &gt; Framebuffer  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Framebuffer name</td><td>This property must be a valid C symbol</td><td>fb_foreground </td><td>Specify the name for the framebuffer for Layer 2. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Number of framebuffers</td><td>Must be a valid non-negative integer</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 2. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Section for framebuffer allocation</td><td>Manual Entry</td><td>.sdram </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 2 &gt; Line Repeat  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 On</li>
 <li>
 Off</li>
 </ul>
 </td><td>Off </td><td>Select On if the display will be repeated from a smaller section of the framebuffer. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Line Repeat &gt; Repeat count</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535 i.e (vertical size) x (lines repeat times) must be equal to the panel vertical size</td><td>0 </td><td>Specify the number of times the image is repeated. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Fading &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Repeat count</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535 i.e (vertical size) x (lines repeat times) must be equal to the panel vertical size</td><td>0 </td><td>Specify the number of times the image is repeated. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Graphics Layer 2 &gt; Fading  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -420,58 +530,64 @@ Fade-in</li>
 Fade-out</li>
 </ul>
 </td><td>None </td><td>Select the fade method. </td></tr>
-<tr>
-<td>Input &gt; Graphics Layer 2 &gt; Fading &gt; Speed</td><td>Value must be between 0 and 255</td><td>0 </td><td>Specify the number of frames for the fading transition to complete. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Horizontal total cycles</td><td>Value must be between 24 and 2048</td><td>559 </td><td>Specify the total cycles in a horizontal line. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Horizontal active video cycles</td><td>Value must be between 16 and 2040</td><td>480 </td><td>Specify the number of active video cycles in a horizontal line (including front and back porch). Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Horizontal back porch cycles</td><td>Value must be between 5 and 2029</td><td>5 </td><td>Specify the number of back porch cycles in a horizontal line. Back porch starts from the beginning of Hsync cycles, which means back porch cycles contain Hsync cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Horizontal sync signal cycles</td><td>Value must be between 0 and 2046</td><td>2 </td><td>Specify the number of Hsync signal assertion cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Horizontal sync signal polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Speed</td><td>Value must be an integer from 0 to 255</td><td>0 </td><td>Specify the number of frames for the fading transition to complete. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Timing  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal total cycles</td><td>Value must be an integer from 24 to 2047</td><td>559 </td><td>Specify the total cycles in a horizontal line. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal active video cycles</td><td>Value must be an integer from 16 to 2040</td><td>480 </td><td>Specify the number of active video cycles in a horizontal line (including front and back porch). Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal back porch cycles</td><td>Value must be an integer from 5 to 2029</td><td>5 </td><td>Specify the number of back porch cycles in a horizontal line. Back porch starts from the beginning of Hsync cycles, which means back porch cycles contain Hsync cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal sync signal cycles</td><td>Value must be an integer from 0 to 2046</td><td>2 </td><td>Specify the number of Hsync signal assertion cycles. Set to the number of cycles defined in the data sheet of LCD panel sheet in your system. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal sync signal polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Low active</li>
 <li>
 High active</li>
 </ul>
 </td><td>Low active </td><td>Select the polarity of Hsync signal to match your system. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Vertical total lines</td><td>Value must be between 20 and 2048</td><td>894 </td><td>Specify number of total lines in a frame (including front and back porch). </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Vertical active video lines</td><td>Value must be between 16 and 2043</td><td>854 </td><td>Specify the number of active video lines in a frame. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Vertical back porch lines</td><td>Value must be between 3 and 2030</td><td>20 </td><td>Specify the number of back porch lines in a frame. Back porch starts from the beginning of Vsync lines, which means back porch lines contain Vsync lines. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Vertical sync signal lines</td><td>Value must be between 0 and 2046</td><td>3 </td><td>Specify the Vsync signal assertion lines in a frame. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Vertical sync signal polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Vertical total lines</td><td>Value must be an integer from 20 to 2047</td><td>894 </td><td>Specify number of total lines in a frame (including front and back porch). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Vertical active video lines</td><td>Value must be an integer from 16 to 2043</td><td>854 </td><td>Specify the number of active video lines in a frame. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Vertical back porch lines</td><td>Value must be an integer from 3 to 2030</td><td>20 </td><td>Specify the number of back porch lines in a frame. Back porch starts from the beginning of Vsync lines, which means back porch lines contain Vsync lines. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Vertical sync signal lines</td><td>Value must be an integer from 0 to 2046</td><td>3 </td><td>Specify the Vsync signal assertion lines in a frame. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Vertical sync signal polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Low active</li>
 <li>
 High active</li>
 </ul>
 </td><td>Low active </td><td>Select the polarity of Vsync signal to match to your system. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Data Enable Signal Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Enable Signal Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Low active</li>
 <li>
 High active</li>
 </ul>
 </td><td>High active </td><td>Select the polarity of Data Enable signal to match to your system. </td></tr>
-<tr>
-<td>Output &gt; Timing &gt; Sync edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sync edge</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Rising edge</li>
 <li>
 Falling edge</li>
 </ul>
 </td><td>Falling edge </td><td>Select the polarity of Sync signals to match to your system. </td></tr>
-<tr>
-<td>Output &gt; Format &gt; Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Format  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Color format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 24bits RGB888</li>
 <li>
@@ -482,42 +598,48 @@ Falling edge</li>
 8bits serial</li>
 </ul>
 </td><td>24bits RGB888 </td><td>Specify the graphics layer output format to match to your LCD panel. </td></tr>
-<tr>
-<td>Output &gt; Format &gt; Color order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Color order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 RGB</li>
 <li>
 BGR</li>
 </ul>
 </td><td>RGB </td><td>Select data order for output signal to LCD panel. </td></tr>
-<tr>
-<td>Output &gt; Format &gt; Endian</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Endian</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Little endian</li>
 <li>
 Big endian</li>
 </ul>
 </td><td>Little endian </td><td>Select data endianness for output signal to LCD panel. </td></tr>
-<tr>
-<td>Output &gt; Background &gt; Alpha</td><td>Value must be between 0 and 255</td><td>255 </td><td>Alpha component of the background color. </td></tr>
-<tr>
-<td>Output &gt; Background &gt; Red</td><td>Value must be between 0 and 255</td><td>0 </td><td>Red component of the background color. </td></tr>
-<tr>
-<td>Output &gt; Background &gt; Green</td><td>Value must be between 0 and 255</td><td>0 </td><td>Green component of the background color. </td></tr>
-<tr>
-<td>Output &gt; Background &gt; Blue</td><td>Value must be between 0 and 255</td><td>0 </td><td>Blue component of the background color. </td></tr>
-<tr>
-<td>CLUT &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Background  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Alpha</td><td>Value must be an integer from 0 to 255</td><td>255 </td><td>Alpha component of the background color. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Red</td><td>Value must be an integer from 0 to 255</td><td>0 </td><td>Red component of the background color. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Green</td><td>Value must be an integer from 0 to 255</td><td>0 </td><td>Green component of the background color. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Blue</td><td>Value must be an integer from 0 to 255</td><td>0 </td><td>Blue component of the background color. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> CLUT  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Yes</li>
 <li>
 No</li>
 </ul>
 </td><td>No </td><td>Specify Used if selecting CLUT formats for a graphics layer input format. If used, a buffer (CLUT_buffer) will be automatically generated based on the selected pixel width. </td></tr>
-<tr>
-<td>CLUT &gt; Size</td><td>Must be a valid non-negative integer with a maximum configurable value of 256</td><td>256 </td><td>Specify the number of entries for the CLUT source data buffer. Each entry consumes 4 bytes (1 word). </td></tr>
-<tr>
-<td>TCON &gt; Hsync pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Size</td><td>Must be a valid non-negative integer with a maximum configurable value of 256</td><td>256 </td><td>Specify the number of entries for the CLUT source data buffer. Each entry consumes 4 bytes (1 word). </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> TCON  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Hsync pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Not used</li>
 <li>
@@ -530,8 +652,8 @@ LCD_TCON2</li>
 LCD_TCON3</li>
 </ul>
 </td><td>LCD_TCON1 </td><td>Select the TCON pin used for the Hsync signal to match to your system. </td></tr>
-<tr>
-<td>TCON &gt; Vsync pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Vsync pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Not used</li>
 <li>
@@ -544,8 +666,8 @@ LCD_TCON2</li>
 LCD_TCON3</li>
 </ul>
 </td><td>LCD_TCON0 </td><td>Select TCON pin used for Vsync signal to match to your system. </td></tr>
-<tr>
-<td>TCON &gt; Data enable (DE) pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data enable (DE) pin select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Not used</li>
 <li>
@@ -558,280 +680,310 @@ LCD_TCON2</li>
 LCD_TCON3</li>
 </ul>
 </td><td>LCD_TCON2 </td><td>Select TCON pin used for DataEnable signal to match to your system. </td></tr>
-<tr>
-<td>TCON &gt; Panel clock source</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Panel clock source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Internal clock (GLCDCLK)</li>
 <li>
 External clock (LCD_EXTCLK)</li>
 </ul>
 </td><td>Internal clock (GLCDCLK) </td><td>Choose between an internal GLCDCLK generated from PCLKA or an external clock provided to the LCD_EXTCLK pin. </td></tr>
-<tr>
-<td>TCON &gt; Panel clock division ratio</td><td>Refer to the RA Configuration tool for available options.</td><td>1/8 </td><td>Select the clock source divider value. </td></tr>
-<tr>
-<td>Color Correction &gt; Brightness &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Panel clock division ratio</td><td>Refer to the RA Configuration tool for available options.</td><td>1/8 </td><td>Select the clock source divider value. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Color Correction  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Brightness  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Yes</li>
 <li>
 No</li>
 </ul>
 </td><td>No </td><td>Enable brightness color correction. </td></tr>
-<tr>
-<td>Color Correction &gt; Brightness &gt; Red channel</td><td>Value must be between 0 and 1023</td><td>512 </td><td>Red component of the brightness calibration. This value is divided by 512 to determine gain. </td></tr>
-<tr>
-<td>Color Correction &gt; Brightness &gt; Green channel</td><td>Value must be between 0 and 1023</td><td>512 </td><td>Green component of the brightness calibration. This value is divided by 512 to determine gain. </td></tr>
-<tr>
-<td>Color Correction &gt; Brightness &gt; Blue channel</td><td>Value must be between 0 and 1023</td><td>512 </td><td>Blue component of the brightness calibration. This value is divided by 512 to determine gain. </td></tr>
-<tr>
-<td>Color Correction &gt; Contrast &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Red channel</td><td>Value must be an integer from 0 to 1023</td><td>512 </td><td>Red component of the brightness calibration. This value is divided by 512 to determine gain. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Green channel</td><td>Value must be an integer from 0 to 1023</td><td>512 </td><td>Green component of the brightness calibration. This value is divided by 512 to determine gain. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Blue channel</td><td>Value must be an integer from 0 to 1023</td><td>512 </td><td>Blue component of the brightness calibration. This value is divided by 512 to determine gain. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Contrast  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Yes</li>
 <li>
 No</li>
 </ul>
 </td><td>No </td><td>Enable contrast color correction. </td></tr>
-<tr>
-<td>Color Correction &gt; Contrast &gt; Red channel gain</td><td>Value must be between 0 and 255</td><td>128 </td><td>Red component of the contrast calibration. This value is divided by 128 to determine gain. </td></tr>
-<tr>
-<td>Color Correction &gt; Contrast &gt; Green channel gain</td><td>Value must be between 0 and 255</td><td>128 </td><td>Green component of the contrast calibration. This value is divided by 128 to determine gain. </td></tr>
-<tr>
-<td>Color Correction &gt; Contrast &gt; Blue channel gain</td><td>Value must be between 0 and 255</td><td>128 </td><td>Blue component of the contrast calibration. This value is divided by 128 to determine gain. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 0</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 1</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 2</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 3</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 4</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 5</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 6</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 7</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 8</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 9</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 10</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 11</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 12</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 13</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 14</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain &gt; 15</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 1</td><td>Value must be between 0 and 1023</td><td>64 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 2</td><td>Value must be between 0 and 1023</td><td>128 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 3</td><td>Value must be between 0 and 1023</td><td>192 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 4</td><td>Value must be between 0 and 1023</td><td>256 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 5</td><td>Value must be between 0 and 1023</td><td>320 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 6</td><td>Value must be between 0 and 1023</td><td>384 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 7</td><td>Value must be between 0 and 1023</td><td>448 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 8</td><td>Value must be between 0 and 1023</td><td>512 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 9</td><td>Value must be between 0 and 1023</td><td>576 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 10</td><td>Value must be between 0 and 1023</td><td>640 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 11</td><td>Value must be between 0 and 1023</td><td>704 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 12</td><td>Value must be between 0 and 1023</td><td>768 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 13</td><td>Value must be between 0 and 1023</td><td>832 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 14</td><td>Value must be between 0 and 1023</td><td>896 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold &gt; 15</td><td>Value must be between 0 and 1023</td><td>960 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 0</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 1</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 2</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 3</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 4</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 5</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 6</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 7</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 8</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 9</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 10</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 11</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 12</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 13</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 14</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain &gt; 15</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 1</td><td>Value must be between 0 and 1023</td><td>64 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 2</td><td>Value must be between 0 and 1023</td><td>128 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 3</td><td>Value must be between 0 and 1023</td><td>192 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 4</td><td>Value must be between 0 and 1023</td><td>256 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 5</td><td>Value must be between 0 and 1023</td><td>320 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 6</td><td>Value must be between 0 and 1023</td><td>384 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 7</td><td>Value must be between 0 and 1023</td><td>448 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 8</td><td>Value must be between 0 and 1023</td><td>512 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 9</td><td>Value must be between 0 and 1023</td><td>576 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 10</td><td>Value must be between 0 and 1023</td><td>640 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 11</td><td>Value must be between 0 and 1023</td><td>704 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 12</td><td>Value must be between 0 and 1023</td><td>768 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 13</td><td>Value must be between 0 and 1023</td><td>832 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 14</td><td>Value must be between 0 and 1023</td><td>896 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold &gt; 15</td><td>Value must be between 0 and 1023</td><td>960 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 0</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 1</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 2</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 3</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 4</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 5</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 6</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 7</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 8</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 9</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 10</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 11</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 12</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 13</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 14</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain &gt; 15</td><td>Value must be between 0 and 2047</td><td>1024 </td><td>Enter a gain value between 0 and 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 1</td><td>Value must be between 0 and 1023</td><td>64 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 2</td><td>Value must be between 0 and 1023</td><td>128 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 3</td><td>Value must be between 0 and 1023</td><td>192 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 4</td><td>Value must be between 0 and 1023</td><td>256 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 5</td><td>Value must be between 0 and 1023</td><td>320 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 6</td><td>Value must be between 0 and 1023</td><td>384 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 7</td><td>Value must be between 0 and 1023</td><td>448 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 8</td><td>Value must be between 0 and 1023</td><td>512 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 9</td><td>Value must be between 0 and 1023</td><td>576 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 10</td><td>Value must be between 0 and 1023</td><td>640 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 11</td><td>Value must be between 0 and 1023</td><td>704 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 12</td><td>Value must be between 0 and 1023</td><td>768 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 13</td><td>Value must be between 0 and 1023</td><td>832 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 14</td><td>Value must be between 0 and 1023</td><td>896 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold &gt; 15</td><td>Value must be between 0 and 1023</td><td>960 </td><td>Enter a threshold value between the surrounding values less than 1023. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Red</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Red channel gain</td><td>Value must be an integer from 0 to 255</td><td>128 </td><td>Red component of the contrast calibration. This value is divided by 128 to determine gain. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Green channel gain</td><td>Value must be an integer from 0 to 255</td><td>128 </td><td>Green component of the contrast calibration. This value is divided by 128 to determine gain. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Blue channel gain</td><td>Value must be an integer from 0 to 255</td><td>128 </td><td>Blue component of the contrast calibration. This value is divided by 128 to determine gain. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables  </td></tr>
+<tr class="tree_lvl_4">
+<td class="tree_lvl_4" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Red  </td></tr>
+<tr class="tree_lvl_5">
+<td class="tree_lvl_5" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Gain  </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">0</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">1</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">2</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">3</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">4</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">5</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">6</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">7</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">8</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">9</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">10</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">11</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">12</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">13</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">14</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">15</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5">
+<td class="tree_lvl_5" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Red &gt; Threshold  </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">1</td><td>Value must be an integer from 0 to 1023</td><td>64 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">2</td><td>Value must be an integer from 0 to 1023</td><td>128 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">3</td><td>Value must be an integer from 0 to 1023</td><td>192 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">4</td><td>Value must be an integer from 0 to 1023</td><td>256 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">5</td><td>Value must be an integer from 0 to 1023</td><td>320 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">6</td><td>Value must be an integer from 0 to 1023</td><td>384 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">7</td><td>Value must be an integer from 0 to 1023</td><td>448 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">8</td><td>Value must be an integer from 0 to 1023</td><td>512 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">9</td><td>Value must be an integer from 0 to 1023</td><td>576 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">10</td><td>Value must be an integer from 0 to 1023</td><td>640 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">11</td><td>Value must be an integer from 0 to 1023</td><td>704 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">12</td><td>Value must be an integer from 0 to 1023</td><td>768 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">13</td><td>Value must be an integer from 0 to 1023</td><td>832 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">14</td><td>Value must be an integer from 0 to 1023</td><td>896 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">15</td><td>Value must be an integer from 0 to 1023</td><td>960 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_4">
+<td class="tree_lvl_4" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Green  </td></tr>
+<tr class="tree_lvl_5">
+<td class="tree_lvl_5" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Gain  </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">0</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">1</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">2</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">3</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">4</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">5</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">6</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">7</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">8</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">9</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">10</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">11</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">12</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">13</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">14</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">15</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5">
+<td class="tree_lvl_5" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Green &gt; Threshold  </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">1</td><td>Value must be an integer from 0 to 1023</td><td>64 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">2</td><td>Value must be an integer from 0 to 1023</td><td>128 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">3</td><td>Value must be an integer from 0 to 1023</td><td>192 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">4</td><td>Value must be an integer from 0 to 1023</td><td>256 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">5</td><td>Value must be an integer from 0 to 1023</td><td>320 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">6</td><td>Value must be an integer from 0 to 1023</td><td>384 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">7</td><td>Value must be an integer from 0 to 1023</td><td>448 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">8</td><td>Value must be an integer from 0 to 1023</td><td>512 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">9</td><td>Value must be an integer from 0 to 1023</td><td>576 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">10</td><td>Value must be an integer from 0 to 1023</td><td>640 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">11</td><td>Value must be an integer from 0 to 1023</td><td>704 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">12</td><td>Value must be an integer from 0 to 1023</td><td>768 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">13</td><td>Value must be an integer from 0 to 1023</td><td>832 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">14</td><td>Value must be an integer from 0 to 1023</td><td>896 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">15</td><td>Value must be an integer from 0 to 1023</td><td>960 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_4">
+<td class="tree_lvl_4" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Blue  </td></tr>
+<tr class="tree_lvl_5">
+<td class="tree_lvl_5" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Gain  </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">0</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">1</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">2</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">3</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">4</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">5</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">6</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">7</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">8</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">9</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">10</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">11</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">12</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">13</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">14</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">15</td><td>Value must be an integer from 0 to 2047</td><td>1024 </td><td>Enter a gain value from 0 to 2047 (corresponding to gain of 0 and 1.999, respectively). </td></tr>
+<tr class="tree_lvl_5">
+<td class="tree_lvl_5" colspan="4"><span class="chevron-collapsed"></span> Color Correction &gt; Gamma &gt; Tables &gt; Blue &gt; Threshold  </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">1</td><td>Value must be an integer from 0 to 1023</td><td>64 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">2</td><td>Value must be an integer from 0 to 1023</td><td>128 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">3</td><td>Value must be an integer from 0 to 1023</td><td>192 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">4</td><td>Value must be an integer from 0 to 1023</td><td>256 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">5</td><td>Value must be an integer from 0 to 1023</td><td>320 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">6</td><td>Value must be an integer from 0 to 1023</td><td>384 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">7</td><td>Value must be an integer from 0 to 1023</td><td>448 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">8</td><td>Value must be an integer from 0 to 1023</td><td>512 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">9</td><td>Value must be an integer from 0 to 1023</td><td>576 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">10</td><td>Value must be an integer from 0 to 1023</td><td>640 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">11</td><td>Value must be an integer from 0 to 1023</td><td>704 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">12</td><td>Value must be an integer from 0 to 1023</td><td>768 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">13</td><td>Value must be an integer from 0 to 1023</td><td>832 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">14</td><td>Value must be an integer from 0 to 1023</td><td>896 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_5_item">
+<td class="tree_lvl_5_cell">15</td><td>Value must be an integer from 0 to 1023</td><td>960 </td><td>Enter a threshold value between the surrounding values less than or equal to 1023. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Red</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 On</li>
 <li>
 Off</li>
 </ul>
 </td><td>Off </td><td>Enable gamma color correction for the red channel. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Green</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Green</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 On</li>
 <li>
 Off</li>
 </ul>
 </td><td>Off </td><td>Enable gamma color correction for the green channel. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Blue</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Blue</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 On</li>
 <li>
 Off</li>
 </ul>
 </td><td>Off </td><td>Enable gamma color correction for the blue channel. </td></tr>
-<tr>
-<td>Color Correction &gt; Gamma &gt; Table Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Table Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Constant</li>
 <li>
 Variable</li>
 </ul>
 </td><td>Variable </td><td>Set to Constant to override the automatically-generated RAM gamma tables with a constant declaration using the provided values. </td></tr>
-<tr>
-<td>Color Correction &gt; Process order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Process order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Brightness/contrast first</li>
 <li>
 Gamma first</li>
 </ul>
 </td><td>Brightness/contrast first </td><td>Select the color correction processing order. </td></tr>
-<tr>
-<td>Dithering &gt; Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Dithering  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Yes</li>
 <li>
 No</li>
 </ul>
 </td><td>No </td><td>Enable dithering to reduce the effect of color banding. </td></tr>
-<tr>
-<td>Dithering &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Truncate</li>
 <li>
@@ -840,8 +992,8 @@ Round off</li>
 2x2 Pattern</li>
 </ul>
 </td><td>Truncate </td><td>Select the dithering mode. </td></tr>
-<tr>
-<td>Dithering &gt; Pattern A</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pattern A</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pattern 00</li>
 <li>
@@ -852,8 +1004,8 @@ Pattern 10</li>
 Pattern 11</li>
 </ul>
 </td><td>Pattern 11 </td><td>Select the dithering pattern. </td></tr>
-<tr>
-<td>Dithering &gt; Pattern B</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pattern B</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pattern 00</li>
 <li>
@@ -864,8 +1016,8 @@ Pattern 10</li>
 Pattern 11</li>
 </ul>
 </td><td>Pattern 11 </td><td>Select the dithering pattern. </td></tr>
-<tr>
-<td>Dithering &gt; Pattern C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pattern C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pattern 00</li>
 <li>
@@ -876,8 +1028,8 @@ Pattern 10</li>
 Pattern 11</li>
 </ul>
 </td><td>Pattern 11 </td><td>Select the dithering pattern. </td></tr>
-<tr>
-<td>Dithering &gt; Pattern D</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pattern D</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pattern 00</li>
 <li>
@@ -1136,6 +1288,12 @@ Dithering pattern C. </td></tr>
 dithering_pattern_D</td>
 <td class="fielddoc">
 Dithering pattern D. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5813558b14a81da403c551509b6e3072"></a>void *</td>
+<td class="fieldname">
+phy_layer</td>
+<td class="fielddoc">
+Alternate PHY layer, such as MIPI DSI. </td></tr>
 </table>
 
 </div>
@@ -1705,6 +1863,7 @@ Dithering pattern D. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to the control block or the display correction structure is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Function call is performed when the driver state is not DISPLAY_STATE_DISPLAYING. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_UPDATE_TIMING</td><td>A function call is performed while the GLCDC is updating registers internally. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Feature not supported with the current configuration.</td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_BRIGHTNESS_SETTING</td><td>Invalid brightness correction setting found </td></tr>
   </table>
   </dd>
@@ -1807,6 +1966,47 @@ Dithering pattern D. </td></tr>
 
 </div>
 </div>
+<a id="ga90e788cd13261f633af7a67bc551f82a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90e788cd13261f633af7a67bc551f82a">&#9670;&nbsp;</a></span>R_GLCDC_ColorKeySet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_GLCDC_ColorKeySet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__colorkeying__layer__t">display_colorkeying_layer_t</a>&#160;</td>
+          <td class="paramname"><em>key_cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a>&#160;</td>
+          <td class="paramname"><em>layer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configuring color key is not supported for GLCDC.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga1ba1f4b003e8045aefaa604f4eb5954f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1ba1f4b003e8045aefaa604f4eb5954f">&#9670;&nbsp;</a></span>R_GLCDC_StatusGet()</h2>
 
@@ -1850,7 +2050,7 @@ Dithering pattern D. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

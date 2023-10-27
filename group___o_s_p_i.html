@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -235,7 +313,7 @@ The following build time configurations are defined in driver/r_ospi_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -245,7 +323,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DMAC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -259,18 +337,22 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Single Continuous Mode &gt; Read Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>100 </td><td>Specify the read idle time. </td></tr>
-<tr>
-<td>General &gt; Single Continuous Mode &gt; Write Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>100 </td><td>Specify the write idle time. </td></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_ospi0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Channel</td><td>Channel should be 0 or 1</td><td>0 </td><td>Specify the OSPI chip select line to use. </td></tr>
-<tr>
-<td>General &gt; Flash Size</td><td>Must be an integer greater than 0 with maximum configurable value of 0x3FFFFFFF</td><td>0x04000000 </td><td>Specify the OctaFlash size in bytes. </td></tr>
-<tr>
-<td>General &gt; SPI Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> General &gt; Single Continuous Mode  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Read Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>100 </td><td>Specify the read idle time. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Write Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>100 </td><td>Specify the write idle time. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_ospi0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Channel should be 0 or 1</td><td>0 </td><td>Specify the OSPI chip select line to use. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Flash Size</td><td>Must be an integer greater than 0 with maximum configurable value of 0x3FFFFFFF</td><td>0x04000000 </td><td>Specify the OctaFlash size in bytes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SPI Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 SPI</li>
 <li>
@@ -279,68 +361,86 @@ Single data rate OPI</li>
 Dual data rate OPI</li>
 </ul>
 </td><td>SPI </td><td>Select the initial SPI protocol. SPI protocol can be changed on the OctaFlash using <a class="el" href="group___o_s_p_i.html#ga71105098bc41e1d98ea07a6e4f3a26ff">R_OSPI_DirectTransfer()</a>. </td></tr>
-<tr>
-<td>General &gt; Address Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Address Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3</li>
 <li>
 4</li>
 </ul>
 </td><td>4 </td><td>Select the number of address bytes. </td></tr>
-<tr>
-<td>OPI Mode &gt; Auto-Calibration &gt; Data latching delay</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFF</td><td>0x80 </td><td>Set this to 0 to enable auto-calibration. 0x80 is the default value calculated at 3.3V and 25°C </td></tr>
-<tr>
-<td>OPI Mode &gt; Auto-Calibration &gt; Auto-Calibration Address</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFFFFFFFF</td><td>0x00 </td><td>Set the address of the read/write destination to be performed for auto-calibration. </td></tr>
-<tr>
-<td>OPI Mode &gt; Command Definitions &gt; Page Program Command</td><td>Must be a 16-bit OSPI Page Program Command under OPI Mode|Command Definitions</td><td>0x12ED </td><td>The command to program a page in OPI mode. </td></tr>
-<tr>
-<td>OPI Mode &gt; Command Definitions &gt; Read Command</td><td>Must be a 16-bit OSPI Read Command under OPI Mode|Command Definitions</td><td>0xEC13 </td><td>The command to read in SOPI mode (8READ). </td></tr>
-<tr>
-<td>OPI Mode &gt; Command Definitions &gt; Dual Read Command</td><td>Must be a 16-bit OSPI Dual Read Command under OPI Mode|Command Definitions</td><td>0xEE11 </td><td>The command to read in DOPI mode (8DTRD). </td></tr>
-<tr>
-<td>OPI Mode &gt; Command Definitions &gt; Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under OPI Mode|Command Definitions</td><td>0x06F9 </td><td>The command to enable write in OPI mode. </td></tr>
-<tr>
-<td>OPI Mode &gt; Command Definitions &gt; Status Command</td><td>Must be a 16-bit OSPI Status Command under OPI Mode|Command Definitions</td><td>0x05FA </td><td>The command to query the status of a write or erase command in OPI mode. </td></tr>
-<tr>
-<td>OPI Mode &gt; OM_DQS Enable Counter &gt; SOPI</td><td>Must be an integer between 0 and 255</td><td>9 </td><td>OM_DQS enable counter for memory access. Setting for SOPI mode. </td></tr>
-<tr>
-<td>OPI Mode &gt; OM_DQS Enable Counter &gt; DOPI</td><td>Must be an integer between 0 and 255</td><td>6 </td><td>OM_DQS enable counter for memory access. Setting for DOPI mode. </td></tr>
-<tr>
-<td>OPI Mode &gt; Command Length Bytes</td><td>Must be an integer between 1 and 2</td><td>2 </td><td>Command length in bytes </td></tr>
-<tr>
-<td>OPI Mode &gt; Memory Read Dummy Cycles</td><td>Must be an integer between 6 and 10</td><td>10 </td><td>Memory read dummy cycles </td></tr>
-<tr>
-<td>OPI Mode &gt; DOPI Byte Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OPI Mode  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OPI Mode &gt; Auto-Calibration  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data latching delay</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFF</td><td>0x80 </td><td>Set this to 0 to enable auto-calibration. 0x80 is the default value calculated at 3.3V and 25°C </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Auto-Calibration Address</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFFFFFFFF</td><td>0x00 </td><td>Set the address of the read/write destination to be performed for auto-calibration. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OPI Mode &gt; Command Definitions  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Page Program Command</td><td>Must be a 16-bit OSPI Page Program Command under OPI Mode|Command Definitions</td><td>0x12ED </td><td>The command to program a page in OPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Read Command</td><td>Must be a 16-bit OSPI Read Command under OPI Mode|Command Definitions</td><td>0xEC13 </td><td>The command to read in SOPI mode (8READ). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dual Read Command</td><td>Must be a 16-bit OSPI Dual Read Command under OPI Mode|Command Definitions</td><td>0xEE11 </td><td>The command to read in DOPI mode (8DTRD). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under OPI Mode|Command Definitions</td><td>0x06F9 </td><td>The command to enable write in OPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Command</td><td>Must be a 16-bit OSPI Status Command under OPI Mode|Command Definitions</td><td>0x05FA </td><td>The command to query the status of a write or erase command in OPI mode. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OPI Mode &gt; OM_DQS Enable Counter  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SOPI</td><td>Must be an integer between 0 and 255</td><td>9 </td><td>OM_DQS enable counter for memory access. Setting for SOPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">DOPI</td><td>Must be an integer between 0 and 255</td><td>6 </td><td>OM_DQS enable counter for memory access. Setting for DOPI mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Length Bytes</td><td>Must be an integer between 1 and 2</td><td>2 </td><td>Command length in bytes </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Read Dummy Cycles</td><td>Must be an integer between 6 and 10</td><td>10 </td><td>Memory read dummy cycles </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Status Read Dummy Cycles</td><td>Must be an integer between 0 and 255</td><td>4 </td><td>Status read dummy cycles </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DOPI Byte Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Byte0, Byte1, Byte2, Byte3</li>
 <li>
 Byte1, Byte0, Byte3, Byte2</li>
 </ul>
 </td><td>Byte0, Byte1, Byte2, Byte3 </td><td>Byte order on the external bus </td></tr>
-<tr>
-<td>SPI Mode &gt; Command Definitions &gt; Page Program Command</td><td>Must be a 8-bit OSPI Page Program Command under SPI Mode|Command Definitions</td><td>0x12 </td><td>The command to program a page in SPI mode. </td></tr>
-<tr>
-<td>SPI Mode &gt; Command Definitions &gt; Read Command</td><td>Must be a 8-bit OSPI Read Command under SPI Mode|Command Definitions</td><td>0x13 </td><td>The command to read in SPI mode. </td></tr>
-<tr>
-<td>SPI Mode &gt; Command Definitions &gt; Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under SPI Mode|Command Definitions</td><td>0x06 </td><td>The command to enable write in SPI mode. </td></tr>
-<tr>
-<td>SPI Mode &gt; Command Definitions &gt; Status Command</td><td>Must be a 16-bit OSPI Status Command under SPI Mode|Command Definitions</td><td>0x05 </td><td>The command to query the status of a write or erase command in SPI mode. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Sector Erase Command</td><td>Must be a value greater than or equal to 0</td><td>0x21DE </td><td>The command to erase a sector. Set Sector Erase Size to 0 if unused. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Block Erase Command</td><td>Must be a value greater than or equal to 0</td><td>0xDC23 </td><td>The command to erase a block. Set Block Erase Size to 0 if unused. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Chip Erase Command</td><td>Must be a value greater than or equal to 0</td><td>0xC738 </td><td>The command to erase the entire chip. Set Chip Erase Command to 0 if unused. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Write Status Bit</td><td>Must be an integer between 0 and 7</td><td>0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Write Enable Bit</td><td>Must be an integer between 0 and 7</td><td>1 </td><td>Which bit contains the write enable status returned from the Write Enable Command. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Sector Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>4096 </td><td>The sector erase size. Set Sector Erase Size to 0 if Sector Erase is not supported. </td></tr>
-<tr>
-<td>Common Command Definitions &gt; Block Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>65536 </td><td>The block erase size. Set Block Erase Size to 0 if Block Erase is not supported. </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Read Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> SPI Mode  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> SPI Mode &gt; Command Definitions  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Page Program Command</td><td>Must be a 8-bit OSPI Page Program Command under SPI Mode|Command Definitions</td><td>0x12 </td><td>The command to program a page in SPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Read Command</td><td>Must be a 8-bit OSPI Read Command under SPI Mode|Command Definitions</td><td>0x13 </td><td>The command to read in SPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under SPI Mode|Command Definitions</td><td>0x06 </td><td>The command to enable write in SPI mode. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Command</td><td>Must be a 16-bit OSPI Status Command under SPI Mode|Command Definitions</td><td>0x05 </td><td>The command to query the status of a write or erase command in SPI mode. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Common Command Definitions  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Erase Command</td><td>Must be a value greater than or equal to 0</td><td>0x21DE </td><td>The command to erase a sector. Set Sector Erase Size to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase Command</td><td>Must be a value greater than or equal to 0</td><td>0xDC23 </td><td>The command to erase a block. Set Block Erase Size to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Chip Erase Command</td><td>Must be a value greater than or equal to 0</td><td>0xC738 </td><td>The command to erase the entire chip. Set Chip Erase Command to 0 if unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Status Bit</td><td>Must be an integer between 0 and 7</td><td>0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Enable Bit</td><td>Must be an integer between 0 and 7</td><td>1 </td><td>Which bit contains the write enable status returned from the Write Enable Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sector Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>4096 </td><td>The sector erase size. Set Sector Erase Size to 0 if Sector Erase is not supported. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Block Erase Size</td><td>Must be an integer greater than or equal to 0</td><td>65536 </td><td>The block erase size. Set Block Erase Size to 0 if Block Erase is not supported. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Chip Select Timing Setting  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Read Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2</li>
 <li>
@@ -359,8 +459,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 17</li>
 </ul>
 </td><td>2 </td><td>Memory mapped read command execution interval setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Write Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Write Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2</li>
 <li>
@@ -379,8 +479,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 17</li>
 </ul>
 </td><td>2 </td><td>Memory mapped write command execution interval setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2</li>
 <li>
@@ -399,8 +499,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 17</li>
 </ul>
 </td><td>2 </td><td>Command execution interval setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Read Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Read Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 5 SPI/SOPI</li>
 <li>
@@ -413,8 +513,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 9 SPI/SOPI, 8.5 DOPI</li>
 </ul>
 </td><td>5 SPI/SOPI </td><td>Memory mapped read signal pull-up timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Write Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Write Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2 SPI/SOPI, 1.5 DOPI</li>
 <li>
@@ -433,8 +533,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 9 SPI/SOPI, 8.5 DOPI</li>
 </ul>
 </td><td>2 SPI/SOPI, 1.5 DOPI </td><td>Memory mapped write signal pull-up timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 5 SPI/SOPI</li>
 <li>
@@ -447,8 +547,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 9 SPI/SOPI, 8.5 DOPI</li>
 </ul>
 </td><td>5 SPI/SOPI </td><td>Signal pull-up timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Read Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Read Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3 SPI/SOPI, 2.5 DOPI</li>
 <li>
@@ -457,8 +557,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 5 SPI/SOPI, 4.5 DOPI</li>
 </ul>
 </td><td>3 SPI/SOPI, 2.5 DOPI </td><td>Memory mapped read signal pull-down timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Write Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Write Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3 SPI/SOPI, 2.5 DOPI</li>
 <li>
@@ -467,8 +567,8 @@ Byte1, Byte0, Byte3, Byte2</li>
 5 SPI/SOPI, 4.5 DOPI</li>
 </ul>
 </td><td>3 SPI/SOPI, 2.5 DOPI </td><td>Memory mapped write signal pull-down timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3 SPI/SOPI, 2.5 DOPI</li>
 <li>
@@ -486,7 +586,7 @@ The following build time configurations are defined in driver/r_ospi_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -496,7 +596,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DMAC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -510,32 +610,44 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Single Continuous Mode &gt; Read Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>127 </td><td>Specify the read idle time. </td></tr>
-<tr>
-<td>General &gt; Single Continuous Mode &gt; Write Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>127 </td><td>Specify the write idle time. </td></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_ospi_ram0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Channel</td><td>Channel should be 0 or 1 [Channel 0 recommended]</td><td>0 </td><td>Specify the OSPI chip select line to use. </td></tr>
-<tr>
-<td>General &gt; RAM Size</td><td>Must be an integer greater than 0 with maximum configurable value of 0x00800000</td><td>0x00800000 </td><td>Specify the OctaRam size in bytes. </td></tr>
-<tr>
-<td>General &gt; SPI Protocol</td><td>Dual data rate OPI</td><td>Dual data rate OPI </td><td>Select the initial SPI protocol. OctaRAM only supports DOPI mode. </td></tr>
-<tr>
-<td>General &gt; Address Bytes</td><td>4</td><td>4 </td><td>Select the number of address bytes. OctaRAM only supports 4 byte addresses in DOPI mode. </td></tr>
-<tr>
-<td>Auto-Calibration &gt; Data latching delay</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFF</td><td>0x80 </td><td>Set this to 0 to enable auto-calibration. 0x80 is the default value calculated at 3.3V and 25°C </td></tr>
-<tr>
-<td>Auto-Calibration &gt; Auto-Calibration Address</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFFFFFFFF</td><td>0x00 </td><td>Set the address of the read/write destination to be performed for auto-calibration. </td></tr>
-<tr>
-<td>Command Definitions &gt; Memory Read Command</td><td>Must be a 16-bit OSPI Dual Read Command under Command Definitions</td><td>0xA000 </td><td>The command to read in DOPI mode. </td></tr>
-<tr>
-<td>Command Definitions &gt; Memory Write Command</td><td>Must be a 16-bit OSPI Write Command under Command Definitions</td><td>0x2000 </td><td>The command to write in DOPI mode. </td></tr>
-<tr>
-<td>OM_DQS Enable Counter &gt; DOPI</td><td>Must be an integer between 0 and 255</td><td>3 </td><td>OM_DQS enable counter for memory access. Setting for DOPI mode. </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Read Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> General &gt; Single Continuous Mode  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Read Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>127 </td><td>Specify the read idle time. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Write Idle Time</td><td>Must be an integer greater than 0 with maximum configurable value of 127</td><td>127 </td><td>Specify the write idle time. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_ospi_ram0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Channel should be 0 or 1 [Channel 0 recommended]</td><td>0 </td><td>Specify the OSPI chip select line to use. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">RAM Size</td><td>Must be an integer greater than 0 with maximum configurable value of 0x00800000</td><td>0x00800000 </td><td>Specify the OctaRam size in bytes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SPI Protocol</td><td>Dual data rate OPI</td><td>Dual data rate OPI </td><td>Select the initial SPI protocol. OctaRAM only supports DOPI mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Address Bytes</td><td>4</td><td>4 </td><td>Select the number of address bytes. OctaRAM only supports 4 byte addresses in DOPI mode. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Auto-Calibration  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data latching delay</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFF</td><td>0x80 </td><td>Set this to 0 to enable auto-calibration. 0x80 is the default value calculated at 3.3V and 25°C </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Auto-Calibration Address</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFFFFFFFF</td><td>0x00 </td><td>Set the address of the read/write destination to be performed for auto-calibration. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Command Definitions  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Read Command</td><td>Must be a 16-bit OSPI Dual Read Command under Command Definitions</td><td>0xA000 </td><td>The command to read in DOPI mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Write Command</td><td>Must be a 16-bit OSPI Write Command under Command Definitions</td><td>0x2000 </td><td>The command to write in DOPI mode. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OM_DQS Enable Counter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DOPI</td><td>Must be an integer between 0 and 255</td><td>3 </td><td>OM_DQS enable counter for memory access. Setting for DOPI mode. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Chip Select Timing Setting  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Read Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2</li>
 <li>
@@ -554,8 +666,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 17</li>
 </ul>
 </td><td>2 </td><td>Memory mapped read command execution interval setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Write Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Write Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2</li>
 <li>
@@ -574,8 +686,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 17</li>
 </ul>
 </td><td>2 </td><td>Memory mapped write command execution interval setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Command Interval</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2</li>
 <li>
@@ -594,8 +706,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 17</li>
 </ul>
 </td><td>2 </td><td>Command execution interval setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Read Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Read Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 6.5 DOPI</li>
 <li>
@@ -604,8 +716,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 8.5 DOPI</li>
 </ul>
 </td><td>6.5 DOPI </td><td>Memory mapped read signal pull-up timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Write Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Write Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1.5 DOPI</li>
 <li>
@@ -624,8 +736,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 8.5 DOPI</li>
 </ul>
 </td><td>1.5 DOPI </td><td>Memory mapped write signal pull-up timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 6.5 DOPI</li>
 <li>
@@ -634,8 +746,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 8.5 DOPI</li>
 </ul>
 </td><td>6.5 DOPI </td><td>Signal pull-up timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Read Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Read Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2.5 DOPI</li>
 <li>
@@ -644,8 +756,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 4.5 DOPI</li>
 </ul>
 </td><td>2.5 DOPI </td><td>Memory mapped read signal pull-down timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Memory Mapped Write Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mapped Write Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2.5 DOPI</li>
 <li>
@@ -654,8 +766,8 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 4.5 DOPI</li>
 </ul>
 </td><td>2.5 DOPI </td><td>Memory mapped write signal pull-down timing setting in OCTACLK units </td></tr>
-<tr>
-<td>Chip Select Timing Setting &gt; Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 2.5 DOPI</li>
 <li>
@@ -664,13 +776,13 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 4.5 DOPI</li>
 </ul>
 </td><td>2.5 DOPI </td><td>Signal pull-down timing setting in OCTACLK units </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Command Length Bytes</td><td>Must be an integer between 1 and 2</td><td>2 </td><td>Command length in bytes </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Memory Read Dummy Cycles</td><td>Must be an integer between 3 and 8</td><td>4 </td><td>Memory read dummy cycles </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Memory Write Dummy Cycles</td><td>Must be an integer between 3 and 8</td><td>4 </td><td>Memory write dummy cycles </td></tr>
-<tr>
+<tr class="tree_none">
 <td>DOPI Byte Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Byte0, Byte1, Byte2, Byte3</li>
@@ -678,7 +790,7 @@ Byte0, Byte1, Byte2, Byte3</li>
 Byte1, Byte0, Byte3, Byte2</li>
 </ul>
 </td><td>Byte1, Byte0, Byte3, Byte2 </td><td>Byte order on the external bus </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Chip Select Maximum Low Time (us)</td><td>Must be an integer between 0 to 511</td><td>4 </td><td>Chip Select Maximum Low Time (tCSM). </td></tr>
 </table>
 </p>
@@ -1429,7 +1541,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

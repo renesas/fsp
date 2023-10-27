@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,8 +281,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga2a09de185d3b7f1c301b33330931bac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2fc5d6a737a00948802e2bb77fbe8d8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga2fc5d6a737a00948802e2bb77fbe8d8c">R_GPT_Close</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga2fc5d6a737a00948802e2bb77fbe8d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada982ef1873ca00147f9692b42aba8f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#gada982ef1873ca00147f9692b42aba8f0">R_GPT_PwmOutputDelayInitialize</a> ()</td></tr>
-<tr class="separator:gada982ef1873ca00147f9692b42aba8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0a5ae520cacb0257493b0820cfeb2e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#gab0a5ae520cacb0257493b0820cfeb2e1">R_GPT_PwmOutputDelayInitialize</a> (void)</td></tr>
+<tr class="separator:gab0a5ae520cacb0257493b0820cfeb2e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the GPT32 and GPT16 peripherals on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
@@ -259,7 +337,7 @@ The following build time configurations are defined in fsp_cfg/r_gpt_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -269,7 +347,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Pin Output Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -279,7 +357,7 @@ Enabled</li>
 Enabled with Extra Features</li>
 </ul>
 </td><td>Disabled </td><td>Enables or disables support for outputting PWM waveforms on GTIOCx pins. The "Enabled with Extra Features" option enables support for Triangle wave modes and also enables the features located in the "Extra Features" section of each module instance. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Write Protect Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -287,20 +365,20 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If selected write protection is applied to all GPT channels. </td></tr>
-<tr>
-<td>Clock Source</td><td>MCU Specific Options</td><td></td><td>Select either the synchronous clock (PCLKD) or asynchronous clock (GPTCLK) as the source for the GPT core clock and PWM delay circuit. </td></tr>
 </table>
  <h2>Configurations for Timers &gt; Timer, General PWM (r_gpt)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Timer, General PWM (r_gpt). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; Channel</td><td>Channel number must exist on this MCU</td><td>0 </td><td>Specify the hardware channel. </td></tr>
-<tr>
-<td>General &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Channel number must exist on this MCU</td><td>0 </td><td>Specify the hardware channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Periodic</li>
 <li>
@@ -322,12 +400,12 @@ One-shot: Generate a single interrupt or a pulse wave. Note: One-shot mode is im
 PWM: Generates basic PWM waveforms.<br />
 Triangle-Wave Symmetric PWM: Generates symmetric PWM waveforms with duty cycle determined by compare match set during a crest interrupt and updated at the next trough.<br />
 Triangle-Wave Asymmetric PWM: Generates asymmetric PWM waveforms with duty cycle determined by compare match set during a crest/trough interrupt and updated at the next trough/crest. </td></tr>
-<tr>
-<td>General &gt; Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the timer period in units selected below. Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000 (32-bit) or 0x4000000 (16-bit) which will use a divider of 1024 with the maximum period.<br />
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the timer period in units selected below. Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000 (32-bit) or 0x4000000 (16-bit) which will use a divider of 1024 with the maximum period.<br />
 <br />
 If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the generated <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
-<tr>
-<td>General &gt; Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Raw Counts</li>
 <li>
@@ -344,16 +422,22 @@ Hertz</li>
 Kilohertz</li>
 </ul>
 </td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Initial Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Custom Waveform  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Custom Waveform &gt; GTIOA  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Initial Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level Low </td><td>Set the initial output level of GTIOCxA. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Cycle End Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Cycle End Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Retain</li>
 <li>
@@ -364,8 +448,8 @@ Pin Level High</li>
 Pin Level Toggle</li>
 </ul>
 </td><td>Pin Level Retain </td><td>Set the output level of GTIOCxA at cycle end. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Compare Match Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Compare Match Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Retain</li>
 <li>
@@ -376,24 +460,26 @@ Pin Level High</li>
 Pin Level Toggle</li>
 </ul>
 </td><td>Pin Level Retain </td><td>Set the output level of GTIOCxA at compare match. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Retain Output Level at Count Stop</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Retain Output Level at Count Stop</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Retain the current GTIOxA output level when counting is stopped. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Initial Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Custom Waveform &gt; GTIOB  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Initial Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level Low </td><td>Set the initial output level of GTIOCxB. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Cycle End Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Cycle End Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Retain</li>
 <li>
@@ -404,8 +490,8 @@ Pin Level High</li>
 Pin Level Toggle</li>
 </ul>
 </td><td>Pin Level Retain </td><td>Set the output level of GTIOCxB at cycle end. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Compare Match Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Compare Match Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Retain</li>
 <li>
@@ -416,76 +502,78 @@ Pin Level High</li>
 Pin Level Toggle</li>
 </ul>
 </td><td>Pin Level Retain </td><td>Set the output level of GTIOCxB at compare match. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Retain Output Level at Count Stop</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Retain Output Level at Count Stop</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Retain the current GTIOxB output level when counting is stopped. </td></tr>
-<tr>
-<td>Output &gt; Custom Waveform &gt; Custom Waveform Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Custom Waveform Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable custom waveform configuration. </td></tr>
-<tr>
-<td>Output &gt; Duty Cycle Percent (only applicable in PWM mode)</td><td>Value must be between 0 and 100</td><td>50 </td><td>Specify the timer duty cycle percent. Only used in PWM mode. </td></tr>
-<tr>
-<td>Output &gt; GTIOCA Output Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Duty Cycle Percent (only applicable in PWM mode)</td><td>Value must be between 0 and 100</td><td>50 </td><td>Specify the timer duty cycle percent. Only used in PWM mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCA Output Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 True</li>
 <li>
 False</li>
 </ul>
 </td><td>False </td><td>Enable the output of GTIOCA on a pin. </td></tr>
-<tr>
-<td>Output &gt; GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
-<tr>
-<td>Output &gt; GTIOCB Output Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCB Output Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 True</li>
 <li>
 False</li>
 </ul>
 </td><td>False </td><td>Enable the output of GTIOCB on a pin. </td></tr>
-<tr>
-<td>Output &gt; GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCB Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
-<tr>
-<td>Input &gt; Count Up Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will increment the counter. If any count up source is selected, the timer will count the external sources only. It will not count PCLKD cycles. </td></tr>
-<tr>
-<td>Input &gt; Count Down Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will decrement the counter. If any count down source is selected, the timer will count the external sources only. It will not count PCLKD cycles. </td></tr>
-<tr>
-<td>Input &gt; Start Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will start the timer. <br />
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Count Up Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will increment the counter. If any count up source is selected, the timer will count the external sources only. It will not count PCLKD cycles. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Count Down Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will decrement the counter. If any count down source is selected, the timer will count the external sources only. It will not count PCLKD cycles. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Start Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will start the timer. <br />
 <br />
  For pulse width measurement, set the Start Source and the Clear Source to the trigger edge (the edge to start the measurement), and set the Stop Source and Capture Source (either A or B) to the opposite edge (the edge to stop the measurement). <br />
 <br />
  For pulse period measurement, set the Start Source, the Clear Source, and the Capture Source (either A or B) to the trigger edge (the edge to start the measurement). </td></tr>
-<tr>
-<td>Input &gt; Stop Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will stop the timer. </td></tr>
-<tr>
-<td>Input &gt; Clear Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will clear the timer. </td></tr>
-<tr>
-<td>Input &gt; Capture A Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will trigger a capture A event. </td></tr>
-<tr>
-<td>Input &gt; Capture B Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will trigger a capture B event. </td></tr>
-<tr>
-<td>Input &gt; Noise Filter A Sampling Clock Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stop Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will stop the timer. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clear Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will clear the timer. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture A Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will trigger a capture A event. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture B Source</td><td>MCU Specific Options</td><td></td><td>Select external source that will trigger a capture B event. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Noise Filter A Sampling Clock Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Filter</li>
 <li>
@@ -498,8 +586,8 @@ Filter PCLKD / 16</li>
 Filter PCLKD / 64</li>
 </ul>
 </td><td>No Filter </td><td>Select the input filter for GTIOCA. </td></tr>
-<tr>
-<td>Input &gt; Noise Filter B Sampling Clock Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Noise Filter B Sampling Clock Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Filter</li>
 <li>
@@ -512,18 +600,24 @@ Filter PCLKD / 16</li>
 Filter PCLKD / 64</li>
 </ul>
 </td><td>No Filter </td><td>Select the input filter for GTIOCB. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be specified here. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the timer period elapses </td></tr>
-<tr>
-<td>Interrupts &gt; Overflow/Crest Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the overflow interrupt priority. This is the crest interrupt for triangle-wave PWM. </td></tr>
-<tr>
-<td>Interrupts &gt; Capture A Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for capture A. </td></tr>
-<tr>
-<td>Interrupts &gt; Capture B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for capture B. </td></tr>
-<tr>
-<td>Interrupts &gt; Underflow/Trough Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the trough interrupt (triangle-wave PWM only). </td></tr>
-<tr>
-<td>Extra Features &gt; Output Disable &gt; POEG Link</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be specified here. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the timer period elapses </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Overflow/Crest Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the overflow interrupt priority. This is the crest interrupt for triangle-wave PWM. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture A Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for capture A. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for capture B. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Underflow/Trough Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the trough interrupt (triangle-wave PWM only). </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra Features  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; Output Disable  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">POEG Link</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 POEG Channel 0</li>
 <li>
@@ -534,8 +628,8 @@ POEG Channel 2</li>
 POEG Channel 3</li>
 </ul>
 </td><td>POEG Channel 0 </td><td>Select which POEG to link this GPT channel to. </td></tr>
-<tr>
-<td>Extra Features &gt; Output Disable &gt; Output Disable POEG Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Output Disable POEG Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Dead Time Error</li>
 <li>
@@ -544,8 +638,8 @@ GTIOCA and GTIOCB High Level</li>
 GTIOCA and GTIOCB Low Level</li>
 </ul>
 </td><td></td><td>Select which errors send an output disable trigger to POEG. Dead time error is only available GPT channels that have GTINTAD.GRPDTE. </td></tr>
-<tr>
-<td>Extra Features &gt; Output Disable &gt; GTIOCA Disable Setting</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">GTIOCA Disable Setting</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable Prohibited</li>
 <li>
@@ -556,8 +650,8 @@ Level Low</li>
 Level High</li>
 </ul>
 </td><td>Disable Prohibited </td><td>Select the disable setting for GTIOCA. </td></tr>
-<tr>
-<td>Extra Features &gt; Output Disable &gt; GTIOCB Disable Setting</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">GTIOCB Disable Setting</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable Prohibited</li>
 <li>
@@ -568,8 +662,10 @@ Level Low</li>
 Level High</li>
 </ul>
 </td><td>Disable Prohibited </td><td>Select the disable setting for GTIOCB. </td></tr>
-<tr>
-<td>Extra Features &gt; ADC Trigger &gt; Start Event Trigger (Channels with GTINTAD only)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; ADC Trigger  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Start Event Trigger (Channels with GTINTAD only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Trigger Event A/D Converter Start Request A During Up Counting</li>
 <li>
@@ -580,16 +676,24 @@ Trigger Event A/D Converter Start Request B During Up Counting</li>
 Trigger Event A/D Converter Start Request B During Down Counting</li>
 </ul>
 </td><td></td><td>Select which A/D converter start request interrupts to generate and at which point in the cycle to generate them. </td></tr>
-<tr>
-<td>Extra Features &gt; Dead Time (Value range varies with Channel) &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for channels that do not have GTDVD. The dead time count up value can be set up to 0xffffffff (32-bit) or 0xffff (16-bit). </td></tr>
-<tr>
-<td>Extra Features &gt; Dead Time (Value range varies with Channel) &gt; Dead Time Count Down (Raw Counts) (Channels with GTDVD only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. The dead time count down value can be set up to 0xffffffff (32-bit) or 0xffff (16-bit). </td></tr>
-<tr>
-<td>Extra Features &gt; ADC Trigger (Channels with GTADTRA only) &gt; ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. </td></tr>
-<tr>
-<td>Extra Features &gt; ADC Trigger (Channels with GTADTRB only) &gt; ADC B Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG B event. </td></tr>
-<tr>
-<td>Extra Features &gt; Interrupt Skipping (Channels with GTITC only) &gt; Interrupt to Count</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; Dead Time (Value range varies with Channel)  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for channels that do not have GTDVD. The dead time count up value can be set up to 0xffffffff (32-bit) or 0xffff (16-bit). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Dead Time Count Down (Raw Counts) (Channels with GTDVD only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. The dead time count down value can be set up to 0xffffffff (32-bit) or 0xffff (16-bit). </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; ADC Trigger (Channels with GTADTRA only)  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; ADC Trigger (Channels with GTADTRB only)  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">ADC B Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG B event. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra Features &gt; Interrupt Skipping (Channels with GTITC only)  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Interrupt to Count</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -600,8 +704,8 @@ Crest (triangle)</li>
 Trough (triangle)</li>
 </ul>
 </td><td>None </td><td>Select the count source for interrupt skipping. The interrupt skip counter increments after each source event. All crest/overflow and trough/underflow interrupts are skipped when the interrupt skip counter is non-zero. </td></tr>
-<tr>
-<td>Extra Features &gt; Interrupt Skipping (Channels with GTITC only) &gt; Interrupt Skip Count</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Interrupt Skip Count</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 0</li>
 <li>
@@ -620,8 +724,8 @@ Trough (triangle)</li>
 7</li>
 </ul>
 </td><td>0 </td><td>Select the number of interrupts to skip. </td></tr>
-<tr>
-<td>Extra Features &gt; Interrupt Skipping (Channels with GTITC only) &gt; Skip ADC Events</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Skip ADC Events</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -632,8 +736,8 @@ ADC B Compare Match</li>
 ADC A and B Compare Match</li>
 </ul>
 </td><td>module.driver.timer.interrupt_skip.adc.none </td><td>Select ADC events to suppress when the interrupt skip count is not zero. </td></tr>
-<tr>
-<td>Extra Features &gt; Extra Features</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Extra Features</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -703,7 +807,7 @@ GPT PWM Output</div></div>
 <div class="caption">
 GPT Triangle-Wave PWM Output</div></div>
  <h2>PWM Output Delay Circuit<a class="anchor" id="um_gpt_pwm_output_delay"></a></h2>
-<p>On select MCUs, an additional PWM output delay circuit can be configured in order to fine tune the rising and falling edge delays in increments of 1/32 times the period of the GPT core clock. The PWM output delay function must be configured prior to initializing the GPT channels using <a class="el" href="group___g_p_t.html#gada982ef1873ca00147f9692b42aba8f0">R_GPT_PwmOutputDelayInitialize</a>.</p>
+<p>On select MCUs, an additional PWM output delay circuit can be configured in order to fine tune the rising and falling edge delays in increments of 1/32 times the period of the GPT core clock. The PWM output delay function must be configured prior to initializing the GPT channels using <a class="el" href="group___g_p_t.html#gab0a5ae520cacb0257493b0820cfeb2e1">R_GPT_PwmOutputDelayInitialize</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>1. In Saw-wave PWM mode, the output delay setting cannot be changed while the capture compare setting (GTCCRn) is greater than or equal the period setting (GTPR) - 2. </dd>
 <dd>
 2. In Triangle PWM modes, the output delay setting cannot be changed while the counter is counting down, and the capture compare setting (GTCCRn) is less than or equal to 2. </dd>
@@ -956,13 +1060,13 @@ ADC events to skip when interrupt skipping is enabled. </td></tr>
 <td class="fieldname">
 gtioca_disable_setting</td>
 <td class="fielddoc">
-DEPRECATED - Select how to configure GTIOCA when output is disabled. </td></tr>
+Select how to configure GTIOCA when output is disabled. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa34079abac90aaced078650c626c9820"></a><a class="el" href="group___g_p_t.html#ga82d61d33edf38d50f1247d1d55ec506b">gpt_gtioc_disable_t</a></td>
 <td class="fieldname">
 gtiocb_disable_setting</td>
 <td class="fielddoc">
-DEPRECATED - Select how to configure GTIOCB when output is disabled. </td></tr>
+Select how to configure GTIOCB when output is disabled. </td></tr>
 </table>
 
 </div>
@@ -986,13 +1090,13 @@ DEPRECATED - Select how to configure GTIOCB when output is disabled. </td></tr>
 <td class="fieldname">
 gtioca</td>
 <td class="fielddoc">
-DEPRECATED - Configuration for GPT I/O pin A. </td></tr>
+Configuration for GPT I/O pin A. </td></tr>
 <tr><td class="fieldtype">
 <a id="a78476af74debd54ee8394dd0aa6d2505"></a><a class="el" href="group___g_p_t.html#structgpt__output__pin__t">gpt_output_pin_t</a></td>
 <td class="fieldname">
 gtiocb</td>
 <td class="fielddoc">
-DEPRECATED - Configuration for GPT I/O pin B. </td></tr>
+Configuration for GPT I/O pin B. </td></tr>
 <tr><td class="fieldtype">
 <a id="a3b894424ab45e17d02938de9c211911a"></a><a class="el" href="group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a">gpt_source_t</a></td>
 <td class="fieldname">
@@ -2158,7 +2262,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a1b2c51a519145c2482ca2fb6b4b3d749">timer_api_t::callbackSet</a>.</p>
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ad2569f06e8034790e7b363142d93a816">timer_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -2198,8 +2302,8 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 
 </div>
 </div>
-<a id="gada982ef1873ca00147f9692b42aba8f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gada982ef1873ca00147f9692b42aba8f0">&#9670;&nbsp;</a></span>R_GPT_PwmOutputDelayInitialize()</h2>
+<a id="gab0a5ae520cacb0257493b0820cfeb2e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab0a5ae520cacb0257493b0820cfeb2e1">&#9670;&nbsp;</a></span>R_GPT_PwmOutputDelayInitialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2207,6 +2311,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
         <tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_GPT_PwmOutputDelayInitialize </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -2231,7 +2336,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

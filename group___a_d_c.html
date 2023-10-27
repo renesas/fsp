@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -238,7 +316,7 @@ The following build time configurations are defined in fsp_cfg/r_adc_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -254,24 +332,26 @@ This module can be added to the Stacks tab via New Stack &gt; Analog &gt; ADC (r
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_adc0 </td><td>Module name </td></tr>
-<tr>
-<td>General &gt; Unit</td><td>Unit must be a non-negative integer</td><td>0 </td><td>Specifies the ADC Unit to be used. </td></tr>
-<tr>
-<td>General &gt; Resolution</td><td>MCU Specific Options</td><td></td><td>Specifies the conversion resolution for this unit. </td></tr>
-<tr>
-<td>General &gt; Alignment</td><td>MCU Specific Options</td><td></td><td>Specifies the conversion result alignment. </td></tr>
-<tr>
-<td>General &gt; Clear after read</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_adc0 </td><td>Module name </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Unit</td><td>Unit must be a non-negative integer</td><td>0 </td><td>Specifies the ADC Unit to be used. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resolution</td><td>MCU Specific Options</td><td></td><td>Specifies the conversion resolution for this unit. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Alignment</td><td>MCU Specific Options</td><td></td><td>Specifies the conversion result alignment. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clear after read</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Off</li>
 <li>
 On</li>
 </ul>
 </td><td>On </td><td>Specifies if the result register will be automatically cleared after the conversion result is read. </td></tr>
-<tr>
-<td>General &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Single Scan</li>
 <li>
@@ -280,8 +360,8 @@ Continuous Scan</li>
 Group Scan</li>
 </ul>
 </td><td>Single Scan </td><td>Specifies the mode that this ADC unit is used in. </td></tr>
-<tr>
-<td>General &gt; Double-trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Double-trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
@@ -294,8 +374,12 @@ Enabled (extended mode)</li>
 In group mode Group B is unaffected.<br />
 <br />
  </td></tr>
-<tr>
-<td>Input &gt; Sample and Hold &gt; Sample and Hold Channels (Available only on selected MCUs)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Sample and Hold  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sample and Hold Channels (Available only on selected MCUs)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Channel 0</li>
 <li>
@@ -304,56 +388,62 @@ Channel 1</li>
 Channel 2</li>
 </ul>
 </td><td></td><td>Specifies if this channel is included in the Sample and Hold Mask. </td></tr>
-<tr>
-<td>Input &gt; Sample and Hold &gt; Sample Hold States (Applies only to channels 0, 1, 2)</td><td>Must be a valid non-negative integer with configurable value 4 to 255</td><td>24 </td><td>Specifies the updated sample-and-hold count for the channel dedicated sample-and-hold circuit </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window A &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sample Hold States (Applies only to channels 0, 1, 2)</td><td>Must be a valid non-negative integer with configurable value 4 to 255</td><td>24 </td><td>Specifies the updated sample-and-hold count for the channel dedicated sample-and-hold circuit </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Window Compare  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Window Compare &gt; Window A  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable or disable comparison with Window A. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window A &gt; Channels to compare (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Select channels to be compared to Window A. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window A &gt; Channel comparison mode (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Checking a box sets the comparison mode for that channel to Greater Than or Inside Window depending on whether Window Mode is disabled or enabled (respectively). If left unchecked the comparison mode will likewise be Less Than or Outside Window (respectively). </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window A &gt; Lower Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the lower comparison value. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window A &gt; Upper Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the upper comparison value. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window B &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Channels to compare (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Select channels to be compared to Window A. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Channel comparison mode (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Checking a box sets the comparison mode for that channel to Greater Than or Inside Window depending on whether Window Mode is disabled or enabled (respectively). If left unchecked the comparison mode will likewise be Less Than or Outside Window (respectively). </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Lower Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the lower comparison value. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Upper Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the upper comparison value. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Window Compare &gt; Window B  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable or disable comparison with Window B. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window B &gt; Channel to compare (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td>Channel 0 </td><td>Select a channel to be compared to Window B. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window B &gt; Comparison mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Channel to compare (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td>Channel 0 </td><td>Select a channel to be compared to Window B. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Comparison mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Less Than or Outside Window</li>
 <li>
 Greater Than or Inside Window</li>
 </ul>
 </td><td>module.driver.adc.compare.window_b.mode </td><td>Select the comparison mode for Window B. For each option, the first condition applies when Window Mode is disabled and the second option applies when Window Mode is enabled. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window B &gt; Lower Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the lower comparison value. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window B &gt; Upper Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the upper comparison value. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Window Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Lower Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the lower comparison value. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Upper Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the upper comparison value. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Window Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>When disabled, ADC values will be compared only with the lower reference on each comparator. When enabled, both the lower and upper reference values will be used to create a comparison window. </td></tr>
-<tr>
-<td>Input &gt; Window Compare &gt; Event Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Event Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 OR</li>
 <li>
@@ -362,22 +452,24 @@ XOR</li>
 AND</li>
 </ul>
 </td><td>OR </td><td>Select how comparison results should be composited for event output. </td></tr>
-<tr>
-<td>Input &gt; Channel Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In Normal mode of operation, this bitmask field specifies the channels that are enabled in that ADC unit. In group mode, this field specifies which channels belong to group A. </td></tr>
-<tr>
-<td>Input &gt; Group B Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In group mode, this field specifies which channels belong to group B. </td></tr>
-<tr>
-<td>Input &gt; Add/Average Count</td><td>MCU Specific Options</td><td></td><td>Specifies if addition or averaging needs to be done for any of the channels in this unit. </td></tr>
-<tr>
-<td>Input &gt; Reference Voltage control</td><td>MCU Specific Options</td><td></td><td>Specify VREFH/VREFADC output voltage control. </td></tr>
-<tr>
-<td>Input &gt; Addition/Averaging Mask (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Select channels to include in the Addition/Averaging Mask </td></tr>
-<tr>
-<td>Interrupts &gt; Normal/Group A Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger type to be used for this unit.  </td></tr>
-<tr>
-<td>Interrupts &gt; Group B Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger for Group B scanning in group scanning mode. This event is also used to trigger Group A in extended double-trigger mode. </td></tr>
-<tr>
-<td>Interrupts &gt; Group Priority (Valid only in Group Scan Mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In Normal mode of operation, this bitmask field specifies the channels that are enabled in that ADC unit. In group mode, this field specifies which channels belong to group A. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Group B Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In group mode, this field specifies which channels belong to group B. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Add/Average Count</td><td>MCU Specific Options</td><td></td><td>Specifies if addition or averaging needs to be done for any of the channels in this unit. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reference Voltage control</td><td>MCU Specific Options</td><td></td><td>Specify VREFH/VREFADC output voltage control. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Addition/Averaging Mask (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Select channels to include in the Addition/Averaging Mask </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Normal/Group A Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger type to be used for this unit.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Group B Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger for Group B scanning in group scanning mode. This event is also used to trigger Group A in extended double-trigger mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Group Priority (Valid only in Group Scan Mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Group A cannot interrupt Group B</li>
 <li>
@@ -388,18 +480,20 @@ Group A can interrupt Group B; Group B scan restarts immediately</li>
 Group A can interrupt Group B; Group B scan restarts immediately and scans continuously</li>
 </ul>
 </td><td>Group A cannot interrupt Group B </td><td>Determines whether an ongoing group B scan can be interrupted by a group A trigger, whether it should abort on a group A trigger, or if it should pause to allow group A scan and restart immediately after group A scan is complete. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the ADC scan completes. </td></tr>
-<tr>
-<td>Interrupts &gt; Scan End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select scan end interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Scan End Group B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select group B scan end interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Window Compare A Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Window Compare A interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; Window Compare B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Window Compare B interrupt priority. </td></tr>
-<tr>
-<td>Extra &gt; ADC Ring Buffer</td><td>MCU Specific Options</td><td></td><td>ADC Ring Buffer to be used only with DMAC transfers, keep this property disabled for normal ADC operations. When enabled, ADC converted data is stored in ADBUF registers in place of ADDR registers. The read API will not read from this location for normal ADC operations. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the ADC scan completes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Scan End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select scan end interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Scan End Group B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select group B scan end interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Window Compare A Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Window Compare A interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Window Compare B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Window Compare B interrupt priority. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ADC Ring Buffer</td><td>MCU Specific Options</td><td></td><td>ADC Ring Buffer to be used only with DMAC transfers, keep this property disabled for normal ADC operations. When enabled, ADC converted data is stored in ADBUF registers in place of ADDR registers. The read API will not read from this location for normal ADC operations. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-adc-clock-configuration"></a>
@@ -415,6 +509,8 @@ Clock Configuration</h2>
 <td>RA2E1</td><td>PCLKD</td></tr>
 <tr>
 <td>RA2E2</td><td>PCLKD</td></tr>
+<tr>
+<td>RA2E3</td><td>PCLKD</td></tr>
 <tr>
 <td>RA2L1</td><td>PCLKD</td></tr>
 <tr>
@@ -449,6 +545,8 @@ Clock Configuration</h2>
 <td>RA6T1</td><td>PCLKC</td></tr>
 <tr>
 <td>RA6T3</td><td>PCLKC</td></tr>
+<tr>
+<td>RA8M1</td><td>PCLKC</td></tr>
 </table>
 </p>
 <p>The ADC clock must be at least 1 MHz when the ADC is used. Many MCUs also have PCLK ratio restrictions when the ADC is used. For details on PCLK ratio restrictions, reference the footnotes in the second table of the Clock Generation Circuit chapter of the MCU User's Manual (for example, Table 9.2 "Specifications
@@ -1281,7 +1379,7 @@ Number of states to be used for sample and hold. Affects channels 0-2. </td></tr
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e">adc_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___a_d_c___a_p_i.html#a2cd8e8911dcf8c4c617fe62f185b4363">adc_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1716,7 +1814,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

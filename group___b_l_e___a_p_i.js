@@ -1,6 +1,7 @@
 var group___b_l_e___a_p_i =
 [
     [ "GAP", "group___g_a_p___a_p_i.html", "group___g_a_p___a_p_i" ],
+    [ "ISO", "group___i_s_o___a_p_i.html", "group___i_s_o___a_p_i" ],
     [ "GATT_COMMON", "group___g_a_t_t___c_o_m_m_o_n___a_p_i.html", "group___g_a_t_t___c_o_m_m_o_n___a_p_i" ],
     [ "GATT_SERVER", "group___g_a_t_t___s_e_r_v_e_r___a_p_i.html", "group___g_a_t_t___s_e_r_v_e_r___a_p_i" ],
     [ "GATT_CLIENT", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html", "group___g_a_t_t___c_l_i_e_n_t___a_p_i" ],

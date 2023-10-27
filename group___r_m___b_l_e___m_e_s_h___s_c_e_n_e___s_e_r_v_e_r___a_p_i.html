@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,10 +248,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___s_c_e_
 <p>Interface for Bluetooth Low Energy Mesh Model Scene Server functions. </p>
 <h1><a class="anchor" id="RM_BLE_MESH_SCENE_SERVER_API_Summary"></a>
 Summary</h1>
-<p>The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Scene Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Scene Server functionality.</p>
-<p>The Bluetooth Low Energy Mesh Model Scene Server interface can be implemented by:</p><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___s_r_v.html">Bluetooth Low Energy Mesh Network Scene Server (rm_mesh_scene_srv)</a> </li>
-</ul>
+<p>The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Scene Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Scene Server functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -317,10 +392,10 @@ Binary Large Object. </td></tr>
 <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#a08589afa2deb276842ea048cb9b85fa7">setup_server_handle</a></td></tr>
 <tr class="memdesc:a08589afa2deb276842ea048cb9b85fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Model handle for setup server. <br /></td></tr>
 <tr class="separator:a08589afa2deb276842ea048cb9b85fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ab65d5b5e366a0778c14c7cf03d55b3"><td class="memItemLeft" align="right" valign="top"><a id="a6ab65d5b5e366a0778c14c7cf03d55b3"></a>
-void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#a6ab65d5b5e366a0778c14c7cf03d55b3">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__scene__server__callback__args__t">rm_ble_mesh_scene_server_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:a6ab65d5b5e366a0778c14c7cf03d55b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model scene server callback. <br /></td></tr>
-<tr class="separator:a6ab65d5b5e366a0778c14c7cf03d55b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa97e890dc20190b951d09680bf920da"><td class="memItemLeft" align="right" valign="top"><a id="afa97e890dc20190b951d09680bf920da"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#afa97e890dc20190b951d09680bf920da">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__scene__server__callback__args__t">rm_ble_mesh_scene_server_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:afa97e890dc20190b951d09680bf920da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model scene server callback. <br /></td></tr>
+<tr class="separator:afa97e890dc20190b951d09680bf920da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae93d4d3abd9a46470edbb3c1c7e196e"><td class="memItemLeft" align="right" valign="top"><a id="aae93d4d3abd9a46470edbb3c1c7e196e"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#aae93d4d3abd9a46470edbb3c1c7e196e">p_timeout_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__scene__server__timeout__callback__args__t">rm_ble_mesh_scene_server_timeout_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:aae93d4d3abd9a46470edbb3c1c7e196e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model scene server publication timeout callback. <br /></td></tr>
@@ -388,10 +463,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to open scene server model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___s_r_v.html#ga28dfe96d4d65e14cfbea4b2b2bb56a5e">RM_MESH_SCENE_SRV_Open()</a></li>
-</ul>
-</dd></dl>
+<p>API to open scene server model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -413,10 +485,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to close scene server model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___s_r_v.html#gad2b76d1046894297d280812cd9059da5">RM_MESH_SCENE_SRV_Close()</a></li>
-</ul>
-</dd></dl>
+<p>API to close scene server model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -437,10 +506,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to send reply or to update state change. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___s_r_v.html#ga2f82659b478d36609e076dec28851ee6">RM_MESH_SCENE_SRV_StateUpdate()</a></li>
-</ul>
-</dd></dl>
+<p>API to send reply or to update state change.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -504,10 +570,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BLE MESH SCENE SERVER control block. Allocate an instance specific control block to pass into the BLE mesh model scene server API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>rm_ble_mesh_scene_server_instance_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>BLE MESH SCENE SERVER control block. Allocate an instance specific control block to pass into the BLE mesh model scene server API calls. </p>
 
 </div>
 </div>
@@ -545,7 +608,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

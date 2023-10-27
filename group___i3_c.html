@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -248,7 +326,7 @@ The following build time configurations are defined in fsp_cfg/r_i3c_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -258,7 +336,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Unaligned Buffer Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -266,7 +344,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Unaligned buffer support may be optionally disabled for improved performance. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Master Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -274,7 +352,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>If only slave mode is required, disable master support to decrease code size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Slave Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -282,7 +360,7 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>If only master mode is required, disable slave support to decrease code size. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Error Recovery Procedure</td><td>MCU Specific Options</td><td></td><td>There are two different chip versions of the RA2E2 MCU (Version 1 and Version 2). Each version requires a different procedure for recovering from errors. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; I3C (r_i3c)</h2>
@@ -290,114 +368,142 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Bitrate Settings &gt; Standard Mode &gt; Open-Drain &gt; Logic High Period (ns)</td><td>Must be an integer greater than 0.</td><td>167 </td><td>The Logic High period of SCL during Standard Mode Open Drain transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Standard Mode &gt; Open-Drain &gt; Frequency</td><td>Must be an integer greater than 0.</td><td>1000000 </td><td>The Frequency of SCL during Standard Mode Open Drain transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Standard Mode &gt; Push-Pull &gt; Logic High Period (ns)</td><td>The Logic High Period must be greater than or equal to 24 Nanoseconds.</td><td>167 </td><td>The Logic High period of SCL during Standard Mode Push Pull transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Standard Mode &gt; Push-Pull &gt; Frequency</td><td>Push-Pull frequency must be greater than or equal to 10000 Hz.</td><td>3400000 </td><td>The Frequency of SCL during Standard Mode Push-Pull transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Extended Mode &gt; Open-Drain &gt; Logic High Period (ns)</td><td>Must be an integer greater than 0.</td><td>167 </td><td>The Logic High period of SCL during Extended Mode Open Drain transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Extended Mode &gt; Open-Drain &gt; Frequency</td><td>Must be an integer greater than 0.</td><td>1000000 </td><td>The Frequency of SCL during Extended Mode Open Drain transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Extended Mode &gt; Push-Pull &gt; Logic High Period (ns)</td><td>The Logic High Period must be greater than or equal to 24 Nanoseconds.</td><td>167 </td><td>The Logic High period of SCL during Extended Mode Push Pull transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Extended Mode &gt; Push-Pull &gt; Frequency</td><td>Push-Pull frequency must be greater than or equal to 10000 Hz.</td><td>3400000 </td><td>The Frequency of SCL during Extended Mode Push-Pull transfers. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Bus Timing &gt; Open Drain Rising Time (ns)</td><td>Rising time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Open Drain rising time in nanoseconds. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Bus Timing &gt; Open Drain Falling Time (ns)</td><td>Falling time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Open Drain falling time in nanoseconds. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Bus Timing &gt; Push-Pull Rising Time (ns)</td><td>Rising time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Push-Pull rising time in nanoseconds. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Bus Timing &gt; Push-Pull Falling Time (ns)</td><td>Falling time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Push-Pull rising time in nanoseconds. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Clock Stalling &gt; Address Assignment Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Standard Mode  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Standard Mode &gt; Open-Drain  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Logic High Period (ns)</td><td>Must be an integer greater than 0.</td><td>167 </td><td>The Logic High period of SCL during Standard Mode Open Drain transfers. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Frequency</td><td>Must be an integer greater than 0.</td><td>1000000 </td><td>The Frequency of SCL during Standard Mode Open Drain transfers. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Standard Mode &gt; Push-Pull  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Logic High Period (ns)</td><td>The Logic High Period must be greater than or equal to 24 Nanoseconds.</td><td>167 </td><td>The Logic High period of SCL during Standard Mode Push Pull transfers. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Frequency</td><td>Push-Pull frequency must be greater than or equal to 10000 Hz.</td><td>3400000 </td><td>The Frequency of SCL during Standard Mode Push-Pull transfers. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Extended Mode  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Extended Mode &gt; Open-Drain  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Logic High Period (ns)</td><td>Must be an integer greater than 0.</td><td>167 </td><td>The Logic High period of SCL during Extended Mode Open Drain transfers. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Frequency</td><td>Must be an integer greater than 0.</td><td>1000000 </td><td>The Frequency of SCL during Extended Mode Open Drain transfers. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Extended Mode &gt; Push-Pull  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Logic High Period (ns)</td><td>The Logic High Period must be greater than or equal to 24 Nanoseconds.</td><td>167 </td><td>The Logic High period of SCL during Extended Mode Push Pull transfers. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Frequency</td><td>Push-Pull frequency must be greater than or equal to 10000 Hz.</td><td>3400000 </td><td>The Frequency of SCL during Extended Mode Push-Pull transfers. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Bus Timing  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Open Drain Rising Time (ns)</td><td>Rising time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Open Drain rising time in nanoseconds. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Open Drain Falling Time (ns)</td><td>Falling time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Open Drain falling time in nanoseconds. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Push-Pull Rising Time (ns)</td><td>Rising time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Push-Pull rising time in nanoseconds. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Push-Pull Falling Time (ns)</td><td>Falling time must be greater than or equal to 0 nanoseconds.</td><td>0 </td><td>The Push-Pull rising time in nanoseconds. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Bitrate Settings &gt; Clock Stalling  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Address Assignment Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable clock stalling during the Address Assignment Phase of ENTDAA. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Clock Stalling &gt; Transition Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Transition Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable clock stalling during the Transition Bit of a read transfer. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Clock Stalling &gt; Parity Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Parity Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable clock stalling during the Parity Bit of a write transfer. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Clock Stalling &gt; Ack Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Ack Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable clock stalling during the ACK phase of a transfer. </td></tr>
-<tr>
-<td>Bitrate Settings &gt; Clock Stalling &gt; Time (us)</td><td>Must be greater than or equal to 0.</td><td>0 </td><td>The amount of time to stall the clock during the Address Assignment Phase, Transition Phase, Parity Phase, and ACK Phase. </td></tr>
-<tr>
-<td>Master Mode &gt; ACK Hot-Join Requests</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Time (us)</td><td>Must be greater than or equal to 0.</td><td>0 </td><td>The amount of time to stall the clock during the Address Assignment Phase, Transition Phase, Parity Phase, and ACK Phase. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Master Mode  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ACK Hot-Join Requests</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, the I3C instance will ACK Hot-Join Requests and notify the application. </td></tr>
-<tr>
-<td>Master Mode &gt; Notify Rejected Hot-Join Requests.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Notify Rejected Hot-Join Requests.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, the application will get a callback when an IBI Hot-Join Request is rejected. </td></tr>
-<tr>
-<td>Master Mode &gt; Notify Rejected Mastership Requests.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Notify Rejected Mastership Requests.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, the application will get a callback when an IBI Mastership Request is rejected. </td></tr>
-<tr>
-<td>Master Mode &gt; Notify Rejected Interrupt Requests.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Notify Rejected Interrupt Requests.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, the application will get a callback when an IBI Interrupt Request is rejected. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; ENEC/DISEC &gt; In-Band Interrupts</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Slave Mode  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info &gt; ENEC/DISEC  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">In-Band Interrupts</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Configure whether the slave can issue IBI requests. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; ENEC/DISEC &gt; Hot-Join Requests</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Hot-Join Requests</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Configure whether the slave can issue Hot-Join requests. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; ENTASn &gt; Activity State</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info &gt; ENTASn  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Activity State</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Activity State 0</li>
 <li>
@@ -408,14 +514,20 @@ Activity State 2</li>
 Activity State 3</li>
 </ul>
 </td><td>Activity State 0 </td><td>Configure the starting activity state of the slave. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; SETMWL/GETMWL &gt; Max Write Length</td><td>Write length must be in the range of [8, 65535].</td><td>65535 </td><td>Set the max write length. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; SETMRL/GETMRL &gt; Max Read Length</td><td>Read length must be in the range of [16, 65535].</td><td>65535 </td><td>Set the max read length. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; SETMRL/GETMRL &gt; Max IBI Payload Length</td><td>Read length must be in the range of [0, 255].</td><td>0 </td><td>Set the max IBI payload length, or set it to 0 for unlimited. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETMXDS &gt; Write Data Rate</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info &gt; SETMWL/GETMWL  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Max Write Length</td><td>Write length must be in the range of [8, 65535].</td><td>65535 </td><td>Set the max write length. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info &gt; SETMRL/GETMRL  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Max Read Length</td><td>Read length must be in the range of [16, 65535].</td><td>65535 </td><td>Set the max read length. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Max IBI Payload Length</td><td>Read length must be in the range of [0, 255].</td><td>0 </td><td>Set the max IBI payload length, or set it to 0 for unlimited. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info &gt; GETMXDS  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Write Data Rate</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 FSCL_MAX</li>
 <li>
@@ -428,8 +540,8 @@ FSCL_MAX</li>
 2Mhz</li>
 </ul>
 </td><td>2Mhz </td><td>Set the max write data rate. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETMXDS &gt; Read Data Rate</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Read Data Rate</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 FSCL_MAX</li>
 <li>
@@ -442,8 +554,8 @@ FSCL_MAX</li>
 2Mhz</li>
 </ul>
 </td><td>2Mhz </td><td>Set the max read data rate. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETMXDS &gt; Clock to Data Turnaround Time</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Clock to Data Turnaround Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 8 Nanoseconds</li>
 <li>
@@ -458,35 +570,39 @@ FSCL_MAX</li>
 Greater than 12 Nanoseconds</li>
 </ul>
 </td><td>8 Nanoseconds </td><td>Set the clock to data turnaround time. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETMXDS &gt; Include Max Read Turnaround Time</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Include Max Read Turnaround Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Configure whether the Max Read Turnaround time will be transmitted. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETMXDS &gt; Max Read Turnaround Time</td><td>Value must be in the range [0, 255].</td><td>0 </td><td>Set max read turnaround time. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETXTIME &gt; Frequency Byte</td><td>Value must be in the range [0, 255].</td><td>0 </td><td>Set the internal oscillator frequency in increments of 0.5 Mhz. </td></tr>
-<tr>
-<td>Slave Mode &gt; Command Response Info &gt; GETXTIME &gt; Inaccuracy Byte</td><td>Value must be in the range [0, 255].</td><td>0 </td><td>Set the oscillator inaccuracy byte in increments of 0.5% </td></tr>
-<tr>
-<td>Interrupts &gt; Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The interrupt priority of the RX, TX, RESPONSE, RCV_STATUS, and IBI ISRs. </td></tr>
-<tr>
-<td>Interrupts &gt; Error and Event Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The interrupt priority of the EEI ISR which is used to notify the application when an Internal Error, HDR Exit Pattern, or Timeout is detected. </td></tr>
-<tr>
-<td>Interrupts &gt; Receive Status ICU Group 3 (RA2E2 Only)</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
-<tr>
-<td>Interrupts &gt; Receive Status ICU Group 5 (RA2E2 Only)</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
-<tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Max Read Turnaround Time</td><td>Value must be in the range [0, 255].</td><td>0 </td><td>Set max read turnaround time. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Slave Mode &gt; Command Response Info &gt; GETXTIME  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Frequency Byte</td><td>Value must be in the range [0, 255].</td><td>0 </td><td>Set the internal oscillator frequency in increments of 0.5 Mhz. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Inaccuracy Byte</td><td>Value must be in the range [0, 255].</td><td>0 </td><td>Set the oscillator inaccuracy byte in increments of 0.5% </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The interrupt priority of the RX, TX, RESPONSE, RCV_STATUS, and IBI ISRs. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error and Event Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The interrupt priority of the EEI ISR which is used to notify the application when an Internal Error, HDR Exit Pattern, or Timeout is detected. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive Status ICU Group 3 (RA2E2 Only)</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive Status ICU Group 5 (RA2E2 Only)</td><td>MCU Specific Options</td><td></td><td>The Receive Status IRQ can use ICU Group 3 or Group 5. </td></tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i3c0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>g_i3c0_callback </td><td>A user callback function must be provided. This will be called in order to notify the application of I3C events and provide status information. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback Context</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A pointer to additional application specific information that is provided to the callback. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Device Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Main Master</li>
@@ -494,13 +610,13 @@ Main Master</li>
 Slave</li>
 </ul>
 </td><td>Slave </td><td>The role that the I3C instance will take on the I3C bus. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bus Free Condition Detection Time (ns)</td><td>Must be greater than or equal to 38.4 nanoseconds.</td><td>38.4 </td><td>The minimum period occurring after a STOP and before a START. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bus Available Condition Detection Time (us)</td><td>Must be greater than or equal to 1 microsecond.</td><td>1 </td><td>The minimum period occurring after the Bus Free Condition when Slaves can initiate IBI requests. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Bus Idle Condition Detection Time (us)</td><td>Must be greater than or equal to 1000 microseconds.</td><td>1000 </td><td>The minimum period occurring after the Bus Available Condition when Slaves can initiate Hot-Join requests. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Timeout Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -1860,7 +1976,7 @@ Error and Event Interrupt Priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

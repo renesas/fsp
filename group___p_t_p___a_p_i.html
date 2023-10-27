@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,10 +249,7 @@ $(document).ready(function(){initNavTree('group___p_t_p___a_p_i.html','');});
 <p>Interface for PTP functions. </p>
 <h1><a class="anchor" id="PTP_API_SUMMARY"></a>
 Summary</h1>
-<p>The PTP interface provides the functionality for using PTP.</p>
-<p>Implemented by:</p><ul>
-<li><a class="el" href="group___p_t_p.html">PTP (r_ptp)</a> </li>
-</ul>
+<p>The PTP interface provides the functionality for using PTP. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -725,7 +800,7 @@ header</td>
 <td class="fielddoc">
 Header of the message. </td></tr>
 <tr><td class="fieldtype">
-<a id="a3f65c5bb9e3b15c570630252137c3f15"></a>union <a class="el" href="group___p_t_p___a_p_i.html#unionptp__message__t_8____unnamed____">ptp_message_t</a></td>
+<a id="ad735cf93e11bff6017d99d9fa4e63a3c"></a>union <a class="el" href="group___p_t_p___a_p_i.html#unionptp__message__t_8____unnamed____">ptp_message_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1021,14 +1096,14 @@ p_multicast_addr_filter</td>
 <td class="fielddoc">
 Filter for multicast packets. </td></tr>
 <tr><td class="fieldtype">
-<a id="ab24a4e8b1409d1d01719c7fa61f86703"></a>struct <a class="el" href="group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ether">ptp_synfp_cfg_t</a></td>
+<a id="aa3ddcc8f1587fe86650d9a06946d6e32"></a>struct <a class="el" href="group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ether">ptp_synfp_cfg_t</a></td>
 <td class="fieldname">
 ether</td>
 <td class="fielddoc">
 <p>Valid if frame_format is set to Ethernet II or IEEE 802.3. </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a id="aed49fced4991141c69f6b24f58b3a409"></a>struct <a class="el" href="group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ipv4">ptp_synfp_cfg_t</a></td>
+<a id="ad32e74ac32465aa1318d0bf7a274fcb7"></a>struct <a class="el" href="group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ipv4">ptp_synfp_cfg_t</a></td>
 <td class="fieldname">
 ipv4</td>
 <td class="fielddoc">
@@ -1321,10 +1396,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gac64c5e4a41f886f32a2396020e6e9669">R_PTP_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initial configuration.</p>
 <dl class="section note"><dt>Note</dt><dd>To reconfigure after calling this function, call <a class="el" href="group___p_t_p___a_p_i.html#affa30a9c253e0a32d42e35a90fddc1e8">ptp_api_t::close</a> first. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1347,10 +1419,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the MAC address for the PTP. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#ga1cf674cbb8cafcd8a090608167b20271">R_PTP_MacAddrSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set the MAC address for the PTP.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1372,10 +1441,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the IP address for the PTP. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#ga1147acf7f5f8b34247f6e2fda64fd794">R_PTP_IpAddrSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set the IP address for the PTP.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1397,10 +1463,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the local clock ID (Usually based off of the PTP MAC address). </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gadd493ac1a0bb441a875b8f4cbcb48689">R_PTP_LocalClockIdSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set the local clock ID (Usually based off of the PTP MAC address).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1422,10 +1485,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the master clock ID (Usually obtained from previously received announce message). </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gaf8a649eb2aed004ccf17135f527e9503">R_PTP_MasterClockIdSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set the master clock ID (Usually obtained from previously received announce message).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1448,10 +1508,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the flags field for the given message type. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gadb66200ebc5d880fb8b3bef9b091734c">R_PTP_MessageFlagsSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set the flags field for the given message type.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1474,10 +1531,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the offsetFromMaster field in announce messages. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gae7c3176ad9d2b8fe00fda18d2faeac01">R_PTP_CurrentUtcOffsetSet()</a></li>
-</ul>
-</dd></dl>
+<p>Sets the offsetFromMaster field in announce messages.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1500,10 +1554,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Transition to a new clock state.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gae0850f602bdcc31584f8fd8652ad8dc9">R_PTP_PortStateSet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1526,10 +1576,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Send a PTP message. Appropriate fields in the PTP message will be endian swapped. The application must ensure that the TLV data is in big endian format.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gad4c9e431f1209bb087dd3f6c7233c89a">R_PTP_MessageSend()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1554,10 +1600,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Set the local clock value.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#ga6ce3801ef62ff464667916864e1f3e1a">R_PTP_LocalClockValueSet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1580,10 +1622,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Get the local clock value.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gacea3b3940af3df1f91101e722f26d6ef">R_PTP_LocalClockValueGet()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1606,10 +1644,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Configuration that is common to all of the pulse timers.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#ga805458fe513b8ad84e56ef4bc6b9efe3">R_PTP_PulseTimerCommonConfig()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1632,10 +1666,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Setup a pulse timer.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gadf42f6597cf6da5dd7f6cdf180826ede">R_PTP_PulseTimerEnable()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1659,10 +1689,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Stop a pulse timer.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#ga449c98ce945e5d8821fa74c89b8dfb75">R_PTP_PulseTimerDisable()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1685,10 +1711,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
       </table>
 </div><div class="memdoc">
 <p>Stop PTP operation.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___p_t_p.html#gafa87719b0a35125a830b14b03831e157">R_PTP_Close()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -2213,7 +2235,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

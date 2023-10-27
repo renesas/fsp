@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -442,10 +520,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga34766994da3769a1f5cd3e7f22652b43">R_JPEG_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initial configuration</p>
 <dl class="section pre"><dt>Precondition</dt><dd>none</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -468,10 +543,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Assign input data buffer to JPEG codec. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#gaaed65a4fe2f87a3c30dc817d311056f0">R_JPEG_InputBufferSet()</a></li>
-</ul>
-</dd></dl>
+<p>Assign input data buffer to JPEG codec.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>the JPEG codec module must have been opened properly. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The buffer starting address must be 8-byte aligned. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -496,10 +568,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Assign output buffer to JPEG codec for storing output data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga6d304aad5fbb148f8bd7ed71f878e53d">R_JPEG_OutputBufferSet()</a></li>
-</ul>
-</dd></dl>
+<p>Assign output buffer to JPEG codec for storing output data.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>The JPEG codec module must have been opened properly. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The buffer starting address must be 8-byte aligned. For the decoding process, the HLD driver automatically computes the number of lines of the image to decoded so the output data fits into the given space. If the supplied output buffer is not able to hold the entire frame, the application should call the Output Full Callback function so it can be notified when additional buffer space is needed. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -524,10 +593,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieve current status of the JPEG codec module. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga1d62e16ee0c22a4ca2c3853ec81c7928">R_JPEG_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Retrieve current status of the JPEG codec module.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>the JPEG codec module must have been opened properly. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -550,10 +616,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cancel an outstanding operation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga0b41824f40d6c66c59a6c5ad908cbdce">R_JPEG_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Cancel an outstanding operation.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>the JPEG codec module must have been opened properly. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the encoding or the decoding operation is finished without errors, the HLD driver automatically closes the device. In this case, application does not need to explicitly close the JPEG device. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -576,10 +639,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure the horizontal stride value. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga62ffba3d7256310ec46dff12b798983e">R_JPEG_DecodeHorizontalStrideSet()</a></li>
-</ul>
-</dd></dl>
+<p>Configure the horizontal stride value.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>The JPEG codec module must have been opened properly. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -603,10 +663,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the input pixel format. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#gae1ed6685a29aa94b4fc5a6764c72c2a5">R_JPEG_DecodePixelFormatGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get the input pixel format.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>the JPEG codec module must have been opened properly. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -629,10 +686,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure the horizontal and vertical subsample settings. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga3246bd6af57284f48d8c5061257bfeed">R_JPEG_DecodeImageSubsampleSet()</a></li>
-</ul>
-</dd></dl>
+<p>Configure the horizontal and vertical subsample settings.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>The JPEG codec module must have been opened properly. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -656,10 +710,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return the number of lines decoded into the output buffer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#gae339672b9122a431c66a695858877463">R_JPEG_DecodeLinesDecodedGet()</a></li>
-</ul>
-</dd></dl>
+<p>Return the number of lines decoded into the output buffer.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>the JPEG codec module must have been opened properly. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -682,10 +733,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieve image size during decoding operation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga3d68546c7a9f31f72b96cf17086bdfe4">R_JPEG_DecodeImageSizeGet()</a></li>
-</ul>
-</dd></dl>
+<p>Retrieve image size during decoding operation.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>the JPEG codec module must have been opened properly. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the encoding or the decoding operation is finished without errors, the HLD driver automatically closes the device. In this case, application does not need to explicitly close the JPEG device. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -710,10 +758,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set image parameters to JPEG Codec </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga6cff298a8d044d4a7ea04c577a9170ca">R_JPEG_EncodeImageSizeSet()</a></li>
-</ul>
-</dd></dl>
+<p>Set image parameters to JPEG Codec</p>
 <dl class="section pre"><dt>Precondition</dt><dd>The JPEG codec module must have been opened properly.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -736,10 +781,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Switch between encode and decode mode or vice-versa. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#gab669afd6c669dabba75e3510fc9f5bda">R_JPEG_ModeSet()</a></li>
-</ul>
-</dd></dl>
+<p>Switch between encode and decode mode or vice-versa.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>The JPEG codec module must have been opened properly. The JPEG Codec can only perform one operation at a time and requires different configuration for encode and decode. This function facilitates easy switching between the two modes in case both are needed in an application. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -802,10 +844,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>JPEG decode control block. Allocate an instance specific control block to pass into the JPEG decode API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#structjpeg__instance__ctrl__t">jpeg_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>JPEG decode control block. Allocate an instance specific control block to pass into the JPEG decode API calls. </p>
 
 </div>
 </div>
@@ -955,7 +994,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

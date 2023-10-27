@@ -19,7 +19,7 @@ var group___p_o_e_g___a_p_i =
     [ "poeg_api_t", "group___p_o_e_g___a_p_i.html#structpoeg__api__t", [
       [ "open", "group___p_o_e_g___a_p_i.html#a41c511a6b1b828d54f180b729ae4fe55", null ],
       [ "statusGet", "group___p_o_e_g___a_p_i.html#ab377a80211d85f8c90b578e93dfd7964", null ],
-      [ "callbackSet", "group___p_o_e_g___a_p_i.html#a7d01f09a832b9940b264b0cf10a3863c", null ],
+      [ "callbackSet", "group___p_o_e_g___a_p_i.html#a77b8a93a87cb6e37bd2f3213223b949b", null ],
       [ "outputDisable", "group___p_o_e_g___a_p_i.html#afe1feb1a5288478eea8d339ffaa1c68e", null ],
       [ "reset", "group___p_o_e_g___a_p_i.html#a5765dcf518892b71b73b5ae38942bd7f", null ],
       [ "close", "group___p_o_e_g___a_p_i.html#a1576cf3362e4341bf14ec8ba9592abc4", null ]
@@ -56,9 +56,9 @@ var group___p_o_e_g___a_p_i =
     ] ],
     [ "poeg_gtetrg_noise_filter_t", "group___p_o_e_g___a_p_i.html#gab482b24d14d1c94f6f4ba9f5e39f8d0b", [
       [ "POEG_GTETRG_NOISE_FILTER_DISABLED", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0ba2ade356ffb1863fce2543f4b3440d526", null ],
-      [ "POEG_GTETRG_NOISE_FILTER_PCLKB_DIV_1", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0ba38f961191fa339ca693af2b31132e9cf", null ],
-      [ "POEG_GTETRG_NOISE_FILTER_PCLKB_DIV_8", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0bab361929a40b68a2e6bbac0b5e9213c5a", null ],
-      [ "POEG_GTETRG_NOISE_FILTER_PCLKB_DIV_32", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0ba8a559716ca4f1164b677818843e90715", null ],
-      [ "POEG_GTETRG_NOISE_FILTER_PCLKB_DIV_128", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0ba88875580846aa38277404a473822fa54", null ]
+      [ "POEG_GTETRG_NOISE_FILTER_CLK_SOURCE_DIV_1", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0bae405d11807096022e95ca21196b3b31b", null ],
+      [ "POEG_GTETRG_NOISE_FILTER_CLK_SOURCE_DIV_8", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0ba9aba7e8afb814c0cf6afb6ecde8ce56a", null ],
+      [ "POEG_GTETRG_NOISE_FILTER_CLK_SOURCE_DIV_32", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0baddaa499f1862688b45cba87f56d698de", null ],
+      [ "POEG_GTETRG_NOISE_FILTER_CLK_SOURCE_DIV_128", "group___p_o_e_g___a_p_i.html#ggab482b24d14d1c94f6f4ba9f5e39f8d0bad0691487948bf5184215e6962445c58f", null ]
     ] ]
 ];

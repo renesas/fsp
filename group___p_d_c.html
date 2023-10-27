@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -160,7 +238,8 @@ $(document).ready(function(){initNavTree('group___p_d_c.html','');});
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Parallel Data Capture (r_pdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___g_r_a_p_h_i_c_s___m_o_d_u_l_e_s.html">Graphics</a></div></div>  </div>
 </div><!--header-->
@@ -168,18 +247,22 @@ $(document).ready(function(){initNavTree('group___p_d_c.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga37bc265a61b2aa8735d74acd3a94c88c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga37bc265a61b2aa8735d74acd3a94c88c">R_PDC_Open</a> (<a class="el" href="group___p_d_c___a_p_i.html#ga6bb625506dc92e3aef9fc154addb9663">pdc_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___p_d_c___a_p_i.html#structpdc__cfg__t">pdc_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="memdesc:ga37bc265a61b2aa8735d74acd3a94c88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Powers on PDC, handles required initialization described in the hardware manual.  <a href="#ga37bc265a61b2aa8735d74acd3a94c88c">More...</a><br /></td></tr>
-<tr class="separator:ga37bc265a61b2aa8735d74acd3a94c88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga05be16f0b97684be7c5276a915766d86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga05be16f0b97684be7c5276a915766d86">R_PDC_Close</a> (<a class="el" href="group___p_d_c___a_p_i.html#ga6bb625506dc92e3aef9fc154addb9663">pdc_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:ga05be16f0b97684be7c5276a915766d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops and closes the transfer interface, disables and powers off the PDC, clears internal driver data and disables interrupts.  <a href="#ga05be16f0b97684be7c5276a915766d86">More...</a><br /></td></tr>
-<tr class="separator:ga05be16f0b97684be7c5276a915766d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6ef8ec2670efe6a82faf4b5059c8d933"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a> (<a class="el" href="group___p_d_c___a_p_i.html#ga6bb625506dc92e3aef9fc154addb9663">pdc_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_buffer)</td></tr>
-<tr class="memdesc:ga6ef8ec2670efe6a82faf4b5059c8d933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a capture. Enables interrupts.  <a href="#ga6ef8ec2670efe6a82faf4b5059c8d933">More...</a><br /></td></tr>
-<tr class="separator:ga6ef8ec2670efe6a82faf4b5059c8d933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0f8b645014660caf1312ef3554c24b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#gae0f8b645014660caf1312ef3554c24b9">R_PDC_Open</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:gae0f8b645014660caf1312ef3554c24b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Powers on PDC, handles required initialization described in the hardware manual.  <a href="#gae0f8b645014660caf1312ef3554c24b9">More...</a><br /></td></tr>
+<tr class="separator:gae0f8b645014660caf1312ef3554c24b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98f665fe22de40ec3ddcb4d2884bd4ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga98f665fe22de40ec3ddcb4d2884bd4ca">R_PDC_Close</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga98f665fe22de40ec3ddcb4d2884bd4ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops and closes the transfer interface, disables and powers off the PDC, clears internal driver data and disables interrupts.  <a href="#ga98f665fe22de40ec3ddcb4d2884bd4ca">More...</a><br /></td></tr>
+<tr class="separator:ga98f665fe22de40ec3ddcb4d2884bd4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cd3f8319ab9da6ae2a9231d35d3f1a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">R_PDC_CaptureStart</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, uint8_t *const p_buffer)</td></tr>
+<tr class="memdesc:ga0cd3f8319ab9da6ae2a9231d35d3f1a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a capture. Enables interrupts.  <a href="#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">More...</a><br /></td></tr>
+<tr class="separator:ga0cd3f8319ab9da6ae2a9231d35d3f1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga926341335ac197ca8cc6164a90a04aca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga926341335ac197ca8cc6164a90a04aca">R_PDC_StatusGet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *p_status)</td></tr>
+<tr class="separator:ga926341335ac197ca8cc6164a90a04aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7429b98eb04e4547ec5df388190e74b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga7429b98eb04e4547ec5df388190e74b0">R_PDC_CallbackSet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga7429b98eb04e4547ec5df388190e74b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the PDC peripheral on RA MCUs. This module implements the <a class="el" href="group___p_d_c___a_p_i.html">PDC Interface</a>. </p>
+<p>Driver for the PDC peripheral on RA MCUs. This module implements the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html">CAPTURE Interface</a>. </p>
 <h1><a class="anchor" id="r-pdc-overview"></a>
 Overview</h1>
 <p>The PDC peripheral supports interfacing with external cameras by accepting timing and data signals in order to capture incoming data. A callback is invoked every time a frame of data is accepted.</p>
@@ -203,7 +286,7 @@ The following build time configurations are defined in fsp_cfg/r_pdc_cfg.h:<br /
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -219,36 +302,44 @@ This module can be added to the Stacks tab via New Stack &gt; Graphics &gt; Para
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_pdc0 </td><td>Module name. </td></tr>
-<tr>
-<td>Input &gt; Signal polarity &gt; HSYNC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_pdc0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Signal polarity  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">HSYNC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 High</li>
 <li>
 Low</li>
 </ul>
 </td><td>High </td><td>Specify the active polarity of the HSYNC signal. </td></tr>
-<tr>
-<td>Input &gt; Signal polarity &gt; VSYNC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">VSYNC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 High</li>
 <li>
 Low</li>
 </ul>
 </td><td>High </td><td>Specify the active polarity of the VSYNC signal. </td></tr>
-<tr>
-<td>Input &gt; Capture Specifications &gt; Number of pixels to capture horizontally</td><td>Value must be an integer greater than 0</td><td>640 </td><td>Specify the number of horizontal pixels to capture. </td></tr>
-<tr>
-<td>Input &gt; Capture Specifications &gt; Number of lines to capture vertically</td><td>Value must be an integer greater than 0</td><td>480 </td><td>Specify the number of vertical pixels to capture. </td></tr>
-<tr>
-<td>Input &gt; Capture Specifications &gt; Horizontal pixel to start capture from</td><td>Value must be an integer</td><td>0 </td><td>Specify the horizontal pixel to start capturing image data from. Allows an image smaller than the native resolution of a camera to be captured. </td></tr>
-<tr>
-<td>Input &gt; Capture Specifications &gt; Line to start capture from</td><td>Value must be an integer</td><td>0 </td><td>Specify the vertical line to start capturing image data from. Allows an image smaller than the native resolution of a camera to be captured. </td></tr>
-<tr>
-<td>Input &gt; Bytes per pixel</td><td>Value must be an integer greater than 0</td><td>2 </td><td>Specify the number of bytes per pixel of the captured image data. </td></tr>
-<tr>
-<td>Input &gt; Clock divider</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Input &gt; Capture Specifications  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Number of pixels to capture horizontally</td><td>Value must be an integer greater than 0</td><td>640 </td><td>Specify the number of horizontal pixels to capture. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Number of lines to capture vertically</td><td>Value must be an integer greater than 0</td><td>480 </td><td>Specify the number of vertical pixels to capture. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal pixel to start capture from</td><td>Value must be an integer</td><td>0 </td><td>Specify the horizontal pixel to start capturing image data from. Allows an image smaller than the native resolution of a camera to be captured. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Line to start capture from</td><td>Value must be an integer</td><td>0 </td><td>Specify the vertical line to start capturing image data from. Allows an image smaller than the native resolution of a camera to be captured. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bytes per pixel</td><td>Value must be an integer greater than 0</td><td>2 </td><td>Specify the number of bytes per pixel of the captured image data. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock divider</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 CLK/2</li>
 <li>
@@ -267,26 +358,28 @@ CLK/14</li>
 CLK/16</li>
 </ul>
 </td><td>CLK/2 </td><td>Specify the clock divider of the clock input to the PDC peripheral. </td></tr>
-<tr>
-<td>Input &gt; Endianess</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Endianess</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Little</li>
 <li>
 Big</li>
 </ul>
 </td><td>Little </td><td>Specify the endianness of the captured image data. </td></tr>
-<tr>
-<td>Output &gt; Buffer &gt; Image buffer name</td><td>Name must be a valid C symbol</td><td>g_user_buffer </td><td>Specify the name of the data buffer to create or set to NULL, if it is to be created by the user external to the PDC driver. </td></tr>
-<tr>
-<td>Output &gt; Buffer &gt; Image buffer section</td><td>Manual Entry</td><td>.bss </td><td>Specify the RAM section for the image data buffer. Typically .bss (internal RAM) or .sdram. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
-<tr>
-<td>Output &gt; Buffer &gt; Number of image buffers</td><td>Value must be an integer greater than 0</td><td>1 </td><td>Specify the number of buffers to create. </td></tr>
-<tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>g_pdc_user_callback </td><td>A user callback function must be provided. This callback is invoked for every successful frame capture and any error conditions </td></tr>
-<tr>
-<td>Interrupts &gt; PDC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the PDC interrupt priority. </td></tr>
-<tr>
-<td>Interrupts &gt; DTC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the DTC interrupt priority. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Buffer  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Number of image buffers</td><td>Value must be an integer greater than 0</td><td>1 </td><td>Specify the number of buffers to create. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>g_pdc_user_callback </td><td>A user callback function must be provided. This callback is invoked for every successful frame capture and any error conditions </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PDC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the PDC interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DTC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the DTC interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-pdc-clock-configuration"></a>
@@ -324,13 +417,100 @@ PDC setup with external camera</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the PDC in an application. This example shows how this driver can be used for capturing data from an external I/O device such as an image sensor.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> g_pdc_user_callback (<a class="code" href="group___p_d_c___a_p_i.html#structpdc__callback__args__t">pdc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___p_d_c___a_p_i.html#gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3">PDC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___p_d_c___a_p_i.html#a311c38c08e8717b53d7f98d1d61c6513">event</a>)</div><div class="line">    {</div><div class="line">        g_capture_ready = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga37bc265a61b2aa8735d74acd3a94c88c">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the camera module at this point. This implementation is camera vendor specific. */</span></div><div class="line">    camera_module_initialization();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize capture ready flag to false. This gets set to true in PDC callback upon successful frame capture. */</span></div><div class="line">    g_capture_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t timeout_ms = PDC_DELAY_MS;</div><div class="line"></div><div class="line">    <span class="comment">/* Since there is nothing else to do, block until Callback triggers*/</span></div><div class="line">    <span class="keywordflow">while</span> ((<span class="keyword">true</span> != g_capture_ready) &amp;&amp; timeout_ms)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        timeout_ms--;;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0U == timeout_ms)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> camera_module_initialization (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Camera vendor specific initialization to be done here */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> g_pdc_user_callback (<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___p_d_c.html#gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3">PDC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#ae6ef34b8317e856d0d84b45231fc52db">event</a>)</div><div class="line">    {</div><div class="line">        g_capture_ready = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#gae0f8b645014660caf1312ef3554c24b9">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the camera module at this point. This implementation is camera vendor specific. */</span></div><div class="line">    camera_module_initialization();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize capture ready flag to false. This gets set to true in PDC callback upon successful frame capture. */</span></div><div class="line">    g_capture_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t timeout_ms = PDC_DELAY_MS;</div><div class="line"></div><div class="line">    <span class="comment">/* Since there is nothing else to do, block until Callback triggers*/</span></div><div class="line">    <span class="keywordflow">while</span> ((<span class="keyword">true</span> != g_capture_ready) &amp;&amp; timeout_ms)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        timeout_ms--;;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0U == timeout_ms)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> camera_module_initialization (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Camera vendor specific initialization to be done here */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structpdc__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#structpdc__extended__cfg__t">pdc_extended_cfg_t</a></td></tr>
+<tr class="separator:structpdc__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structpdc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#structpdc__instance__ctrl__t">pdc_instance_ctrl_t</a></td></tr>
 <tr class="separator:structpdc__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga31162259e060f212b6d1cb04778f3adb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga31162259e060f212b6d1cb04778f3adb">pdc_event_t</a> </td></tr>
+<tr class="separator:ga31162259e060f212b6d1cb04778f3adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefcdde7fd248adecb15dfa8a16d173f8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#gaefcdde7fd248adecb15dfa8a16d173f8">pdc_clock_division_t</a> </td></tr>
+<tr class="separator:gaefcdde7fd248adecb15dfa8a16d173f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41559cfdb76f3c5f485b79dab1d8620a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga41559cfdb76f3c5f485b79dab1d8620a">pdc_endian_t</a> </td></tr>
+<tr class="separator:ga41559cfdb76f3c5f485b79dab1d8620a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga994abe0ad9b4c832eedd74e4700fd7f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga994abe0ad9b4c832eedd74e4700fd7f6">pdc_hsync_polarity_t</a> </td></tr>
+<tr class="separator:ga994abe0ad9b4c832eedd74e4700fd7f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fdbba40243f5c6ac0060412b66675c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga5fdbba40243f5c6ac0060412b66675c9">pdc_vsync_polarity_t</a> </td></tr>
+<tr class="separator:ga5fdbba40243f5c6ac0060412b66675c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structpdc__extended__cfg__t" id="structpdc__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdc__extended__cfg__t">&#9670;&nbsp;</a></span>pdc_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdc_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration structure for PDC. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6a45052f39e31880d9e9219d61060253"></a><a class="el" href="group___p_d_c.html#gaefcdde7fd248adecb15dfa8a16d173f8">pdc_clock_division_t</a></td>
+<td class="fieldname">
+clock_division</td>
+<td class="fielddoc">
+Clock divider. </td></tr>
+<tr><td class="fieldtype">
+<a id="a75798e78cfbef9f726e9c831611d5dfa"></a><a class="el" href="group___p_d_c.html#ga41559cfdb76f3c5f485b79dab1d8620a">pdc_endian_t</a></td>
+<td class="fieldname">
+endian</td>
+<td class="fielddoc">
+Endian of capture data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3ad58e583b78ab2ce8b482b5f05c5bb6"></a><a class="el" href="group___p_d_c.html#ga994abe0ad9b4c832eedd74e4700fd7f6">pdc_hsync_polarity_t</a></td>
+<td class="fieldname">
+hsync_polarity</td>
+<td class="fielddoc">
+Polarity of HSYNC input. </td></tr>
+<tr><td class="fieldtype">
+<a id="a666e4a6e12e7e5c4b88fb212c9a8297f"></a><a class="el" href="group___p_d_c.html#ga5fdbba40243f5c6ac0060412b66675c9">pdc_vsync_polarity_t</a></td>
+<td class="fieldname">
+vsync_polarity</td>
+<td class="fielddoc">
+Polarity of VSYNC input. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad6289a13d4121608e371e75b354a2385"></a>uint8_t</td>
+<td class="fieldname">
+pdc_ipl</td>
+<td class="fielddoc">
+PDC interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8166b2159ac9a03fb618ac8b84cd0602"></a>uint8_t</td>
+<td class="fieldname">
+transfer_req_ipl</td>
+<td class="fielddoc">
+Transfer interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a777fce3e317ab7f3e19b06eae4ab0efe"></a>IRQn_Type</td>
+<td class="fieldname">
+pdc_irq</td>
+<td class="fielddoc">
+PDC IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa29f587dd2b95d3ec6882947e8828b43"></a>IRQn_Type</td>
+<td class="fieldname">
+transfer_req_irq</td>
+<td class="fielddoc">
+Transfer request IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0a055de186014b56f5c8caf972aa4e0d"></a><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *</td>
+<td class="fieldname">
+p_lower_lvl_transfer</td>
+<td class="fielddoc">
+Pointer to the transfer instance the PDC should use. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structpdc__instance__ctrl__t" id="structpdc__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structpdc__instance__ctrl__t">&#9670;&nbsp;</a></span>pdc_instance_ctrl_t</h2>
 
@@ -346,9 +526,137 @@ Data Structures</h2></td></tr>
 </div>
 </div>
 </div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga31162259e060f212b6d1cb04778f3adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga31162259e060f212b6d1cb04778f3adb">&#9670;&nbsp;</a></span>pdc_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_c.html#ga31162259e060f212b6d1cb04778f3adb">pdc_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PDC events </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3"></a>PDC_EVENT_TRANSFER_COMPLETE&#160;</td><td class="fielddoc"><p>Complete frame transferred by DMAC/DTC. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adbaaadaefd28383256ed782a187e8e55a2d"></a>PDC_EVENT_RX_DATA_READY&#160;</td><td class="fielddoc"><p>Receive data ready interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adba38e5870656db6d09aa764e1d9684478d"></a>PDC_EVENT_FRAME_END&#160;</td><td class="fielddoc"><p>Frame end interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adbabc8091df32a1a224f96d9e134fb843e0"></a>PDC_EVENT_ERR_OVERRUN&#160;</td><td class="fielddoc"><p>Overrun interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adbab84c187493215b05a81107d9fa4dc94b"></a>PDC_EVENT_ERR_UNDERRUN&#160;</td><td class="fielddoc"><p>Underrun interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adbaf31d9918f84eeb57601dd0c6ac320584"></a>PDC_EVENT_ERR_V_SET&#160;</td><td class="fielddoc"><p>Vertical line setting error interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga31162259e060f212b6d1cb04778f3adba04a4d65d441f8e54f7ce74abb71dade8"></a>PDC_EVENT_ERR_H_SET&#160;</td><td class="fielddoc"><p>Horizontal byte number setting error interrupt. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaefcdde7fd248adecb15dfa8a16d173f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaefcdde7fd248adecb15dfa8a16d173f8">&#9670;&nbsp;</a></span>pdc_clock_division_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_c.html#gaefcdde7fd248adecb15dfa8a16d173f8">pdc_clock_division_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clock divider applied to PDC clock to provide PCKO output frequency </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8aff8cbf46a199dff620f3843eb281adb2"></a>PDC_CLOCK_DIVISION_2&#160;</td><td class="fielddoc"><p>CLK / 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8a019ab3c0885c426fdefe0aa3e5f4fc48"></a>PDC_CLOCK_DIVISION_4&#160;</td><td class="fielddoc"><p>CLK / 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8a70d2fdab72b99ea1eb821da90ae02ce7"></a>PDC_CLOCK_DIVISION_6&#160;</td><td class="fielddoc"><p>CLK / 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8abd64f8a45b995d91c4d86bf25592c7b9"></a>PDC_CLOCK_DIVISION_8&#160;</td><td class="fielddoc"><p>CLK / 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8a4e892b62a529adba7e1b12bc84d2ccd5"></a>PDC_CLOCK_DIVISION_10&#160;</td><td class="fielddoc"><p>CLK / 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8a06d5bdd9487b4ade62696c2353eee5b3"></a>PDC_CLOCK_DIVISION_12&#160;</td><td class="fielddoc"><p>CLK / 12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8a77b45289cdc1542e9bd789433a8a8652"></a>PDC_CLOCK_DIVISION_14&#160;</td><td class="fielddoc"><p>CLK / 14. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaefcdde7fd248adecb15dfa8a16d173f8a5b19e15c2f2b5c3017144e7e9b704fe4"></a>PDC_CLOCK_DIVISION_16&#160;</td><td class="fielddoc"><p>CLK / 16. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga41559cfdb76f3c5f485b79dab1d8620a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41559cfdb76f3c5f485b79dab1d8620a">&#9670;&nbsp;</a></span>pdc_endian_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_c.html#ga41559cfdb76f3c5f485b79dab1d8620a">pdc_endian_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Endian of captured data </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga41559cfdb76f3c5f485b79dab1d8620aaa09386076664c4ebdfab1479d2b97eb0"></a>PDC_ENDIAN_LITTLE&#160;</td><td class="fielddoc"><p>Data is in little endian format. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga41559cfdb76f3c5f485b79dab1d8620aadcdb4435e5b61673aa52be6acd7b32f3"></a>PDC_ENDIAN_BIG&#160;</td><td class="fielddoc"><p>Data is in big endian format. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga994abe0ad9b4c832eedd74e4700fd7f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga994abe0ad9b4c832eedd74e4700fd7f6">&#9670;&nbsp;</a></span>pdc_hsync_polarity_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_c.html#ga994abe0ad9b4c832eedd74e4700fd7f6">pdc_hsync_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Polarity of input HSYNC signal </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga994abe0ad9b4c832eedd74e4700fd7f6a3c857fb79cb9a053cddb04bb3de1ffd6"></a>PDC_HSYNC_POLARITY_HIGH&#160;</td><td class="fielddoc"><p>HSYNC signal is active high. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga994abe0ad9b4c832eedd74e4700fd7f6af74c39a33f99faffede2e03449f391c8"></a>PDC_HSYNC_POLARITY_LOW&#160;</td><td class="fielddoc"><p>HSYNC signal is active low. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5fdbba40243f5c6ac0060412b66675c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5fdbba40243f5c6ac0060412b66675c9">&#9670;&nbsp;</a></span>pdc_vsync_polarity_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_c.html#ga5fdbba40243f5c6ac0060412b66675c9">pdc_vsync_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Polarity of input VSYNC signal </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5fdbba40243f5c6ac0060412b66675c9a7e48bd745b0c381bafa92bd1acab9890"></a>PDC_VSYNC_POLARITY_HIGH&#160;</td><td class="fielddoc"><p>VSYNC signal is active high. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5fdbba40243f5c6ac0060412b66675c9aeac766ec2ad653beb9210a0fe2dfb1cd"></a>PDC_VSYNC_POLARITY_LOW&#160;</td><td class="fielddoc"><p>VSYNC signal is active low. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga37bc265a61b2aa8735d74acd3a94c88c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga37bc265a61b2aa8735d74acd3a94c88c">&#9670;&nbsp;</a></span>R_PDC_Open()</h2>
+<a id="gae0f8b645014660caf1312ef3554c24b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae0f8b645014660caf1312ef3554c24b9">&#9670;&nbsp;</a></span>R_PDC_Open()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -356,13 +664,13 @@ Data Structures</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDC_Open </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group___p_d_c___a_p_i.html#ga6bb625506dc92e3aef9fc154addb9663">pdc_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group___p_d_c___a_p_i.html#structpdc__cfg__t">pdc_cfg_t</a> const *const&#160;</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_cfg</em>&#160;</td>
         </tr>
         <tr>
@@ -374,9 +682,9 @@ Data Structures</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Powers on PDC, handles required initialization described in the hardware manual. </p>
-<p>Implements <a class="el" href="group___p_d_c___a_p_i.html#a8990d4fe3eedd0988cd4f1398015db41">pdc_api_t::open</a>.</p>
-<p>The Open function provides initial configuration for the PDC module. It powers on the module and enables the PCLKO output and the PIXCLK input. Further initialization requires the PIXCLK input to be running in order to be able to reset the PDC as part of its initialization. This clock is input from a camera module and so the reset and further initialization is performed in <a class="el" href="group___p_d_c___a_p_i.html#a110d0725d82910e086afb31056378b2b">pdc_api_t::captureStart</a>. This function should be called once prior to calling any other PDC API functions. After the PDC is opened the Open function should not be called again without first calling the Close function.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga37bc265a61b2aa8735d74acd3a94c88c">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a>.</p>
+<p>The Open function provides initial configuration for the PDC module. It powers on the module and enables the PCLKO output and the PIXCLK input. Further initialization requires the PIXCLK input to be running in order to be able to reset the PDC as part of its initialization. This clock is input from a camera module and so the reset and further initialization is performed in <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ac4bb5bd99af525a14f75fb1422d92ae9">capture_api_t::captureStart</a>. This function should be called once prior to calling any other PDC API functions. After the PDC is opened the Open function should not be called again without first calling the Close function.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#gae0f8b645014660caf1312ef3554c24b9">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One or more of the following parameters is NULL<ol type="1">
@@ -402,8 +710,8 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
-<a id="ga05be16f0b97684be7c5276a915766d86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga05be16f0b97684be7c5276a915766d86">&#9670;&nbsp;</a></span>R_PDC_Close()</h2>
+<a id="ga98f665fe22de40ec3ddcb4d2884bd4ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98f665fe22de40ec3ddcb4d2884bd4ca">&#9670;&nbsp;</a></span>R_PDC_Close()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,15 +719,15 @@ Data Structures</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDC_Close </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group___p_d_c___a_p_i.html#ga6bb625506dc92e3aef9fc154addb9663">pdc_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Stops and closes the transfer interface, disables and powers off the PDC, clears internal driver data and disables interrupts. </p>
-<p>Implements <a class="el" href="group___p_d_c___a_p_i.html#aa4d12908591f162b73df01012da87156">pdc_api_t::close</a>.</p>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a9a67c2ec8ab248f375326a14bd476b37">capture_api_t::close</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
@@ -431,8 +739,8 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
-<a id="ga6ef8ec2670efe6a82faf4b5059c8d933"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6ef8ec2670efe6a82faf4b5059c8d933">&#9670;&nbsp;</a></span>R_PDC_CaptureStart()</h2>
+<a id="ga0cd3f8319ab9da6ae2a9231d35d3f1a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">&#9670;&nbsp;</a></span>R_PDC_CaptureStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -440,8 +748,8 @@ Data Structures</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDC_CaptureStart </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group___p_d_c___a_p_i.html#ga6bb625506dc92e3aef9fc154addb9663">pdc_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -458,19 +766,106 @@ Data Structures</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Starts a capture. Enables interrupts. </p>
-<p>Implements <a class="el" href="group___p_d_c___a_p_i.html#a110d0725d82910e086afb31056378b2b">pdc_api_t::captureStart</a>.</p>
-<p>Sets up the transfer interface to transfer data from the PDC into the specified buffer. Configures the PDC settings as previously set by the <a class="el" href="group___p_d_c___a_p_i.html#a8990d4fe3eedd0988cd4f1398015db41">pdc_api_t::open</a> API. These settings are configured here as the PIXCLK input must be active for the PDC reset operation. When a capture is complete the callback registered during <a class="el" href="group___p_d_c___a_p_i.html#a8990d4fe3eedd0988cd4f1398015db41">pdc_api_t::open</a> API call will be called.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ac4bb5bd99af525a14f75fb1422d92ae9">capture_api_t::captureStart</a>.</p>
+<p>Sets up the transfer interface to transfer data from the PDC into the specified buffer. Configures the PDC settings as previously set by the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> API. These settings are configured here as the PIXCLK input must be active for the PDC reset operation. When a capture is complete the callback registered during <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> API call will be called.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Capture start successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One or more of the following parameters is NULL<ol type="1">
 <li>p_api_ctrl is NULL</li>
-<li>p_buffer is NULL while p_buffer field of the control structure is NULL </li>
+<li>p_buffer is NULL </li>
 </ol>
 </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Open has not been successfully called. </td></tr>
     <tr><td class="paramname">FSP_ERR_IN_USE</td><td>PDC transfer is already in progress. </td></tr>
     <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Reset operation timed out. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>Callback function has not been set </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga926341335ac197ca8cc6164a90a04aca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga926341335ac197ca8cc6164a90a04aca">&#9670;&nbsp;</a></span>R_PDC_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDC_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides the pdc operating status.</p>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a66812a782c5871df038b2e34a7c4d13e">capture_api_t::statusGet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One or more parameters is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Open has not been successfully called. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7429b98eb04e4547ec5df388190e74b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7429b98eb04e4547ec5df388190e74b0">&#9670;&nbsp;</a></span>R_PDC_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDC_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure.</p>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a4cd5ee5ded7aaf45445f6c594c98081e">capture_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This is just a stub at present </td></tr>
   </table>
   </dd>
 </dl>
@@ -483,7 +878,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

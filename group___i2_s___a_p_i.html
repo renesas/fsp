@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,10 +248,7 @@ $(document).ready(function(){initNavTree('group___i2_s___a_p_i.html','');});
 <p>Interface for I2S audio communication. </p>
 <h1><a class="anchor" id="I2S_API_SUMMARY"></a>
 Summary</h1>
-<p>The I2S (Inter-IC Sound) interface provides APIs and definitions for I2S audio communication.</p>
-<h1><a class="anchor" id="I2S_API_INSTANCES"></a>
-Known Implementations</h1>
-<p><a class="el" href="group___s_s_i.html">I2S (r_ssi)</a> </p>
+<p>The I2S (Inter-IC Sound) interface provides APIs and definitions for I2S audio communication. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -362,7 +437,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To use DTC during write, link a DTC instance here. Set to NULL if unused. </p>
+<p>To use DMA for transmitting link a Transfer instance here. Set to NULL if unused. </p>
 
 </div>
 </div>
@@ -377,7 +452,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To use DTC during read, link a DTC instance here. Set to NULL if unused. </p>
+<p>To use DMA for receiving link a Transfer instance here. Set to NULL if unused. </p>
 
 </div>
 </div>
@@ -444,8 +519,8 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:a1f88823bc677660a18881e9a348e6af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c2a70075e8e8b976cf1664f034cc68e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_s___a_p_i.html#a8c2a70075e8e8b976cf1664f034cc68e">close</a> )(<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a8c2a70075e8e8b976cf1664f034cc68e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48c3fdc05d5204621b8a1d5151f83cc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_s___a_p_i.html#a48c3fdc05d5204621b8a1d5151f83cc6">callbackSet</a> )(<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a48c3fdc05d5204621b8a1d5151f83cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99622a1df3e622b8b44450b98e616ddf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_s___a_p_i.html#a99622a1df3e622b8b44450b98e616ddf">callbackSet</a> )(<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a99622a1df3e622b8b44450b98e616ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a126cf17d3f087c894b25e519583e3c7a"></a>
@@ -459,10 +534,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial configuration. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#ga11eda7ae877dbff4d650b4bc5847bb72">R_SSI_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Initial configuration.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Peripheral clocks and any required output pins should be configured prior to calling this function. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>To reconfigure after calling this function, call <a class="el" href="group___i2_s___a_p_i.html#a8c2a70075e8e8b976cf1664f034cc68e">i2s_api_t::close</a> first. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -487,10 +559,6 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
       </table>
 </div><div class="memdoc">
 <p>Stop communication. Communication is stopped when callback is called with I2S_EVENT_IDLE.</p>
-<dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#gaece1c2abe43d44acb9078a073b62c186">R_SSI_Stop()</a></li>
-</ul>
-</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -511,10 +579,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable or disable mute. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#gacd323f1e3ef5f11745645b8297889b9b">R_SSI_Mute()</a></li>
-</ul>
-</dd></dl>
+<p>Enable or disable mute.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -536,10 +601,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write I2S data. All transmit data is queued when callback is called with I2S_EVENT_TX_EMPTY. Transmission is complete when callback is called with I2S_EVENT_IDLE. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#ga50467e833da72f35c1dcf5f74059da18">R_SSI_Write()</a></li>
-</ul>
-</dd></dl>
+<p>Write I2S data. All transmit data is queued when callback is called with I2S_EVENT_TX_EMPTY. Transmission is complete when callback is called with I2S_EVENT_IDLE.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -562,10 +624,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read I2S data. Reception is complete when callback is called with I2S_EVENT_RX_EMPTY. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#ga4920c995f4b40edcf21a9287b63d669a">R_SSI_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Read I2S data. Reception is complete when callback is called with I2S_EVENT_RX_EMPTY.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -588,10 +647,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Simultaneously write and read I2S data. Transmission and reception are complete when callback is called with I2S_EVENT_IDLE. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#gaec5fe3772ecc9fca9b85126f6d2f3f49">R_SSI_WriteRead()</a></li>
-</ul>
-</dd></dl>
+<p>Simultaneously write and read I2S data. Transmission and reception are complete when callback is called with I2S_EVENT_IDLE.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -615,10 +671,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get current status and store it in provided pointer p_status. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#gaff322c2f867c9c0518da4a3d47d10242">R_SSI_StatusGet()</a></li>
-</ul>
-</dd></dl>
+<p>Get current status and store it in provided pointer p_status.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -640,10 +693,7 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Allows driver to be reconfigured and may reduce power consumption. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#ga377334858b5b5c7757c0bdce3bcacbf0">R_SSI_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Allows driver to be reconfigured and may reduce power consumption.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___i2_s___a_p_i.html#a126cf17d3f087c894b25e519583e3c7a">i2s_api_t::open</a> call for this instance. </td></tr>
@@ -653,21 +703,18 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 
 </div>
 </div>
-<a id="a48c3fdc05d5204621b8a1d5151f83cc6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48c3fdc05d5204621b8a1d5151f83cc6">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a99622a1df3e622b8b44450b98e616ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99622a1df3e622b8b44450b98e616ddf">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i2s_api_t::callbackSet) (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i2s_api_t::callbackSet) (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#ga487b2317d289066a0a27e0e5a9124463">R_SSI_CallbackSet()</a></li>
-</ul>
-</dd></dl>
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the I2S control block. </td></tr>
@@ -731,10 +778,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>I2S control block. Allocate an instance specific control block to pass into the I2S API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_s_i.html#structssi__instance__ctrl__t">ssi_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>I2S control block. Allocate an instance specific control block to pass into the I2S API calls. </p>
 
 </div>
 </div>
@@ -764,7 +808,7 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga622c7c1c7f4e11569cedea578a839550a80c9c8f0ef92ef6ed286b4c92e02fc11"></a>I2S_PCM_WIDTH_24_BITS&#160;</td><td class="fielddoc"><p>Using 24-bit PCM. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga622c7c1c7f4e11569cedea578a839550a68d394f59ee968bb9c0eed82998f3880"></a>I2S_PCM_WIDTH_32_BITS&#160;</td><td class="fielddoc"><p>Using 24-bit PCM. </p>
+<tr><td class="fieldname"><a id="gga622c7c1c7f4e11569cedea578a839550a68d394f59ee968bb9c0eed82998f3880"></a>I2S_PCM_WIDTH_32_BITS&#160;</td><td class="fielddoc"><p>Using 32-bit PCM. </p>
 </td></tr>
 </table>
 
@@ -916,7 +960,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

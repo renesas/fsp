@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -181,17 +259,18 @@ Functions</h2></td></tr>
 <p>Middleware to implement the Data Shipper for Reality AI applications. This module implements the <a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html">Data Shipper Interface</a>. </p>
 <h1><a class="anchor" id="rm-rai-data-shipper-overview"></a>
 Overview</h1>
-<p>Data Shipper usage is relatively straightforward with all communications being fully asynchronous. It utilizes the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. The data being transported may be any combination of the following:</p>
+<p>RAI Data Shipper is mainly for sending data collected by RAI Data Collector to PC so that they can be used for Reality AI model training. It utilizes the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a> and all communications are fully asynchronous. The data being transported may be any combination of the following:</p>
 <ul>
 <li>Sensor data</li>
 <li>System events/errors</li>
 <li>Debug data and diagnostic information, including RAI runtime output</li>
 </ul>
+<p>Sensor data is provided by Data Collector instance via the data ready callback. System events and debug data are prepared by application. A callback is used to notify application that UART communcation is finished. Error flag will be set in case there is error during data transmission. When UART communication finishes, sensor data buffers needs to be released if they are not being used by any other modules.</p>
+<dl class="section note"><dt>Note</dt><dd>Debug data, diagnostic information, and associated events are provided for debug purposes only and are not tracked by upstream Reality AI tools.</dd></dl>
 <h2><a class="anchor" id="rm-rai-data-shipper-features"></a>
 Features</h2>
-<p>The Data Shipper supports following interfaces:</p><ul>
-<li>multiple Data Collector instances</li>
-<li>various interfaces, e.g <a class="el" href="group___r_m___c_o_m_m_s___u_a_r_t.html">UART Communication Device (rm_comms_uart)</a></li>
+<p>The RAI Data Shipper module supports the following interface:</p><ul>
+<li>RM_COMMS_UART with/without CRC-8</li>
 </ul>
 <h1><a class="anchor" id="rm-rai-data-shipper-configuration"></a>
 Configuration</h1>
@@ -200,7 +279,7 @@ The following build time configurations are defined in fsp_cfg/rm_rai_data_shipp
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -216,13 +295,13 @@ This module can be added to the Stacks tab via New Stack &gt; Artificial Intelli
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rai_data_shipper0 </td><td>Module name </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Frame Rate Divider</td><td>Value must be non-negative</td><td>0 </td><td>Skip write requests </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>rai_data_shipper0_callback </td><td>A user callback function on data sent or error. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Context</td><td>Manual Entry</td><td>NULL </td><td></td></tr>
 </table>
 </p>
@@ -236,7 +315,7 @@ Pin Configuration</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the Data Shipper implementation in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define DEBUG_DATA_LEN    (16)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> data_shipper_callback(<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__callback__args__t">rai_data_shipper_callback_args_t</a> * p_args);</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> RM_RAI_DATA_SHIPPER_example();</div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keywordtype">bool</span> g_data_ready;</div><div class="line"><a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__write__params__t">rai_data_shipper_write_params_t</a> g_write_params;</div><div class="line"></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t">rm_comms_instance_t</a> g_comms_instance;</div><div class="line"></div><div class="line"><a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__cfg__t">rai_data_shipper_cfg_t</a> g_ds_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#ad49453b24b3780cbcaae67f66bba8110">divider</a> = 0,                      </div><div class="line">    .p_comms = &amp;g_comms_instance,</div><div class="line">    .p_crc   = NULL,</div><div class="line"></div><div class="line">    .p_callback = data_shipper_callback,</div><div class="line">    .p_context  = NULL</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__instance__t">rai_data_shipper_instance_t</a> g_ds_ctrl;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> RM_RAI_DATA_SHIPPER_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    uint8_t   cnt = 5;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#ga377222c8d097219e07209cead2239735">RM_RAI_DATA_SHIPPER_Open</a>(&amp;g_ds_ctrl, &amp;g_ds_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (cnt != 0)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            cnt--;</div><div class="line"></div><div class="line">            err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#ga3eba066ed628818564367d27c319e567">RM_RAI_DATA_SHIPPER_Write</a>(&amp;g_ds_ctrl, &amp;g_write_params);</div><div class="line"></div><div class="line">            <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#ga326872a65919a99e8cf8189316213784">RM_RAI_DATA_SHIPPER_Close</a>(&amp;g_ds_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when all sensor data are sent or there is an error */</span></div><div class="line"><span class="keywordtype">void</span> data_shipper_callback (<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__callback__args__t">rai_data_shipper_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> RM_RAI_DATA_SHIPPER_example();</div><div class="line"><span class="keywordtype">void</span> data_shipper_callback(<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__callback__args__t">rai_data_shipper_callback_args_t</a> * p_args); </div><div class="line"></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__cfg__t">rai_data_shipper_cfg_t</a> g_ds_cfg;</div><div class="line"></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__instance__t">rai_data_shipper_instance_t</a> g_ds_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> g_exit = <span class="keyword">false</span>;                                          </div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keywordtype">bool</span> g_data_ready;                                            </div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__callback__args__t">rai_data_collector_callback_args_t</a> g_data_ready_callback_arg; </div><div class="line"></div><div class="line"><span class="keywordtype">void</span> RM_RAI_DATA_SHIPPER_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#ga377222c8d097219e07209cead2239735">RM_RAI_DATA_SHIPPER_Open</a>(&amp;g_ds_ctrl, &amp;g_ds_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_exit)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__write__params__t">rai_data_shipper_write_params_t</a> g_write_params;</div><div class="line">            g_write_params.<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#aa318ce8faec7140f7466f570520efdc3">p_sensor_data</a> = &amp;g_data_ready_callback_arg;</div><div class="line"></div><div class="line">            <span class="comment">/* Application is responsible to initialize diagnostic information and events.- */</span></div><div class="line">            <span class="comment">/* Application has no diagnostic information/events to report. */</span></div><div class="line">            g_write_params.<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a0bb12a48126ff9d5d4ad80d41b957844">diagnostic_data_len</a> = 0;</div><div class="line">            g_write_params.<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a661d79fdd89edbcb038af7f89a98bd64">events</a>              = 0;</div><div class="line">            g_write_params.<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#afbaa3a14227e366d2cde5638205a4381">p_diagnostic_data</a>   = NULL;</div><div class="line">            err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#ga3eba066ed628818564367d27c319e567">RM_RAI_DATA_SHIPPER_Write</a>(&amp;g_ds_ctrl, &amp;g_write_params);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">            g_data_ready = <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#ga326872a65919a99e8cf8189316213784">RM_RAI_DATA_SHIPPER_Close</a>(&amp;g_ds_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when all sensor data are sent or there is an error */</span></div><div class="line"><span class="keywordtype">void</span> data_shipper_callback (<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__callback__args__t">rai_data_shipper_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (RM_COMMS_EVENT_ERROR == p_args-&gt;<a class="code" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a499d47827151700c18ab5041f7d3158c">result</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Communication error */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Release sensor buffers if they are not being used by any other modules. */</span></div><div class="line">    <span class="comment">/* RM_RAI_DATA_COLLECTOR_BufferRelease(g_dc_ctrl); */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrai__data__shipper__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html#structrai__data__shipper__instance__ctrl__t">rai_data_shipper_instance_ctrl_t</a></td></tr>
@@ -330,7 +409,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Read data.</p>
-<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a9851949b51fe47249263af1d06d6b440">rai_data_shipper_api_t::read()</a>.</p>
+<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#acddaa6872b90ef9d8fc1a55008c23ab5">rai_data_shipper_api_t::read()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Data Shipper module read not supported </td></tr>
@@ -366,7 +445,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Write data. Note this funciton may be called in ISR.</p>
-<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a5d1d1d866da3b9290d5e27bfe8181eb1">rai_data_shipper_api_t::write()</a>.</p>
+<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#ac156dc33bfc54576cc672d786c5ad92e">rai_data_shipper_api_t::write()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Tx buf list created and transmission starts, or write request skipped. </td></tr>
@@ -413,7 +492,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

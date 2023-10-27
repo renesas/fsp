@@ -1,0 +1,1348 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: SDADC_B Channel Configuration (r_sdadc_b)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___s_d_a_d_c___b.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">SDADC_B Channel Configuration (r_sdadc_b)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga3c22556065129deecb793babedbd1aae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga3c22556065129deecb793babedbd1aae">R_SDADC_B_Open</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__cfg__t">adc_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga3c22556065129deecb793babedbd1aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga853b8e138086a2a0a97ebdf760fb12a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga853b8e138086a2a0a97ebdf760fb12a0">R_SDADC_B_ScanCfg</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, void const *const p_extend)</td></tr>
+<tr class="separator:ga853b8e138086a2a0a97ebdf760fb12a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga367e001fb8ea367c8d3920a2a69b8db2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga367e001fb8ea367c8d3920a2a69b8db2">R_SDADC_B_InfoGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *p_adc_info)</td></tr>
+<tr class="separator:ga367e001fb8ea367c8d3920a2a69b8db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga789c21392e904451d683f1d188c047f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga789c21392e904451d683f1d188c047f6">R_SDADC_B_ScanStart</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga789c21392e904451d683f1d188c047f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17faa2f5d730013adddd445d16e35320"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga17faa2f5d730013adddd445d16e35320">R_SDADC_B_ScanGroupStart</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> group_id)</td></tr>
+<tr class="separator:ga17faa2f5d730013adddd445d16e35320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08ff13634f57cac58498cbf2edad2396"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga08ff13634f57cac58498cbf2edad2396">R_SDADC_B_ScanStop</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga08ff13634f57cac58498cbf2edad2396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9671bf4098c02134662ddb4a483d56ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga9671bf4098c02134662ddb4a483d56ba">R_SDADC_B_StatusGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> *p_status)</td></tr>
+<tr class="separator:ga9671bf4098c02134662ddb4a483d56ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a633ea2365b39469a93ceb6f70adb48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga0a633ea2365b39469a93ceb6f70adb48">R_SDADC_B_Read</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, uint16_t *const p_data)</td></tr>
+<tr class="separator:ga0a633ea2365b39469a93ceb6f70adb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b55b0c8b44337ea50b309b975f5381b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga5b55b0c8b44337ea50b309b975f5381b">R_SDADC_B_Read32</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, uint32_t *const p_data)</td></tr>
+<tr class="separator:ga5b55b0c8b44337ea50b309b975f5381b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac967d5ca2ce7723c4047bc7fa0894077"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#gac967d5ca2ce7723c4047bc7fa0894077">R_SDADC_B_OffsetSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t const offset)</td></tr>
+<tr class="separator:gac967d5ca2ce7723c4047bc7fa0894077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30cc6b931569b2e2c59c82e4c5234a7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga30cc6b931569b2e2c59c82e4c5234a7d">R_SDADC_B_Calibrate</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void const *p_extend)</td></tr>
+<tr class="separator:ga30cc6b931569b2e2c59c82e4c5234a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54b83e5cf763b739dc5f0db353bef981"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga54b83e5cf763b739dc5f0db353bef981">R_SDADC_B_Close</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga54b83e5cf763b739dc5f0db353bef981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the SDADC_B peripheral on RA MCUs. This module implements the <a class="el" href="group___a_d_c___a_p_i.html">ADC Interface</a>. </p>
+<h1><a class="anchor" id="r-sdadc-b-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r-sdadc-b-features"></a>
+Features</h2>
+<p>The SDADC_B module supports the following features:</p>
+<ul>
+<li>24 bit maximum resolution</li>
+<li>Configure scans to include:<ul>
+<li>Multiple analog channels</li>
+</ul>
+</li>
+<li>Configurable sampling mode:<ul>
+<li>4 kHz sampling mode</li>
+<li>8 kHz sampling mode</li>
+<li>8 kHz/4 kHz Hybrid sampling mode<a class="anchor" id="um_sdadc_b_half_frequency_conversion_results"></a></li>
+</ul>
+</li>
+<li>Configurable Cut-off frequency of high-pass filter</li>
+<li>Configurable preamplifier gain for each channel</li>
+<li>Configurable phase adjustment for each channel</li>
+<li>Optional callback when conversion completes or zero-cross is detected<a class="anchor" id="um_sdadc_b_conversion_complete_notification"></a><a class="anchor" id="um_sdadc_b_zero_detection_notification"></a></li>
+<li>Supports reading converted data<a class="anchor" id="um_sdadc_b_reading_conversion_data"></a></li>
+<li>Supports positive and negative input voltage<a class="anchor" id="um_sdadc_b_positive_input_voltage"></a><a class="anchor" id="um_sdadc_b_negative_input_voltage"></a></li>
+</ul>
+<h2><a class="anchor" id="r-sdadc-b-selecting-an-adc"></a>
+Selecting an ADC</h2>
+<p>All RA MCUs have an <a class="el" href="group___a_d_c.html">ADC (r_adc)</a>. Only select RA MCUs have an SDADC_B. When selecting between them, consider these factors. Refer to the hardware manual for details.</p>
+<table class="doxtable">
+<tr>
+<th></th><th>ADC </th><th>SDADC_B  </th></tr>
+<tr>
+<td>Availability</td><td>Available on all RA MCUs.</td><td>Available on select RA MCUs. </td></tr>
+<tr>
+<td>Resolution</td><td>The ADC has a maximum resolution of 12, 14, or 16 bits depending on the MCU.</td><td>The SDADC_B has a maximum accuracy of 24 bits. </td></tr>
+<tr>
+<td>Number of Channels</td><td>The ADC has 4 channels.</td><td>The SDADC_B has up to 7 channels. </td></tr>
+<tr>
+<td>Frequency</td><td>The ADC sampling time is shorter (more samples per second).</td><td>The SDADC sampling time is longer (fewer samples per second). </td></tr>
+</table>
+<h1><a class="anchor" id="r-sdadc-b-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_sdadc_b_configure_sampling_mode"></a><a class="anchor" id="um_sdadc_b_configure_24_bit_resolution"></a><a class="anchor" id="um_sdadc_b_configure_16_bit_resolution"></a><a class="anchor" id="um_sdadc_b_select_channels"></a><a class="anchor" id="um_sdadc_b_pga_configuration_gain"></a><a class="anchor" id="um_sdadc_b_configure_phase_adjustment"></a> <h2>Build Time Configurations for r_sdadc_b</h2>
+The following build time configurations are defined in fsp_cfg/r_sdadc_b_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-sdadc-b-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The SDADC_B clock is configurable on the clocks tab.</p>
+<p>The SDADC_B clock must be 12 MHz, 12.8 MHz or 16 MHz when the SDADC_B is used.</p>
+<h2><a class="anchor" id="r-sdadc-b-pin-configuration"></a>
+Pin Configuration</h2>
+<p>The ANINn/ANIPn (n = 0-6) pins are analog input channels that can be used with the SDADC_B.</p>
+<h2>Virtual Channel Configuration</h2>
+<ul>
+<li>When 8KHz/4KHz Hybrid Mode is enabled, selected Virtual Channels 0 to 3 are converted at an 8KHz rate and corresponding Virtual Channels 4 to 7 are converted at a 4KHz rate.</li>
+<li>In some locations, 4KHz Hybrid Mode conversions may be referred to 'Type 2'. All other conversions may be referred to as 'Type 1'. The SDADC_B driver abstracts 'Type 1' and 'Type 2' and populates the user callback arguments with a mask of converted channel IDs. It is the responsibility of the application to know the configuration of provided channel IDs.</li>
+<li>Configuration of enabled virtual channels corresponding to Sampling mode is subject to below constraints:<ul>
+<li>Analog input n (n = 0 to 3) must be configured for Virtual Channel m (m = 4 to 7) if corresponding Analog input n is configured for Virtual Channel n and Hybrid mode is enabled</li>
+<li>Analog input 4 to 6 cannot be configured for Virtual Channel 4 to 6 when Hybrid mode is enabled</li>
+<li>Virtual Channel 7 can only be configured when Hybrid mode is enabled</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="r-sdadc-b-usage-notes"></a>
+Usage Notes</h1>
+<h2>Cut-off frequency of HPF</h2>
+<p>Cut-off frequency of HPF (High Pass Filter) is selectable by setting SDADHPFCR.COF bit. Value of cut-off frequency of HPF corresponding to each COF value is as below table:</p>
+<table class="doxtable">
+<tr>
+<th>COF </th><th>4 kHz sampling mode <br />
+ fos = 1.5 MHz </th><th>4 kHz sampling mode <br />
+ fos = 1.6 MHz </th><th>8 kHz sampling mode <br />
+ fos = 3.0 MHz </th><th>8 kHz sampling mode <br />
+ fos = 3.2 MHz </th><th>8 kHz/4 kHz hybrid sampling mode <br />
+ fos = 3.0 MHz </th><th>8 kHz/4 kHz hybrid sampling mode <br />
+ fos = 3.2 MHz  </th></tr>
+<tr>
+<td>COF 0 </td><td>0.607 Hz </td><td>0.647 Hz </td><td>1.214 Hz </td><td>1.295 Hz </td><td>1.214 Hz </td><td>1.295 Hz </td></tr>
+<tr>
+<td>COF 1 </td><td>1.214 Hz </td><td>1.295 Hz </td><td>2.427 Hz </td><td>2.589 Hz </td><td>2.427 Hz </td><td>2.589 Hz </td></tr>
+<tr>
+<td>COF 2 </td><td>2.427 Hz </td><td>2.589 Hz </td><td>4.855 Hz </td><td>5.179 Hz </td><td>4.855 Hz </td><td>5.179 Hz </td></tr>
+<tr>
+<td>COF 3 </td><td>4.855 Hz </td><td>5.179 Hz </td><td>9.710 Hz </td><td>10.357 Hz </td><td>1.214 Hz (Type 1) <br />
+ 0.607 Hz (Type 2) </td><td>1.295 Hz (Type 1) <br />
+ 0.647 Hz (Type 2) </td></tr>
+</table>
+<h2>Channel ID used in driver</h2>
+<p>Channel ID input to <a class="el" href="group___s_d_a_d_c___b.html#ga0a633ea2365b39469a93ceb6f70adb48">R_SDADC_B_Read</a> and <a class="el" href="group___s_d_a_d_c___b.html#ga5b55b0c8b44337ea50b309b975f5381b">R_SDADC_B_Read32</a> API and Channel Mask provided to user callback is the virtual channel ID and does not necessarily correspond to a physical input channel number. When Hybrid sampling mode is enabled, reading conversion result for channel 4 to 7 returns the 4 kHz conversion (Type 2) result of corresponding channel 0 to 3.</p>
+<h2><a class="anchor" id="r-sdadc-b-scan-procedure"></a>
+Scan Procedure</h2>
+<p>Operation of 24-bit Sigma-Delta A/D Converter is as below:</p>
+<ol type="1">
+<li>Conversions are performed on enabled channels in ascending order of channel number after software trigger is started using <a class="el" href="group___s_d_a_d_c___b.html#ga789c21392e904451d683f1d188c047f6">R_SDADC_B_ScanStart()</a> API.<a class="anchor" id="um_sdadc_b_starting_a_scan"></a></li>
+<li>Conversions are performed at the rate (in Hz) of the SDADC_B sampling clock frequency.</li>
+<li>The user callback function will be invoked after enabled channels are scanned.</li>
+<li>If zero-cross detection interrupt is enabled, a zero-cross detection interrupt occurs in synchronization with the rising edge of the SDADC conversion end interrupt.</li>
+</ol>
+<h2>Triggering ELC Events with SDADC_B</h2>
+<ul>
+<li>The interrupt signals SDADC_B can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals. <dl class="section note"><dt>Note</dt><dd>When using ELC events to directly read converted data, it is the responsibility of the application to ensure that the stabilization period of 80 conversions has passed since starting the converter by using <a class="el" href="group___s_d_a_d_c___b.html#ga9671bf4098c02134662ddb4a483d56ba">R_SDADC_B_StatusGet()</a> API.</dd></dl>
+</li>
+</ul>
+<h2><a class="anchor" id="r-sdadc-b-limitations"></a>
+Limitations</h2>
+<ul>
+<li>After powering on, an internal setup time is necessary. During this time <a class="el" href="group___s_d_a_d_c___b.html#ga9671bf4098c02134662ddb4a483d56ba">R_SDADC_B_StatusGet()</a> will return ADC_STATE_CALIBRATION_IN_PROGRESS.</li>
+<li>SDADC_B does not operate in software standby mode. To reduce current comsumption, stop and close the SDADC_B module before entering software standby.</li>
+<li>After stopping the conversion using <a class="el" href="group___s_d_a_d_c___b.html#ga08ff13634f57cac58498cbf2edad2396">R_SDADC_B_ScanStop()</a> API, it is necessary to wait at least 1.4us before performing conversion again.</li>
+</ul>
+<h1><a class="anchor" id="r-sdadc-b-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the SDADC_B in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> sdadc_b_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___s_d_a_d_c___b.html#ga3c22556065129deecb793babedbd1aae">R_SDADC_B_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* In software trigger mode, start a scan by calling R_SDADC_B_ScanStart(). In other modes, enable external</span></div><div class="line"><span class="comment">     * triggers by calling R_SDADC_B_ScanStart(). */</span></div><div class="line">    (void) <a class="code" href="group___s_d_a_d_c___b.html#ga789c21392e904451d683f1d188c047f6">R_SDADC_B_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for conversion to complete. */</span></div><div class="line">    <a class="code" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> status;</div><div class="line">    status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6a4766863227ec2104751a15e3eb148d86">ADC_STATE_CALIBRATION_IN_PROGRESS</a>;</div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6a4766863227ec2104751a15e3eb148d86">ADC_STATE_CALIBRATION_IN_PROGRESS</a> == status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___s_d_a_d_c___b.html#ga9671bf4098c02134662ddb4a483d56ba">R_SDADC_B_StatusGet</a>(&amp;g_adc0_ctrl, &amp;status);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read converted data. */</span></div><div class="line">    uint32_t channel1_conversion_result;</div><div class="line">    <a class="code" href="group___s_d_a_d_c___b.html#ga5b55b0c8b44337ea50b309b975f5381b">R_SDADC_B_Read32</a>(&amp;g_adc0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492">ADC_CHANNEL_1</a>, &amp;channel1_conversion_result);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Using DTC or DMAC with the SDADC_B</h2>
+<p>If desired, the DTC or DMAC can be used to store each conversion result in a circular buffer. An example configuration is below.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example DTC transfer settings to used with SDADC_B. */</span></div><div class="line"></div><div class="line"><span class="comment">/* The transfer length should match the total number of conversions per scan. This example assumes the SDADC_B is</span></div><div class="line"><span class="comment"> * configured to scan all 7 channels. */</span></div><div class="line"><span class="preprocessor">#define SDADC_B_EXAMPLE_TRANSFER_LENGTH    (7)</span></div><div class="line"></div><div class="line">uint32_t g_sdadc_b_example_buffer[SDADC_B_EXAMPLE_TRANSFER_LENGTH];</div><div class="line"></div><div class="line"><a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> g_sdadc_b_transfer_info =</div><div class="line">{</div><div class="line">    .transfer_settings_word_b.dest_addr_mode = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51a7665741e25c4cc78fd24745efbd2eaad">TRANSFER_ADDR_MODE_INCREMENTED</a>,</div><div class="line">    .transfer_settings_word_b.repeat_area    = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga769464d2068881ccb44573c96167812ba77aeeab30b003de23742e40a57f19239">TRANSFER_REPEAT_AREA_DESTINATION</a>,</div><div class="line">    .transfer_settings_word_b.irq            = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggad71bdadb7f486bb5d3ca6ff508dc0b08ada378ad830e44cc0c25d4fe2413e11de">TRANSFER_IRQ_END</a>,</div><div class="line">    .transfer_settings_word_b.chain_mode     = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga68f81dc8b9ca46fbe3a1e556c020436dae974453c306b4959252905e362d75067">TRANSFER_CHAIN_MODE_DISABLED</a>,</div><div class="line">    .transfer_settings_word_b.src_addr_mode  = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51abf18f9b3701e9e91f44055ee47d0ca47">TRANSFER_ADDR_MODE_FIXED</a>,</div><div class="line">    .transfer_settings_word_b.mode           = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a>,</div><div class="line"></div><div class="line">    <span class="comment">/* NOTE: The data transferred will contain a 24-bit converted value in bits 23:0. The settings for</span></div><div class="line"><span class="comment">     * resolution and alignment are ignored when DTC or DMAC is used. */</span></div><div class="line">    .transfer_settings_word_b.size           = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a18482bfa86e737cde78042be4db54412">TRANSFER_SIZE_4_BYTE</a>,</div><div class="line"></div><div class="line">    .p_src  = (<span class="keywordtype">void</span> <span class="keyword">const</span> *) &amp;R_SDADC_B-&gt;SDADCR0,</div><div class="line">    .p_dest = &amp;g_sdadc_b_example_buffer[0],</div><div class="line">    .length = SDADC_B_EXAMPLE_TRANSFER_LENGTH,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> sdadc_b_dtc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___s_d_a_d_c___b.html#ga3c22556065129deecb793babedbd1aae">R_SDADC_B_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a scan by calling R_SDADC_B_ScanStart(). */</span></div><div class="line">    (void) <a class="code" href="group___s_d_a_d_c___b.html#ga789c21392e904451d683f1d188c047f6">R_SDADC_B_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for conversion to complete. */</span></div><div class="line">    <a class="code" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> status;</div><div class="line">    status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6a4766863227ec2104751a15e3eb148d86">ADC_STATE_CALIBRATION_IN_PROGRESS</a>;</div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6a4766863227ec2104751a15e3eb148d86">ADC_STATE_CALIBRATION_IN_PROGRESS</a> == status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___s_d_a_d_c___b.html#ga9671bf4098c02134662ddb4a483d56ba">R_SDADC_B_StatusGet</a>(&amp;g_adc0_ctrl, &amp;status);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* After each conversion, the converted data is transferred to the next index in g_sdadc_b_example_buffer. After</span></div><div class="line"><span class="comment">     * the entire scan completes, the index in g_sdadc_b_example_buffer resets. The data in g_sdadc_b_example_buffer</span></div><div class="line"><span class="comment">     * is:</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[0] = SDADC_B channel 0</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[1] = SDADC_B channel 1</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[2] = SDADC_B channel 2</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[3] = SDADC_B channel 3</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[4] = SDADC_B channel 4</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[5] = SDADC_B channel 5</span></div><div class="line"><span class="comment">     *  - g_sdadc_b_example_buffer[6] = SDADC_B channel 6</span></div><div class="line"><span class="comment">     */</span><span class="comment">/* At any point in the application after the first scan completes, the most recent data for channel 2 can be read</span></div><div class="line"><span class="comment">     * from the buffer like this. Conversion data is signed integer value. */</span></div><div class="line">    int32_t channel_2_data = (int32_t) g_sdadc_b_example_buffer[2];</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(channel_2_data);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structsdadc__b__scan__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#structsdadc__b__scan__cfg__t">sdadc_b_scan_cfg_t</a></td></tr>
+<tr class="separator:structsdadc__b__scan__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsdadc__b__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#structsdadc__b__extended__cfg__t">sdadc_b_extended_cfg_t</a></td></tr>
+<tr class="separator:structsdadc__b__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsdadc__b__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#structsdadc__b__instance__ctrl__t">sdadc_b_instance_ctrl_t</a></td></tr>
+<tr class="separator:structsdadc__b__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga4527b386ec23ed4d884296214002ef33"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga4527b386ec23ed4d884296214002ef33">sdadc_b_oper_clk_t</a> </td></tr>
+<tr class="separator:ga4527b386ec23ed4d884296214002ef33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fa03817ae3af751cf557b5b36124ed3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga5fa03817ae3af751cf557b5b36124ed3">sdadc_b_channel_mode_t</a> </td></tr>
+<tr class="separator:ga5fa03817ae3af751cf557b5b36124ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38609f59791c0792babd2ee2d0b322e9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga38609f59791c0792babd2ee2d0b322e9">sdadc_b_channel_power_t</a> </td></tr>
+<tr class="separator:ga38609f59791c0792babd2ee2d0b322e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1db69ccc6e99ac4108f3dbdfee6ba69b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga1db69ccc6e99ac4108f3dbdfee6ba69b">sdadc_b_samp_mode_t</a> </td></tr>
+<tr class="separator:ga1db69ccc6e99ac4108f3dbdfee6ba69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga005d66ae08164514ba68a348127c8c81"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga005d66ae08164514ba68a348127c8c81">sdadc_b_channel_gain_t</a> </td></tr>
+<tr class="separator:ga005d66ae08164514ba68a348127c8c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa56bdae78f80b7f6912f83fd3b3c75c4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#gaa56bdae78f80b7f6912f83fd3b3c75c4">sdadc_b_channel_hpf_t</a> </td></tr>
+<tr class="separator:gaa56bdae78f80b7f6912f83fd3b3c75c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b374c7f505b5545740422005da9a0c6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga7b374c7f505b5545740422005da9a0c6">sdadc_b_resolution_t</a> </td></tr>
+<tr class="separator:ga7b374c7f505b5545740422005da9a0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3770c2acc7f33313ba9928e122dcd9d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#gab3770c2acc7f33313ba9928e122dcd9d">sdadc_b_zc_channel_t</a> </td></tr>
+<tr class="separator:gab3770c2acc7f33313ba9928e122dcd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae012f4b6d1006a0dde1a62201b704f3d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#gae012f4b6d1006a0dde1a62201b704f3d">sdadc_b_zc_output_mode_t</a> </td></tr>
+<tr class="separator:gae012f4b6d1006a0dde1a62201b704f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3097a621329954d82407e9f56dee806f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga3097a621329954d82407e9f56dee806f">sdadc_b_zc_falling_edge_detection_t</a> </td></tr>
+<tr class="separator:ga3097a621329954d82407e9f56dee806f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga168bb2091b8a57d0594cc28d0164e02c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga168bb2091b8a57d0594cc28d0164e02c">sdadc_b_zc_rising_edge_detection_t</a> </td></tr>
+<tr class="separator:ga168bb2091b8a57d0594cc28d0164e02c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18702b2102168eb19b7ebeec0d3ef697"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_a_d_c___b.html#ga18702b2102168eb19b7ebeec0d3ef697">sdadc_b_cutoff_t</a> </td></tr>
+<tr class="separator:ga18702b2102168eb19b7ebeec0d3ef697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structsdadc__b__scan__cfg__t" id="structsdadc__b__scan__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdadc__b__scan__cfg__t">&#9670;&nbsp;</a></span>sdadc_b_scan_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdadc_b_scan_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>SDADC_B active channel configuration. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a2286cb4de1111cf99e8ac866130e418d"></a>union <a class="el" href="group___s_d_a_d_c___b.html#unionsdadc__b__scan__cfg__t_8____unnamed____">sdadc_b_scan_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a98f51b8deeda670b34e06e02a2d9d5fb"></a><a class="el" href="group___s_d_a_d_c___b.html#ga18702b2102168eb19b7ebeec0d3ef697">sdadc_b_cutoff_t</a></td>
+<td class="fieldname">
+hpf_cutoff</td>
+<td class="fielddoc">
+Cut-off frequency of HPF. </td></tr>
+<tr><td class="fieldtype">
+<a id="a67f4ed1fb8dfc3ce070abe6e7ea7fe0b"></a><a class="el" href="group___s_d_a_d_c___b.html#ga005d66ae08164514ba68a348127c8c81">sdadc_b_channel_gain_t</a></td>
+<td class="fieldname">
+gain_setting[SDADC_B_MAX_NUM_CHANNELS - 1]</td>
+<td class="fielddoc">
+Gain setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8d438efcf7927f1e0ac2780736f9df12"></a><a class="el" href="group___s_d_a_d_c___b.html#gaa56bdae78f80b7f6912f83fd3b3c75c4">sdadc_b_channel_hpf_t</a></td>
+<td class="fieldname">
+hpf_setting[SDADC_B_MAX_NUM_CHANNELS]</td>
+<td class="fielddoc">
+High pass filter on-off. </td></tr>
+<tr><td class="fieldtype">
+<a id="af8f099b227f890da266c6917b436de9d"></a>uint16_t</td>
+<td class="fieldname">
+phase_adjustment[SDADC_B_MAX_NUM_CHANNELS]</td>
+<td class="fielddoc">
+Phase adjustment for each channels. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structsdadc__b__extended__cfg__t" id="structsdadc__b__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdadc__b__extended__cfg__t">&#9670;&nbsp;</a></span>sdadc_b_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdadc_b_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>SDADC configuration extension. This extension is required and must be provided in <a class="el" href="group___a_d_c___a_p_i.html#a5463ef8731c3b8a0094fbfff74c73449" title="Extension parameter for hardware specific settings. ">adc_cfg_t::p_extend</a>. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af652fcd3bbe5b6876cae447229b14e5e"></a><a class="el" href="group___s_d_a_d_c___b.html#ga4527b386ec23ed4d884296214002ef33">sdadc_b_oper_clk_t</a></td>
+<td class="fieldname">
+oper_clk</td>
+<td class="fielddoc">
+Operating clock of the digital block. </td></tr>
+<tr><td class="fieldtype">
+<a id="a413ed23139366e2f957aab0316007a0b"></a><a class="el" href="group___s_d_a_d_c___b.html#ga1db69ccc6e99ac4108f3dbdfee6ba69b">sdadc_b_samp_mode_t</a></td>
+<td class="fieldname">
+sampling_mode</td>
+<td class="fielddoc">
+Sampling mode select. </td></tr>
+<tr><td class="fieldtype">
+<a id="a800eb8b30ad9d1e3d0f6dcbe53082ce0"></a><a class="el" href="group___s_d_a_d_c___b.html#structsdadc__b__scan__cfg__t">sdadc_b_scan_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_channel_cfg</td>
+<td class="fielddoc">
+Pointer to original channel config data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5e0daa7f156e2d0a408cdb1a27da2ade"></a>uint8_t</td>
+<td class="fieldname">
+conv_end_ipl</td>
+<td class="fielddoc">
+Conversion end interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8cb7ab68cd7da20b3c5daac7138d5f93"></a>IRQn_Type</td>
+<td class="fieldname">
+conv_end_irq</td>
+<td class="fielddoc">
+Conversion type 1 end IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8079d1a8febb9f429a78de1082feafd1"></a>IRQn_Type</td>
+<td class="fieldname">
+conv_end_irq2</td>
+<td class="fielddoc">
+Conversion type 2 end IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab7378a4f017c4b655ef317853e802374"></a>uint8_t</td>
+<td class="fieldname">
+zc_ipl</td>
+<td class="fielddoc">
+Zero-cross detection 0 interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a24511866efc9571c3b66e166693a19e2"></a>IRQn_Type</td>
+<td class="fieldname">
+zc_irq</td>
+<td class="fielddoc">
+Zero-cross detection 0 IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="aed2387ba6e886c4c2a68f5aad42bd4b8"></a>uint8_t</td>
+<td class="fieldname">
+zc_ipl2</td>
+<td class="fielddoc">
+Zero-cross detection 1 interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="adf35076be6d046d1740f7207a1b96ad7"></a>IRQn_Type</td>
+<td class="fieldname">
+zc_irq2</td>
+<td class="fielddoc">
+Zero-cross detection 1 IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a94f5bc729eac7b68568a3efd8382a2af"></a>union <a class="el" href="group___s_d_a_d_c___b.html#unionsdadc__b__extended__cfg__t_8____unnamed____">sdadc_b_extended_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structsdadc__b__instance__ctrl__t" id="structsdadc__b__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdadc__b__instance__ctrl__t">&#9670;&nbsp;</a></span>sdadc_b_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdadc_b_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>SDADC instance control block. DO NOT INITIALIZE. Initialized in <a class="el" href="group___a_d_c___a_p_i.html#afa184c06541e3fd9f90fc12ed775f468">adc_api_t::open()</a>. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a872d1f921f8b58923a1d27912fb88a8b"></a><a class="el" href="group___a_d_c___a_p_i.html#structadc__cfg__t">adc_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a3d9908b82584e6a6639430134cdf7b13"></a>uint32_t</td>
+<td class="fieldname">
+opened</td>
+<td class="fielddoc">
+Boolean to verify that the Unit has been initialized. </td></tr>
+<tr><td class="fieldtype">
+<a id="a33849264ac2fd4d8aaa7be423a8449c4"></a>uint32_t</td>
+<td class="fieldname">
+channel_mask</td>
+<td class="fielddoc">
+Channel mask to keep track of channels enabled in scanCfg. </td></tr>
+<tr><td class="fieldtype">
+<a id="af624637f5ce065f10bf358248132b78d"></a>struct <a class="el" href="group___s_d_a_d_c___b.html#structsdadc__b__instance__ctrl__t_8results">sdadc_b_instance_ctrl_t</a></td>
+<td class="fieldname">
+results</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a12e6a55d5714d9ca8b0847fda2a10e51"></a>uint32_t</td>
+<td class="fieldname">
+setup_time_cnt</td>
+<td class="fielddoc">
+Period of 80 conversions for internal setup time. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae5066e1ba119feb999f6c0161c9df7a4"></a>uint8_t</td>
+<td class="fieldname">
+calibration_complete</td>
+<td class="fielddoc">
+Calibration is completed if set. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga4527b386ec23ed4d884296214002ef33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4527b386ec23ed4d884296214002ef33">&#9670;&nbsp;</a></span>sdadc_b_oper_clk_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga4527b386ec23ed4d884296214002ef33">sdadc_b_oper_clk_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Operating clock of the digital block. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4527b386ec23ed4d884296214002ef33a3dfb709313758de7d865942cad60d152"></a>SDADC_B_CLOCK_DISABLE&#160;</td><td class="fielddoc"><p>Disable operating clock. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4527b386ec23ed4d884296214002ef33aee8e0c23e967b2c391bb246b385c6280"></a>SDADC_B_CLOCK_IS_12MHZ&#160;</td><td class="fielddoc"><p>Clock frequency is 12MHz or 12.8MHz. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4527b386ec23ed4d884296214002ef33aca0119cdfbddd4b80c60e697a8745c97"></a>SDADC_B_CLOCK_IS_16MHZ&#160;</td><td class="fielddoc"><p>Clock frequency is 16MHz. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5fa03817ae3af751cf557b5b36124ed3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5fa03817ae3af751cf557b5b36124ed3">&#9670;&nbsp;</a></span>sdadc_b_channel_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga5fa03817ae3af751cf557b5b36124ed3">sdadc_b_channel_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Per channel operation mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5fa03817ae3af751cf557b5b36124ed3ace787ac797163db3b98b4e769d54bb20"></a>SDADC_B_ELECTRIC_CHARGE_RESET&#160;</td><td class="fielddoc"><p>Electric charge reset. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5fa03817ae3af751cf557b5b36124ed3a934148c4cd6f52e2aa0a1166d4632ec1"></a>SDADC_B_NORMAL_OPERATION&#160;</td><td class="fielddoc"><p>Normal operation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga38609f59791c0792babd2ee2d0b322e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga38609f59791c0792babd2ee2d0b322e9">&#9670;&nbsp;</a></span>sdadc_b_channel_power_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga38609f59791c0792babd2ee2d0b322e9">sdadc_b_channel_power_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Per channel power-on control. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga38609f59791c0792babd2ee2d0b322e9ad99a11c5b99cca0efc6401e7dc7275a7"></a>SDADC_B_CHANNEL_POWER_OFF&#160;</td><td class="fielddoc"><p>Power off. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga38609f59791c0792babd2ee2d0b322e9a97f59dafb9716fe74e907c3cc1e28ba6"></a>SDADC_B_CHANNEL_POWER_ON&#160;</td><td class="fielddoc"><p>Power on. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1db69ccc6e99ac4108f3dbdfee6ba69b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1db69ccc6e99ac4108f3dbdfee6ba69b">&#9670;&nbsp;</a></span>sdadc_b_samp_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga1db69ccc6e99ac4108f3dbdfee6ba69b">sdadc_b_samp_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sampling mode select. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1db69ccc6e99ac4108f3dbdfee6ba69ba3d1474c0fa1cf671002ed4c9b57d88cd"></a>SDADC_B_4KHZ_SAMPLING_MODE&#160;</td><td class="fielddoc"><p>4 kHz sampling mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1db69ccc6e99ac4108f3dbdfee6ba69ba584f68bc58a9aacea9a81fafb6468b49"></a>SDADC_B_8KHZ_SAMPLING_MODE&#160;</td><td class="fielddoc"><p>8 kHz sampling mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1db69ccc6e99ac4108f3dbdfee6ba69ba0ddbff7cac97e40d3ecb03d69b3dec0d"></a>SDADC_B_HYBRID_SAMPLING_MODE&#160;</td><td class="fielddoc"><p>8 kHz / 4 kHz hybird sampling mode </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga005d66ae08164514ba68a348127c8c81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga005d66ae08164514ba68a348127c8c81">&#9670;&nbsp;</a></span>sdadc_b_channel_gain_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga005d66ae08164514ba68a348127c8c81">sdadc_b_channel_gain_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Per channel preamplifier gain options. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga005d66ae08164514ba68a348127c8c81a21a2768028734d154930ed2f8d76d4a8"></a>SDADC_B_CHANNEL_GAIN_1&#160;</td><td class="fielddoc"><p>Gain of 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga005d66ae08164514ba68a348127c8c81ac006949a6cff8b257846653692c4f82a"></a>SDADC_B_CHANNEL_GAIN_2&#160;</td><td class="fielddoc"><p>Gain of 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga005d66ae08164514ba68a348127c8c81ab5305ea1777794b2a1fe20c4420068ec"></a>SDADC_B_CHANNEL_GAIN_4&#160;</td><td class="fielddoc"><p>Gain of 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga005d66ae08164514ba68a348127c8c81abf8c2effa56d32641c528cfd3c5ea7e0"></a>SDADC_B_CHANNEL_GAIN_8&#160;</td><td class="fielddoc"><p>Gain of 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga005d66ae08164514ba68a348127c8c81a68135a1d29b6a2da2afb11e301c98071"></a>SDADC_B_CHANNEL_GAIN_16&#160;</td><td class="fielddoc"><p>Gain of 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga005d66ae08164514ba68a348127c8c81ace519456e27882bb1e98ab102ff4509e"></a>SDADC_B_CHANNEL_GAIN_32&#160;</td><td class="fielddoc"><p>Gain of 32. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa56bdae78f80b7f6912f83fd3b3c75c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa56bdae78f80b7f6912f83fd3b3c75c4">&#9670;&nbsp;</a></span>sdadc_b_channel_hpf_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#gaa56bdae78f80b7f6912f83fd3b3c75c4">sdadc_b_channel_hpf_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Per channel HPF bypass. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa56bdae78f80b7f6912f83fd3b3c75c4a3bb743c86df17281346408088087106c"></a>SDADC_B_CHANNEL_HPF_ENABLE&#160;</td><td class="fielddoc"><p>HPF enable. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa56bdae78f80b7f6912f83fd3b3c75c4af86f8f1ff22c862fce5d131c21963188"></a>SDADC_B_CHANNEL_HPF_DISABLE&#160;</td><td class="fielddoc"><p>HPF disable. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7b374c7f505b5545740422005da9a0c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7b374c7f505b5545740422005da9a0c6">&#9670;&nbsp;</a></span>sdadc_b_resolution_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga7b374c7f505b5545740422005da9a0c6">sdadc_b_resolution_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SDADC data resolution definitions </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7b374c7f505b5545740422005da9a0c6a05a704d62d033024202c468ef7a32259"></a>SDADC_B_RESOLUTION_24_BIT&#160;</td><td class="fielddoc"><p>24 bit resolution </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b374c7f505b5545740422005da9a0c6a3e45d8d4eac7ec401fea31c73485fa7e"></a>SDADC_B_RESOLUTION_16_BIT&#160;</td><td class="fielddoc"><p>16 bit resolution </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab3770c2acc7f33313ba9928e122dcd9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab3770c2acc7f33313ba9928e122dcd9d">&#9670;&nbsp;</a></span>sdadc_b_zc_channel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#gab3770c2acc7f33313ba9928e122dcd9d">sdadc_b_zc_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Zero-cross detection channel </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab3770c2acc7f33313ba9928e122dcd9da2fcafa9e3fd0d71442371c3ab13cee87"></a>SDADC_B_ZC_CHANNEL_2_OR_3&#160;</td><td class="fielddoc"><p>Detect channel 2 (ZCCTL0) or channel 3 (ZCCTL1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab3770c2acc7f33313ba9928e122dcd9daa08a87831378a733d57436c7291f98a8"></a>SDADC_B_ZC_CHANNEL_1_OR_0&#160;</td><td class="fielddoc"><p>Detect channel 1 (ZCCTL0) or channel 0 (ZCCTL1) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae012f4b6d1006a0dde1a62201b704f3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae012f4b6d1006a0dde1a62201b704f3d">&#9670;&nbsp;</a></span>sdadc_b_zc_output_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#gae012f4b6d1006a0dde1a62201b704f3d">sdadc_b_zc_output_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Zero-cross detection output mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae012f4b6d1006a0dde1a62201b704f3dad82ad4bc5d5bedf9e8efece82fc15921"></a>SDADC_B_ZC_PULSE_OUTPUT_MODE&#160;</td><td class="fielddoc"><p>Pulse output mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae012f4b6d1006a0dde1a62201b704f3da4b74a0eea7f55ead76b1982424bd2d66"></a>SDADC_B_ZC_LEVEL_OUTPUT_MODE&#160;</td><td class="fielddoc"><p>Level output mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga3097a621329954d82407e9f56dee806f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3097a621329954d82407e9f56dee806f">&#9670;&nbsp;</a></span>sdadc_b_zc_falling_edge_detection_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga3097a621329954d82407e9f56dee806f">sdadc_b_zc_falling_edge_detection_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Zero-cross detection output mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3097a621329954d82407e9f56dee806fa9d32f6b43d52892a503c687b6cab689c"></a>SDADC_B_ZC_FALLING_EDGE_DETECTION_DISABLE&#160;</td><td class="fielddoc"><p>Disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3097a621329954d82407e9f56dee806fa97e6ca9134662bb975c629cabf6028f9"></a>SDADC_B_ZC_FALLING_EDGE_DETECTION_ENABLE&#160;</td><td class="fielddoc"><p>Enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga168bb2091b8a57d0594cc28d0164e02c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga168bb2091b8a57d0594cc28d0164e02c">&#9670;&nbsp;</a></span>sdadc_b_zc_rising_edge_detection_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga168bb2091b8a57d0594cc28d0164e02c">sdadc_b_zc_rising_edge_detection_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Zero-cross detection output mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga168bb2091b8a57d0594cc28d0164e02ca74ef60a36acedccf522e4c2f25890475"></a>SDADC_B_ZC_RISING_EDGE_DETECTION_DISABLE&#160;</td><td class="fielddoc"><p>Disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga168bb2091b8a57d0594cc28d0164e02ca9ee96e38e5debe8afb94a9507110ebdf"></a>SDADC_B_ZC_RISING_EDGE_DETECTION_ENABLE&#160;</td><td class="fielddoc"><p>Enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga18702b2102168eb19b7ebeec0d3ef697"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga18702b2102168eb19b7ebeec0d3ef697">&#9670;&nbsp;</a></span>sdadc_b_cutoff_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_d_a_d_c___b.html#ga18702b2102168eb19b7ebeec0d3ef697">sdadc_b_cutoff_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>HPF cut off. The enum value is to set to SDADHPFCR register. See Table 31.8 Cut-off frequency of HPF of the manual R01UH1005EJ0051 </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga18702b2102168eb19b7ebeec0d3ef697a3af5a0bc04735653d1a3bdda8e9b0bbd"></a>SDADC_B_CUTOFF_00B&#160;</td><td class="fielddoc"><p>Cut-off frequency 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga18702b2102168eb19b7ebeec0d3ef697a8aba0cee431978b8fc133f04c40d7158"></a>SDADC_B_CUTOFF_01B&#160;</td><td class="fielddoc"><p>Cut-off frequency 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga18702b2102168eb19b7ebeec0d3ef697af9441da66aa8296d8f8d732f994e9c60"></a>SDADC_B_CUTOFF_10B&#160;</td><td class="fielddoc"><p>Cut-off frequency 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga18702b2102168eb19b7ebeec0d3ef697a5c20e0e4819a963bd4a56d146a09011e"></a>SDADC_B_CUTOFF_11B&#160;</td><td class="fielddoc"><p>Cut-off frequency 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga3c22556065129deecb793babedbd1aae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c22556065129deecb793babedbd1aae">&#9670;&nbsp;</a></span>R_SDADC_B_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__cfg__t">adc_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Applies power to the SDADC_B and initializes the hardware based on the user configuration. Enabling interrupts which will call a callback to notify the user when a conversion is completed or a zero-cross is detected. Implements <a class="el" href="group___a_d_c___a_p_i.html#afa184c06541e3fd9f90fc12ed775f468">adc_api_t::open()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL or an input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid channel configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga853b8e138086a2a0a97ebdf760fb12a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga853b8e138086a2a0a97ebdf760fb12a0">&#9670;&nbsp;</a></span>R_SDADC_B_ScanCfg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_ScanCfg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_extend</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configures the enabled channels of the ADC. Implements <a class="el" href="group___a_d_c___a_p_i.html#a44289d7822720544751eb22e3d7d38ea">adc_api_t::scanCfg()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not compatible with Hybrid Mode operation.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Information stored in p_adc_info. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL or an input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Hybrid mode channel configuration is invalid </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid channel configuration </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Converter operation must be stopped before reconfiguring </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga367e001fb8ea367c8d3920a2a69b8db2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga367e001fb8ea367c8d3920a2a69b8db2">&#9670;&nbsp;</a></span>R_SDADC_B_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *&#160;</td>
+          <td class="paramname"><em>p_adc_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the address of the lowest number configured channel, the total number of results to be read in order to read the results of all configured channels, the size of each result, and the ELC event enumerations. Implements <a class="el" href="group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87">adc_api_t::infoGet()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Conversion is started successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL or an input parameter is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga789c21392e904451d683f1d188c047f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga789c21392e904451d683f1d188c047f6">&#9670;&nbsp;</a></span>R_SDADC_B_ScanStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_ScanStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#a2f9e091ca57ca2c58262f66ab5c341c9">adc_api_t::scanStart()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Conversion is started successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL or an input parameter is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga17faa2f5d730013adddd445d16e35320"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga17faa2f5d730013adddd445d16e35320">&#9670;&nbsp;</a></span>R_SDADC_B_ScanGroupStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_ScanGroupStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a>&#160;</td>
+          <td class="paramname"><em>group_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#aeae126b8a09e1ec34e8e3afb4a3344ff">adc_api_t::scanGroupStart</a> is not supported on the SDADC_B. Use scanStart instead.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga08ff13634f57cac58498cbf2edad2396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08ff13634f57cac58498cbf2edad2396">&#9670;&nbsp;</a></span>R_SDADC_B_ScanStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_ScanStop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#a90346240a89666209a78bdcb020278bd">adc_api_t::scanStop()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>According to Hardware specification, after stopping the conversion, it is necessary to wait at least 1.4us before performing conversion again.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Conversion is started successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL or an input parameter is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9671bf4098c02134662ddb4a483d56ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9671bf4098c02134662ddb4a483d56ba">&#9670;&nbsp;</a></span>R_SDADC_B_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> *&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the status of a scan including calibration scans. Implements <a class="el" href="group___a_d_c___a_p_i.html#ae54bb53ea323ac24a3b63769e0196a57">adc_api_t::scanStatusGet()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Module status stored in the provided pointer p_status </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input argument is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Unit is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0a633ea2365b39469a93ceb6f70adb48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a633ea2365b39469a93ceb6f70adb48">&#9670;&nbsp;</a></span>R_SDADC_B_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads the most recent conversion result from a channel. Truncates 24-bit results to the upper 16 bits. When the SDADC_B is configured for 16-bit resolution, the sign bit is bit 15 and the upper 16 bits are 0. Implements <a class="el" href="group___a_d_c___a_p_i.html#a9a540c52a5052a12b3b879d78543efd5">adc_api_t::read()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>The result stored in p_data is signed.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Conversion result in p_data. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL or an input parameter was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>Result buffer has not been updated with valid data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5b55b0c8b44337ea50b309b975f5381b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b55b0c8b44337ea50b309b975f5381b">&#9670;&nbsp;</a></span>R_SDADC_B_Read32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_Read32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads the most recent conversion result from a channel. Implements <a class="el" href="group___a_d_c___a_p_i.html#a81338d39975b7fe87d5e06c55a8c5dc5">adc_api_t::read32()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>The result stored in p_data is signed. </dd>
+<dd>
+When the SDADC is configured for 24-bit resolution, the upper 8 bits are sign extended.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Conversion result in p_data. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL or an input parameter was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>Result buffer has not been updated with valid data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac967d5ca2ce7723c4047bc7fa0894077"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac967d5ca2ce7723c4047bc7fa0894077">&#9670;&nbsp;</a></span>R_SDADC_B_OffsetSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_OffsetSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t const&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">adc_api_t::offsetSet</a> is not supported on the SDADC_B.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga30cc6b931569b2e2c59c82e4c5234a7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga30cc6b931569b2e2c59c82e4c5234a7d">&#9670;&nbsp;</a></span>R_SDADC_B_Calibrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_Calibrate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *&#160;</td>
+          <td class="paramname"><em>p_extend</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calibration is performed automatically each time a scan is started. <a class="el" href="group___a_d_c___a_p_i.html#a1020d90e58d3bf86cee2f46a62e62fc4">adc_api_t::calibrate</a> is not supported on the SDADC_B.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga54b83e5cf763b739dc5f0db353bef981"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54b83e5cf763b739dc5f0db353bef981">&#9670;&nbsp;</a></span>R_SDADC_B_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDADC_B_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops any scan in progress, disables interrupts, and powers down the SDADC_B peripheral. Implements <a class="el" href="group___a_d_c___a_p_i.html#a83cce8ff1af572c11ef31442f2679124">adc_api_t::close()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Instance control block closed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

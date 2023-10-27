@@ -12,7 +12,8 @@ var group___g_l_c_d_c =
       [ "dithering_pattern_A", "group___g_l_c_d_c.html#ab79b1cad25e34e7b47420e1448667276", null ],
       [ "dithering_pattern_B", "group___g_l_c_d_c.html#a6eb480ff0892cf412793666a8173460b", null ],
       [ "dithering_pattern_C", "group___g_l_c_d_c.html#a09d3ac7b7b8aee905b4a1082e5dc960e", null ],
-      [ "dithering_pattern_D", "group___g_l_c_d_c.html#a328c2b20548a36cacf4ecdb1475f40c6", null ]
+      [ "dithering_pattern_D", "group___g_l_c_d_c.html#a328c2b20548a36cacf4ecdb1475f40c6", null ],
+      [ "phy_layer", "group___g_l_c_d_c.html#a5813558b14a81da403c551509b6e3072", null ]
     ] ],
     [ "glcdc_clk_src_t", "group___g_l_c_d_c.html#ga43acd93eeb35746824c49342b74f85a5", [
       [ "GLCDC_CLK_SRC_INTERNAL", "group___g_l_c_d_c.html#gga43acd93eeb35746824c49342b74f85a5a7eb6ad419d6034781e0a955081f12260", null ],
@@ -100,5 +101,6 @@ var group___g_l_c_d_c =
     [ "R_GLCDC_ColorCorrection", "group___g_l_c_d_c.html#ga9d0754a6820a3a189c270f8da8677b72", null ],
     [ "R_GLCDC_ClutUpdate", "group___g_l_c_d_c.html#gaaabcf5b43ea6cb821c0cddee78172cc5", null ],
     [ "R_GLCDC_ClutEdit", "group___g_l_c_d_c.html#gadae3a06f170b361c175a49a9961298e9", null ],
+    [ "R_GLCDC_ColorKeySet", "group___g_l_c_d_c.html#ga90e788cd13261f633af7a67bc551f82a", null ],
     [ "R_GLCDC_StatusGet", "group___g_l_c_d_c.html#ga1ba1f4b003e8045aefaa604f4eb5954f", null ]
 ];

@@ -3,6 +3,7 @@ var searchData=
   ['ra2a1',['RA2A1',['../group___b_s_p___m_c_u___r_a2_a1.html',1,'']]],
   ['ra2e1',['RA2E1',['../group___b_s_p___m_c_u___r_a2_e1.html',1,'']]],
   ['ra2e2',['RA2E2',['../group___b_s_p___m_c_u___r_a2_e2.html',1,'']]],
+  ['ra2e3',['RA2E3',['../group___b_s_p___m_c_u___r_a2_e3.html',1,'']]],
   ['ra2l1',['RA2L1',['../group___b_s_p___m_c_u___r_a2_l1.html',1,'']]],
   ['ra4e1',['RA4E1',['../group___b_s_p___m_c_u___r_a4_e1.html',1,'']]],
   ['ra4e2',['RA4E2',['../group___b_s_p___m_c_u___r_a4_e2.html',1,'']]],
@@ -21,9 +22,11 @@ var searchData=
   ['ra6t1',['RA6T1',['../group___b_s_p___m_c_u___r_a6_t1.html',1,'']]],
   ['ra6t2',['RA6T2',['../group___b_s_p___m_c_u___r_a6_t2.html',1,'']]],
   ['ra6t3',['RA6T3',['../group___b_s_p___m_c_u___r_a6_t3.html',1,'']]],
+  ['ra8m1',['RA8M1',['../group___b_s_p___m_c_u___r_a8_m1.html',1,'']]],
   ['rtos',['RTOS',['../group___r_e_n_e_s_a_s___r_t_o_s___m_o_d_u_l_e_s.html',1,'']]],
   ['reality_20ai_20data_20collector_20_28rm_5frai_5fdata_5fcollector_29',['Reality AI Data Collector (rm_rai_data_collector)',['../group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html',1,'']]],
   ['reality_20ai_20data_20shipper_20_28rm_5frai_5fdata_5fshipper_29',['Reality AI Data Shipper (rm_rai_data_shipper)',['../group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html',1,'']]],
+  ['rsip_20key_20injection_20interface',['RSIP key injection Interface',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html',1,'']]],
   ['realtime_20clock_20_28r_5frtc_29',['Realtime Clock (r_rtc)',['../group___r_t_c.html',1,'']]],
   ['rtc_20interface',['RTC Interface',['../group___r_t_c___a_p_i.html',1,'']]]
 ];

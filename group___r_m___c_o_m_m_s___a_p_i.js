@@ -15,7 +15,7 @@ var group___r_m___c_o_m_m_s___a_p_i =
       [ "read", "group___r_m___c_o_m_m_s___a_p_i.html#a40779e10d71d444a436dc2382003bc0b", null ],
       [ "write", "group___r_m___c_o_m_m_s___a_p_i.html#af5486a540964c7c37f3115739be3e6cb", null ],
       [ "writeRead", "group___r_m___c_o_m_m_s___a_p_i.html#a468f1e4f571140989fa274d8f40a5bb1", null ],
-      [ "callbackSet", "group___r_m___c_o_m_m_s___a_p_i.html#a72b92d10a4deec62e00ee14a8ba17b93", null ]
+      [ "callbackSet", "group___r_m___c_o_m_m_s___a_p_i.html#af1a782cc776093ebd3e07c711cf5bad5", null ]
     ] ],
     [ "rm_comms_instance_t", "group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t", null ],
     [ "rm_comms_ctrl_t", "group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20", null ],

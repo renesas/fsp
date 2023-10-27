@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -232,7 +310,7 @@ The following build time configurations are defined in fsp_cfg/rm_motor_sense_en
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -248,21 +326,25 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor A
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_sense_encoder0 </td><td>Module name. </td></tr>
-<tr>
-<td>Motor Parameter &gt; Pole pairs</td><td>Must be a valid non-negative value.</td><td>7 </td><td>Pole pairs </td></tr>
-<tr>
-<td>Motor Parameter &gt; Resistance (ohm)</td><td>Must be a valid value</td><td>0.453F </td><td>Resistance </td></tr>
-<tr>
-<td>Motor Parameter &gt; Inductance of d-axis (H)</td><td>Must be a valid value</td><td>0.0009447F </td><td>Inductance of d-axis </td></tr>
-<tr>
-<td>Motor Parameter &gt; Inductance of q-axis (H)</td><td>Must be a valid value</td><td>0.0009447F </td><td>Inductance of q-axis </td></tr>
-<tr>
-<td>Motor Parameter &gt; Permanent magnetic flux (Wb)</td><td>Must be a valid value</td><td>0.006198F </td><td>Permanent magnetic flux </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_sense_encoder0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Pole pairs</td><td>Must be a valid non-negative value.</td><td>7 </td><td>Pole pairs </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid value</td><td>0.453F </td><td>Resistance </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance of d-axis (H)</td><td>Must be a valid value</td><td>0.0009447F </td><td>Inductance of d-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Inductance of q-axis (H)</td><td>Must be a valid value</td><td>0.0009447F </td><td>Inductance of q-axis </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Permanent magnetic flux (Wb)</td><td>Must be a valid value</td><td>0.006198F </td><td>Permanent magnetic flux </td></tr>
 <tr>
 <td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Must be a valid value</td><td>0.00000962F </td><td>Rotor inertia </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Control Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Speed</li>
@@ -270,31 +352,31 @@ Speed</li>
 Position</li>
 </ul>
 </td><td>Position </td><td>Select control Type </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Period of Current control (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>Period of Current control </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Period of Speed control (sec)</td><td>Must be a valid value</td><td>0.0005F </td><td>Period of Speed control </td></tr>
-<tr>
+<tr class="tree_none">
 <td>PWM Carrier Frequency (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>PWM Carrier Frequency </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Decimation of Interrupt</td><td>Manual Entry</td><td>0U </td><td>Decimation of Interrupt </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Counts per Rotation</td><td>Must be a valid non-negative value.</td><td>1200U </td><td>Encoder Counts per One Rotation </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Counts for Angle Adjust</td><td>Must be a valid non-negative value.</td><td>512U </td><td>Counts for Angle Adjust (as working time) </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Zero speed counts</td><td>Must be a valid non-negative value.</td><td>20000000U </td><td>Threshold counts to judge zero speed </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Occupancy Time</td><td>Must be a valid value</td><td>0.30F </td><td>Occupancy time of carrier interrup </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Carrier Time</td><td>Must be a valid value</td><td>0.000013F </td><td>Processing time of carrier interrupt </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Process Time</td><td>Must be a valid value</td><td>0.000001F </td><td>Processing time of encoder interrupt </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Highspeed Change Margin (rpm)</td><td>Must be a valid non-negative value.</td><td>150U </td><td>Margin of toggle speed for high speed mode </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LPF parameter for Highspeed Filter</td><td>Must be a valid value</td><td>0.1F </td><td>Highspeed mode speed LPF parameter </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Counts to change speed</td><td>Must be a valid non-negative value.</td><td>8U </td><td>Counts for mode change of position speed calculation </td></tr>
 </table>
 </p>
@@ -900,7 +982,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,10 +248,7 @@ $(document).ready(function(){initNavTree('group___r_m___z_m_o_d4_x_x_x___a_p_i.h
 <p>Interface for ZMOD4XXX Middleware functions. </p>
 <h1><a class="anchor" id="RM_ZMOD4XXX_API_Summary"></a>
 Summary</h1>
-<p>The ZMOD4XXX interface provides ZMOD4XXX functionality.</p>
-<p>The ZMOD4XXX interface can be implemented by:</p><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html">ZMOD4XXX Gas Sensor (rm_zmod4xxx)</a> </li>
-</ul>
+<p>The ZMOD4XXX interface provides ZMOD4XXX functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -677,60 +752,57 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <div class="textblock"><p>ZMOD4XXX APIs </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a5ba1799ed3669a41fd7f0f436706367b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5ba1799ed3669a41fd7f0f436706367b">open</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:a5ba1799ed3669a41fd7f0f436706367b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9e1e5ff4fd276f7d7bfeb341854b0c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af9e1e5ff4fd276f7d7bfeb341854b0c2">measurementStart</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:af9e1e5ff4fd276f7d7bfeb341854b0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cf69c31fc52e26757bedf1ec76581f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5cf69c31fc52e26757bedf1ec76581f3">measurementStop</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a5cf69c31fc52e26757bedf1ec76581f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27c6d482aef38fe699598bd294eae220"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a27c6d482aef38fe699598bd294eae220">statusCheck</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a27c6d482aef38fe699598bd294eae220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0e582715db0dc1589f314944c2a41a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8f0e582715db0dc1589f314944c2a41a">read</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data)</td></tr>
-<tr class="separator:a8f0e582715db0dc1589f314944c2a41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e96d0abcbc4a4479d92d6e8e8d410de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6e96d0abcbc4a4479d92d6e8e8d410de">iaq1stGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t">rm_zmod4xxx_iaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:a6e96d0abcbc4a4479d92d6e8e8d410de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1ff5841c01173a03ff6ccb7bd731ddc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af1ff5841c01173a03ff6ccb7bd731ddc">iaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:af1ff5841c01173a03ff6ccb7bd731ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed55023e17ab93d307606c0d880df721"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aed55023e17ab93d307606c0d880df721">odorDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:aed55023e17ab93d307606c0d880df721"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2123328d6c1ced0cc62d9c98f5a8a7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af2123328d6c1ced0cc62d9c98f5a8a7a">sulfurOdorDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:af2123328d6c1ced0cc62d9c98f5a8a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad56aa9708d3f48a92253eeda652edede"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad56aa9708d3f48a92253eeda652edede">oaq1stGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:ad56aa9708d3f48a92253eeda652edede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1d9b01a5d84a3a4a06dfd714f485911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911">oaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:ad1d9b01a5d84a3a4a06dfd714f485911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa05768468433346424e7c695a0e0a4ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa05768468433346424e7c695a0e0a4ed">raqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:aa05768468433346424e7c695a0e0a4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1923a191333769644eb59d939c58a90d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1923a191333769644eb59d939c58a90d">relIaqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__rel__iaq__data__t">rm_zmod4xxx_rel_iaq_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:a1923a191333769644eb59d939c58a90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abee913c06f4f6ca942bb3124a729c944"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abee913c06f4f6ca942bb3124a729c944">pbaqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__pbaq__data__t">rm_zmod4xxx_pbaq_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:abee913c06f4f6ca942bb3124a729c944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a504a4e2266dc1ae46f27b752ade032e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">temperatureAndHumiditySet</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td></tr>
-<tr class="separator:a504a4e2266dc1ae46f27b752ade032e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a032f14a6414a147c3e05a28064d97069"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">deviceErrorCheck</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a032f14a6414a147c3e05a28064d97069"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37597974b2ae3e5ba15c57fce44b2c83"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">close</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:a37597974b2ae3e5ba15c57fce44b2c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9839a07b96c79990f08d8720890e8da8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a9839a07b96c79990f08d8720890e8da8">open</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a9839a07b96c79990f08d8720890e8da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47041454b1b699ca178a5156c6a79aac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a47041454b1b699ca178a5156c6a79aac">measurementStart</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a47041454b1b699ca178a5156c6a79aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcdce084970e22641ee7151ae45ecee7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abcdce084970e22641ee7151ae45ecee7">measurementStop</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:abcdce084970e22641ee7151ae45ecee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa00282b7e3e0551c96618e19b7b1ee4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa00282b7e3e0551c96618e19b7b1ee4b">statusCheck</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:aa00282b7e3e0551c96618e19b7b1ee4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25a326294be7c8d65f6918ba532fb09f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a25a326294be7c8d65f6918ba532fb09f">read</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data)</td></tr>
+<tr class="separator:a25a326294be7c8d65f6918ba532fb09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84760f27fa7ca93259cf43597772c781"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84760f27fa7ca93259cf43597772c781">iaq1stGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t">rm_zmod4xxx_iaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a84760f27fa7ca93259cf43597772c781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88ffe068c172b8719782357b16cbe937"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a88ffe068c172b8719782357b16cbe937">iaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a88ffe068c172b8719782357b16cbe937"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92c5b2fd0fba637202780d8423b170dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92c5b2fd0fba637202780d8423b170dc">odorDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a92c5b2fd0fba637202780d8423b170dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8d15ec491a454d5d120f21aa41e8f9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af8d15ec491a454d5d120f21aa41e8f9f">sulfurOdorDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:af8d15ec491a454d5d120f21aa41e8f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49bdc7ca88b2859fd18b3d33890d32bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a49bdc7ca88b2859fd18b3d33890d32bd">oaq1stGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a49bdc7ca88b2859fd18b3d33890d32bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae56592403602103a28a5d1e13d6dec03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae56592403602103a28a5d1e13d6dec03">oaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:ae56592403602103a28a5d1e13d6dec03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a557c09febce20b7bd5e1e7418d760f9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a557c09febce20b7bd5e1e7418d760f9a">raqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a557c09febce20b7bd5e1e7418d760f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417eb9005c2cabc805e5176bd409b838"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a417eb9005c2cabc805e5176bd409b838">relIaqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__rel__iaq__data__t">rm_zmod4xxx_rel_iaq_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a417eb9005c2cabc805e5176bd409b838"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c2fe41b4db79301c8a1b294809a25d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a32c2fe41b4db79301c8a1b294809a25d">pbaqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__pbaq__data__t">rm_zmod4xxx_pbaq_data_t</a> *const p_zmod4xxx_data)</td></tr>
+<tr class="separator:a32c2fe41b4db79301c8a1b294809a25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1240e62119dd4d148dd4ec393e234447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1240e62119dd4d148dd4ec393e234447">temperatureAndHumiditySet</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, float temperature, float humidity)</td></tr>
+<tr class="separator:a1240e62119dd4d148dd4ec393e234447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96bea17094f7a5933ab13d77d7d86699"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a96bea17094f7a5933ab13d77d7d86699">deviceErrorCheck</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a96bea17094f7a5933ab13d77d7d86699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8858935263e54d095b16b998cebcf40d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8858935263e54d095b16b998cebcf40d">close</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a8858935263e54d095b16b998cebcf40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a5ba1799ed3669a41fd7f0f436706367b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ba1799ed3669a41fd7f0f436706367b">&#9670;&nbsp;</a></span>open</h2>
+<a id="a9839a07b96c79990f08d8720890e8da8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9839a07b96c79990f08d8720890e8da8">&#9670;&nbsp;</a></span>open</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::open) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a> const *const p_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::open) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open sensor. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga2d4f33091a3b32dc0bda323c24a4eb15">RM_ZMOD4XXX_Open()</a></li>
-</ul>
-</dd></dl>
+<p>Open sensor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
   </table>
   </dd>
@@ -738,96 +810,84 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="af9e1e5ff4fd276f7d7bfeb341854b0c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9e1e5ff4fd276f7d7bfeb341854b0c2">&#9670;&nbsp;</a></span>measurementStart</h2>
+<a id="a47041454b1b699ca178a5156c6a79aac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47041454b1b699ca178a5156c6a79aac">&#9670;&nbsp;</a></span>measurementStart</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::measurementStart) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::measurementStart) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start measurement </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga21bde6c18d166c38790d044a3325d7b9">RM_ZMOD4XXX_MeasurementStart()</a></li>
-</ul>
-</dd></dl>
+<p>Start measurement</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a5cf69c31fc52e26757bedf1ec76581f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cf69c31fc52e26757bedf1ec76581f3">&#9670;&nbsp;</a></span>measurementStop</h2>
+<a id="abcdce084970e22641ee7151ae45ecee7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcdce084970e22641ee7151ae45ecee7">&#9670;&nbsp;</a></span>measurementStop</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::measurementStop) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::measurementStop) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop measurement </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga1a9e4762c544db1dc924fdff62bf9cc7">RM_ZMOD4XXX_MeasurementStop()</a></li>
-</ul>
-</dd></dl>
+<p>Stop measurement</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a27c6d482aef38fe699598bd294eae220"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27c6d482aef38fe699598bd294eae220">&#9670;&nbsp;</a></span>statusCheck</h2>
+<a id="aa00282b7e3e0551c96618e19b7b1ee4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa00282b7e3e0551c96618e19b7b1ee4b">&#9670;&nbsp;</a></span>statusCheck</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::statusCheck) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::statusCheck) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read status of the sensor </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaad8d1b8d7b71762b60c6078f9059bf1d">RM_ZMOD4XXX_StatusCheck()</a></li>
-</ul>
-</dd></dl>
+<p>Read status of the sensor</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a8f0e582715db0dc1589f314944c2a41a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f0e582715db0dc1589f314944c2a41a">&#9670;&nbsp;</a></span>read</h2>
+<a id="a25a326294be7c8d65f6918ba532fb09f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25a326294be7c8d65f6918ba532fb09f">&#9670;&nbsp;</a></span>read</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::read) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::read) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gafabd01cfcb93ac2bcdc4378dc94ec804">RM_ZMOD4XXX_Read()</a></li>
-</ul>
-</dd></dl>
+<p>Read ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data structure. </td></tr>
   </table>
   </dd>
@@ -835,24 +895,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="a6e96d0abcbc4a4479d92d6e8e8d410de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e96d0abcbc4a4479d92d6e8e8d410de">&#9670;&nbsp;</a></span>iaq1stGenDataCalculate</h2>
+<a id="a84760f27fa7ca93259cf43597772c781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84760f27fa7ca93259cf43597772c781">&#9670;&nbsp;</a></span>iaq1stGenDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::iaq1stGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t">rm_zmod4xxx_iaq_1st_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::iaq1stGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t">rm_zmod4xxx_iaq_1st_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate IAQ 1st Gen. values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga3ee9369b728a5687fcc637114b563875">RM_ZMOD4XXX_Iaq1stGenDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate IAQ 1st Gen. values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -861,24 +918,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="af1ff5841c01173a03ff6ccb7bd731ddc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1ff5841c01173a03ff6ccb7bd731ddc">&#9670;&nbsp;</a></span>iaq2ndGenDataCalculate</h2>
+<a id="a88ffe068c172b8719782357b16cbe937"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88ffe068c172b8719782357b16cbe937">&#9670;&nbsp;</a></span>iaq2ndGenDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::iaq2ndGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::iaq2ndGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate IAQ 2nd Gen. values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaa2b8de7170ff85a0f991dfdb6fb71317">RM_ZMOD4XXX_Iaq2ndGenDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate IAQ 2nd Gen. values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -887,24 +941,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="aed55023e17ab93d307606c0d880df721"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed55023e17ab93d307606c0d880df721">&#9670;&nbsp;</a></span>odorDataCalculate</h2>
+<a id="a92c5b2fd0fba637202780d8423b170dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92c5b2fd0fba637202780d8423b170dc">&#9670;&nbsp;</a></span>odorDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::odorDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::odorDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate Odor values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaed61c1d9714552e574a4e6037d926180">RM_ZMOD4XXX_OdorDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate Odor values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -913,24 +964,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="af2123328d6c1ced0cc62d9c98f5a8a7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2123328d6c1ced0cc62d9c98f5a8a7a">&#9670;&nbsp;</a></span>sulfurOdorDataCalculate</h2>
+<a id="af8d15ec491a454d5d120f21aa41e8f9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8d15ec491a454d5d120f21aa41e8f9f">&#9670;&nbsp;</a></span>sulfurOdorDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::sulfurOdorDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::sulfurOdorDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate Sulfur Odor values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaf200a9dc7ca8bf0601c2a2b96c341ecf">RM_ZMOD4XXX_SulfurOdorDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate Sulfur Odor values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -939,24 +987,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="ad56aa9708d3f48a92253eeda652edede"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad56aa9708d3f48a92253eeda652edede">&#9670;&nbsp;</a></span>oaq1stGenDataCalculate</h2>
+<a id="a49bdc7ca88b2859fd18b3d33890d32bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49bdc7ca88b2859fd18b3d33890d32bd">&#9670;&nbsp;</a></span>oaq1stGenDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::oaq1stGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::oaq1stGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate OAQ 1st Gen. values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gaeafe7943df31f237ac45310796df64b2">RM_ZMOD4XXX_Oaq1stGenDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate OAQ 1st Gen. values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -965,24 +1010,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="ad1d9b01a5d84a3a4a06dfd714f485911"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1d9b01a5d84a3a4a06dfd714f485911">&#9670;&nbsp;</a></span>oaq2ndGenDataCalculate</h2>
+<a id="ae56592403602103a28a5d1e13d6dec03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae56592403602103a28a5d1e13d6dec03">&#9670;&nbsp;</a></span>oaq2ndGenDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::oaq2ndGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::oaq2ndGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate OAQ 2nd Gen. values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33">RM_ZMOD4XXX_Oaq2ndGenDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate OAQ 2nd Gen. values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -991,24 +1033,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="aa05768468433346424e7c695a0e0a4ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa05768468433346424e7c695a0e0a4ed">&#9670;&nbsp;</a></span>raqDataCalculate</h2>
+<a id="a557c09febce20b7bd5e1e7418d760f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a557c09febce20b7bd5e1e7418d760f9a">&#9670;&nbsp;</a></span>raqDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::raqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::raqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate RAQ values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gadaee5fde2afbb40e28f40b1de50daf45">RM_ZMOD4XXX_RaqDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate RAQ values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -1017,24 +1056,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="a1923a191333769644eb59d939c58a90d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1923a191333769644eb59d939c58a90d">&#9670;&nbsp;</a></span>relIaqDataCalculate</h2>
+<a id="a417eb9005c2cabc805e5176bd409b838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417eb9005c2cabc805e5176bd409b838">&#9670;&nbsp;</a></span>relIaqDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::relIaqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__rel__iaq__data__t">rm_zmod4xxx_rel_iaq_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::relIaqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__rel__iaq__data__t">rm_zmod4xxx_rel_iaq_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate Relative IAQ values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga88a9173f1eb50d4c2f7ca7b310c98957">RM_ZMOD4XXX_RelIaqDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate Relative IAQ values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -1043,24 +1079,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="abee913c06f4f6ca942bb3124a729c944"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abee913c06f4f6ca942bb3124a729c944">&#9670;&nbsp;</a></span>pbaqDataCalculate</h2>
+<a id="a32c2fe41b4db79301c8a1b294809a25d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c2fe41b4db79301c8a1b294809a25d">&#9670;&nbsp;</a></span>pbaqDataCalculate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::pbaqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__pbaq__data__t">rm_zmod4xxx_pbaq_data_t</a> *const p_zmod4xxx_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::pbaqDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__pbaq__data__t">rm_zmod4xxx_pbaq_data_t</a> *const p_zmod4xxx_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculate PBAQ values from ADC data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga0c5aac5f58a3e8053557d02e3e781f3b">RM_ZMOD4XXX_PbaqDataCalculate()</a></li>
-</ul>
-</dd></dl>
+<p>Calculate PBAQ values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
   </table>
@@ -1069,24 +1102,21 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="a504a4e2266dc1ae46f27b752ade032e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a504a4e2266dc1ae46f27b752ade032e9">&#9670;&nbsp;</a></span>temperatureAndHumiditySet</h2>
+<a id="a1240e62119dd4d148dd4ec393e234447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1240e62119dd4d148dd4ec393e234447">&#9670;&nbsp;</a></span>temperatureAndHumiditySet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::temperatureAndHumiditySet) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::temperatureAndHumiditySet) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, float temperature, float humidity)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set temperature and humidity. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477">RM_ZMOD4XXX_TemperatureAndHumiditySet()</a></li>
-</ul>
-</dd></dl>
+<p>Set temperature and humidity.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">temperature</td><td>Temperature (deg C). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">humidity</td><td>Humidity (percent). </td></tr>
   </table>
@@ -1095,48 +1125,42 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="a032f14a6414a147c3e05a28064d97069"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a032f14a6414a147c3e05a28064d97069">&#9670;&nbsp;</a></span>deviceErrorCheck</h2>
+<a id="a96bea17094f7a5933ab13d77d7d86699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96bea17094f7a5933ab13d77d7d86699">&#9670;&nbsp;</a></span>deviceErrorCheck</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::deviceErrorCheck) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::deviceErrorCheck) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check device error event. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94">RM_ZMOD4XXX_DeviceErrorCheck()</a></li>
-</ul>
-</dd></dl>
+<p>Check device error event.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a37597974b2ae3e5ba15c57fce44b2c83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37597974b2ae3e5ba15c57fce44b2c83">&#9670;&nbsp;</a></span>close</h2>
+<a id="a8858935263e54d095b16b998cebcf40d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8858935263e54d095b16b998cebcf40d">&#9670;&nbsp;</a></span>close</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::close) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::close) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the sensor </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48">RM_ZMOD4XXX_Close()</a></li>
-</ul>
-</dd></dl>
+<p>Close the sensor</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1197,10 +1221,7 @@ p_api</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ZMOD4xxx Control block. Allocate an instance specific control block to pass into the API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#structrm__zmod4xxx__instance__ctrl__t">rm_zmod4xxx_instance_ctrl_t</a> </li>
-</ul>
-</dd></dl>
+<p>ZMOD4xxx Control block. Allocate an instance specific control block to pass into the API calls. </p>
 
 </div>
 </div>
@@ -1247,7 +1268,7 @@ p_api</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

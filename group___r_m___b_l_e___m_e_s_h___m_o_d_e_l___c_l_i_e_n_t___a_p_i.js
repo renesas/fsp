@@ -14,7 +14,6 @@ var group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i =
     [ "rm_ble_mesh_model_client_api_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__model__client__api__t", [
       [ "open", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a91a1c9d4bc4b1ff4d2bfbe16ab1c29d0", null ],
       [ "close", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#af3dfa31cd026481ddb36f982efa44880", null ],
-      [ "setModelHandle", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a468443f9957fcd21a9cc07df13fe64e7", null ],
       [ "getModelHandle", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#aefdd178892bc2093f6c4c0f0a72db7e9", null ],
       [ "sendReliablePdu", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a2102d3db1562e88c56bc8c9373522891", null ]
     ] ],

@@ -4,7 +4,6 @@ var group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t =
     [ "RM_MESH_GENERIC_PL_CLT_Open", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga51c23c408f546d0497e575126952e0f7", null ],
     [ "RM_MESH_GENERIC_PL_CLT_Close", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga53c5c3bddfad2cc5a2706b094d66854a", null ],
     [ "RM_MESH_GENERIC_PL_CLT_GetModelHandle", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga7afc9f8985e4e02fcfdc5f0e2516e325", null ],
-    [ "RM_MESH_GENERIC_PL_CLT_SetModelHandle", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#gad6b02a6b334178703178c8c3ed5dcf48", null ],
     [ "RM_MESH_GENERIC_PL_CLT_SendReliablePdu", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga404d727439959c1ebea972b7a6b61df0", null ],
     [ "RM_MESH_GENERIC_PL_CLT_LevelGet", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga8a9456c774c4add26faac3d7dc4b0c2a", null ],
     [ "RM_MESH_GENERIC_PL_CLT_LevelSet", "group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga0ee0a31e5ecc9d32941e0500b88306f0", null ],

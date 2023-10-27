@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -192,7 +270,7 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_fil
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -207,11 +285,11 @@ Disabled</li>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_filex_levelx_nor0 </td><td>Module name. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>g_rm_filex_levelx_nor_0_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called during operations by the lower level block media as a way for the user to provide their desired waiting functionality. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>LevelX NOR Name (String)</td><td>Manual Entry</td><td>g_rm_filex_levelx_nor_0 </td><td>String name to be input into LevelX API. </td></tr>
 </table>
  <h2>Build Time Configurations for fx</h2>
@@ -219,205 +297,213 @@ The following build time configurations are defined in fsp_cfg/azure/fx/fx_user.
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Common &gt; Max Long Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>Specifies the maximum file name size for FileX. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
-<tr>
-<td>Common &gt; Max Last Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>This value defines the maximum file name length, which includes full path name. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
-<tr>
-<td>Common &gt; Max Sector Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the maximum number of logical sectors that can be cached by FileX. The actual number of sectors that can be cached is lesser of this constant and how many sectors can fit in the amount of memory supplied at fx_media_open. The default value if left blank is 256. All values must be a power of 2. </td></tr>
-<tr>
-<td>Common &gt; Fat Map Size</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies the number of sectors that can be represented in the FAT update map. The default value if left blank is 256. Larger values help reduce unneeded updates of secondary FAT sectors. </td></tr>
-<tr>
-<td>Common &gt; Max Fat Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the number of entries in the internal FAT cache. The default value if left blank is 16. All values must be a power of 2. </td></tr>
-<tr>
-<td>Threading &gt; Update Rate (Seconds)</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies rate at which system time in FileX is adjusted. Default value if left blank is 10, specifying that the FileX system time is updated every 10 seconds. </td></tr>
-<tr>
-<td>Threading &gt; No Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Common  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Long Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>Specifies the maximum file name size for FileX. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Last Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>This value defines the maximum file name length, which includes full path name. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Sector Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the maximum number of logical sectors that can be cached by FileX. The actual number of sectors that can be cached is lesser of this constant and how many sectors can fit in the amount of memory supplied at fx_media_open. The default value if left blank is 256. All values must be a power of 2. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Fat Map Size</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies the number of sectors that can be represented in the FAT update map. The default value if left blank is 256. Larger values help reduce unneeded updates of secondary FAT sectors. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Fat Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the number of entries in the internal FAT cache. The default value if left blank is 16. All values must be a power of 2. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Threading  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Update Rate (Seconds)</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies rate at which system time in FileX is adjusted. Default value if left blank is 10, specifying that the FileX system time is updated every 10 seconds. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">No Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Eliminates the ThreadX timer setup to update the FileX system time and date. Doing so causes default time and date to be placed on all file operations. </td></tr>
-<tr>
-<td>Threading &gt; Single Thread</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Single Thread</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Eliminates ThreadX protection logic from the FileX source. It should be used if FileX is being used only from one thread. </td></tr>
-<tr>
-<td>Threading &gt; Standalone</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Standalone</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Enables FileX to be used in standalone mode (without Azure RTOS). </td></tr>
-<tr>
-<td>Extra Features &gt; Don't Update Open Files</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra Features  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Don't Update Open Files</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, FileX does not update already opened files. </td></tr>
-<tr>
-<td>Extra Features &gt; Media Search Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Media Search Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>When disabled, the file search cache optimization is disabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Direct Data Read Cache Fill</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Direct Data Read Cache Fill</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>When disabled, the direct read sector update of cache is disabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Media Statistics</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Media Statistics</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>When disabled, gathering of media statistics is disabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Single Open Legacy</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Single Open Legacy</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, legacy single open logic for the same file is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Rename Path Inherit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Rename Path Inherit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, renaming inherits path information. </td></tr>
-<tr>
-<td>Extra Features &gt; No Local Path</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">No Local Path</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, removes local path logic from FileX, resulting in smaller code size. </td></tr>
-<tr>
-<td>Extra Features &gt; 64-bit LBA</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">64-bit LBA</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, 64-bits sector addresses are used in I/O driver. </td></tr>
-<tr>
-<td>Extra Features &gt; Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Cache</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables the cache, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; File Close</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">File Close</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables file close, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Fast Close</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Fast Close</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables fast open, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Force Memory Operation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Force Memory Operation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables force memory operation, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Build Options</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Build Options</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables build options, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; One Line Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">One Line Function</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables one line function, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; FAT Entry Refresh</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">FAT Entry Refresh</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables FAT entry refresh, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Consecutive Detect</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Consecutive Detect</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
 <li>
 Disabled</li>
 </ul>
 </td><td>Enabled (default) </td><td>Enables or disables consecutive detect, default is enabled. </td></tr>
-<tr>
-<td>Extra Features &gt; Enable exFAT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Enable exFAT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>Enables exFAT support in FileX. </td></tr>
-<tr>
-<td>Fault Tolerant &gt; Fault Tolerant Service</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Fault Tolerant  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Fault Tolerant Service</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, enables the FileX Fault Tolerant Module. Enabling Fault Tolerant automatically defines the symbol FX_FAULT_TOLERANT and FX_FAULT_TOLERANT_DATA. </td></tr>
-<tr>
-<td>Fault Tolerant &gt; Fault Tolerant Data</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Fault Tolerant Data</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, FileX immediately passes all file data write requests to the media's driver. This potentially decreases performance, but helps limit lost file data. Note that enabling this feature does not automatically enable FileX Fault Tolerant Module, which should be enabled separately. </td></tr>
-<tr>
-<td>Fault Tolerant &gt; Fault Tolerant</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Fault Tolerant</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, FileX immediately passes write requests of all system sectors (boot, FAT, and directory sectors) to the media's driver. This potentially decreases performance, but helps limit corruption to lost clusters. Note that enabling this feature does not automatically enable FileX Fault Tolerant Module, which should be enabled separately. </td></tr>
-<tr>
-<td>Fault Tolerant &gt; Fault Tolerant Boot Index</td><td>Value must be greater than or equal to 116 and less than or equal to 119</td><td></td><td>Defines byte offset in the boot sector where the cluster for the fault tolerant log is. By default if left blank this value is 116. This field takes 4 bytes. Bytes 116 through 119 are chosen because they are marked as reserved by FAT 12/16/32/exFAT specification. </td></tr>
-<tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Fault Tolerant Boot Index</td><td>Value must be greater than or equal to 116 and less than or equal to 119</td><td></td><td>Defines byte offset in the boot sector where the cluster for the fault tolerant log is. By default if left blank this value is 116. This field takes 4 bytes. Bytes 116 through 119 are chosen because they are marked as reserved by FAT 12/16/32/exFAT specification. </td></tr>
+<tr class="tree_none">
 <td>Error Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled (default)</li>
@@ -431,25 +517,25 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Azure
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_fx_media0 </td><td>Symbol used for media_ptr parameter in FileX APIs </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Volume Name</td><td>Name must be a valid C symbol</td><td>Volume 1 </td><td>Volume name string, which is a maximum of 11 characters. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Number of FATs</td><td>Number of FATs must be an integer greater than 0</td><td>1 </td><td>Number of FATs in the media. The minimal value is 1 for the primary FAT. Values greater than 1 result in additional FAT copies being maintained at run-time. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Directory Entries</td><td>Number of Directory Entries must be an integer greater than 0</td><td>256 </td><td>Number of directory entries in the root directory. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Hidden Sectors</td><td>Number of Hidden Sectors must be an integer</td><td>0 </td><td>Number of sectors hidden before this media’s boot sector. If using media formatted with multiple partitions this number should correspond to the starting block number for the desired partition. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Total Sectors</td><td>Total Sectors must be an integer greater than 0</td><td>57337 </td><td>Total number of sectors in the media. When using a Renesas provided block media implementation, total sectors can be fetched by the infoGet from the block media API. Any removable media must be inserted and initialized first to retrieve this info. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Sectors per Cluster</td><td>Sectors per Cluster must be an integer greater than 0</td><td>1 </td><td>Number of sectors in each cluster. The cluster is the minimum allocation unit in a FAT file system. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Volume Serial Number (exFAT only)</td><td>Volume Serial Number must be an integer greater than 0</td><td>12345 </td><td>Serial number to be used for this volume. exFAT only. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Boundary Unit (exFAT only)</td><td>Boundary unit must be an integer greater than 0</td><td>128 </td><td>Physical data area alignment size, in number of sectors. exFAT only. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Working media memory size</td><td>Memory size must be an integer greater than or equal to the size of one sector</td><td>512 </td><td>Memory allocated for file system. Memory size must be an integer greater than or equal to the size of one sector. </td></tr>
 </table>
 </p>
@@ -693,7 +779,7 @@ Pointer to the configuration structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

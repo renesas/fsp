@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,7 +252,7 @@ The following build time configurations are defined in fsp_cfg/rm_aws_ota_pal_mc
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -184,16 +262,16 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Filepath to Slot ID Callback Function</td><td>Must be a valid C symbol</td><td>NULL </td><td>Callback function for determining which Slot ID the image should be downloaded to. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>OTA code signing signature algorithm</td><td>sig-sha256-ecdsa</td><td>sig-sha256-ecdsa </td><td>Code signing algorithm used by AWS to sign the downloaded image. </td></tr>
 </table>
  <h2>Configurations for Storage &gt; AWS OTA PAL (rm_aws_ota_pal_mcuboot)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_aws_ota_pal_mcuboot0 </td><td>Module name. </td></tr>
 </table>
 </p>
@@ -204,31 +282,33 @@ The following build time configurations are defined in aws/ota_config.h:<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Version &gt; Major</td><td>Value must be a non-negative integer</td><td>0 </td><td>Major Version number used when updating. </td></tr>
-<tr>
-<td>Version &gt; Minor</td><td>Value must be a non-negative integer</td><td>0 </td><td>Minor Version number used when updating. </td></tr>
-<tr>
-<td>Version &gt; Build</td><td>Value must be a non-negative integer</td><td>1 </td><td>Build Version number used when updating. </td></tr>
-<tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Version  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Major</td><td>Value must be a non-negative integer</td><td>0 </td><td>Major Version number used when updating. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Minor</td><td>Value must be a non-negative integer</td><td>0 </td><td>Minor Version number used when updating. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Build</td><td>Value must be a non-negative integer</td><td>1 </td><td>Build Version number used when updating. </td></tr>
+<tr class="tree_none">
 <td>Custom ota_config.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom ota_config.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Log2 File Block Size</td><td>Value must be a non-negative integer</td><td>11 </td><td>Log base 2 of the size of the file data block message (excluding the header). e.g. 11: 2^11 = 2048bytes </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Self Test Response Wait (ms)</td><td>Value must be a non-negative integer</td><td>16000 </td><td>Milliseconds to wait for the self test phase to succeed before we force reset. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>File Request Wait (ms)</td><td>Value must be a non-negative integer</td><td>10000 </td><td>Milliseconds to wait before requesting data blocks from the OTA service if nothing is happening. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Max Thingname Length</td><td>Value must be a non-negative integer</td><td>64 </td><td>The maximum allowed length of the thing name used by the OTA agent. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Max Num Blocks Request</td><td>Value must be a non-negative integer</td><td>1 </td><td>The maximum number of data blocks requested from OTA streaming service. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Max Num Request Momentum</td><td>Value must be a non-negative integer</td><td>32 </td><td>The maximum number of requests allowed to send without a response before we abort. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Ota Update Status Frequency</td><td>Value must be a non-negative integer</td><td>64 </td><td>How frequently the device will report its OTA progress to the cloud. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Max Num OTA Data Buffers</td><td>Value must be a non-negative integer</td><td>1 </td><td>The number of data buffers reserved by the OTA agent. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Allow Downgrade</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Allowed</li>
@@ -236,11 +316,11 @@ Allowed</li>
 Disallowed</li>
 </ul>
 </td><td>Disallowed </td><td>Flag to enable booting into updates that have an identical or lower version than the current version. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Ota Firmware Update File Type ID</td><td>Value must be a non-negative integer</td><td>0 </td><td>The file type id received in the job document. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Enabled Control Protocol</td><td>OTA Control Over MQTT</td><td>OTA Control Over MQTT </td><td>The protocol selected for OTA control operations. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>Enabled Data Protcols</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 OTA Data Over MQTT</li>
@@ -250,7 +330,7 @@ OTA Data Over HTTP</li>
 OTA Data Over MQTT and HTTP</li>
 </ul>
 </td><td>OTA Data Over MQTT </td><td>The protocol selected for OTA data operations. </td></tr>
-<tr>
+<tr class="tree_none">
 <td>OTA Primary Data Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 OTA Data Over MQTT</li>
@@ -258,6 +338,8 @@ OTA Data Over MQTT</li>
 OTA Data Over HTTP</li>
 </ul>
 </td><td>OTA Data Over MQTT </td><td>The preferred protocol selected for OTA data operations. </td></tr>
+<tr class="tree_none">
+<td>OTA Events Polling Timeout (ms)</td><td>Value must be a non-negative integer</td><td>1000 </td><td>The polling timeout (milliseconds) to receive messages from event queue. </td></tr>
 </table>
 </p>
 <h1><a class="anchor" id="rm-aws-ota-pal-mcuboot-usage_notes"></a>
@@ -274,7 +356,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

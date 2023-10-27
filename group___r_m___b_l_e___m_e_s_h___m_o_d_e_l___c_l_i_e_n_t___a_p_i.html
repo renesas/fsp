@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -169,27 +247,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___m_o_d_
 <p>Interface for Bluetooth Low Energy Mesh Model Client functions. </p>
 <h1><a class="anchor" id="RM_BLE_MESH_MODEL_CLIENT_API_Summary"></a>
 Summary</h1>
-<p>The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Client (BLE MESH MODEL CLIENT) middleware provides Bluetooth Low Energy Mesh Model Client functionality.</p>
-<p>The Bluetooth Low Energy Mesh Model Client interface can be implemented by:</p><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Battery Client (rm_mesh_generic_battery_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Default Transition Time Client (rm_mesh_generic_dtt_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Level Client (rm_mesh_generic_level_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Location Client (rm_mesh_generic_loc_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___c_l_t.html">Bluetooth Low Energy Mesh Network Generic On Off Client (rm_mesh_generic_on_off_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Power Level Client (rm_mesh_generic_pl_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Power On Off Client (rm_mesh_generic_poo_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html">Bluetooth Low Energy Mesh Network Generic Property Client (rm_mesh_generic_prop_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html">Bluetooth Low Energy Mesh Network Health Client (rm_mesh_health_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___c_l_t.html">Bluetooth Low Energy Mesh Network Light Control Client (rm_mesh_light_ctl_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___c_l_t.html">Bluetooth Low Energy Mesh Network Light Hsl Client (rm_mesh_light_hsl_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___c_l_t.html">Bluetooth Low Energy Mesh Network Light Location Client (rm_mesh_light_lc_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html">Bluetooth Low Energy Mesh Network Light Lightness Client (rm_mesh_light_lightness_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___c_l_t.html">Bluetooth Low Energy Mesh Network Light Xyl Client (rm_mesh_light_xyl_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html">Bluetooth Low Energy Mesh Network Scene Client (rm_mesh_scene_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html">Bluetooth Low Energy Mesh Network Scheduler Client (rm_mesh_scheduler_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html">Bluetooth Low Energy Mesh Network Time Client (rm_mesh_time_clt)</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html">Bluetooth Low Energy Mesh Network Sensor Client (rm_mesh_sensor_clt)</a> </li>
-</ul>
+<p>The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Client (BLE MESH MODEL CLIENT) middleware provides Bluetooth Low Energy Mesh Model Client functionality. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -313,8 +371,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a91a1c9d4bc4b1ff4d2bfbe16ab1c29d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3dfa31cd026481ddb36f982efa44880"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#af3dfa31cd026481ddb36f982efa44880">close</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:af3dfa31cd026481ddb36f982efa44880"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a468443f9957fcd21a9cc07df13fe64e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a468443f9957fcd21a9cc07df13fe64e7">setModelHandle</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> model_handle)</td></tr>
-<tr class="separator:a468443f9957fcd21a9cc07df13fe64e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefdd178892bc2093f6c4c0f0a72db7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#aefdd178892bc2093f6c4c0f0a72db7e9">getModelHandle</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> *const p_model_handle)</td></tr>
 <tr class="separator:aefdd178892bc2093f6c4c0f0a72db7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2102d3db1562e88c56bc8c9373522891"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a2102d3db1562e88c56bc8c9373522891">sendReliablePdu</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, uint32_t req_opcode, void const *const p_parameter, uint32_t rsp_opcode)</td></tr>
@@ -332,27 +388,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to open client model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html#ga5e68b3b4a498f7ff98a293ca74cc7714">RM_MESH_GENERIC_BATTERY_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html#ga9fbed4ef74431f68e1e7b1c1624fa4a7">RM_MESH_GENERIC_DTT_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html#ga98085e9fe7e7c1315f1570fbfb7bfc0a">RM_MESH_GENERIC_LEVEL_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___c_l_t.html#ga9d6a84d03d197cb71d4718923692d572">RM_MESH_GENERIC_LOC_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___c_l_t.html#gae2ef82fb61feb5fb683297644a5ffda0">RM_MESH_GENERIC_ON_OFF_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga51c23c408f546d0497e575126952e0f7">RM_MESH_GENERIC_PL_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___c_l_t.html#gad9c0f11fe73fbc273513c3821db6e736">RM_MESH_GENERIC_POO_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga094c7b36d45f3184e09759681703354c">RM_MESH_GENERIC_PROP_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___c_l_t.html#ga6cb5400049478896c2b0e2d7ca51a78e">RM_MESH_LIGHT_CTL_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___c_l_t.html#ga152108f45a937b5777d7962d858a1e1a">RM_MESH_LIGHT_HSL_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___c_l_t.html#ga31a7b63816a3a5508580b16169bb827b">RM_MESH_LIGHT_LC_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#gac1d64e78ffdee12cb84fc0026e72c6e1">RM_MESH_LIGHT_LIGHTNESS_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___c_l_t.html#ga60d21a5514284f06de0530c8146f7230">RM_MESH_LIGHT_XYL_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#ga4312cc06961e164dcdae0fe6992855b6">RM_MESH_SCENE_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html#gac23509f1c6f3d74db22a035e6cfc37f9">RM_MESH_SCHEDULER_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga5e3ac17cef8bbbd6c629a988fbec8634">RM_MESH_TIME_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html#ga9ad813884311da3b770fec20fd84bbbc">RM_MESH_SENSOR_CLT_Open()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#gab9577355472debbbb7ab31c0f88faa08">RM_MESH_HEALTH_CLIENT_Open()</a></li>
-</ul>
-</dd></dl>
+<p>API to open client model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -374,72 +410,10 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to close client model. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html#ga578865c4f190801be1690ae25dea4adc">RM_MESH_GENERIC_BATTERY_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html#ga968aa5886329895967826d8c1c57e12e">RM_MESH_GENERIC_DTT_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html#ga3b8de636732b29fd9ddf866877aaf070">RM_MESH_GENERIC_LEVEL_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___c_l_t.html#gaadbaedb6507c86a44112d18a1252532f">RM_MESH_GENERIC_LOC_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___c_l_t.html#gad93b370736d8b5b3f7457fbf1c30b517">RM_MESH_GENERIC_ON_OFF_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga53c5c3bddfad2cc5a2706b094d66854a">RM_MESH_GENERIC_PL_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___c_l_t.html#ga8a48ac9a9856b3e504dc550bb6898180">RM_MESH_GENERIC_POO_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga57e9a739cb85aa1641da82e5c5d13907">RM_MESH_GENERIC_PROP_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___c_l_t.html#ga930bab94e2826f2c9ea3255b9d3455de">RM_MESH_LIGHT_CTL_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___c_l_t.html#ga09e3bd8285712b7f1039e6ab7a79abc9">RM_MESH_LIGHT_HSL_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___c_l_t.html#ga06f3e24f44102dd1829c7f9d97974a3d">RM_MESH_LIGHT_LC_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#gabd98524f6845fde5cd5d0b603cbc7a53">RM_MESH_LIGHT_LIGHTNESS_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___c_l_t.html#ga01106d6fe8fd1ba8ec878e406138a9f9">RM_MESH_LIGHT_XYL_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#gabaf7b683de8c4cce5c0b909c4352d599">RM_MESH_SCENE_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html#ga864ff5da62d969694ff7671400cf1a2a">RM_MESH_SCHEDULER_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#gaba20e64e606398d0e40fbd9de83a7199">RM_MESH_TIME_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html#ga9a4e28f0f7981ebbbab677ef30845cd2">RM_MESH_SENSOR_CLT_Close()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga93654e3bdf20ae07cfa8a942904adb17">RM_MESH_HEALTH_CLIENT_Close()</a></li>
-</ul>
-</dd></dl>
+<p>API to close client model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a468443f9957fcd21a9cc07df13fe64e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a468443f9957fcd21a9cc07df13fe64e7">&#9670;&nbsp;</a></span>setModelHandle</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_model_client_api_t::setModelHandle) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> model_handle)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DEPRECATED - API to set Model client model handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html#gafaab86717c293305d7f7e3aaf9884114">RM_MESH_GENERIC_BATTERY_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html#gafbf2200bae501a9f1a86d63ab004ae76">RM_MESH_GENERIC_DTT_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html#gae4ed019457fb045921b831490b6a07ef">RM_MESH_GENERIC_LEVEL_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___c_l_t.html#gaeb1b40914893c6cdc44947d6a95c4248">RM_MESH_GENERIC_LOC_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___c_l_t.html#gaa52b1e2b69c5d2acf833f0ceecade178">RM_MESH_GENERIC_ON_OFF_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#gad6b02a6b334178703178c8c3ed5dcf48">RM_MESH_GENERIC_PL_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___c_l_t.html#gad819e6670067879721b14a40d3eb1c00">RM_MESH_GENERIC_POO_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga792947721a61a24bc433e3e93a772635">RM_MESH_GENERIC_PROP_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___c_l_t.html#ga3fbbaa7a9c83f583e51b490c213ad119">RM_MESH_LIGHT_CTL_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___c_l_t.html#gac1736ae79ffe8258827a20ccf2144145">RM_MESH_LIGHT_HSL_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___c_l_t.html#gabf05e44d89c5023bc7d82a3e76a81362">RM_MESH_LIGHT_LC_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga3edc593e26c31dbd5c0ad33be0355633">RM_MESH_LIGHT_LIGHTNESS_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___c_l_t.html#ga1da3a5151b9d4fe1dcd6e47e0d5c2589">RM_MESH_LIGHT_XYL_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#ga3632d955093155b19884c1aaf8a35844">RM_MESH_SCENE_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html#ga74528baad50b2482621c8523cdd9c12b">RM_MESH_SCHEDULER_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga7d77f400de19b8f7e4734cfa335420f1">RM_MESH_TIME_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html#ga57107b4c5709b736ae798033456133de">RM_MESH_SENSOR_CLT_SetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga332bf4ff2ca68f3fc36ff9a91ed71d38">RM_MESH_HEALTH_CLIENT_SetModelHandle()</a></li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Model handle to be assigned. </td></tr>
   </table>
   </dd>
 </dl>
@@ -457,27 +431,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to get Model client model handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html#ga9b293c0937608526bcb157409d7fbf69">RM_MESH_GENERIC_BATTERY_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html#ga7bb1ada6f60c07c92e8c219a1e856115">RM_MESH_GENERIC_DTT_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html#ga3103bb5e84bf50e9fef43846b001006e">RM_MESH_GENERIC_LEVEL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___c_l_t.html#ga8fab285eea12dea16fc23de016879c43">RM_MESH_GENERIC_LOC_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___c_l_t.html#ga15d702b441760d081a70b4a4278d647f">RM_MESH_GENERIC_ON_OFF_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga7afc9f8985e4e02fcfdc5f0e2516e325">RM_MESH_GENERIC_PL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___c_l_t.html#gab389abd0598e256e065ef8653ff651f3">RM_MESH_GENERIC_POO_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga16c7b35ee9483327868e7be237bf1112">RM_MESH_GENERIC_PROP_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___c_l_t.html#gaa373bc321757b2e2763a2cb5dfcd3670">RM_MESH_LIGHT_CTL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___c_l_t.html#ga3f8f99a55ec79753ffd77ed500ef7b6c">RM_MESH_LIGHT_HSL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___c_l_t.html#gad8488604ebd63034894733e750e33cf0">RM_MESH_LIGHT_LC_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga37c9588d5cf8f15f1acc555938da2972">RM_MESH_LIGHT_LIGHTNESS_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___c_l_t.html#ga3826f3e013f4b3fca195dc439c5247f9">RM_MESH_LIGHT_XYL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#gaf16f19b70222f58e50d30bd62e79ad1e">RM_MESH_SCENE_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html#gaa86ca63bc3414f1812e6c6e68d24e22c">RM_MESH_SCHEDULER_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga9f9ce66e29efb7b8ac14299e43c29f63">RM_MESH_TIME_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html#gaf5797fee6f8f262de908987fecace9e7">RM_MESH_SENSOR_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga91aa409f4e7aa12a8e540d9503b9583c">RM_MESH_HEALTH_CLIENT_GetModelHandle()</a></li>
-</ul>
-</dd></dl>
+<p>API to get Model client model handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -499,27 +453,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to send acknowledged commands. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html#ga9b293c0937608526bcb157409d7fbf69">RM_MESH_GENERIC_BATTERY_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html#ga7bb1ada6f60c07c92e8c219a1e856115">RM_MESH_GENERIC_DTT_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html#ga3103bb5e84bf50e9fef43846b001006e">RM_MESH_GENERIC_LEVEL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___c_l_t.html#ga8fab285eea12dea16fc23de016879c43">RM_MESH_GENERIC_LOC_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___o_n___o_f_f___c_l_t.html#ga15d702b441760d081a70b4a4278d647f">RM_MESH_GENERIC_ON_OFF_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_l___c_l_t.html#ga7afc9f8985e4e02fcfdc5f0e2516e325">RM_MESH_GENERIC_PL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_o_o___c_l_t.html#gab389abd0598e256e065ef8653ff651f3">RM_MESH_GENERIC_POO_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___p_r_o_p___c_l_t.html#ga16c7b35ee9483327868e7be237bf1112">RM_MESH_GENERIC_PROP_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___c_l_t.html#gaa373bc321757b2e2763a2cb5dfcd3670">RM_MESH_LIGHT_CTL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___c_l_t.html#ga3f8f99a55ec79753ffd77ed500ef7b6c">RM_MESH_LIGHT_HSL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_c___c_l_t.html#gad8488604ebd63034894733e750e33cf0">RM_MESH_LIGHT_LC_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___l_i_g_h_t_n_e_s_s___c_l_t.html#ga37c9588d5cf8f15f1acc555938da2972">RM_MESH_LIGHT_LIGHTNESS_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___x_y_l___c_l_t.html#ga3826f3e013f4b3fca195dc439c5247f9">RM_MESH_LIGHT_XYL_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_e_n_e___c_l_t.html#gaf16f19b70222f58e50d30bd62e79ad1e">RM_MESH_SCENE_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html#gaa86ca63bc3414f1812e6c6e68d24e22c">RM_MESH_SCHEDULER_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga9f9ce66e29efb7b8ac14299e43c29f63">RM_MESH_TIME_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html#gaf5797fee6f8f262de908987fecace9e7">RM_MESH_SENSOR_CLT_GetModelHandle()</a></li>
-<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga91aa409f4e7aa12a8e540d9503b9583c">RM_MESH_HEALTH_CLIENT_GetModelHandle()</a></li>
-</ul>
-</dd></dl>
+<p>API to send acknowledged commands.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -585,10 +519,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BLE MESH MODEL CLIENT control block. Allocate an instance specific control block to pass into the BLE mesh model health client API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>rm_ble_mesh_health_client_instance_ctrl_t </li>
-</ul>
-</dd></dl>
+<p>BLE MESH MODEL CLIENT control block. Allocate an instance specific control block to pass into the BLE mesh model health client API calls. </p>
 
 </div>
 </div>
@@ -598,7 +529,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

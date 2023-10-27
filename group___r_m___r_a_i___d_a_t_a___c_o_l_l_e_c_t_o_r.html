@@ -27,6 +27,84 @@
   $(document).ready(function() { init_search(); });
 </script>
 <link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -37,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v4.6.0</span>
+   &#160;<span id="projectnumber">Release v5.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,20 +269,24 @@ Functions</h2></td></tr>
 <p>Middleware to implement the Data Collector for Reality AI applications. This module implements the <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html">Data Collector Interface</a>. </p>
 <h1><a class="anchor" id="rm-rai-data-collector-overview"></a>
 Overview</h1>
-<p>Data Collector is to abstract the collection of data from sensors so that samples are collected and accumulated into fixed length frames before being made available to upper modules/application. Support of "snapshot" mode and "data feed" mode are required to accommodate for background and cooperative data collection. Each sensor will be captured into a separate frame buffer. Frame buffers are allocated by users, and they shall have the same amount of data samples (int32_t, float, uint8_t etc). User application has to make sure that each frame buffer will be filled up at the same rate. PING-PONG buffer is required for seamless operation.</p>
-<p>When all frame buffers are filled up, they will be provided to the upper modules/application via data ready callback. When they are consumed, upper module has to release them. Ideally buffers will be released before the other set of buffers are filled up. However, it is possible that frame buffers will overrun due to the fact that upper module may take longer time to process the data in some cases. If it happens, application will be notified via the error callback. No intervention is required from user side in this case. Buffer overrun will go away when frame buffers are released. However, if there is a buffer-out-of-sync error, users need to find out whether all sensors work at the same pace.</p>
+<p>Data Collector is to abstract the collection of data from sensors so that data samples are accumulated into fixed length frames before being made available to application. Support of "snapshot" mode and "data feed" mode are required to accommodate for background and cooperative data collection. Each mode supports 8 sensor channels maximally. Each sensor channel will be captured into a separate frame buffer. Frame buffers shall have the same amount of data samples, however, data type can be different(int32_t, float, uint8_t etc). Users have to make sure that frame buffers will be filled up at the same rate.</p>
+<p>When all frame buffers are filled up, they will be provided to the application via data ready callback. After they are consumed, application has to release them by calling <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gace0a86245132ca58a6d68f574a52d213">RM_RAI_DATA_COLLECTOR_BufferRelease()</a>. For seamless operation, PING-PONG buffer will be used. Ideally buffers will be released before the other set of buffers are filled up. However, it is possible that frame buffers will overrun due to the fact that application may take longer time to process the data in some cases. If it happens, application will be notified with a buffer-overrun event via the error callback. No intervention is required from user side in this case. Buffer overrun will disappear when frame buffers are released. However, if not all sensor channels are configured to work at the same pace, application will get a buffer-out-of-sync error. Users have to reconfigure sensor channels and ensure all of them will work at the same pace. If sensor channels can't work at the same rate, then multiple data collector instances are required.</p>
 <h2><a class="anchor" id="rm-rai-data-collector-features"></a>
 Features</h2>
 <ul>
 <li>Snapshot mode and data feed mode are supported</li>
-<li>Maximumlly 8 sensors are supported for each mode</li>
-<li>Mix mode is supported(Snapshot mode and data feed mode work symultaneously)</li>
+<li>Maximally 8 sensors are supported for each mode</li>
+<li>Mix mode is supported(both snapshot mode and data feed mode are enabled)</li>
 </ul>
 <h2>Snapshot Mode</h2>
-<p>Snapshot mode will periodically pull data from the user-specified places and save to designated frame buffers in the background. Renesas MCUs are well equipped to support this mode. DTC with its chain mode enables data collection from various, potentially non-linear and different-sized sources, while the General PWM Timer (GPT) and the Asynchronous General Purpose Timer provides periodic interrupt that can be used as the activation source of DTC. When sensor source addresses are reigstered, application needs to start the timer so that DTC will start data collection.</p>
+<p>Snapshot mode will periodically pull data from the user-specified places and save to designated frame buffers. It requires a DTC module and a timer module. DTC will work in chain mode, which enables data collection from various, potentially non-linear and different-sized sources. Timer, either General PWM Timer (GPT) or Asynchronous General Purpose Timer, provides activation source for DTC to work periodically. To select this activation source, relevant interrupt has to be configured in the timer module. Application has to start the timer to enable DTC after sensor source addresses are registered.</p>
 <h2>Data Feed Mode</h2>
-<p>Data feed mode will require data producer to push data directly to the designated frame buffer whenever data is ready. Data can be pushed synchronously or asynchronously. Synchronous mode is for the use case that the data producer has a short amount of data to be copied to the frame buffer. Asynchronous mode is for dmac/dtc transfer. Application is responsible to initialize dmac/dtc transfer descriptors.</p>
-<p>Note when work in mixed mode, users must take care to make sure snapshot mode channels and data mode channels work at the same pace.</p>
+<p>Data feed mode will require data producer to push data directly to the designated frame buffer whenever data is ready. Data can be pushed synchronously or asynchronously. Synchronous mode is for use cases that the data producer has a short amount of data to be copied to the frame buffer. Asynchronous mode is to use DTC/DMAC for data transfer. Application has to add DTC/DMAC modules and initialize transfer descriptors for asynchronous transfer.</p>
+<h2>Usage Notes</h2>
+<ol type="1">
+<li>Do not use the DTC stack and timer stack of the data collector instance for data feed mode.</li>
+<li>Users must take care to make sure all channels of a data collector instance will work at the same pace.</li>
+</ol>
 <h1><a class="anchor" id="rm-rai-data-collector-configuration"></a>
 Configuration</h1>
 <p><a class="anchor" id="um_rai_data_collector_snapshot_complete_event_notification"></a><a class="anchor" id="um_rai_data_collector_datafeed_syncwrite_event_notification"></a><a class="anchor" id="um_rai_data_collector_datafeed_asyncwrite_event_notification"></a><a class="anchor" id="um_rai_data_collector_mixed_data_ready_event_notification"></a><a class="anchor" id="um_rai_data_collector_mixed_err_event_notification"></a><h2>Build Time Configurations for rm_rai_data_collector</h2>
@@ -212,7 +294,7 @@ The following build time configurations are defined in fsp_cfg/rm_rai_data_colle
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
+<tr class="tree_none">
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
@@ -222,96 +304,132 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-<tr>
-<td>Max Number Of Channels</td><td>Value must be less than or equal to 16</td><td>16 </td><td>Max number of channels. </td></tr>
+<tr class="tree_none">
+<td>Max Number Of Channels</td><td>Value must be a positive integer less than or equal to 16</td><td>16 </td><td>Max number of channels. </td></tr>
 </table>
  <h2>Configurations for Artificial Intelligence &gt; Data Collector (rm_rai_data_collector)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Artificial Intelligence &gt; Data Collector (rm_rai_data_collector).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_rai_data_collector0 </td><td>Module name. </td></tr>
-<tr>
-<td>General &gt; ID</td><td>Manual Entry</td><td>0 </td><td>Instance ID </td></tr>
-<tr>
-<td>General &gt; Frame Buffer Length</td><td>Value must be a positive integer</td><td>100 </td><td>Length of frame buffers in data samples. </td></tr>
-<tr>
-<td>General &gt; Data Ready Callback</td><td>Name must be a valid C symbol</td><td>rai_data_collector0_callback </td><td>Callback function on data ready. </td></tr>
-<tr>
-<td>General &gt; Error Callback</td><td>Name must be a valid C symbol</td><td>rai_data_collector0_error_callback </td><td>Callback function for error events. </td></tr>
-<tr>
-<td>General &gt; Context</td><td>Manual Entry</td><td>NULL </td><td></td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 0 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch0 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 0 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 1 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch1 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 1 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 2 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch2 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 2 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 3 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch3 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 3 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 4 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch4 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 4 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 5 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch5 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 5 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 6 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch6 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 6 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 7 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch7 </td><td>Channel name </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channel 7 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Data Feed Mode &gt; Channels</td><td>Value must be between 0 and 8</td><td>0 </td><td>Number of Data Feed Mode channels. </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 0 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch0 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 0 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 1 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch1 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 1 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 2 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch2 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 2 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 3 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch3 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 3 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 4 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch4 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 4 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 5 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch5 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 5 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 6 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch6 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 6 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 7 &gt; Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch7 </td><td>Channel name </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channel 7 &gt; Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
-<tr>
-<td>Snapshot Mode &gt; Channels</td><td>Value must be between 0 and 8</td><td>0 </td><td>Number of snapshot mode channels. </td></tr>
-<tr>
-<td>Snapshot Mode &gt; DTC Transfer Count</td><td>Must be an integer</td><td>1 </td><td>DTC transfer count on each activation </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_rai_data_collector0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ID</td><td>Value must be a positive integer.</td><td>0 </td><td>Instance ID </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Frame Buffer Length</td><td>Value must be a positive integer greater than 0</td><td>100 </td><td>Length of frame buffers in data samples. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Ready Callback</td><td>Name must be a valid C symbol</td><td>rai_data_collector0_callback </td><td>Callback function on data ready. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Callback</td><td>Name must be a valid C symbol</td><td>rai_data_collector0_error_callback </td><td>Callback function for error events. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 0  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch0 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 1  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch1 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 2  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch2 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 3  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch3 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 4  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch4 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 5  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch5 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 6  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch6 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Data Feed Mode &gt; Channel 7  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_data_feed_ch7 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channels</td><td>Value must be an integer between 0 and 8</td><td>0 </td><td>Number of Data Feed Mode channels. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 0  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch0 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 1  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch1 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 2  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch2 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 3  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch3 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 4  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch4 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 5  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch5 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 6  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch6 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Snapshot Mode &gt; Channel 7  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Name</td><td>Must be valid C variable name</td><td>dc0_snapshot_ch7 </td><td>Channel name </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Data Type</td><td>MCU Specific Options</td><td></td><td>Channel Data Type </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channels</td><td>Value must be an integer between 0 and 8</td><td>0 </td><td>Number of snapshot mode channels. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DTC Transfer Count</td><td>Value must be a positive integer greater than 0</td><td>1 </td><td>DTC transfer count on each activation </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-rai-data-collector-clock-configuration"></a>
@@ -322,9 +440,8 @@ Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
 <h1><a class="anchor" id="rm-rai-data-collector-examples"></a>
 Examples</h1>
-<h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the Data Collector implementation in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_rai_data_collector_example();</div><div class="line"><span class="keywordtype">void</span> data_ready_callback_test(<span class="keyword">const</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__callback__args__t">rai_data_collector_callback_args_t</a> * p_args);</div><div class="line"><span class="keywordtype">void</span> error_callback_test(<span class="keyword">const</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__error__callback__args__t">rai_data_collector_error_callback_args_t</a> * p_args);</div><div class="line"><span class="keywordtype">void</span> dma_callback(<span class="keyword">const</span> <span class="keywordtype">void</span> * p_args);</div><div class="line"><span class="keywordtype">void</span> timer_callback(<span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args);</div><div class="line"></div><div class="line"><span class="preprocessor">#define DC_TEST_REQUIRED_FRAME_LEN      (256U)</span></div><div class="line"><span class="preprocessor">#define DC_TEST_PING_PONG_BUFFER_LEN    (DC_TEST_REQUIRED_FRAME_LEN * 2U)</span></div><div class="line"><span class="preprocessor">#define DC_TEST_CHAN_BUFFER_LEN         (64U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define DC_TEST_SNAPSHOT_CHAN_COUNT     (3)</span></div><div class="line"><span class="preprocessor">#define DC_TEST_DATA_FEED_CHAN_COUNT    (3)</span></div><div class="line"><span class="preprocessor">#define DC_TEST_CHAN_COUNT              (DC_TEST_SNAPSHOT_CHAN_COUNT + DC_TEST_DATA_FEED_CHAN_COUNT)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define DC_TEST_VIRTUAL_CHAN_COUNT      (DC_TEST_DATA_FEED_CHAN_COUNT + (DC_TEST_SNAPSHOT_CHAN_COUNT &gt; 0 ? 1 : 0))</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__instance__t">timer_instance_t</a>    g_timer0;</div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> g_transfer0;</div><div class="line"></div><div class="line"><span class="keyword">static</span> uint8_t g_frame_buf[DC_TEST_CHAN_COUNT][DC_TEST_PING_PONG_BUFFER_LEN];</div><div class="line"><span class="keyword">static</span> uint8_t g_chan_buf[DC_TEST_CHAN_COUNT][DC_TEST_CHAN_BUFFER_LEN];</div><div class="line"></div><div class="line"><span class="keyword">static</span> uint8_t   g_data_feed_sync_buf[DC_TEST_CHAN_BUFFER_LEN];</div><div class="line"><span class="keyword">static</span> uint8_t * g_data_feed_async_dma_buf;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ga525e6a9d22d8fbd8772bd27f1ff92b5f">rai_data_collector_error_event_t</a> g_dc_error_event = RAI_DATA_COLLECTOR_ERROR_TYPE_NONE;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_exit = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__snapshot__cfg__t">rai_data_collector_snapshot_cfg_t</a> g_ss_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ac5f98311db103b661b46745b29bd2f3f">channels</a>     = DC_TEST_SNAPSHOT_CHAN_COUNT,</div><div class="line">    .transfer_len = DC_TEST_CHAN_BUFFER_LEN,</div><div class="line">    .p_timer      = &amp;g_timer0,         </div><div class="line">    .p_transfer   = &amp;g_transfer0,      </div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">const</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__data__feed__cfg__t">rai_data_collector_data_feed_cfg_t</a> g_df_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a60d3e9675d95e1fe70429ec65b020f57">channels</a> = DC_TEST_DATA_FEED_CHAN_COUNT, </div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Initialize g_extended_cfg */</span></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> transfer_info[DC_TEST_SNAPSHOT_CHAN_COUNT];</div><div class="line"><span class="keyword">static</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__frame__buffer__t">rai_data_collector_frame_buffer_t</a>        ping_pong_buf[DC_TEST_CHAN_COUNT];</div><div class="line"><span class="keyword">static</span> rai_data_collector_frame_buffer_handle_t ping_pong_buf_hnd[DC_TEST_VIRTUAL_CHAN_COUNT];</div><div class="line"></div><div class="line"><span class="keyword">const</span> rai_data_collector_extended_cfg_t g_extended_cfg =</div><div class="line">{</div><div class="line">    .p_ping_pong_buf     = ping_pong_buf, <span class="comment">// Frame buffer used as PING-PONG buffer</span></div><div class="line">    .p_ping_pong_buf_hnd = ping_pong_buf_hnd,</div><div class="line">    .p_transfer_info     = transfer_info,</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__cfg__t">rai_data_collector_cfg_t</a> g_dc_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a4e0819c1504cd906b84081a2132ca590">p_snapshot_cfg</a>     = &amp;g_ss_cfg,</div><div class="line">    .p_data_feed_cfg    = &amp;g_df_cfg,</div><div class="line">    .<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a60d3e9675d95e1fe70429ec65b020f57">channels</a>           = DC_TEST_CHAN_COUNT,</div><div class="line">    .virt_channels      = DC_TEST_VIRTUAL_CHAN_COUNT,</div><div class="line">    .channel_ready_mask = 0,</div><div class="line">    .required_frame_len = DC_TEST_REQUIRED_FRAME_LEN,</div><div class="line">    .p_callback         = data_ready_callback_test,</div><div class="line">    .p_error_callback   = error_callback_test,</div><div class="line">    .p_context          = NULL</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__instance__t">rai_data_collector_instance_t</a> g_dc_ctrl;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_rai_data_collector_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize channel frame buffers */</span></div><div class="line">    <span class="keywordflow">for</span> (int32_t i = 0; i &lt; DC_TEST_CHAN_COUNT; i++)</div><div class="line">    {</div><div class="line">        ping_pong_buf[i].<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a341c817d460166b57a35bdfa076df39f">p_buf</a>     = (<span class="keywordtype">void</span> *) g_frame_buf[i]; </div><div class="line">        ping_pong_buf[i].<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ae2d94f1523ccff4246eb2ba13623f7b7">data_type</a> = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#gga5ebafdaaa775caf42d3b0465d9e0abb9ad96b11215dd662c46aed6c7b4ab97903">RAI_DATA_COLLECTOR_DATA_TYPE_UINT8_T</a>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize channel ready mask */</span></div><div class="line">    <span class="keywordflow">for</span> (int32_t i = 0; i &lt; DC_TEST_VIRTUAL_CHAN_COUNT; i++)</div><div class="line">    {</div><div class="line">        g_dc_cfg.<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a916bd81fdf5454ced007703d102b64a7">channel_ready_mask</a> |= 1 &lt;&lt; i;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize transfer info */</span></div><div class="line">    <span class="keywordflow">for</span> (int32_t i = 0; i &lt; DC_TEST_SNAPSHOT_CHAN_COUNT; i++)</div><div class="line">    {</div><div class="line">        transfer_info[i].transfer_settings_word_b.dest_addr_mode = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51a7665741e25c4cc78fd24745efbd2eaad">TRANSFER_ADDR_MODE_INCREMENTED</a>;</div><div class="line">        transfer_info[i].transfer_settings_word_b.src_addr_mode  = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51a7665741e25c4cc78fd24745efbd2eaad">TRANSFER_ADDR_MODE_INCREMENTED</a>;</div><div class="line">        transfer_info[i].transfer_settings_word_b.repeat_area    = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga769464d2068881ccb44573c96167812ba2002ef7bbc49f7c9ebfac1618ba3c391">TRANSFER_REPEAT_AREA_SOURCE</a>;</div><div class="line">        transfer_info[i].transfer_settings_word_b.irq            = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggad71bdadb7f486bb5d3ca6ff508dc0b08ada378ad830e44cc0c25d4fe2413e11de">TRANSFER_IRQ_END</a>;</div><div class="line">        transfer_info[i].transfer_settings_word_b.size           = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12accfeb24892ec24e42ccf14e4d4896c21">TRANSFER_SIZE_1_BYTE</a>; <span class="comment">// data type is uint8_t</span></div><div class="line">        transfer_info[i].transfer_settings_word_b.chain_mode     = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga68f81dc8b9ca46fbe3a1e556c020436dadab837d29a543149d35ed2fd28d8e4e8">TRANSFER_CHAIN_MODE_EACH</a>;</div><div class="line">        transfer_info[i].transfer_settings_word_b.mode           = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a>;</div><div class="line">        transfer_info[i].<a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a176dc2f3d1edfc321fa248a7e4c3b549">p_dest</a>     = ping_pong_buf[i + DC_TEST_DATA_FEED_CHAN_COUNT].<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a341c817d460166b57a35bdfa076df39f">p_buf</a>;</div><div class="line">        transfer_info[i].<a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ad264d20a1b0afc0100c2e3b1d5a1a1c8">p_src</a>      = (<span class="keywordtype">void</span> <span class="keyword">const</span> *) NULL;</div><div class="line">        transfer_info[i].<a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9781e58bb7cb2ee40de446936d523814">num_blocks</a> = 1;</div><div class="line">        transfer_info[i].<a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#aa92c5d06d07e7d13c16f9704a431c7cb">length</a>     = g_ss_cfg.<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#aee2b3add7cb7faf4592ed506ae377fd3">transfer_len</a>;</div><div class="line">    }</div><div class="line"></div><div class="line">    transfer_info[DC_TEST_SNAPSHOT_CHAN_COUNT - 1].transfer_settings_word_b.chain_mode = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga68f81dc8b9ca46fbe3a1e556c020436dae974453c306b4959252905e362d75067">TRANSFER_CHAIN_MODE_DISABLED</a>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga1fcb51daebaffbb5c976c07cc25331e3">RM_RAI_DATA_COLLECTOR_Open</a>(&amp;g_dc_ctrl, &amp;g_dc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; DC_TEST_SNAPSHOT_CHAN_COUNT; i++)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gaa857b65a4646a7ab7a1c56a1c055b9eb">RM_RAI_DATA_COLLECTOR_SnapshotChannelRegister</a>(&amp;g_dc_ctrl, i, g_chan_buf[i + DC_TEST_DATA_FEED_CHAN_COUNT]);</div><div class="line"></div><div class="line">        <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga4f19f80b96e1ef9eacdf06fa2a5833bf">RM_RAI_DATA_COLLECTOR_SnapshotStart</a>(&amp;g_dc_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gac0a93212201d79701e7a869f5a0ae6fa">RM_RAI_DATA_COLLECTOR_ChannelBufferGet</a>(&amp;g_dc_ctrl, 0, (<span class="keywordtype">void</span> **) &amp;g_data_feed_async_dma_buf);</div><div class="line"></div><div class="line">    <span class="comment">/* use g_data_feed_async_dma_buf for dma transfer */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Process error event */</span></div><div class="line">        <span class="keywordflow">if</span> (RAI_DATA_COLLECTOR_ERROR_TYPE_BUF_OUT_OF_SYNC == g_dc_error_event)</div><div class="line">        {</div><div class="line">            <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga66034af224cefa36141f9d308fce4834">RM_RAI_DATA_COLLECTOR_SnapshotStop</a>(&amp;g_dc_ctrl);</div><div class="line"></div><div class="line">            <span class="comment">/* Stop data feed mode channels */</span></div><div class="line"></div><div class="line">            <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga522ec61ef5dcf5b938c3bd2ba3fc2460">RM_RAI_DATA_COLLECTOR_BufferReset</a>(&amp;g_dc_ctrl);</div><div class="line"></div><div class="line">            <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga4f19f80b96e1ef9eacdf06fa2a5833bf">RM_RAI_DATA_COLLECTOR_SnapshotStart</a>(&amp;g_dc_ctrl);</div><div class="line"></div><div class="line">            <span class="comment">/* Start data feed mode channels */</span></div><div class="line"></div><div class="line">            <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gac0a93212201d79701e7a869f5a0ae6fa">RM_RAI_DATA_COLLECTOR_ChannelBufferGet</a>(&amp;g_dc_ctrl, 0, (<span class="keywordtype">void</span> **) &amp;g_data_feed_async_dma_buf);</div><div class="line"></div><div class="line">            <span class="comment">/* use g_data_feed_async_dma_buf for dma transfer */</span></div><div class="line">        }</div><div class="line">    } <span class="keywordflow">while</span> (!g_exit);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga66034af224cefa36141f9d308fce4834">RM_RAI_DATA_COLLECTOR_SnapshotStop</a>(&amp;g_dc_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga3a4f9c1526ed17b471d1e8adbad52a1f">RM_RAI_DATA_COLLECTOR_Close</a>(&amp;g_dc_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dma_callback (<span class="keyword">const</span> <span class="keywordtype">void</span> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line"></div><div class="line">    <span class="comment">/* Prepare for next transfer.*/</span></div><div class="line"></div><div class="line">    <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gac0a93212201d79701e7a869f5a0ae6fa">RM_RAI_DATA_COLLECTOR_ChannelBufferGet</a>(&amp;g_dc_ctrl, 0, (<span class="keywordtype">void</span> **) &amp;g_data_feed_async_dma_buf);</div><div class="line"></div><div class="line">    <span class="comment">/* use g_data_feed_async_dma_buf for dma transfer */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> timer_callback (<span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga57fec9f68b46003f1189644789a02e4f">RM_RAI_DATA_COLLECTOR_ChannelWrite</a>(&amp;g_dc_ctrl, 0, (<span class="keywordtype">void</span> *) g_data_feed_sync_buf, DC_TEST_CHAN_BUFFER_LEN);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Data ready callback called when all sensor data are ready. */</span></div><div class="line"><span class="keywordtype">void</span> data_ready_callback_test (<span class="keyword">const</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__callback__args__t">rai_data_collector_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line"></div><div class="line">    <span class="comment">/* TO DO: consume frame buffers.</span></div><div class="line"><span class="comment">     * Note this callback may be called in ISR.Please return as fast as possible.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Error callback when there is buffer overflow. */</span></div><div class="line"><span class="keywordtype">void</span> error_callback_test (<span class="keyword">const</span> <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__error__callback__args__t">rai_data_collector_error_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* TO DO */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line"></div><div class="line">    g_dc_error_event = p_args-&gt;<a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a76519f9a0da8f503c13ebaa4cb88929a">event</a>;</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<h2>Snapshot Mode Example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_rai_data_collector_snapshot_mode_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga1fcb51daebaffbb5c976c07cc25331e3">RM_RAI_DATA_COLLECTOR_Open</a>(&amp;g_dc_ctrl, &amp;g_dc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; DC_TEST_CHAN_COUNT; i++)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gaa857b65a4646a7ab7a1c56a1c055b9eb">RM_RAI_DATA_COLLECTOR_SnapshotChannelRegister</a>(&amp;g_dc_ctrl, i, g_sensor_buf[i]);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga4f19f80b96e1ef9eacdf06fa2a5833bf">RM_RAI_DATA_COLLECTOR_SnapshotStart</a>(&amp;g_dc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Process error event */</span></div><div class="line">        <span class="keywordflow">if</span> (RAI_DATA_COLLECTOR_ERROR_TYPE_BUF_OUT_OF_SYNC &amp; g_dc_error_event)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Error! Please reconfigure sensors to make sure they all work at the same pace.*/</span></div><div class="line"></div><div class="line">            g_dc_error_event = RAI_DATA_COLLECTOR_ERROR_TYPE_NONE;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (g_data_ready)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Process collected data saved in g_frame_buf. */</span></div><div class="line">            do_data_process(g_data_ready_callback_arg.instance_id,</div><div class="line">                            g_data_ready_callback_arg.frames,</div><div class="line">                            g_data_ready_callback_arg.frame_buf_len,</div><div class="line">                            g_data_ready_callback_arg.p_frame_buf);</div><div class="line"></div><div class="line">            g_data_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">            <span class="comment">/* Release buffer when done */</span></div><div class="line"></div><div class="line">            <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#gace0a86245132ca58a6d68f574a52d213">RM_RAI_DATA_COLLECTOR_BufferRelease</a>(&amp;g_dc_ctrl);</div><div class="line">        }</div><div class="line">    } <span class="keywordflow">while</span> (!g_exit);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga66034af224cefa36141f9d308fce4834">RM_RAI_DATA_COLLECTOR_SnapshotStop</a>(&amp;g_dc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#ga3a4f9c1526ed17b471d1e8adbad52a1f">RM_RAI_DATA_COLLECTOR_Close</a>(&amp;g_dc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrai__data__collector__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html#structrai__data__collector__instance__ctrl__t">rai_data_collector_instance_ctrl_t</a></td></tr>
@@ -418,7 +535,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Config transfer src address for snapshot mode channel</p>
-<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a6091f9105a74cf770763b1c689c663eb">rai_data_collector_api_t::snapshotChannelRegister()</a>.</p>
+<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a7ae7d2f5ae2c8f86bbef223881bf4d86">rai_data_collector_api_t::snapshotChannelRegister()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Src addresses are set. </td></tr>
@@ -518,7 +635,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get channel destination buffer address for asynchronous data transfer.</p>
-<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a951f80ffd3ceb4543555a7e4f33eae6d">rai_data_collector_api_t::channelBufferGet()</a>.</p>
+<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a05addc08744793ed04426f85257eff31">rai_data_collector_api_t::channelBufferGet()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Buffer avaialble. </td></tr>
@@ -568,7 +685,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Synchronouse data transfer using CPU copy.</p>
-<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a374f35742bc4e56f50dffb7680e16d99">rai_data_collector_api_t::channelWrite()</a>.</p>
+<p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a4cb42b2d9d9e9f64d124a235f6de2044">rai_data_collector_api_t::channelWrite()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data copy completed. </td></tr>
@@ -675,7 +792,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v4.6.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
