@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.0</span>
+   &#160;<span id="projectnumber">Release v5.0.1</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -856,7 +856,6 @@ Stack Monitor Underflow Detection</h3>
 <h2><a class="anchor" id="r-freertos-port-low-power-modes"></a>
 Low Power Modes</h2>
 <p><a class="anchor" id="um_freertos_low_power"></a>When FreeRTOS is configured to use tickless idle, the idle task executes WFI() when no task is ready to run. If the MCU is configured to enter software standby mode or deep software standby mode when the idle task executes WFI(), the RA FreeRTOS port changes the low power mode to sleep mode so the idle task can wake from SysTick. The low power mode settings are restored when the MCU wakes from sleep mode.</p>
-<p>On RA8, there are delays inserted before and after switching to a lower power mode based on BSP configuration options and current CPUCLK speed. These delays do not disable interrupts for the entire delay as required by the RA8 Hardware Manual. Interrupts should be disabled by the application when possible before sleeping to meet the requirements, or the control of interrupts and the delay should be managed by the user to ensure the requirement is fully met.</p>
 <h2><a class="anchor" id="r-freertos-port-trustzone-integration"></a>
 TrustZone Integration</h2>
 <p><a class="anchor" id="um_freertos_port_trustzone"></a>When using an RTOS in a TrustZone project, Arm recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the task has allocated a secure context (using portALLOCATE_SECURE_CONTEXT).</p>
@@ -873,7 +872,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

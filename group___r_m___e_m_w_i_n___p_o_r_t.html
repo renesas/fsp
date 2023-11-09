@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.0</span>
+   &#160;<span id="projectnumber">Release v5.0.1</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -423,10 +423,9 @@ Limitations</h2>
 <li>Hardware acceleration is not available when using color modes lower than 16 bits.</li>
 <li>Hardware acceleration is not available for SEGGER's RLE image format.</li>
 <li>Rotated screen modes are not supported.</li>
-<li>Because emWin is provided as a pre-compiled library the build-time options are fixed. See the <a class="el" href="group___r_m___e_m_w_i_n___p_o_r_t.html#rm-emwin-port-lib-config">Library Configuration</a> section for the supplied configuration.</li>
+<li>Because emWin is provided as a pre-compiled library the build-time options are fixed. See the <a class="el" href="group___r_m___e_m_w_i_n___p_o_r_t.html#rm-emwin-port-lib-config">Library Configuration</a> section for the supplied configuration. <hr/>
+</li>
 </ul>
-<h2>Low Power Mode</h2>
-<p>On RA8, there are delays inserted before and after switching to a lower power mode for the delay function based on BSP configuration options and current CPUCLK speed. These delays do not disable interrupts for the entire delay as required by the RA8 Hardware Manual. Interrupts should be disabled by the application when possible before sleeping to meet the requirements, or the control of interrupts and the delay should be managed by the user to ensure the requirement is fully met. </p><hr/>
 <h1><a class="anchor" id="rm-emwin-port-examples"></a>
 Examples</h1>
 <h2><a class="anchor" id="rm-emwin-port-examples-minimal"></a>
@@ -440,7 +439,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
