@@ -81,8 +81,10 @@ extern TX_THREAD * volatile _tx_thread_execute_ptr;
 
 /* These variables are global because this function is called from PendSV_Handler, which is a stackless
  * function. */
+#if !defined(BSP_CFG_RTOS_IDLE_SLEEP) || BSP_CFG_RTOS_IDLE_SLEEP
 static volatile uint16_t g_saved_lpm_state = 0U;
 static volatile uint32_t g_prcr            = 0U;
+#endif
 void * _tx_port_wait_thread_ready (void)
 {
     /* The following compile time assertions validate offsets used in the assembly code
@@ -111,6 +113,24 @@ void * _tx_port_wait_thread_ready (void)
 
     TX_THREAD * new_thread_ptr;
 
+#if defined(BSP_CFG_RTOS_IDLE_SLEEP) && (0 == BSP_CFG_RTOS_IDLE_SLEEP)
+    while (1)
+    {
+        /* Make the new thread the current thread. */
+        new_thread_ptr         = _tx_thread_execute_ptr;
+        _tx_thread_current_ptr = new_thread_ptr;
+
+        /* If non-NULL, a new thread is ready! */
+        if (new_thread_ptr != 0)
+        {
+            /* At this point, we have a new thread ready to go.  */
+            break;
+        }
+
+        /* Short delay to prevent bus thrashing */
+        R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+#else
     while (1)
     {
         /* Disable interrupts - The next block is critical. Interrupts are disabled with PRIMASK event if
@@ -138,13 +158,13 @@ void * _tx_port_wait_thread_ready (void)
         }
 
         /* Save LPM Mode */
-#if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
+ #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
         g_saved_lpm_state = R_SYSTEM->SBYCR;
-#elif BSP_FEATURE_LPM_HAS_LPSCR
+ #elif BSP_FEATURE_LPM_HAS_LPSCR
         g_saved_lpm_state = R_SYSTEM->LPSCR;
-#endif
+ #endif
 
-#if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
+ #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
 
         /* Check if the LPM peripheral is set to go to Software Standby mode with WFI instruction.
          * If yes, change the LPM peripheral to go to Sleep mode. Otherwise skip following procedures
@@ -161,7 +181,7 @@ void * _tx_port_wait_thread_ready (void)
             /* Clear to set to sleep low power mode (not standby or deep standby) */
             R_SYSTEM->SBYCR = g_saved_lpm_state & (uint16_t) ~R_SYSTEM_SBYCR_SSBY_Msk;
         }
-#elif BSP_FEATURE_LPM_HAS_LPSCR
+ #elif BSP_FEATURE_LPM_HAS_LPSCR
         if (R_SYSTEM_LPSCR_LPMD_Msk & g_saved_lpm_state)
         {
             /* Save register protect value */
@@ -173,11 +193,7 @@ void * _tx_port_wait_thread_ready (void)
             /* Clear to set to sleep low power mode (not standby or deep standby) */
             R_SYSTEM->LPSCR = 0U;
         }
-#endif
-
-#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-        bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
-#endif
+ #endif
 
         /**
          * DSB should be last instruction executed before WFI
@@ -193,11 +209,7 @@ void * _tx_port_wait_thread_ready (void)
         /* Instruction Synchronization Barrier. */
         __ISB();
 
-#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-        bsp_prv_clock_prepare_post_sleep(clock_slowed);
-#endif
-
-#if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
+ #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
 
         /* Check if the LPM peripheral was supposed to go to Software Standby mode with WFI instruction.
          * If yes, restore the LPM peripheral setting. Otherwise skip following procedures to avoid the
@@ -211,7 +223,7 @@ void * _tx_port_wait_thread_ready (void)
             /* Restore register lock */
             R_SYSTEM->PRCR = (uint16_t) (RM_THREADX_PORT_PRCR_LOCK_LPM_REGISTER_ACCESS | g_prcr);
         }
-#elif BSP_FEATURE_LPM_HAS_LPSCR
+ #elif BSP_FEATURE_LPM_HAS_LPSCR
         if (R_SYSTEM_LPSCR_LPMD_Msk & g_saved_lpm_state)
         {
             /* Restore LPM Mode */
@@ -220,12 +232,13 @@ void * _tx_port_wait_thread_ready (void)
             /* Restore register lock */
             R_SYSTEM->PRCR = (uint16_t) (RM_THREADX_PORT_PRCR_LOCK_LPM_REGISTER_ACCESS | g_prcr);
         }
-#endif
+ #endif
 
         /* Re-enable interrupts. */
         __enable_irq();
         __ISB();
     }
+#endif
 
     return new_thread_ptr;
 }

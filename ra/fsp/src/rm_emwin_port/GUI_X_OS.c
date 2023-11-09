@@ -83,19 +83,15 @@ void GUI_X_Delay (int Period)
 #else
     uint32_t time_start = g_gui_time_ms;
 
- #if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-    bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
- #endif
-
     /* Wait for the specified number of ticks */
     do
     {
+ #if !defined(BSP_CFG_RTOS_IDLE_SLEEP) || BSP_CFG_RTOS_IDLE_SLEEP
         __WFI();
-    } while ((int) (g_gui_time_ms - time_start) < Period);
-
- #if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-    bsp_prv_clock_prepare_post_sleep(clock_slowed);
+ #else
+        R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
  #endif
+    } while ((int) (g_gui_time_ms - time_start) < Period);
 #endif
 }
 

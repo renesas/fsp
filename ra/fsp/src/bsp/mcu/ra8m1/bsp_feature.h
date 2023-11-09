@@ -30,12 +30,13 @@
  **********************************************************************************************************************/
 
 /** The main oscillator drive value is based upon the oscillator frequency selected in the configuration */
+#define CGC_MOMCR_RESERVED_MASK    (0x8U) /* RA8 has reserved bit in MOMCR that must be 1. */
 #if (BSP_CFG_XTAL_HZ > (24000000))
- #define CGC_MAINCLOCK_DRIVE    (0x05U)
+ #define CGC_MAINCLOCK_DRIVE       (0x05U | CGC_MOMCR_RESERVED_MASK)
 #elif (BSP_CFG_XTAL_HZ > (8000000)) && (BSP_CFG_XTAL_HZ <= (24000000))
- #define CGC_MAINCLOCK_DRIVE    (0x03U)
+ #define CGC_MAINCLOCK_DRIVE       (0x03U | CGC_MOMCR_RESERVED_MASK)
 #else
- #define CGC_MAINCLOCK_DRIVE    (0x00U)
+ #define CGC_MAINCLOCK_DRIVE       (0x00U | CGC_MOMCR_RESERVED_MASK)
 #endif
 
 /***********************************************************************************************************************
@@ -185,7 +186,7 @@
 #define BSP_FEATURE_CGC_LOW_VOLTAGE_MAX_FREQ_HZ              (0U)       // This MCU does not have Low Voltage Mode
 #define BSP_FEATURE_CGC_MIDDLE_SPEED_MAX_FREQ_HZ             (0U)       // This MCU does not have Middle Speed Mode
 #define BSP_FEATURE_CGC_MOCO_STABILIZATION_MAX_US            (15U)
-#define BSP_FEATURE_CGC_MODRV_MASK                           (R_SYSTEM_MOMCR_MODRV0_Msk)
+#define BSP_FEATURE_CGC_MODRV_MASK                           (0x1EU)
 #define BSP_FEATURE_CGC_MODRV_SHIFT                          (R_SYSTEM_MOMCR_MODRV0_Pos)
 #define BSP_FEATURE_CGC_PLL_OUT_MAX_HZ                       (480000000U)
 #define BSP_FEATURE_CGC_PLL_OUT_P_MAX_HZ                     (480000000U)

@@ -928,6 +928,12 @@ static void rm_at_transport_da16xxx_cleanup_open (at_transport_da16xxx_ctrl_t * 
         p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT] = NULL;
     }
 
+    uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
+    if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+    {
+        p_uart->p_api->close(p_uart->p_ctrl);
+    }
+
     if (p_instance_ctrl->num_uarts > 1)
     {
         if (NULL != p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT])
@@ -935,18 +941,12 @@ static void rm_at_transport_da16xxx_cleanup_open (at_transport_da16xxx_ctrl_t * 
             vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT]);
             p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT] = NULL;
         }
-    }
 
-    uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
-    if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
-    {
-        p_uart->p_api->close(p_uart->p_ctrl);
-    }
-
-    p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT];
-    if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
-    {
-        p_uart->p_api->close(p_uart->p_ctrl);
+        p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT];
+        if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+        {
+            p_uart->p_api->close(p_uart->p_ctrl);
+        }
     }
 }
 

@@ -954,6 +954,8 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2)
     if (g_clock_freq[clock] >= g_clock_freq[R_SYSTEM->SCKSCR])
     {
 #if BSP_CFG_CLOCK_SETTLING_DELAY_ENABLE
+        bool post_div_set_delay = false;
+
         if ((clock_freq_hz_post_change > SystemCoreClock) &&
             ((clock_freq_hz_post_change - SystemCoreClock) > BSP_MAX_CLOCK_CHANGE_THRESHOLD))
         {
@@ -995,6 +997,9 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2)
             /* Wait for settling delay. */
             SystemCoreClockUpdate();
             R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+            /* Trigger delay after setting dividers */
+            post_div_set_delay = true;
         }
         /* Continue and set clock to actual target speed. */
 #endif
@@ -1002,8 +1007,21 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2)
         /* Set the clock dividers before switching to the new clock source. */
         prv_clock_dividers_set(sckdivcr, sckdivcr2);
 
-        /* Switch to the new clock source. */
-        R_SYSTEM->SCKSCR = (uint8_t) clock;
+#if BSP_CFG_CLOCK_SETTLING_DELAY_ENABLE
+        if (post_div_set_delay)
+        {
+            /* Update the CMSIS core clock variable so that it reflects the new ICLK frequency. */
+            SystemCoreClock = clock_freq_hz_post_change;
+
+            /* Wait for settling delay. */
+            R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+        }
+        else
+#endif
+        {
+            /* Switch to the new clock source. */
+            R_SYSTEM->SCKSCR = (uint8_t) clock;
+        }
     }
     /* Switching to a slower source clock. */
     else
@@ -1206,6 +1224,10 @@ static void bsp_prv_clock_set_hard_reset (void)
     /* Continue and set clock to actual target speed. */
     R_SYSTEM->SCKDIVCR2 = BSP_PRV_STARTUP_SCKDIVCR2;
     R_SYSTEM->SCKDIVCR  = BSP_PRV_STARTUP_SCKDIVCR;
+
+    /* Wait for settling delay. */
+    SystemCoreClockUpdate();
+    R_BSP_SoftwareDelay(BSP_CFG_CLOCK_SETTLING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
    #else
     #if BSP_PRV_ICLK_DIV_VALUE >= BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_FEATURE_CGC_ICLK_DIV_RESET)
 

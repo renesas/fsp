@@ -361,7 +361,7 @@
     * [Crypto AES2](https://renesas.github.io/fsp/)
     * [Crypto RA2](https://renesas.github.io/fsp/)
     * [FreeRTOS MbedTLS Port](https://renesas.github.io/fsp/)
-    * [Key Injection for PSA Crypto](https://renesas.github.io/fsp/group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html)
+    * [Key Injection for PSA Crypto](https://renesas.github.io/fsp/group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html)
     * [MCUBoot TinyCrypt H/W Acceleration (rm_mcuboot_tinycrypt_port)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
     * [MCUboot TinyCrypt (H/W Accelerated)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)
     * [MCUboot TinyCrypt (S/W Only)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)

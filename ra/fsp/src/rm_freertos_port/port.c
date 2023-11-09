@@ -1297,7 +1297,9 @@ void vPortExitCritical (void)
  **********************************************************************************************************************/
 void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
 {
+ #if !defined(BSP_CFG_RTOS_IDLE_SLEEP) || BSP_CFG_RTOS_IDLE_SLEEP
     uint32_t saved_lpm_state = 0U;
+ #endif
 
     /* Sleep until something happens.  configPRE_SLEEP_PROCESSING() can
      * set its parameter to 0 to indicate that its implementation contains
@@ -1307,16 +1309,18 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
     configPRE_SLEEP_PROCESSING(xExpectedIdleTime);
     if (xExpectedIdleTime > 0)
     {
+ #if !defined(BSP_CFG_RTOS_IDLE_SLEEP) || BSP_CFG_RTOS_IDLE_SLEEP
+
         /* Save LPM Mode */
- #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
+  #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
         saved_lpm_state = R_SYSTEM->SBYCR;
- #elif BSP_FEATURE_LPM_HAS_LPSCR
+  #elif BSP_FEATURE_LPM_HAS_LPSCR
         saved_lpm_state = R_SYSTEM->LPSCR;
- #endif
+  #endif
 
         /** Check if the LPM peripheral is set to go to Software Standby mode with WFI instruction.
          *  If so, change the LPM peripheral to go to Sleep mode. */
- #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
+  #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
         if (R_SYSTEM_SBYCR_SSBY_Msk & saved_lpm_state)
         {
             /* Save register protect value */
@@ -1332,43 +1336,39 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
             R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
         }
 
- #elif BSP_FEATURE_LPM_HAS_LPSCR
+  #elif BSP_FEATURE_LPM_HAS_LPSCR
         if (R_SYSTEM_LPSCR_LPMD_Msk & saved_lpm_state)
         {
-  #if BSP_TZ_NONSECURE_BUILD
+   #if BSP_TZ_NONSECURE_BUILD
 
             /* Save register protect value */
             uint32_t saved_prcr = R_SYSTEM->PRCR_NS;
 
             /* Unlock LPM peripheral registers */
             R_SYSTEM->PRCR_NS = RM_FREERTOS_PORT_UNLOCK_LPM_REGISTER_ACCESS;
-  #else
+   #else
 
             /* Save register protect value */
             uint32_t saved_prcr = R_SYSTEM->PRCR;
 
             /* Unlock LPM peripheral registers */
             R_SYSTEM->PRCR = RM_FREERTOS_PORT_UNLOCK_LPM_REGISTER_ACCESS;
-  #endif
+   #endif
 
             /* Clear to set to sleep low power mode (not standby or deep standby) */
             R_SYSTEM->LPSCR = 0U;
 
-  #if BSP_TZ_NONSECURE_BUILD
+   #if BSP_TZ_NONSECURE_BUILD
 
             /* Restore register lock */
             R_SYSTEM->PRCR_NS = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
-  #else
+   #else
 
             /* Restore register lock */
             R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
-  #endif
+   #endif
         }
- #endif
-
- #if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-        bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
- #endif
+  #endif
 
         /**
          * DSB should be last instruction executed before WFI
@@ -1384,10 +1384,14 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
 
         /* Instruction Synchronization Barrier. */
         __ISB();
+ #else
 
- #if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-        bsp_prv_clock_prepare_post_sleep(clock_slowed);
- #endif
+        /* Wait for an interrupt to be pending without going to sleep if BSP is configured to not sleep when idle for RTOS. */
+        while (0 == (SCB->ICSR & SCB_ICSR_VECTPENDING_Msk))
+        {
+            R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);;
+        }
+ #endif                                /* !defined(BSP_CFG_RTOS_IDLE_SLEEP) || BSP_CFG_RTOS_IDLE_SLEEP */
 
         /* Re-enable interrupts to allow the interrupt that brought the MCU
          * out of sleep mode to execute immediately. This will not cause a
@@ -1401,9 +1405,11 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
 
     configPOST_SLEEP_PROCESSING(xExpectedIdleTime);
 
+ #if !defined(BSP_CFG_RTOS_IDLE_SLEEP) || BSP_CFG_RTOS_IDLE_SLEEP
+
     /** Check if the LPM peripheral was supposed to go to Software Standby mode with WFI instruction.
      *  If yes, restore the LPM peripheral setting. */
- #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
+  #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
     if (R_SYSTEM_SBYCR_SSBY_Msk & saved_lpm_state)
     {
         /* Save register protect value */
@@ -1419,38 +1425,39 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
         R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
     }
 
- #elif BSP_FEATURE_LPM_HAS_LPSCR
+  #elif BSP_FEATURE_LPM_HAS_LPSCR
     if (R_SYSTEM_LPSCR_LPMD_Msk & saved_lpm_state)
     {
-  #if BSP_TZ_NONSECURE_BUILD
+   #if BSP_TZ_NONSECURE_BUILD
 
         /* Save register protect value */
         uint32_t saved_prcr = R_SYSTEM->PRCR_NS;
 
         /* Unlock LPM peripheral registers */
         R_SYSTEM->PRCR_NS = RM_FREERTOS_PORT_UNLOCK_LPM_REGISTER_ACCESS;
-  #else
+   #else
 
         /* Save register protect value */
         uint32_t saved_prcr = R_SYSTEM->PRCR;
 
         /* Unlock LPM peripheral registers */
         R_SYSTEM->PRCR = RM_FREERTOS_PORT_UNLOCK_LPM_REGISTER_ACCESS;
-  #endif
+   #endif
 
         /* Restore LPM Mode */
         R_SYSTEM->LPSCR = (uint8_t) saved_lpm_state;
 
-  #if BSP_TZ_NONSECURE_BUILD
+   #if BSP_TZ_NONSECURE_BUILD
 
         /* Restore register lock */
         R_SYSTEM->PRCR_NS = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
-  #else
+   #else
 
         /* Restore register lock */
         R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
-  #endif
+   #endif
     }
+  #endif
  #endif
 }
 

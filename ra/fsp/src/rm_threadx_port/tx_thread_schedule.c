@@ -1,4 +1,5 @@
 /**************************************************************************/
+
 /*                                                                        */
 /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
 /*                                                                        */
@@ -8,7 +9,6 @@
 /*       and in the root directory of this software.                      */
 /*                                                                        */
 /**************************************************************************/
-
 
 /**************************************************************************/
 /**************************************************************************/
@@ -69,9 +69,9 @@
  * overflow because PSP is not used in handler mode. TX_PORT_SCHEDULER_STACK is used to move PSPLIM to account for
  * this. TX_PORT_SCHEDULER_STACK must be a multiple of 8. */
 #if __FPU_USED
-#define TX_PORT_SCHEDULER_STACK    40
+ #define TX_PORT_SCHEDULER_STACK    40
 #else
-#define TX_PORT_SCHEDULER_STACK    32
+ #define TX_PORT_SCHEDULER_STACK    32
 #endif
 
 /* The following macros are defined as hard coded numbers so they can be converted to strings in the
@@ -114,7 +114,6 @@ extern volatile UINT        _tx_thread_preempt_disable;
 /* This cannot be static because the compiler is not aware it is reference in the assembly code. */
 const uint32_t g_secure_stack_offset = offsetof(TX_THREAD, tx_thread_secure_stack_context);
 #endif
-
 
 /**************************************************************************/
 /*                                                                        */
@@ -238,7 +237,7 @@ VOID _tx_thread_schedule (VOID)
 
 /* These variables are global because this function is called from PendSV_Handler, which is a stackless
  * function. */
-__attribute((weak)) void * _tx_port_wait_thread_ready (VOID)
+__attribute((weak)) void * _tx_port_wait_thread_ready(VOID)
 {
     /* The following is the idle wait processing. In this case, no threads are ready for execution and the
      * system will simply be idle until an interrupt occurs that makes a thread ready. Note that interrupts
@@ -246,6 +245,24 @@ __attribute((weak)) void * _tx_port_wait_thread_ready (VOID)
 
     TX_THREAD * new_thread_ptr;
 
+#if defined(BSP_CFG_RTOS_IDLE_SLEEP) && (0 == BSP_CFG_RTOS_IDLE_SLEEP)
+    while (1)
+    {
+        /* Make the new thread the current thread. */
+        new_thread_ptr         = _tx_thread_execute_ptr;
+        _tx_thread_current_ptr = new_thread_ptr;
+
+        /* If non-NULL, a new thread is ready! */
+        if (new_thread_ptr != 0)
+        {
+            /* At this point, we have a new thread ready to go.  */
+            break;
+        }
+
+        /* Short delay to prevent bus thrashing */
+        R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+#else
     while (1)
     {
         /* Disable interrupts - The next block is critical. Interrupts are disabled with PRIMASK event if
@@ -272,11 +289,6 @@ __attribute((weak)) void * _tx_port_wait_thread_ready (VOID)
             break;
         }
 
-#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-
-        bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
-#endif
-
         /**
          * DSB should be last instruction executed before WFI
          * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html
@@ -291,15 +303,11 @@ __attribute((weak)) void * _tx_port_wait_thread_ready (VOID)
         /* Instruction Synchronization Barrier. */
         __ISB();
 
-#if BSP_CFG_RTOS_SLEEP_MODE_DELAY_ENABLE
-
-        bsp_prv_clock_prepare_post_sleep(clock_slowed);
-#endif
-
         /* Re-enable interrupts. */
         __enable_irq();
         __ISB();
     }
+#endif
 
     return new_thread_ptr;
 }
@@ -376,21 +384,21 @@ TX_PORT_NAKED_FUNCTION VOID PendSV_Handler (VOID)
         "MOV     r5,  r9                     \n"
         "MOV     r6,  r10                    \n"
         "MOV     r7,  r11                    \n"
-        "SUBS    r3,  r3, #32                \n" // Allocate stack space
+        "SUBS    r3,  r3, #32                \n"                                  // Allocate stack space
         "STM     r3!, {r4-r7}                \n"
-        "SUBS    r3,  r3, #16                \n" // Allocate stack space
+        "SUBS    r3,  r3, #16                \n"                                  // Allocate stack space
 #endif
 #if __FPU_USED
-        "TST     LR,  #0x10                  \n" // Determine if the VFP extended frame is present
-        "BNE     _skip_vfp_save              \n" // No, skip additional VFP save
+        "TST     LR,  #0x10                  \n"                                  // Determine if the VFP extended frame is present
+        "BNE     _skip_vfp_save              \n"                                  // No, skip additional VFP save
  #if defined(TX_PORT_VENDOR_STACK_MONITOR_ENABLE)
-        "SUB     r3,  r3, #64                \n" // Calculate the amount of room required to save s16-s31
-        "MSR     PSP, r3                     \n" // Update PSP to utilize the HW stack monitor
-        "ADD     r3,  r3, #64                \n" // Restore original PSP to r3 so we can continue stacking
+        "SUB     r3,  r3, #64                \n"                                  // Calculate the amount of room required to save s16-s31
+        "MSR     PSP, r3                     \n"                                  // Update PSP to utilize the HW stack monitor
+        "ADD     r3,  r3, #64                \n"                                  // Restore original PSP to r3 so we can continue stacking
  #endif
-        "VSTMDB  r3!, {s16-s31}              \n" // Yes, save additional VFP registers
+        "VSTMDB  r3!, {s16-s31}              \n"                                  // Yes, save additional VFP registers
         "_skip_vfp_save:                     \n"
-        "STMDB   r3!, {LR}                   \n" // Save LR on the stack
+        "STMDB   r3!, {LR}                   \n"                                  // Save LR on the stack
 #endif
 
         // [r1, #TX_PORT_OFFSET_STACK_PTR] == _tx_thread_current_ptr->tx_thread_stack_ptr
@@ -765,7 +773,6 @@ void _tx_port_svc_handler (UINT * caller_stack_ptr)
         }
     }
 }
-
 
 /**************************************************************************/
 /*                                                                        */
