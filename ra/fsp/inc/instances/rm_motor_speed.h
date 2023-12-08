@@ -302,6 +302,8 @@ typedef struct st_motor_speed_instance_ctrl
     motor_speed_observer_t             st_observer;             ///< Speed observer structure
     motor_speed_disturbance_observer_t st_disturbance_observer; ///< Disturbance speed observer structure
 
+    motor_speed_oldamp_sub_t openloop_sub;                      ///< Sub parameter for open-loop damping
+
     motor_speed_position_data_t st_position_data;               ///< Data for position control
 
     /* cyclic timer callback */

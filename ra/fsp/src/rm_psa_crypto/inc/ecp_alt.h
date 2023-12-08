@@ -39,22 +39,36 @@ extern "C" {
 
 // Alternate implementation
 //
-  #define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits)    ((bits >> 7) & (1U))
+  #define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits)    ((((bits >> 7) & 1) | (bits & 8) >> 2) )
   #define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT                         (0U)
   #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED                           (1U)
-  #define RM_PSA_CRYPTO_LARGEST_FORMATTED_ECC_PUBLIC_KEY_WORDS    (32U) /* Corresponding to ECC P-384 curves on SCE7 */
+  #define RM_PSA_CRYPTO_LARGEST_WRAPPED_ECC_PRIVATE_KEY_WORDS     (25U) /* Corresponding to ECC P-521 curves on RSIP */
 
   #define PSA_ECC_BYTES_VENDOR_RAW(bit_length)                                                                     \
     ((bit_length) ==                                                                                               \
      PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_LENGTH_BITS) : \
      (bit_length) ==                                                                                               \
      PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_LENGTH_BITS) : \
+     (bit_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_521_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_521_PRIVATE_KEY_LENGTH_BITS) : \
      0)
+
+  #define PSA_ECC_BITS_VENDOR_RAW(byte_length)                                                                     \
+    ((byte_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_LENGTH_BITS) ? ECC_256_PRIVATE_KEY_LENGTH_BITS : \
+     (byte_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_LENGTH_BITS) ? ECC_384_PRIVATE_KEY_LENGTH_BITS : \
+     (byte_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_521_PRIVATE_KEY_LENGTH_BITS) ? ECC_521_PRIVATE_KEY_LENGTH_BITS : \
+     0)
+     
   #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED_SIZE_BYTES(bit_length)                                  \
     ((bit_length) ==                                                                            \
      ECC_256_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) : \
      (bit_length) ==                                                                            \
      ECC_384_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) : \
+     (bit_length) ==                                                                            \
+     ECC_521_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_521_PRIVATE_KEY_HRK_LENGTH_BITS) : \
      0)
 
 /*

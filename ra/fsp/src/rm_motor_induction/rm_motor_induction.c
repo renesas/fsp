@@ -207,6 +207,8 @@ fsp_err_t RM_MOTOR_INDUCTION_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t cons
     MOTOR_INDUCTION_ERROR_RETURN(p_extended_cfg->f_lowvoltage_limit >= 0.0F, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
+    p_instance_ctrl->p_cfg = p_cfg;
+
     err = p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
                                                        p_cfg->p_motor_current_instance->p_cfg);
 
@@ -216,8 +218,6 @@ fsp_err_t RM_MOTOR_INDUCTION_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t cons
                                                          p_cfg->p_motor_speed_instance->p_cfg);
         if (FSP_SUCCESS == err)
         {
-            p_instance_ctrl->p_cfg = p_cfg;
-
             // Open Inertia estimate when supported
             if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
             {

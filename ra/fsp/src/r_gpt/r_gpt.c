@@ -1342,6 +1342,13 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRC] = duty_regs.gtccr_buffer;
     p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRE] = duty_regs.gtccr_buffer;
 
+    if (p_cfg->mode >= TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM)
+    {
+        /* Set the double buffer registers for triangle modes. */
+        p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRD] = duty_regs.gtccr_buffer;
+        p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRF] = duty_regs.gtccr_buffer;
+    }
+
     /* If the requested duty cycle is 0% or 100%, set this in the registers. */
     gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OADTY_Pos;
     gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OBDTY_Pos;

@@ -38,6 +38,7 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
+#define TOUCH_VERSION_SUPPORT_JUDGEMENT_MAJORITY    (1)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -75,13 +76,13 @@ typedef enum e_touch_tuning_scan
     TOUCH_TUNING_SCAN_CURRENT,
 } touch_tuning_scan_t;
 
-typedef struct st_ico
+typedef struct st_touch_tuning_ico
 {
     uint16_t pri_sen;
     uint16_t snd_sen;
 } touch_tuning_ico_t;
 
-typedef struct
+typedef struct st_touch_tuning_ts_msk
 {
     uint32_t mska;
     uint32_t mskb;
@@ -89,7 +90,7 @@ typedef struct
 #endif
 
 /** Information of button */
-typedef struct
+typedef struct st_touch_button_info
 {
     uint64_t   status;                 ///< Touch result bitmap.
     uint16_t * p_threshold;            ///< Pointer to Threshold value array. g_touch_button_threshold[] is set by Open API.
@@ -106,21 +107,21 @@ typedef struct
 } touch_button_info_t;
 
 /** Information of slider */
-typedef struct
+typedef struct st_touch_slider_info
 {
     uint16_t * p_position;             ///< Calculated Position data. g_touch_slider_position[] is set by Open API.
     uint16_t * p_threshold;            ///< Copy from config by Open API. g_touch_slider_threshold[] is set by Open API.
 } touch_slider_info_t;
 
 /** Information of wheel */
-typedef struct
+typedef struct st_touch_wheel_info
 {
     uint16_t * p_position;             ///< Calculated Position data. g_touch_wheel_position[] is set by Open API.
     uint16_t * p_threshold;            ///< Copy from config by Open API. g_touch_wheel_threshold[] is set by Open API.
 } touch_wheel_info_t;
 
 /** Information of pad */
-typedef struct
+typedef struct st_touch_pad_info
 {
     uint16_t * p_rx_coordinate;        ///< RX coordinate
     uint16_t * p_tx_coordinate;        ///< TX coordinate
@@ -147,6 +148,17 @@ typedef struct st_touch_instance_ctrl
     touch_cfg_t const     * p_touch_cfg;          ///< Pointer to initial configurations.
     ctsu_instance_t const * p_ctsu_instance;      ///< Pointer to CTSU instance.
 } touch_instance_ctrl_t;
+
+#if (CTSU_CFG_JUDGEMENT_MODE == 1)
+
+/** Information of 3freq judge */
+typedef struct st_touch_jmm_info
+{
+    uint8_t  id;
+    uint8_t  jmm_index;
+    uint16_t jmm_result[CTSU_CFG_NUM_SUMULTI];
+} touch_jmm_info_t;
+#endif
 
 /**********************************************************************************************************************
  * Exported global variables

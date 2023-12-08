@@ -357,6 +357,7 @@ typedef enum e_elc_event_ra8m1
     ELC_EVENT_ADC1_COMPARE_MATCH      = (0x1B8), // Compare match
     ELC_EVENT_ADC1_COMPARE_MISMATCH   = (0x1B9), // Compare mismatch
     ELC_EVENT_DOC_INT                 = (0x1BA), // Data operation circuit interrupt
+    ELC_EVENT_RSIP_TADI               = (0x1BC), // RSIP tamper detect interrupt
     ELC_EVENT_CEU_CEUI                = (0x1DA), // CEU interrupt
 } elc_event_t;
 

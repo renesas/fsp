@@ -231,7 +231,6 @@ fsp_err_t R_CRC_CalculatedValueGet (crc_ctrl_t * const p_ctrl, uint32_t * calcul
  * @retval FSP_ERR_ASSERTION            Pointer to control stucture is NULL
  * @retval FSP_ERR_NOT_OPEN             The driver is not opened.
  * @retval FSP_ERR_UNSUPPORTED          SNOOP operation is not supported.
- * @retval FSP_ERR_INVALID_ARGUMENT     SNOOP address is invalid.
  *
  **********************************************************************************************************************/
 fsp_err_t R_CRC_SnoopEnable (crc_ctrl_t * const p_ctrl, uint32_t crc_seed)
@@ -242,14 +241,13 @@ fsp_err_t R_CRC_SnoopEnable (crc_ctrl_t * const p_ctrl, uint32_t crc_seed)
  #if CRC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl);
     FSP_ERROR_RETURN(CRC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->snoop_address >= 0, FSP_ERR_INVALID_ARGUMENT);
  #endif
 
     crc_seed_value_update(p_instance_ctrl, crc_seed);
 
     /* Set CRC snoop address */
     R_CRC->CRCSAR =
-        (uint16_t) (((uint32_t) p_instance_ctrl->p_cfg->snoop_address & R_CRC_CRCSAR_CRCSA_Msk) <<
+        (uint16_t) ((p_instance_ctrl->p_cfg->snoop_address & R_CRC_CRCSAR_CRCSA_Msk) <<
                     R_CRC_CRCSAR_CRCSA_Pos);
 
     /*

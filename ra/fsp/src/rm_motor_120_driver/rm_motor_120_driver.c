@@ -31,6 +31,7 @@
  **********************************************************************************************************************/
 
 #define MOTOR_120_DRIVER_OPEN                    (0x4D543144L)
+#define MOTOR_120_DRIVER_SHARED_ADC_OPEN         (('M' << 24U) | ('1' << 16U) | ('S' << 8U) | ('A' << 0U))
 
 #define MOTOR_120_DRIVER_DEV_HALF                (0.5F)      /* 1/2 */
 
@@ -55,6 +56,11 @@
  **********************************************************************************************************************/
 void rm_motor_120_driver_cyclic(adc_callback_args_t * p_args);
 
+#if (MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 1)
+void rm_motor_120_driver_shared_cyclic(adc_callback_args_t * p_args);
+
+#endif
+
 static void rm_motor_120_driver_reset(motor_120_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_120_driver_output_pwm(motor_120_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_120_driver_ctrl_start(motor_120_driver_instance_ctrl_t * p_ctrl);
@@ -69,6 +75,22 @@ static void rm_motor_120_driver_pin_cfg(bsp_io_port_pin_t pin, uint32_t cfg);
 /* Modulation functions */
 static void rm_motor_120_driver_mod_set_max_duty(motor_120_driver_modulation_t * p_mod, float f4_max_duty);
 static void rm_motor_120_driver_mod_set_min_duty(motor_120_driver_modulation_t * p_mod, float f4_min_duty);
+
+#if (MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 1)
+static void rm_motor_120_driver_shared_current_get(motor_120_driver_instance_ctrl_t * p_ctrl);
+
+ #if (MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 1)
+static void rm_motor_120_driver_adc_b_open(motor_120_driver_instance_ctrl_t   * p_instance_ctrl,
+                                           motor_120_driver_cfg_t const * const p_cfg);
+static void rm_motor_120_driver_adc_b_close(motor_120_driver_instance_ctrl_t * p_instance_ctrl);
+
+ #else
+static void rm_motor_120_driver_adc_open(motor_120_driver_instance_ctrl_t   * p_instance_ctrl,
+                                         motor_120_driver_cfg_t const * const p_cfg);
+static void rm_motor_120_driver_adc_close(motor_120_driver_instance_ctrl_t * p_instance_ctrl);
+
+ #endif
+#endif
 
 /***********************************************************************************************************************
  * Private global variables
@@ -140,7 +162,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
     p_instance_ctrl->u4_carrier_base =
         (uint32_t) ((float) p_extended_cfg->u4_pwm_timer_freq * (float) MOTOR_120_DRIVER_KHZ_TRANS /
                     (float) p_extended_cfg->u4_pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
-    p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime * p_extended_cfg->u4_pwm_timer_freq;
+    p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
     rm_motor_120_driver_mod_set_max_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_max_duty);
@@ -150,6 +172,9 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
     if (p_extended_cfg->p_three_phase_instance != NULL)
     {
         gpt_extended_cfg_t const * p_u_phase_gpt_extend;
+
+        p_extended_cfg->p_three_phase_instance->p_api->open(p_extended_cfg->p_three_phase_instance->p_ctrl,
+                                                            p_extended_cfg->p_three_phase_instance->p_cfg);
 
         p_three_phase        = p_extended_cfg->p_three_phase_instance;
         p_u_phase_gpt        = p_three_phase->p_cfg->p_timer_instance[0];
@@ -186,31 +211,28 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
             p_instance_ctrl->u4_gtiocb_periheral_high_cfg = MOTOR_120_DRIVER_PERIPHERAL_IO_PORT_L;
         }
 
-        p_extended_cfg->p_three_phase_instance->p_api->open(p_extended_cfg->p_three_phase_instance->p_ctrl,
-                                                            p_extended_cfg->p_three_phase_instance->p_cfg);
-
         p_extended_cfg->p_three_phase_instance->p_api->start(p_extended_cfg->p_three_phase_instance->p_ctrl);
     }
 
     /* Start ADC module */
+#if (MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 1)
+ #if (MOTOR_120_DRIVER_CFG_SUPPORT_ADC_B == 1)
+    rm_motor_120_driver_adc_b_open(p_instance_ctrl, p_cfg);
+ #else
+    rm_motor_120_driver_adc_open(p_instance_ctrl, p_cfg);
+ #endif
+#else                                  // MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 0
     if (p_extended_cfg->p_adc_instance != NULL)
     {
-        adc_status_t status = {.state = ADC_STATE_SCAN_IN_PROGRESS};
-
         p_extended_cfg->p_adc_instance->p_api->open(p_extended_cfg->p_adc_instance->p_ctrl,
                                                     p_extended_cfg->p_adc_instance->p_cfg);
         p_extended_cfg->p_adc_instance->p_api->scanCfg(p_extended_cfg->p_adc_instance->p_ctrl,
                                                        p_extended_cfg->p_adc_instance->p_channel_cfg);
         p_extended_cfg->p_adc_instance->p_api->calibrate(p_extended_cfg->p_adc_instance->p_ctrl,
                                                          p_extended_cfg->p_adc_instance->p_cfg->p_extend);
-
-        while (ADC_STATE_IDLE != status.state)
-        {
-            p_extended_cfg->p_adc_instance->p_api->scanStatusGet(p_extended_cfg->p_adc_instance->p_ctrl, &status);
-        }
-
         p_extended_cfg->p_adc_instance->p_api->scanStart(p_extended_cfg->p_adc_instance->p_ctrl);
     }
+#endif
 
     rm_motor_120_driver_reset(p_instance_ctrl);
 
@@ -245,10 +267,18 @@ fsp_err_t RM_MOTOR_120_DRIVER_Close (motor_120_driver_ctrl_t * const p_ctrl)
     rm_motor_120_driver_reset(p_instance_ctrl);
 
     /* Close ADC module */
+#if (MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 1)
+ #if (MOTOR_120_DRIVER_CFG_SUPPORT_ADC_B == 1)
+    rm_motor_120_driver_adc_b_close(p_instance_ctrl);
+ #else
+    rm_motor_120_driver_adc_close(p_instance_ctrl);
+ #endif
+#else                                  // MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 0
     if (p_extended_cfg->p_adc_instance != NULL)
     {
         p_extended_cfg->p_adc_instance->p_api->close(p_extended_cfg->p_adc_instance->p_ctrl);
     }
+#endif
 
     /* Close GPT three phase module */
     if (p_extended_cfg->p_three_phase_instance != NULL)
@@ -1370,7 +1400,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_ParameterUpdate (motor_120_driver_ctrl_t * const  
     p_instance_ctrl->u4_carrier_base =
         (uint32_t) ((float) p_extended_cfg->u4_pwm_timer_freq * (float) MOTOR_120_DRIVER_KHZ_TRANS /
                     (float) p_extended_cfg->u4_pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
-    p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime * p_extended_cfg->u4_pwm_timer_freq;
+    p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
     rm_motor_120_driver_mod_set_max_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_max_duty);
@@ -1705,3 +1735,375 @@ void rm_motor_120_driver_cyclic (adc_callback_args_t * p_args)
         (p_instance->p_cfg->p_callback)(&temp_args_t);
     }
 }
+
+#if (MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 1)
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_120_driver_shared_current_get
+ * Description   : Get Iu/Iw & Vdc process with ADC shared module
+ * Arguments     : p_ctrl - The pointer to the motor 120 driver module instance
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_120_driver_shared_current_get (motor_120_driver_instance_ctrl_t * p_ctrl)
+{
+    uint16_t u2_addata[6] = {0U};
+    float    f_addata[5]  = {0.0F};
+    motor_120_driver_cfg_t const                 * p_cfg        = p_ctrl->p_cfg;
+    motor_120_driver_extended_cfg_t              * p_extend_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
+    motor_120_driver_extended_shared_cfg_t const * p_shared_cfg = p_extend_cfg->p_shared_cfg;
+
+    adc_instance_t const * p_temp_adc_instance[2];
+
+    p_temp_adc_instance[0] = p_shared_cfg->p_adc_instance_1st;
+    p_temp_adc_instance[1] = p_shared_cfg->p_adc_instance_2nd;
+
+    /* Read A/D converted data */
+    p_temp_adc_instance[p_extend_cfg->iu_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->iu_ad_unit]->p_ctrl,
+                                                               p_extend_cfg->iu_ad_ch,
+                                                               &u2_addata[0]);
+    p_temp_adc_instance[p_extend_cfg->iw_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->iw_ad_unit]->p_ctrl,
+                                                               p_extend_cfg->iw_ad_ch,
+                                                               &u2_addata[1]);
+    p_temp_adc_instance[p_extend_cfg->vdc_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vdc_ad_unit]->p_ctrl,
+                                                                p_extend_cfg->vdc_ad_ch,
+                                                                &u2_addata[2]);
+    p_temp_adc_instance[p_extend_cfg->vu_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vu_ad_unit]->p_ctrl,
+                                                               p_extend_cfg->vu_ad_ch,
+                                                               &u2_addata[3]);
+    p_temp_adc_instance[p_extend_cfg->vv_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vv_ad_unit]->p_ctrl,
+                                                               p_extend_cfg->vv_ad_ch,
+                                                               &u2_addata[4]);
+    p_temp_adc_instance[p_extend_cfg->vw_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vw_ad_unit]->p_ctrl,
+                                                               p_extend_cfg->vw_ad_ch,
+                                                               &u2_addata[5]);
+
+    f_addata[0] = (float) u2_addata[0] - p_extend_cfg->f_ad_current_offset;
+    f_addata[1] = (float) u2_addata[1] - p_extend_cfg->f_ad_current_offset;
+
+    p_ctrl->f_iu_ad = -(f_addata[0]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
+    p_ctrl->f_iw_ad = -(f_addata[1]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
+
+    p_ctrl->f_vdc_ad = (float) u2_addata[2] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+                       p_extend_cfg->f_ad_voltage_conversion;
+
+    p_ctrl->f_vu_ad = (float) u2_addata[3] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+                      p_extend_cfg->f_ad_voltage_conversion;
+    p_ctrl->f_vv_ad = (float) u2_addata[4] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+                      p_extend_cfg->f_ad_voltage_conversion;
+    p_ctrl->f_vw_ad = (float) u2_addata[5] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+                      p_extend_cfg->f_ad_voltage_conversion;
+}                                      /* End of function rm_motor_120_driver_shared_current_get */
+
+ #if (MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 1)
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_120_driver_adc_b_open
+ * Description   : Open operation with adc_b module
+ * Arguments     : p_instance_ctrl - The pointer to instance control
+ *               : p_cfg  - The pointer to configuration data
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_120_driver_adc_b_open (motor_120_driver_instance_ctrl_t   * p_instance_ctrl,
+                                     motor_120_driver_cfg_t const * const p_cfg)
+{
+    motor_120_driver_extended_cfg_t         * p_extended_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
+    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl  = p_extended_cfg->p_shared_cfg->p_shared_instance_ctrl;
+
+    adc_instance_t const * p_adc_instance;
+
+    /* For the 1st motor */
+    if (0 == p_shared_ctrl->registered_motor_count)
+    {
+        p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_1st;
+        if (p_adc_instance != NULL)
+        {
+            /* Open and setting ADC instance */
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
+
+            p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+            FSP_CRITICAL_SECTION_EXIT;
+            p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
+            p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
+
+            p_adc_instance->p_api->callbackSet(p_adc_instance->p_ctrl,
+                                               rm_motor_120_driver_shared_cyclic,
+                                               p_shared_ctrl,
+                                               &(p_instance_ctrl->adc_callback_args));
+
+            /* Start ADC module */
+            p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+
+            /* Set ADC shared information */
+            p_shared_ctrl->open         = MOTOR_120_DRIVER_SHARED_ADC_OPEN;
+            p_shared_ctrl->p_context[0] = p_instance_ctrl;
+            (p_shared_ctrl->registered_motor_count)++;
+        }
+    }
+    /* After the 2nd motor */
+    else
+    {
+        /* Register driver module instance for callback */
+        p_instance_ctrl->p_shared_instance_ctrl->p_context[p_shared_ctrl->registered_motor_count] = p_instance_ctrl;
+
+        /* count up the number of registered motor */
+        (p_shared_ctrl->registered_motor_count)++;
+    }
+}                                      /* End of function rm_motor_120_driver_adc_b_open */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_120_driver_adc_b_close
+ * Description   : Close operation with adc_b module
+ * Arguments     : p_instance_ctrl - The pointer to instance control
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_120_driver_adc_b_close (motor_120_driver_instance_ctrl_t * p_instance_ctrl)
+{
+    motor_120_driver_extended_cfg_t * p_extended_cfg =
+        (motor_120_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl = p_extended_cfg->p_shared_cfg->p_shared_instance_ctrl;
+
+    adc_instance_t const * p_adc_instance;
+
+    /* For the 1st motor */
+    if (1U == p_shared_ctrl->registered_motor_count)
+    {
+        p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_1st;
+        if (p_adc_instance != NULL)
+        {
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
+
+            /* Close ADC instance */
+            p_adc_instance->p_api->close(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+            FSP_CRITICAL_SECTION_EXIT;
+
+            /* Reset ADC shared information */
+            p_shared_ctrl->open = 0U;
+            p_shared_ctrl->registered_motor_count = 0U;
+        }
+    }
+    /* After the 2nd motor */
+    else
+    {
+        /* count up the number of registered motor */
+        (p_shared_ctrl->registered_motor_count)--;
+    }
+}                                      /* End of function rm_motor_120_driver_adc_b_close */
+
+ #else                                 // (MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 0)
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_120_driver_adc_open
+ * Description   : Open operation with adc module
+ * Arguments     : p_instance_ctrl - The pointer to instance control
+ *               : p_cfg  - The pointer to configuration data
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_120_driver_adc_open (motor_120_driver_instance_ctrl_t   * p_instance_ctrl,
+                                   motor_120_driver_cfg_t const * const p_cfg)
+{
+    motor_120_driver_extended_cfg_t         * p_extended_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
+    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl  = p_extended_cfg->p_shared_cfg->p_shared_instance_ctrl;
+
+    adc_instance_t const * p_adc_instance;
+
+    /* Open ADC modules */
+    /* 1st ADC instance */
+    p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_1st;
+    if (p_adc_instance != NULL)
+    {
+        FSP_CRITICAL_SECTION_DEFINE;
+        FSP_CRITICAL_SECTION_ENTER;
+
+        /* Open and setting ADC instance */
+        p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+        FSP_CRITICAL_SECTION_EXIT;
+
+        p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
+        p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
+
+        /* Interrupt setting */
+        if (MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_1ST == p_extended_cfg->interrupt_adc)
+        {
+            p_adc_instance->p_api->callbackSet(p_adc_instance->p_ctrl,
+                                               rm_motor_120_driver_shared_cyclic,
+                                               p_instance_ctrl,
+                                               &(p_instance_ctrl->adc_callback_args));
+        }
+
+        p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+    }
+
+    /* 2nd ADC instance */
+    p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_2nd;
+    if (p_adc_instance != NULL)
+    {
+        FSP_CRITICAL_SECTION_DEFINE;
+        FSP_CRITICAL_SECTION_ENTER;
+
+        /* Open and setting ADC instance */
+        p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+        FSP_CRITICAL_SECTION_EXIT;
+
+        p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
+        p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
+
+        /* Interrupt setting */
+        if (MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_2ND == p_extended_cfg->interrupt_adc)
+        {
+            p_adc_instance->p_api->callbackSet(p_adc_instance->p_ctrl,
+                                               rm_motor_120_driver_shared_cyclic,
+                                               p_instance_ctrl,
+                                               &(p_instance_ctrl->adc_callback_args));
+        }
+
+        p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+    }
+
+    /* For the 1st motor */
+    if (0 == p_shared_ctrl->registered_motor_count)
+    {
+        /* Set ADC shared information */
+        p_shared_ctrl->open         = MOTOR_120_DRIVER_SHARED_ADC_OPEN;
+        p_shared_ctrl->p_context[0] = p_instance_ctrl;
+        (p_shared_ctrl->registered_motor_count)++;
+    }
+    /* After the 2nd motor */
+    else
+    {
+        p_shared_ctrl->p_context[p_shared_ctrl->registered_motor_count] = p_instance_ctrl;
+
+        /* count up the number of registered motor */
+        (p_shared_ctrl->registered_motor_count)++;
+    }
+}                                      /* End of function rm_motor_120_driver_adc_open */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_120_driver_adc_close
+ * Description   : Close operation with adc module
+ * Arguments     : p_instance_ctrl - The pointer to instance control
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_120_driver_adc_close (motor_120_driver_instance_ctrl_t * p_instance_ctrl)
+{
+    motor_120_driver_extended_cfg_t * p_extended_cfg =
+        (motor_120_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl = p_extended_cfg->p_shared_cfg->p_shared_instance_ctrl;
+
+    adc_instance_t const * p_adc_instance;
+
+    /* Close ADC modules */
+    /* Only when 1st motor close, ADC shared module should be closed. */
+    if (1U == p_shared_ctrl->registered_motor_count)
+    {
+        /* 1st ADC instance */
+
+        p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_1st;
+        if (p_adc_instance != NULL)
+        {
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
+
+            p_adc_instance->p_api->close(p_adc_instance->p_ctrl);
+            FSP_CRITICAL_SECTION_EXIT;
+        }
+
+        /* 2nd ADC instance */
+        p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_2nd;
+        if (p_adc_instance != NULL)
+        {
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
+
+            p_adc_instance->p_api->close(p_adc_instance->p_ctrl);
+            FSP_CRITICAL_SECTION_EXIT;
+        }
+
+        /* Set ADC shared information */
+        p_shared_ctrl->open = 0U;
+        p_shared_ctrl->registered_motor_count = 0U;
+    }
+    else
+    {
+        (p_shared_ctrl->registered_motor_count)--;
+    }
+}                                      /* End of function rm_motor_120_driver_adc_close */
+
+ #endif                                // MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 0
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_120_driver_shared_cyclic
+ * Description   : Cyclic process for driver accsess (Call at A/D conversion finish interrupt)
+ * Arguments     : p_args - The pointer to arguments of A/D conversion finish intterupt callback
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_120_driver_shared_cyclic (adc_callback_args_t * p_args)
+{
+    motor_120_driver_callback_args_t temp_args_t;
+
+ #if (MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 1)
+    motor_120_driver_instance_ctrl_t * p_instance_ctrl;
+    uint8_t i;
+    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl =
+        (motor_120_driver_shared_instance_ctrl_t *) p_args->p_context;
+
+    switch (p_args->event)
+    {
+        default:
+        {
+            break;
+        }
+
+        case ADC_EVENT_SCAN_COMPLETE:
+        case ADC_EVENT_SCAN_COMPLETE_GROUP_B:
+        {
+            for (i = 0; i < MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM; i++)
+            {
+                p_instance_ctrl = (motor_driver_instance_ctrl_t *) p_shared_ctrl->p_context[i];
+                motor_driver_extended_cfg_t * p_extended_cfg =
+                    (motor_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+                /* Check scan complete ad channel */
+                if (p_args->group_mask == p_extended_cfg->adc_group)
+                {
+                    break;
+                }
+            }
+
+            break;
+        }
+    }
+
+ #else
+    motor_120_driver_instance_ctrl_t * p_instance_ctrl = (motor_120_driver_instance_ctrl_t *) p_args->p_context;
+ #endif
+
+    /* Get A/D converted data (Phase current & main line voltage) */
+    rm_motor_120_driver_shared_current_get(p_instance_ctrl);
+
+    /* Invoke the callback function if it is set. */
+    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    {
+        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_FORWARD;
+        temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+        (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+    }
+
+    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    {
+        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_120_CONTROL;
+        temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+        (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+    }
+
+    /* Invoke the callback function if it is set. */
+    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    {
+        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_BACKWARD;
+        temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+        (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+    }
+}
+
+#endif                                 // MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 1

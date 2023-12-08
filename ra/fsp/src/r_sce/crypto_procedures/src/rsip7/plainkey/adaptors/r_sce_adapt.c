@@ -103,6 +103,8 @@ const uint32_t sce_oem_key_size[SCE_OEM_CMD_NUM] =
     SCE_OEM_KEY_SIZE_ECCP512R1_PRIVATE_KEY_INST_DATA_WORD,
     SCE_OEM_KEY_SIZE_ECCSECP256K1_PUBLICK_KEY_INST_DATA_WORD,
     SCE_OEM_KEY_SIZE_ECCSECP256K1_PRIVATE_KEY_INST_DATA_WORD,
+    SCE_OEM_KEY_SIZE_ECCP521_PUBLICK_KEY_INST_DATA_WORD,
+    SCE_OEM_KEY_SIZE_ECCP521_PRIVATE_KEY_INST_DATA_WORD,
 };
 
 /* Find the lifecycle state load the hardware unique key */
@@ -405,6 +407,18 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(const uint32_t InData_Curv
     return (HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType, InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R));
 }
 
+fsp_err_t HW_SCE_Ecc521ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
+                                                      const uint32_t InData_Cmd[],
+                                                      const uint32_t InData_KeyIndex[],
+                                                      const uint32_t InData_PubKey[],
+                                                      const uint32_t InData_DomainParam[],
+                                                      uint32_t OutData_R[])
+{
+    FSP_PARAMETER_NOT_USED(InData_CurveType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    return (HW_SCE_Ecc521ScalarMultiplicationSub(InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R));
+}
+
 fsp_err_t HW_SCE_EcdsaSignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
                                                   const uint32_t InData_Cmd[],
                                                   const uint32_t InData_KeyIndex[],
@@ -424,6 +438,16 @@ fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSubAdaptor(const uint32_t InData_Curv
     return (HW_SCE_EcdsaP384SignatureGenerateSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature));
 }
 
+fsp_err_t HW_SCE_EcdsaP521SignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
+                                                      const uint32_t InData_KeyIndex[],
+                                                      const uint32_t InData_MsgDgst[],
+                                                      const uint32_t InData_DomainParam[],
+                                                      uint32_t OutData_Signature[])
+{
+    FSP_PARAMETER_NOT_USED(InData_CurveType);
+    return (HW_SCE_EcdsaP521SignatureGenerateSub(InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature));
+}
+
 fsp_err_t HW_SCE_EcdsaSignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
                                                   const uint32_t InData_Cmd[],
                                                   const uint32_t InData_KeyIndex[],
@@ -441,6 +465,16 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(const uint32_t InData_
                                                           const uint32_t InData_DomainParam[])
 {
     return (HW_SCE_EcdsaP384SignatureVerificationSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
+}
+
+fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
+                                                          const uint32_t InData_KeyIndex[],
+                                                          const uint32_t InData_MsgDgst[],
+                                                          const uint32_t InData_Signature[],
+                                                          const uint32_t InData_DomainParam[])
+{
+    FSP_PARAMETER_NOT_USED(InData_CurveType);
+    return (HW_SCE_EcdsaP521SignatureVerificationSub(InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
 }
 
 fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType,
@@ -473,6 +507,7 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor(const uint32_t *InData_
     
     return (HW_SCE_GenerateEccP384RandomKeyIndexSub(InData_CurveType, InData_DomainParam, OutData_PubKeyIndex, OutData_PrivKeyIndex));
 }
+
 fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, 
                                                   uint32_t *InData_KeyType,
                                                   uint32_t *OutData_PubKeyIndex,

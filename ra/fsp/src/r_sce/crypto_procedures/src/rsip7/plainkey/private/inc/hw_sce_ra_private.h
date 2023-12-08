@@ -65,16 +65,21 @@
  #define RSA_PARAMETERS_SIZE_BYTES(RSA_SIZE_BITS)             (24)
 
 /** DER encoded size for wrapped RSA key */
- #define RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES    (1200U)
+ #define RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES    (1600U)
+ #define RSA_WRAPPED_3072_EXPORTED_DER_SIZE_BYTES    (1500U)
 
  #define ECC_256_FORMATTED_PUBLIC_KEY_LENGTH_WORDS              (24U)
  #define ECC_384_FORMATTED_PUBLIC_KEY_LENGTH_WORDS              (32U)
+ #define ECC_521_FORMATTED_PUBLIC_KEY_LENGTH_WORDS              (45U)
 
- #define ECC_256_PRIVATE_KEY_HRK_LENGTH_WORDS                   (16U)
- #define ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS                    (512U)
+ #define ECC_256_PRIVATE_KEY_HRK_LENGTH_WORDS                   (13U)
+ #define ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS                    (416U)
 
- #define ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS                   (20U)
- #define ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS                    (640U)
+ #define ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS                   (17U)
+ #define ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS                    (544U)
+
+ #define ECC_521_PRIVATE_KEY_HRK_LENGTH_WORDS                   (25U)
+ #define ECC_521_PRIVATE_KEY_HRK_LENGTH_BITS                    (800U)
 
 /**********************************************************************************************************************
  External global variables
@@ -157,6 +162,17 @@ void HW_SCE_p_func302(void);
 void HW_SCE_p_func303(void);
 void HW_SCE_p_func304(void);
 void HW_SCE_p_func305(void);
+void HW_SCE_p_func310(void);
+void HW_SCE_p_func311(void);
+void HW_SCE_p_func312(void);
+void HW_SCE_p_func313(void);
+void HW_SCE_p_func314(void);
+void HW_SCE_p_func315(void);
+void HW_SCE_p_func316(void);
+void HW_SCE_p_func317(void);
+void HW_SCE_p_func318(void);
+void HW_SCE_p_func319(void);
+void HW_SCE_p_func320(void);
 void HW_SCE_p_func401_r1(const uint32_t ARG1[]);
 void HW_SCE_p_func402_r1(void);
 void HW_SCE_p_func403(void);
@@ -311,11 +327,14 @@ fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSub(const uint32_t InData_CurveTy
 fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[], const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[]);
 fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t InData_CurveType[], const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
 fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
+fsp_err_t HW_SCE_Ecc521ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
 fsp_err_t HW_SCE_EcdsaP512SignatureGenerateSub(const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_DomainParam[], uint32_t OutData_Signature[]);
 fsp_err_t HW_SCE_EcdsaP512SignatureVerificationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[]);
 fsp_err_t HW_SCE_Ecc512ScalarMultiplicationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
 fsp_err_t HW_SCE_EcdsaP521SignatureGenerateSub(const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_DomainParam[], uint32_t OutData_Signature[]);
+fsp_err_t HW_SCE_EcdsaP521SignatureGenerateSubAdaptor(const uint32_t InData_CurveType[], const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_DomainParam[], uint32_t OutData_Signature[]);
 fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[]);
+fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[], const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[]);
 fsp_err_t HW_SCE_Ecc521ScalarMultiplicationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
 fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSub(const uint32_t InData_CurveType[], const uint32_t InData_Cmd[], const uint32_t InData_DomainParam[], uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType, const uint32_t *InData_Cmd, const uint32_t *InData_KeyType, const uint32_t InData_DomainParam[], uint32_t *OutData_PubKeyIndex, uint32_t *OutData_PubKey, uint32_t *OutData_PrivKeyIndex, uint32_t *OutData_PrivKey);
@@ -338,6 +357,7 @@ fsp_err_t HW_SCE_Aes128OutputKeyForDotfSub(uint32_t InData_KeyIndex[], uint32_t 
 fsp_err_t HW_SCE_Aes192OutputKeyForDotfSub(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
 fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
 fsp_err_t HW_SCE_RSA2048_KeyPairGenerateSub(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
+fsp_err_t HW_SCE_RSA3072_KeyPairGenerateSub(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *InData_KeyType, uint32_t *OutData_PubKeyIndex,
         uint32_t *OutData_PubKey, uint32_t *OutData_PrivKeyIndex, uint32_t *OutData_PrivKey);
 uint32_t change_endian_long (uint32_t data);

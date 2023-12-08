@@ -81,6 +81,13 @@
 
 #define RTC_ALARM_REG_SIZE                (0x20)
 
+#define BSP_DELAY_US_PER_SECOND           (1000000)
+#define NOISE_FILTER_SET_NUMBER_DELAY     (3)
+#define NOISE_FILTER_CLOCK_DEVIDE_1       (1)
+#define NOISE_FILTER_CLOCK_DEVIDE_32      (32)
+#define NOISE_FILTER_CLOCK_DEVIDE_4096    (4096)
+#define NOISE_FILTER_CLOCK_DEVIDE_8192    (8192)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -121,6 +128,8 @@ const rtc_api_t g_rtc_on_rtc =
     .infoGet            = R_RTC_InfoGet,
     .errorAdjustmentSet = R_RTC_ErrorAdjustmentSet,
     .callbackSet        = R_RTC_CallbackSet,
+    .timeCaptureSet     = R_RTC_TimeCaptureSet,
+    .timeCaptureGet     = R_RTC_TimeCaptureGet,
 };
 
 #if RTC_CFG_PARAM_CHECKING_ENABLE
@@ -837,6 +846,173 @@ fsp_err_t R_RTC_CallbackSet (rtc_ctrl_t * const          p_ctrl,
     p_instance_ctrl->p_callback_memory = p_callback_memory;
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Set time capture configuration for the provided channel.
+ *
+ * Implements @ref rtc_api_t::timeCaptureSet
+ *
+ * @note Updating capture settings requires significant software delay. Timing considerations should be carefully
+ * considered when calling this function.
+ *
+ * @retval FSP_SUCCESS                 Setting for Time capture was successful.
+ * @retval FSP_ERR_ASSERTION           Invalid input argument.
+ * @retval FSP_ERR_NOT_OPEN            Driver not open already for operation.
+ * @retval FSP_ERR_INVALID_CHANNEL     Invalid input channel set.
+ * @retval FSP_ERR_UNSUPPORTED         Hardware not support this feature.
+ **********************************************************************************************************************/
+fsp_err_t R_RTC_TimeCaptureSet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * const p_time_capture)
+{
+#if BSP_FEATURE_RTC_IS_IRTC && BSP_FEATURE_RTC_HAS_TCEN
+ #if (RTC_CFG_PARAM_CHECKING_ENABLE)
+    rtc_instance_ctrl_t * p_instance_ctrl = (rtc_instance_ctrl_t *) p_ctrl;
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_time_capture);
+    FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(BSP_FEATURE_RTC_RTCCR_CHANNELS > p_time_capture->channel, FSP_ERR_INVALID_CHANNEL);
+ #else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+ #endif
+
+    /* Clear config, set TCEN bit before set other bit. */
+    R_RTC->RTCCR[p_time_capture->channel].RTCCR = R_RTC_RTCCR_RTCCR_TCEN_Msk;
+
+    /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
+     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
+     * manual R01UH1005EJ0100) */
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR, (uint8_t) R_RTC_RTCCR_RTCCR_TCEN_Msk);
+
+    R_RTC->RTCCR[p_time_capture->channel].RTCCR |=
+        (uint8_t) (p_time_capture->noise_filter << R_RTC_RTCCR_RTCCR_TCNF_Pos);
+
+    /* When the noise filter is used, set the TCNF[2:0] bits,wait for 3 cycles of the specified sampling period (see
+     * section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the  manual R01UH1005EJ0100) */
+    uint32_t noise_filter_delay_us = 0;
+    switch (p_time_capture->noise_filter)
+    {
+        case RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_32:
+        {
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_32 / BSP_SUBCLOCK_FREQ_HZ);
+            break;
+        }
+
+        case RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_4096:
+        {
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_4096 / BSP_SUBCLOCK_FREQ_HZ);
+            break;
+        }
+
+        case RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_8192:
+        {
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_8192 / BSP_SUBCLOCK_FREQ_HZ);
+            break;
+        }
+
+        default:
+        {
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_1 / BSP_SUBCLOCK_FREQ_HZ);
+            break;
+        }
+    }
+
+    R_BSP_SoftwareDelay(NOISE_FILTER_SET_NUMBER_DELAY * noise_filter_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
+     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
+     * manual R01UH1005EJ0100) */
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCNF,
+                               (uint8_t) p_time_capture->noise_filter);
+
+    R_RTC->RTCCR[p_time_capture->channel].RTCCR |= (uint8_t) (p_time_capture->source << R_RTC_RTCCR_RTCCR_TCCT_Pos);
+
+    /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
+     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
+     * manual R01UH1005EJ0100) */
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCCT, (uint8_t) p_time_capture->source);
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_time_capture);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * Get time capture value of the provided channel.
+ *
+ * Implements @ref rtc_api_t::timeCaptureGet
+ *
+ * @retval FSP_SUCCESS                 Get time capture successful.
+ * @retval FSP_ERR_ASSERTION           Invalid input argument.
+ * @retval FSP_ERR_NOT_OPEN            Driver not open already for operation.
+ * @retval FSP_ERR_INVALID_CHANNEL     Invalid input channel get.
+ * @retval FSP_ERR_INVALID_STATE       Invalid operation state.
+ * @retval FSP_ERR_UNSUPPORTED         Hardware not support this feature.
+ **********************************************************************************************************************/
+fsp_err_t R_RTC_TimeCaptureGet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * const p_time_capture)
+{
+#if BSP_FEATURE_RTC_IS_IRTC && BSP_FEATURE_RTC_HAS_TCEN
+ #if (RTC_CFG_PARAM_CHECKING_ENABLE)
+    rtc_instance_ctrl_t * p_instance_ctrl = (rtc_instance_ctrl_t *) p_ctrl;
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_time_capture);
+    FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(BSP_FEATURE_RTC_RTCCR_CHANNELS > p_time_capture->channel, FSP_ERR_INVALID_CHANNEL);
+ #else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+ #endif
+
+    /* The event is detected only during count operation (RCR2.START bit = 1). Before reading the capture register,
+     * make sure that this bit is set to 1. */
+    FSP_ERROR_RETURN(R_RTC->RCR2_b.START == 1U, FSP_ERR_INVALID_STATE);
+
+    /* Capture event detected */
+    FSP_ERROR_RETURN(R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCST == 1U, FSP_ERR_INVALID_STATE);
+
+    /* Get configuration of capture source and noise filter */
+    p_time_capture->source       = (rtc_time_capture_source_t) R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCCT;
+    p_time_capture->noise_filter = (rtc_time_capture_noise_filter_t) R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCNF;
+
+    /* Before reading from this register, the time capture event detection should be stopped using the RTCCRn.TCCT[1:0]
+     * bits.(see section 23.2.28 "RSECCPn : Second Capture Register n (n = 0 to 2) (in Calendar Count Mode)" of the
+     *  manual r01uh1005ej0100 */
+    uint8_t rtccr = R_RTC->RTCCR[p_time_capture->channel].RTCCR;
+    R_RTC->RTCCR[p_time_capture->channel].RTCCR = rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCCT_Msk);
+
+    /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
+     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
+     * manual R01UH1005EJ0100) */
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR,
+                               (uint8_t) (rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCCT_Msk)));
+
+    p_time_capture->time.tm_sec  = rtc_bcd_to_dec(R_RTC->CP[p_time_capture->channel].RSEC & RTC_MASK_8TH_BIT);
+    p_time_capture->time.tm_min  = rtc_bcd_to_dec(R_RTC->CP[p_time_capture->channel].RMIN & RTC_MASK_8TH_BIT);
+    p_time_capture->time.tm_hour = rtc_bcd_to_dec(R_RTC->CP[p_time_capture->channel].RHR & RTC_MASK_8TH_BIT);
+    p_time_capture->time.tm_mday = rtc_bcd_to_dec(R_RTC->CP[p_time_capture->channel].RDAY & RTC_MASK_8TH_BIT);
+
+    /* Subtract one from month to match with C time.h standards */
+    p_time_capture->time.tm_mon = rtc_bcd_to_dec(R_RTC->CP[p_time_capture->channel].RMON & RTC_MASK_8TH_BIT) -
+                                  (uint8_t) 1;
+
+    /* Restore setting and clear Time capture status bit */
+    R_RTC->RTCCR[p_time_capture->channel].RTCCR = rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCST_Msk);
+
+    /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
+     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
+     * manual R01UH1005EJ0100) */
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR,
+                               (uint8_t) (rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCST_Msk)));
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_time_capture);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**

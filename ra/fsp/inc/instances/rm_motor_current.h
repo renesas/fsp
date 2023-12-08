@@ -124,6 +124,7 @@ typedef struct st_motor_current_extended_cfg
     float f_comp_i[MOTOR_CURRENT_VOLTAGE_COMPENSATION_TABLE_ARRAY_SIZE];     ///< Voltage error compensation table of current
     motor_current_voltage_compensation_select_t vcomp_enable;                ///< Enable/Disable select of voltage error compensation
     motor_current_sample_delay_compensation_t   u1_sample_delay_comp_enable; ///< Enable/Disable select of sample delay compensation
+    float f_period_magnitude_value;                                          ///< Period magnification value for sampling delay compensation
     float f_current_ctrl_period;                                             ///< Current control period [usec]
     float f_ilimit;                                                          ///< Current limit [A]
 

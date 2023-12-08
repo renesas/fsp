@@ -51,6 +51,8 @@ psa_status_t psa_allocate_buffer_to_slot(psa_key_slot_t * slot, size_t buffer_le
      PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_LENGTH_BITS) : \
      (bit_length) ==                                                                                               \
      PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_LENGTH_BITS) : \
+     (bit_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_521_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_521_PRIVATE_KEY_LENGTH_BITS) : \
      0)
 
 /* Functions used directly from mbedCrypto */

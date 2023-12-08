@@ -176,14 +176,14 @@ fsp_err_t RM_MOTOR_120_DEGREE_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t con
 
     motor_120_degree_extended_cfg_t * p_extended_cfg = (motor_120_degree_extended_cfg_t *) p_cfg->p_extend;
 
+    p_instance_ctrl->p_cfg = p_cfg;
+
     /* Start 120 control module */
     if (p_extended_cfg != NULL)
     {
         p_extended_cfg->p_motor_120_control_instance->p_api->open(p_extended_cfg->p_motor_120_control_instance->p_ctrl,
                                                                   p_extended_cfg->p_motor_120_control_instance->p_cfg);
     }
-
-    p_instance_ctrl->p_cfg = p_cfg;
 
     p_instance_ctrl->u2_error_info = MOTOR_ERROR_NONE;
 

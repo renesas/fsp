@@ -54,6 +54,12 @@
 #define BLE_MODULE_SPP_SPI_READ_EVENT_SIZE       (2U)
 #define BLE_MODULE_SPP_MAX_PACKET_SIZE           (255)
 
+/* OP_CODE received for an attribute write command. */
+#define BLE_MODULE_ATT_OP_WRITE_REQ              (0x12)
+
+/* OP_CODE received for an attribute write-without-response command. */
+#define BLE_MODULE_ATT_OP_WRITE_CMD              (0x52)
+
 #define BLE_PARAMETER_NOT_USED(p)    (void) ((p))
 
 #define ENDIAN_LSB16(n)              (uint8_t) (n & 0xFF)
@@ -1042,6 +1048,7 @@ ble_status_t R_BLE_Execute (void)
 
             case R_BLE_SPP_EVENT_DATA_RECEIVED:
             {
+                uint32_t op_code = g_current_spp_async_payload.out_data[0];
                 attr_hdl        = *((uint16_t *) (&g_current_spp_async_payload.out_data[1]));
                 value.value_len = (uint16_t) (g_current_spp_async_payload.out_len - 5);
                 value.p_value   = &g_current_spp_async_payload.out_data[3];
@@ -1050,13 +1057,38 @@ ble_status_t R_BLE_Execute (void)
 
                 if (NULL != g_spp_gatt_server_cb)
                 {
-                    st_ble_gatts_evt_data_t      event_write_data;
-                    st_ble_gatts_write_rsp_evt_t event_write;
-                    event_write.attr_hdl       = attr_hdl;
-                    event_write_data.conn_hdl  = 0;
-                    event_write_data.param_len = value.value_len;
-                    event_write_data.p_param   = (void *) &event_write;
-                    g_spp_gatt_server_cb(BLE_GATTS_EVENT_WRITE_RSP_COMP, BLE_SUCCESS, (void *) &event_write_data);
+                    /* An attribute was written using a write command. */
+                    if (BLE_MODULE_ATT_OP_WRITE_REQ == op_code)
+                    {
+                        st_ble_gatts_evt_data_t      event_write_data;
+                        st_ble_gatts_write_rsp_evt_t event_write;
+                        event_write.attr_hdl       = attr_hdl;
+                        event_write_data.conn_hdl  = 0;
+                        event_write_data.param_len = value.value_len;
+                        event_write_data.p_param   = (void *) &event_write;
+
+                        g_spp_gatt_server_cb(BLE_GATTS_EVENT_WRITE_RSP_COMP, BLE_SUCCESS, (void *) &event_write_data);
+                    }
+
+                    /* An attribute was writting using a write-without-response command. */
+                    if (BLE_MODULE_ATT_OP_WRITE_CMD == op_code)
+                    {
+                        st_ble_gatts_evt_data_t      event_write_no_response_data;
+                        st_ble_gatts_db_access_evt_t event_db_access;
+                        st_ble_gatts_db_params_t     event_db_access_params;
+                        event_db_access_params.attr_hdl        = attr_hdl;
+                        event_db_access_params.db_op           = BLE_GATTS_OP_CHAR_PEER_WRITE_CMD;
+                        event_db_access_params.value           = value;
+                        event_db_access.p_handle               = 0;
+                        event_db_access.p_params               = &event_db_access_params;
+                        event_write_no_response_data.conn_hdl  = 0;
+                        event_write_no_response_data.param_len = sizeof(st_ble_gatts_db_access_evt_t);
+                        event_write_no_response_data.p_param   = &event_db_access;
+
+                        g_spp_gatt_server_cb(BLE_GATTS_EVENT_DB_ACCESS_IND,
+                                             BLE_SUCCESS,
+                                             (void *) &event_write_no_response_data);
+                    }
                 }
 
                 break;

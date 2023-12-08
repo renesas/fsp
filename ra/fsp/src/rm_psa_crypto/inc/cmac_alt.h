@@ -65,6 +65,16 @@ struct mbedtls_cmac_context_t
 
 };
 
+
+#define PSA_CMAC_BITS_VENDOR_RAW(bit_length)                                                                     \
+    ((bit_length) ==                                                                                               \
+     SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED ? 128 : \
+     (bit_length) ==                                                                                               \
+     SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED ? 192 : \
+     (bit_length) ==                                                                                               \
+     SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED ? 256 : \
+     0)
+     
 #endif  /* MBEDTLS_CMAC_ALT */
 
 

@@ -60,6 +60,12 @@ fsp_err_t R_RSIP_AES128_InitialKeyWrap(rsip_key_injection_type_t const key_injec
                                        uint8_t const * const           p_user_key,
                                        rsip_aes_wrapped_key_t * const  p_wrapped_key);
 
+fsp_err_t R_RSIP_AES192_InitialKeyWrap(rsip_key_injection_type_t const key_injection_type,
+                                       uint8_t const * const           p_wrapped_user_factory_programming_key,
+                                       uint8_t const * const           p_initial_vector,
+                                       uint8_t const * const           p_user_key,
+                                       rsip_aes_wrapped_key_t * const  p_wrapped_key);
+
 fsp_err_t R_RSIP_AES256_InitialKeyWrap(rsip_key_injection_type_t const key_injection_type,
                                        uint8_t const * const           p_wrapped_user_factory_programming_key,
                                        uint8_t const * const           p_initial_vector,

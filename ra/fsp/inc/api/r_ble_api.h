@@ -6360,7 +6360,7 @@ typedef struct BLE_PACKED_OPTION
     {
         int8_t i;
         int8_t q;
-    } * iq;
+    } * p_iq;
 } st_cte_iq_sample_t;
 
 /* Event Code : BLE_GAP_EVENT_CTE_CONNLESS_REPT */
@@ -6773,7 +6773,7 @@ typedef struct BLE_PACKED_OPTION
     /**
      * @brief Pointer to an array containing the Codec Configuration. Reserved for future use.
      */
-    uint8_t * codec_conf;
+    uint8_t * p_codec_conf;
 } st_ble_iso_chan_path;
 
 /**
@@ -6816,7 +6816,7 @@ typedef struct  BLE_PACKED_OPTION
     /**
      *  @brief     SDU data.
      */
-    uint8_t * sdu_data;
+    uint8_t * p_sdu_data;
 } st_ble_iso_sdu_t;
 
 /******************************************************************************************************************//**
@@ -6950,22 +6950,22 @@ typedef struct BLE_PACKED_OPTION
     uint8_t nse;
 
     /**
-     *  @brief Maximum size, in octets, of the payload from the Central’s Host.
+     *  @brief Maximum size, in octets, of the payload from the Central Host.
      */
     uint16_t c_sdu;
 
     /**
-     *  @brief Maximum size, in octets, of the payload from the Peripheral’s Host.
+     *  @brief Maximum size, in octets, of the payload from the Peripheral Host.
      */
     uint16_t p_sdu;
 
     /**
-     *  @brief Maximum size, in octets, of the payload from the Central’s Link Layer to the Peripheral’s Link Layer.
+     *  @brief Maximum size, in octets, of the payload from the Central Link Layer to the Peripheral Link Layer.
      */
     uint16_t c_pdu;
 
     /**
-     *  @brief Maximum size, in octets, of the payload from the Peripheral’s Link Layer to the Central’s Link Layer.
+     *  @brief Maximum size, in octets, of the payload from the Peripheral Link Layer to the Central Link Layer.
      */
     uint16_t p_pdu;
 
@@ -6997,12 +6997,12 @@ typedef struct BLE_PACKED_OPTION
 typedef struct BLE_PACKED_OPTION
 {
     /**
-     *  @brief Time interval of periodic SDUs from the Central’s Host.
+     *  @brief Time interval of periodic SDUs from the Central Host.
      */
     uint8_t c_interval[3];
 
     /**
-     *  @brief Time interval of periodic SDUs from the Peripheral’s Host.
+     *  @brief Time interval of periodic SDUs from the Peripheral Host.
      */
     uint8_t p_interval[3];
 
@@ -9750,7 +9750,7 @@ typedef enum
      * ## Event Data:
      * st_ble_gap_cte_antenna_info_t
      */
-    BLE_ISO_EVENT_READ_ANT_INFO_COMP,
+    BLE_GAP_EVENT_READ_ANT_INFO_COMP,
 
     /**
      * @brief
@@ -9806,7 +9806,7 @@ typedef enum
      * ## Event Data:
      * None
      */
-    BLE_ISO_EVENT_PER_ADV_RECV_ON,
+    BLE_GAP_EVENT_PER_ADV_RECV_ON,
 
     /**
      * @brief
@@ -9814,7 +9814,7 @@ typedef enum
      * ## Event Data:
      * None
      */
-    BLE_ISO_EVENT_PER_ADV_RECV_OFF,
+    BLE_GAP_EVENT_PER_ADV_RECV_OFF,
 } e_ble_iso_evt_t;
 
 /*@}*/
@@ -13816,12 +13816,12 @@ ble_status_t R_BLE_GAP_ReplyLtkReq(uint16_t conn_hdl, uint16_t ediv, uint8_t * p
 
 
 /******************************************************************************************************************//**
- *  @fn ble_status_t R_BLE_GAP_SetCteConnlessParam(st_ble_gap_cte_connless_t * cte_param)
+ *  @fn ble_status_t R_BLE_GAP_SetCteConnlessParam(st_ble_gap_cte_connless_t * p_cte_param)
  *  @brief Set the parameters for the transmission of Constant Tone Extensions in any periodic advertising.
- *  @param[in] cte_param parameters of type, length, and antenna switching pattern.
+ *  @param[in] p_cte_param parameters of type, length, and antenna switching pattern.
  *  @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
-ble_status_t R_BLE_GAP_SetCteConnlessParam(st_ble_gap_cte_connless_t * cte_param);
+ble_status_t R_BLE_GAP_SetCteConnlessParam(st_ble_gap_cte_connless_t * p_cte_param);
 
 /******************************************************************************************************************//**
  * @fn ble_status_t R_BLE_GAP_EnableCteConnless(uint16_t adv_hdl, uint8_t enable)
@@ -14127,14 +14127,14 @@ ble_status_t R_BLE_GAP_SetHostFeat(uint8_t bit_number, uint8_t bit_value);
  *  @{
  */
 /******************************************************************************************************************//**
- *  @fn ble_status_t R_BLE_ISO_CreateBig(uint8_t * big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param)
+ *  @fn ble_status_t R_BLE_ISO_CreateBig(uint8_t * p_big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param)
  *  @brief Create a BIG.
- *  @param[out] big_hdl BIG handle is assigned by host stack, and value is passed out.
+ *  @param[out] p_big_hdl BIG handle is assigned by host stack, and value is passed out.
  *  @param[in] adv_hdl Periodic adv handle which carries the biginfo.
  *  @param[in] p_big_param BIG param
  *  @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_CreateBig(uint8_t * big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param);
+ble_status_t R_BLE_ISO_CreateBig(uint8_t * p_big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param);
 
 /******************************************************************************************************************//**
  *  @fn ble_status_t R_BLE_ISO_StopBig(uint8_t big_hdl, uint8_t reason)
@@ -14146,16 +14146,16 @@ ble_status_t R_BLE_ISO_CreateBig(uint8_t * big_hdl, uint8_t adv_hdl, st_ble_iso_
 ble_status_t R_BLE_ISO_StopBig(uint8_t big_hdl, uint8_t reason);
 
 /******************************************************************************************************************//**
- *  @fn ble_status_t R_BLE_ISO_CreateBigSync(uint8_t* big_hdl,
+ *  @fn ble_status_t R_BLE_ISO_CreateBigSync(uint8_t* p_big_hdl,
                                      uint16_t sync_hdl,
                                      st_ble_iso_big_sync_param_t * p_big_sync_param);
  *  @brief  Create a BIG sync
- *  @param[out] big_hdl BIG handle is assigned by host stack, and value is passed out.
+ *  @param[out] p_big_hdl BIG handle is assigned by host stack, and value is passed out.
  *  @param[in] sync_hdl Periodic adv sid which carries the biginfo.
  *  @param[in] p_big_sync_param BIG param which is got from biginfo.
  *  @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_CreateBigSync(uint8_t                     * big_hdl,
+ble_status_t R_BLE_ISO_CreateBigSync(uint8_t                     * p_big_hdl,
                                      uint16_t                      sync_hdl,
                                      st_ble_iso_big_sync_param_t * p_big_sync_param);
 
@@ -14168,15 +14168,15 @@ ble_status_t R_BLE_ISO_CreateBigSync(uint8_t                     * big_hdl,
 ble_status_t R_BLE_ISO_TerminateBigSync(uint8_t big_hdl);
 
 /******************************************************************************************************************//**
- *  @fn ble_status_t R_BLE_ISO_SetCigParam(uint8_t * cig_id, st_ble_iso_cig_param_t * p_cig_param)
+ *  @fn ble_status_t R_BLE_ISO_SetCigParam(uint8_t * p_cig_id, st_ble_iso_cig_param_t * p_cig_param)
  *  @brief Create a CIG with param.
  *  @details This function requests BLE system to create a CIG.
  *      The result of this API call is notified in @ref BLE_ISO_EVENT_CIG_PARAM_SET_COMP event.
- *  @param[out] cig_id CIG is assigned by host stack, and value is passed out.
+ *  @param[out] p_cig_id CIG is assigned by host stack, and value is passed out.
  *  @param[in] p_cig_param CIG param
  *  @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_SetCigParam(uint8_t * cig_id, st_ble_iso_cig_param_t * p_cig_param);
+ble_status_t R_BLE_ISO_SetCigParam(uint8_t * p_cig_id, st_ble_iso_cig_param_t * p_cig_param);
 
 /******************************************************************************************************************//**
  *  @fn ble_status_t R_BLE_ISO_CreateCis(st_ble_iso_cis_conn_t * p_cis_conn)
@@ -14236,28 +14236,28 @@ ble_status_t R_BLE_ISO_ReplyCisRequest(uint8_t cig_id, uint8_t cis_id, uint8_t r
 ble_status_t R_BLE_ISO_SetupDataPath(uint16_t conn_hdl, st_ble_iso_chan_path * p_path);
 
 /******************************************************************************************************************//**
- *  @fn ble_status_t R_BLE_ISO_SendData(st_ble_iso_sdu_t * sdu_info)
+ *  @fn ble_status_t R_BLE_ISO_SendData(st_ble_iso_sdu_t * p_sdu_info)
  *  @brief Send a SDU payload to a ISO channel of conn_hdl.
  *  @details This function copies SDU payload into host's buffer and push the buffer into host's TX queue.
  *           Once the payload is accepted by controller scheduler, @ref BLE_ISO_EVENT_ISO_TX_COMP event
  *           is sent back to application. Due to limitation of host buffer capacity, the maximum size of
  *           SDU payload is 251 bytes (@ref BLE_ISO_DATA_MAX_PDU).
- *  @param[in] sdu_info SDU info and data
+ *  @param[in] p_sdu_info SDU info and data
  *  @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_SendData(st_ble_iso_sdu_t * sdu_info);
+ble_status_t R_BLE_ISO_SendData(st_ble_iso_sdu_t * p_sdu_info);
 
 /******************************************************************************************************************//**
- *  @fn ble_status_t R_BLE_ISO_SendDataNoCopy(st_ble_iso_sdu_t * sdu_info)
+ *  @fn ble_status_t R_BLE_ISO_SendDataNoCopy(st_ble_iso_sdu_t * p_sdu_info)
  *  @brief Send SDU payload to a ISO channel of conn_hdl without copying data.
  *  @details This function behaviors similar to R_BLE_ISO_SendData, but without copying SDU payload
  *           to the buffer in host. For this reason application should hold the buffer until a @ref
- *           BLE_ISO_EVENT_ISO_TX_COMP event with the same conn_hdl and seq_number of sdu_info is received.
+ *           BLE_ISO_EVENT_ISO_TX_COMP event with the same conn_hdl and seq_number of p_sdu_info is received.
  *           The maximum size of SDU payload defined by @ref BLE_ISO_DATA_MAX_SDU.
- *  @param[in] sdu_info SDU info and data
+ *  @param[in] p_sdu_info SDU info and data
  *  @retval  BLE_SUCCESS(0x0000) Success
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_SendDataNoCopy(st_ble_iso_sdu_t * sdu_info);
+ble_status_t R_BLE_ISO_SendDataNoCopy(st_ble_iso_sdu_t * p_sdu_info);
 
 /******************************************************************************************************************
  * @fn ble_status_t R_BLE_ISO_GetTxSync(uint16_t conn_hdl)
@@ -14269,31 +14269,31 @@ ble_status_t R_BLE_ISO_SendDataNoCopy(st_ble_iso_sdu_t * sdu_info);
 ble_status_t R_BLE_ISO_GetTxSync(uint16_t conn_hdl);
 
 /******************************************************************************************************************//**
- * @fn ble_status_t R_BLE_ISO_CreateBigTest(uint8_t * big_hdl, uint8_t adv_hdl,
+ * @fn ble_status_t R_BLE_ISO_CreateBigTest(uint8_t * p_big_hdl, uint8_t adv_hdl,
  *                                  st_ble_iso_create_big_test_param_t * p_create_big_test_param);
  * @brief   Create one or more BISes of a BIG (see [Vol 6] Part B,
  *          Section 4.4.6). All BISes in the BIG have the same values for all parameters.
  * @details
- * @param[out] big_hdl Used to identify a BIG.
+ * @param[out] p_big_hdl Used to identify a BIG.
  * @param[in] adv_hdl Used to identify an advertising set.
  * @param[in] p_create_big_test_param specified parameter of BIG param test
  * @retval  BLE_SUCCESS(0x0000) Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum.
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_CreateBigTest(uint8_t                            * big_hdl,
+ble_status_t R_BLE_ISO_CreateBigTest(uint8_t                            * p_big_hdl,
                                      uint8_t                              adv_hdl,
                                      st_ble_iso_create_big_test_param_t * p_create_big_test_param);
 
 /******************************************************************************************************************//**
- * @fn ble_status_t R_BLE_ISO_SetCigParamTest(uint8_t * cig_id,
+ * @fn ble_status_t R_BLE_ISO_SetCigParamTest(uint8_t * p_cig_id,
  *                              st_ble_iso_set_cig_param_test_param_t * p_set_cig_param_test_param)
  * @brief   Create a CIG and set the parameters of one or more CISes that are associated with a CIG in the
  *          Controller.
  * @details
  * @param[in] p_set_cig_param_test_param specified parameter of CIG param_test
- * @param[out] cig_id cig ID is assigned by host stack, and value is passed out.
+ * @param[out] p_cig_id cig ID is assigned by host stack, and value is passed out.
  * @retval  BLE_SUCCESS(0x0000) Success, otherwise "HCI Spec Error" in enum RBLE_STATUS_enum.
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_SetCigParamTest(uint8_t                               * cig_id,
+ble_status_t R_BLE_ISO_SetCigParamTest(uint8_t                               * p_cig_id,
                                        st_ble_iso_set_cig_param_test_param_t * p_set_cig_param_test_param);
 
 /******************************************************************************************************************//**
@@ -14376,7 +14376,7 @@ ble_status_t R_BLE_ISO_RemoveDataPath(uint16_t conn_hdl, uint8_t dir);
  *  @retval  BLE_ERR_INVALID_HDL(0x000E) The handle does not indicate a synchronization connection.
  *  @retval  BLE_ERR_UNSPECIFIED(0x0013) Unspecified error.
  **********************************************************************************************************************/
-ble_status_t R_BLE_ISO_SetPerAdvRecvEnable(uint16_t sync_hdl, uint8_t enable);
+ble_status_t R_BLE_GAP_SetPerAdvRecvEnable(uint16_t sync_hdl, uint8_t enable);
 
 /** @} */
 

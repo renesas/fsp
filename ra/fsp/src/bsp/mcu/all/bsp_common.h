@@ -504,7 +504,13 @@ __STATIC_INLINE uint32_t R_FSP_SciClockHzGet (void)
  **********************************************************************************************************************/
 __STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet (void)
 {
+#if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+
+    return (bsp_unique_id_t *) (BSP_FEATURE_BSP_UNIQUE_ID_POINTER | BSP_FEATURE_TZ_NS_OFFSET);
+#else
+
     return (bsp_unique_id_t *) BSP_FEATURE_BSP_UNIQUE_ID_POINTER;
+#endif
 }
 
 /*******************************************************************************************************************//**

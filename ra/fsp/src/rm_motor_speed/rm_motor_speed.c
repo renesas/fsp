@@ -211,8 +211,8 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
                                 &(p_extended_cfg->mtr_param));
     p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
 
-    rm_motor_speed_opl_damp_init(&(p_extended_cfg->ol_sub_param), p_extended_cfg->f_ol_fb_speed_limit_rate);
-    rm_motor_speed_opl_damp_r_set_gain(&(p_extended_cfg->ol_sub_param),
+    rm_motor_speed_opl_damp_init(&(p_instance_ctrl->openloop_sub), p_extended_cfg->f_ol_fb_speed_limit_rate);
+    rm_motor_speed_opl_damp_r_set_gain(&(p_instance_ctrl->openloop_sub),
                                        p_extended_cfg->mtr_param.u2_mtr_pp,
                                        p_extended_cfg->mtr_param.f4_mtr_m,
                                        p_extended_cfg->mtr_param.f4_mtr_j,
@@ -363,7 +363,7 @@ fsp_err_t RM_MOTOR_SPEED_Reset (motor_speed_ctrl_t * const p_ctrl)
     p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
     rm_motor_speed_fluxwkn_reset(&(p_instance_ctrl->st_flxwkn));
 
-    rm_motor_speed_opl_damp_reset(&(p_extended_cfg->ol_sub_param));
+    rm_motor_speed_opl_damp_reset(&(p_instance_ctrl->openloop_sub));
 
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
     {
@@ -874,8 +874,8 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
                                 &(p_extended_cfg->mtr_param));
     p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
 
-    rm_motor_speed_opl_damp_init(&(p_extended_cfg->ol_sub_param), p_extended_cfg->f_ol_fb_speed_limit_rate);
-    rm_motor_speed_opl_damp_r_set_gain(&(p_extended_cfg->ol_sub_param),
+    rm_motor_speed_opl_damp_init(&(p_instance_ctrl->openloop_sub), p_extended_cfg->f_ol_fb_speed_limit_rate);
+    rm_motor_speed_opl_damp_r_set_gain(&(p_instance_ctrl->openloop_sub),
                                        p_extended_cfg->mtr_param.u2_mtr_pp,
                                        p_extended_cfg->mtr_param.f4_mtr_m,
                                        p_extended_cfg->mtr_param.f4_mtr_j,
@@ -1377,7 +1377,7 @@ static float rm_motor_speed_set_iq_ref (motor_speed_instance_ctrl_t * p_ctrl)
             {
                 /* Open loop damping control*/
                 p_ctrl->f_damp_comp_speed =
-                    rm_motor_speed_opl_damp_ctrl(&(p_extended_cfg->ol_sub_param),
+                    rm_motor_speed_opl_damp_ctrl(&(p_ctrl->openloop_sub),
                                                  p_ctrl->st_input.f_ed,
                                                  p_ctrl->f_ref_speed_rad_ctrl);
             }
@@ -1403,7 +1403,7 @@ static float rm_motor_speed_set_iq_ref (motor_speed_instance_ctrl_t * p_ctrl)
                 if (MOTOR_SPEED_FLAG_SET == p_extended_cfg->u1_openloop_damping)
                 {
                     /* Open-loop damping control reset */
-                    rm_motor_speed_opl_damp_reset(&(p_extended_cfg->ol_sub_param));
+                    rm_motor_speed_opl_damp_reset(&(p_ctrl->openloop_sub));
                     p_ctrl->f_damp_comp_speed = 0.0F;
                 }
             }

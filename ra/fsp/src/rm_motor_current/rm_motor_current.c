@@ -32,18 +32,16 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_CURRENT_OPEN         (0X4D435043L)
+#define     MOTOR_CURRENT_OPEN        (0X4D435043L)
 
-#define     MOTOR_CURRENT_FLG_CLR      (0)                           /* For flag clear */
-#define     MOTOR_CURRENT_FLG_SET      (1)                           /* For flag set */
+#define     MOTOR_CURRENT_FLG_CLR     (0)                           /* For flag clear */
+#define     MOTOR_CURRENT_FLG_SET     (1)                           /* For flag set */
 
-#define     MOTOR_CURRENT_TWOPI        (3.14159265358979F * 2.0F)
-#define     MOTOR_CURRENT_60_TWOPI     (60.0F / MOTOR_CURRENT_TWOPI) /* To translate rad/s => rpm */
-#define     MOTOR_CURRENT_SQRT_2       (1.41421356F)                 /* Sqrt(2) */
-#define     MOTOR_CURRENT_SQRT_3       (1.7320508F)                  /* Sqrt(3) */
-#define     MOTOR_CURRENT_DIV_KHZ      (0.001F)
-
-#define     MOTOR_CURRENT_MAGNITUDE    (1.0F)
+#define     MOTOR_CURRENT_TWOPI       (3.14159265358979F * 2.0F)
+#define     MOTOR_CURRENT_60_TWOPI    (60.0F / MOTOR_CURRENT_TWOPI) /* To translate rad/s => rpm */
+#define     MOTOR_CURRENT_SQRT_2      (1.41421356F)                 /* Sqrt(2) */
+#define     MOTOR_CURRENT_SQRT_3      (1.7320508F)                  /* Sqrt(3) */
+#define     MOTOR_CURRENT_DIV_KHZ     (0.001F)
 
 #ifndef MOTOR_CURRENT_ERROR_RETURN
  #define    MOTOR_CURRENT_ERROR_RETURN(a, err)    FSP_ERROR_RETURN((a), (err))
@@ -78,7 +76,10 @@ static void motor_current_voltage_limit(motor_current_instance_ctrl_t * p_ctrl);
 static void motor_current_transform_uvw_dq_abs(const float f_angle, const float * f_uvw, float * f_dq);
 static void motor_current_transform_dq_uvw_abs(const float f_angle, const float * f_dq, float * f_uvw);
 
-static float motor_current_sample_delay_compensation(float f4_angle_rad, float f4_speed_rad, float f4_ctrl_period);
+static float motor_current_sample_delay_compensation(float f4_angle_rad,
+                                                     float f4_speed_rad,
+                                                     float f4_ctrl_period,
+                                                     float f4_magnitude);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -526,7 +527,8 @@ fsp_err_t RM_MOTOR_CURRENT_PhaseVoltageGet (motor_current_ctrl_t * const        
         p_instance_ctrl->f_rotor_angle =
             motor_current_sample_delay_compensation(p_instance_ctrl->f_rotor_angle,
                                                     p_instance_ctrl->f_speed_rad,
-                                                    p_extended_cfg->f_current_ctrl_period * MOTOR_CURRENT_DIV_KHZ);
+                                                    p_extended_cfg->f_current_ctrl_period * MOTOR_CURRENT_DIV_KHZ,
+                                                    p_extended_cfg->f_period_magnitude_value);
     }
 
     /* Coordinate transformation (dq->uvw) */
@@ -1092,13 +1094,17 @@ static void motor_current_transform_dq_uvw_abs (const float f_angle, const float
  * Arguments    : f4_angle_rad   - motor angle (electrical) [rad]
  *              : f4_speed_rad   - motor speed (electrical) [rad/s]
  *              : f4_ctrl_period - motor current control period
+ *              : f4_magnitude   - period magnification value for sampling delay compensation
  * Return Value : motor angle (electrical) [rad/s]
  **********************************************************************************************************************/
-static float motor_current_sample_delay_compensation (float f4_angle_rad, float f4_speed_rad, float f4_ctrl_period)
+static float motor_current_sample_delay_compensation (float f4_angle_rad,
+                                                      float f4_speed_rad,
+                                                      float f4_ctrl_period,
+                                                      float f4_magnitude)
 {
     float f4_comp_angle_rad = 0.0F;
 
-    f4_comp_angle_rad = f4_speed_rad * f4_ctrl_period * MOTOR_CURRENT_MAGNITUDE;
+    f4_comp_angle_rad = f4_speed_rad * f4_ctrl_period * f4_magnitude;
     f4_comp_angle_rad = f4_angle_rad + f4_comp_angle_rad;
 
     /* Limit angle value of one rotation */

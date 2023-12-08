@@ -350,6 +350,7 @@
 #define BSP_FEATURE_LPM_HAS_DPSBYCR_DPSBY                    (1U)
 #define BSP_FEATURE_LPM_HAS_DPSBYCR_SRKEEP                   (0U)
 #define BSP_FEATURE_LPM_HAS_LDO_CONTROL                      (0U)
+#define BSP_FEATURE_LPM_HAS_LPCSR                            (0U)
 #define BSP_FEATURE_LPM_HAS_LPSCR                            (0U)
 #define BSP_FEATURE_LPM_HAS_PDRAMSCR                         (0U)
 #define BSP_FEATURE_LPM_HAS_SBYCR_OPE                        (0U)
@@ -409,10 +410,11 @@
 #define BSP_FEATURE_SCI_UART_FIFO_CHANNELS                   (0x219U)
 #define BSP_FEATURE_SCI_UART_FIFO_DEPTH                      (16U)
 #define BSP_FEATURE_SCI_VERSION                              (1U)
+#define BSP_FEATURE_SCI_LIN_CHANNELS                         (0U)      // Feature not available on this MCU
 
 #define BSP_FEATURE_SDHI_CLOCK                               (FSP_PRIV_CLOCK_PCLKB)
 #define BSP_FEATURE_SDHI_HAS_CARD_DETECTION                  (1U)
-#define BSP_FEATURE_SDHI_MIN_CLOCK_DIVISION_SHIFT            (0U) // 0 (2^0) is minimum division supported
+#define BSP_FEATURE_SDHI_MIN_CLOCK_DIVISION_SHIFT            (0U)      // 0 (2^0) is minimum division supported
 #define BSP_FEATURE_SDHI_SUPPORTS_8_BIT_MMC                  (1U)
 #define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK                  (0x01U)
 

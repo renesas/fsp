@@ -113,18 +113,13 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
     int32_t          ret     = -1;
 
     if ((NULL == pxNetworkParams) || (0 == pxNetworkParams->ucSSIDLength) ||
-        (0 == pxNetworkParams->xPassword.xWPA.ucLength))
+        ((0 == pxNetworkParams->xPassword.xWPA.ucLength) &&
+         (eWiFiSecurityOpen != pxNetworkParams->xSecurity)))
     {
         return eWiFiFailure;
     }
 
     if (pxNetworkParams->xSecurity >= eWiFiSecurityNotSupported)
-    {
-        return eWiFiFailure;
-    }
-
-    if ((0 == pxNetworkParams->xPassword.xWPA.ucLength) &&
-        (eWiFiSecurityOpen != pxNetworkParams->xSecurity))
     {
         return eWiFiFailure;
     }

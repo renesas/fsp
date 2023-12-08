@@ -54,6 +54,8 @@
 
 #include "psa/crypto_types.h"
 
+#include "hw_sce_ra_private.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -85,6 +87,7 @@ typedef struct mbedtls_ccm_context
     int MBEDTLS_PRIVATE(state);              /*!< Working value holding context's
                                                   state. Used for chunked data
                                                   input */
+    bool vendor_flag;
 }
 mbedtls_ccm_context;
 
@@ -109,5 +112,7 @@ int sce_ccm_crypt_and_tag(mbedtls_ccm_context * ctx,
 
 /* Functions to support vendor defined format */
 psa_status_t vendor_bitlength_to_raw_bitlength(psa_key_type_t type, size_t vendor_bits, size_t * raw_bits);
+
+void psa_aead_setup_vendor (void * ctx);
 
 #endif /* MBEDTLS_CCM_ALT_H */

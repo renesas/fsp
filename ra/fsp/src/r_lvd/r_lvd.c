@@ -804,6 +804,14 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
         FSP_ASSERT(NULL != p_cfg->p_callback);
     }
 
+ #if BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE
+    if (LVD_RESPONSE_RESET_ON_RISING == p_ctrl->p_cfg->detection_response)
+    {
+        /* Negation shall only follow a stabilization time (tPVDm) after VCC < Vdetm is detected on VCC-rising reset. */
+        FSP_ASSERT(LVD_NEGATION_DELAY_FROM_VOLTAGE == p_ctrl->p_cfg->negation_delay);
+    }
+ #endif
+
  #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 0
     FSP_ERROR_RETURN(LVD_SAMPLE_CLOCK_DISABLED == p_cfg->sample_clock_divisor, FSP_ERR_UNSUPPORTED);
  #endif

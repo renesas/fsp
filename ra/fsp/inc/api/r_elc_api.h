@@ -91,6 +91,7 @@ typedef void elc_ctrl_t;
 typedef struct st_elc_cfg
 {
     elc_event_t const link[ELC_PERIPHERAL_NUM]; ///< Event link register settings
+    void const      * p_extend;                 ///< Extension parameter for hardware specific settings
 } elc_cfg_t;
 
 #ifndef BSP_OVERRIDE_ELC_SOFTWARE_EVENT_T

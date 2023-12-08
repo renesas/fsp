@@ -37,8 +37,11 @@
                                                    (TRANSFER_ADDR_MODE_INCREMENTED << 26U) | (TRANSFER_IRQ_END << 21U) | \
                                                    (TRANSFER_ADDR_MODE_FIXED << 18U))
 
+#define SCI_B_SPI_PRV_CLK_MAX_N                   (0xFFU)
+#define SCI_B_SPI_PRV_CLK_MAX_n                   (3U)
 #define SCI_B_SPI_PRV_CLK_MIN_DIV                 (4U)
-#define SCI_B_SPI_PRV_CLK_MAX_DIV                 ((UINT16_MAX + 1U) * 2U)
+#define SCI_B_SPI_PRV_CLK_MAX_DIV                 ((SCI_B_SPI_PRV_CLK_MAX_N + 1) * 8 * \
+                                                   (1 << (2 * SCI_B_SPI_PRV_CLK_MAX_n - 1)))
 #define SCI_B_SPI_PRV_CHR_RST_VALUE               (0x0200U)
 #define SCI_B_SPI_PRV_DATA_REG_MASK               (0xFFFFFF00)
 #define SCI_B_SPI_PRV_RDAT_MASK                   (0xFFU)
@@ -573,8 +576,8 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
             R_SCI_B0_CFCLR_ERSC_Msk;
     ffclr = R_SCI_B0_FFCLR_DRC_Msk;
 
-    /* Set FCR. Reset fifo/data registers. */
-    p_ctrl->p_reg->FCR = (8U << R_SCI_B0_FCR_RTRG_Pos);
+    /* Set FCR. Reset FIFO/data registers. */
+    p_ctrl->p_reg->FCR = R_SCI_B0_FCR_TFRST_Msk | R_SCI_B0_FCR_RFRST_Msk;
 
     /* Write settings to registers. */
     p_ctrl->p_reg->CCR3  = ccr3;

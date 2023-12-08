@@ -149,6 +149,25 @@ typedef enum e_rtc_periodic_irq_select
 } rtc_periodic_irq_select_t;
 #endif
 
+/** Time capture trigger source */
+typedef enum e_rtc_time_capture_source
+{
+    RTC_TIME_CAPTURE_SOURCE_DISABLED     = 0, ///< Disable trigger
+    RTC_TIME_CAPTURE_SOURCE_PIN_RISING   = 1, ///< Rising edge pin trigger
+    RTC_TIME_CAPTURE_SOURCE_PIN_FALLING  = 2, ///< Falling edge pin trigger
+    RTC_TIME_CAPTURE_SOURCE_PIN_BOTH     = 3, ///< Both edges pin trigger
+} rtc_time_capture_source_t;
+
+/** Time capture noise filter control */
+typedef enum e_rtc_time_capture_noise_filter
+{
+    RTC_TIME_CAPTURE_NOISE_FILTER_OFF             = 0, ///< Turn noise filter off
+    RTC_TIME_CAPTURE_NOISE_FILTER_ON              = 2, ///< Turn noise filter on (count source)
+    RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_32   = 3, ///< Turn noise filter on (count source by divided by 32)
+    RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_4096 = 4, ///< Turn noise filter on (count source by divided by 4096)
+    RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_8192 = 5, ///< Turn noise filter on (count source by divided by 8192)
+} rtc_time_capture_noise_filter_t;
+
 /** Date and time structure defined in C standard library <time.h> */
 typedef struct tm rtc_time_t;
 
@@ -172,6 +191,15 @@ typedef struct st_rtc_alarm_time
     bool                saturday_match;  ///< Enable the alarm on Saturday
     rtc_alarm_channel_t channel;         ///< Select alarm 0 or alarm 1
 } rtc_alarm_time_t;
+
+/** Time capture configuration structure */
+typedef struct st_rtc_time_capture
+{
+    rtc_time_t                      time;         ///< Time structure
+    uint8_t                         channel;      ///< Capture channel
+    rtc_time_capture_source_t       source;       ///< Trigger source
+    rtc_time_capture_noise_filter_t noise_filter; ///< Noise filter
+} rtc_time_capture_t;
 
 /** RTC Information Structure for information returned by  infoGet() */
 typedef struct st_rtc_info
@@ -284,6 +312,20 @@ typedef struct st_rtc_api
      * @param[out]  p_rtc_info   Pointer to RTC information structure
      */
     fsp_err_t (* infoGet)(rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info);
+
+    /** Config Time capture
+     *
+     * @param[in] p_ctrl             Pointer to RTC device handle
+     * @param[in] p_time_capture     Pointer to a time capture structure that contains the configuration
+     */
+    fsp_err_t (* timeCaptureSet)(rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * const p_time_capture);
+
+    /** Get the capture time and clear bit status.
+     *
+     * @param[in]  p_ctrl             Pointer to RTC device handle
+     * @param[out] p_time_capture     Pointer to a time capture structure to fill up with the time capture
+     */
+    fsp_err_t (* timeCaptureGet)(rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * const p_time_capture);
 } rtc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -40,13 +40,13 @@
 #endif
 #include "cmsis_compiler.h"
 
-/* Workaround for compilers that are not defining __ARM_ARCH_8_1M_MAIN__ for CM85 parts. */
+/* Workaround for compilers that are not defining __ARM_ARCH_8_1M_MAIN__ for CM85 parts. Search CM85_WORKAROUND for related code changes */
 #if BSP_CFG_MCU_PART_SERIES == 8
  #undef __ARM_ARCH_8M_MAIN__
  #define __ARM_ARCH_8_1M_MAIN__    1
 #endif
 
-#include "bsp_api.h"                   /* This include brings in a workaround for defining __ARM_ARCH_8_1M_MAIN__. It should be removed when this behaviour is fixed. */
+#include "bsp_api.h"                   /* This include brings in a workaround for defining __ARM_ARCH_8_1M_MAIN__. It should be removed when this behaviour is fixed. Search CM85_WORKAROUND for related code changes */
 
 #if   __ARM_ARCH_7EM__
  #define __MPU_PRESENT             1   /*!< MPU present or not                                                    */

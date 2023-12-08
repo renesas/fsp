@@ -4645,20 +4645,27 @@ static fsp_err_t ble_abs_timer_create (ble_abs_instance_ctrl_t * const p_instanc
  **********************************************************************************************************************/
 static fsp_err_t ble_abs_timer_delete (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t * p_timer_hdl)
 {
-    uint32_t timer_hdl = *p_timer_hdl;
-
-    *p_timer_hdl = BLE_TIMER_INVALID_HDL;
-
-    if (BLE_TIMER_STATUS_STARTED == p_instance_ctrl->timer[timer_hdl].status)
+    if (BLE_TIMER_INVALID_HDL != *p_timer_hdl)
     {
-        ble_abs_timer_stop(p_instance_ctrl, timer_hdl);
-    }
+        uint32_t timer_hdl = *p_timer_hdl;
 
-    ble_abs_timer_update_remaining_time_ms(p_instance_ctrl, false);
-    ble_abs_timer_stop_timer(p_instance_ctrl);
-    ble_abs_timer_remove_timer(p_instance_ctrl, timer_hdl);
-    ble_abs_timer_free_timer(p_instance_ctrl, timer_hdl);
-    ble_abs_timer_start_timer(p_instance_ctrl);
+        *p_timer_hdl = BLE_TIMER_INVALID_HDL;
+
+        if (BLE_TIMER_STATUS_STARTED == p_instance_ctrl->timer[timer_hdl].status)
+        {
+            ble_abs_timer_stop(p_instance_ctrl, timer_hdl);
+        }
+
+        ble_abs_timer_update_remaining_time_ms(p_instance_ctrl, false);
+        ble_abs_timer_stop_timer(p_instance_ctrl);
+        ble_abs_timer_remove_timer(p_instance_ctrl, timer_hdl);
+        ble_abs_timer_free_timer(p_instance_ctrl, timer_hdl);
+        ble_abs_timer_start_timer(p_instance_ctrl);
+    }
+    else
+    {
+        /* Do nothing, if timer handle is invalid. */
+    }
 
     return FSP_SUCCESS;
 }

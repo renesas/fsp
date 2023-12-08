@@ -153,7 +153,7 @@ typedef enum e_i3c_type
 /** Identifies the protocol for transferring data with the device on the bus. */
 typedef enum e_i3c_device_protocol
 {
-    I3C_DEVICE_PROTOCOL_I2C,           ///< Transfers will use legacy I2C protocal with open-drain output at a reduced baudrate.
+    I3C_DEVICE_PROTOCOL_I2C,           ///< Transfers will use legacy I2C protocol with open-drain output at a reduced baudrate.
     I3C_DEVICE_PROTOCOL_I3C,           ///< Transfers will use I3C SDR mode.
 } i3c_device_protocol_t;
 
@@ -453,6 +453,7 @@ typedef struct st_i3c_api
      *
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.
+     * @param[in]   ibi_type   The type of In-Band Interrupt.
      * @param[in]   p_data     Pointer to a buffer to start the bytes read during the transfer.
      * @param[in]   length     Number of bytes to transfer.
      */

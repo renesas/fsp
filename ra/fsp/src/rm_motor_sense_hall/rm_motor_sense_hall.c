@@ -42,6 +42,9 @@
 
 #define     MOTOR_SENSE_HALL_CALCULATE_MSEC    (1000.0F)
 
+#define     MOTOR_SENSE_HALL_FLAG_SET          (1)
+#define     MOTOR_SENSE_HALL_FLAG_CLEAR        (0)
+
 #ifndef MTR_SENSE_HALL_ERROR_RETURN
 
  #define MTR_SENSE_HALL_ERROR_RETURN(a, err)    FSP_ERROR_RETURN((a), (err))
@@ -251,6 +254,7 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
     motor_sense_hall_extended_cfg_t * p_extended_cfg =
         (motor_sense_hall_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
+    float    f_temp0;
     uint32_t u4_uvw_sum    = 0U;
     uint32_t u4_temp_level = 0U;
     float    f_temp_angle  = 0.0F;
@@ -267,14 +271,6 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
     p_instance_ctrl->u1_hall_signal |= (uint8_t) (u4_temp_level << MOTOR_SENSE_HALL_V_SHIFT);
     u4_temp_level = R_BSP_PinRead(p_extended_cfg->port_hall_sensor_w);
     p_instance_ctrl->u1_hall_signal |= (uint8_t) (u4_temp_level);
-
-    /* Memorize startup hall sensor signal */
-    if (MOTOR_SENSE_HALL_SIGNAL_STATUS_INITIAL == p_instance_ctrl->hall_signal_status)
-    {
-        p_instance_ctrl->u1_hall_signal_memory = p_instance_ctrl->u1_hall_signal;
-        p_instance_ctrl->u1_last_hall_signal   = p_instance_ctrl->u1_hall_signal;
-        p_instance_ctrl->hall_signal_status    = MOTOR_SENSE_HALL_SIGNAL_STATUS_CAPTURED;
-    }
 
     if (0U == p_instance_ctrl->u1_last_hall_signal)
     {
@@ -298,15 +294,6 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
     /* At the boundary of hall signal change */
     if (p_instance_ctrl->u1_hall_signal != p_instance_ctrl->u1_last_hall_signal)
     {
-        /* Counts when the startup hall signal and the current hall signal are the same */
-        if (p_extended_cfg->u1_trigger_hall_signal_count > p_instance_ctrl->u1_hall_signal_count)
-        {
-            if (p_instance_ctrl->u1_hall_signal_memory == p_instance_ctrl->u1_hall_signal)
-            {
-                p_instance_ctrl->u1_hall_signal_count++;
-            }
-        }
-
         /* Rotation direction judge */
         p_instance_ctrl->last_direction = p_instance_ctrl->direction;
 
@@ -417,8 +404,11 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
         /* Do nothing */
     }
 
+    f_temp0 = fabsf(p_instance_ctrl->f_calculated_speed);
+
     /* Pseudo speed is used until the motor rotation become stable. */
-    if (p_extended_cfg->u1_trigger_hall_signal_count > p_instance_ctrl->u1_hall_signal_count)
+    if ((p_extended_cfg->f4_start_speed_rad > f_temp0) &&
+        (MOTOR_SENSE_HALL_FLAG_SET == p_instance_ctrl->u1_startup_flag))
     {
         if (p_extended_cfg->u2_trigger_carrier_count <= p_instance_ctrl->u2_startup_carrier_count)
         {
@@ -450,6 +440,7 @@ fsp_err_t RM_MOTOR_SENSE_HALL_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
     }
     else
     {
+        p_instance_ctrl->u1_startup_flag = MOTOR_SENSE_HALL_FLAG_CLEAR;
         *p_speed = p_instance_ctrl->f_calculated_speed;
     }
 
@@ -500,8 +491,6 @@ fsp_err_t RM_MOTOR_SENSE_HALL_ParameterUpdate (motor_angle_ctrl_t * const p_ctrl
     p_instance_ctrl->f4_add_pseudo_speed_rad  = 1.0F / (p_extended_cfg->f_pwm_carrier_freq);
     p_instance_ctrl->f4_add_pseudo_speed_rad *= p_extended_cfg->f4_target_pseudo_speed_rad;
     p_instance_ctrl->f4_add_pseudo_speed_rad /= p_extended_cfg->f4_reach_time_msec;
-
-    motor_sense_hall_reset(p_instance_ctrl);
 
     return FSP_SUCCESS;
 }
@@ -585,13 +574,12 @@ static void motor_sense_hall_reset (motor_sense_hall_instance_ctrl_t * p_ctrl)
     p_ctrl->f_calculated_speed  = 0.0F;
 
     /* Reset startup parameters. */
-    p_ctrl->u1_hall_signal_memory = 0U;
-    p_ctrl->hall_signal_status    = MOTOR_SENSE_HALL_SIGNAL_STATUS_INITIAL;
-    p_ctrl->u1_hall_signal_count  = 0U;
-    p_ctrl->f4_pseudo_speed_rad   = 0.0F;
+    p_ctrl->f4_pseudo_speed_rad = 0.0F;
 
     p_ctrl->st_input.f4_ref_speed_rad_ctrl = 0.0F;
     p_ctrl->u2_startup_carrier_count       = 0U;
+
+    p_ctrl->u1_startup_flag = MOTOR_SENSE_HALL_FLAG_SET;
 
     for (i = 0; i < MOTOR_SENSE_HALL_SPEED_COUNTS; i++)
     {

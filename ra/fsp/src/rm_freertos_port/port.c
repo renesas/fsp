@@ -1316,6 +1316,8 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
         saved_lpm_state = R_SYSTEM->SBYCR;
   #elif BSP_FEATURE_LPM_HAS_LPSCR
         saved_lpm_state = R_SYSTEM->LPSCR;
+  #elif BSP_FEATURE_LPM_HAS_LPCSR
+        saved_lpm_state = SYS_REG0->LPCSR;
   #endif
 
         /** Check if the LPM peripheral is set to go to Software Standby mode with WFI instruction.
@@ -1367,6 +1369,13 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
             /* Restore register lock */
             R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
    #endif
+        }
+
+  #elif BSP_FEATURE_LPM_HAS_LPCSR
+        if (SYS_REG0_LPCSR_LPSTS_Msk & saved_lpm_state)
+        {
+            /* Clear to set to sleep low power mode (not standby or deep standby) */
+            SYS_REG0->LPCSR = 0;
         }
   #endif
 
@@ -1456,6 +1465,13 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
         /* Restore register lock */
         R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
    #endif
+    }
+
+  #elif BSP_FEATURE_LPM_HAS_LPCSR
+    if (SYS_REG0_LPCSR_LPSTS_Msk & saved_lpm_state)
+    {
+        /* Clear to set to sleep low power mode (not standby or deep standby) */
+        SYS_REG0->LPCSR = saved_lpm_state;
     }
   #endif
  #endif

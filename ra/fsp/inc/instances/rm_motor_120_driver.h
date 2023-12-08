@@ -46,6 +46,29 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** Support two ADC instance valid for adc */
+typedef enum e_motor_120_driver_select_adc_instance
+{
+    MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_1ST = 0, ///< Use 1st ADC instance
+    MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_2ND,     ///< Use 2nd ADC instanse
+} motor_120_driver_select_adc_instance_t;
+
+/** For multiple ADC module */
+typedef struct st_motor_120_driver_shared_instance_ctrl
+{
+    uint32_t     open;
+    uint8_t      registered_motor_count; ///< Registered motor counts
+    void const * p_context[MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM];
+} motor_120_driver_shared_instance_ctrl_t;
+
+typedef struct st_motor_120_driver_extended_shared_cfg
+{
+    adc_instance_t const * p_adc_instance_1st; ///< 1st ADC instance
+    adc_instance_t const * p_adc_instance_2nd; ///< 2nd ADC instance
+
+    motor_120_driver_shared_instance_ctrl_t * const p_shared_instance_ctrl;
+} motor_120_driver_extended_shared_cfg_t;
+
 /** 120 driver active flag */
 typedef enum  e_motor_120_driver_status
 {
@@ -72,38 +95,48 @@ typedef struct st_motor_120_driver_modulation
 /** Extended configurations for motor 120 driver */
 typedef struct st_motor_120_driver_extended_cfg
 {
-    adc_instance_t const         * p_adc_instance;         ///< ADC module instance
-    three_phase_instance_t const * p_three_phase_instance; ///< PWM output module instance (GPT three phase)
+    adc_instance_t const         * p_adc_instance;                ///< ADC module instance
+    three_phase_instance_t const * p_three_phase_instance;        ///< PWM output module instance (GPT three phase)
 
-    motor_120_driver_type_t motor_120_type;                ///< 120 degree control type
+    motor_120_driver_type_t motor_120_type;                       ///< 120 degree control type
 
-    adc_channel_t iu_ad_ch;                                ///< A/D channel for U phase current
-    adc_channel_t iw_ad_ch;                                ///< A/D channel for W phase current
-    adc_channel_t vdc_ad_ch;                               ///< A/D channel for main line voltage
-    adc_channel_t vu_ad_ch;                                ///< A/D channel for U phase voltage
-    adc_channel_t vv_ad_ch;                                ///< A/D channel for V phase voltage
-    adc_channel_t vw_ad_ch;                                ///< A/D channel for W phase voltage
+    adc_channel_t iu_ad_ch;                                       ///< A/D channel for U phase current
+    adc_channel_t iw_ad_ch;                                       ///< A/D channel for W phase current
+    adc_channel_t vdc_ad_ch;                                      ///< A/D channel for main line voltage
+    adc_channel_t vu_ad_ch;                                       ///< A/D channel for U phase voltage
+    adc_channel_t vv_ad_ch;                                       ///< A/D channel for V phase voltage
+    adc_channel_t vw_ad_ch;                                       ///< A/D channel for W phase voltage
 
-    bsp_io_port_pin_t port_up;                             ///< PWM output port UP
-    bsp_io_port_pin_t port_un;                             ///< PWM output port UN
-    bsp_io_port_pin_t port_vp;                             ///< PWM output port VP
-    bsp_io_port_pin_t port_vn;                             ///< PWM output port VN
-    bsp_io_port_pin_t port_wp;                             ///< PWM output port WP
-    bsp_io_port_pin_t port_wn;                             ///< PWM output port WN
+    uint8_t iu_ad_unit;                                           ///< Used A/D unit number for U phase current
+    uint8_t iw_ad_unit;                                           ///< Used A/D unit number for W phase current
+    uint8_t vdc_ad_unit;                                          ///< Used A/D unit number for main line voltage
+    uint8_t vu_ad_unit;                                           ///< Used A/D unit number for U phase voltage
+    uint8_t vv_ad_unit;                                           ///< Used A/D unit number for V phase voltage
+    uint8_t vw_ad_unit;                                           ///< Used A/D unit number for W phase voltage
 
-    uint32_t u4_pwm_timer_freq;                            ///< PWM timer frequency (MHz)
-    uint32_t u4_pwm_carrier_freq;                          ///< PWM carrier frequency (kHz)
-    uint32_t u4_deadtime;                                  ///< PWM deadtime (usec)
+    bsp_io_port_pin_t port_up;                                    ///< PWM output port UP
+    bsp_io_port_pin_t port_un;                                    ///< PWM output port UN
+    bsp_io_port_pin_t port_vp;                                    ///< PWM output port VP
+    bsp_io_port_pin_t port_vn;                                    ///< PWM output port VN
+    bsp_io_port_pin_t port_wp;                                    ///< PWM output port WP
+    bsp_io_port_pin_t port_wn;                                    ///< PWM output port WN
 
-    float f_current_range;                                 ///< A/D current measure range (max current) (A)
-    float f_vdc_range;                                     ///< A/D main line voltage measure range (max voltage) (V)
-    float f_ad_resolution;                                 ///< A/D resolution
-    float f_ad_current_offset;                             ///< A/D offset (Center value)
-    float f_ad_voltage_conversion;                         ///< A/D conversion level
+    uint32_t u4_pwm_timer_freq;                                   ///< PWM timer frequency (MHz)
+    uint32_t u4_pwm_carrier_freq;                                 ///< PWM carrier frequency (kHz)
+    uint32_t u4_deadtime;                                         ///< PWM deadtime (usec)
 
-    uint32_t u4_offset_calc_count;                         ///< Calculation counts for current offset
+    float f_current_range;                                        ///< A/D current measure range (max current) (A)
+    float f_vdc_range;                                            ///< A/D main line voltage measure range (max voltage) (V)
+    float f_ad_resolution;                                        ///< A/D resolution
+    float f_ad_current_offset;                                    ///< A/D offset (Center value)
+    float f_ad_voltage_conversion;                                ///< A/D conversion level
 
-    motor_120_driver_modulation_t mod_param;               ///< Modulation parameter
+    uint32_t u4_offset_calc_count;                                ///< Calculation counts for current offset
+
+    motor_120_driver_modulation_t mod_param;                      ///< Modulation parameter
+
+    motor_120_driver_select_adc_instance_t         interrupt_adc; ///< Select which interrupt to use
+    motor_120_driver_extended_shared_cfg_t const * p_shared_cfg;  ///< shared extended config
 } motor_120_driver_extended_cfg_t;
 
 typedef struct st_motor_120_driver_instance_ctrl
@@ -157,6 +190,9 @@ typedef struct st_motor_120_driver_instance_ctrl
     /* For ADC callback */
     adc_callback_args_t   adc_callback_args;                 ///< For call ADC callbackSet function
     timer_callback_args_t timer_callback_args;               ///< For call timer callbackSet function
+
+    /* Shared ADC */
+    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl;
 } motor_120_driver_instance_ctrl_t;
 
 /**********************************************************************************************************************

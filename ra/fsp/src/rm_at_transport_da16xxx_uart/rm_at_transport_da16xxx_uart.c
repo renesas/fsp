@@ -594,7 +594,7 @@ size_t rm_at_transport_da16xxx_uart_bufferRecv (at_transport_da16xxx_ctrl_t * co
                 xStreamBufferReceive(p_instance_ctrl->socket_byteq_hdl,
                                      &p_rcv[recv_index],
                                      (length - recv_index),
-                                     pdMS_TO_TICKS(10));
+                                     pdMS_TO_TICKS(100));
             if (incomeBytes > 0)
             {
                 xReceivedBytes += incomeBytes;

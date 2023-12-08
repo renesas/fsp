@@ -215,14 +215,18 @@ static int ccm_authetication_block_format (mbedtls_ccm_context * ctx,
     }
 
     header_size += HW_SCE_AES_BLOCK_BYTE_SIZE;
-    b_format_buffer[header_size] = (unsigned char) ((ctx->add_len >> 8) & 0xFF);
-    header_size++;
-    b_format_buffer[header_size] = (unsigned char) ((ctx->add_len) & 0xFF);
+    
+    if(ctx->add_len > 0U)
+    {
+        b_format_buffer[header_size] = (unsigned char) ((ctx->add_len >> 8) & 0xFF);
+        header_size++;
+        b_format_buffer[header_size] = (unsigned char) ((ctx->add_len) & 0xFF);
 
-    header_size++;
-    memcpy(&b_format_buffer[header_size], aad, aad_len);
-    header_size += aad_len;
-    header_size  = ROUNDOFF_TO_BLOCK_SIZE(HW_SCE_AES_BLOCK_BYTE_SIZE, header_size);
+        header_size++;
+        memcpy(&b_format_buffer[header_size], aad, aad_len);
+        header_size += aad_len;
+        header_size  = ROUNDOFF_TO_BLOCK_SIZE(HW_SCE_AES_BLOCK_BYTE_SIZE, header_size);
+    }
 
     /* Header size to be specified in words. */
     *format_buffer_length = header_size >> 2;
@@ -315,8 +319,10 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
 
     if (MBEDTLS_CCM_ENCRYPT == mode)
     {
+        memset(mac_buff, 0, HW_SCE_MAC_SIZE);
         err = g_sce_aes_ccm_encrypt_final[key_len_idx]((uint32_t *) work_buffer, indata_textlen,
-                                                       (uint32_t *) &output[input_length], (uint32_t *) tag);
+                                                       (uint32_t *) &output[input_length], (uint32_t *) mac_buff);
+        memcpy(tag, mac_buff, tag_len);
     }
     else
     {
@@ -325,7 +331,6 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
         err = g_sce_aes_ccm_decrypt_final[key_len_idx]((uint32_t *) work_buffer, indata_textlen,
                                                        (uint32_t *) mac_buff, (uint32_t *) indata_maclength,
                                                        (uint32_t *) &output[input_length]);
-        memcpy(tag, mac_buff, tag_len);
     }
 
     if (FSP_SUCCESS != err)

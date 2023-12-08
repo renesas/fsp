@@ -191,7 +191,7 @@ typedef struct st_can_api
     /** Open function for CAN device
      *
      * @param[in,out]  p_ctrl     Pointer to the CAN control block. Must be declared by user. Value set here.
-     * @param[in]      can_cfg_t  Pointer to CAN configuration structure. All elements of this structure must be set by
+     * @param[in]      p_cfg      Pointer to CAN configuration structure. All elements of this structure must be set by
      *                            user.
      */
     fsp_err_t (* open)(can_ctrl_t * const p_ctrl, can_cfg_t const * const p_cfg);

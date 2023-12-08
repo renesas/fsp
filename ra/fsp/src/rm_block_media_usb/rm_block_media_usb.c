@@ -25,8 +25,8 @@
 #include "rm_block_media_usb_cfg.h"
 #include "r_usb_hmsc.h"
 #if (BSP_CFG_RTOS == 0)
- #include "r_usb_typedef.h"
- #include "r_usb_extern.h"
+ #include "../r_usb_basic/src/driver/inc/r_usb_typedef.h"
+ #include "../r_usb_basic/src/driver/inc/r_usb_extern.h"
  #include "../r_usb_hmsc/src/inc/r_usb_hmsc_driver.h"
 #endif                                 /* (BSP_CFG_RTOS == 0) */
 
@@ -46,6 +46,11 @@
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * blockmedia_usb_prv_ns_callback)(rm_block_media_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile blockmedia_usb_prv_ns_callback)(rm_block_media_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -58,6 +63,9 @@ void rm_block_media_usb_callback(usb_event_info_t * p_usb_event_info, usb_hdl_t 
 static void rm_block_media_usb_waitloop(void);
 
 #endif
+
+static void rm_block_media_usb_call_callback(rm_block_media_usb_instance_ctrl_t * p_instance_ctrl,
+                                             rm_block_media_callback_args_t     * p_callback_args);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -125,6 +133,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Open (rm_block_media_ctrl_t * const p_ctrl, rm_bloc
     /* Open the underlying driver. */
     usb_instance_t * p_usb_instance = (usb_instance_t *) p_extended_cfg->p_usb;
 
+    /* Set callback and context pointers, if configured */
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
+
     fsp_err_t err;
     err = p_usb_instance->p_api->open(p_usb_instance->p_ctrl, p_usb_instance->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -169,6 +182,8 @@ fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
 #if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_extended_cfg->p_usb);
 #endif
+
+    p_instance_ctrl->device_address = USB_DEVICEADDR; /* Temporary proccessing for TrustZone. */
 
     usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
     fsp_err_t        err   = R_USB_HMSC_StorageCommand(p_usb->p_ctrl,
@@ -294,7 +309,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
     memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
     args.p_context = p_instance_ctrl->p_cfg->p_context;
     args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
-    p_instance_ctrl->p_cfg->p_callback(&args);
+    rm_block_media_usb_call_callback(p_instance_ctrl, &args);
 
     return FSP_SUCCESS;
 }
@@ -389,7 +404,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Write (rm_block_media_ctrl_t * const p_ctrl,
     memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
     args.p_context = p_instance_ctrl->p_cfg->p_context;
     args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
-    p_instance_ctrl->p_cfg->p_callback(&args);
+    rm_block_media_usb_call_callback(p_instance_ctrl, &args);
 
     return FSP_SUCCESS;
 }
@@ -443,7 +458,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
     memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
     args.p_context = p_instance_ctrl->p_cfg->p_context;
     args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
-    p_instance_ctrl->p_cfg->p_callback(&args);
+    rm_block_media_usb_call_callback(p_instance_ctrl, &args);
 
     return FSP_SUCCESS;
 }
@@ -456,18 +471,46 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
  *
  * @retval  FSP_ERR_UNSUPPORTED          CallbackSet is not currently supported for Block Media over USB.
  **********************************************************************************************************************/
-fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet (rm_block_media_ctrl_t * const p_ctrl,
+fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet (rm_block_media_ctrl_t * const p_api_ctrl,
                                           void (                      * p_callback)(
                                               rm_block_media_callback_args_t *),
                                           void const * const                     p_context,
                                           rm_block_media_callback_args_t * const p_callback_memory)
 {
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(p_callback);
-    FSP_PARAMETER_NOT_USED(p_context);
-    FSP_PARAMETER_NOT_USED(p_callback_memory);
+    rm_block_media_usb_instance_ctrl_t * p_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_api_ctrl;
 
-    return FSP_ERR_UNSUPPORTED;
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    rm_block_media_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                                 CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(rm_block_media_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -588,6 +631,62 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Close (rm_block_media_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_instance_ctrl      Pointer to block media usb instance control block
+ * @param[in]     p_callback_args      Pointer to callback args
+ **********************************************************************************************************************/
+static void rm_block_media_usb_call_callback (rm_block_media_usb_instance_ctrl_t * p_instance_ctrl,
+                                              rm_block_media_callback_args_t     * p_callback_args)
+{
+    rm_block_media_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    rm_block_media_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->event     = p_callback_args->event;
+    p_args->p_context = p_instance_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (!cmse_is_nsfptr(p_instance_ctrl->p_callback))
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_instance_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        blockmedia_usb_prv_ns_callback p_callback = (blockmedia_usb_prv_ns_callback) (p_instance_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_instance_ctrl->p_callback(p_args);
+#endif
+
+    if (NULL != p_instance_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_instance_ctrl->p_callback_memory = args;
+    }
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup RM_BLOCK_MEDIA_USB)
  **********************************************************************************************************************/
 
@@ -653,9 +752,9 @@ void rm_block_media_usb_callback (usb_event_info_t * p_usb_event_info, usb_hdl_t
 
     if (args.event)
     {
-        if (NULL != p_instance_ctrl->p_cfg->p_callback)
+        if (NULL != p_instance_ctrl->p_callback)
         {
-            p_instance_ctrl->p_cfg->p_callback(&args);
+            rm_block_media_usb_call_callback(p_instance_ctrl, &args);
         }
     }
 }
@@ -674,8 +773,8 @@ static void rm_block_media_usb_waitloop (void)
 {
     if (USB_FLGSET == usb_cstd_check_schedule())
     {
-        usb_hstd_hcd_task((usb_vp_int_t) 0);
-        usb_hstd_mgr_task((usb_vp_int_t) 0);
+        usb_hstd_hcd_task((void *) 0);
+        usb_hstd_mgr_task((void *) 0);
 
         // usb_hhub_task((usb_vp_int_t) 0);
         usb_hmsc_task();               /* HMSC Task */

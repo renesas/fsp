@@ -52,6 +52,7 @@
     * [I2C Slave (r_iic_slave)](https://renesas.github.io/fsp/group___i_i_c___s_l_a_v_e.html)
     * [I2S (r_ssi)](https://renesas.github.io/fsp/group___s_s_i.html)
     * [I3C (r_i3c)](https://renesas.github.io/fsp/group___i3_c.html)
+    * [LIN (r_sci_b_lin)](https://renesas.github.io/fsp/group___s_c_i___b___l_i_n.html)
     * [SMCI (r_sci_smci)](https://renesas.github.io/fsp/group___s_c_i___s_m_c_i.html)
     * [SPI (r_sci_b_spi)](https://renesas.github.io/fsp/group___s_c_i___b___s_p_i.html)
     * [SPI (r_sci_spi)](https://renesas.github.io/fsp/group___s_c_i___s_p_i.html)
@@ -112,6 +113,7 @@
     * [Motor inertia estimation (rm_motor_inertia_estimate)](https://renesas.github.io/fsp/group___m_o_t_o_r___i_n_e_r_t_i_a___e_s_t_i_m_a_t_e.html)
     * [Motor return origin function (rm_motor_return_origin)](https://renesas.github.io/fsp/group___m_o_t_o_r___r_e_t_u_r_n___o_r_i_g_i_n.html)
     * [Motor vector control with induction sensor (rm_motor_induction)](https://renesas.github.io/fsp/group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html)
+    * [Shared ADC module (on rm_motor_120_driver)](https://renesas.github.io/fsp/group___m_o_t_o_r__120___d_r_i_v_e_r.html)
     * [Shared ADC module (on rm_motor_driver)](https://renesas.github.io/fsp/group___m_o_t_o_r___d_r_i_v_e_r.html)
   * Networking
     * Bluetooth Low Energy Mesh Network modules
@@ -205,6 +207,7 @@
     * [Ethernet (r_ether_phy)](https://renesas.github.io/fsp/group___e_t_h_e_r___p_h_y.html)
     * [FreeRTOS+TCP](https://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_IP_Configuration.html)
     * [GTL BLE Abstraction (rm_ble_abs_gtl)](https://renesas.github.io/fsp/group___b_l_e___a_b_s.html)
+    * [HTTP Client on DA16XXX (rm_http_onchip_da16xxx)](https://renesas.github.io/fsp/)
     * [MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)](https://renesas.github.io/fsp/)
     * [PTP (r_ptp)](https://renesas.github.io/fsp/group___p_t_p.html)
     * [SPP BLE Abstraction (rm_ble_abs_spp)](https://renesas.github.io/fsp/group___b_l_e___a_b_s.html)
@@ -306,6 +309,8 @@
     * [USB PVND (r_usb_pvnd_class)](https://renesas.github.io/fsp/group___u_s_b___p_v_n_d.html)
   * Graphics
     * [Azure RTOS GUIX Port (rm_guix_port)](https://renesas.github.io/fsp/group___r_m___g_u_i_x___p_o_r_t.html)
+    * [MIPI Display (r_mipi_dsi)](https://renesas.github.io/fsp/group___m_i_p_i___d_s_i.html)
+    * [MIPI Physical Layer (r_mipi_phy)](https://renesas.github.io/fsp/group___m_i_p_i___d_s_i.html)
     * [SEGGER emWin RA Port (rm_emwin_port)](https://renesas.github.io/fsp/group___r_m___e_m_w_i_n___p_o_r_t.html)
   * Networking
     * [AWS Cellular Interface Common](https://www.freertos.org/Documentation/api-ref/cellular/index.html)
@@ -361,7 +366,7 @@
     * [Crypto AES2](https://renesas.github.io/fsp/)
     * [Crypto RA2](https://renesas.github.io/fsp/)
     * [FreeRTOS MbedTLS Port](https://renesas.github.io/fsp/)
-    * [Key Injection for PSA Crypto](https://renesas.github.io/fsp/group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html)
+    * [Key Injection for PSA Crypto](https://renesas.github.io/fsp/group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html)
     * [MCUBoot TinyCrypt H/W Acceleration (rm_mcuboot_tinycrypt_port)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
     * [MCUboot TinyCrypt (H/W Accelerated)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)
     * [MCUboot TinyCrypt (S/W Only)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)

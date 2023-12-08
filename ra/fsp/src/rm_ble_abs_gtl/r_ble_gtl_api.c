@@ -829,19 +829,12 @@ ble_status_t R_BLE_VS_EndTest (void)
 
 ble_status_t R_BLE_VS_SetTxPower (uint16_t conn_hdl, uint8_t tx_power)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
-    FSP_PARAMETER_NOT_USED(tx_power);
-
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return R_BLE_GTL_VS_SetTxPower(conn_hdl, tx_power);
 }
 
 ble_status_t R_BLE_VS_GetTxPower (uint16_t conn_hdl)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
-
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return R_BLE_GTL_VS_GetTxPower(conn_hdl);
 }
 
 ble_status_t R_BLE_VS_SetCodingScheme (uint8_t coding_scheme)

@@ -439,7 +439,8 @@ fsp_err_t R_SCI_SPI_CalculateBitrate (uint32_t bitrate, sci_spi_div_setting_t * 
 #if SCI_SPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != sclk_div);
     FSP_ASSERT(bitrate);
-    FSP_ASSERT(bitrate >= (peripheral_clock + SCI_SPI_PRV_CLK_MAX_DIV - 1U) / SCI_SPI_PRV_CLK_MAX_DIV);
+    uint32_t clock_max_div = use_mddr ? SCI_SPI_PRV_CLK_MAX_DIV : (SCI_SPI_PRV_CLK_MAX_DIV / 2);
+    FSP_ASSERT(bitrate >= (peripheral_clock + clock_max_div - 1U) / clock_max_div);
 #endif
 
     int32_t divisor = 0;

@@ -725,6 +725,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
         /* If all the data is aligned, copy over the final 64 bytes for later processing. */
         if (ilen > 0)
         {
+            /* If there was previously buffered data in this buffer, process that first. */
              if ((1U == ctx->use_rsip_buffer) && (0U == ctx->rsip_buffer_processed))
             {
                 if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->rsip_buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0)
@@ -734,8 +735,8 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
                 ctx->rsip_buffer_processed = 1U;
                 ctx->use_rsip_buffer = 0U;
             }
-            ctx->use_rsip_buffer = 0U;
             ctx->rsip_buffer_processed = 1U;
+            ctx->use_rsip_buffer = 0U;
         }
         else
         {

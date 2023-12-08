@@ -1260,14 +1260,14 @@ void LCDCONF_DisableDave2D (void)
 void LCD_X_Config (void)
 {
     //
-    // Initialize graphics HW
-    //
-    _GraphicsHWInit();
-
-    //
     // Set framebuffer pointer
     //
     _fb_emwin = EMWIN_LCD_FRAMEBUFFER_PTR;
+
+    //
+    // Initialize graphics HW
+    //
+    _GraphicsHWInit();
 
     //
     // Set graphics HW deinit callback for GUI_Exit

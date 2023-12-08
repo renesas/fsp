@@ -62,15 +62,15 @@
  * Exported global functions
  **********************************************************************************************************************/
 
-ble_status_t R_BLE_ISO_SetPerAdvRecvEnable (uint16_t sync_hdl, uint8_t enable) {
+ble_status_t R_BLE_GAP_SetPerAdvRecvEnable (uint16_t sync_hdl, uint8_t enable) {
     FSP_PARAMETER_NOT_USED(sync_hdl);
     FSP_PARAMETER_NOT_USED(enable);
 
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_GAP_SetCteConnlessParam (st_ble_gap_cte_connless_t * cte_param) {
-    FSP_PARAMETER_NOT_USED(cte_param);
+ble_status_t R_BLE_GAP_SetCteConnlessParam (st_ble_gap_cte_connless_t * p_cte_param) {
+    FSP_PARAMETER_NOT_USED(p_cte_param);
 
     return BLE_ERR_UNSUPPORTED;
 };
@@ -255,8 +255,8 @@ ble_status_t R_BLE_GAP_SetHostFeat (uint8_t bit_number, uint8_t bit_value) {
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_CreateBig (uint8_t * big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param) {
-    FSP_PARAMETER_NOT_USED(big_hdl);
+ble_status_t R_BLE_ISO_CreateBig (uint8_t * p_big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param) {
+    FSP_PARAMETER_NOT_USED(p_big_hdl);
     FSP_PARAMETER_NOT_USED(adv_hdl);
     FSP_PARAMETER_NOT_USED(p_big_param);
 
@@ -270,10 +270,10 @@ ble_status_t R_BLE_ISO_StopBig (uint8_t big_hdl, uint8_t reason) {
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_CreateBigSync (uint8_t                     * big_hdl,
+ble_status_t R_BLE_ISO_CreateBigSync (uint8_t                     * p_big_hdl,
                                       uint16_t                      sync_hdl,
                                       st_ble_iso_big_sync_param_t * p_big_sync_param) {
-    FSP_PARAMETER_NOT_USED(big_hdl);
+    FSP_PARAMETER_NOT_USED(p_big_hdl);
     FSP_PARAMETER_NOT_USED(sync_hdl);
     FSP_PARAMETER_NOT_USED(p_big_sync_param);
 
@@ -286,8 +286,8 @@ ble_status_t R_BLE_ISO_TerminateBigSync (uint8_t big_hdl) {
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_SetCigParam (uint8_t * cig_id, st_ble_iso_cig_param_t * p_cig_param) {
-    FSP_PARAMETER_NOT_USED(cig_id);
+ble_status_t R_BLE_ISO_SetCigParam (uint8_t * p_cig_id, st_ble_iso_cig_param_t * p_cig_param) {
+    FSP_PARAMETER_NOT_USED(p_cig_id);
     FSP_PARAMETER_NOT_USED(p_cig_param);
 
     return BLE_ERR_UNSUPPORTED;
@@ -321,14 +321,14 @@ ble_status_t R_BLE_ISO_SetupDataPath (uint16_t conn_hdl, st_ble_iso_chan_path * 
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_SendData (st_ble_iso_sdu_t * sdu_info) {
-    FSP_PARAMETER_NOT_USED(sdu_info);
+ble_status_t R_BLE_ISO_SendData (st_ble_iso_sdu_t * p_sdu_info) {
+    FSP_PARAMETER_NOT_USED(p_sdu_info);
 
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_SendDataNoCopy (st_ble_iso_sdu_t * sdu_info) {
-    FSP_PARAMETER_NOT_USED(sdu_info);
+ble_status_t R_BLE_ISO_SendDataNoCopy (st_ble_iso_sdu_t * p_sdu_info) {
+    FSP_PARAMETER_NOT_USED(p_sdu_info);
 
     return BLE_ERR_UNSUPPORTED;
 };
@@ -339,19 +339,19 @@ ble_status_t R_BLE_ISO_GetTxSync (uint16_t conn_hdl) {
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_CreateBigTest (uint8_t                            * big_hdl,
+ble_status_t R_BLE_ISO_CreateBigTest (uint8_t                            * p_big_hdl,
                                       uint8_t                              adv_hdl,
                                       st_ble_iso_create_big_test_param_t * p_create_big_test_param) {
-    FSP_PARAMETER_NOT_USED(big_hdl);
+    FSP_PARAMETER_NOT_USED(p_big_hdl);
     FSP_PARAMETER_NOT_USED(adv_hdl);
     FSP_PARAMETER_NOT_USED(p_create_big_test_param);
 
     return BLE_ERR_UNSUPPORTED;
 };
 
-ble_status_t R_BLE_ISO_SetCigParamTest (uint8_t                               * cig_id,
+ble_status_t R_BLE_ISO_SetCigParamTest (uint8_t                               * p_cig_id,
                                         st_ble_iso_set_cig_param_test_param_t * p_set_cig_param_test_param) {
-    FSP_PARAMETER_NOT_USED(cig_id);
+    FSP_PARAMETER_NOT_USED(p_cig_id);
     FSP_PARAMETER_NOT_USED(p_set_cig_param_test_param);
 
     return BLE_ERR_UNSUPPORTED;

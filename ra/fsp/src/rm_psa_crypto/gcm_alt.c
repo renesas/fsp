@@ -158,6 +158,12 @@ int mbedtls_gcm_setkey(mbedtls_gcm_context *ctx,
         return ret;
     }
 
+    if (ctx->vendor_flag == 1U)
+    {
+        psa_aead_setup_vendor(ctx->cipher_ctx.cipher_ctx);
+    }
+
+
     if ((ret = mbedtls_cipher_setkey(&ctx->cipher_ctx, key, keybits,
                                      MBEDTLS_ENCRYPT)) != 0) {
         return ret;

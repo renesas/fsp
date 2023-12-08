@@ -51,12 +51,11 @@ fsp_err_t RM_TINCYRYPT_PORT_Init ()
  * @brief Reads requested length of random data from the TRNG. Generate `num_req_bytes` of random bytes
  * and store them in `p_rngbuf` buffer.
  *
- * @retval FSP_SUCCESS                          Random number generation successful
- * @retval FSP_ERR_ASSERTION                    NULL input parameter(s).
- * @retval FSP_ERR_CRYPTO_UNKNOWN               An unknown error occurred.
- * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
- *         This function calls:
- *         * HW_SCE_RNG_Read
+ * @retval FSP_SUCCESS             Random number generation successful
+ * @retval FSP_ERR_ASSERTION       NULL input parameter(s).
+ * @retval FSP_ERR_CRYPTO_UNKNOWN  An unknown error occurred.
+ * @return                         See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
+ *                                         return codes.
  *
  **********************************************************************************************************************/
 fsp_err_t RM_TINCYRYPT_PORT_TRNG_Read (uint8_t * const p_rngbuf, uint32_t num_req_bytes)

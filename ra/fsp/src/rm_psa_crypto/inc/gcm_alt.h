@@ -40,6 +40,8 @@
  
  #include "psa/crypto_types.h"
 
+ #include "hw_sce_ra_private.h"
+
  #include <stdint.h>
 
  #ifdef __cplusplus
@@ -62,6 +64,7 @@ typedef struct mbedtls_gcm_context
     int mode;                               /*!< The operation to perform:
                                              * MBEDTLS_GCM_ENCRYPT or
                                              * MBEDTLS_GCM_DECRYPT. */
+	bool vendor_flag;
 } mbedtls_gcm_context;
 
  #define RM_PSA_CRYPTO_AES_LOOKUP_INDEX(bits)    (((bits) >> 6) - 2U)
@@ -84,5 +87,7 @@ int sce_gcm_crypt_and_tag(mbedtls_gcm_context * ctx,
  
  /* Functions to support vendor defined format */
 psa_status_t vendor_bitlength_to_raw_bitlength(psa_key_type_t type, size_t vendor_bits, size_t * raw_bits);
+
+void psa_aead_setup_vendor (void * ctx);
 
 #endif                                 /* gcm_alt.h */

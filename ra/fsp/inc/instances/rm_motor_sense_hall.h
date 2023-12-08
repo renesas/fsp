@@ -64,14 +64,14 @@ typedef struct st_motor_sense_hall_input
 /** Optional Motor sense hall extension data structure. */
 typedef struct st_motor_sense_hall_extended_cfg
 {
-    bsp_io_port_pin_t port_hall_sensor_u;                       ///< Hall U-signal input port     BSP_IO_PORT_12_PIN_04
-    bsp_io_port_pin_t port_hall_sensor_v;                       ///< Hall V-signal input port     BSP_IO_PORT_12_PIN_05
-    bsp_io_port_pin_t port_hall_sensor_w;                       ///< Hall W-signal input port     BSP_IO_PORT_11_PIN_01
+    bsp_io_port_pin_t port_hall_sensor_u;                       ///< Hall U-signal input port
+    bsp_io_port_pin_t port_hall_sensor_v;                       ///< Hall V-signal input port
+    bsp_io_port_pin_t port_hall_sensor_w;                       ///< Hall W-signal input port
 
     uint8_t u1_hall_pattern[MOTOR_SENSE_HALL_SPEED_COUNTS + 1]; ///< The order of hall signal pattern
 
-    float f_pwm_carrier_freq;                                   ///< PWM carrier frequency        20.0kHz
-    float f_angle_correct;                                      ///< Coefficent to correct angle  0.4
+    float f_pwm_carrier_freq;                                   ///< PWM carrier frequency (or Decimated frequency at decimation of current process)
+    float f_angle_correct;                                      ///< Coefficent to correct angle
 
     uint8_t  u1_trigger_hall_signal_count;                      ///< Rotation counts to wait the stability
     float    f4_target_pseudo_speed_rad;                        ///< Target value for pseudo speed estimates [radian/second]
@@ -82,6 +82,8 @@ typedef struct st_motor_sense_hall_extended_cfg
     uint16_t u2_maximum_period;                                 ///< Maximum counts of hall signal period
 
     uint8_t u1_hall_polepairs;                                  ///< Hall pole pairs
+
+    float f4_start_speed_rad;                                   ///< Speed to judge start [radian/second]
 } motor_sense_hall_extended_cfg_t;
 
 /** SENSE_HALL control block. DO NOT INITIALIZE. Initialization occurs when @ref motor_angle_api_t::open is called. */
@@ -108,6 +110,8 @@ typedef struct st_motor_sense_hall_instance_ctrl
     float                    f4_add_pseudo_speed_rad;       ///< Step of pseudo speed to update [radian/second]
     uint16_t                 u2_startup_carrier_count;      ///< Counter of carrier interrupt for startup
     motor_sense_hall_input_t st_input;                      ///< Input parameter structure
+
+    uint8_t u1_startup_flag;                                ///< Flag for startup
 
     motor_angle_cfg_t const * p_cfg;
 } motor_sense_hall_instance_ctrl_t;

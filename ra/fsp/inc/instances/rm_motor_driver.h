@@ -62,7 +62,7 @@ typedef enum  e_motor_driver_modulation_method
 /* For 1shunt phase detection */
 typedef enum  e_motor_driver_phase
 {
-    MOTOR_DRIVER_PHASE_U_PHASE = 1,
+    MOTOR_DRIVER_PHASE_U_PHASE = 0,
     MOTOR_DRIVER_PHASE_V_PHASE,
     MOTOR_DRIVER_PHASE_W_PHASE,
 } motor_driver_phase_t;
@@ -120,9 +120,10 @@ typedef struct st_motor_driver_extended_cfg
     bsp_io_port_pin_t port_wn;                                ///< PWM output port WN
 
     /* For 1shunt */
-    float   f_ad_current_adjust;                              ///< Adjustment value for 1shunt A/D current
-    int32_t s4_difference_minimum;                            ///< Minimum difference of PWM duty
-    int32_t s4_adjust_adc_delay;                              ///< Adjustment delay for A/D conversion
+    float                f_ad_current_adjust;                 ///< Adjustment value for 1shunt A/D current
+    int32_t              s4_difference_minimum;               ///< Minimum difference of PWM duty
+    int32_t              s4_adjust_adc_delay;                 ///< Adjustment delay for A/D conversion
+    motor_driver_phase_t trigger_phase;                       ///< trigger phase of interrupt to get 1shunt current
 
     /* For multiple motor */
     adc_group_mask_t adc_group;                               ///< Used ADC scan group only valid for adc_b
@@ -177,6 +178,7 @@ typedef struct st_motor_driver_instance_ctrl
     /* Port configuration */
     uint32_t u4_gtioca_low_cfg;        ///< I/O port "Low" config for gtioca
     uint32_t u4_gtiocb_low_cfg;        ///< I/O port "Low" config for gtioca
+    uint8_t  u1_flag_port_enable;      ///< The flag represents that PWM port should be enabled.
 
     motor_driver_modulation_t  st_modulation;
     motor_driver_cfg_t const * p_cfg;

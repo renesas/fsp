@@ -101,7 +101,7 @@ typedef struct st_crc_cfg
     uint8_t          channel;          ///< Channel number
     crc_polynomial_t polynomial;       ///< CRC Generating Polynomial Switching (GPS)
     crc_bit_order_t  bit_order;        ///< CRC Calculation Switching (LMS)
-    int32_t          snoop_address;    ///< Register Snoop Address (CRCSA)
+    uint32_t         snoop_address;    ///< Register Snoop Address (CRCSA)
     void const *     p_extend;         ///< CRC Hardware Dependent Configuration
 } crc_cfg_t;
 

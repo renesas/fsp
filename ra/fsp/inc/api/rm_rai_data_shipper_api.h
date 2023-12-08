@@ -59,6 +59,7 @@ typedef struct st_rai_data_shipper_callback_args
 {
     rm_comms_event_t result;           ///< Whether data is sent successfully or not
     void const     * p_context;        ///< Pointer to the user-provided context
+    uint8_t          instance;         ///< Data collector instance ID
 } rai_data_shipper_callback_args_t;
 
 /** Data Shipper write funciton parameter structure */

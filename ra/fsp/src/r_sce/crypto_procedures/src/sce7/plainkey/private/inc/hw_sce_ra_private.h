@@ -87,7 +87,8 @@
  #define RSA_PARAMETERS_SIZE_BYTES(RSA_SIZE_BITS)             (24)
 
 /** DER encoded size for wrapped RSA key */
- #define RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES    (1200U)
+ #define RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES    (1600U)
+ #define RSA_WRAPPED_3072_EXPORTED_DER_SIZE_BYTES    (1500U)
 
  #define ECC_256_FORMATTED_PUBLIC_KEY_LENGTH_WORDS              (24U)
  #define ECC_384_FORMATTED_PUBLIC_KEY_LENGTH_WORDS              (32U)
@@ -98,6 +99,8 @@
  #define ECC_384_PRIVATE_KEY_HRK_LENGTH_WORDS                   (20U)
  #define ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS                    (640U)
 
+ #define ECC_521_PRIVATE_KEY_HRK_LENGTH_BITS                    (800U)
+ 
 #define ECC_DUMMY_DOMAIN_PARAM_SIZE                             (1)
 /**********************************************************************************************************************
  Global Typedef definitions

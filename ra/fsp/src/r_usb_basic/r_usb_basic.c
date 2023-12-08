@@ -139,9 +139,16 @@ usb_event_t g_usb_cstd_event;
 uint16_t    g_usb_change_device_state[USB_NUM_USBIP];
 #else                                  /*(BSP_CFG_RTOS == 0)*/
 usb_instance_ctrl_t g_usb_cstd_event[USB_EVENT_MAX];
-usb_callback_t    * g_usb_apl_callback[USB_NUM_USBIP];
 
 #endif                                 /*(BSP_CFG_RTOS == 0)*/
+usb_callback_t      * g_usb_apl_callback[USB_NUM_USBIP];
+usb_callback_args_t * g_usb_apl_callback_memory[USB_NUM_USBIP] =
+{
+    NULL,
+#if 2 == USB_NUM_USBIP
+    NULL,
+#endif                                 /* 2 == USB_NUM_USBIP */
+};
 
 #if defined(USB_CFG_OTG_USE)
 usb_cfg_t * g_p_usb_otg_cfg;
@@ -279,6 +286,8 @@ const usb_api_t g_usb_on_usb =
     .periControlDataSet   = R_USB_PeriControlDataSet,
     .periControlStatusSet = R_USB_PeriControlStatusSet,
     .remoteWakeup         = R_USB_RemoteWakeup,
+    .driverActivate       = R_USB_DriverActivate,
+    .callbackMemorySet    = R_USB_CallbackMemorySet,
     .moduleNumberGet      = R_USB_ModuleNumberGet,
     .classTypeGet         = R_USB_ClassTypeGet,
     .deviceAddressGet     = R_USB_DeviceAddressGet,
@@ -351,25 +360,33 @@ fsp_err_t R_USB_EventGet (usb_ctrl_t * const p_api_ctrl, usb_status_t * event)
  * If this function is called in the OS-less execution environment, a failure is returned.
  *
  * @retval FSP_SUCCESS        Successfully completed.
- * @retval FSP_ERR_USB_FAILED If this function is called in the OS-less execution environment, a failure is returned.
  * @retval FSP_ERR_ASSERTION  Parameter is NULL error.
  * @note Do not call this API in the interrupt function.
  ******************************************************************************/
 fsp_err_t R_USB_Callback (usb_callback_t * p_callback)
 {
-    fsp_err_t err;
-#if (BSP_CFG_RTOS != 0)
- #if USB_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_callback)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
-    g_usb_apl_callback[0] = p_callback;
-    err = FSP_SUCCESS;
-#else /* #if (BSP_CFG_RTOS != 0) */
-    FSP_PARAMETER_NOT_USED(*p_callback);
-    err = FSP_ERR_USB_FAILED;
-#endif                                 /* #if (BSP_CFG_RTOS != 0) */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
-    return err;
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+    g_usb_apl_callback[0] = callback_is_secure ? p_callback :
+                            (void (*)(usb_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else                                  /* BSP_TZ_SECURE_BUILD */
+    g_usb_apl_callback[0] = p_callback;
+#endif  /* BSP_TZ_SECURE_BUILD */
+
+#if USB_NUM_USBIP == 2
+    g_usb_apl_callback[1] = g_usb_apl_callback[0];
+#endif                                 /* USB_NUM_USBIP == 2 */
+
+    return FSP_SUCCESS;
 } /* End of function R_USB_Callback() */
 
 /**************************************************************************//**
@@ -413,13 +430,11 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
     p_ctrl->module_number = p_cfg->module_number;
     p_ctrl->type          = (usb_class_t) (p_cfg->type & USB_VALUE_7FH);
     p_ctrl->p_context     = (void *) p_cfg->p_context;
-#if (BSP_CFG_RTOS != 0)
- #if (BSP_CFG_RTOS == 1)
+#if (BSP_CFG_RTOS == 1)
     g_usb_apl_callback[p_ctrl->module_number] = usb_cstd_usbx_callback;
- #else                                 /* #if (BSP_CFG_RTOS == 1)*/
+#else                                  /* #if (BSP_CFG_RTOS == 1) */
     g_usb_apl_callback[p_ctrl->module_number] = p_cfg->p_usb_apl_callback;
- #endif                                /* #if (BSP_CFG_RTOS == 1)*/
-#endif                                 /* #if (BSP_CFG_RTOS != 0) */
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
@@ -3416,6 +3431,70 @@ fsp_err_t R_USB_RemoteWakeup (usb_ctrl_t * const p_api_ctrl)
 }
 
 /**************************************************************************//**
+ * @brief Activate USB Driver for USB Peripheral BareMetal.
+ *
+ * @retval FSP_SUCCESS              Successful completion.
+ * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
+ * @note Call this API in the in the infinite loop of the application program or a timer interrupt.
+ ******************************************************************************/
+fsp_err_t R_USB_DriverActivate (usb_ctrl_t * const p_api_ctrl)
+{
+    fsp_err_t err = FSP_ERR_USB_FAILED;
+#if USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_api_ctrl)
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
+
+#if (BSP_CFG_RTOS == 0)
+    usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
+
+    if (USB_MODE_PERI == g_usb_usbmode[p_ctrl->module_number])
+    {
+        usb_cstd_usb_task();
+        err = FSP_SUCCESS;
+    }
+
+#else                                  /* (BSP_CFG_RTOS == 0) */
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    err = FSP_ERR_USB_FAILED;
+#endif /* (BSP_CFG_RTOS == 0) */
+    return err;
+}
+
+/**************************************************************************//**
+ * @brief Set callback memory to USB Driver for USB Peripheral BareMetal.
+ *
+ * @retval FSP_SUCCESS              Successful completion.
+ * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
+ * @note Call this API after calling R_USB_Open function.
+ ******************************************************************************/
+fsp_err_t R_USB_CallbackMemorySet (usb_ctrl_t * const p_api_ctrl, usb_callback_args_t * p_callback_memory)
+{
+    fsp_err_t err = FSP_ERR_USB_FAILED;
+
+#if USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_api_ctrl)
+    FSP_ASSERT(p_callback_memory)
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
+
+#if (BSP_CFG_RTOS == 0)
+    usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
+
+    if (USB_MODE_PERI == g_usb_usbmode[p_ctrl->module_number])
+    {
+        g_usb_apl_callback_memory[p_ctrl->module_number] = p_callback_memory;
+        err = FSP_SUCCESS;
+    }
+
+#else                                  /* (BSP_CFG_RTOS == 0) */
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
+#endif  /* (BSP_CFG_RTOS == 0) */
+    return err;
+}
+
+/**************************************************************************//**
  * @brief This API gets the module number.
  *
  * @retval FSP_SUCCESS              Successful completion.
@@ -3443,9 +3522,7 @@ fsp_err_t R_USB_ClassTypeGet (usb_ctrl_t * const p_api_ctrl, usb_class_t * class
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    p_ctrl->type = (usb_class_t) (p_ctrl->type | USB_VALUE_80H);
-
-    *class_type = p_ctrl->type;
+    *class_type = (usb_class_t) (p_ctrl->type | USB_VALUE_80H);
 
     return FSP_SUCCESS;
 }

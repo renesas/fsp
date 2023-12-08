@@ -69,6 +69,13 @@ typedef struct st_rm_block_media_usb_instance_ctrl
 #if 2 == BSP_CFG_RTOS
     EventGroupHandle_t event_group;
 #endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(rm_block_media_callback_args_t *);
+    rm_block_media_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } rm_block_media_usb_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -98,7 +105,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Flush(rm_block_media_ctrl_t * const p_ctrl);
 fsp_err_t RM_BLOCK_MEDIA_USB_Erase(rm_block_media_ctrl_t * const p_ctrl,
                                    uint32_t const                block_address,
                                    uint32_t const                num_blocks);
-fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet(rm_block_media_ctrl_t * const p_ctrl,
+fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet(rm_block_media_ctrl_t * const p_api_ctrl,
                                          void (                      * p_callback)(
                                              rm_block_media_callback_args_t *),
                                          void const * const                     p_context,

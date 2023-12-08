@@ -45,7 +45,7 @@ extern "C" {
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
- #if defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) || (BSP_CFG_MCU_PART_SERIES == 8)
+ #if defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA8M1) || defined(BSP_MCU_GROUP_RA8D1)
 
   #define USB_HIGH_SPEED_MODULE
   #define USB_IP0_MODULE    USB_FS_MODULE
@@ -59,7 +59,7 @@ extern "C" {
     defined(BSP_MCU_GROUP_RA4E2) || defined(BSP_MCU_GROUP_RA6E1) || defined(BSP_MCU_GROUP_RA4E1)     \
     || defined(BSP_MCU_GROUP_RA4M1) || defined(BSP_MCU_GROUP_RA4M2) || defined(BSP_MCU_GROUP_RA4M3)  \
     || defined(BSP_MCU_GROUP_RA4W1) || defined(BSP_MCU_GROUP_RA6M1) || defined(BSP_MCU_GROUP_RA6M2)  \
-    || defined(BSP_MCU_GROUP_RA6M4)
+    || defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA8T1)
 
   #define USB_IP0_MODULE    USB_FS_MODULE
   #define USB_IP1_MODULE    USB_NOT_SUPPORT
@@ -405,6 +405,7 @@ extern "C" {
  #define USB_CFG_20MHZ                          (1)
  #define USB_CFG_OTHER                          (2)
  #define USB_CFG_12MHZ                          (3)
+ #define USB_CFG_48MHZ                          (4)
 
 /* Channel Number */
  #define USB_CFG_CH0                            (0U)

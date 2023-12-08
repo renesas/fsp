@@ -147,6 +147,7 @@ typedef enum e_ctsu_ssdiv
 typedef enum e_ctsu_specific_data_type
 {
     CTSU_SPECIFIC_RAW_DATA,
+    CTSU_SPECIFIC_CCO_CORRECTION_DATA,
     CTSU_SPECIFIC_CORRECTION_DATA,
     CTSU_SPECIFIC_SELECTED_FREQ,
 } ctsu_specific_data_type_t;

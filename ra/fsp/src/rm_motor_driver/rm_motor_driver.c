@@ -175,8 +175,7 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
     p_instance_ctrl->u2_carrier_base =
         (uint16_t) (p_extended_cfg->u2_pwm_timer_freq * MOTOR_DRIVER_KHZ_TRANS /
                     p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
-    p_instance_ctrl->u2_deadtime_count =
-        (uint16_t) (p_extended_cfg->u2_deadtime * p_extended_cfg->u2_pwm_timer_freq);
+    p_instance_ctrl->u2_deadtime_count = p_extended_cfg->u2_deadtime;
 
     rm_motor_driver_reset(p_instance_ctrl);
 
@@ -194,7 +193,7 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
         gpt_extended_cfg_t const     * p_u_phase_gpt_extend;
 
         p_three_phase        = p_cfg->p_three_phase_instance;
-        p_u_phase_gpt        = p_three_phase->p_cfg->p_timer_instance[0];
+        p_u_phase_gpt        = p_three_phase->p_cfg->p_timer_instance[p_extended_cfg->trigger_phase];
         p_u_phase_gpt_cfg    = p_u_phase_gpt->p_cfg;
         p_u_phase_gpt_extend = p_u_phase_gpt_cfg->p_extend;
 
@@ -221,11 +220,8 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
 
         if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt)
         {
-            p_cfg->p_three_phase_instance->p_cfg->p_timer_instance[0]->p_api->callbackSet(
-                p_cfg->p_three_phase_instance->p_cfg->p_timer_instance[0]->p_ctrl,
-                rm_motor_driver_1shunt_cyclic,
-                p_instance_ctrl,
-                &(p_instance_ctrl->timer_callback_args));
+            p_u_phase_gpt->p_api->callbackSet(p_u_phase_gpt->p_ctrl, rm_motor_driver_1shunt_cyclic, p_instance_ctrl,
+                                              &(p_instance_ctrl->timer_callback_args));
         }
         else
         {
@@ -541,8 +537,7 @@ fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate (motor_driver_ctrl_t * const p_ctrl, m
     p_instance_ctrl->u2_carrier_base =
         (uint16_t) (p_extended_cfg->u2_pwm_timer_freq * MOTOR_DRIVER_KHZ_TRANS /
                     p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
-    p_instance_ctrl->u2_deadtime_count =
-        (uint16_t) (p_extended_cfg->u2_deadtime * p_extended_cfg->u2_pwm_timer_freq);
+    p_instance_ctrl->u2_deadtime_count = p_extended_cfg->u2_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
     rm_motor_driver_mod_set_max_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_max_duty);
@@ -585,6 +580,8 @@ static void rm_motor_driver_reset (motor_driver_instance_ctrl_t * p_ctrl)
     p_ctrl->f_sum_iw_ad          = 0.0F;
 
     p_ctrl->st_modulation.u1_sat_flag = 0U;
+
+    p_ctrl->u1_flag_port_enable = 1U;
 }                                      /* End of function rm_motor_driver_reset */
 
 /***********************************************************************************************************************
@@ -616,6 +613,14 @@ static void rm_motor_driver_set_uvw_duty (motor_driver_instance_ctrl_t * p_ctrl,
     temp_duty.duty[0] = (uint32_t) u2_count_u;
     temp_duty.duty[1] = (uint32_t) u2_count_v;
     temp_duty.duty[2] = (uint32_t) u2_count_w;
+
+    if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_ctrl->p_cfg->shunt)
+    {
+        temp_duty.duty_buffer[0] = (uint32_t) u2_count_u;
+        temp_duty.duty_buffer[1] = (uint32_t) u2_count_v;
+        temp_duty.duty_buffer[2] = (uint32_t) u2_count_w;
+    }
+
     if (p_three_phase != NULL)
     {
         p_three_phase->p_api->dutyCycleSet(p_three_phase->p_ctrl, &temp_duty);
@@ -802,15 +807,17 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
     /* Read A/D converted data */
     if (p_adc2_instance != NULL)
     {
- #if (BSP_FEATURE_ADC_UNIT_1_CHANNELS == 0)
+        /* When an AD unit is used to read 1shunt current and vdc,
+         * once close the unit and reopen with other configuration. */
+        if (p_extend_cfg->iu_ad_unit == p_extend_cfg->vdc_ad_unit)
+        {
+            /* Close first ADC instance */
+            p_adc_instance->p_api->close(p_adc_instance->p_ctrl);
 
-        /* Close first ADC instance */
-        p_adc_instance->p_api->close(p_adc_instance->p_ctrl);
-
-        /* Open second ADC instance */
-        p_adc2_instance->p_api->open(p_adc2_instance->p_ctrl, p_adc2_instance->p_cfg);
-        p_adc2_instance->p_api->scanCfg(p_adc2_instance->p_ctrl, p_adc2_instance->p_channel_cfg);
- #endif
+            /* Open second ADC instance */
+            p_adc2_instance->p_api->open(p_adc2_instance->p_ctrl, p_adc2_instance->p_cfg);
+            p_adc2_instance->p_api->scanCfg(p_adc2_instance->p_ctrl, p_adc2_instance->p_channel_cfg);
+        }
 
         p_adc2_instance->p_api->scanStart(p_adc2_instance->p_ctrl);
 
@@ -823,17 +830,19 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
 
         p_adc2_instance->p_api->read(p_adc2_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[0]);
 
- #if (BSP_FEATURE_ADC_UNIT_1_CHANNELS == 0)
+        /* When an AD unit is used to read 1shunt current and vdc,
+         * once close the unit and reopen with other configuration again. */
+        if (p_extend_cfg->iu_ad_unit == p_extend_cfg->vdc_ad_unit)
+        {
+            /* Close second ADC instance */
+            p_adc2_instance->p_api->close(p_adc2_instance->p_ctrl);
 
-        /* Close second ADC instance */
-        p_adc2_instance->p_api->close(p_adc2_instance->p_ctrl);
-
-        /* Open & Start first ADC instance again */
-        p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
-        p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
-        p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
-        p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
- #endif
+            /* Open & Start first ADC instance again */
+            p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+            p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
+            p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
+            p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+        }
     }
 #endif                                 /* ADC_B_SUPPORTED == 0 */
 
@@ -986,7 +995,8 @@ static void rm_motor_driver_1shunt_modulation (motor_driver_instance_ctrl_t * p_
 
     motor_driver_extended_cfg_t  * p_extended_cfg = (motor_driver_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     three_phase_instance_t const * p_three_phase  = p_ctrl->p_cfg->p_three_phase_instance;
-    timer_instance_t const       * timer_u        = p_three_phase->p_cfg->p_timer_instance[0];
+    timer_instance_t const       * timer_u        =
+        p_three_phase->p_cfg->p_timer_instance[p_extended_cfg->trigger_phase];
     timer_info_t temp_info;
 
     if (p_three_phase != NULL)
@@ -1215,28 +1225,33 @@ static void rm_motor_driver_pin_cfg (bsp_io_port_pin_t pin, uint32_t cfg)
  **********************************************************************************************************************/
 static void rm_motor_driver_output_enable (motor_driver_instance_ctrl_t * p_ctrl)
 {
-    motor_driver_cfg_t           * p_cfg         = (motor_driver_cfg_t *) p_ctrl->p_cfg;
-    motor_driver_extended_cfg_t  * p_extended    = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
-    three_phase_instance_t const * p_three_phase = p_cfg->p_three_phase_instance;
-    timer_instance_t const       * p_u_phase_gpt = p_three_phase->p_cfg->p_timer_instance[0];
-    timer_instance_t const       * p_v_phase_gpt = p_three_phase->p_cfg->p_timer_instance[1];
-    timer_instance_t const       * p_w_phase_gpt = p_three_phase->p_cfg->p_timer_instance[2];
+    if (1U == p_ctrl->u1_flag_port_enable)
+    {
+        motor_driver_cfg_t           * p_cfg         = (motor_driver_cfg_t *) p_ctrl->p_cfg;
+        motor_driver_extended_cfg_t  * p_extended    = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
+        three_phase_instance_t const * p_three_phase = p_cfg->p_three_phase_instance;
+        timer_instance_t const       * p_u_phase_gpt = p_three_phase->p_cfg->p_timer_instance[0];
+        timer_instance_t const       * p_v_phase_gpt = p_three_phase->p_cfg->p_timer_instance[1];
+        timer_instance_t const       * p_w_phase_gpt = p_three_phase->p_cfg->p_timer_instance[2];
 
-    p_ctrl->u4_gtioca_low_cfg |= MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK;
-    p_ctrl->u4_gtiocb_low_cfg |= MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK;
+        p_ctrl->u4_gtioca_low_cfg |= MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK;
+        p_ctrl->u4_gtiocb_low_cfg |= MOTOR_DRIVER_IO_PORT_PERIPHERAL_MASK;
 
-    /* Set pin function */
-    rm_motor_driver_pin_cfg(p_extended->port_up, p_ctrl->u4_gtioca_low_cfg);
-    rm_motor_driver_pin_cfg(p_extended->port_un, p_ctrl->u4_gtiocb_low_cfg);
-    rm_motor_driver_pin_cfg(p_extended->port_vp, p_ctrl->u4_gtioca_low_cfg);
-    rm_motor_driver_pin_cfg(p_extended->port_vn, p_ctrl->u4_gtiocb_low_cfg);
-    rm_motor_driver_pin_cfg(p_extended->port_wp, p_ctrl->u4_gtioca_low_cfg);
-    rm_motor_driver_pin_cfg(p_extended->port_wn, p_ctrl->u4_gtiocb_low_cfg);
+        /* Set pin function */
+        rm_motor_driver_pin_cfg(p_extended->port_up, p_ctrl->u4_gtioca_low_cfg);
+        rm_motor_driver_pin_cfg(p_extended->port_un, p_ctrl->u4_gtiocb_low_cfg);
+        rm_motor_driver_pin_cfg(p_extended->port_vp, p_ctrl->u4_gtioca_low_cfg);
+        rm_motor_driver_pin_cfg(p_extended->port_vn, p_ctrl->u4_gtiocb_low_cfg);
+        rm_motor_driver_pin_cfg(p_extended->port_wp, p_ctrl->u4_gtioca_low_cfg);
+        rm_motor_driver_pin_cfg(p_extended->port_wn, p_ctrl->u4_gtiocb_low_cfg);
 
-    /* PWM output enable */
-    R_GPT_OutputEnable(p_u_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
-    R_GPT_OutputEnable(p_v_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
-    R_GPT_OutputEnable(p_w_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+        /* PWM output enable */
+        R_GPT_OutputEnable(p_u_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+        R_GPT_OutputEnable(p_v_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+        R_GPT_OutputEnable(p_w_phase_gpt->p_ctrl, GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+
+        p_ctrl->u1_flag_port_enable = 0U;
+    }
 }                                      /* End of function rm_motor_driver_output_enable */
 
 /***********************************************************************************************************************
@@ -1268,6 +1283,8 @@ static void rm_motor_driver_output_disable (motor_driver_instance_ctrl_t * p_ctr
     rm_motor_driver_pin_cfg(p_extended->port_vn, p_ctrl->u4_gtiocb_low_cfg);
     rm_motor_driver_pin_cfg(p_extended->port_wp, p_ctrl->u4_gtioca_low_cfg);
     rm_motor_driver_pin_cfg(p_extended->port_wn, p_ctrl->u4_gtiocb_low_cfg);
+
+    p_ctrl->u1_flag_port_enable = 1U;
 }                                      /* End of function rm_motor_driver_output_disable */
 
 /***********************************************************************************************************************
@@ -1830,19 +1847,23 @@ static void rm_motor_driver_adc_b_close (motor_driver_instance_ctrl_t * p_instan
 static void rm_motor_driver_adc_open (motor_driver_instance_ctrl_t   * p_instance_ctrl,
                                       motor_driver_cfg_t const * const p_cfg)
 {
+    motor_driver_extended_cfg_t * p_extended_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
  #if (MOTOR_DRIVER_CFG_SUPPORT_SHARED_ADC == 0) /* Original ADC module support */
     /* Start ADC module */
     /* For 1shunt, Vdc is need to read by ADC module #1. */
     if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt)
     {
-  #if (BSP_FEATURE_ADC_UNIT_1_CHANNELS != 0)
-        if (p_cfg->p_adc2_instance != NULL)
+        /* When different AD units are used to read 1shunt current and vdc,
+         * the unit for vdc should be open. */
+        if (p_extended_cfg->iu_ad_unit != p_extended_cfg->vdc_ad_unit)
         {
-            p_cfg->p_adc2_instance->p_api->open(p_cfg->p_adc2_instance->p_ctrl, p_cfg->p_adc2_instance->p_cfg);
-            p_cfg->p_adc2_instance->p_api->scanCfg(p_cfg->p_adc2_instance->p_ctrl,
-                                                   p_cfg->p_adc2_instance->p_channel_cfg);
+            if (p_cfg->p_adc2_instance != NULL)
+            {
+                p_cfg->p_adc2_instance->p_api->open(p_cfg->p_adc2_instance->p_ctrl, p_cfg->p_adc2_instance->p_cfg);
+                p_cfg->p_adc2_instance->p_api->scanCfg(p_cfg->p_adc2_instance->p_ctrl,
+                                                       p_cfg->p_adc2_instance->p_channel_cfg);
+            }
         }
-  #endif
     }
 
     if (p_cfg->p_adc_instance != NULL)
@@ -1863,7 +1884,6 @@ static void rm_motor_driver_adc_open (motor_driver_instance_ctrl_t   * p_instanc
     }
 
  #else                                 /* SUPPORT_SHARED_ADC == 1 */
-    motor_driver_extended_cfg_t * p_extended_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
     p_instance_ctrl->p_shared_instance_ctrl = p_extended_cfg->p_shared_cfg->p_shared_instance_ctrl;
 
     motor_driver_shared_instance_ctrl_t * p_shared_ctrl = p_instance_ctrl->p_shared_instance_ctrl;
@@ -1902,34 +1922,38 @@ static void rm_motor_driver_adc_open (motor_driver_instance_ctrl_t   * p_instanc
             (p_shared_ctrl->registered_motor_count)++;
         }
 
-  #if (BSP_FEATURE_ADC_UNIT_1_CHANNELS != 0)
-        if (p_extended_cfg->p_shared_cfg->p_adc_instance_second != NULL)
+        if ((MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt) &&
+            (p_extended_cfg->iu_ad_unit == p_extended_cfg->vdc_ad_unit))
         {
-            p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_second;
-
-            if (p_adc_instance != NULL)
+            /* When 1shunt current and Vdc are read with same ADC channel,
+             * second ADC module should not be opened. */
+        }
+        /* In other case, second ADC module is opened here. */
+        else
+        {
+            if (p_extended_cfg->p_shared_cfg->p_adc_instance_second != NULL)
             {
-                p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
-                p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
-                p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
+                p_adc_instance = p_extended_cfg->p_shared_cfg->p_adc_instance_second;
 
-                if ((p_cfg->shunt != MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT) &&
-                    (MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND == p_extended_cfg->interrupt_adc))
+                if (p_adc_instance != NULL)
                 {
-                    /* Register callback to ADC module */
-                    p_adc_instance->p_api->callbackSet(p_adc_instance->p_ctrl,
-                                                       rm_motor_driver_cyclic,
-                                                       p_instance_ctrl,
-                                                       &(p_instance_ctrl->adc_callback_args));
-                }
+                    p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+                    p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
+                    p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
 
-                if (p_cfg->shunt != MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT)
-                {
-                    p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+                    if ((p_cfg->shunt != MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT) &&
+                        (MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND == p_extended_cfg->interrupt_adc))
+                    {
+                        /* Register callback to ADC module */
+                        p_adc_instance->p_api->callbackSet(p_adc_instance->p_ctrl,
+                                                           rm_motor_driver_cyclic,
+                                                           p_instance_ctrl,
+                                                           &(p_instance_ctrl->adc_callback_args));
+                        p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+                    }
                 }
             }
         }
-  #endif
     }
     /* After the second motor */
     else

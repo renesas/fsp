@@ -850,6 +850,11 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
   #if defined(USB_HIGH_SPEED_MODULE)
         USB_M1->PHYSET = (USB_DIRPD | USB_PLLRESET | USB_CLKSEL);
 
+   #if USB_CFG_CLKSEL == USB_CFG_48MHZ
+        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
+        USB_M1->PHYSET |= USB_CLKSEL_48;
+   #endif                              /* USB_CFG_CLKSEL == USB_CFG_48MHZ */
+
    #if USB_CFG_CLKSEL == USB_CFG_24MHZ
         USB_M1->PHYSET &= (uint16_t) ~USB_HSEB;
    #endif                              /* USB_CFG_CLKSEL == USB_CFG_24MHZ */
@@ -875,13 +880,15 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
         USB_M1->PHYSET = (uint16_t) (USB_M1->PHYSET & (~USB_DIRPD));
         usb_cpu_delay_xms(1);            /* wait 1msec */
 
-   #if ((USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ))
+   #if ((USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || \
+        (USB_CFG_CLKSEL == USB_CFG_48MHZ))
         USB_M1->PHYSET = (uint16_t) (USB_M1->PHYSET & (~USB_PLLRESET));
-   #endif /* (USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) */
+   #endif                              /* (USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || (USB_CFG_CLKSEL == USB_CFG_48MHZ) */
 
         USB_M1->LPSTS |= USB_SUSPENDM;
 
-   #if ((USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ))
+   #if ((USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || \
+        (USB_CFG_CLKSEL == USB_CFG_48MHZ))
 
         /* WAIT_LOOP */
         while (USB_PLLLOCK != (USB_M1->PLLSTA & USB_PLLLOCK))
@@ -889,7 +896,7 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
             /* Wait for PLL Lock */
         }
         ;
-   #endif                              /* (USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) */
+   #endif                              /* (USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || (USB_CFG_CLKSEL == USB_CFG_48MHZ) */
 
         USB_M1->SYSCFG |= USB_DCFM;
 

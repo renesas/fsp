@@ -137,9 +137,19 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     if (PSA_KEY_TYPE_IS_RSA_KEY_PAIR_WRAPPED(slot->attr.type))
     {
         mbedtls_rsa_context * rsa;
-        int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;;
-        int exponent;
-        if (bits > PSA_VENDOR_RSA_MAX_KEY_BITS)
+        int      ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;;
+        int      exponent;
+        uint32_t export_der_size_bytes = 0;
+
+        if (bits == RSA_2048_BITS)
+        {
+            export_der_size_bytes = RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES;
+        }
+        else if (bits == RSA_3072_BITS)
+        {
+            export_der_size_bytes = RSA_WRAPPED_3072_EXPORTED_DER_SIZE_BYTES;
+        }
+        else
         {
             return PSA_ERROR_NOT_SUPPORTED;
         }
@@ -182,7 +192,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         /* The key is stored in an export representation (DER format) in the slot.
          * Only RSA 2048 key generation is currently supported.
          * There is a check in the key generation stage above this that will succeed only for RSA 2048 case. */
-        status = psa_allocate_buffer_to_slot(slot, RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES);
+        status = psa_allocate_buffer_to_slot(slot, export_der_size_bytes);
         if (status != PSA_SUCCESS)
         {
             mbedtls_rsa_free(rsa);
@@ -194,7 +204,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         status = mbedtls_psa_rsa_export_key(slot->attr.type,
                                             rsa,
                                             slot->key.data,
-                                            RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES,
+                                            export_der_size_bytes,
                                             &slot->key.bytes);
         mbedtls_rsa_free(rsa);
         mbedtls_free(rsa);

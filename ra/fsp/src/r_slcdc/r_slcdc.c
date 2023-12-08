@@ -108,6 +108,9 @@ fsp_err_t R_SLCDC_Open (slcdc_ctrl_t * const p_ctrl, slcdc_cfg_t const * const p
 
 #if BSP_FEATURE_SLCDC_HAS_VL1SEL
 
+    /* Set SELVL to 1 first before using the VL1 function. */
+    R_PFS->VLSEL.VL1SEL_b.SELVL = 1;
+
     /* Set voltage reference */
     R_SLCDC->VLCD =
         (((uint8_t) (p_cfg->ref_volt_sel << R_SLCDC_VLCD_MDSET2_Pos) & R_SLCDC_VLCD_MDSET2_Msk) |

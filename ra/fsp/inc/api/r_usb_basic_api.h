@@ -370,8 +370,10 @@ typedef struct st_usb_event_info
     const transfer_instance_t * p_transfer_rx;  ///< Receive context
 } usb_event_info_t;
 
+typedef usb_event_info_t usb_callback_args_t;
+
 #if (BSP_CFG_RTOS == 0)
-typedef void (usb_callback_t)(void *);
+typedef void (usb_callback_t)(usb_callback_args_t *);
 #endif
 #if (BSP_CFG_RTOS == 1)
 typedef TX_THREAD * usb_hdl_t;
@@ -586,6 +588,23 @@ typedef struct st_usb_api
      * @param[in]     p_ctrl      USB control structure.
      */
     fsp_err_t (* remoteWakeup)(usb_ctrl_t * const p_ctrl);
+
+    /** Activate USB Driver
+     * @par Implemented as
+     * - @ref R_USB_DriverActivate()
+     *
+     * @param[in]     p_api_ctrl  USB control structure.
+     */
+    fsp_err_t (* driverActivate)(usb_ctrl_t * const p_api_ctrl);
+
+    /** Set callback memory to USB driver.
+     * @par Implemented as
+     * - @ref R_USB_CallbackMemorySet()
+     *
+     * @param[in]     p_api_ctrl  USB control structure.
+     * @param[in]     p_callback_memory  Pointer to store USB event information.
+     */
+    fsp_err_t (* callbackMemorySet)(usb_ctrl_t * const p_api_ctrl, usb_callback_args_t * p_callback_memory);
 
     /** This API gets the module number.
      *

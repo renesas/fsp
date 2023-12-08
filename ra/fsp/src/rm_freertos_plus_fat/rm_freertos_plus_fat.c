@@ -340,13 +340,16 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_Close (rm_freertos_plus_fat_ctrl_t * const p_ctrl
     FSP_ERROR_RETURN(RM_FREERTOS_PLUS_FAT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_instance_ctrl->open = 0;
-    p_instance_ctrl->p_cfg->p_block_media->p_api->close(p_instance_ctrl->p_cfg->p_block_media->p_ctrl);
+    fsp_err_t err = p_instance_ctrl->p_cfg->p_block_media->p_api->close(p_instance_ctrl->p_cfg->p_block_media->p_ctrl);
+    if (FSP_SUCCESS == err)
+    {
 #if 2 == BSP_CFG_RTOS
-    vSemaphoreDelete(p_instance_ctrl->p_mutex);
+        vSemaphoreDelete(p_instance_ctrl->p_mutex);
 #endif
+        p_instance_ctrl->open = 0;
+    }
 
-    return FSP_SUCCESS;
+    return err;
 }
 
 /*******************************************************************************************************************//**
