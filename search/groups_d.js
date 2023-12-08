@@ -1,6 +1,9 @@
 var searchData=
 [
   ['mcu_20board_20support_20package',['MCU Board Support Package',['../group___b_s_p___m_c_u.html',1,'']]],
+  ['mipi_20display_20serial_20interface_20_28r_5fmipi_5fdsi_29',['MIPI Display Serial Interface (r_mipi_dsi)',['../group___m_i_p_i___d_s_i.html',1,'']]],
+  ['mipi_20dsi_20interface',['MIPI DSI Interface',['../group___m_i_p_i___d_s_i___a_p_i.html',1,'']]],
+  ['mipi_5fphy',['MIPI_PHY',['../group___m_i_p_i___p_h_y.html',1,'']]],
   ['motor_20120_2ddegree_20control_20interface',['Motor 120-Degree Control Interface',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html',1,'']]],
   ['motor_20120_20degree_20control_20_28rm_5fmotor_5f120_5fdegree_29',['Motor 120 degree control (rm_motor_120_degree)',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html',1,'']]],
   ['motor_20120_2ddegree_20driver_20interface',['Motor 120-Degree Driver Interface',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html',1,'']]],

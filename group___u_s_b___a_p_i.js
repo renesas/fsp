@@ -49,6 +49,8 @@ var group___u_s_b___a_p_i =
       [ "periControlDataSet", "group___u_s_b___a_p_i.html#adf500dc4e48aab1cce6ecd5d8ed37d87", null ],
       [ "periControlStatusSet", "group___u_s_b___a_p_i.html#a2bf6b2b55ae43aadcf7ed5970f27eb3c", null ],
       [ "remoteWakeup", "group___u_s_b___a_p_i.html#a176bf067655f5a302737da5be82670d7", null ],
+      [ "driverActivate", "group___u_s_b___a_p_i.html#a45556d7aca23663ba36a6dc8c0391ec2", null ],
+      [ "callbackMemorySet", "group___u_s_b___a_p_i.html#ad5dedbc7adf5c865fd3cb3b1f218a181", null ],
       [ "moduleNumberGet", "group___u_s_b___a_p_i.html#a1a5a609b45c4e322506c9a89fa305b01", null ],
       [ "classTypeGet", "group___u_s_b___a_p_i.html#a8ae3b604bc6ea15e5b9169337fad9c20", null ],
       [ "deviceAddressGet", "group___u_s_b___a_p_i.html#adb38af72559a5cdee3aa20278f92e896", null ],

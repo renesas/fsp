@@ -13,6 +13,7 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "I2C Slave (r_iic_slave)", "group___i_i_c___s_l_a_v_e.html", "group___i_i_c___s_l_a_v_e" ],
     [ "I2S (r_ssi)", "group___s_s_i.html", "group___s_s_i" ],
     [ "I3C (r_i3c)", "group___i3_c.html", "group___i3_c" ],
+    [ "LIN (r_sci_b_lin)", "group___s_c_i___b___l_i_n.html", "group___s_c_i___b___l_i_n" ],
     [ "SMCI (r_sci_smci)", "group___s_c_i___s_m_c_i.html", "group___s_c_i___s_m_c_i" ],
     [ "SPI (r_sci_b_spi)", "group___s_c_i___b___s_p_i.html", "group___s_c_i___b___s_p_i" ],
     [ "SPI (r_sci_spi)", "group___s_c_i___s_p_i.html", "group___s_c_i___s_p_i" ],

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['on_20chip_20http_20client_20on_20da16xxx_20_28rm_5fhttp_5fonchip_5fda16xxx_29',['On Chip HTTP Client on DA16XXX (rm_http_onchip_da16xxx)',['../group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html',1,'']]],
   ['on_20chip_20mqtt_20client_20on_20da16xxx_20_28rm_5fmqtt_5fonchip_5fda16xxx_29',['On Chip MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html',1,'']]],
   ['operational_20amplifier_20_28r_5fopamp_29',['Operational Amplifier (r_opamp)',['../group___o_p_a_m_p.html',1,'']]],
   ['opamp_20interface',['OPAMP Interface',['../group___o_p_a_m_p___a_p_i.html',1,'']]],

@@ -197,7 +197,7 @@ var NAVTREEINDEX4 =
 "group___b_l_e___a_b_s___a_p_i.html#structble__gap__scan__on__t":[5,2,3,4],
 "group___b_l_e___a_b_s___a_p_i.html#structble__gap__scan__phy__parameter__t":[5,2,3,3],
 "group___b_l_e___a_b_s___g_t_l.html":[5,1,11,16],
-"group___b_l_e___a_b_s___s_p_p.html":[5,1,11,21],
+"group___b_l_e___a_b_s___s_p_p.html":[5,1,11,22],
 "group___b_l_e___a_p_i.html":[5,2,4],
 "group___b_l_e___a_p_i.html#ga0a266b41d8d8194d9ae6dec7f1a1bbcd":[5,2,4,17],
 "group___b_l_e___a_p_i.html#ga135f2b14a3f0926fb5b63a155c94ddcb":[5,2,4,14],

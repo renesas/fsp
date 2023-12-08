@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['mipi_5fdsi_5fctrl_5ft',['mipi_dsi_ctrl_t',['../group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6',1,'r_mipi_dsi_api.h']]],
   ['motor_5f120_5fcontrol_5fctrl_5ft',['motor_120_control_ctrl_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#ga52699a76491c24c80ad8a0d7d58f9b79',1,'rm_motor_120_control_api.h']]],
   ['motor_5f120_5fdriver_5fctrl_5ft',['motor_120_driver_ctrl_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#gac22e2165fbe216b6ca99369b706ad175',1,'rm_motor_120_driver_api.h']]],
   ['motor_5fangle_5fctrl_5ft',['motor_angle_ctrl_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e',1,'rm_motor_angle_api.h']]],

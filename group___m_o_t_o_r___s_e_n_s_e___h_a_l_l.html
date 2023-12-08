@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -346,7 +346,7 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor A
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">sensor pattern #6</td><td>Manual Entry</td><td>3 </td><td>Hall sensor pattern #6 </td></tr>
 <tr class="tree_none">
-<td>PWM Carrier Frequency (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>PWM Carrier Frequency </td></tr>
+<td>Process Frequency (kHz)</td><td>Must be a valid value</td><td>20.0F </td><td>Frequency to perform the process. </td></tr>
 <tr class="tree_none">
 <td>Correction parameter of rotor angle</td><td>Must be a valid value</td><td>0.0F </td><td>Correction parameter of rotor angle </td></tr>
 <tr class="tree_none">
@@ -361,6 +361,8 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor A
 <td>Rotation counts to start speed estimation</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Rotation counts to start of speed estimation. </td></tr>
 <tr class="tree_none">
 <td>Carrier counts at startup</td><td>Must be a valid non-negative value.</td><td>400 </td><td>Carrier counts to wait the start timing of pseudo speed update </td></tr>
+<tr class="tree_none">
+<td>Speed to judge start</td><td>Must be a valid non-negative value.</td><td>250.0 </td><td>Speed to judge start PI calculation. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_sense_hall-clock-configuration"></a>
@@ -437,19 +439,19 @@ Speed Reference [rad/sec]. </td></tr>
 <td class="fieldname">
 port_hall_sensor_u</td>
 <td class="fielddoc">
-Hall U-signal input port BSP_IO_PORT_12_PIN_04. </td></tr>
+Hall U-signal input port. </td></tr>
 <tr><td class="fieldtype">
 <a id="a56bbdc9e0c294ebdc515213a5b22a8b2"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
 <td class="fieldname">
 port_hall_sensor_v</td>
 <td class="fielddoc">
-Hall V-signal input port BSP_IO_PORT_12_PIN_05. </td></tr>
+Hall V-signal input port. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7ba4ac91aadbd69b41b7edccf087fad0"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
 <td class="fieldname">
 port_hall_sensor_w</td>
 <td class="fielddoc">
-Hall W-signal input port BSP_IO_PORT_11_PIN_01. </td></tr>
+Hall W-signal input port. </td></tr>
 <tr><td class="fieldtype">
 <a id="a2cb9fb911f913ed6b39ebdc9112260e1"></a>uint8_t</td>
 <td class="fieldname">
@@ -461,13 +463,13 @@ The order of hall signal pattern. </td></tr>
 <td class="fieldname">
 f_pwm_carrier_freq</td>
 <td class="fielddoc">
-PWM carrier frequency 20.0kHz. </td></tr>
+PWM carrier frequency (or Decimated frequency at decimation of current process) </td></tr>
 <tr><td class="fieldtype">
 <a id="a6ca06e5de2ba8f7f53907d2c18ca014d"></a>float</td>
 <td class="fieldname">
 f_angle_correct</td>
 <td class="fielddoc">
-Coefficent to correct angle 0.4. </td></tr>
+Coefficent to correct angle. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad7e0d225138cade6fa06176cc459214a"></a>uint8_t</td>
 <td class="fieldname">
@@ -510,6 +512,12 @@ Maximum counts of hall signal period. </td></tr>
 u1_hall_polepairs</td>
 <td class="fielddoc">
 Hall pole pairs. </td></tr>
+<tr><td class="fieldtype">
+<a id="a53b4c66195d1de4eb1d4d541192a96c1"></a>float</td>
+<td class="fieldname">
+f4_start_speed_rad</td>
+<td class="fielddoc">
+Speed to judge start [radian/second]. </td></tr>
 </table>
 
 </div>
@@ -636,6 +644,12 @@ Counter of carrier interrupt for startup. </td></tr>
 st_input</td>
 <td class="fielddoc">
 Input parameter structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6ba2b7b2961555871b9fd7d5ae4d603d"></a>uint8_t</td>
+<td class="fieldname">
+u1_startup_flag</td>
+<td class="fielddoc">
+Flag for startup. </td></tr>
 <tr><td class="fieldtype">
 <a id="a099414f2b14f99d808eb3d3e91fa269a"></a><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__cfg__t">motor_angle_cfg_t</a> const  *</td>
 <td class="fieldname">
@@ -1155,7 +1169,7 @@ p_cfg</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

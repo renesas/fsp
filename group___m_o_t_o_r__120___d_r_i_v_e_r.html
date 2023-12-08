@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -314,6 +314,24 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>ADC_B Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select ADC_B module support. </td></tr>
+<tr class="tree_none">
+<td>Shared ADC support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select Shared ADC support. </td></tr>
+<tr class="tree_none">
+<td>Support Motor Number</td><td>Must be greater than 1.</td><td>1 </td><td></td></tr>
 </table>
  <h2>Configurations for Motor &gt; ADC and PWM modulation (rm_motor_120_driver)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Motor &gt; ADC and PWM modulation (rm_motor_120_driver).<br />
@@ -345,9 +363,9 @@ Hall</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">PWM output port WN</td><td>Manual Entry</td><td>BSP_IO_PORT_01_PIN_12 </td><td>PWM output port WN </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PWM timer frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
+<td class="tree_lvl_1_cell">PWM timer frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120.0 </td><td>GPT PWM timer frequency </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PWM carrier period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
+<td class="tree_lvl_1_cell">PWM carrier period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50.0 </td><td>GPT PWM carrier period </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Dead time (Raw counts)</td><td>Must be a valid non-negative value.</td><td>240 </td><td>GPT PWM dead time </td></tr>
 <tr class="tree_lvl_1_item">
@@ -377,6 +395,18 @@ Hall</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">A/D conversion channel for W phase voltage</td><td>Manual Entry</td><td>ADC_CHANNEL_6 </td><td>Specify the A/D channel for W phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for U phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for U phase current </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for W phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for W phase current </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for main line voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for main line voltage </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for U phase voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for U phase voltage </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for V phase voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for V phase voltage </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">A/D conversion unit for W phase voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for W phase voltage </td></tr>
+<tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">GTIOCA stop level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Pin Level Low</li>
@@ -392,6 +422,14 @@ Pin Level Low</li>
 Pin Level High</li>
 </ul>
 </td><td>Pin Level High </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ADC interrupt module</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1st</li>
+<li>
+2nd</li>
+</ul>
+</td><td>1st </td><td>Select from which module ADC intterupt happens </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Modulation  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -420,6 +458,8 @@ Examples</h1>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_120_driver_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga479ed0423a2ab1b4c4f6650c75b46057">RM_MOTOR_120_DRIVER_Open</a>(&amp;g_motor_120_driver0.p_ctrl, &amp;g_motor_120_driver0.p_cfg);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start PWM output */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga16c97aaf4b3256181829f9becb812793">RM_MOTOR_120_DRIVER_Run</a>(&amp;g_motor_120_driver0.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Basically run this module at cyclic interrupt (e.g. included GPT PWM carrier intterupt).</span></div><div class="line"><span class="comment">     * This implementation is an example. */</span></div><div class="line"></div><div class="line">    <span class="comment">// while (true)</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Caclutarion of current offset */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gad4fceb56dd7984215381056755f1b600">RM_MOTOR_120_DRIVER_CurrentOffsetCalc</a>(&amp;g_motor_120_driver0.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get electric current, main line voltage and maximum voltage component */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gac8c271fa7df76db9782a3544644e2c13">RM_MOTOR_120_DRIVER_CurrentGet</a>(&amp;g_motor_120_driver0.p_ctrl, &amp;g_current_status);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get the flag of A/D convderted current offset */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaac5cbe1329f06383944236268d49a23f">RM_MOTOR_120_DRIVER_FlagCurrentOffsetGet</a>(&amp;g_motor_120_driver0.p_ctrl, &amp;u1_get_flg_offset);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">// Perform current control process here</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaa8ba699a769f1e8ea5da31f9a046c8fa">RM_MOTOR_120_DRIVER_PhaseVoltageSet</a>(&amp;g_motor_120_driver0.p_ctrl, 1.0F, 1.0F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set phase pattern */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaf9c967244ab7cf1944e250d69adfa670">RM_MOTOR_120_DRIVER_PhasePatternSet</a>(&amp;g_motor_120_driver0.p_ctrl, MOTOR_120_DRIVER_API_VP_ON_WN_PWM);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaf9dfe0ea5a56e9a1c687acdbe4db75b0">RM_MOTOR_120_DRIVER_ParameterUpdate</a>(&amp;g_motor_120_driver0.p_ctrl, &amp;g_motor_120_driver0.p_cfg);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaba86e9b73791ea50a8b8cf4527732438">RM_MOTOR_120_DRIVER_Stop</a>(&amp;g_motor_120_driver0.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaefd265b38b937903b1248acb72122ffb">RM_MOTOR_120_DRIVER_Reset</a>(&amp;g_motor_120_driver0.p_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">//</span></div><div class="line"><span class="comment"></span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gadf1b4b5187160ccf472e5ff389916bd6">RM_MOTOR_120_DRIVER_Close</a>(&amp;g_motor_120_driver0.p_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structmotor__120__driver__shared__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__shared__instance__ctrl__t">motor_120_driver_shared_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmotor__120__driver__shared__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__120__driver__modulation__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__modulation__t">motor_120_driver_modulation_t</a></td></tr>
 <tr class="separator:structmotor__120__driver__modulation__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__120__driver__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__extended__cfg__t">motor_120_driver_extended_cfg_t</a></td></tr>
@@ -427,12 +467,50 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:ga7d563caa2b26b6dcac3c2bdcb6563753"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga7d563caa2b26b6dcac3c2bdcb6563753">motor_120_driver_select_adc_instance_t</a> </td></tr>
+<tr class="separator:ga7d563caa2b26b6dcac3c2bdcb6563753"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5786aa10befc7f92d49fdd3622ad7a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaa5786aa10befc7f92d49fdd3622ad7a3">motor_120_driver_status_t</a> </td></tr>
 <tr class="separator:gaa5786aa10befc7f92d49fdd3622ad7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga39484001d8f61c852cca3a3ac1447589"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga39484001d8f61c852cca3a3ac1447589">motor_120_driver_type_t</a> </td></tr>
 <tr class="separator:ga39484001d8f61c852cca3a3ac1447589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmotor__120__driver__shared__instance__ctrl__t" id="structmotor__120__driver__shared__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__120__driver__shared__instance__ctrl__t">&#9670;&nbsp;</a></span>motor_120_driver_shared_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_120_driver_shared_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>For multiple ADC module </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a71d8d61b749f9b47a8e27655ac40b3c6"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa74a3d2d90df89a1527b99368c84fbd2"></a>uint8_t</td>
+<td class="fieldname">
+registered_motor_count</td>
+<td class="fielddoc">
+Registered motor counts. </td></tr>
+<tr><td class="fieldtype">
+<a id="a13b905bde5e58877aae89294bd7fc7e6"></a>void const  *</td>
+<td class="fieldname">
+p_context[MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM]</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <a name="structmotor__120__driver__modulation__t" id="structmotor__120__driver__modulation__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structmotor__120__driver__modulation__t">&#9670;&nbsp;</a></span>motor_120_driver_modulation_t</h2>
 
@@ -544,6 +622,42 @@ vw_ad_ch</td>
 <td class="fielddoc">
 A/D channel for W phase voltage. </td></tr>
 <tr><td class="fieldtype">
+<a id="a97b442cc2c1da38471244d23444a2922"></a>uint8_t</td>
+<td class="fieldname">
+iu_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for U phase current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a374c873c4d206cf3e03e223b0db589d9"></a>uint8_t</td>
+<td class="fieldname">
+iw_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for W phase current. </td></tr>
+<tr><td class="fieldtype">
+<a id="a743f0b97747cb924011877062bb3ec1e"></a>uint8_t</td>
+<td class="fieldname">
+vdc_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for main line voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab63bcaf508f7f4c79b99438db37b1b02"></a>uint8_t</td>
+<td class="fieldname">
+vu_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for U phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="a48d501d44520ab132691edae3456e4ef"></a>uint8_t</td>
+<td class="fieldname">
+vv_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for V phase voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="a157d939fa4c6fedf8450bb5a511ccb9c"></a>uint8_t</td>
+<td class="fieldname">
+vw_ad_unit</td>
+<td class="fielddoc">
+Used A/D unit number for W phase voltage. </td></tr>
+<tr><td class="fieldtype">
 <a id="ab2d05f3e43675a2760b01bfba282dec5"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
 <td class="fieldname">
 port_up</td>
@@ -639,11 +753,45 @@ Calculation counts for current offset. </td></tr>
 mod_param</td>
 <td class="fielddoc">
 Modulation parameter. </td></tr>
+<tr><td class="fieldtype">
+<a id="aefbfdd5c13dd678ee327e6170f8cd578"></a><a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga7d563caa2b26b6dcac3c2bdcb6563753">motor_120_driver_select_adc_instance_t</a></td>
+<td class="fieldname">
+interrupt_adc</td>
+<td class="fielddoc">
+Select which interrupt to use. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab673a7b3aae3f54b6278b179e85e64e7"></a>motor_120_driver_extended_shared_cfg_t <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_shared_cfg</td>
+<td class="fielddoc">
+shared extended config </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga7d563caa2b26b6dcac3c2bdcb6563753"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d563caa2b26b6dcac3c2bdcb6563753">&#9670;&nbsp;</a></span>motor_120_driver_select_adc_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga7d563caa2b26b6dcac3c2bdcb6563753">motor_120_driver_select_adc_instance_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Support two ADC instance valid for adc </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7d563caa2b26b6dcac3c2bdcb6563753a12aed182dcb2f2e557ca7b0917543821"></a>MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_1ST&#160;</td><td class="fielddoc"><p>Use 1st ADC instance. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7d563caa2b26b6dcac3c2bdcb6563753a4cf07f0a33fb87505b235ce9d8e1e3da"></a>MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_2ND&#160;</td><td class="fielddoc"><p>Use 2nd ADC instanse. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="gaa5786aa10befc7f92d49fdd3622ad7a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa5786aa10befc7f92d49fdd3622ad7a3">&#9670;&nbsp;</a></span>motor_120_driver_status_t</h2>
 
@@ -1078,7 +1226,7 @@ Modulation parameter. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

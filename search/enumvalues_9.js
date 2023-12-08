@@ -1,5 +1,30 @@
 var searchData=
 [
-  ['keymatrix_5ftrig_5ffalling',['KEYMATRIX_TRIG_FALLING',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#gga5ef5011ed342570c52df788c61cb3e8da10593fe57729b2ecb049440139819e51',1,'r_keymatrix_api.h']]],
-  ['keymatrix_5ftrig_5frising',['KEYMATRIX_TRIG_RISING',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#gga5ef5011ed342570c52df788c61cb3e8da53a78a1a2c5e55a8208c2cbfe6ee0a29',1,'r_keymatrix_api.h']]]
+  ['jpeg_5fcolor_5fspace_5fycbcr411',['JPEG_COLOR_SPACE_YCBCR411',['../group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a7bd281de8ae95b15b94bdf402e11ea3d',1,'r_jpeg_api.h']]],
+  ['jpeg_5fcolor_5fspace_5fycbcr420',['JPEG_COLOR_SPACE_YCBCR420',['../group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a4a30fad930595fc81a42685cbee7e6b5',1,'r_jpeg_api.h']]],
+  ['jpeg_5fcolor_5fspace_5fycbcr422',['JPEG_COLOR_SPACE_YCBCR422',['../group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a27552e1b09ebafb42389d0734a9bcf02',1,'r_jpeg_api.h']]],
+  ['jpeg_5fcolor_5fspace_5fycbcr444',['JPEG_COLOR_SPACE_YCBCR444',['../group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a378512585a77dd3d25ddb73ed7761fe0',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5fbyte_5fswap',['JPEG_DATA_ORDER_BYTE_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21a3d123a7ca6ad95420c68babaae051c94',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5flongword_5fbyte_5fswap',['JPEG_DATA_ORDER_LONGWORD_BYTE_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21a717273bf42e7777fd730128dbe9e92d0',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5flongword_5fswap',['JPEG_DATA_ORDER_LONGWORD_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21aa84f2ce1f14c26c3bf3969a452ca0f2d',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5flongword_5fword_5fbyte_5fswap',['JPEG_DATA_ORDER_LONGWORD_WORD_BYTE_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21a5b526d686eba1bc5ea23eab8e1327d66',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5flongword_5fword_5fswap',['JPEG_DATA_ORDER_LONGWORD_WORD_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21aff83d7b89bae774f1f1b223133117f32',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5fnormal',['JPEG_DATA_ORDER_NORMAL',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21aa94e38c43f0b56ee14dcd879d457406b',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5fword_5fbyte_5fswap',['JPEG_DATA_ORDER_WORD_BYTE_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21a365d856315cb97b89253706838e97652',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdata_5forder_5fword_5fswap',['JPEG_DATA_ORDER_WORD_SWAP',['../group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21a1a1404e3204dd8b6eb500557b6ce2d8c',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdecode_5foutput_5fno_5fsubsample',['JPEG_DECODE_OUTPUT_NO_SUBSAMPLE',['../group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242cae3cf50c8a6a6a55ab18063c1f459ec85',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdecode_5foutput_5fsubsample_5fhalf',['JPEG_DECODE_OUTPUT_SUBSAMPLE_HALF',['../group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242ca4f3d2870e970419b670860d0f20d8783',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdecode_5foutput_5fsubsample_5fone_5feighth',['JPEG_DECODE_OUTPUT_SUBSAMPLE_ONE_EIGHTH',['../group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242cacac6446ba925a73768f6c7cedf155f8d',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdecode_5foutput_5fsubsample_5fone_5fquarter',['JPEG_DECODE_OUTPUT_SUBSAMPLE_ONE_QUARTER',['../group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242ca13aabd7266ead79810ccbdf20df99730',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdecode_5fpixel_5fformat_5fargb8888',['JPEG_DECODE_PIXEL_FORMAT_ARGB8888',['../group___j_p_e_g___a_p_i.html#ggaf255735f7f96e62d09a5af50736fe97ca28822a5d5a2729279132d36c55677457',1,'r_jpeg_api.h']]],
+  ['jpeg_5fdecode_5fpixel_5fformat_5frgb565',['JPEG_DECODE_PIXEL_FORMAT_RGB565',['../group___j_p_e_g___a_p_i.html#ggaf255735f7f96e62d09a5af50736fe97ca1926f7da52a4fdfd5fd9aefaf8af2eb6',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5ferror',['JPEG_STATUS_ERROR',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a3a0763f9ec7b19a9d9165413a8422cf6',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5fheader_5fprocessing',['JPEG_STATUS_HEADER_PROCESSING',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a1ea446598e442335c0ef84d83d2e696c',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5fidle',['JPEG_STATUS_IDLE',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36af4c72dc3358b3ff6130cf6200db7d908',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5fimage_5fsize_5fready',['JPEG_STATUS_IMAGE_SIZE_READY',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a6da7cb3ae07290d77d5257f07032ae50',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5finput_5fpause',['JPEG_STATUS_INPUT_PAUSE',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36aaf5d858b56dc734e60bc429a5dbe7427',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5fnone',['JPEG_STATUS_NONE',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36abba794c803930866203bfe367642df25',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5foperation_5fcomplete',['JPEG_STATUS_OPERATION_COMPLETE',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36ac90637a7c3ea7d4867526c51249fac4d',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5foutput_5fpause',['JPEG_STATUS_OUTPUT_PAUSE',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a5394271c79d092343320eb5abdf824d3',1,'r_jpeg_api.h']]],
+  ['jpeg_5fstatus_5frunning',['JPEG_STATUS_RUNNING',['../group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a51669758a495c1e0e156e4b7696b470e',1,'r_jpeg_api.h']]]
 ];

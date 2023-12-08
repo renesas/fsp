@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -291,6 +291,7 @@ Features</h2>
 <li>3 byte addressing for SPI<a class="anchor" id="um_ospi_3byte_address"></a></li>
 <li>4 byte addressing for SPI and DOPI<a class="anchor" id="um_ospi_4byte_address"></a></li>
 <li>Auto-calibration for DOPI mode<a class="anchor" id="um_ospi_autocalibration"></a></li>
+<li>Decryption-on-the-fly</li>
 </ul>
 <p>Additional build-time features:</p><ul>
 <li>Optional (build-time) DMAC support for data transmission when used with OSPI_B.<a class="anchor" id="um_ospi_optional_dmac_support_for_data_transmission"></a></li>
@@ -502,7 +503,7 @@ No Extension</li>
 <li>
 1 Cycle</li>
 </ul>
-</td><td>No Extension </td><td>Signal pull-up timing setting in OCTACLK units </td></tr>
+</td><td>No Extension </td><td>Signal pull-up timing (CS asserting extention) setting in OCTACLK units </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -510,7 +511,7 @@ No Extension</li>
 <li>
 1 Cycle</li>
 </ul>
-</td><td>No Extension </td><td>Signal pull-down timing setting in OCTACLK units </td></tr>
+</td><td>No Extension </td><td>Signal pull-down timing (CS negating extention) setting in OCTACLK units </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> XiP Mode  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -578,6 +579,10 @@ XiP Support</h3>
 xSPI Commands</h2>
 <p>Command sets and erase commands may be specified individually for each supported protocol mode. By default, the configurator only supports an alternative command set for DOPI (8D-8D-8D) mode. The command sets cannot be changed during run-time. The appropriate command set will be selected when changing protocol modes. If a command set is not found, it defaults to the SPI command set.</p>
 <p>If custom DOPI erase commands are not specified, ensure the erase commands are the appropriate 2-byte DOPI commands. The lower byte will be used for 1-byte command protocols.</p>
+<h3><a class="anchor" id="r-ospi-dotf-configuration"></a>
+DOTF Support</h3>
+<p>Decryption-On-The-Fly is configurable for OSPI Flash and is disabled from the build by default. Using the DOTF feature requires first creating the encrypted blob on the PC and then configuring the DOTF module with the appropriate parameters to allow decryption of the blob once it is programmed into OSPI. Use the Security Key Management Tool (<a href="https://www.renesas.com/us/en/software-tool/security-key-management-tool">https://www.renesas.com/us/en/software-tool/security-key-management-tool</a>) to create the encrypted blob. Example: To encrypt a 4096 byte area in a input srec file from 0x90000000 to 0x90000FFF using a 128 AES encryption key "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" and iv "00000000000000000000000000000000" use SKMT with the following arguments: skmt.exe /encdotf /keytype "AES-128" /enckey "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" /nonce "00000000000000000000000000000000" /startaddr "90000000" /endaddr "90000FFF" /prg "input.srec" /incplain /output "encrypted_output.srec"</p>
+<p>The values for key, iv and decryption area start and end addresses that were used to create the blob using SKMT must be set in the DOTF configuration in FSP.</p>
 <h2><a class="anchor" id="r-ospi-b-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the OSPI_B driver: </p>
@@ -1569,7 +1574,7 @@ Dummy cycles to be inserted for status read commands. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

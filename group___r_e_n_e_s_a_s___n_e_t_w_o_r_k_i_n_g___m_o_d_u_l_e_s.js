@@ -19,6 +19,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "GTL BLE Abstraction (rm_ble_abs_gtl)", "group___b_l_e___a_b_s___g_t_l.html", null ],
     [ "NetX Duo Ethernet Driver (rm_netxduo_ether)", "group___r_m___n_e_t_x_d_u_o___e_t_h_e_r.html", null ],
     [ "NetX Duo WiFi Driver (rm_netxduo_wifi)", "group___r_m___n_e_t_x_d_u_o___w_i_f_i.html", null ],
+    [ "On Chip HTTP Client on DA16XXX (rm_http_onchip_da16xxx)", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x" ],
     [ "On Chip MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x" ],
     [ "PTP (r_ptp)", "group___p_t_p.html", "group___p_t_p" ],
     [ "SPP BLE Abstraction (rm_ble_abs_spp)", "group___b_l_e___a_b_s___s_p_p.html", null ],

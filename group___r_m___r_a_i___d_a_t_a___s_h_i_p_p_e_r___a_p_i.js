@@ -2,7 +2,8 @@ var group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i =
 [
     [ "rai_data_shipper_callback_args_t", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__callback__args__t", [
       [ "result", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a499d47827151700c18ab5041f7d3158c", null ],
-      [ "p_context", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a1bcc29a48075e8a5d4c9d8b6d96d24ca", null ]
+      [ "p_context", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a1bcc29a48075e8a5d4c9d8b6d96d24ca", null ],
+      [ "instance", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a984698cef6775208bef233d822cb8e40", null ]
     ] ],
     [ "rai_data_shipper_write_params_t", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#structrai__data__shipper__write__params__t", [
       [ "events", "group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#a661d79fdd89edbcb038af7f89a98bd64", null ],

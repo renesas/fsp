@@ -1,7 +1,8 @@
 var group___e_l_c___a_p_i =
 [
     [ "elc_cfg_t", "group___e_l_c___a_p_i.html#structelc__cfg__t", [
-      [ "link", "group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d", null ]
+      [ "link", "group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d", null ],
+      [ "p_extend", "group___e_l_c___a_p_i.html#a5511ed4623e336768e8f12c1bdc34788", null ]
     ] ],
     [ "elc_api_t", "group___e_l_c___a_p_i.html#structelc__api__t", [
       [ "open", "group___e_l_c___a_p_i.html#ac4f753f3fcae95e036d24e3d6a84d1f5", null ],

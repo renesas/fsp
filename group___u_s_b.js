@@ -23,6 +23,8 @@ var group___u_s_b =
     [ "R_USB_PeriControlDataSet", "group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0", null ],
     [ "R_USB_PeriControlStatusSet", "group___u_s_b.html#gaf8976d11f8be52c3f9422563188d6ab9", null ],
     [ "R_USB_RemoteWakeup", "group___u_s_b.html#ga66ee4c6ec542965dbac67020bd135179", null ],
+    [ "R_USB_DriverActivate", "group___u_s_b.html#ga2f8b7813a97e21b412fc95a80c042fe3", null ],
+    [ "R_USB_CallbackMemorySet", "group___u_s_b.html#gaaedca302f2e3938e2d85e4a82c44d44b", null ],
     [ "R_USB_ModuleNumberGet", "group___u_s_b.html#gad568903d7571f81da82b56d766bac46f", null ],
     [ "R_USB_ClassTypeGet", "group___u_s_b.html#gafe65188a89a926bcc12676c39ff587ea", null ],
     [ "R_USB_DeviceAddressGet", "group___u_s_b.html#ga5115f4b4a93c22485a82d753d5ca30b4", null ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -265,13 +265,17 @@ Overview</h1>
 <li>System events/errors</li>
 <li>Debug data and diagnostic information, including RAI runtime output</li>
 </ul>
-<p>Sensor data is provided by Data Collector instance via the data ready callback. System events and debug data are prepared by application. A callback is used to notify application that UART communcation is finished. Error flag will be set in case there is error during data transmission. When UART communication finishes, sensor data buffers needs to be released if they are not being used by any other modules.</p>
+<p>Sensor data is provided by Data Collector instance via the data ready callback. System events and debug data are prepared by application. A callback is used to notify application that communcation is finished. Sensor data buffers must be released if they are not used. Error flag will be set if there is any error during data transmission.</p>
 <dl class="section note"><dt>Note</dt><dd>Debug data, diagnostic information, and associated events are provided for debug purposes only and are not tracked by upstream Reality AI tools.</dd></dl>
 <h2><a class="anchor" id="rm-rai-data-shipper-features"></a>
 Features</h2>
-<p>The RAI Data Shipper module supports the following interface:</p><ul>
+<ol type="1">
+<li>The RAI Data Shipper module supports up to 8 Data Collector instances.</li>
+<li>The RAI Data Shipper module supports the following interface:<ul>
 <li>RM_COMMS_UART with/without CRC-8</li>
 </ul>
+</li>
+</ol>
 <h1><a class="anchor" id="rm-rai-data-shipper-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_rai_data_shipper</h2>
@@ -289,6 +293,8 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Max Number Of DC Instances</td><td>Value must be a positive integer that less than or equal to 8</td><td>8 </td><td>Max number of DC instances to be sent. </td></tr>
 </table>
  <h2>Configurations for Artificial Intelligence &gt; Data Shipper (rm_rai_data_shipper)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Artificial Intelligence &gt; Data Shipper (rm_rai_data_shipper).<br />
@@ -311,6 +317,12 @@ Clock Configuration</h2>
 <h2><a class="anchor" id="rm-rai-data-shipper-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
+<h2><a class="anchor" id="rm-rai-data-shipper-limitations"></a>
+Limitations</h2>
+<ol type="1">
+<li>2-way communication hasn't been supported yet - data is always sent from device to host.</li>
+<li>Users shall take care to avoid race condition in the case of multiple data collector instances.</li>
+</ol>
 <h1><a class="anchor" id="rm-rai-data-shipper-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -444,7 +456,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write data. Note this funciton may be called in ISR.</p>
+<p>Write data. Note this function may be called in ISR.</p>
 <p>Implements <a class="el" href="group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r___a_p_i.html#ac156dc33bfc54576cc672d786c5ad92e">rai_data_shipper_api_t::write()</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -492,7 +504,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

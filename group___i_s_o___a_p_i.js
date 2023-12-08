@@ -48,7 +48,7 @@ var group___i_s_o___a_p_i =
       [ "vcodec_id", "group___i_s_o___a_p_i.html#acb64af1a63a72e5842f5a6d35a18fcb7", null ],
       [ "delay", "group___i_s_o___a_p_i.html#a162676119985b9acd747fa214e77d682", null ],
       [ "codec_conf_len", "group___i_s_o___a_p_i.html#a2eb7f70c24a822f7870d1190d0bb373a", null ],
-      [ "codec_conf", "group___i_s_o___a_p_i.html#ad255b7f1e625801ae03d722963b1545a", null ]
+      [ "p_codec_conf", "group___i_s_o___a_p_i.html#af151bf589c5ce421bbe3b6a8bade7f7c", null ]
     ] ],
     [ "st_ble_iso_sdu_t", "group___i_s_o___a_p_i.html#structst__ble__iso__sdu__t", [
       [ "conn_hdl", "group___i_s_o___a_p_i.html#a1175d65633e0c886d88edd178438c0f9", null ],
@@ -56,7 +56,7 @@ var group___i_s_o___a_p_i =
       [ "timestamp", "group___i_s_o___a_p_i.html#aa4b495e26dcd76bae2000da8d4b8b7bb", null ],
       [ "seq_num", "group___i_s_o___a_p_i.html#afc06963fcae300e6e0916048460271f3", null ],
       [ "sdu_len", "group___i_s_o___a_p_i.html#a64759d020551c52cde91ab3a776622e3", null ],
-      [ "sdu_data", "group___i_s_o___a_p_i.html#aa527c164ee61eef93072e20ae7ebc3f5", null ]
+      [ "p_sdu_data", "group___i_s_o___a_p_i.html#a16957e646b23f15f4fa9c5afacbf1efa", null ]
     ] ],
     [ "st_ble_iso_bis_qos_t", "group___i_s_o___a_p_i.html#structst__ble__iso__bis__qos__t", [
       [ "nse", "group___i_s_o___a_p_i.html#a1bbfd80bf6ab8abef9958857b5417c76", null ],
@@ -222,34 +222,33 @@ var group___i_s_o___a_p_i =
       [ "BLE_ISO_EVENT_BIG_REMOVE_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17a0a3a8f4ddc8c02b46a14c9a9e8f0e96e", null ],
       [ "BLE_ISO_EVENT_REPLY_CIS_REQ_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17a5b6aa97abc6973353e3c713368d9e48f", null ],
       [ "BLE_ISO_EVENT_GET_TX_SYNC_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17ae831f508c89c3314083b9a1f0a412d4b", null ],
-      [ "BLE_ISO_EVENT_READ_ANT_INFO_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17af57dc64c2705f4de93f7e3ff4df5a8dc", null ],
+      [ "BLE_GAP_EVENT_READ_ANT_INFO_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17af46e05e8fe553a84345b1becc05dbb1c", null ],
       [ "BLE_ISO_EVENT_TX_TEST_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17ac7226b30f05fb1b4dc1001672d70459b", null ],
       [ "BLE_ISO_EVENT_RX_TEST_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17ad6a90c8033acbd02681abc3f8c84daed", null ],
       [ "BLE_ISO_EVENT_READ_TEST_CNT_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17a2f6a507eae6eb9c82309f496fffbab37", null ],
       [ "BLE_ISO_EVENT_TEST_ENDED", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17a28325fba76a3cc7979c0d7ed8e8f4621", null ],
       [ "BLE_ISO_EVENT_READ_LINK_QUALITY_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17a8324b77778f7021c3bc8a8aa3b108dbe", null ],
       [ "BLE_ISO_EVENT_REMOVE_DATAPATH_COMP", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17afb566360070057c3d44b7f4d404f51e6", null ],
-      [ "BLE_ISO_EVENT_PER_ADV_RECV_ON", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17afd07c4e212560f90a05b8c7c14f160ac", null ],
-      [ "BLE_ISO_EVENT_PER_ADV_RECV_OFF", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17a0f8a26125dd867b7c63d9f7c0ea5c0d6", null ]
+      [ "BLE_GAP_EVENT_PER_ADV_RECV_ON", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17aeec058cd40da95827c05b7c389cb8f4b", null ],
+      [ "BLE_GAP_EVENT_PER_ADV_RECV_OFF", "group___i_s_o___a_p_i.html#gga38cfc9b28ef377abe7773a7ad6c0fb17ac3b8298287a7bf0dc68031df94b16010", null ]
     ] ],
-    [ "R_BLE_ISO_CreateBig", "group___i_s_o___a_p_i.html#gab8cf2bc3a1991d9d7268b94099ea0105", null ],
+    [ "R_BLE_ISO_CreateBig", "group___i_s_o___a_p_i.html#gae2a8c254046823db93bd83531c43836c", null ],
     [ "R_BLE_ISO_StopBig", "group___i_s_o___a_p_i.html#ga73d7c5ea0b9f10131b39980a5822ecb9", null ],
-    [ "R_BLE_ISO_CreateBigSync", "group___i_s_o___a_p_i.html#ga02b730be918eaa0fd3d6651b96e260e1", null ],
+    [ "R_BLE_ISO_CreateBigSync", "group___i_s_o___a_p_i.html#ga0bbb8ea379c3681d88756cc9a9d41e44", null ],
     [ "R_BLE_ISO_TerminateBigSync", "group___i_s_o___a_p_i.html#ga7aa47fe71f43b17324f182946d3cf0d4", null ],
-    [ "R_BLE_ISO_SetCigParam", "group___i_s_o___a_p_i.html#gaf6cde0c2cac92e9b4fc8ae19669fbf5f", null ],
+    [ "R_BLE_ISO_SetCigParam", "group___i_s_o___a_p_i.html#ga24bab33bc8a1cba3f0cabb74e0787fad", null ],
     [ "R_BLE_ISO_CreateCis", "group___i_s_o___a_p_i.html#ga1ee201ec2119d29813ca04f95cdfac88", null ],
     [ "R_BLE_ISO_RemoveCig", "group___i_s_o___a_p_i.html#ga61d82bd25230cd7a86b4b955fbe2ccc6", null ],
     [ "R_BLE_ISO_ReplyCisRequest", "group___i_s_o___a_p_i.html#ga973130f925347c24437b30adbb19e871", null ],
     [ "R_BLE_ISO_SetupDataPath", "group___i_s_o___a_p_i.html#gac87e5810149115b63038f63eeb26d1f2", null ],
-    [ "R_BLE_ISO_SendData", "group___i_s_o___a_p_i.html#gaddccdb08102211d8c3a409cde80dddd6", null ],
-    [ "R_BLE_ISO_SendDataNoCopy", "group___i_s_o___a_p_i.html#ga475761a904f78e452d0e454ae427eb04", null ],
-    [ "R_BLE_ISO_CreateBigTest", "group___i_s_o___a_p_i.html#gad63eb1239a19738139d445c4f00bd1b9", null ],
-    [ "R_BLE_ISO_SetCigParamTest", "group___i_s_o___a_p_i.html#ga72b8de51a9c59c3cfa9c0111eac12a14", null ],
+    [ "R_BLE_ISO_SendData", "group___i_s_o___a_p_i.html#ga49e1fde22ef24a11f53ad5229f90f14f", null ],
+    [ "R_BLE_ISO_SendDataNoCopy", "group___i_s_o___a_p_i.html#ga4c08106ebf63879e21072ad97b31d1eb", null ],
+    [ "R_BLE_ISO_CreateBigTest", "group___i_s_o___a_p_i.html#ga58f3190467feb9dea5b4b22dd182a958", null ],
+    [ "R_BLE_ISO_SetCigParamTest", "group___i_s_o___a_p_i.html#ga0bca30a6ce68eb43e0adf0ae491da6b3", null ],
     [ "R_BLE_ISO_TransmitTest", "group___i_s_o___a_p_i.html#ga0c247db41647044e2252015e02e9ec7c", null ],
     [ "R_BLE_ISO_ReceiveTest", "group___i_s_o___a_p_i.html#ga5bc020d69a2bbe5eee6521510c7eaae5", null ],
     [ "R_BLE_ISO_ReadTestCounters", "group___i_s_o___a_p_i.html#gabe02d686f07dd812e482a93fd18628fb", null ],
     [ "R_BLE_ISO_TestEnd", "group___i_s_o___a_p_i.html#ga98108bf64b81a1e4a0e1afa9027ec91e", null ],
     [ "R_BLE_ISO_ReadLinkQuality", "group___i_s_o___a_p_i.html#ga30db32efbae01f58007f3f1ca7760050", null ],
-    [ "R_BLE_ISO_RemoveDataPath", "group___i_s_o___a_p_i.html#ga69c5c878f9bf3eaa75f1103acd460795", null ],
-    [ "R_BLE_ISO_SetPerAdvRecvEnable", "group___i_s_o___a_p_i.html#gae01d6308de24989dceb7465308f8e17a", null ]
+    [ "R_BLE_ISO_RemoveDataPath", "group___i_s_o___a_p_i.html#ga69c5c878f9bf3eaa75f1103acd460795", null ]
 ];

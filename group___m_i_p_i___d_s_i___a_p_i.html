@@ -1,0 +1,1738 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: MIPI DSI Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">MIPI DSI Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for MIPI DSI communications. </p>
+<h1><a class="anchor" id="MIPI_DSI_API_SUMMARY"></a>
+Summary</h1>
+<p>The MIPI DSI interface provides functionality involved with driving display panels over MIPI. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmipi__dsi__cmd__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a></td></tr>
+<tr class="separator:structmipi__dsi__cmd__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionmipi__dsi__ack__err__status__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__ack__err__status__t">mipi_dsi_ack_err_status_t</a></td></tr>
+<tr class="separator:unionmipi__dsi__ack__err__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmipi__dsi__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__status__t">mipi_dsi_status_t</a></td></tr>
+<tr class="separator:structmipi__dsi__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmipi__dsi__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a></td></tr>
+<tr class="separator:structmipi__dsi__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmipi__dsi__timing__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__timing__t">mipi_dsi_timing_t</a></td></tr>
+<tr class="separator:structmipi__dsi__timing__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmipi__dsi__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cfg__t">mipi_dsi_cfg_t</a></td></tr>
+<tr class="separator:structmipi__dsi__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmipi__dsi__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__api__t">mipi_dsi_api_t</a></td></tr>
+<tr class="separator:structmipi__dsi__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmipi__dsi__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__instance__t">mipi_dsi_instance_t</a></td></tr>
+<tr class="separator:structmipi__dsi__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga00e2dbf62836d3baa956ee7470838eeb"><td class="memItemLeft" align="right" valign="top">typedef __PACKED_STRUCT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga00e2dbf62836d3baa956ee7470838eeb">st_mipi_dsi_result</a></td></tr>
+<tr class="memdesc:ga00e2dbf62836d3baa956ee7470838eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data of received packet header.  <a href="#ga00e2dbf62836d3baa956ee7470838eeb">More...</a><br /></td></tr>
+<tr class="separator:ga00e2dbf62836d3baa956ee7470838eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b34613802c7994c2674c18a77a1d1b6"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a></td></tr>
+<tr class="separator:ga5b34613802c7994c2674c18a77a1d1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga0c9af0d3591f144aca9637850d11b09e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e">mipi_dsi_cmd_id_t</a> </td></tr>
+<tr class="separator:ga0c9af0d3591f144aca9637850d11b09e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2247389c8044ea584fc41c88f0bdc78"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac2247389c8044ea584fc41c88f0bdc78">mipi_dsi_dcs_id_t</a> </td></tr>
+<tr class="separator:gac2247389c8044ea584fc41c88f0bdc78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f08ee0aaead0040917442f9a6896591"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga1f08ee0aaead0040917442f9a6896591">mipi_dsi_video_data_t</a> </td></tr>
+<tr class="separator:ga1f08ee0aaead0040917442f9a6896591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f107e89f3b165bc57a5b7a575d4db63"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga1f107e89f3b165bc57a5b7a575d4db63">mipi_dsi_ack_err_t</a> </td></tr>
+<tr class="separator:ga1f107e89f3b165bc57a5b7a575d4db63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89791dbddfc382eb15352fd3e151236f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga89791dbddfc382eb15352fd3e151236f">mipi_dsi_vc_t</a> </td></tr>
+<tr class="separator:ga89791dbddfc382eb15352fd3e151236f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc3bdd29eb397d22d89b1fe84a307bb0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gadc3bdd29eb397d22d89b1fe84a307bb0">mipi_dsi_cmd_flag_t</a> </td></tr>
+<tr class="separator:gadc3bdd29eb397d22d89b1fe84a307bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47d5a52762575f9e8f3ae6404c9d5ab1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga47d5a52762575f9e8f3ae6404c9d5ab1">mipi_dsi_event_t</a> </td></tr>
+<tr class="separator:ga47d5a52762575f9e8f3ae6404c9d5ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2668d830371ded94dc6c3afb92b1a3df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga2668d830371ded94dc6c3afb92b1a3df">mipi_dsi_sequence_status_t</a> </td></tr>
+<tr class="separator:ga2668d830371ded94dc6c3afb92b1a3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga064bab1d47c5b836b2a34f4c8272045f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga064bab1d47c5b836b2a34f4c8272045f">mipi_dsi_video_status_t</a> </td></tr>
+<tr class="separator:ga064bab1d47c5b836b2a34f4c8272045f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d9384adceec0c5ef13c80e3dfba24d6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga9d9384adceec0c5ef13c80e3dfba24d6">mipi_dsi_receive_status_t</a> </td></tr>
+<tr class="separator:ga9d9384adceec0c5ef13c80e3dfba24d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f5f9b4400be314e299bf6c792928897"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga2f5f9b4400be314e299bf6c792928897">mipi_dsi_fatal_status_t</a> </td></tr>
+<tr class="separator:ga2f5f9b4400be314e299bf6c792928897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97932a5bc0902ec9468dc8a6971d7280"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga97932a5bc0902ec9468dc8a6971d7280">mipi_dsi_phy_status_t</a> </td></tr>
+<tr class="separator:ga97932a5bc0902ec9468dc8a6971d7280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga677d8c3fd76f743ec4d5d36d02695885"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga677d8c3fd76f743ec4d5d36d02695885">mipi_dsi_link_status_t</a> </td></tr>
+<tr class="separator:ga677d8c3fd76f743ec4d5d36d02695885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac64221aa26233766a89b534fdd596703"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a> </td></tr>
+<tr class="separator:gac64221aa26233766a89b534fdd596703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga9ba043d4f48bfd247a032b674aeff3a5"><td class="memItemLeft" align="right" valign="top"><a id="ga9ba043d4f48bfd247a032b674aeff3a5"></a>
+<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e">mipi_dsi_cmd_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga9ba043d4f48bfd247a032b674aeff3a5">cmd_id</a></td></tr>
+<tr class="memdesc:ga9ba043d4f48bfd247a032b674aeff3a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type. <br /></td></tr>
+<tr class="separator:ga9ba043d4f48bfd247a032b674aeff3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fd53b70f4fe46fc044141ea0914fad7"><td class="memItemLeft" align="right" valign="top"><a id="ga6fd53b70f4fe46fc044141ea0914fad7"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga6fd53b70f4fe46fc044141ea0914fad7">virtual_channel_id</a></td></tr>
+<tr class="memdesc:ga6fd53b70f4fe46fc044141ea0914fad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual channel ID. <br /></td></tr>
+<tr class="separator:ga6fd53b70f4fe46fc044141ea0914fad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc772ab15154feaf4078c52ed6e669c8"><td class="memItemLeft" align="right" valign="top"><a id="gabc772ab15154feaf4078c52ed6e669c8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gabc772ab15154feaf4078c52ed6e669c8">long_packet</a></td></tr>
+<tr class="memdesc:gabc772ab15154feaf4078c52ed6e669c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort packet (0) or Long packet (1) <br /></td></tr>
+<tr class="separator:gabc772ab15154feaf4078c52ed6e669c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf04c5791f1f0caa423ac01df8adbde93"><td class="memItemLeft" align="right" valign="top"><a id="gaf04c5791f1f0caa423ac01df8adbde93"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gaf04c5791f1f0caa423ac01df8adbde93">rx_success</a></td></tr>
+<tr class="memdesc:gaf04c5791f1f0caa423ac01df8adbde93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Response packet or ack trigger received. <br /></td></tr>
+<tr class="separator:gaf04c5791f1f0caa423ac01df8adbde93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabaf366c6d73ec33baf041915b61b231f"><td class="memItemLeft" align="right" valign="top"><a id="gabaf366c6d73ec33baf041915b61b231f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gabaf366c6d73ec33baf041915b61b231f">timeout</a></td></tr>
+<tr class="memdesc:gabaf366c6d73ec33baf041915b61b231f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fatal timeout error. <br /></td></tr>
+<tr class="separator:gabaf366c6d73ec33baf041915b61b231f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad97e605066af146f293f8be239bec5b3"><td class="memItemLeft" align="right" valign="top"><a id="gad97e605066af146f293f8be239bec5b3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gad97e605066af146f293f8be239bec5b3">rx_fail</a></td></tr>
+<tr class="memdesc:gad97e605066af146f293f8be239bec5b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expected receive not done. <br /></td></tr>
+<tr class="separator:gad97e605066af146f293f8be239bec5b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa478cbbc6212f02bef42daf00ba9fef7"><td class="memItemLeft" align="right" valign="top"><a id="gaa478cbbc6212f02bef42daf00ba9fef7"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gaa478cbbc6212f02bef42daf00ba9fef7">rx_data_fail</a></td></tr>
+<tr class="memdesc:gaa478cbbc6212f02bef42daf00ba9fef7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive packet data fail. <br /></td></tr>
+<tr class="separator:gaa478cbbc6212f02bef42daf00ba9fef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac40dace99f2694abb3c65965bf1cf077"><td class="memItemLeft" align="right" valign="top"><a id="gac40dace99f2694abb3c65965bf1cf077"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac40dace99f2694abb3c65965bf1cf077">rx_correctable_error</a></td></tr>
+<tr class="memdesc:gac40dace99f2694abb3c65965bf1cf077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correctable error detected. <br /></td></tr>
+<tr class="separator:gac40dace99f2694abb3c65965bf1cf077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1352392f8ca01f5856d60d741e412194"><td class="memItemLeft" align="right" valign="top"><a id="ga1352392f8ca01f5856d60d741e412194"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga1352392f8ca01f5856d60d741e412194">rx_ack_err</a></td></tr>
+<tr class="memdesc:ga1352392f8ca01f5856d60d741e412194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx acknowledge and error report packet received. <br /></td></tr>
+<tr class="separator:ga1352392f8ca01f5856d60d741e412194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9cea5f9abece2b77b36f5746b13680f1"><td class="memItemLeft" align="right" valign="top"><a id="ga9cea5f9abece2b77b36f5746b13680f1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga9cea5f9abece2b77b36f5746b13680f1">info_overwrite</a></td></tr>
+<tr class="memdesc:ga9cea5f9abece2b77b36f5746b13680f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This information was overwritten. <br /></td></tr>
+<tr class="separator:ga9cea5f9abece2b77b36f5746b13680f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmipi__dsi__cmd__t" id="structmipi__dsi__cmd__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__cmd__t">&#9670;&nbsp;</a></span>mipi_dsi_cmd_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_cmd_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MIPI DSI Command </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae77cb8b13b73b076ae22b9cfbae513cf"></a>uint8_t</td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Virtual Channel ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="a251039fd2491f883d6f631fb5df54c77"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e">mipi_dsi_cmd_id_t</a></td>
+<td class="fieldname">
+cmd_id</td>
+<td class="fielddoc">
+Message ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="a62202cbf3d27914c5532a9c7315c4e5a"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gadc3bdd29eb397d22d89b1fe84a307bb0">mipi_dsi_cmd_flag_t</a></td>
+<td class="fieldname">
+flags</td>
+<td class="fielddoc">
+Flags controlling this message transition. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa9b332d365238037e89c86518985dc31"></a>uint16_t</td>
+<td class="fieldname">
+tx_len</td>
+<td class="fielddoc">
+Transmit buffer size. </td></tr>
+<tr><td class="fieldtype">
+<a id="adda44a2844356e0fd86fab47be1e7ab8"></a>const uint8_t *</td>
+<td class="fieldname">
+p_tx_buffer</td>
+<td class="fielddoc">
+Transmit buffer pointer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a96239e549f4bdd4213bdae274e6ae233"></a>const uint8_t *</td>
+<td class="fieldname">
+p_rx_buffer</td>
+<td class="fielddoc">
+Receive buffer pointer. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="unionmipi__dsi__ack__err__status__t" id="unionmipi__dsi__ack__err__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#unionmipi__dsi__ack__err__status__t">&#9670;&nbsp;</a></span>mipi_dsi_ack_err_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union mipi_dsi_ack_err_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MIPI DSI Acknowledge and Error status type </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3b3297252a8d6428cb2103c1482bd985"></a></td>
+<td class="fieldname">
+__PACKED_STRUCT</td>
+<td class="fielddoc">
+Error report bits. </td></tr>
+<tr><td class="fieldtype">
+<a id="a78a39926a9d7b6d6d6a6a5656f155f04"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga89791dbddfc382eb15352fd3e151236f">mipi_dsi_vc_t</a></td>
+<td class="fieldname">
+virtual_channel: 4</td>
+<td class="fielddoc">
+Virtual Channel ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3b3588cbfc4b4cbabfd2db8e081f8219"></a>uint32_t</td>
+<td class="fieldname">
+__pad0__: 12</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="afd7508362d9929e74af09abdb65c7b48"></a>uint32_t</td>
+<td class="fieldname">
+bits</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmipi__dsi__status__t" id="structmipi__dsi__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__status__t">&#9670;&nbsp;</a></span>mipi_dsi_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MIPI DSI status type </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af0d642a577f506a6c0a260c1077743c4"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga677d8c3fd76f743ec4d5d36d02695885">mipi_dsi_link_status_t</a></td>
+<td class="fieldname">
+link_status</td>
+<td class="fielddoc">
+Link status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6748ed804e7353995e4692814514c443"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__ack__err__status__t">mipi_dsi_ack_err_status_t</a></td>
+<td class="fieldname">
+ack_err_latest</td>
+<td class="fielddoc">
+Latest Acknowledge and Error Report Packet Latest Info. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6f3b9504cffd427fa36167032c3cf6d2"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__ack__err__status__t">mipi_dsi_ack_err_status_t</a></td>
+<td class="fieldname">
+ack_err_accumulated</td>
+<td class="fielddoc">
+Accumulated Acknowledge and Error Report Packet Latest Info. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmipi__dsi__callback__args__t" id="structmipi__dsi__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__callback__args__t">&#9670;&nbsp;</a></span>mipi_dsi_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MIPI DSI callback parameter definition </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acd4f908e602a78ff747cc0bed9f05763"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga47d5a52762575f9e8f3ae6404c9d5ab1">mipi_dsi_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event code. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3b23da40c8fe7871b1f44350312b6fd1"></a>union <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__callback__args__t_8____unnamed____">mipi_dsi_callback_args_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a92d378242562304b84f9425afd361441"></a>mipi_dsi_receive_result_t *</td>
+<td class="fieldname">
+p_result</td>
+<td class="fielddoc">
+Receive result pointer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9536c5b3a3ab8c474158edf58c6ab6dd"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Context provided to user during callback. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmipi__dsi__timing__t" id="structmipi__dsi__timing__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__timing__t">&#9670;&nbsp;</a></span>mipi_dsi_timing_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_timing_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MIPI DSI transition timing </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0f10375ecbb69fbe7451c56262d67b8f"></a>uint32_t</td>
+<td class="fieldname">
+clock_stop_time</td>
+<td class="fielddoc">
+Clock stop time. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab14452fa0e4c4eaf71d04d16de162361"></a>uint32_t</td>
+<td class="fieldname">
+clock_beforehand_time</td>
+<td class="fielddoc">
+Clock beforehand time. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac84e2c6a912c08e27fba5acf94778511"></a>uint32_t</td>
+<td class="fieldname">
+clock_keep_time</td>
+<td class="fielddoc">
+Clock Keep time. </td></tr>
+<tr><td class="fieldtype">
+<a id="abe39a9db55cd2a893f06aaa97b47cdba"></a>uint32_t</td>
+<td class="fieldname">
+go_lp_and_back</td>
+<td class="fielddoc">
+Go LP and Back time. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmipi__dsi__cfg__t" id="structmipi__dsi__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__cfg__t">&#9670;&nbsp;</a></span>mipi_dsi_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MIPI DSI main configuration structure </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a6b5ee97aab2dfb664914903c051e7f38"><td class="memItemLeft" align="right" valign="top"><a id="a6b5ee97aab2dfb664914903c051e7f38"></a>
+<a class="el" href="group___m_i_p_i___p_h_y.html#structmipi__phy__instance__t">mipi_phy_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a6b5ee97aab2dfb664914903c051e7f38">p_mipi_phy_instance</a></td></tr>
+<tr class="memdesc:a6b5ee97aab2dfb664914903c051e7f38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to mipi physical layer instance. <br /></td></tr>
+<tr class="separator:a6b5ee97aab2dfb664914903c051e7f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfd012760fc55e3abb6af73f3e5e9be6"><td class="memItemLeft" align="right" valign="top"><a id="adfd012760fc55e3abb6af73f3e5e9be6"></a>
+<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__timing__t">mipi_dsi_timing_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#adfd012760fc55e3abb6af73f3e5e9be6">p_timing</a></td></tr>
+<tr class="memdesc:adfd012760fc55e3abb6af73f3e5e9be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to MIPI DSI timing configuration. <br /></td></tr>
+<tr class="separator:adfd012760fc55e3abb6af73f3e5e9be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36ad0dab9064e041027e1dd43498b220"><td class="memItemLeft" align="right" valign="top"><a id="a36ad0dab9064e041027e1dd43498b220"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a36ad0dab9064e041027e1dd43498b220">hsa_no_lp</a></td></tr>
+<tr class="memdesc:a36ad0dab9064e041027e1dd43498b220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suppress the transition to LP during HSA period and keep HS. <br /></td></tr>
+<tr class="separator:a36ad0dab9064e041027e1dd43498b220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c584a3b6e23cc9b63591cd4ac6ea31d"><td class="memItemLeft" align="right" valign="top"><a id="a9c584a3b6e23cc9b63591cd4ac6ea31d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a9c584a3b6e23cc9b63591cd4ac6ea31d">hbp_no_lp</a></td></tr>
+<tr class="memdesc:a9c584a3b6e23cc9b63591cd4ac6ea31d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suppress the transition to LP during HBP period and keep HS. <br /></td></tr>
+<tr class="separator:a9c584a3b6e23cc9b63591cd4ac6ea31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2a380b802c631686eb752fadaa5e8d0"><td class="memItemLeft" align="right" valign="top"><a id="ad2a380b802c631686eb752fadaa5e8d0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ad2a380b802c631686eb752fadaa5e8d0">hfp_no_lp</a></td></tr>
+<tr class="memdesc:ad2a380b802c631686eb752fadaa5e8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suppress the transition to LP during HFP period and keep HS. <br /></td></tr>
+<tr class="separator:ad2a380b802c631686eb752fadaa5e8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaebdfd4125426d26b3191dda6d3171d5"><td class="memItemLeft" align="right" valign="top"><a id="aaebdfd4125426d26b3191dda6d3171d5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#aaebdfd4125426d26b3191dda6d3171d5">num_lanes</a></td></tr>
+<tr class="memdesc:aaebdfd4125426d26b3191dda6d3171d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of MIPI lanes to use. <br /></td></tr>
+<tr class="separator:aaebdfd4125426d26b3191dda6d3171d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05d0d2b5fc8ea533c206b9f5d4d8e44d"><td class="memItemLeft" align="right" valign="top"><a id="a05d0d2b5fc8ea533c206b9f5d4d8e44d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a05d0d2b5fc8ea533c206b9f5d4d8e44d">ulps_wakeup_period</a></td></tr>
+<tr class="memdesc:a05d0d2b5fc8ea533c206b9f5d4d8e44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ULPS wakeup period. <br /></td></tr>
+<tr class="separator:a05d0d2b5fc8ea533c206b9f5d4d8e44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a050214b16c2523ace11be2d19d85c132"><td class="memItemLeft" align="right" valign="top"><a id="a050214b16c2523ace11be2d19d85c132"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a050214b16c2523ace11be2d19d85c132">continuous_clock</a></td></tr>
+<tr class="memdesc:a050214b16c2523ace11be2d19d85c132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Always run HS clock on/off. <br /></td></tr>
+<tr class="separator:a050214b16c2523ace11be2d19d85c132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058f850fec162a0caa6641292214554e"><td class="memItemLeft" align="right" valign="top"><a id="a058f850fec162a0caa6641292214554e"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a058f850fec162a0caa6641292214554e">hs_tx_timeout</a></td></tr>
+<tr class="memdesc:a058f850fec162a0caa6641292214554e"><td class="mdescLeft">&#160;</td><td class="mdescRight">HS-Tx Timeout value. <br /></td></tr>
+<tr class="separator:a058f850fec162a0caa6641292214554e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39ce95ef11ea6b15859781c5cfe369dc"><td class="memItemLeft" align="right" valign="top"><a id="a39ce95ef11ea6b15859781c5cfe369dc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a39ce95ef11ea6b15859781c5cfe369dc">lp_rx_timeout</a></td></tr>
+<tr class="memdesc:a39ce95ef11ea6b15859781c5cfe369dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">LP-Rx host processor timeout. <br /></td></tr>
+<tr class="separator:a39ce95ef11ea6b15859781c5cfe369dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f1914c81f6889acd77df92317d54f2a"><td class="memItemLeft" align="right" valign="top"><a id="a2f1914c81f6889acd77df92317d54f2a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a2f1914c81f6889acd77df92317d54f2a">turnaround_timeout</a></td></tr>
+<tr class="memdesc:a2f1914c81f6889acd77df92317d54f2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turnaround Acknowledge Timeout. <br /></td></tr>
+<tr class="separator:a2f1914c81f6889acd77df92317d54f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84a88d6149d8f31611b267241e1c66aa"><td class="memItemLeft" align="right" valign="top"><a id="a84a88d6149d8f31611b267241e1c66aa"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a84a88d6149d8f31611b267241e1c66aa">bta_timeout</a></td></tr>
+<tr class="memdesc:a84a88d6149d8f31611b267241e1c66aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peripheral Response Timeout. <br /></td></tr>
+<tr class="separator:a84a88d6149d8f31611b267241e1c66aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d6bac20b3e7a62d6119890383532b25"><td class="memItemLeft" align="right" valign="top"><a id="a7d6bac20b3e7a62d6119890383532b25"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a7d6bac20b3e7a62d6119890383532b25">lprw_timeout</a></td></tr>
+<tr class="memdesc:a7d6bac20b3e7a62d6119890383532b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">LP Read and Write Timeouts. <br /></td></tr>
+<tr class="separator:a7d6bac20b3e7a62d6119890383532b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a791e020ad8f5c3cb63050e75ddbf8dcd"><td class="memItemLeft" align="right" valign="top"><a id="a791e020ad8f5c3cb63050e75ddbf8dcd"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a791e020ad8f5c3cb63050e75ddbf8dcd">hsrw_timeout</a></td></tr>
+<tr class="memdesc:a791e020ad8f5c3cb63050e75ddbf8dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">HS Read and Write Timeouts. <br /></td></tr>
+<tr class="separator:a791e020ad8f5c3cb63050e75ddbf8dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a421a758c4a7933b4b1bbef01e5f01dd4"><td class="memItemLeft" align="right" valign="top"><a id="a421a758c4a7933b4b1bbef01e5f01dd4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a421a758c4a7933b4b1bbef01e5f01dd4">max_return_packet_size</a></td></tr>
+<tr class="memdesc:a421a758c4a7933b4b1bbef01e5f01dd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum return packet size. <br /></td></tr>
+<tr class="separator:a421a758c4a7933b4b1bbef01e5f01dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab53488912e86beb19bf93204af1d9e3c"><td class="memItemLeft" align="right" valign="top"><a id="ab53488912e86beb19bf93204af1d9e3c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ab53488912e86beb19bf93204af1d9e3c">ecc_enable</a></td></tr>
+<tr class="memdesc:ab53488912e86beb19bf93204af1d9e3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECC Check enable. <br /></td></tr>
+<tr class="separator:ab53488912e86beb19bf93204af1d9e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0473fa7a8ac220ce6e0a98f10b170e3"><td class="memItemLeft" align="right" valign="top"><a id="aa0473fa7a8ac220ce6e0a98f10b170e3"></a>
+<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga89791dbddfc382eb15352fd3e151236f">mipi_dsi_vc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#aa0473fa7a8ac220ce6e0a98f10b170e3">crc_check_mask</a></td></tr>
+<tr class="memdesc:aa0473fa7a8ac220ce6e0a98f10b170e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual channel CRC check enable. <br /></td></tr>
+<tr class="separator:aa0473fa7a8ac220ce6e0a98f10b170e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a91f076b56d003f359fd522dc88831a"><td class="memItemLeft" align="right" valign="top"><a id="a2a91f076b56d003f359fd522dc88831a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a2a91f076b56d003f359fd522dc88831a">scramble_enable</a></td></tr>
+<tr class="memdesc:a2a91f076b56d003f359fd522dc88831a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scramble on/off. <br /></td></tr>
+<tr class="separator:a2a91f076b56d003f359fd522dc88831a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0f6d967e4fe69a765bc72303c260c84"><td class="memItemLeft" align="right" valign="top"><a id="ae0f6d967e4fe69a765bc72303c260c84"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ae0f6d967e4fe69a765bc72303c260c84">tearing_detect</a></td></tr>
+<tr class="memdesc:ae0f6d967e4fe69a765bc72303c260c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">External tearing effect detection mode (0:rising, 1:falling edge) <br /></td></tr>
+<tr class="separator:ae0f6d967e4fe69a765bc72303c260c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03b10f34291031a94c26f256be210171"><td class="memItemLeft" align="right" valign="top"><a id="a03b10f34291031a94c26f256be210171"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a03b10f34291031a94c26f256be210171">eotp_enable</a></td></tr>
+<tr class="memdesc:a03b10f34291031a94c26f256be210171"><td class="mdescLeft">&#160;</td><td class="mdescRight">End of Transmit Packet (EoTP) on/off. <br /></td></tr>
+<tr class="separator:a03b10f34291031a94c26f256be210171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaebfab48b01079d7d2e73d561407817a"><td class="memItemLeft" align="right" valign="top"><a id="aaebfab48b01079d7d2e73d561407817a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#aaebfab48b01079d7d2e73d561407817a">sync_pulse</a></td></tr>
+<tr class="memdesc:aaebfab48b01079d7d2e73d561407817a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable for Non-Burst Mode with Sync Pulse sequence. <br /></td></tr>
+<tr class="separator:aaebfab48b01079d7d2e73d561407817a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ad49c03fa37a6bd758b327a27af6752"><td class="memItemLeft" align="right" valign="top"><a id="a1ad49c03fa37a6bd758b327a27af6752"></a>
+<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga1f08ee0aaead0040917442f9a6896591">mipi_dsi_video_data_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a1ad49c03fa37a6bd758b327a27af6752">data_type</a></td></tr>
+<tr class="memdesc:a1ad49c03fa37a6bd758b327a27af6752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Video mode data type: 16-bit RGB, 18-bit RGB, 24-bit RGB. <br /></td></tr>
+<tr class="separator:a1ad49c03fa37a6bd758b327a27af6752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5791f4836cdfd71fc3c3bccde3190d4"><td class="memItemLeft" align="right" valign="top"><a id="ab5791f4836cdfd71fc3c3bccde3190d4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ab5791f4836cdfd71fc3c3bccde3190d4">virtual_channel_id</a></td></tr>
+<tr class="memdesc:ab5791f4836cdfd71fc3c3bccde3190d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Video mode virtual channel to use (from 0x0 to 0x3) <br /></td></tr>
+<tr class="separator:ab5791f4836cdfd71fc3c3bccde3190d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b3766203f9e8944be3fb7eacb4ed9d2"><td class="memItemLeft" align="right" valign="top"><a id="a3b3766203f9e8944be3fb7eacb4ed9d2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a3b3766203f9e8944be3fb7eacb4ed9d2">vertical_sync_lines</a></td></tr>
+<tr class="memdesc:a3b3766203f9e8944be3fb7eacb4ed9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of vertical sync active lines. <br /></td></tr>
+<tr class="separator:a3b3766203f9e8944be3fb7eacb4ed9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6499af6307a80f41d529e6039a93719b"><td class="memItemLeft" align="right" valign="top"><a id="a6499af6307a80f41d529e6039a93719b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a6499af6307a80f41d529e6039a93719b">vertical_sync_polarity</a></td></tr>
+<tr class="memdesc:a6499af6307a80f41d529e6039a93719b"><td class="mdescLeft">&#160;</td><td class="mdescRight">V-Sync Polarity. <br /></td></tr>
+<tr class="separator:a6499af6307a80f41d529e6039a93719b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4e9118eb351ea44504f982d0d813073"><td class="memItemLeft" align="right" valign="top"><a id="ae4e9118eb351ea44504f982d0d813073"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ae4e9118eb351ea44504f982d0d813073">vertical_active_lines</a></td></tr>
+<tr class="memdesc:ae4e9118eb351ea44504f982d0d813073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of vertical active lines. <br /></td></tr>
+<tr class="separator:ae4e9118eb351ea44504f982d0d813073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea21d8d97bf4048d60149f7a58574ee2"><td class="memItemLeft" align="right" valign="top"><a id="aea21d8d97bf4048d60149f7a58574ee2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#aea21d8d97bf4048d60149f7a58574ee2">vertical_back_porch</a></td></tr>
+<tr class="memdesc:aea21d8d97bf4048d60149f7a58574ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertical back porch. <br /></td></tr>
+<tr class="separator:aea21d8d97bf4048d60149f7a58574ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e3819fd88978529d5cee3a7a4e0f1a1"><td class="memItemLeft" align="right" valign="top"><a id="a2e3819fd88978529d5cee3a7a4e0f1a1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a2e3819fd88978529d5cee3a7a4e0f1a1">vertical_front_porch</a></td></tr>
+<tr class="memdesc:a2e3819fd88978529d5cee3a7a4e0f1a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertical front porch. <br /></td></tr>
+<tr class="separator:a2e3819fd88978529d5cee3a7a4e0f1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67ce219cd21657f0bc57ee316cf18684"><td class="memItemLeft" align="right" valign="top"><a id="a67ce219cd21657f0bc57ee316cf18684"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a67ce219cd21657f0bc57ee316cf18684">horizontal_sync_lines</a></td></tr>
+<tr class="memdesc:a67ce219cd21657f0bc57ee316cf18684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of horizontal sync active lines. <br /></td></tr>
+<tr class="separator:a67ce219cd21657f0bc57ee316cf18684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af01c60368fa0eaff96068cb40f52b07c"><td class="memItemLeft" align="right" valign="top"><a id="af01c60368fa0eaff96068cb40f52b07c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#af01c60368fa0eaff96068cb40f52b07c">horizontal_sync_polarity</a></td></tr>
+<tr class="memdesc:af01c60368fa0eaff96068cb40f52b07c"><td class="mdescLeft">&#160;</td><td class="mdescRight">H-Sync Polarity. <br /></td></tr>
+<tr class="separator:af01c60368fa0eaff96068cb40f52b07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afee1b027fb38e4b510b64548cf660300"><td class="memItemLeft" align="right" valign="top"><a id="afee1b027fb38e4b510b64548cf660300"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#afee1b027fb38e4b510b64548cf660300">horizontal_active_lines</a></td></tr>
+<tr class="memdesc:afee1b027fb38e4b510b64548cf660300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of horizontal active lines. <br /></td></tr>
+<tr class="separator:afee1b027fb38e4b510b64548cf660300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb0438da02343625c8c953e837b89a79"><td class="memItemLeft" align="right" valign="top"><a id="aeb0438da02343625c8c953e837b89a79"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#aeb0438da02343625c8c953e837b89a79">horizontal_back_porch</a></td></tr>
+<tr class="memdesc:aeb0438da02343625c8c953e837b89a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal back porch. <br /></td></tr>
+<tr class="separator:aeb0438da02343625c8c953e837b89a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cefbfd4e59f7393fcf32d80180ded02"><td class="memItemLeft" align="right" valign="top"><a id="a7cefbfd4e59f7393fcf32d80180ded02"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a7cefbfd4e59f7393fcf32d80180ded02">horizontal_front_porch</a></td></tr>
+<tr class="memdesc:a7cefbfd4e59f7393fcf32d80180ded02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal front porch. <br /></td></tr>
+<tr class="separator:a7cefbfd4e59f7393fcf32d80180ded02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96007efbaaa0a0ba47a1cb100d33eb01"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a96007efbaaa0a0ba47a1cb100d33eb01">p_callback</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a96007efbaaa0a0ba47a1cb100d33eb01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function.  <a href="#a96007efbaaa0a0ba47a1cb100d33eb01">More...</a><br /></td></tr>
+<tr class="separator:a96007efbaaa0a0ba47a1cb100d33eb01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fd6675144041cfe111bff2459cc8e97"><td class="memItemLeft" align="right" valign="top"><a id="a6fd6675144041cfe111bff2459cc8e97"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a6fd6675144041cfe111bff2459cc8e97">p_context</a></td></tr>
+<tr class="memdesc:a6fd6675144041cfe111bff2459cc8e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
+<tr class="separator:a6fd6675144041cfe111bff2459cc8e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c726681ef760d838f7b6b38b971082f"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a0c726681ef760d838f7b6b38b971082f">p_extend</a></td></tr>
+<tr class="memdesc:a0c726681ef760d838f7b6b38b971082f"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI hardware dependent configuration.  <a href="#a0c726681ef760d838f7b6b38b971082f">More...</a><br /></td></tr>
+<tr class="separator:a0c726681ef760d838f7b6b38b971082f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a96007efbaaa0a0ba47a1cb100d33eb01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96007efbaaa0a0ba47a1cb100d33eb01">&#9670;&nbsp;</a></span>p_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(*  mipi_dsi_cfg_t::p_callback) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> *p_args)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pointer to callback function. </p>
+<p>Callback configuration </p>
+
+</div>
+</div>
+<a id="a0c726681ef760d838f7b6b38b971082f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c726681ef760d838f7b6b38b971082f">&#9670;&nbsp;</a></span>p_extend</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void const* mipi_dsi_cfg_t::p_extend</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>MIPI hardware dependent configuration. </p>
+<p>Pointer to display peripheral specific configuration </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structmipi__dsi__api__t" id="structmipi__dsi__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__api__t">&#9670;&nbsp;</a></span>mipi_dsi_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Shared Interface definition for MIPI DSI peripheral </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad7a0f8351cafb476f49f37ac758ac145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ad7a0f8351cafb476f49f37ac758ac145">open</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cfg__t">mipi_dsi_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ad7a0f8351cafb476f49f37ac758ac145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2987d30852a73b31453fda74579b35e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#af2987d30852a73b31453fda74579b35e">close</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:af2987d30852a73b31453fda74579b35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e965aae80a389b11faf47d4aa80c7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a64e965aae80a389b11faf47d4aa80c7f">start</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a64e965aae80a389b11faf47d4aa80c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae99723d9a6bbe3114aa1651b2e39c571"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ae99723d9a6bbe3114aa1651b2e39c571">stop</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ae99723d9a6bbe3114aa1651b2e39c571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2046a82f236d2c6ae809b8cb2dfae40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ad2046a82f236d2c6ae809b8cb2dfae40">ulpsEnter</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a> lane)</td></tr>
+<tr class="separator:ad2046a82f236d2c6ae809b8cb2dfae40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca931b01b8d3b7bca2b21f3cea7cc6a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#aca931b01b8d3b7bca2b21f3cea7cc6a2">ulpsExit</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a> lane)</td></tr>
+<tr class="separator:aca931b01b8d3b7bca2b21f3cea7cc6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43a2dc2425a68e5456d9aae69cbaa4f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a43a2dc2425a68e5456d9aae69cbaa4f6">command</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a> *p_cmd)</td></tr>
+<tr class="separator:a43a2dc2425a68e5456d9aae69cbaa4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0bec7732237f0614a2181e193981d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ade0bec7732237f0614a2181e193981d8">statusGet</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__status__t">mipi_dsi_status_t</a> *p_status)</td></tr>
+<tr class="separator:ade0bec7732237f0614a2181e193981d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="ad7a0f8351cafb476f49f37ac758ac145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7a0f8351cafb476f49f37ac758ac145">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::open) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cfg__t">mipi_dsi_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open MIPI DSI device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. Must be declared by user. Value set here. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to MIPI DSI configuration structure. All elements of this structure must be set by user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af2987d30852a73b31453fda74579b35e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2987d30852a73b31453fda74579b35e">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::close) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close MIPI DSI device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a64e965aae80a389b11faf47d4aa80c7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e965aae80a389b11faf47d4aa80c7f">&#9670;&nbsp;</a></span>start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::start) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start pixel data output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae99723d9a6bbe3114aa1651b2e39c571"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae99723d9a6bbe3114aa1651b2e39c571">&#9670;&nbsp;</a></span>stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::stop) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop pixel data output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad2046a82f236d2c6ae809b8cb2dfae40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2046a82f236d2c6ae809b8cb2dfae40">&#9670;&nbsp;</a></span>ulpsEnter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::ulpsEnter) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a> lane)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enter Ultra-low Power State (ULPS).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>Physical lane(s) to transition into ULPS </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aca931b01b8d3b7bca2b21f3cea7cc6a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca931b01b8d3b7bca2b21f3cea7cc6a2">&#9670;&nbsp;</a></span>ulpsExit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::ulpsExit) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a> lane)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exit Ultra-low Power State (ULPS).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>Physical lane(s) to transition from ULPS </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a43a2dc2425a68e5456d9aae69cbaa4f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43a2dc2425a68e5456d9aae69cbaa4f6">&#9670;&nbsp;</a></span>command</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::command) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a> *p_cmd)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send a command to the display.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cmd</td><td>Pointer to a command structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ade0bec7732237f0614a2181e193981d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade0bec7732237f0614a2181e193981d8">&#9670;&nbsp;</a></span>statusGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  mipi_dsi_api_t::statusGet) (<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__status__t">mipi_dsi_status_t</a> *p_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get status of MIPI link.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MIPI DSI interface control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_status</td><td>Pointer to MIPI DSI interface status structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structmipi__dsi__instance__t" id="structmipi__dsi__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmipi__dsi__instance__t">&#9670;&nbsp;</a></span>mipi_dsi_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mipi_dsi_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0c06c87f51f5cbf2d7c0753e60403883"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="af979c552695d64551c9efd1365c7910c"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cfg__t">mipi_dsi_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a59d91e4d3320be3bfd2b6bbddaf36406"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__api__t">mipi_dsi_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga00e2dbf62836d3baa956ee7470838eeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00e2dbf62836d3baa956ee7470838eeb">&#9670;&nbsp;</a></span>st_mipi_dsi_result</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef __PACKED_STRUCT <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga00e2dbf62836d3baa956ee7470838eeb">st_mipi_dsi_result</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Data of received packet header. </p>
+<p>MIPI DSI Result </p>
+
+</div>
+</div>
+<a id="ga5b34613802c7994c2674c18a77a1d1b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b34613802c7994c2674c18a77a1d1b6">&#9670;&nbsp;</a></span>mipi_dsi_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga5b34613802c7994c2674c18a77a1d1b6">mipi_dsi_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI control block. Allocate an instance specific control block to pass into the MIPI DSI API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga0c9af0d3591f144aca9637850d11b09e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0c9af0d3591f144aca9637850d11b09e">&#9670;&nbsp;</a></span>mipi_dsi_cmd_id_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e">mipi_dsi_cmd_id_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI packet Data Type (commands) - See MIPI specification for additional information </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea1f0f53ee105f08391594a690719e5af7"></a>MIPI_DSI_CMD_ID_V_SYNC_START&#160;</td><td class="fielddoc"><p>(Short) Sync Event, V Sync Start </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaa0686dc97cbe525777e17ad650e7fa7e"></a>MIPI_DSI_CMD_ID_V_SYNC_END&#160;</td><td class="fielddoc"><p>(Short) Sync Event, V Sync End </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaacd7af03f03ccb3061ef199cf240187c"></a>MIPI_DSI_CMD_ID_H_SYNC_START&#160;</td><td class="fielddoc"><p>(Short) Sync Event, H Sync Start </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea23f01a9a625b9e561b208f9998d2e8c8"></a>MIPI_DSI_CMD_ID_H_SYNC_END&#160;</td><td class="fielddoc"><p>(Short) Sync Event, H Sync End </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaea394961cd94fc003ed1c2de9b0c76fa"></a>MIPI_DSI_CMD_ID_COMPRESSION_MODE&#160;</td><td class="fielddoc"><p>(Short) Compression Mode Command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea867513f8398d5d253859cfb06c533dda"></a>MIPI_DSI_CMD_ID_END_OF_TRANSMISSION&#160;</td><td class="fielddoc"><p>(Short) End of Transmission packet (EoTp) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaecb0db9786ee410fa9be355907de5cbd"></a>MIPI_DSI_CMD_ID_COLOR_MODE_OFF&#160;</td><td class="fielddoc"><p>(Short) Color Mode (CM) Off Command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea1bef291668fa2dddb39eba9b941d5428"></a>MIPI_DSI_CMD_ID_COLOR_MODE_ON&#160;</td><td class="fielddoc"><p>(Short) Color Mode (CM) On Command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eacb8a2bda617838cffb6abaf931b31e13"></a>MIPI_DSI_CMD_ID_SHUTDOWN_PERIPHERAL&#160;</td><td class="fielddoc"><p>(Short) Shut Down Peripheral Command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea1a568c81bd9fb995e29008a6ea1a3edd"></a>MIPI_DSI_CMD_ID_TURN_ON_PERIPHERAL&#160;</td><td class="fielddoc"><p>(Short) Turn On Peripheral Command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eabaab00a6e825d0df57e9db63ff301c54"></a>MIPI_DSI_CMD_ID_GENERIC_SHORT_WRITE_0_PARAM&#160;</td><td class="fielddoc"><p>(Short) Generic Short WRITE, no parameters </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea93fbf865aa8577367a86fb319eb933cf"></a>MIPI_DSI_CMD_ID_GENERIC_SHORT_WRITE_1_PARAM&#160;</td><td class="fielddoc"><p>(Short) Generic Short WRITE, 1 parameter </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea7099ca7708df35824aae150b2a0e568c"></a>MIPI_DSI_CMD_ID_GENERIC_SHORT_WRITE_2_PARAM&#160;</td><td class="fielddoc"><p>(Short) Generic Short WRITE, 2 parameters </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaddb76dddef2a3f9d63bf9c2e0fcbf83c"></a>MIPI_DSI_CMD_ID_GENERIC_READ_REQUEST_0_PARAM&#160;</td><td class="fielddoc"><p>(Short) Generic READ, no parameters </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea99a3dad3002bb630c25ca0c6ae5ebf9f"></a>MIPI_DSI_CMD_ID_GENERIC_READ_REQUEST_1_PARAM&#160;</td><td class="fielddoc"><p>(Short) Generic READ, 1 parameter </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea1491378d3d6236cdc92c0a9ee5cae469"></a>MIPI_DSI_CMD_ID_GENERIC_READ_REQUEST_2_PARAM&#160;</td><td class="fielddoc"><p>(Short) Generic READ, 2 parameters </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea5836a696f34f5b45eaba47b3f645957f"></a>MIPI_DSI_CMD_ID_DCS_SHORT_WRITE_0_PARAM&#160;</td><td class="fielddoc"><p>(Short) DCS Short WRITE, no parameters </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaa753348d85cc3f41d5e1c82535b63fce"></a>MIPI_DSI_CMD_ID_DCS_SHORT_WRITE_1_PARAM&#160;</td><td class="fielddoc"><p>(Short) DCS Short WRITE, 1 parameter </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea7d4c9608e09708e4b6e961d0c8033f8e"></a>MIPI_DSI_CMD_ID_DCS_READ&#160;</td><td class="fielddoc"><p>(Short) DCS READ, no parameters </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eac1c9ea930955e51a6a4a7f8e984d9b75"></a>MIPI_DSI_CMD_ID_EXECUTE_QUEUE&#160;</td><td class="fielddoc"><p>(Short) Execute Queue </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea0bf7022e09da18a45c711ae2f19b1bff"></a>MIPI_DSI_CMD_ID_SET_MAXIMUM_RETURN_PACKET_SIZE&#160;</td><td class="fielddoc"><p>(Short) Set Maximum Return Packet Size </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea799d4153fffb590d4be9e5c377f7d879"></a>MIPI_DSI_CMD_ID_NULL_PACKET&#160;</td><td class="fielddoc"><p>(Long) Null Packet, no data </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaf01b0c753ab8544745871c49d72b3a37"></a>MIPI_DSI_CMD_ID_BLANKING_PACKET&#160;</td><td class="fielddoc"><p>(Long) Blanking Packet, no data </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea80ecb2851dc9205271831a6a8f93a70a"></a>MIPI_DSI_CMD_ID_GENERIC_LONG_WRITE&#160;</td><td class="fielddoc"><p>(Long) Generic Long Write </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eacaf06f346eb783e95e1b96829739b6ef"></a>MIPI_DSI_CMD_ID_DCS_LONG_WRITE&#160;</td><td class="fielddoc"><p>(Long) DCS Long Write/write_LUT Command Packet </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaf6310fbde4fbd7408278408c832c851b"></a>MIPI_DSI_CMD_ID_PICTURE_PARAMETER_SET&#160;</td><td class="fielddoc"><p>(Long) Picture Parameter Set </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea6d668d1dc0373d5a7a87f763d3d0c413"></a>MIPI_DSI_CMD_ID_COMPRESSED_PIXEL_STREAM&#160;</td><td class="fielddoc"><p>(Long) Compressed Pixel Stream </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaa5fded2c74540f9c3eb4eb4f059cabeb"></a>MIPI_DSI_CMD_ID_LOOSELY_PACKED_PIXEL_STREAM_YCBCR20&#160;</td><td class="fielddoc"><p>(Long) Loosely Packed Pixel Stream, 20-bit YCbCr, 4:2:2 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eae7d288c5c2c1cec8579298ef1b4fc748"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_YCBCR24&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 24-bit YCbCr, 4:2:2 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea37df2368c81a4442edde341a7a22f3c6"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_YCBCR16&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 16-bit YCbCr, 4:2:2 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eac1dc828426e587a4845283144573a654"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_30&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 30-bit RGB, 10-10-10 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eaf1f44221214e3fc6a929d0987527967d"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_36&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 36-bit RGB, 12-12-12 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09eab7f412990f492178ec4a5cc794fb7946"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_YCBCR12&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 12-bit YCbCr, 4:2:0 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea049a03db1172358da99eb9f81d5b09fe"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_16&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 16-bit RGB, 5-6-5 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea178f93a627c1cbc4e79f4e02950c842d"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_18&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 18-bit RGB, 6-6-6 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea7ea7acd27b4e3395f4e26bdbb6e58ad3"></a>MIPI_DSI_CMD_ID_LOOSELY_PACKED_PIXEL_STREAM_18&#160;</td><td class="fielddoc"><p>(Long) Loosely Packed Pixel Stream, 18-bit RGB, 6-6-6 Format </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea48b058f54a99a37049e7eb624ff282b8"></a>MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_24&#160;</td><td class="fielddoc"><p>(Long) Packed Pixel Stream, 24-bit RGB, 8-8-8 Format </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gac2247389c8044ea584fc41c88f0bdc78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2247389c8044ea584fc41c88f0bdc78">&#9670;&nbsp;</a></span>mipi_dsi_dcs_id_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac2247389c8044ea584fc41c88f0bdc78">mipi_dsi_dcs_id_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DCS ID types - See MIPI DCS specification for additional information </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aed82bdf171bd982e5aaf9829d825c02d"></a>MIPI_DSI_DCS_ID_ENTER_IDLE_MODE&#160;</td><td class="fielddoc"><p>Enter idle mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ad406e7786cc56e8002c6d1ee49753fe6"></a>MIPI_DSI_DCS_ID_ENTER_INVERT_MODE&#160;</td><td class="fielddoc"><p>Displayed image colors inverted. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a2f4b23e73a8aa7ec2b353cf1e0c94e1f"></a>MIPI_DSI_DCS_ID_ENTER_NORMAL_MODE&#160;</td><td class="fielddoc"><p>Whole display area used for image. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78af6dda1b989cf3d8e6b8307948357faac"></a>MIPI_DSI_DCS_ID_ENTER_PARTIAL_MODE&#160;</td><td class="fielddoc"><p>Part of display area used for image. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a7b548c3663aefd2e979dbed158ab0811"></a>MIPI_DSI_DCS_ID_ENTER_SLEEP_MODE&#160;</td><td class="fielddoc"><p>Power off the display panel. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a370410d6601bf11c9a3e15d574d1005a"></a>MIPI_DSI_DCS_ID_EXIT_IDLE_MODE&#160;</td><td class="fielddoc"><p>Full color depth used. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78acd57494104bc2afe4b171d63b07d31d5"></a>MIPI_DSI_DCS_ID_EXIT_INVERT_MODE&#160;</td><td class="fielddoc"><p>Displayed image colors not inverted. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78af8473db71cfe436bf461d0aa7b1f02db"></a>MIPI_DSI_DCS_ID_EXIT_SLEEP_MODE&#160;</td><td class="fielddoc"><p>Power on the display panel. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aebf57826f8c4fdc259225a476e95d068"></a>MIPI_DSI_DCS_ID_GET_3D_CONTROL&#160;</td><td class="fielddoc"><p>Get display module 3D mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a7b9c28b4a69ebe0997d865323159e0ab"></a>MIPI_DSI_DCS_ID_GET_ADDRESS_MODE&#160;</td><td class="fielddoc"><p>Get data order for transfers from host to the display device. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a9f6a64a17ba5a42ae9f506fbe2b6b088"></a>MIPI_DSI_DCS_ID_GET_BLUE_CHANNEL&#160;</td><td class="fielddoc"><p>Get blue component of pixel at 0,0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a128b605fdb6b2a98eb3745ae8529a089"></a>MIPI_DSI_DCS_ID_GET_CABC_MIN_BRIGHTNESS&#160;</td><td class="fielddoc"><p>Get current minimum brightness level of the active CABC mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a1fa7fbd03995d3db9cbcb1d3448cf72b"></a>MIPI_DSI_DCS_ID_GET_COMPRESSION_MODE&#160;</td><td class="fielddoc"><p>Get current compression mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ae7653d113b0834a420d56a2da36dadcc"></a>MIPI_DSI_DCS_ID_GET_CONTROL_DISPLAY&#160;</td><td class="fielddoc"><p>Get control display mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aab87365b4ab183f13fc6e9d1c2ff22d2"></a>MIPI_DSI_DCS_ID_GET_DIAGNOSTIC_RESULT&#160;</td><td class="fielddoc"><p>Get peripheral self-diagnostic result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a2c6df41ff3cd19406b7c074539ad5b78"></a>MIPI_DSI_DCS_ID_GET_DISPLAY_BRIGHTNESS&#160;</td><td class="fielddoc"><p>Get current display brightness level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a8930c078be918176f58dab6c86963623"></a>MIPI_DSI_DCS_ID_GET_DISPLAY_MODE&#160;</td><td class="fielddoc"><p>Get current display mode from the peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a8f0101a1e905475163b9f6b0f68f30c2"></a>MIPI_DSI_DCS_ID_GET_DSI_MODE&#160;</td><td class="fielddoc"><p>Get DSI operation mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ab0bb14aae4457133301c68fdf50dc8b5"></a>MIPI_DSI_DCS_ID_GET_ERROR_COUNT_ON_DSI&#160;</td><td class="fielddoc"><p>Get number of corrupted packets on DSI. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aa195b0b3b88faf5092841fcbf7df0cbb"></a>MIPI_DSI_DCS_ID_GET_GREEN_CHANNEL&#160;</td><td class="fielddoc"><p>Get green component of pixel at 0,0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a47ff0b78da01f44428cb8c52dfe3e0e0"></a>MIPI_DSI_DCS_ID_GET_IMAGE_CHECKSUM_CT&#160;</td><td class="fielddoc"><p>Returns checksum of frame of color-transformed pixel data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a31519de5ac97095fa694beb8b0d585fc"></a>MIPI_DSI_DCS_ID_GET_IMAGE_CHECKSUM_RGB&#160;</td><td class="fielddoc"><p>Returns checksum of frame of RGB pixel data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a27401c6d1dd8faa4cacc8c64d7382c3d"></a>MIPI_DSI_DCS_ID_GET_PIXEL_FORMAT&#160;</td><td class="fielddoc"><p>Get current pixel format. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ae5a86df99f979bcd693511da323ca817"></a>MIPI_DSI_DCS_ID_GET_POWER_MODE&#160;</td><td class="fielddoc"><p>Get current power mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ac151442d3a4a6e359f2098f40732bf4a"></a>MIPI_DSI_DCS_ID_GET_POWER_SAVE&#160;</td><td class="fielddoc"><p>Get current power-save mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a0df4923893b90029d10b3c29a1ff1091"></a>MIPI_DSI_DCS_ID_GET_RED_CHANNEL&#160;</td><td class="fielddoc"><p>Get red component of pixel at 0,0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a16ce262956789a0599b59dbec27a6e95"></a>MIPI_DSI_DCS_ID_GET_SCANLINE&#160;</td><td class="fielddoc"><p>Get current scanline. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a07891301f22ff0dd7534854ded9f34e4"></a>MIPI_DSI_DCS_ID_GET_SIGNAL_MODE&#160;</td><td class="fielddoc"><p>Get display module signaling mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a447e9d4f2287bd06615692c85ef35779"></a>MIPI_DSI_DCS_ID_NOP&#160;</td><td class="fielddoc"><p>No operation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a54b96381bd3ca7f34dde73056f0d6304"></a>MIPI_DSI_DCS_ID_READ_ACMD&#160;</td><td class="fielddoc"><p>Perform read access to the ACMD registers. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ae9efecd3f52a8efaf4f3ec928e3ed997"></a>MIPI_DSI_DCS_ID_READ_DDB_CONTINUE&#160;</td><td class="fielddoc"><p>Continue reading the DDB from the last read location. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ab363b60e8546786beae9f0770872775c"></a>MIPI_DSI_DCS_ID_READ_DDB_START&#160;</td><td class="fielddoc"><p>Read the DDB from the provided location. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a2859b30897fbb70be5d4a6652a9c3641"></a>MIPI_DSI_DCS_ID_READ_DSE_MAILBOX&#160;</td><td class="fielddoc"><p>Read access to the registers of the DSE read or write control mailbox. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a562c79eb4b5ea226af6c72dd1184780b"></a>MIPI_DSI_DCS_ID_READ_MEMORY_CONTINUE&#160;</td><td class="fielddoc"><p>Read image data from peripheral, continuing after last read. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a9c7d0f7bea52fcd789adc0b207143ab2"></a>MIPI_DSI_DCS_ID_READ_MEMORY_START&#160;</td><td class="fielddoc"><p>Read image data from the peripheral to the host. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a8ffb7763d5a5dc357d53c2a7b432ec43"></a>MIPI_DSI_DCS_ID_READ_PPS_CONTINUE&#160;</td><td class="fielddoc"><p>Continue reading the specified length of PPS data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a66f01b42a0570331aad5febb02d586c6"></a>MIPI_DSI_DCS_ID_READ_PPS_START&#160;</td><td class="fielddoc"><p>Read PPS data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a041593843d9fac3b9d5004a45a00a4c6"></a>MIPI_DSI_DCS_ID_SET_3D_CONTROL&#160;</td><td class="fielddoc"><p>3D is used on the display panel </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a4d9339a7a18f8bd691ad6b07dbe2f19c"></a>MIPI_DSI_DCS_ID_SET_ADDRESS_MODE&#160;</td><td class="fielddoc"><p>Set data order for transfers from host to peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ab6a28c5afec44ab0dfeeca34851630dd"></a>MIPI_DSI_DCS_ID_SET_ARP_OFF&#160;</td><td class="fielddoc"><p>Disable ARP. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a627fb970967108b9300265a49d8ca048"></a>MIPI_DSI_DCS_ID_SET_ARP_ON&#160;</td><td class="fielddoc"><p>Enable ARP and set T2 timer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aded093b771828de0bca25e9aa26640ab"></a>MIPI_DSI_DCS_ID_SET_CABC_MIN_BRIGHTNESS&#160;</td><td class="fielddoc"><p>Set minimum brightness level for CABC mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a4df14c2f6fb74d26cabddc1a9d076da5"></a>MIPI_DSI_DCS_ID_SET_COLUMN_ADDRESS&#160;</td><td class="fielddoc"><p>Set column extent. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ae40ac58aa1e217a061ffc6bc0e819837"></a>MIPI_DSI_DCS_ID_SET_DISPLAY_BRIGHTNESS&#160;</td><td class="fielddoc"><p>Set display brightness level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78afd9dc575889ea2f1fa6bde4224416b4f"></a>MIPI_DSI_DCS_ID_SET_DISPLAY_OFF&#160;</td><td class="fielddoc"><p>Blank the display device. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78adad208f96f578e873bbd5ad1abf3bbe9"></a>MIPI_DSI_DCS_ID_SET_DISPLAY_ON&#160;</td><td class="fielddoc"><p>Show image on display device. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a2bf2f522a2257c8418d982af9c89f61d"></a>MIPI_DSI_DCS_ID_SET_DSI_MODE&#160;</td><td class="fielddoc"><p>Set DSI operation mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ac4ec6d81b66e17a98ea4d710b362feb4"></a>MIPI_DSI_DCS_ID_SET_GAMMA_CURVE&#160;</td><td class="fielddoc"><p>Select gamma curve used by display. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aeb3269f78c8160f223e6cdb24f2cf1fc"></a>MIPI_DSI_DCS_ID_SET_PAGE_ADDRESS&#160;</td><td class="fielddoc"><p>Set page extent. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a8a35702ab4f43306e4aa67558027a64b"></a>MIPI_DSI_DCS_ID_SET_PARTIAL_COLUMNS&#160;</td><td class="fielddoc"><p>Define the number of columns in the partial display area. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a4dbb93a8796cc599c716ec8c36762525"></a>MIPI_DSI_DCS_ID_SET_PARTIAL_ROWS&#160;</td><td class="fielddoc"><p>Define the number of rows in the partial display area. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a614ffd99d4b9ad7df99fdf2728f5ce9b"></a>MIPI_DSI_DCS_ID_SET_PIXEL_FORMAT&#160;</td><td class="fielddoc"><p>Define how many bits per pixel are used. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a9f48549edc610cc7a7daf345bf659398"></a>MIPI_DSI_DCS_ID_SET_SCROLL_AREA&#160;</td><td class="fielddoc"><p>Define vertical scrolling and fixed area. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78adcc8325e072eee690f206df7772ca582"></a>MIPI_DSI_DCS_ID_SET_SCROLL_START&#160;</td><td class="fielddoc"><p>Define vertical scrolling starting point. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a0e46be931dab7862779e65ffec258566"></a>MIPI_DSI_DCS_ID_SET_TEAR_OFF&#160;</td><td class="fielddoc"><p>Sync information not sent from the display module to the host. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a46a68d931c16148e89b043818a743507"></a>MIPI_DSI_DCS_ID_SET_TEAR_ON&#160;</td><td class="fielddoc"><p>Sync information is sent from the display module to the host. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a9d60226bb6e158c98bd0e5a109a4e770"></a>MIPI_DSI_DCS_ID_SET_TEAR_SCANLINE&#160;</td><td class="fielddoc"><p>Sync information is sent from display to the host when display refresh reaches profivided scan line. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a28913bb13503af39037e1f45ffd08e0e"></a>MIPI_DSI_DCS_ID_SET_VSYNC_TIMING&#160;</td><td class="fielddoc"><p>Set VSYNC timing to the specified length of PPS data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a78b10dd8cc41d3b55f6fda9cb92ed27f"></a>MIPI_DSI_DCS_ID_SOFT_RESET&#160;</td><td class="fielddoc"><p>Software reset. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a269cf1931870435da5a61eef8d1844a5"></a>MIPI_DSI_DCS_ID_WRITE_ACMD&#160;</td><td class="fielddoc"><p>Write access to ACMD registers. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78abecf8bc25a9de31cde48a50c1a58aefe"></a>MIPI_DSI_DCS_ID_WRITE_CONTROL_DISPLAY&#160;</td><td class="fielddoc"><p>Write control mode of display brightness. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78ae084ae7baa49e8e2b45edb5526507469"></a>MIPI_DSI_DCS_ID_WRITE_DSE_MAILBOX&#160;</td><td class="fielddoc"><p>Write registers of DSE read or write control mailbox. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78aa9524f5a1417a33e8b8b38dfebe48fd7"></a>MIPI_DSI_DCS_ID_WRITE_LUT&#160;</td><td class="fielddoc"><p>Fill peripheral look-up table with provided data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a040b440fd3fca116f6ffddd86f1abab4"></a>MIPI_DSI_DCS_ID_WRITE_MEMORY_CONTINUE&#160;</td><td class="fielddoc"><p>Continue image information transfer from last address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a3fc938e65ae2445751d2181363a69a8f"></a>MIPI_DSI_DCS_ID_WRITE_MEMORY_START&#160;</td><td class="fielddoc"><p>Transfer image information from host to peripheral. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2247389c8044ea584fc41c88f0bdc78a53f9c20460d86a5d95eb7a4eb8498cb2"></a>MIPI_DSI_DCS_ID_WRITE_POWER_SAVE&#160;</td><td class="fielddoc"><p>Writes power save mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1f08ee0aaead0040917442f9a6896591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f08ee0aaead0040917442f9a6896591">&#9670;&nbsp;</a></span>mipi_dsi_video_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga1f08ee0aaead0040917442f9a6896591">mipi_dsi_video_data_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI Video Data type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1f08ee0aaead0040917442f9a6896591a9e879956166a5adc2f29a3096e2ac376"></a>MIPI_DSI_VIDEO_DATA_16RGB_PIXEL_STREAM&#160;</td><td class="fielddoc"><p>16-bit RGB Packed Pixel Stream </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f08ee0aaead0040917442f9a6896591aef682b7a0fcbb96edd985d69ae2dd0e7"></a>MIPI_DSI_VIDEO_DATA_18RGB_PIXEL_STREAM&#160;</td><td class="fielddoc"><p>18-bit RGB Packed Pixel Stream </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f08ee0aaead0040917442f9a6896591aaf88126e528be0cd6108819516686675"></a>MIPI_DSI_VIDEO_DATA_24RGB_PIXEL_STREAM&#160;</td><td class="fielddoc"><p>24-bit RGB Packed Pixel Stream </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1f107e89f3b165bc57a5b7a575d4db63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f107e89f3b165bc57a5b7a575d4db63">&#9670;&nbsp;</a></span>mipi_dsi_ack_err_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga1f107e89f3b165bc57a5b7a575d4db63">mipi_dsi_ack_err_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI Acknowledge and Error type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a44f41a4c454fabb374dba3165705f471"></a>MIPI_DSI_ACK_ERR_NONE&#160;</td><td class="fielddoc"><p>No Errors. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a5566352b4a4876f112298399a3c4dee0"></a>MIPI_DSI_ACK_ERR_SOT_ERROR&#160;</td><td class="fielddoc"><p>SoT Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a8bfa2fab3c422ff487d4ca8d4744c16e"></a>MIPI_DSI_ACK_ERR_SOT_SYNC_ERROR&#160;</td><td class="fielddoc"><p>SoT Sync Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a06e1f93d6bc7588c1afa10755b21e691"></a>MIPI_DSI_ACK_ERR_EOT_SYNC_ERROR&#160;</td><td class="fielddoc"><p>EoT Sync Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a100c440ecf818083049dfdb4de060b7f"></a>MIPI_DSI_ACK_ERR_ESCAPE_ENTRY_ERROR&#160;</td><td class="fielddoc"><p>Escape Mode Entry Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63ad1113d3489e0ea5fd823c9a5ef9aecd9"></a>MIPI_DSI_ACK_ERR_LOW_POWER_SYNC_ERROR&#160;</td><td class="fielddoc"><p>Low-Power Transmit Sync Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a954723a6a12ca13e3c546c6b4a955e04"></a>MIPI_DSI_ACK_ERR_PERIPHERAL_TIMEOUT_ERROR&#160;</td><td class="fielddoc"><p>Peripheral Timeout Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a40dcfcb9a2bfe246015cfad18e9472d9"></a>MIPI_DSI_ACK_ERR_FALSE_CONTROL_ERROR&#160;</td><td class="fielddoc"><p>False Control Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a58e96a3d09df375e967663b94ba1d3db"></a>MIPI_DSI_ACK_ERR_CONTENTION_DETECTED&#160;</td><td class="fielddoc"><p>Contention Detected Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a9ba876127129ba9a48e7c0c3027ffa7e"></a>MIPI_DSI_ACK_ERR_ECC_SINGLE&#160;</td><td class="fielddoc"><p>ECC Error, single-bit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a4267d7d1b4a18ea56f5f4c2860ff58e3"></a>MIPI_DSI_ACK_ERR_ECC_MULTI&#160;</td><td class="fielddoc"><p>ECC Error, multi-bit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a2c2e3d7fa4dc9f20b6292223e7f1a2b3"></a>MIPI_DSI_ACK_ERR_CKSM_ERROR&#160;</td><td class="fielddoc"><p>Checksum Error (Long packet only) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a3e9b6b9793390f127dec2b077cdf3568"></a>MIPI_DSI_ACK_ERR_DSI_DATA_ERROR&#160;</td><td class="fielddoc"><p>DSI Data Type Not Recognized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63ada03a102d0616c3d30c9ac67973d6c23"></a>MIPI_DSI_ACK_ERR_DSI_VC_ID_ERROR&#160;</td><td class="fielddoc"><p>DSI VC ID Invalid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63a931852a63008922cf8d050bdd8ba9e10"></a>MIPI_DSI_ACK_ERR_INVALID_TX_LEN&#160;</td><td class="fielddoc"><p>Invalid Transmission Length. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f107e89f3b165bc57a5b7a575d4db63ab3ef917066a161f3ca1aebf70e4c75c8"></a>MIPI_DSI_ACK_ERR_DSI_PROTOCOL_VIOLATION&#160;</td><td class="fielddoc"><p>DSI Protocol Violation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga89791dbddfc382eb15352fd3e151236f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga89791dbddfc382eb15352fd3e151236f">&#9670;&nbsp;</a></span>mipi_dsi_vc_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga89791dbddfc382eb15352fd3e151236f">mipi_dsi_vc_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga89791dbddfc382eb15352fd3e151236fa0e1243a536b949bd3848e3372302218f"></a>MIPI_DSI_VC_NONE&#160;</td><td class="fielddoc"><p>No channels selected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89791dbddfc382eb15352fd3e151236fa19d98243786ce083fc3ea5f9e673e501"></a>MIPI_DSI_VC_0&#160;</td><td class="fielddoc"><p>Virtual channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89791dbddfc382eb15352fd3e151236fa07fd9cce335a284ef943f2210130c145"></a>MIPI_DSI_VC_1&#160;</td><td class="fielddoc"><p>Virtual channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89791dbddfc382eb15352fd3e151236fa568b50427400f25b364cc1a4b0a7b66c"></a>MIPI_DSI_VC_2&#160;</td><td class="fielddoc"><p>Virtual channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga89791dbddfc382eb15352fd3e151236fa9ec4ca309a18de7520c0b6248eff3f16"></a>MIPI_DSI_VC_3&#160;</td><td class="fielddoc"><p>Virtual channel 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gadc3bdd29eb397d22d89b1fe84a307bb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc3bdd29eb397d22d89b1fe84a307bb0">&#9670;&nbsp;</a></span>mipi_dsi_cmd_flag_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gadc3bdd29eb397d22d89b1fe84a307bb0">mipi_dsi_cmd_flag_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI Message Flags </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0a69effa2e35d4c6aa64080e653bc133f1"></a>MIPI_DSI_CMD_FLAG_NONE&#160;</td><td class="fielddoc"><p>No flags. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0a26d43e619602271e920cbd795033c63c"></a>MIPI_DSI_CMD_FLAG_BTA&#160;</td><td class="fielddoc"><p>Assert bus turnaround at end of transfer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0a525c62314fd5ffe7902034bc0a7dfef0"></a>MIPI_DSI_CMD_FLAG_BTA_READ&#160;</td><td class="fielddoc"><p>Assert bus turnaround followed by read request (No WRITE request before BTA) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0a998fcc195846975ef3189404cc1dcdae"></a>MIPI_DSI_CMD_FLAG_BTA_NO_WRITE&#160;</td><td class="fielddoc"><p>Immediately assert bus turnaround (No WRITE request before BTA) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0afec2eac28772d197ec04bd716e00637f"></a>MIPI_DSI_CMD_FLAG_AUX_OPERATION&#160;</td><td class="fielddoc"><p>Execute auxiliary operation command. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0ae76c4c8b9196604941845fe86e86a494"></a>MIPI_DSI_CMD_FLAG_ACT_CODE_RESET_TRIGGER&#160;</td><td class="fielddoc"><p>Send action code reset trigger message. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0afcc216ca437f7c110d5ca206f7350f9b"></a>MIPI_DSI_CMD_FLAG_ACT_CODE_INITIAL_SKEW_CAL&#160;</td><td class="fielddoc"><p>Send action code initial skew calibration message. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0ab9081568c2b72bbba366a6ea92aa6c56"></a>MIPI_DSI_CMD_FLAG_ACT_CODE_PERIODIC_SKEW_CAL&#160;</td><td class="fielddoc"><p>Send action code periodic skew message. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0aa38f4df18b02dbc98d40c8f1ea69b121"></a>MIPI_DSI_CMD_FLAG_ACT_CODE_NO_OPERATION&#160;</td><td class="fielddoc"><p>Send action code NOOP message. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc3bdd29eb397d22d89b1fe84a307bb0a9045aaf71ee86b4eaf12aaadabd336eb"></a>MIPI_DSI_CMD_FLAG_LOW_POWER&#160;</td><td class="fielddoc"><p>Transmit in low-power mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga47d5a52762575f9e8f3ae6404c9d5ab1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47d5a52762575f9e8f3ae6404c9d5ab1">&#9670;&nbsp;</a></span>mipi_dsi_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga47d5a52762575f9e8f3ae6404c9d5ab1">mipi_dsi_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI event codes </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1a863ce97ba480162c5facd0cac9afc5a1"></a>MIPI_DSI_EVENT_SEQUENCE_0&#160;</td><td class="fielddoc"><p>Sequence 0 event (Low-Power) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1a4792a15c1d6a28d32a7d7aaefb7d7155"></a>MIPI_DSI_EVENT_SEQUENCE_1&#160;</td><td class="fielddoc"><p>Sequence 1 event (High-Speed) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1a72e2a94e0e8047785118ce8c5550f6f9"></a>MIPI_DSI_EVENT_VIDEO&#160;</td><td class="fielddoc"><p>Video event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1ac3bd6cc9ccdf58b8465cf549caee3310"></a>MIPI_DSI_EVENT_RECEIVE&#160;</td><td class="fielddoc"><p>Receive event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1aed050a7a95202781b4f6f285f00658c5"></a>MIPI_DSI_EVENT_FATAL&#160;</td><td class="fielddoc"><p>Fatal event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1a8f438202db069afe956b3d2be64508f0"></a>MIPI_DSI_EVENT_PHY&#160;</td><td class="fielddoc"><p>Physical layer event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1a5ff5ed8a579a2a0191af5a8820324c6e"></a>MIPI_DSI_EVENT_POST_OPEN&#160;</td><td class="fielddoc"><p>Interface has been opened. Perform post-open application processing. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga47d5a52762575f9e8f3ae6404c9d5ab1aecaabcf3bce577563a26635bd56ec130"></a>MIPI_DSI_EVENT_PRE_START&#160;</td><td class="fielddoc"><p>Video is about to start. Perform pre-video application processing. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga2668d830371ded94dc6c3afb92b1a3df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2668d830371ded94dc6c3afb92b1a3df">&#9670;&nbsp;</a></span>mipi_dsi_sequence_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga2668d830371ded94dc6c3afb92b1a3df">mipi_dsi_sequence_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI Sequence status </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa04f7d4c703e613537e1dc3de8531b21f"></a>MIPI_DSI_SEQUENCE_STATUS_NONE&#160;</td><td class="fielddoc"><p>Sequence status not set. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa5d352c675b5dca187ea81284cf689ab5"></a>MIPI_DSI_SEQUENCE_STATUS_RUNNING&#160;</td><td class="fielddoc"><p>Sequence operation in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfafdbe130f8e3ce6daa9e2d466efb92a6a"></a>MIPI_DSI_SEQUENCE_STATUS_ACTIONS_FINISHED&#160;</td><td class="fielddoc"><p>All descriptor actions finished. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfaa28ad25105ee949c68ae453494d591e6"></a>MIPI_DSI_SEQUENCE_STATUS_DESCRIPTORS_FINISHED&#160;</td><td class="fielddoc"><p>All descriptors finished. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa50fec4815986943e7a08b263046a0ee2"></a>MIPI_DSI_SEQUENCE_STATUS_DESCRIPTOR_ABORT&#160;</td><td class="fielddoc"><p>Descriptor abort interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa9480fc38a3cdd0633c7a5bb9eab45920"></a>MIPI_DSI_SEQUENCE_STATUS_SIZE_ERROR&#160;</td><td class="fielddoc"><p>Packet size error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa9085c72c15bf4a1ef0083ec4d84dde1e"></a>MIPI_DSI_SEQUENCE_STATUS_TX_INTERNAL_BUS_ERROR&#160;</td><td class="fielddoc"><p>Tx internal bus error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa5f4dd09e1e402a507bfc52c724d48cd2"></a>MIPI_DSI_SEQUENCE_STATUS_RX_FATAL_ERROR&#160;</td><td class="fielddoc"><p>Receive fatal error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa4a0d4bf39a0fb67cf1b93c1a2fee412e"></a>MIPI_DSI_SEQUENCE_STATUS_RX_FAIL&#160;</td><td class="fielddoc"><p>Receive fail. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa9965cbbcc7689e7b7715f72662b6765e"></a>MIPI_DSI_SEQUENCE_STATUS_RX_PACKET_DATA_FAIL&#160;</td><td class="fielddoc"><p>Receive packet data fail. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa29fd15c7766852bb86f3b6e09534a5be"></a>MIPI_DSI_SEQUENCE_STATUS_RX_CORRECTABLE_ERROR&#160;</td><td class="fielddoc"><p>Receive correctable error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2668d830371ded94dc6c3afb92b1a3dfa9acdf33be0ecd8e473f0dc7f3579b69c"></a>MIPI_DSI_SEQUENCE_STATUS_RX_ACK_AND_ERROR&#160;</td><td class="fielddoc"><p>Receive acknowledge and error report. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga064bab1d47c5b836b2a34f4c8272045f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga064bab1d47c5b836b2a34f4c8272045f">&#9670;&nbsp;</a></span>mipi_dsi_video_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga064bab1d47c5b836b2a34f4c8272045f">mipi_dsi_video_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI video status errors </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045fa1655bc1d48bc0f111282a8409ad95cb9"></a>MIPI_DSI_VIDEO_STATUS_NONE&#160;</td><td class="fielddoc"><p>Video status not set. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045faf33bed8faedff5a82335d8a7eb705bf9"></a>MIPI_DSI_VIDEO_STATUS_START&#160;</td><td class="fielddoc"><p>Video started event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045faca83aef229da20b51a0a8b66076da524"></a>MIPI_DSI_VIDEO_STATUS_STOP&#160;</td><td class="fielddoc"><p>Video stopped event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045fa94e374b6be479251bc3264e69a73641a"></a>MIPI_DSI_VIDEO_STATUS_RUNNING&#160;</td><td class="fielddoc"><p>Video running status. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045fac6a68baa0e7aecb6522cb4d88692dd81"></a>MIPI_DSI_VIDEO_STATUS_READY&#160;</td><td class="fielddoc"><p>Video ready event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045faab6afd5bb3cd01c4b7657e96bf3cf4cd"></a>MIPI_DSI_VIDEO_STATUS_TIMING_ERROR&#160;</td><td class="fielddoc"><p>Video timing error event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045faf66b879a6e4ddc3502b32d2d8ad48415"></a>MIPI_DSI_VIDEO_STATUS_UNDERFLOW&#160;</td><td class="fielddoc"><p>Video buffer underflow event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga064bab1d47c5b836b2a34f4c8272045fa6886076c20c110c48a6a8af8c29fd482"></a>MIPI_DSI_VIDEO_STATUS_OVERFLOW&#160;</td><td class="fielddoc"><p>Video buffer overflow event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga9d9384adceec0c5ef13c80e3dfba24d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d9384adceec0c5ef13c80e3dfba24d6">&#9670;&nbsp;</a></span>mipi_dsi_receive_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga9d9384adceec0c5ef13c80e3dfba24d6">mipi_dsi_receive_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI receive status errors </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6afe29fe9407e5b3d7fc421cf723735505"></a>MIPI_DSI_RECEIVE_STATUS_NONE&#160;</td><td class="fielddoc"><p>Receive status not set. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a397bdfa9fdb669fc0e988484c490de94"></a>MIPI_DSI_RECEIVE_STATUS_BTA_REQUEST_END&#160;</td><td class="fielddoc"><p>Receive BTA request end. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a2480d232719a6fa0386622c5f95d3be1"></a>MIPI_DSI_RECEIVE_STATUS_LP_RX_HOST_TIMEOUT&#160;</td><td class="fielddoc"><p>Receive low power receive timeout. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a1511121caf0cf926030180a8044a9229"></a>MIPI_DSI_RECEIVE_STATUS_BTA_ACK_TIMEOUT&#160;</td><td class="fielddoc"><p>Receive BTA ack timeout. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a061356b652a142de5ed4365a99741de4"></a>MIPI_DSI_RECEIVE_STATUS_RESPONSE_PACKET&#160;</td><td class="fielddoc"><p>Receive response. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6af9a49d0b7e5b7eb7272ecac3461a52a7"></a>MIPI_DSI_RECEIVE_STATUS_EOTP&#160;</td><td class="fielddoc"><p>Receive end of transmission packet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6aac60fcf89cc85fc79cda99f5404d216b"></a>MIPI_DSI_RECEIVE_STATUS_TEARING_TRIGGER&#160;</td><td class="fielddoc"><p>Receive tearing trigger. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a3272f4a8d69e5da8500ff39a5382dd6c"></a>MIPI_DSI_RECEIVE_STATUS_ACK_TRIGGER&#160;</td><td class="fielddoc"><p>Receive ack trigger. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a04691fa73cbb17e0be4d05ff01a0623f"></a>MIPI_DSI_RECEIVE_STATUS_TEARING_DETECT&#160;</td><td class="fielddoc"><p>Receive tearing detect. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a464f9a62958108f702dbf1f3d371eb2e"></a>MIPI_DSI_RECEIVE_STATUS_MALFORM_ERROR&#160;</td><td class="fielddoc"><p>Receive malform error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a8876e96e1b6eb752ad84e616b69a2fb1"></a>MIPI_DSI_RECEIVE_STATUS_ECC_MULTI&#160;</td><td class="fielddoc"><p>Receive ecc multi-bit error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a1b4372c20d78760f08e58c7c437c8d05"></a>MIPI_DSI_RECEIVE_STATUS_UNEXPECTED_PACKET&#160;</td><td class="fielddoc"><p>Receive unexpected packet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6aa65ca225b338c83710d131c20a9a53fb"></a>MIPI_DSI_RECEIVE_STATUS_WORD_COUNT&#160;</td><td class="fielddoc"><p>Receive word count. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6ad36f34a85e9932214af81f30d7442920"></a>MIPI_DSI_RECEIVE_STATUS_CRC&#160;</td><td class="fielddoc"><p>Receive crc error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a1fcbe5e5bb7320f4203b96e8d881c164"></a>MIPI_DSI_RECEIVE_STATUS_INTERNAL_BUS&#160;</td><td class="fielddoc"><p>Receive internal bus error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6ae793f8deca612b950551351957160313"></a>MIPI_DSI_RECEIVE_STATUS_BUFFER_OVERFLOW&#160;</td><td class="fielddoc"><p>Receive buffer overflow. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a68ba4fcb226084e2f67da711f4bff74f"></a>MIPI_DSI_RECEIVE_STATUS_TIMEOUT&#160;</td><td class="fielddoc"><p>Receive timeout. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6ad1b3cd398577043712b6fc4bee913d38"></a>MIPI_DSI_RECEIVE_STATUS_NO_RESPONSE&#160;</td><td class="fielddoc"><p>Receive no response. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6aeabe16b61192d08a05ee476021b3fb78"></a>MIPI_DSI_RECEIVE_STATUS_PACKET_SIZE&#160;</td><td class="fielddoc"><p>Receive packet size error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a14dae3ac59b473fbc7eb9c1e6fb54eb9"></a>MIPI_DSI_RECEIVE_STATUS_ECC_SINGLE&#160;</td><td class="fielddoc"><p>Receive ecc single bit error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d9384adceec0c5ef13c80e3dfba24d6a0c10a9546266c008498a2a3293ce4786"></a>MIPI_DSI_RECEIVE_STATUS_ACK_AND_ERROR&#160;</td><td class="fielddoc"><p>Receive ack and error. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga2f5f9b4400be314e299bf6c792928897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2f5f9b4400be314e299bf6c792928897">&#9670;&nbsp;</a></span>mipi_dsi_fatal_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga2f5f9b4400be314e299bf6c792928897">mipi_dsi_fatal_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI fatal status errors </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897acd3fa6ca0f0c2b8d9296287956a2798c"></a>MIPI_DSI_FATAL_STATUS_NONE&#160;</td><td class="fielddoc"><p>Fatal status not set. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a4d4f393e60092144da2d3e4734cda12d"></a>MIPI_DSI_FATAL_STATUS_HS_TX_TIMEOUT&#160;</td><td class="fielddoc"><p>Fatal high speed transmit timeout. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a3203cf1df2e00c42d5790068c9f57a9b"></a>MIPI_DSI_FATAL_STATUS_LP_RX_TIMEOUT&#160;</td><td class="fielddoc"><p>Fatal low power receive timeout. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a52a9812815c390eb5eaeb32ec411a29f"></a>MIPI_DSI_FATAL_STATUS_BTA_ACK_TIMEOUT&#160;</td><td class="fielddoc"><p>Fatal BTA ack timeout. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a38c1c6ab6f74357e51885233af3bd730"></a>MIPI_DSI_FATAL_STATUS_ESCAPE_ENTRY_ERROR&#160;</td><td class="fielddoc"><p>Fatal escape mode entry error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897ad3aa1964300069e29254a07d86d5b04f"></a>MIPI_DSI_FATAL_STATUS_LPDT_SYNC_ERROR&#160;</td><td class="fielddoc"><p>Fatal low power data transmission synchronization error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a227f51a421b41c28d47986bdd5c05418"></a>MIPI_DSI_FATAL_STATUS_CTRL_ERROR&#160;</td><td class="fielddoc"><p>Fatal control error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a1c4604ab212ab442ad11fecaa4ce35fe"></a>MIPI_DSI_FATAL_STATUS_LP0_CONTENTION_DETECT&#160;</td><td class="fielddoc"><p>Fatal lane 0 low power contention detect. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897aeda548ebd9589ddeb948867f21abb251"></a>MIPI_DSI_FATAL_STATUS_LP1_CONTENTION_DETECT&#160;</td><td class="fielddoc"><p>Fatal lane 1 low power contention detect. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897ae165961e5a1ff33b3eacb2ff163d2736"></a>MIPI_DSI_FATAL_STATUS_LP0_CONTENTION&#160;</td><td class="fielddoc"><p>Fatal lane 0 low power contention status. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2f5f9b4400be314e299bf6c792928897a2143a9de5046e0a08828376590cbac29"></a>MIPI_DSI_FATAL_STATUS_LP1_CONTENTION&#160;</td><td class="fielddoc"><p>Fatal lane 1 low power contention status. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga97932a5bc0902ec9468dc8a6971d7280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga97932a5bc0902ec9468dc8a6971d7280">&#9670;&nbsp;</a></span>mipi_dsi_phy_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga97932a5bc0902ec9468dc8a6971d7280">mipi_dsi_phy_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI physical lane status </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a8c13267ebffd3dfc8d95c201eadb4519"></a>MIPI_DSI_PHY_STATUS_NONE&#160;</td><td class="fielddoc"><p>Physical lane status not set. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a88aef67696020de822fd81f6bda5e5ad"></a>MIPI_DSI_PHY_STATUS_ULP_NOT_ACTIVE&#160;</td><td class="fielddoc"><p>Physical lane ULP not active. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a974060a3ef176a59954df123cc0c1979"></a>MIPI_DSI_PHY_STATUS_CLOCK_LANE_STOP&#160;</td><td class="fielddoc"><p>Clock lane in stopped state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280ab78b6e61cc67faa4fe308ecfe5cfb53e"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_LP_RX&#160;</td><td class="fielddoc"><p>Data lane low power receive mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280aad73ac22ea6bb0bc0a55dc1a1f952b32"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_ULP_RX&#160;</td><td class="fielddoc"><p>Data lane ultra low power receive mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a51c1bfc3540687b3a091f735550696e7"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_NOT_ULP&#160;</td><td class="fielddoc"><p>Data lane 0 not in ULP mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280aa10d8d1baf8473a3ab65db83170773d7"></a>MIPI_DSI_PHY_STATUS_DATA_LANE1_NOT_ULP&#160;</td><td class="fielddoc"><p>Data lane 1 not in ULP mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a3b74cdc6301c93b4cb59ef65c366494f"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_STOP&#160;</td><td class="fielddoc"><p>Data lane 0 stop state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a5e70d230eca6ca6492c6958eea91c080"></a>MIPI_DSI_PHY_STATUS_DATA_LANE1_STOP&#160;</td><td class="fielddoc"><p>Data lane 1 stop state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a38f4bf536bc78a7e70d6a32dd4bc152d"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_RX_TO_TX&#160;</td><td class="fielddoc"><p>Data lane Rx to Tx transition event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280ac79eceefec4647f8e75023b813dc587b"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_TX_TO_RX&#160;</td><td class="fielddoc"><p>Data lane Tx to Rx transition event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280aeb5c286fddbc4ee7399147ffc96dbd8b"></a>MIPI_DSI_PHY_STATUS_DATA_LANE0_RX_STATE&#160;</td><td class="fielddoc"><p>Data lane Rx active state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280ad8b0be24b2c3562bf916b0cb3f88a616"></a>MIPI_DSI_PHY_STATUS_CLOCK_ULPS_ENTER&#160;</td><td class="fielddoc"><p>Clock lane ULPS enter event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a40f4b196aeed8e29708c16358256d129"></a>MIPI_DSI_PHY_STATUS_CLOCK_ULPS_EXIT&#160;</td><td class="fielddoc"><p>Clock lane ULPS exit event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280aceba5f29ddb83fe0c4d46184f4e6568c"></a>MIPI_DSI_PHY_STATUS_CLOCK_LP_TO_HS&#160;</td><td class="fielddoc"><p>Clock lane LP to HS transition event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280aedd8694a42f26004684efe86f490e163"></a>MIPI_DSI_PHY_STATUS_CLOCK_HS_TO_LP&#160;</td><td class="fielddoc"><p>Clock lane HS to LP transition event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280afd164933f0f615c441e09de2520014dd"></a>MIPI_DSI_PHY_STATUS_DATA_LANE_ULPS_ENTER&#160;</td><td class="fielddoc"><p>Data lane ULPS enter event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97932a5bc0902ec9468dc8a6971d7280a01032f2abd9d2e4cc6f7fbeee88ac59e"></a>MIPI_DSI_PHY_STATUS_DATA_LANE_ULPS_EXIT&#160;</td><td class="fielddoc"><p>Data lane ULPS exit event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga677d8c3fd76f743ec4d5d36d02695885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga677d8c3fd76f743ec4d5d36d02695885">&#9670;&nbsp;</a></span>mipi_dsi_link_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga677d8c3fd76f743ec4d5d36d02695885">mipi_dsi_link_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI link status bits </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga677d8c3fd76f743ec4d5d36d02695885a9d64d9c6783fda228eea1af6b1bffd00"></a>MIPI_DSI_LINK_STATUS_IDLE&#160;</td><td class="fielddoc"><p>Link idle or uninitialized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga677d8c3fd76f743ec4d5d36d02695885af4a73081bc97288e4976eda9dc67934b"></a>MIPI_DSI_LINK_STATUS_CH0_RUNNING&#160;</td><td class="fielddoc"><p>Channel 0 running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga677d8c3fd76f743ec4d5d36d02695885ad7931b45f8b8cacbf2498ef2ecb48852"></a>MIPI_DSI_LINK_STATUS_CH1_RUNNING&#160;</td><td class="fielddoc"><p>Channel 1 running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga677d8c3fd76f743ec4d5d36d02695885aa2005f58b764ac8ef0ce61176559db2e"></a>MIPI_DSI_LINK_STATUS_VIDEO_RUNNING&#160;</td><td class="fielddoc"><p>Video output running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga677d8c3fd76f743ec4d5d36d02695885ae483ef70442dfb5bf12dbffbacb51847"></a>MIPI_DSI_LINK_STATUS_HP_MODE_BUSY&#160;</td><td class="fielddoc"><p>HP operation busy. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga677d8c3fd76f743ec4d5d36d02695885a74c2b0d8c52fb218e965e1d69f354402"></a>MIPI_DSI_LINK_STATUS_LP_MODE_BUSY&#160;</td><td class="fielddoc"><p>LP operation busy. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gac64221aa26233766a89b534fdd596703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac64221aa26233766a89b534fdd596703">&#9670;&nbsp;</a></span>mipi_dsi_lane_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MIPI DSI Lane Type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac64221aa26233766a89b534fdd596703aa460b5f21cef72cc959cf6a7f1a2a840"></a>MIPI_DSI_LANE_CLOCK&#160;</td><td class="fielddoc"><p>Clock Lanes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac64221aa26233766a89b534fdd596703ab2abdfdb21f33213982d6f70aeaea662"></a>MIPI_DSI_LANE_DATA_ALL&#160;</td><td class="fielddoc"><p>All Data Lanes. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

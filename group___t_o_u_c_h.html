@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -365,21 +365,47 @@ Usage Notes</h1>
 <h2>Measurements and Data Processing</h2>
 <p>The module determines whether the button has been touched based on the change in capacitance and detects the position of the slider or wheel. This requires continued periodic measurements of capacitance. When developing your application, make sure to periodically call <a class="el" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">RM_TOUCH_ScanStart()</a> and <a class="el" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1" title="Gets the 64-bit mask indicating which buttons are pressed. Also, this function gets the current posit...">RM_TOUCH_DataGet()</a>. For more details, refer to the sample application.</p>
 <h2>Button Touch Determination</h2>
+<h3>Touch judgment method</h3>
+<p>Touch detection has two modes in CTSU2.</p>
+<ol type="1">
+<li>Value Majority Mode (VMM)<br />
+ Touch module obtains one measurement result for each button from CTSU module and outputs the touch judgment result.<br />
+ The measurement results has been noise-reduced in <a class="el" href="group___c_t_s_u.html">CTSU (r_ctsu)</a> module. <div class="image">
+<img src="rm_touch_Majority_Value_Mode.png" alt="rm_touch_Majority_Value_Mode.png"/>
+<div class="caption">
+Value Majority Mode (VMM)</div></div>
+</li>
+<li>Judgement Majority Mode (JMM)<br />
+ This mode supported from FSP V5.1.0 or later.<br />
+ Touch module obtains three measurement results for each button from CTSU module, judges each touch, and outputs the final touch judgement result by majority vote. <div class="image">
+<img src="rm_touch_Majority_Judgement_Mode.png" alt="rm_touch_Majority_Judgement_Mode.png"/>
+<div class="caption">
+Judgement Majority Mode (JMM)</div></div>
+<br />
+</li>
+</ol>
 <h3>Creating reference value and threshold</h3>
 <p>A touch button is not a mechanical button in which the ON/OF state is switched by hardware. The ON/OFF state is determined via software. <br />
  First, a reference value is created based on measurement results in the non-touch state. The initial reference value is the first measured value. The threshold is then determined with an arbitrary offset. If a measured value exceeds the threshold, the button is determined to be in the ON state, if it does not exceed the threshold, it is in the OFF state. <br />
  Processing for self-capacitance and mutual capacitance are basically the same. However, because the amount of capacitance decreases when a mutual capacitance button is touched, the user needs to set the threshold based on decreasing measured values to determine the ON/OFF state.<br />
- You can set the threshold for each button separately in the configuration settings (threshold in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The following functions are also included to deal with issues such as chattering suppression and changes in the external environment which affect actual touch recognition.</p>
+ You can set the threshold for each button separately in the configuration settings (threshold in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The following functions are also included to deal with issues such as chattering suppression and changes in the external environment which affect actual touch recognition.<br />
+ VMM : Creates one reference value and one threshold value for each button.<br />
+ JMM : Creates three reference values and three threshold values for each button.<br />
+</p>
 <h3>Positive Noise Filter/Negative Noise Filter</h3>
 <p>As a chattering countermeasure, you can confirm the ON/OFF state after a set number of consecutive ON or OFF determinations.<br />
  In the configuration settings (on_freq and off_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>) set the number of consecutive ON or OFF states. You can do this for all buttons in the touch interface configuration. Be aware that, although this is an effective solution to improving chattering, the greater the number of consecutive states, the slower the response to actual touch.</p>
 <h3>Hysteresis</h3>
 <p>This is another chattering countermeasure. Offset the constant to the threshold after the state goes to ON, and prevent chattering by using hysteresis as the OFF-to-ON and ON-to-OFF threshold. <br />
- You can set the hysteresis value for each button in the configuration settings (hysteresis in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The larger the hysteresis, the more effective the countermeasure is in suppressing chattering. However, keep in mind that this will make it more difficult to return the state from ON-to-OFF of OFF-to-ON.</p>
+ You can set the hysteresis value for each button in the configuration settings (hysteresis in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The larger the hysteresis, the more effective the countermeasure is in suppressing chattering. However, keep in mind that this will make it more difficult to return the state from ON-to-OFF of OFF-to-ON.<br />
+ VMM : One hysteresis for each button.<br />
+ JMM : Three hysteresis for each button.</p>
 <h3>Drift Correction Process</h3>
 <p>As a countermeasure for changes in the external environment, the drift correction process refreshes the reference value.<br />
  After averaging the measured value in the OFF state over a set period, if the button is in the touch OFF state after a set period, the reference value is refreshed. The drift correction is only executed in the OFF state and is cleared when touch ON is determined.<br />
- Set the period in the configuration settings (drift_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>). You can do this for all buttons in the touch interface configuration. This allows you to adjust the ability to determine the touch state despite changes in the external environment.</p>
+ Set the period in the configuration settings (drift_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>). You can do this for all buttons in the touch interface configuration. This allows you to adjust the ability to determine the touch state despite changes in the external environment.<br />
+ VMM : Drift corrects one baseline value per button.<br />
+ JMM : Drift corrects three baseline value per button.</p>
 <div class="image">
 <img src="rm_touch_Button_Touch_Determination.png" alt="rm_touch_Button_Touch_Determination.png"/>
 <div class="caption">
@@ -398,7 +424,29 @@ Button Touch Determination</div></div>
 Chattering suppression type</div></div>
  <h2>Touch Position Detection of Slider/Wheel</h2>
 <p>Configure a slider with multiple terminals to be measured (TS) physically arranged in a straight line. Configure a wheel with multiple terminals physically arranged in a circle.<br />
- The touch position is calculated from the measured values of the TS in the configuration. The calculation method for sliders and wheels is fundamentally the same.</p><ol type="1">
+ The touch position is calculated from the measured values of the TS in the configuration. The calculation method for sliders and wheels is fundamentally the same.</p>
+<h3>Touch judgement mode of Slider/Wheel.</h3>
+<p>Slider and wheel coordinate calculation has two modes in CTSU2.<br />
+</p>
+<ol type="1">
+<li>VMM<br />
+ Touch module gets the measurement result of each slider and wheel from the CTSU module and calculate the coordinate.<br />
+ The measurement results has been noise-reduced in CTSU module. <div class="image">
+<img src="rm_touch_Majority_Value_Mode_Slider.png" alt="rm_touch_Majority_Value_Mode_Slider.png"/>
+<div class="caption">
+Value Majority Mode (Slider,Wheel)</div></div>
+</li>
+<li>JMM<br />
+ Touch module get three measurement results for each slider and wheel from the CTSU module, calculate the coordinates for each, select two coordinates by judgement majority, and average the two coordinate results.<br />
+ <div class="image">
+<img src="rm_touch_Majority_Judgement_Mode_Slider.png" alt="rm_touch_Majority_Judgement_Mode_Slider.png"/>
+<div class="caption">
+Judgement Majority Mode (Slider,Wheel)</div></div>
+<br />
+</li>
+</ol>
+<h3>Touch Position calculation of Slider/Wheel</h3>
+<ol type="1">
 <li>Detect the maximum value (TS_MAX) among the terminals in the configuration.</li>
 <li>Calculate the difference (d1, d2) between TS_MAX and the terminals on either side. (If the TS_MAX terminal is at one end of the slider, use the values of the two terminals to the right or left, accordingly.)</li>
 <li>If the total of d1 and d2 exceeds the threshold, position calculation is initiated. If the total amount does not exceed the threshold, the position calculation process is ended.</li>
@@ -1233,7 +1281,7 @@ Pointer to CTSU instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

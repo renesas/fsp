@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -247,6 +247,8 @@ $(document).ready(function(){initNavTree('group___r_s_i_p___k_e_y___i_n_j_e_c_t_
 Functions</h2></td></tr>
 <tr class="memitem:gad7dd63ba584a4170d4e6fd57264f8a76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gad7dd63ba584a4170d4e6fd57264f8a76">R_RSIP_AES128_InitialKeyWrap</a> (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, rsip_aes_wrapped_key_t *const p_wrapped_key)</td></tr>
 <tr class="separator:gad7dd63ba584a4170d4e6fd57264f8a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb2163f3869da539b3d332b568decad9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gabb2163f3869da539b3d332b568decad9">R_RSIP_AES192_InitialKeyWrap</a> (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, rsip_aes_wrapped_key_t *const p_wrapped_key)</td></tr>
+<tr class="separator:gabb2163f3869da539b3d332b568decad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae52f03fcf29650fd6cb3f8b33bddf1b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gae52f03fcf29650fd6cb3f8b33bddf1b1">R_RSIP_AES256_InitialKeyWrap</a> (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, rsip_aes_wrapped_key_t *const p_wrapped_key)</td></tr>
 <tr class="separator:gae52f03fcf29650fd6cb3f8b33bddf1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa7690984a636bdf6874a0652bfae0c39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gaa7690984a636bdf6874a0652bfae0c39">R_RSIP_RSA2048_InitialPublicKeyWrap</a> (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, rsip_rsa2048_public_wrapped_key_t *const p_wrapped_key)</td></tr>
@@ -371,6 +373,78 @@ Usage Notes</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it is encrypted and MAC appended </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>128-bit AES wrapped key</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If an error occurs, the return value will be as follows.<ul>
+<li>FSP_ERR_ASSERTION A required parameter is NULL.</li>
+<li>FSP_ERR_CRYPTO_SCE_FAIL MAC anomaly detection.</li>
+<li>FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.</li>
+<li>FSP_ERR_CRYPTO_UNKNOWN An unknown error occurred.</li>
+<li>FSP_ERR_INVALID_STATE Internal state is illegal.</li>
+</ul>
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is RSIP Enabled State. After the function runs the state transitions to RSIP Enabled State. </dd></dl>
+
+</div>
+</div>
+<a id="gabb2163f3869da539b3d332b568decad9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb2163f3869da539b3d332b568decad9">&#9670;&nbsp;</a></span>R_RSIP_AES192_InitialKeyWrap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_AES192_InitialKeyWrap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const&#160;</td>
+          <td class="paramname"><em>key_injection_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_user_factory_programming_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_initial_vector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_user_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">rsip_aes_wrapped_key_t *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This API generates 192-bit AES key within the user routine.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it is encrypted and MAC appended </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>192-bit AES wrapped key</td></tr>
   </table>
   </dd>
 </dl>
@@ -1622,7 +1696,7 @@ Usage Notes</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

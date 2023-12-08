@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -313,19 +313,19 @@ The following build time configurations are defined in fsp_cfg/azure/fx/fx_user.
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Common  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Max Long Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>Specifies the maximum file name size for FileX. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
+<td class="tree_lvl_1_cell">Max Long Name Len</td><td>Value must be an integer greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>Specifies the maximum file name size for FileX. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Max Last Name Len</td><td>Value must be greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>This value defines the maximum file name length, which includes full path name. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
+<td class="tree_lvl_1_cell">Max Last Name Len</td><td>Value must be an integer greater than or equal to 13 and less than or equal to 256, or empty</td><td></td><td>This value defines the maximum file name length, which includes full path name. If left blank the default value is 256. Legal values range between 13 and 256. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Max Sector Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the maximum number of logical sectors that can be cached by FileX. The actual number of sectors that can be cached is lesser of this constant and how many sectors can fit in the amount of memory supplied at fx_media_open. The default value if left blank is 256. All values must be a power of 2. </td></tr>
+<td class="tree_lvl_1_cell">Max Sector Cache</td><td>Value must be an integer greater than 0 and power of 2 or empty</td><td></td><td>Specifies the maximum number of logical sectors that can be cached by FileX. The actual number of sectors that can be cached is lesser of this constant and how many sectors can fit in the amount of memory supplied at fx_media_open. The default value if left blank is 256. All values must be a power of 2. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Fat Map Size</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies the number of sectors that can be represented in the FAT update map. The default value if left blank is 256. Larger values help reduce unneeded updates of secondary FAT sectors. </td></tr>
+<td class="tree_lvl_1_cell">Fat Map Size</td><td>Value must be an integer greater than 0 or empty</td><td></td><td>Specifies the number of sectors that can be represented in the FAT update map. The default value if left blank is 256. Larger values help reduce unneeded updates of secondary FAT sectors. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Max Fat Cache</td><td>Value must be greater than 0 and power of 2 or empty</td><td></td><td>Specifies the number of entries in the internal FAT cache. The default value if left blank is 16. All values must be a power of 2. </td></tr>
+<td class="tree_lvl_1_cell">Max Fat Cache</td><td>Value must be an integer greater than 0 and power of 2 or empty</td><td></td><td>Specifies the number of entries in the internal FAT cache. The default value if left blank is 16. All values must be a power of 2. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Threading  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Update Rate (Seconds)</td><td>Value must be greater than 0 or empty</td><td></td><td>Specifies rate at which system time in FileX is adjusted. Default value if left blank is 10, specifying that the FileX system time is updated every 10 seconds. </td></tr>
+<td class="tree_lvl_1_cell">Update Rate (Seconds)</td><td>Value must be an integer greater than 0 or empty</td><td></td><td>Specifies rate at which system time in FileX is adjusted. Default value if left blank is 10, specifying that the FileX system time is updated every 10 seconds. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">No Timer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -515,7 +515,7 @@ Disabled (default)</li>
 </ul>
 </td><td>Disabled (default) </td><td>When enabled, FileX immediately passes write requests of all system sectors (boot, FAT, and directory sectors) to the media's driver. This potentially decreases performance, but helps limit corruption to lost clusters. Note that enabling this feature does not automatically enable FileX Fault Tolerant Module, which should be enabled separately. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Fault Tolerant Boot Index</td><td>Value must be greater than or equal to 116 and less than or equal to 119</td><td></td><td>Defines byte offset in the boot sector where the cluster for the fault tolerant log is. By default if left blank this value is 116. This field takes 4 bytes. Bytes 116 through 119 are chosen because they are marked as reserved by FAT 12/16/32/exFAT specification. </td></tr>
+<td class="tree_lvl_1_cell">Fault Tolerant Boot Index</td><td>Value must be an integer greater than or equal to 116 and less than or equal to 119</td><td></td><td>Defines byte offset in the boot sector where the cluster for the fault tolerant log is. By default if left blank this value is 116. This field takes 4 bytes. Bytes 116 through 119 are chosen because they are marked as reserved by FAT 12/16/32/exFAT specification. </td></tr>
 <tr class="tree_none">
 <td>Error Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -720,7 +720,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

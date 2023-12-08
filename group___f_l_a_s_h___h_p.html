@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -372,7 +372,14 @@ Flash Clock (FCLK)</h2>
 <h2><a class="anchor" id="r-flash-hp-interrupts"></a>
 Interrupts</h2>
 <p><a class="anchor" id="um_flash_data_flash_bgo_callbacks"></a><a class="anchor" id="um_flash_tz_callback"></a>Enable the flash ready interrupt only if you plan to use the data flash BGO. In this mode, the application can initiate a data flash operation and then be asynchronously notified of its completion, or an error, using a user supplied-callback function. The callback function is passed a structure containing event information that indicates the source of the callback event (for example, <a class="el" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a47cf4f3983c35ca46fcfabeb1903e068">flash_api_t::FLASH_EVENT_ERASE_COMPLETE</a>) When the FLASH FRDYI interrupt is enabled, the corresponding ISR will be defined in the flash driver. The ISR will call a user-callback function if one was registered with the <a class="el" href="group___f_l_a_s_h___a_p_i.html#a8166d0d1e4f3a59b8bf7f9e89fef9e44">flash_api_t::open</a> API. </p><dl class="section note"><dt>Note</dt><dd>The Flash HP supports an additional flash-error interrupt and if the BGO mode is enabled for the FLASH HP then both the Flash Ready Interrupt and Flash Error Interrupts must be enabled (assigned a priority).</dd></dl>
-<h2><a class="anchor" id="r-flash-hp-limitations"></a>
+<h2><a class="anchor" id="r-flash-hp-e2studio-caching"></a>
+Viewing flash contents in e2 studio</h2>
+<p>By default, the contents of data flash and code flash are cached by e<sup>2</sup> studio. This means that during a debug session, modifications to these memory regions will not be observed by e<sup>2</sup> studio. When debugging applications using e<sup>2</sup> studio, disable the "Allow caching of flash contents" option in the debug configuration in order to view modified flash contents (Debug Configuration &gt; Debugger &gt; Debug Tool Settings &gt; Allow caching of flash contents).</p>
+<div class="image">
+<img src="r_flash_hp_disable_caching.png" alt="r_flash_hp_disable_caching.png"/>
+<div class="caption">
+Debug Configuration</div></div>
+ <h2><a class="anchor" id="r-flash-hp-limitations"></a>
 Limitations</h2>
 <ul>
 <li>Write operations must be aligned on page boundaries and must be a multiple of the page boundary size.</li>
@@ -1080,7 +1087,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

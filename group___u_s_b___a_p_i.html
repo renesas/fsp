@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.0.1</span>
+   &#160;<span id="projectnumber">Release v5.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -906,6 +906,10 @@ Pointer to extended configuration by instance of interface. </td></tr>
 <tr class="separator:a2bf6b2b55ae43aadcf7ed5970f27eb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a176bf067655f5a302737da5be82670d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a176bf067655f5a302737da5be82670d7">remoteWakeup</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a176bf067655f5a302737da5be82670d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45556d7aca23663ba36a6dc8c0391ec2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a45556d7aca23663ba36a6dc8c0391ec2">driverActivate</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:a45556d7aca23663ba36a6dc8c0391ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5dedbc7adf5c865fd3cb3b1f218a181"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ad5dedbc7adf5c865fd3cb3b1f218a181">callbackMemorySet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_callback_args_t *p_callback_memory)</td></tr>
+<tr class="separator:ad5dedbc7adf5c865fd3cb3b1f218a181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a5a609b45c4e322506c9a89fa305b01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a1a5a609b45c4e322506c9a89fa305b01">moduleNumberGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, uint8_t *module_number)</td></tr>
 <tr class="separator:a1a5a609b45c4e322506c9a89fa305b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ae3b604bc6ea15e5b9169337fad9c20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a8ae3b604bc6ea15e5b9169337fad9c20">classTypeGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2">usb_class_t</a> *class_type)</td></tr>
@@ -1415,6 +1419,55 @@ Pointer to extended configuration by instance of interface. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>USB control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a45556d7aca23663ba36a6dc8c0391ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45556d7aca23663ba36a6dc8c0391ec2">&#9670;&nbsp;</a></span>driverActivate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::driverActivate) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Activate USB Driver </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga2f8b7813a97e21b412fc95a80c042fe3">R_USB_DriverActivate()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad5dedbc7adf5c865fd3cb3b1f218a181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5dedbc7adf5c865fd3cb3b1f218a181">&#9670;&nbsp;</a></span>callbackMemorySet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::callbackMemorySet) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_callback_args_t *p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set callback memory to USB driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#gaaedca302f2e3938e2d85e4a82c44d44b">R_USB_CallbackMemorySet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback_memory</td><td>Pointer to store USB event information. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1972,7 +2025,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.0.1 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

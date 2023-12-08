@@ -16,7 +16,8 @@ var group___m_o_t_o_r___s_e_n_s_e___h_a_l_l =
       [ "u2_trigger_carrier_count", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#abb71ff7b49b04fe5f440fbd8594dc4e4", null ],
       [ "u2_default_counts", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a6c08c69c046a2634be88c098d1959e68", null ],
       [ "u2_maximum_period", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a5ab344de6c53e8af80d828f20726f126", null ],
-      [ "u1_hall_polepairs", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a928409392c95d4cce13e866b0602dacc", null ]
+      [ "u1_hall_polepairs", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a928409392c95d4cce13e866b0602dacc", null ],
+      [ "f4_start_speed_rad", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a53b4c66195d1de4eb1d4d541192a96c1", null ]
     ] ],
     [ "motor_sense_hall_instance_ctrl_t", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#structmotor__sense__hall__instance__ctrl__t", [
       [ "u1_hall_signal", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a58129504e5c12e792a552b71b9fb72a3", null ],
@@ -35,7 +36,8 @@ var group___m_o_t_o_r___s_e_n_s_e___h_a_l_l =
       [ "f4_pseudo_speed_rad", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ac4d4b97be96816c2084910e0a8a63bfc", null ],
       [ "f4_add_pseudo_speed_rad", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a69aef03f5343ee56bc95532c8308e149", null ],
       [ "u2_startup_carrier_count", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#aa23a41964ccb7938ad889c9cf7c024f1", null ],
-      [ "st_input", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ab74112bdf49588574e555cadec5c7761", null ]
+      [ "st_input", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ab74112bdf49588574e555cadec5c7761", null ],
+      [ "u1_startup_flag", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a6ba2b7b2961555871b9fd7d5ae4d603d", null ]
     ] ],
     [ "motor_sense_hall_direction_t", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga9edccd7520f94005e49af13917dbd21f", [
       [ "MOTOR_SENSE_HALL_DIRECTION_CW", "group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gga9edccd7520f94005e49af13917dbd21fa6594f3aa23fa5c48b5f0e26ecb9fd334", null ],

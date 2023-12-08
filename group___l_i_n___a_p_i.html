@@ -1,0 +1,799 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: LIN Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_i_n___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">LIN Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for LIN communications. </p>
+<h1><a class="anchor" id="LIN_INTERFACE_SUMMARY"></a>
+Summary</h1>
+<p>The LIN interface provides common APIs for LIN HAL drivers. The LIN interface supports the following features:</p><ul>
+<li>Half-duplex master or slave LIN communication</li>
+<li>Interrupt driven transmit/receive processing</li>
+<li>Callback function with returned event code and data</li>
+<li>Checksum generation and validation (standard or enhanced) </li>
+</ul>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structlin__transfer__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a></td></tr>
+<tr class="separator:structlin__transfer__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlin__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a></td></tr>
+<tr class="separator:structlin__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlin__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#structlin__cfg__t">lin_cfg_t</a></td></tr>
+<tr class="separator:structlin__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlin__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#structlin__api__t">lin_api_t</a></td></tr>
+<tr class="separator:structlin__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlin__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#structlin__instance__t">lin_instance_t</a></td></tr>
+<tr class="separator:structlin__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf205a9f901ded2429ea55d18117d99b8"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a></td></tr>
+<tr class="separator:gaf205a9f901ded2429ea55d18117d99b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga82f45fff4983671b387f6e0b3ec9e12f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ga82f45fff4983671b387f6e0b3ec9e12f">lin_mode_t</a> </td></tr>
+<tr class="separator:ga82f45fff4983671b387f6e0b3ec9e12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga420925530265c35f3b2219649d7aad5b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ga420925530265c35f3b2219649d7aad5b">lin_checksum_type_t</a> </td></tr>
+<tr class="separator:ga420925530265c35f3b2219649d7aad5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7348cb44dbe95ba7bcd29c82cfbf8a72"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ga7348cb44dbe95ba7bcd29c82cfbf8a72">lin_event_t</a> </td></tr>
+<tr class="separator:ga7348cb44dbe95ba7bcd29c82cfbf8a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structlin__transfer__params__t" id="structlin__transfer__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlin__transfer__params__t">&#9670;&nbsp;</a></span>lin_transfer_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lin_transfer_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>LIN Transfer Parameters </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa24c43c5df396418efba7f93c71c2f6b"></a>uint8_t</td>
+<td class="fieldname">
+id</td>
+<td class="fielddoc">
+The unprotected frame ID associated with the information frame transfer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4edd3430e363109754446c79bf646da3"></a>uint8_t *</td>
+<td class="fieldname">
+p_information</td>
+<td class="fielddoc">
+Pointer to rx or tx buffer associated with the information frame transfer. </td></tr>
+<tr><td class="fieldtype">
+<a id="afe681d74e72baac9af01cb15e732f1ee"></a>uint8_t</td>
+<td class="fieldname">
+num_bytes</td>
+<td class="fielddoc">
+Length of buffer pointed to by p_information, in bytes. </td></tr>
+<tr><td class="fieldtype">
+<a id="afac4c23e70ff74f53a1247625dbd6940"></a><a class="el" href="group___l_i_n___a_p_i.html#ga420925530265c35f3b2219649d7aad5b">lin_checksum_type_t</a></td>
+<td class="fieldname">
+checksum_type</td>
+<td class="fielddoc">
+Checksum type to use for checksum generation (when writing frame) or validation (when reading frame). See <a class="el" href="group___l_i_n___a_p_i.html#ga420925530265c35f3b2219649d7aad5b">lin_checksum_type_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlin__callback__args__t" id="structlin__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlin__callback__args__t">&#9670;&nbsp;</a></span>lin_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lin_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>LIN Callback Arguments </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a1bda5e9b9760868f3004ef1e35d3faa1"></a>uint32_t</td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Channel number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6dc50b21f5754e10404f94f8a83cc7a3"></a><a class="el" href="group___l_i_n___a_p_i.html#ga7348cb44dbe95ba7bcd29c82cfbf8a72">lin_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event code. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8d57becd55ba155f218e98327f1dddc3"></a>uint8_t</td>
+<td class="fieldname">
+bytes_received</td>
+<td class="fielddoc">
+<p>Valid for the following events:</p><ul>
+<li>LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE</li>
+<li>LIN_EVENT_ERR_FRAMING</li>
+<li>LIN_EVENT_ERR_INVALID_CHECKSUM</li>
+</ul>
+<p>Contains the number of information bytes received for an information frame reception. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a56d7dcf4d2acb8e0b5a209eecc676ef0"></a>uint8_t</td>
+<td class="fieldname">
+pid</td>
+<td class="fielddoc">
+<p>For LIN slave: Contains the most recently received protected identifier For LIN master: Contains the most recently transmitted protected identifier. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac34b61415600ab875af5dda8fb7fe748"></a>uint8_t</td>
+<td class="fieldname">
+checksum</td>
+<td class="fielddoc">
+<p>Received checksum. Valid for the following events:</p><ul>
+<li>LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE</li>
+<li>LIN_EVENT_ERR_INVALID_CHECKSUM. </li>
+</ul>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a4debbd9d2d5bdbea76add8f74f910228"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Context provided to user during callback. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlin__cfg__t" id="structlin__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlin__cfg__t">&#9670;&nbsp;</a></span>lin_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lin_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>LIN configuration block </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a238f2f12d37279529b9a99d7278fd8b8"><td class="memItemLeft" align="right" valign="top"><a id="a238f2f12d37279529b9a99d7278fd8b8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a238f2f12d37279529b9a99d7278fd8b8">channel</a></td></tr>
+<tr class="memdesc:a238f2f12d37279529b9a99d7278fd8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a channel corresponding to the channel number of the hardware. <br /></td></tr>
+<tr class="separator:a238f2f12d37279529b9a99d7278fd8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61bb86c03d458a8b1173bb1c55603398"><td class="memItemLeft" align="right" valign="top"><a id="a61bb86c03d458a8b1173bb1c55603398"></a>
+<a class="el" href="group___l_i_n___a_p_i.html#ga82f45fff4983671b387f6e0b3ec9e12f">lin_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a61bb86c03d458a8b1173bb1c55603398">mode</a></td></tr>
+<tr class="memdesc:a61bb86c03d458a8b1173bb1c55603398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver mode (master or slave) <br /></td></tr>
+<tr class="separator:a61bb86c03d458a8b1173bb1c55603398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e984b5b54a1e9db5b203c81ab9dd4e4"><td class="memItemLeft" align="right" valign="top"><a id="a2e984b5b54a1e9db5b203c81ab9dd4e4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a2e984b5b54a1e9db5b203c81ab9dd4e4">rxi_ipl</a></td></tr>
+<tr class="memdesc:a2e984b5b54a1e9db5b203c81ab9dd4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive interrupt priority. <br /></td></tr>
+<tr class="separator:a2e984b5b54a1e9db5b203c81ab9dd4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae69962d6319937c2cce331bceb0d8c78"><td class="memItemLeft" align="right" valign="top"><a id="ae69962d6319937c2cce331bceb0d8c78"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ae69962d6319937c2cce331bceb0d8c78">rxi_irq</a></td></tr>
+<tr class="memdesc:ae69962d6319937c2cce331bceb0d8c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive interrupt IRQ number. <br /></td></tr>
+<tr class="separator:ae69962d6319937c2cce331bceb0d8c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819fe31b3509756ee3e7b87e52d7b8e3"><td class="memItemLeft" align="right" valign="top"><a id="a819fe31b3509756ee3e7b87e52d7b8e3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a819fe31b3509756ee3e7b87e52d7b8e3">txi_ipl</a></td></tr>
+<tr class="memdesc:a819fe31b3509756ee3e7b87e52d7b8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit interrupt priority. <br /></td></tr>
+<tr class="separator:a819fe31b3509756ee3e7b87e52d7b8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ac3ad727ed12f03c77781fef795157f"><td class="memItemLeft" align="right" valign="top"><a id="a5ac3ad727ed12f03c77781fef795157f"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a5ac3ad727ed12f03c77781fef795157f">txi_irq</a></td></tr>
+<tr class="memdesc:a5ac3ad727ed12f03c77781fef795157f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit interrupt IRQ number. <br /></td></tr>
+<tr class="separator:a5ac3ad727ed12f03c77781fef795157f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab53693e6f3cc8ebda4ad035e19ceb6e4"><td class="memItemLeft" align="right" valign="top"><a id="ab53693e6f3cc8ebda4ad035e19ceb6e4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ab53693e6f3cc8ebda4ad035e19ceb6e4">tei_ipl</a></td></tr>
+<tr class="memdesc:ab53693e6f3cc8ebda4ad035e19ceb6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit end interrupt priority. <br /></td></tr>
+<tr class="separator:ab53693e6f3cc8ebda4ad035e19ceb6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12db630e5d20bbb0700b67bd1f1c22ae"><td class="memItemLeft" align="right" valign="top"><a id="a12db630e5d20bbb0700b67bd1f1c22ae"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a12db630e5d20bbb0700b67bd1f1c22ae">tei_irq</a></td></tr>
+<tr class="memdesc:a12db630e5d20bbb0700b67bd1f1c22ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit end interrupt IRQ number. <br /></td></tr>
+<tr class="separator:a12db630e5d20bbb0700b67bd1f1c22ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eb5faed06280a0b3a53b0e979c9a940"><td class="memItemLeft" align="right" valign="top"><a id="a7eb5faed06280a0b3a53b0e979c9a940"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a7eb5faed06280a0b3a53b0e979c9a940">eri_ipl</a></td></tr>
+<tr class="memdesc:a7eb5faed06280a0b3a53b0e979c9a940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error interrupt priority. <br /></td></tr>
+<tr class="separator:a7eb5faed06280a0b3a53b0e979c9a940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f2d401e447e3a1d1ef3b5bc240d2864"><td class="memItemLeft" align="right" valign="top"><a id="a3f2d401e447e3a1d1ef3b5bc240d2864"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a3f2d401e447e3a1d1ef3b5bc240d2864">eri_irq</a></td></tr>
+<tr class="memdesc:a3f2d401e447e3a1d1ef3b5bc240d2864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error interrupt IRQ number. <br /></td></tr>
+<tr class="separator:a3f2d401e447e3a1d1ef3b5bc240d2864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a464087017b51b356e0a520f4c92b1535"><td class="memItemLeft" align="right" valign="top"><a id="a464087017b51b356e0a520f4c92b1535"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a464087017b51b356e0a520f4c92b1535">p_callback</a> )(<a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a464087017b51b356e0a520f4c92b1535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function. <br /></td></tr>
+<tr class="separator:a464087017b51b356e0a520f4c92b1535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4c9123bbd44e7257125830fad51eb49"><td class="memItemLeft" align="right" valign="top"><a id="aa4c9123bbd44e7257125830fad51eb49"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#aa4c9123bbd44e7257125830fad51eb49">p_context</a></td></tr>
+<tr class="memdesc:aa4c9123bbd44e7257125830fad51eb49"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
+<tr class="separator:aa4c9123bbd44e7257125830fad51eb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5988db9d76c7a9357da2e1bb6d57812"><td class="memItemLeft" align="right" valign="top"><a id="af5988db9d76c7a9357da2e1bb6d57812"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#af5988db9d76c7a9357da2e1bb6d57812">p_extend</a></td></tr>
+<tr class="memdesc:af5988db9d76c7a9357da2e1bb6d57812"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN hardware dependent configuration. <br /></td></tr>
+<tr class="separator:af5988db9d76c7a9357da2e1bb6d57812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlin__api__t" id="structlin__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlin__api__t">&#9670;&nbsp;</a></span>lin_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lin_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Interface definition for LIN </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a6dd8c405cf45ef0fc3ec162913f5ed1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a6dd8c405cf45ef0fc3ec162913f5ed1e">open</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__cfg__t">lin_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a6dd8c405cf45ef0fc3ec162913f5ed1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebeb9517b0b7e67c7418a6104f5f7cb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#aebeb9517b0b7e67c7418a6104f5f7cb1">startFrameWrite</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, uint8_t const id)</td></tr>
+<tr class="separator:aebeb9517b0b7e67c7418a6104f5f7cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1103bd6a75fd2e6f005d3ad3e2dc4e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#aa1103bd6a75fd2e6f005d3ad3e2dc4e1">informationFrameWrite</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
+<tr class="separator:aa1103bd6a75fd2e6f005d3ad3e2dc4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af38bdf9c3929d5c9010066ec35c32b4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#af38bdf9c3929d5c9010066ec35c32b4e">informationFrameRead</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
+<tr class="separator:af38bdf9c3929d5c9010066ec35c32b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5595034306ba0b95e664ef4fc4a2ffce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a5595034306ba0b95e664ef4fc4a2ffce">communicationAbort</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a5595034306ba0b95e664ef4fc4a2ffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3c026803e304b6a626fde3d069d7140"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#af3c026803e304b6a626fde3d069d7140">callbackSet</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:af3c026803e304b6a626fde3d069d7140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a362c949cfdf9ce62f5bd90788464b49d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a362c949cfdf9ce62f5bd90788464b49d">close</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a362c949cfdf9ce62f5bd90788464b49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a6dd8c405cf45ef0fc3ec162913f5ed1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd8c405cf45ef0fc3ec162913f5ed1e">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::open) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__cfg__t">lin_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open LIN device. Transmission and reception of LIN frames is enabled upon successful return from this function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. Must be declared by user. Value set here. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to LIN configuration structure. All elements of this structure must be set by user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aebeb9517b0b7e67c7418a6104f5f7cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebeb9517b0b7e67c7418a6104f5f7cb1">&#9670;&nbsp;</a></span>startFrameWrite</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::startFrameWrite) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, uint8_t const id)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Begin non-blocking transmission of the LIN start frame. The start frame consists of the break pattern, sync word, and protected frame identifier (PID). The unprotected identifier should be supplied. The driver will compute the PID.</p>
+<p>When the start frame has been transmitted, the callback is called with event LIN_EVENT_TX_START_FRAME_COMPLETE.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>Unprotected frame identifier </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa1103bd6a75fd2e6f005d3ad3e2dc4e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1103bd6a75fd2e6f005d3ad3e2dc4e1">&#9670;&nbsp;</a></span>informationFrameWrite</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::informationFrameWrite) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Begin non-blocking transmission of the LIN information frame.</p>
+<p>The write buffer is used until the write is complete. When the write completes successfully (all bytes are fully transmitted on the wire) the callback is called with event LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_transfer_params</td><td>Pointer to parameters required for the write transaction. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af38bdf9c3929d5c9010066ec35c32b4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af38bdf9c3929d5c9010066ec35c32b4e">&#9670;&nbsp;</a></span>informationFrameRead</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::informationFrameRead) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Begin non-blocking read of information frame bytes.</p>
+<p>When a read completes successfully, the callback is called with event LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block for the channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_transfer_params</td><td>Pointer to parameters required for the read transaction. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5595034306ba0b95e664ef4fc4a2ffce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5595034306ba0b95e664ef4fc4a2ffce">&#9670;&nbsp;</a></span>communicationAbort</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::communicationAbort) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Abort ongoing transfer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af3c026803e304b6a626fde3d069d7140"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3c026803e304b6a626fde3d069d7140">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::callbackSet) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a362c949cfdf9ce62f5bd90788464b49d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a362c949cfdf9ce62f5bd90788464b49d">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::close) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close LIN device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structlin__instance__t" id="structlin__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlin__instance__t">&#9670;&nbsp;</a></span>lin_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct lin_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ad93aefc5c8ff90cd456d05abdc42f9f2"></a><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1a4c7859d9c992416aa39c173b99d26e"></a><a class="el" href="group___l_i_n___a_p_i.html#structlin__cfg__t">lin_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac2089d30410e6101c67600293588fe96"></a><a class="el" href="group___l_i_n___a_p_i.html#structlin__api__t">lin_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="gaf205a9f901ded2429ea55d18117d99b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf205a9f901ded2429ea55d18117d99b8">&#9670;&nbsp;</a></span>lin_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LIN control block. Allocate an instance specific control block to pass into the LIN API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga82f45fff4983671b387f6e0b3ec9e12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga82f45fff4983671b387f6e0b3ec9e12f">&#9670;&nbsp;</a></span>lin_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_i_n___a_p_i.html#ga82f45fff4983671b387f6e0b3ec9e12f">lin_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LIN driver mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga82f45fff4983671b387f6e0b3ec9e12fafaf6c54788c17ab86e6feb0e8933c764"></a>LIN_MODE_SLAVE&#160;</td><td class="fielddoc"><p>Slave mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga82f45fff4983671b387f6e0b3ec9e12fa9cbe72f9d2b38dc472b5f70509d0f962"></a>LIN_MODE_MASTER&#160;</td><td class="fielddoc"><p>Master mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga420925530265c35f3b2219649d7aad5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga420925530265c35f3b2219649d7aad5b">&#9670;&nbsp;</a></span>lin_checksum_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_i_n___a_p_i.html#ga420925530265c35f3b2219649d7aad5b">lin_checksum_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LIN checksum type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga420925530265c35f3b2219649d7aad5bada36f3e7dd737c1f332917a82efb2db2"></a>LIN_CHECKSUM_TYPE_CLASSIC&#160;</td><td class="fielddoc"><p>8 bit LIN classic checksum over information bytes only </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856"></a>LIN_CHECKSUM_TYPE_ENHANCED&#160;</td><td class="fielddoc"><p>8 bit LIN enhanced checksum over information bytes and PID </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga420925530265c35f3b2219649d7aad5ba26e93d617a43afc1ecd4470e0a959fb1"></a>LIN_CHECKSUM_TYPE_NONE&#160;</td><td class="fielddoc"><p>Skip driver checksum generation/validation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7348cb44dbe95ba7bcd29c82cfbf8a72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7348cb44dbe95ba7bcd29c82cfbf8a72">&#9670;&nbsp;</a></span>lin_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_i_n___a_p_i.html#ga7348cb44dbe95ba7bcd29c82cfbf8a72">lin_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LIN Event codes </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a5f4bc68eec0c6ca3545e68a7305aaa1d"></a>LIN_EVENT_NONE&#160;</td><td class="fielddoc"><p>No event present. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a7a645d62c0a254686a2df8f8cecf1426"></a>LIN_EVENT_RX_START_FRAME_COMPLETE&#160;</td><td class="fielddoc"><p>Start frame received event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72afae5a2ecd0e7539ebf8e10c000577321"></a>LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE&#160;</td><td class="fielddoc"><p>Information frame received event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a849c350c804a580611d9608cbf08d377"></a>LIN_EVENT_TX_START_FRAME_COMPLETE&#160;</td><td class="fielddoc"><p>Start frame transmission complete event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6"></a>LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE&#160;</td><td class="fielddoc"><p>Information transmission complete event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48"></a>LIN_EVENT_ERR_INVALID_CHECKSUM&#160;</td><td class="fielddoc"><p>Information frame received successfully, but checksum was invalid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96"></a>LIN_EVENT_ERR_BUS_COLLISION_DETECTED&#160;</td><td class="fielddoc"><p>Bus collision detection event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc"></a>LIN_EVENT_ERR_FRAMING&#160;</td><td class="fielddoc"><p>Framing error event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551"></a>LIN_EVENT_ERR_COUNTER_OVERFLOW&#160;</td><td class="fielddoc"><p>Counter overflow event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ae3376187275c3f4b572e77b89ec80348"></a>LIN_EVENT_ERR_OVERRUN&#160;</td><td class="fielddoc"><p>Overrun error event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9"></a>LIN_EVENT_ERR_PARITY&#160;</td><td class="fielddoc"><p>Parity error event (start frame only, LIN information is sent without parity) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

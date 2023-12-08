@@ -1,6 +1,7 @@
 var group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n =
 [
     [ "R_RSIP_AES128_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gad7dd63ba584a4170d4e6fd57264f8a76", null ],
+    [ "R_RSIP_AES192_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gabb2163f3869da539b3d332b568decad9", null ],
     [ "R_RSIP_AES256_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gae52f03fcf29650fd6cb3f8b33bddf1b1", null ],
     [ "R_RSIP_RSA2048_InitialPublicKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gaa7690984a636bdf6874a0652bfae0c39", null ],
     [ "R_RSIP_RSA2048_InitialPrivateKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gab965ba1e1c3ece674fe28e0a2d392ee6", null ],

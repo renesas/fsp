@@ -248,7 +248,7 @@ var group___g_a_p___a_p_i =
     ] ],
     [ "st_ble_gap_adv_rept_evt_t", "group___g_a_p___a_p_i.html#structst__ble__gap__adv__rept__evt__t", [
       [ "adv_rpt_type", "group___g_a_p___a_p_i.html#a4adc104f63a1921dc660690482dd9219", null ],
-      [ "param", "group___g_a_p___a_p_i.html#abc5133209cd08a23bc22ad41f4b07f06", null ]
+      [ "param", "group___g_a_p___a_p_i.html#ab4171c224b474282262df724acbdc537", null ]
     ] ],
     [ "st_ble_gap_adv_rept_evt_t.param", "group___g_a_p___a_p_i.html#unionst__ble__gap__adv__rept__evt__t_8param", [
       [ "p_adv_rpt", "group___g_a_p___a_p_i.html#a8db81ddc057f720f735776ca05382a93", null ],
@@ -748,7 +748,7 @@ var group___g_a_p___a_p_i =
     [ "R_BLE_GAP_SetBondInfo", "group___g_a_p___a_p_i.html#gac78f7a4de986fd46e53ccde20a493557", null ],
     [ "R_BLE_GAP_DeleteBondInfo", "group___g_a_p___a_p_i.html#gacab339bfac063cd2d0715632ae1f44fe", null ],
     [ "R_BLE_GAP_ReplyLtkReq", "group___g_a_p___a_p_i.html#gac83a44568ee8d498514df80338705e1d", null ],
-    [ "R_BLE_GAP_SetCteConnlessParam", "group___g_a_p___a_p_i.html#gac71839093528bb13c94529f860a4128b", null ],
+    [ "R_BLE_GAP_SetCteConnlessParam", "group___g_a_p___a_p_i.html#ga57a4ce230a5a050043e9393c87ecf253", null ],
     [ "R_BLE_GAP_EnableCteConnless", "group___g_a_p___a_p_i.html#ga7c611c163b258d3cf5b9f7e37f311294", null ],
     [ "R_BLE_GAP_StartCteConnlessRecv", "group___g_a_p___a_p_i.html#ga47be0d3814285b562b1c581f20d88ced", null ],
     [ "R_BLE_GAP_StopCteConnlessRecv", "group___g_a_p___a_p_i.html#ga83f8ea38ce246d392be9bdac93a6dc7d", null ],

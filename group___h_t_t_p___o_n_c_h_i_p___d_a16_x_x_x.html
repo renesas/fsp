@@ -1,0 +1,750 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: On Chip HTTP Client on DA16XXX (rm_http_onchip_da16xxx)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">On Chip HTTP Client on DA16XXX (rm_http_onchip_da16xxx)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gab3adf9b7644d4e7ace31b1fd197ca83c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gab3adf9b7644d4e7ace31b1fd197ca83c">RM_HTTP_DA16XXX_Open</a> (<a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl, <a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__cfg__t">http_onchip_da16xxx_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gab3adf9b7644d4e7ace31b1fd197ca83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8db4b46410efd84c86e44af19217d73d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga8db4b46410efd84c86e44af19217d73d">RM_HTTP_DA16XXX_Send</a> (<a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl, <a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__request__t">http_onchip_da16xxx_request_t</a> *p_request, <a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__buffer__t">http_onchip_da16xxx_buffer_t</a> *p_buffer)</td></tr>
+<tr class="separator:ga8db4b46410efd84c86e44af19217d73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55318ee06a6c512c9628476e77559283"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga55318ee06a6c512c9628476e77559283">RM_HTTP_DA16XXX_Close</a> (<a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga55318ee06a6c512c9628476e77559283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>HTTP client implementation using the DA16XXX WiFi module on RA MCUs. </p>
+<h1><a class="anchor" id="r-http-onchip-da16xxx-overview"></a>
+Overview</h1>
+<p>This Middleware module supplies an implementation for the HTTP Client on the DA16XXX module. The network stack is run on the DA16XXX and this module inherits and extends the core functionality from the DA16XXX WiFi driver. The DA16XXX HTTP module only supports FreeRTOS currently (Microsoft Azure support expected in future release).</p>
+<p>The DA16XXX module supports the following modules:</p>
+<ul>
+<li>DA16200</li>
+<li>DA16600</li>
+</ul>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<h2><a class="anchor" id="r-http-onchip-da16xxx-features"></a>
+Features</h2>
+<p>The HTTP Onchip da16xxx Middleware driver supplies these features:</p>
+<ul>
+<li>Supports sending a request header (GET, PUT, and POST) to an HTTP server and receiving a response header</li>
+<li>Supports unsecure and secure connection via TLS encryption</li>
+<li>Supports parsing of the response header and returning to the user</li>
+<li>Supports other optional configurations such as Server Name Indication (SNI) and ALPNs</li>
+</ul>
+<h1><a class="anchor" id="r-http-onchip-da16xxx-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_http_onchip_da16xxx</h2>
+The following build time configurations are defined in fsp_cfg/rm_http_onchip_da16xxx_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+</p>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<h2><a class="anchor" id="r-http-onchip-da16xxx-interrupt-configuration"></a>
+Interrupt Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<h2><a class="anchor" id="r-http-onchip-da16xxx-clock-configuration"></a>
+Clock Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>.</p>
+<h2><a class="anchor" id="r-http-onchip-da16xxx-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a></p>
+<h1><a class="anchor" id="r-http-onchip-da16xxx-usage_notes"></a>
+Usage Notes</h1>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<ul>
+<li>When the user intends to use secure TLS in their application, they need to provide certificates (root certificate authority, client certificate, and private key) in a header file</li>
+<li>The user must provide certificate macro names in the FSP Configurator properties, as well as the name of the header file (to link the module, certificates, and header together)</li>
+<li>If the user provides these credentials in the Configurator, they must create a new header file in their /src/ folder with the same name as they provided in the Configurator properties. When the code is generated, a build error will occur if the header file is not created</li>
+</ul>
+<h2>Limitations</h2>
+<p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
+<ul>
+<li>This module is not a standalone module - ensure that the WiFi module APIs are invoked first to configure the DA16XXX module and connect to an Access Point before using the HTTP module</li>
+<li>Ensure that DA16XXX SDK version v3.2.6 or later is being used, where the default buffer size for incoming TLS is 6KB and outgoing TLS is 4KB. Using earlier versions may result in failure to connect to an HTTP server with TLS (unless buffer size settings are altered manually)</li>
+</ul>
+<h1><a class="anchor" id="r-http-onchip-da16xxx-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of HTTP Middleware in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> http_onchip_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> wifi_err;</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>        http_err;</div><div class="line"></div><div class="line">    <span class="comment">/* Setup Access Point connection parameters */</span></div><div class="line">    <a class="code" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> net_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___w_i_f_i___a_p_i.html#a3cbd247faa28474c860d8e9dd31cfab5">ucChannel</a>                  = 0,</div><div class="line">        .xPassword.xWPA.cPassphrase = WIFI_PWD,</div><div class="line">        .ucSSID                     = WIFI_SSID,</div><div class="line">        .xPassword.xWPA.ucLength = <span class="keyword">sizeof</span>(WIFI_PWD),</div><div class="line">        .ucSSIDLength            = <span class="keyword">sizeof</span>(WIFI_SSID),</div><div class="line">        .xSecurity               = <a class="code" href="group___w_i_f_i___a_p_i.html#gga827dc938c214035b938c5ebe7d7b6816ac4775007ba0bfdb4e4ba754f219387df">eWiFiSecurityWPA2</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open connection to the Wifi Module */</span></div><div class="line">    wifi_err = <a class="code" href="group___w_i_f_i___a_p_i.html#ga2ee26776a00869c415da4a108031af1d">WIFI_On</a>();</div><div class="line">    assert(<a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> == wifi_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Connect to the Access Point */</span></div><div class="line">    wifi_err = <a class="code" href="group___w_i_f_i___a_p_i.html#ga430d72715054198b6ce0885410b027a5">WIFI_ConnectAP</a>(&amp;net_params);</div><div class="line">    assert(<a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> == wifi_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the HTTP Client connection */</span></div><div class="line">    http_err = <a class="code" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gab3adf9b7644d4e7ace31b1fd197ca83c">RM_HTTP_DA16XXX_Open</a>(&amp;g_rm_http_onchip_da16xxx_instance, &amp;g_http_onchip_da16xxx_cfg);</div><div class="line">    assert(FSP_SUCCESS == http_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the HTTP Client connection */</span></div><div class="line">    http_err = <a class="code" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga8db4b46410efd84c86e44af19217d73d">RM_HTTP_DA16XXX_Send</a>(&amp;g_rm_http_onchip_da16xxx_instance, &amp;test_req, &amp;user_buf);</div><div class="line">    assert(FSP_SUCCESS == http_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Close the HTTP Client module */</span></div><div class="line">    http_err = <a class="code" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga55318ee06a6c512c9628476e77559283">RM_HTTP_DA16XXX_Close</a>(&amp;g_rm_http_onchip_da16xxx_instance);</div><div class="line">    assert(FSP_SUCCESS == http_err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structhttp__onchip__da16xxx__request__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__request__t">http_onchip_da16xxx_request_t</a></td></tr>
+<tr class="separator:structhttp__onchip__da16xxx__request__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structhttp__onchip__da16xxx__buffer__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__buffer__t">http_onchip_da16xxx_buffer_t</a></td></tr>
+<tr class="separator:structhttp__onchip__da16xxx__buffer__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structhttp__onchip__da16xxx__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__cfg__t">http_onchip_da16xxx_cfg_t</a></td></tr>
+<tr class="separator:structhttp__onchip__da16xxx__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structhttp__onchip__da16xxx__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a></td></tr>
+<tr class="separator:structhttp__onchip__da16xxx__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga19cab16c4d955409eff4d85a5969c8c6"><td class="memItemLeft" align="right" valign="top"><a id="ga19cab16c4d955409eff4d85a5969c8c6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga19cab16c4d955409eff4d85a5969c8c6">HTTP_ONCHIP_DA16XXX_MAX_ALPN</a></td></tr>
+<tr class="memdesc:ga19cab16c4d955409eff4d85a5969c8c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of ALPNs supported by DA16XXX. <br /></td></tr>
+<tr class="separator:ga19cab16c4d955409eff4d85a5969c8c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad16b232457e9968e70782ff10b8f22aa"><td class="memItemLeft" align="right" valign="top"><a id="gad16b232457e9968e70782ff10b8f22aa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gad16b232457e9968e70782ff10b8f22aa">HTTP_ONCHIP_DA16XXX_MAX_SNI_LEN</a></td></tr>
+<tr class="memdesc:gad16b232457e9968e70782ff10b8f22aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of SNI supported by DA16XXX. <br /></td></tr>
+<tr class="separator:gad16b232457e9968e70782ff10b8f22aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84f957ac059ec4c81ef0ed9afd0ce8f5"><td class="memItemLeft" align="right" valign="top"><a id="ga84f957ac059ec4c81ef0ed9afd0ce8f5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga84f957ac059ec4c81ef0ed9afd0ce8f5">HTTP_ONCHIP_DA16XXX_MAX_GET_LEN</a></td></tr>
+<tr class="memdesc:ga84f957ac059ec4c81ef0ed9afd0ce8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum length of HTTP GET request. <br /></td></tr>
+<tr class="separator:ga84f957ac059ec4c81ef0ed9afd0ce8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga789a53419eb80b9c71ad086b36d0e0fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga789a53419eb80b9c71ad086b36d0e0fd">http_onchip_da16xxx_method_t</a> </td></tr>
+<tr class="separator:ga789a53419eb80b9c71ad086b36d0e0fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3bb362e9ff58b0f0c63dfc4997be93e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gab3bb362e9ff58b0f0c63dfc4997be93e">http_onchip_da16xxx_tls_auth_t</a> </td></tr>
+<tr class="separator:gab3bb362e9ff58b0f0c63dfc4997be93e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structhttp__onchip__da16xxx__request__t" id="structhttp__onchip__da16xxx__request__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structhttp__onchip__da16xxx__request__t">&#9670;&nbsp;</a></span>http_onchip_da16xxx_request_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct http_onchip_da16xxx_request_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>HTTP Request Buffer </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8a405966956fcdec667f52d7871ecb5c"></a>const char *</td>
+<td class="fieldname">
+p_http_endpoint</td>
+<td class="fielddoc">
+Defines the URL to send HTTP requests to. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac916a3ae16ec0aee29c5db91b6049bf8"></a>const char *</td>
+<td class="fieldname">
+p_request_body</td>
+<td class="fielddoc">
+Pointer to optional buffer for body. </td></tr>
+<tr><td class="fieldtype">
+<a id="a57a66eb6d4ea6c02785bebb695afa9df"></a><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga789a53419eb80b9c71ad086b36d0e0fd">http_onchip_da16xxx_method_t</a></td>
+<td class="fieldname">
+method</td>
+<td class="fielddoc">
+Request method to be used. </td></tr>
+<tr><td class="fieldtype">
+<a id="a955b5a3811a02b12ca2319ad1f8c9847"></a>uint32_t</td>
+<td class="fieldname">
+length</td>
+<td class="fielddoc">
+Length of optional body buffer. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structhttp__onchip__da16xxx__buffer__t" id="structhttp__onchip__da16xxx__buffer__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structhttp__onchip__da16xxx__buffer__t">&#9670;&nbsp;</a></span>http_onchip_da16xxx_buffer_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct http_onchip_da16xxx_buffer_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>HTTP User Buffers </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7c79eb7281cdc706f038f29331ef751d"></a>char *</td>
+<td class="fieldname">
+p_request_buffer</td>
+<td class="fielddoc">
+User HTTP request buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3a8780de095119449cac5474478102cd"></a>uint32_t</td>
+<td class="fieldname">
+req_length</td>
+<td class="fielddoc">
+Size of HTTP request buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa6fc5468e2ca68cf74a7addacb45c58c"></a>char *</td>
+<td class="fieldname">
+p_response_buffer</td>
+<td class="fielddoc">
+User HTTP request buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="abce72ea6541efdcc835badce3fc3bef7"></a>uint32_t</td>
+<td class="fieldname">
+resp_length</td>
+<td class="fielddoc">
+Size of HTTP request buffer. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structhttp__onchip__da16xxx__cfg__t" id="structhttp__onchip__da16xxx__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structhttp__onchip__da16xxx__cfg__t">&#9670;&nbsp;</a></span>http_onchip_da16xxx_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct http_onchip_da16xxx_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>HTTP Configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a61bbbfb7a6e7fb8db32b06ea7ea36181"></a><a class="el" href="group___r_m___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___a_p_i.html#structat__transport__da16xxx__instance__t">at_transport_da16xxx_instance_t</a> <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_transport_instance</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab47c80454d91437580317ab2b2a7896b"></a>const char *</td>
+<td class="fieldname">
+p_alpns[<a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga19cab16c4d955409eff4d85a5969c8c6">HTTP_ONCHIP_DA16XXX_MAX_ALPN</a>]</td>
+<td class="fielddoc">
+Buffer for storing ALPN names. </td></tr>
+<tr><td class="fieldtype">
+<a id="a19c50bb0ffb3e7feea506f8335a9c80d"></a>uint8_t</td>
+<td class="fieldname">
+alpn_count</td>
+<td class="fielddoc">
+ALPN Protocols count. Max value is 3. </td></tr>
+<tr><td class="fieldtype">
+<a id="a00370a1ce52247d59637460b9e602720"></a>const char *</td>
+<td class="fieldname">
+p_sni_name</td>
+<td class="fielddoc">
+Pointer to Server Name Indication. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0413f2c5c2516798c57f0e1e419cce04"></a><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gab3bb362e9ff58b0f0c63dfc4997be93e">http_onchip_da16xxx_tls_auth_t</a></td>
+<td class="fieldname">
+tls_level</td>
+<td class="fielddoc">
+Set TLS Authentication Level (0, 1, or 2) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3cedbb9fc3c6e802a8547d251f0fe2fa"></a>const char *</td>
+<td class="fieldname">
+p_root_ca</td>
+<td class="fielddoc">
+String representing a trusted server root certificate. </td></tr>
+<tr><td class="fieldtype">
+<a id="a55608172c82f3ef6156ac27c70cf4d93"></a>uint32_t</td>
+<td class="fieldname">
+root_ca_size</td>
+<td class="fielddoc">
+Size associated with root CA Certificate. </td></tr>
+<tr><td class="fieldtype">
+<a id="aad06bd93ff48f026751de3864230fd6d"></a>const char *</td>
+<td class="fieldname">
+p_client_cert</td>
+<td class="fielddoc">
+String representing a Client certificate. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7ee12b6efbd3e119aa49942ec2d14ef3"></a>uint32_t</td>
+<td class="fieldname">
+client_cert_size</td>
+<td class="fielddoc">
+Size associated with Client certificate. </td></tr>
+<tr><td class="fieldtype">
+<a id="adf7064cebbe0556601b409a69eb8d94b"></a>const char *</td>
+<td class="fieldname">
+p_client_private_key</td>
+<td class="fielddoc">
+String representing Client Private Key. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6f0302210b5e40e5be26e556e2d25c70"></a>uint32_t</td>
+<td class="fieldname">
+private_key_size</td>
+<td class="fielddoc">
+Size associated with Client Private Key. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structhttp__onchip__da16xxx__instance__ctrl__t" id="structhttp__onchip__da16xxx__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structhttp__onchip__da16xxx__instance__ctrl__t">&#9670;&nbsp;</a></span>http_onchip_da16xxx_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct http_onchip_da16xxx_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>HTTP_ONCHIP_DA16XXX private control block. DO NOT MODIFY. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0d89e642bde7d0ee178867f554553285"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Flag to indicate if HTTP has been opened. </td></tr>
+<tr><td class="fieldtype">
+<a id="af1968637ac708ecf6c9444c728e493c6"></a><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__cfg__t">http_onchip_da16xxx_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to p_cfg for HTTP. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga789a53419eb80b9c71ad086b36d0e0fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga789a53419eb80b9c71ad086b36d0e0fd">&#9670;&nbsp;</a></span>http_onchip_da16xxx_method_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga789a53419eb80b9c71ad086b36d0e0fd">http_onchip_da16xxx_method_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>HTTP Request Method </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga789a53419eb80b9c71ad086b36d0e0fda81aa22e3c2c0fe61c6c4891ba1a1b324"></a>HTTP_ONCHIP_DA16XXX_GET&#160;</td><td class="fielddoc"><p>Value converted to "get" string. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga789a53419eb80b9c71ad086b36d0e0fda974689081d6abded6c26fea12c6b52eb"></a>HTTP_ONCHIP_DA16XXX_POST&#160;</td><td class="fielddoc"><p>Value converted to "post" string. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga789a53419eb80b9c71ad086b36d0e0fda8815a9fe6ec29641d8a81ceadc706f09"></a>HTTP_ONCHIP_DA16XXX_PUT&#160;</td><td class="fielddoc"><p>Value converted to "put" string. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab3bb362e9ff58b0f0c63dfc4997be93e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab3bb362e9ff58b0f0c63dfc4997be93e">&#9670;&nbsp;</a></span>http_onchip_da16xxx_tls_auth_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gab3bb362e9ff58b0f0c63dfc4997be93e">http_onchip_da16xxx_tls_auth_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>HTTP TLS Authentication Level </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab3bb362e9ff58b0f0c63dfc4997be93ea71e982dbb5247599efa22cd655a74fc2"></a>HTTP_ONCHIP_DA16XXX_TLS_VERIFY_NONE&#160;</td><td class="fielddoc"><p>TLS verification is not used. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab3bb362e9ff58b0f0c63dfc4997be93eaaad38d8dfc8f500ee2f3b9d2a4abd30d"></a>HTTP_ONCHIP_DA16XXX_TLS_VERIFY_OPTIONAL&#160;</td><td class="fielddoc"><p>TLS verification is optional. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab3bb362e9ff58b0f0c63dfc4997be93ea26b545f22227ea8e5220b632e3bfc847"></a>HTTP_ONCHIP_DA16XXX_TLS_VERIFY_REQUIRED&#160;</td><td class="fielddoc"><p>TLS verification is required. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gab3adf9b7644d4e7ace31b1fd197ca83c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab3adf9b7644d4e7ace31b1fd197ca83c">&#9670;&nbsp;</a></span>RM_HTTP_DA16XXX_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HTTP_DA16XXX_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__cfg__t">http_onchip_da16xxx_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize the DA16XXX on-chip HTTP Client service.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to HTTP Client instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to HTTP Client configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter checking was unsuccessful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data size is too large or NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The instance has already been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8db4b46410efd84c86e44af19217d73d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8db4b46410efd84c86e44af19217d73d">&#9670;&nbsp;</a></span>RM_HTTP_DA16XXX_Send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HTTP_DA16XXX_Send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__request__t">http_onchip_da16xxx_request_t</a> *&#160;</td>
+          <td class="paramname"><em>p_request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__buffer__t">http_onchip_da16xxx_buffer_t</a> *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send the HTTP request with the configured buffers.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to HTTP Client instance control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_request</td><td>Pointer to HTTP request control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to HTTP user buffer struct for request and response.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter checking was unsuccessful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data size is too large. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>Data was not received correctly. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga55318ee06a6c512c9628476e77559283"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga55318ee06a6c512c9628476e77559283">&#9670;&nbsp;</a></span>RM_HTTP_DA16XXX_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HTTP_DA16XXX_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t">http_onchip_da16xxx_instance_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close the DA16XXX HTTP Client service.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to HTTP Client instance control structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter checking was unsuccessful. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,5 +1,8 @@
 var group___m_o_t_o_r__120___d_r_i_v_e_r =
 [
+    [ "motor_120_driver_shared_instance_ctrl_t", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__shared__instance__ctrl__t", [
+      [ "registered_motor_count", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#aa74a3d2d90df89a1527b99368c84fbd2", null ]
+    ] ],
     [ "motor_120_driver_modulation_t", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__modulation__t", [
       [ "f4_vdc", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ac2e7e866a3aad8ef6e425f8ae231ba76", null ],
       [ "f4_max_duty", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a468b28a714ebbbd672088b9f695be962", null ],
@@ -16,6 +19,12 @@ var group___m_o_t_o_r__120___d_r_i_v_e_r =
       [ "vu_ad_ch", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a1aade0e82d588f9c26b8b92626b05e6b", null ],
       [ "vv_ad_ch", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ad7b54231a06f707377e5e31a19462cbe", null ],
       [ "vw_ad_ch", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a7c5bf7a2e69f7cbaa6d581d540dd1602", null ],
+      [ "iu_ad_unit", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a97b442cc2c1da38471244d23444a2922", null ],
+      [ "iw_ad_unit", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a374c873c4d206cf3e03e223b0db589d9", null ],
+      [ "vdc_ad_unit", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a743f0b97747cb924011877062bb3ec1e", null ],
+      [ "vu_ad_unit", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ab63bcaf508f7f4c79b99438db37b1b02", null ],
+      [ "vv_ad_unit", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a48d501d44520ab132691edae3456e4ef", null ],
+      [ "vw_ad_unit", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a157d939fa4c6fedf8450bb5a511ccb9c", null ],
       [ "port_up", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ab2d05f3e43675a2760b01bfba282dec5", null ],
       [ "port_un", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a4bcad9ec96f46f1f1385743eee4be130", null ],
       [ "port_vp", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ac8911f5875c988dece1231ce5a854a35", null ],
@@ -31,7 +40,13 @@ var group___m_o_t_o_r__120___d_r_i_v_e_r =
       [ "f_ad_current_offset", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a3d696284dbdf161aa2e69007af278b36", null ],
       [ "f_ad_voltage_conversion", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a1ea853dcc0bd603e58b2ca7e1b06137f", null ],
       [ "u4_offset_calc_count", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#a8e150cc6f11a2202bb6cf667a5047cf4", null ],
-      [ "mod_param", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ab60877b7d9ba69ae0ca7669cb30683ac", null ]
+      [ "mod_param", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ab60877b7d9ba69ae0ca7669cb30683ac", null ],
+      [ "interrupt_adc", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#aefbfdd5c13dd678ee327e6170f8cd578", null ],
+      [ "p_shared_cfg", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ab673a7b3aae3f54b6278b179e85e64e7", null ]
+    ] ],
+    [ "motor_120_driver_select_adc_instance_t", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga7d563caa2b26b6dcac3c2bdcb6563753", [
+      [ "MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_1ST", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#gga7d563caa2b26b6dcac3c2bdcb6563753a12aed182dcb2f2e557ca7b0917543821", null ],
+      [ "MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_2ND", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#gga7d563caa2b26b6dcac3c2bdcb6563753a4cf07f0a33fb87505b235ce9d8e1e3da", null ]
     ] ],
     [ "motor_120_driver_status_t", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaa5786aa10befc7f92d49fdd3622ad7a3", [
       [ "MOTOR_120_DRIVER_STATUS_INACTIVE", "group___m_o_t_o_r__120___d_r_i_v_e_r.html#ggaa5786aa10befc7f92d49fdd3622ad7a3a5ea2a375afc8aab883414f9959ba7c8e", null ],

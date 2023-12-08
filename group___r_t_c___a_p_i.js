@@ -28,6 +28,12 @@ var group___r_t_c___a_p_i =
       [ "saturday_match", "group___r_t_c___a_p_i.html#aace35f4f57398a1f590cc39ee8504328", null ],
       [ "channel", "group___r_t_c___a_p_i.html#ae9bd30168ad8a2932e542beaed85b2e1", null ]
     ] ],
+    [ "rtc_time_capture_t", "group___r_t_c___a_p_i.html#structrtc__time__capture__t", [
+      [ "time", "group___r_t_c___a_p_i.html#ad7915eec1adda98a5740960381911c50", null ],
+      [ "channel", "group___r_t_c___a_p_i.html#afe687352b349ef422a1bea06357df121", null ],
+      [ "source", "group___r_t_c___a_p_i.html#ad79be9fceab2cd8a122e5d2254fc4c90", null ],
+      [ "noise_filter", "group___r_t_c___a_p_i.html#aab9203daea2e24a16626b2b40c98d3fa", null ]
+    ] ],
     [ "rtc_info_t", "group___r_t_c___a_p_i.html#structrtc__info__t", [
       [ "clock_source", "group___r_t_c___a_p_i.html#aba0edee87eb628db01fb1fa070a0c144", null ],
       [ "status", "group___r_t_c___a_p_i.html#a72e36c98782bcb50ce83f7d05b3fc024", null ]
@@ -57,7 +63,9 @@ var group___r_t_c___a_p_i =
       [ "periodicIrqRateSet", "group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951", null ],
       [ "errorAdjustmentSet", "group___r_t_c___a_p_i.html#ae1635364719444ad65541ce00953983e", null ],
       [ "callbackSet", "group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e", null ],
-      [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ]
+      [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ],
+      [ "timeCaptureSet", "group___r_t_c___a_p_i.html#ad94675c314c58dc82d170e37fe88c176", null ],
+      [ "timeCaptureGet", "group___r_t_c___a_p_i.html#a8d7348b2c176659c6453b75f2d4d66b9", null ]
     ] ],
     [ "rtc_instance_t", "group___r_t_c___a_p_i.html#structrtc__instance__t", [
       [ "p_ctrl", "group___r_t_c___a_p_i.html#acc669b027e055903ca6effb673182925", null ],
@@ -110,5 +118,18 @@ var group___r_t_c___a_p_i =
       [ "RTC_PERIODIC_IRQ_SELECT_1_HOUR", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a9b69082088629007baba227606dabf7a", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_DAY", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a858efb3d6980d080ebdbd6d2d978f447", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_MONTH", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ada0ec080ff6e58e5bb1601cf6e5d198f", null ]
+    ] ],
+    [ "rtc_time_capture_source_t", "group___r_t_c___a_p_i.html#ga60a231559f89a160d0849ae222518eca", [
+      [ "RTC_TIME_CAPTURE_SOURCE_DISABLED", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaadab60261dd01089e692cf2773b2d600d", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_RISING", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaafea97857443fe80f89e2b32533005cd5", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_FALLING", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa74b616ab24c70b286d37f1f01030823a", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_BOTH", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa3644f3972808104dc47b065116f3792e", null ]
+    ] ],
+    [ "rtc_time_capture_noise_filter_t", "group___r_t_c___a_p_i.html#gaeaa54438f4298dee64468529c104b6a7", [
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_OFF", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a14d8d0855f067c6c2b41884bfa5db7a6", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7aaa2ceda3891f75b5a1a7ff8b1e175bc7", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_32", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a7d817792d824cd55fb87845ae8fca1c7", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_4096", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a1fb7318f5b0241583fb635d2e5bb7351", null ],
+      [ "RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_8192", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7aadad6658307f55e6340493e93c7d48df", null ]
     ] ]
 ];
