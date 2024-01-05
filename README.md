@@ -53,6 +53,14 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 For a list of software modules packaged with FSP, see [Supported Software](SUPPORTED_SOFTWARE.md).
 
+#### Important Notice Regarding Azure RTOS
+
+On November 21, 2023, Microsoft announced that they have decided to contribute Azure RTOS to open source under the stewardship of the Eclipse foundation and Azure RTOS will become Eclipse ThreadX. For detailed information, please refer to the announcement at [Microsoft Contributes Azure RTOS to Open Source](https://techcommunity.microsoft.com/t5/internet-of-things-blog/microsoft-contributes-azure-rtos-to-open-source/ba-p/3986318).
+
+The support strategy scheme for Eclipse ThreadX will be determined and communicated at a later date. Microsoft will discontinue the Azure RTOS and Azure RTOS Middleware under the existing agreement [LICENSED-HARDWARE.txt](https://github.com/azure-rtos/threadx/blob/master/LICENSED-HARDWARE.txt).
+
+It is important to note that updates for Azure RTOS on these hardware will no longer be provided.
+
 ### Product Security Advisories
 
 [Product Security Advisories](https://github.com/renesas/fsp/issues?q=label%3Aproduct_security_advisory) for FSP and third party software (where available) are tagged with the 'product_security_advisory' label. Please check these issues for information from the respective vendors for affected versions and a recommended workaround or patch upgrade.
