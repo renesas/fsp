@@ -51,5 +51,9 @@ fsp_err_t HW_SCE_RNG_Read (uint32_t * OutData_Text) {
         *ptmp++ = R_TRNG->TRNGSDR;
     }
 
+    /* Clear SGCEN bit and SGSTART bit */
+    R_TRNG->TRNGSCR0_b.SGCEN   = 0;
+    R_TRNG->TRNGSCR0_b.SGSTART = 0;
+
     return FSP_SUCCESS;
 }
