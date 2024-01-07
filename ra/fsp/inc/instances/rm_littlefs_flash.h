@@ -28,10 +28,14 @@
 #include "r_flash_api.h"
 #include "lfs.h"
 #if LFS_THREAD_SAFE
- #include "FreeRTOS.h"
- #include "semphr.h"
-
+ #if BSP_CFG_RTOS == 1                 // ThreadX
+  #include "tx_api.h"
+ #elif BSP_CFG_RTOS == 2               // FreeRTOS
+  #include "FreeRTOS.h"
+  #include "semphr.h"
+ #endif
 #endif
+
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -60,8 +64,12 @@ typedef struct st_rm_littlefs_flash_instance_ctrl
     uint32_t open;
     rm_littlefs_cfg_t const * p_cfg;
 #if LFS_THREAD_SAFE
+ #if BSP_CFG_RTOS == 1                 // ThreadX
+    TX_MUTEX mutex;
+ #elif BSP_CFG_RTOS == 2               // FreeRTOS
     SemaphoreHandle_t xSemaphore;
     StaticSemaphore_t xMutexBuffer;
+ #endif
 #endif
 } rm_littlefs_flash_instance_ctrl_t;
 
