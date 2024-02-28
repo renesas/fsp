@@ -1,9 +1,11 @@
 var searchData=
 [
   ['uart_20communication_20device_20_28rm_5fcomms_5fuart_29',['UART Communication Device (rm_comms_uart)',['../group___r_m___c_o_m_m_s___u_a_r_t.html',1,'']]],
+  ['uart_20_28r_5fsau_5fuart_29',['UART (r_sau_uart)',['../group___s_a_u___u_a_r_t.html',1,'']]],
   ['uart_20_28r_5fsci_5fb_5fuart_29',['UART (r_sci_b_uart)',['../group___s_c_i___b___u_a_r_t.html',1,'']]],
   ['uart_20_28r_5fsci_5fuart_29',['UART (r_sci_uart)',['../group___s_c_i___u_a_r_t.html',1,'']]],
   ['uart_20interface',['UART Interface',['../group___u_a_r_t___a_p_i.html',1,'']]],
+  ['uart_20_28r_5fuarta_29',['UART (r_uarta)',['../group___u_a_r_t_a.html',1,'']]],
   ['usb_20_28r_5fusb_5fbasic_29',['USB (r_usb_basic)',['../group___u_s_b.html',1,'']]],
   ['usb_20interface',['USB Interface',['../group___u_s_b___a_p_i.html',1,'']]],
   ['usb_20composite_20_28r_5fusb_5fcomposite_29',['USB Composite (r_usb_composite)',['../group___u_s_b___c_o_m_p_o_s_i_t_e.html',1,'']]],

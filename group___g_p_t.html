@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -384,22 +384,24 @@ Periodic</li>
 <li>
 One-Shot</li>
 <li>
-PWM</li>
-<li>
 One-Shot Pulse</li>
 <li>
-Triangle-Wave Symmetric PWM</li>
+Saw-wave PWM</li>
 <li>
-Triangle-Wave Asymmetric PWM</li>
+Triangle-wave PWM (symmetric, Mode 1)</li>
 <li>
-Triangle-Wave Asymmetric PWM (Mode 3)</li>
+Triangle-wave PWM (asymmetric, Mode 2)</li>
+<li>
+Triangle-wave PWM (asymmetric, Mode 3)</li>
 </ul>
 </td><td>Periodic </td><td>Mode selection.<br />
 Periodic: Generates periodic interrupts or square waves.<br />
 One-shot: Generate a single interrupt or a pulse wave. Note: One-shot mode is implemented in software. ISRs must be enabled for one-shot even if callback is unused.<br />
-PWM: Generates basic PWM waveforms.<br />
-Triangle-Wave Symmetric PWM: Generates symmetric PWM waveforms with duty cycle determined by compare match set during a crest interrupt and updated at the next trough.<br />
-Triangle-Wave Asymmetric PWM: Generates asymmetric PWM waveforms with duty cycle determined by compare match set during a crest/trough interrupt and updated at the next trough/crest. </td></tr>
+One-Shot Pulse: Counter performs saw-wave operation with fixed buffer operation.<br />
+Saw-wave PWM: Generates basic saw-wave PWM waveforms.<br />
+Triangle-wave PWM (symmetric, Mode 1): Generates symmetric PWM waveforms with duty cycle determined by compare match set with 32-bit transfer during a crest interrupt and updated at the next trough with single or double buffer operation.<br />
+Triangle-wave PWM (asymmetric, Mode 2): Generates asymmetric PWM waveforms with duty cycle determined by compare match set with 32-bit transfer during a crest/trough interrupt and updated at the next trough/crest.<br />
+Triangle-wave PWM (asymmetric, Mode 3): Generates PWM waveforms with duty cycle determined by compare match set with 64-bit transfer during a crest interrupt and updated at the next trough with fixed buffer operation. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the timer period in units selected below. Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000 (32-bit) or 0x4000000 (16-bit) which will use a divider of 1024 with the maximum period.<br />
 <br />
@@ -2336,7 +2338,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

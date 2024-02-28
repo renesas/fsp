@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,6 +237,7 @@ $(document).ready(function(){initNavTree('group___b_s_p___m_c_u___r_a6_m3.html',
 </div>
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">RA6M3<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html">BSP</a> &raquo; <a class="el" href="group___b_s_p___m_c_u.html">MCU Board Support Package</a></div></div>  </div>
@@ -523,6 +524,14 @@ The FLL function requires the subclock oscillator to be running and stabilized. 
 <br />
 When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
 <tr class="tree_none">
+<td>Enable inline BSP IRQ functions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Using static inline functions will slightly increase code size, but will slightly decrease cycles taken in ISRs in return. </td></tr>
+<tr class="tree_none">
 <td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 35 cycles</li>
@@ -559,11 +568,34 @@ Locked</li>
 </table>
  </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga6f3d583a26d5f1f1f94756903fb3a935"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m3.html#ga6f3d583a26d5f1f1f94756903fb3a935">BSP_ELC_PERIPHERAL_MASK</a></td></tr>
+<tr class="separator:ga6f3d583a26d5f1f1f94756903fb3a935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gaebe723200f2a7f181f08324128b9d7b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m3.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> </td></tr>
 <tr class="separator:gaebe723200f2a7f181f08324128b9d7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5bf5e18ceb8cf51ac6dce985f9230a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m3.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> </td></tr>
+<tr class="separator:gaa5bf5e18ceb8cf51ac6dce985f9230a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga6f3d583a26d5f1f1f94756903fb3a935"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6f3d583a26d5f1f1f94756903fb3a935">&#9670;&nbsp;</a></span>BSP_ELC_PERIPHERAL_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP_ELC_PERIPHERAL_MASK</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Positions of event link set registers (ELSRs) available on this MCU </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="gaebe723200f2a7f181f08324128b9d7b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaebe723200f2a7f181f08324128b9d7b5">&#9670;&nbsp;</a></span>elc_event_t</h2>
@@ -572,11 +604,26 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_w1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_e2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sources of event signals to be linked to other peripherals or the CPU </p><dl class="section note"><dt>Note</dt><dd>This list may change based on based on the device. </dd></dl>
+<p>Sources of event signals to be linked to other peripherals or the CPU </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
+
+</div>
+</div>
+<a id="gaa5bf5e18ceb8cf51ac6dce985f9230a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5bf5e18ceb8cf51ac6dce985f9230a7">&#9670;&nbsp;</a></span>elc_peripheral_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_e2.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Possible peripherals to be linked to event signals </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
 
 </div>
 </div>
@@ -586,7 +633,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -15,10 +15,13 @@ var searchData=
   ['i_2fo_20port_20interface',['I/O Port Interface',['../group___i_o_p_o_r_t___a_p_i.html',1,'']]],
   ['iso',['ISO',['../group___i_s_o___a_p_i.html',1,'']]],
   ['independent_20watchdog_20_28r_5fiwdt_29',['Independent Watchdog (r_iwdt)',['../group___i_w_d_t.html',1,'']]],
+  ['input',['Input',['../group___r_e_n_e_s_a_s___i_n_p_u_t___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['input',['Input',['../group___r_e_n_e_s_a_s___i_n_p_u_t___m_o_d_u_l_e_s.html',1,'']]],
   ['interfaces',['Interfaces',['../group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['i2c_20communication_20device_20_28rm_5fcomms_5fi2c_29',['I2C Communication Device (rm_comms_i2c)',['../group___r_m___c_o_m_m_s___i2_c.html',1,'']]],
+  ['i2c_20master_20_28r_5fsau_5fi2c_29',['I2C Master (r_sau_i2c)',['../group___s_a_u___i2_c.html',1,'']]],
   ['i2c_20master_20_28r_5fsci_5fb_5fi2c_29',['I2C Master (r_sci_b_i2c)',['../group___s_c_i___b___i2_c.html',1,'']]],
   ['i2c_20master_20_28r_5fsci_5fi2c_29',['I2C Master (r_sci_i2c)',['../group___s_c_i___i2_c.html',1,'']]],
-  ['i2s_20_28r_5fssi_29',['I2S (r_ssi)',['../group___s_s_i.html',1,'']]]
+  ['i2s_20_28r_5fssi_29',['I2S (r_ssi)',['../group___s_s_i.html',1,'']]],
+  ['independent_20channel_2c_2016_2dbit_20and_208_2dbit_20timer_20_28r_5ftau_29',['Independent Channel, 16-bit and 8-bit timer (r_tau)',['../group___t_a_u.html',1,'']]]
 ];

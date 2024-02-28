@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('group___l_p_m___a_p_i.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Low Power Modes Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">Low Power Modes Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___p_o_w_e_r___i_n_t_e_r_f_a_c_e_s.html">Power</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -844,13 +844,51 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___l_p_m___a_p_i.html#ga9c49529c46118be3f3cda150e13f1a0f">lpm_standby_wake_source_t</a></td>
+          <td class="memname">enum lpm_standby_wake_source_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Wake from deep sleep or standby mode sources, does not apply to sleep or deep standby modes </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa4aa9d1a8db03257d5e7d8d4fd43ebb9c"></a>LPM_STANDBY_WAKE_SOURCE_IRQ0&#160;</td><td class="fielddoc"><p>IRQ0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa1fa4fb5b1cb0eed45589ef3f037665cf"></a>LPM_STANDBY_WAKE_SOURCE_IWDT&#160;</td><td class="fielddoc"><p>Independent watchdog interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fada7847c9a9cd671b07b324ddf819f428"></a>LPM_STANDBY_WAKE_SOURCE_LVD1&#160;</td><td class="fielddoc"><p>Low Voltage Detection 1 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa4aa9d1a8db03257d5e7d8d4fd43ebb9c"></a>LPM_STANDBY_WAKE_SOURCE_IRQ0&#160;</td><td class="fielddoc"><p>IRQ0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa191dfaf3f4312f3e07dc90b89d2f2505"></a>LPM_STANDBY_WAKE_SOURCE_IRQ1&#160;</td><td class="fielddoc"><p>IRQ1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa6f39700b121666a8cebc43a5675fc152"></a>LPM_STANDBY_WAKE_SOURCE_IRQ2&#160;</td><td class="fielddoc"><p>IRQ2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa38037d0ad12e84128f06eb75977a904a"></a>LPM_STANDBY_WAKE_SOURCE_IRQ3&#160;</td><td class="fielddoc"><p>IRQ3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0319f099a807f2f42f3597a41a0a7ec4"></a>LPM_STANDBY_WAKE_SOURCE_IRQ4&#160;</td><td class="fielddoc"><p>IRQ4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa55fbf62812b228b8066492c3ae0a67ef"></a>LPM_STANDBY_WAKE_SOURCE_IRQ5&#160;</td><td class="fielddoc"><p>IRQ5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faf08a4d3658bb74f6666462161bf804bc"></a>LPM_STANDBY_WAKE_SOURCE_DTC&#160;</td><td class="fielddoc"><p>DTC Transfer Complete Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0c946e558cc100a79eae42b110806501"></a>LPM_STANDBY_WAKE_SOURCE_SPI00RX&#160;</td><td class="fielddoc"><p>SPI00 Transfer End or Buffer Empty Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fae88e07dffc12e1677808b4f0a0829e52"></a>LPM_STANDBY_WAKE_SOURCE_UART0ERR&#160;</td><td class="fielddoc"><p>UART0 Reception Communication Error Occurrence Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fada98cb6cb0c9ee9df8680aa0c22ac1b2"></a>LPM_STANDBY_WAKE_SOURCE_IICA0&#160;</td><td class="fielddoc"><p>I2CA 0 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faa3b392c3eef3c4ea8dfdb66d230f240e"></a>LPM_STANDBY_WAKE_SOURCE_UART0RXE&#160;</td><td class="fielddoc"><p>UART0 Reception Transfer End Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faa559390ccec9fa4799903624f8599875"></a>LPM_STANDBY_WAKE_SOURCE_ADC&#160;</td><td class="fielddoc"><p>A/D Conversion Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa8346a9de2b9a7bd2bc740f24e24010ce"></a>LPM_STANDBY_WAKE_SOURCE_RTC&#160;</td><td class="fielddoc"><p>RTC interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa5ada871d688cc73e4a45b9da711c07b6"></a>LPM_STANDBY_WAKE_SOURCE_ITL&#160;</td><td class="fielddoc"><p>Interval signal of 32-bit interval timer Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fabb5ad499b96ad8c0fff14271db454037"></a>LPM_STANDBY_WAKE_SOURCE_URE0&#160;</td><td class="fielddoc"><p>UARTA0 reception communication error Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa6e5b2be35df99227873019b7a3d58631"></a>LPM_STANDBY_WAKE_SOURCE_UT0&#160;</td><td class="fielddoc"><p>UARTA0 transmission transfer end or buffer empty Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa5f835d43bd464cf537f24f53c8fa5077"></a>LPM_STANDBY_WAKE_SOURCE_UR0&#160;</td><td class="fielddoc"><p>UARTA0 reception transfer end Interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa4aa9d1a8db03257d5e7d8d4fd43ebb9c"></a>LPM_STANDBY_WAKE_SOURCE_IRQ0&#160;</td><td class="fielddoc"><p>IRQ0. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa191dfaf3f4312f3e07dc90b89d2f2505"></a>LPM_STANDBY_WAKE_SOURCE_IRQ1&#160;</td><td class="fielddoc"><p>IRQ1. </p>
 </td></tr>
@@ -1240,7 +1278,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

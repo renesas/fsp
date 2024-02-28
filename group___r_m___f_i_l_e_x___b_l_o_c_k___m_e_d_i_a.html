@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -576,6 +576,8 @@ Usage Notes</h1>
 <li>RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE: This event is handled internally and operation success is indicated by FileX API calls returning FX_SUCCESS.</li>
 <li>RM_BLOCK_MEDIA_EVENT_ERROR: This event is handled internally and operation failure will be indicated by an error return code from FileX API calls.</li>
 </ul>
+<h2>Erasing Flash Memory Prior to Usage</h2>
+<p>The area of the flash memory being used for the FileX instance should be erased using the lower level flash API prior to usage. Otherwise, FileX open operation may fail when fx_media_open( ) is called.</p>
 <h1><a class="anchor" id="rm-filex-block-media-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -720,7 +722,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

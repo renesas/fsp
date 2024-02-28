@@ -12,7 +12,11 @@ var group___c_g_c___a_p_i =
       [ "out_div_q", "group___c_g_c___a_p_i.html#a1b9674cec7c597408382398583005ceb", null ],
       [ "out_div_r", "group___c_g_c___a_p_i.html#a97d2800fcc1ea6299076d21563fa7f0f", null ]
     ] ],
-    [ "cgc_divider_cfg_t", "group___c_g_c___a_p_i.html#structcgc__divider__cfg__t", null ],
+    [ "cgc_divider_cfg_t", "group___c_g_c___a_p_i.html#structcgc__divider__cfg__t", [
+      [ "moco_divider", "group___c_g_c___a_p_i.html#a839bbaf4f8e14ee81168a4899cff35db", null ],
+      [ "hoco_divider", "group___c_g_c___a_p_i.html#abf8bbaa7af1d17dbee46453c50dc14f7", null ],
+      [ "mosc_divider", "group___c_g_c___a_p_i.html#ae000b3fadee4fd715032f5980d1f343a", null ]
+    ] ],
     [ "cgc_cfg_t", "group___c_g_c___a_p_i.html#structcgc__cfg__t", [
       [ "p_extend", "group___c_g_c___a_p_i.html#ab4c5874fb3bb170c8ad6099bef25911b", null ]
     ] ],
@@ -80,6 +84,12 @@ var group___c_g_c___a_p_i =
       [ "CGC_PLL_OUT_DIV_16", "group___c_g_c___a_p_i.html#gga2e1a2208bb6a8c30053b9034596f73d6a0b89923ee4892080c7c804c79f625055", null ]
     ] ],
     [ "cgc_sys_clock_div_t", "group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d", [
+      [ "CGC_SYS_CLOCK_DIV_1", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326", null ],
+      [ "CGC_SYS_CLOCK_DIV_2", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6", null ],
+      [ "CGC_SYS_CLOCK_DIV_4", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0", null ],
+      [ "CGC_SYS_CLOCK_DIV_8", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daecead8b5b6ef0f7fc4e0c684720736b4", null ],
+      [ "CGC_SYS_CLOCK_DIV_16", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da5fb7e35f2b14f47d71fc3ddce999d9a9", null ],
+      [ "CGC_SYS_CLOCK_DIV_32", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dadd88ebecf942a2a5d0ee88cbadec6bdf", null ],
       [ "CGC_SYS_CLOCK_DIV_1", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326", null ],
       [ "CGC_SYS_CLOCK_DIV_2", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6", null ],
       [ "CGC_SYS_CLOCK_DIV_4", "group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0", null ],

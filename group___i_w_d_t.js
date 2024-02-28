@@ -3,7 +3,6 @@ var group___i_w_d_t =
     [ "iwdt_instance_ctrl_t", "group___i_w_d_t.html#structiwdt__instance__ctrl__t", [
       [ "wdt_open", "group___i_w_d_t.html#ae07ff8e66ee64e231841e8a578b76eff", null ],
       [ "p_context", "group___i_w_d_t.html#af10f9877b3a8b1aaee8a9a422f1398f3", null ],
-      [ "p_reg", "group___i_w_d_t.html#a14aa382d6d5bd479c938e8d3783a1080", null ],
       [ "p_callback", "group___i_w_d_t.html#a1051de77f0a7903177849ae4df6729ec", null ]
     ] ],
     [ "R_IWDT_Open", "group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080", null ],

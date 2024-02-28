@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -362,7 +362,7 @@ Encryption Disabled</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Bootloader Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the flash reserved for the bootloader. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x100 for Cortex-M23, 0x80 for Cortex-M4 and Cortex-M33). </td></tr>
+<td class="tree_lvl_1_cell">Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x100 for Cortex-M23, 0x200 for Cortex-M4 and Cortex-M33). </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Image 1 Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the application image 1, including the header and trailer. For TrustZone projects, enter the combined size of the Secure and Non-Secure Callable regions if the Non-Secure image can be updated separately, or enter the size of the entire image slot if Secure, Non-Secure Callable, and Non-Secure regions are updated as a single image. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -537,7 +537,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

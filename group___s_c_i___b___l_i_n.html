@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -288,7 +288,7 @@ Features</h2>
 <li>Adjustable break field delimiter/stop bits length<a class="anchor" id="um_sci_b_lin_delimiter_bits"></a></li>
 <li>Noise cancellation<a class="anchor" id="um_sci_b_lin_noise_cancellation"></a></li>
 <li>Abort in-progress read/write operations<a class="anchor" id="um_lin_abort"></a></li>
-<li>Error notifications of parity error in protected identifier, framing error, overrun error, bus collision, and counter overflow error (counter overflow error applies in slave mode only)<a class="anchor" id="um_sci_b_lin_parity"></a><a class="anchor" id="um_sci_b_lin_framing_error"></a><a class="anchor" id="um_sci_b_lin_overrun"></a><a class="anchor" id="um_sci_b_lin_bus_collision"></a><a class="anchor" id="um_sci_b_lin_counter_overflow"></a></li>
+<li>Error notifications of parity error in protected identifier, framing error, overrun error, bus collision, and counter overflow error (counter overflow error applies in slave mode only)<a class="anchor" id="um_lin_parity_error"></a><a class="anchor" id="um_lin_framing_error"></a><a class="anchor" id="um_lin_overrun_error"></a><a class="anchor" id="um_sci_b_lin_bus_collision"></a><a class="anchor" id="um_sci_b_lin_counter_overflow"></a></li>
 <li>Operation clock selection (PCLK or SCISPI/SCICLK)<a class="anchor" id="um_sci_b_lin_clock_source_select"></a></li>
 <li>Configuration of all available SCI_B channels with Simple LIN mode support<a class="anchor" id="um_lin_channels_support"></a> </li>
 </ul>
@@ -309,6 +309,22 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Checksum Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>When set to 'Disabled', code for checksum generation and validation is excluded from the build. This setting is applied globally to the project. Disable only when checksum generation and validation is not required for any LIN instance. </td></tr>
+<tr class="tree_none">
+<td>Auto Synchronization Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>When set to 'Disabled', code for auto synchronization is excluded from the build. This setting is applied globally to the project. Enable when at least one LIN slave instance is using auto synchronization. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; LIN (r_sci_b_lin)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; LIN (r_sci_b_lin). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -358,7 +374,7 @@ Disable</li>
 <li>
 4</li>
 </ul>
-</td><td>1 </td><td>Select the base clock divider for the sampling clock of the bus conflict detection circuit. </td></tr>
+</td><td>2 </td><td>Select the base clock divider for the sampling clock of the bus conflict detection circuit. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Baud  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -462,7 +478,7 @@ Clock Configuration</h2>
 <h2><a class="anchor" id="r-sci-b-lin-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses TXD and RXD to communicate to external devices. Connect TXD and RXD to an on-board or external LIN transceiver for LIN bus communication.</p>
-<p>If loopback is required (eg for testing), configure one SCI channel as master node and another SCI channel as slave node. Connect master RXD to slave TXD, and connect master TXD to slave RXD. Loopback by external connection of RXD and TXD pins of the same SCI channel is not supported. Internal loopback is not supported.</p>
+<p>An external pull up resistor is required on TXD in both master and slave mode.</p>
 <h2><a class="anchor" id="r-sci_b_lin-interrupt-configuration"></a>
 Interrupt Configuration</h2>
 <ul>
@@ -482,7 +498,7 @@ Bus Conflict Detection Configuration</h2>
 <p>When Bus Conflict Detection is enabled, the TXDn pin output and the RXDn pin input are sampled by the selected bus conflict detection clock. When a mismatch occurs three times in a row, an SCIn_ERI interrupt is generated and transmission is stopped. This function only works during transmission.</p>
 <p>Consideration of the specific application's LIN bus characteristics should be taken into account when enabling this function. If the bus collision sampling clock is too fast, the expected propagation delay through the transceiver may be erroneously detected as a bus collision (false positive). If the bus collision sampling clock is too slow, collisions may be missed (false negative).</p>
 <p>When CCR2.ABCS = 1, setting the bus conflict clock divider to 4 is is prohibited by the SCI_B hardware.</p>
-<p>Do not enable this feature in an external loopback configuration (eg 2 SCI modules RXD/TXD connected without LIN transceiver) as it requires a physical bus to correctly detect bus collisions.</p>
+<p>A LIN transceiver is required to detect bus collisions.</p>
 <h2><a class="anchor" id="r-sci-b-lin-id-filter"></a>
 ID Filter Configuration</h2>
 <p>The SCI performs optional hardware PID filtering in slave mode. When enabled, only start frames with PIDs that pass through the filter are received and passed to the user callback. Other start frames are ignored.</p>
@@ -633,7 +649,7 @@ Break field length setting (break field length is (bflw + 1) * clock of the time
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a7ed113626c04110d160d2f7a59af77e8"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
+<a id="a0836d3cc4831ce1d4eabe225bd9e5598"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -771,7 +787,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="acd5297cc1f4676d00ea0441323628ffb"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
+<a id="a96994e7d9c8cf05f1740bb347ce01904"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1444,7 +1460,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

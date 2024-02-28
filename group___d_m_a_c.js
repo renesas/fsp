@@ -1,9 +1,6 @@
 var group___d_m_a_c =
 [
     [ "dmac_instance_ctrl_t", "group___d_m_a_c.html#structdmac__instance__ctrl__t", null ],
-    [ "dmac_callback_args_t", "group___d_m_a_c.html#structdmac__callback__args__t", [
-      [ "p_context", "group___d_m_a_c.html#a48a5473d21e29781083979724b5d930d", null ]
-    ] ],
     [ "dmac_extended_cfg_t", "group___d_m_a_c.html#structdmac__extended__cfg__t", [
       [ "channel", "group___d_m_a_c.html#a96ee22f2e357c5098bbe67bbdf920371", null ],
       [ "irq", "group___d_m_a_c.html#aa50d47176d2618694b18cfeb957f6036", null ],
@@ -28,5 +25,6 @@ var group___d_m_a_c =
     [ "R_DMAC_Disable", "group___d_m_a_c.html#ga6b64368039ad6617f091a20b5ac16206", null ],
     [ "R_DMAC_InfoGet", "group___d_m_a_c.html#gade7f6c387756ca9728194ac15f01fc43", null ],
     [ "R_DMAC_Reload", "group___d_m_a_c.html#ga697b9273351d29eb3e0c9319dce2e382", null ],
+    [ "R_DMAC_CallbackSet", "group___d_m_a_c.html#ga0ceeef1307c7e022a38aabfafcfb7e01", null ],
     [ "R_DMAC_Close", "group___d_m_a_c.html#ga3423bb11f0d76dbe760ed01cf03ccd45", null ]
 ];

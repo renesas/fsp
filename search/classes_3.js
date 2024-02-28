@@ -30,7 +30,6 @@ var searchData=
   ['display_5fruntime_5fcfg_5ft',['display_runtime_cfg_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__runtime__cfg__t',1,'']]],
   ['display_5fstatus_5ft',['display_status_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t',1,'']]],
   ['display_5ftiming_5ft',['display_timing_t',['../group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__timing__t',1,'']]],
-  ['dmac_5fcallback_5fargs_5ft',['dmac_callback_args_t',['../group___d_m_a_c.html#structdmac__callback__args__t',1,'']]],
   ['dmac_5fextended_5fcfg_5ft',['dmac_extended_cfg_t',['../group___d_m_a_c.html#structdmac__extended__cfg__t',1,'']]],
   ['dmac_5finstance_5fctrl_5ft',['dmac_instance_ctrl_t',['../group___d_m_a_c.html#structdmac__instance__ctrl__t',1,'']]],
   ['doc_5fapi_5ft',['doc_api_t',['../group___d_o_c___a_p_i.html#structdoc__api__t',1,'']]],

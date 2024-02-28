@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -455,13 +455,7 @@ Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-One</li>
-<li>
-Max</li>
-</ul>
-</td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
+<td class="tree_lvl_1_cell">Receive FIFO Trigger Level</td><td>Refer to the RA Configuration tool for available options.</td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -484,6 +478,8 @@ Clock Configuration</h2>
 <th>MCU Group</th><th>Peripheral Clock </th></tr>
 <tr>
 <td>RA2A1</td><td>PCLKB</td></tr>
+<tr>
+<td>RA2A2</td><td>PCLKB</td></tr>
 <tr>
 <td>RA2E1</td><td>PCLKB</td></tr>
 <tr>
@@ -613,7 +609,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a34a79c4460df08ce07481faea4ec7e1d"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
+<a id="a7d2accde094c180dc8f7299d32532f42"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -807,6 +803,32 @@ RS-485 settings. </td></tr>
 <p>Receive FIFO trigger configuration. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6acbf7b549f4da64e02ba6a63e7fb96f43"></a>SCI_UART_RX_FIFO_TRIGGER_1&#160;</td><td class="fielddoc"><p>Callback after each byte is received without buffering. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a70fe7f56c7e3c69d336ed632b34e67b6"></a>SCI_UART_RX_FIFO_TRIGGER_2&#160;</td><td class="fielddoc"><p>Callback when FIFO having 2 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6abd125add1ea2e6bc657778252b0a35db"></a>SCI_UART_RX_FIFO_TRIGGER_3&#160;</td><td class="fielddoc"><p>Callback when FIFO having 3 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6aad32310b4a403e26c1183d458bd5a775"></a>SCI_UART_RX_FIFO_TRIGGER_4&#160;</td><td class="fielddoc"><p>Callback when FIFO having 4 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a97226e33c067a061d700840b7ee8da27"></a>SCI_UART_RX_FIFO_TRIGGER_5&#160;</td><td class="fielddoc"><p>Callback when FIFO having 5 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a79b01254089af1d371d2a4a40b4ac7b4"></a>SCI_UART_RX_FIFO_TRIGGER_6&#160;</td><td class="fielddoc"><p>Callback when FIFO having 6 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a7ff0f7183551216a3c82023e6d18120c"></a>SCI_UART_RX_FIFO_TRIGGER_7&#160;</td><td class="fielddoc"><p>Callback when FIFO having 7 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6ac891c3d01b14bd3c103410bf5f63eb45"></a>SCI_UART_RX_FIFO_TRIGGER_8&#160;</td><td class="fielddoc"><p>Callback when FIFO having 8 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a367841ce768861d718115e062405cd23"></a>SCI_UART_RX_FIFO_TRIGGER_9&#160;</td><td class="fielddoc"><p>Callback when FIFO having 9 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a9cc438db90c412b0b37b7e585939bab6"></a>SCI_UART_RX_FIFO_TRIGGER_10&#160;</td><td class="fielddoc"><p>Callback when FIFO having 10 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a707aad2aa3f05405bc529f3ab3afa40a"></a>SCI_UART_RX_FIFO_TRIGGER_11&#160;</td><td class="fielddoc"><p>Callback when FIFO having 11 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6af43237ea46192f4d836146e03a52f216"></a>SCI_UART_RX_FIFO_TRIGGER_12&#160;</td><td class="fielddoc"><p>Callback when FIFO having 12 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6aacff35e10eff0d27cc7d1db5b5823fb4"></a>SCI_UART_RX_FIFO_TRIGGER_13&#160;</td><td class="fielddoc"><p>Callback when FIFO having 13 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a342f707751db3524cbc5512752bc848a"></a>SCI_UART_RX_FIFO_TRIGGER_14&#160;</td><td class="fielddoc"><p>Callback when FIFO having 14 bytes. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadf7235ba7fd675f3416ef98c55b810f6a8e41b6d8ad370ac8220019171cd2cbfd"></a>SCI_UART_RX_FIFO_TRIGGER_MAX&#160;</td><td class="fielddoc"><p>Callback when FIFO is full or after 15 bit times with no data (fewer interrupts) </p>
 </td></tr>
@@ -1344,7 +1366,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

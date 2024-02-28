@@ -1,0 +1,984 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: SPI (r_sau_spi)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___s_a_u___s_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle">
+<div class="title">SPI (r_sau_spi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga3babf301273a5576ccb5b9de1ca168f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga3babf301273a5576ccb5b9de1ca168f0">R_SAU_SPI_Open</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *p_api_ctrl, <a class="el" href="group___s_p_i___a_p_i.html#structspi__cfg__t">spi_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga3babf301273a5576ccb5b9de1ca168f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b7b3ba7e709efe0f23cef126a252a60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga4b7b3ba7e709efe0f23cef126a252a60">R_SAU_SPI_Read</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void *p_dest, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
+<tr class="separator:ga4b7b3ba7e709efe0f23cef126a252a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fdec7c51d6405960065dd1ae24c271f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga6fdec7c51d6405960065dd1ae24c271f">R_SAU_SPI_Write</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void const *p_src, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
+<tr class="separator:ga6fdec7c51d6405960065dd1ae24c271f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3af9d95bec7ea82f8c86737c016642f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga3af9d95bec7ea82f8c86737c016642f3">R_SAU_SPI_WriteRead</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
+<tr class="separator:ga3af9d95bec7ea82f8c86737c016642f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga912d7f20c909ff0448985a35b43f91b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga912d7f20c909ff0448985a35b43f91b6">R_SAU_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga912d7f20c909ff0448985a35b43f91b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcf2aeb0190d5982df8ef5ab20f50932"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#gadcf2aeb0190d5982df8ef5ab20f50932">R_SAU_SPI_Close</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gadcf2aeb0190d5982df8ef5ab20f50932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c76702b7ca8108142d0b641759e0c8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga3c76702b7ca8108142d0b641759e0c8f">R_SAU_SPI_CalculateBitrate</a> (uint32_t bitrate, <a class="el" href="structsau__spi__div__setting__t.html">sau_spi_div_setting_t</a> *sclk_div, uint8_t sau_unit, uint8_t channel)</td></tr>
+<tr class="separator:ga3c76702b7ca8108142d0b641759e0c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the SAU peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a>. </p>
+<h1><a class="anchor" id="r_sau_spi-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r_sau_spi-features"></a>
+Features</h2>
+<ul>
+<li>Standard SPI Modes<ul>
+<li>Master or Slave Mode</li>
+<li>Single Transfer Mode or Continuous Transfer Mode</li>
+<li>Data Phase (DAPmn)<ul>
+<li>DAPmn=0 Data output starts from the start of the operation of the serial clock</li>
+<li>DAPmn=1 Data output starts half a clock cycle before the start of the serial clock operation</li>
+</ul>
+</li>
+<li>Clock Phase (CKPmn)<ul>
+<li>CKPmn=0 Non-reverse</li>
+<li>CKPmn=1 Reverse</li>
+</ul>
+</li>
+<li>MSB/LSB first</li>
+</ul>
+</li>
+<li>Callback Events<ul>
+<li>Transfer Complete</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="r_sau_spi-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_sau_spi_transfer_mode"></a><a class="anchor" id="um_spi_api_bitrate"></a><a class="anchor" id="um_sau_spi_data_phase"></a><a class="anchor" id="um_sau_spi_clock_phase"></a><a class="anchor" id="um_spi_api_msb_lsb"></a> <a class="anchor" id="um_spi_api_transfer_count"></a> <a class="anchor" id="um_spi_api_tx_underrun_callback"></a><a class="anchor" id="um_spi_api_rx_overflow_callback"></a></p><ul>
+<li>RX Overflow Error (The SAU shift register is copied to the data register before previous data was read) <h2>Build Time Configurations for r_sau_spi</h2>
+The following build time configurations are defined in fsp_cfg/r_sau_spi_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Critical Section Guarding</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable critical section guarding around peripheral configuration updates. This should be enabled if the R_SAU_I2C module is being used simultaneously with this module. </td></tr>
+<tr class="tree_none">
+<td>Enable Single Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+00</li>
+<li>
+20</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable single channel to reduce code size if only channel 00 or 20 is to be configured for SAU SPI. </td></tr>
+<tr class="tree_none">
+<td>Transfer Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Reception</li>
+<li>
+Transmission</li>
+<li>
+Transmission/Reception</li>
+</ul>
+</td><td>Transmission/Reception </td><td>Select transfer operation mode. </td></tr>
+</table>
+ <h2>Configurations for Connectivity &gt; SPI (r_sau_spi)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sau_spi).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_spi0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td>MCU Specific Options</td><td></td><td>Select the SAU channel. </td></tr>
+<tr class="tree_none">
+<td>Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Master</li>
+<li>
+Slave</li>
+</ul>
+</td><td>Master </td><td>Select the SPI operating mode. </td></tr>
+<tr class="tree_none">
+<td>Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+CK0</li>
+<li>
+CK1</li>
+</ul>
+</td><td>CK0 </td><td>Select the operating clock. <br />
+<br />
+Note: when creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. </td></tr>
+<tr class="tree_none">
+<td>Transfer Mode </td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Single transfer mode</li>
+<li>
+Continuous transfer mode</li>
+</ul>
+</td><td>Single transfer mode </td><td>Select transfer mode in transfer end interrupt. But buffer empty interrupt (in continuous transfer mode) cannot be selected in Slave Reception. </td></tr>
+<tr class="tree_none">
+<td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+MSB First</li>
+<li>
+LSB First</li>
+</ul>
+</td><td>MSB First </td><td>Select of data transfer sequence. </td></tr>
+<tr class="tree_none">
+<td>Data Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+From the start</li>
+<li>
+Half a clock cycle before</li>
+</ul>
+</td><td>From the start </td><td>Select when data output shall start compared with the serial clock operation. </td></tr>
+<tr class="tree_none">
+<td>Clock Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Non-reverse</li>
+<li>
+Reverse</li>
+</ul>
+</td><td>Non-reverse </td><td>Select clock phase. </td></tr>
+<tr class="tree_none">
+<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>500000 </td><td>Enter the desired bitrate.If the requested bitrate cannot be achieved, the settings with the default value the requested bitrate is used. The theoretical bitrate is printed in a comment in the generated <a class="el" href="structsau__spi__extended__cfg__t.html">sau_spi_extended_cfg_t</a> structure. </td></tr>
+<tr class="tree_none">
+<td>Callback</td><td>Name must be a valid C symbol</td><td>sau_spi_callback </td><td>A user callback function that is called from the sau spi interrupts when a transfer is completed or an error has occurred. </td></tr>
+<tr class="tree_none">
+<td>Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
+</table>
+</li>
+</ul>
+<h2><a class="anchor" id="r_sau_spi-clock-configuration"></a>
+Clock Configuration</h2>
+<p>SAU uses system clock (ICLK).</p>
+<h2><a class="anchor" id="r_sau_spi-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module uses SCKmn, SOmn, and SImn pins to communicate with on board devices.</p>
+<dl class="section note"><dt>Note</dt><dd>At high bit rates, it might be necessary to configure the pins with IOPORT_CFG_DRIVE_HIGH.</dd></dl>
+<h1><a class="anchor" id="r_sau_spi-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-sau_spi-enabling-single-channel-configuration"></a>
+Enabling Single Channel By User With The SAU SPI</h2>
+<ul>
+<li>Single Channel is configurable and disabled by default in the driver code. Enable single channel to reduce code size if only channel 00 or 20 is to be configured for SAU SPI<ul>
+<li>Channel 00 is supported by SAU0</li>
+<li>Channel 20 is supported by SAU1</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="r-sau-spi-limitations"></a>
+Limitations</h2>
+<ul>
+<li>When creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. Related SAU modules: SAU-SPI, SAU-IIC and SAU-UART.</li>
+<li>When multiple channels on the same SAU unit need to be used, and one is configured as I2C, then critical section property needs to be enabled.</li>
+</ul>
+<h2>Transfer Complete Event</h2>
+<p>The transfer complete event is triggered when all of the data has been transferred. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
+<h2>Performance</h2>
+<p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors.</p>
+<h2>Slave Select Pin</h2>
+<ul>
+<li>In master mode the slave select pin must be driven in software.</li>
+<li>In slave mode the hardware handles the slave select pin and will only transfer data when the SS pin is low.</li>
+</ul>
+<h2>Single Channel Use Case</h2>
+<p>If only SAU channel 00 is to be used for I2C or SPI or UART, enable single channel can reduce the code size.</p>
+<h1><a class="anchor" id="r_sau_spi-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the SAU_SPI in an application.</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_sau_spi_callback (<a class="code" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_p_i___a_p_i.html#gga6e4960e8b344a8a8ec60f0c11d60f54ca2b456074a7304b0ac4be1cbe69d6dad1">SPI_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> sau_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_a_u___s_p_i.html#ga3babf301273a5576ccb5b9de1ca168f0">R_SAU_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___s_p_i.html#ga3af9d95bec7ea82f8c86737c016642f3">R_SAU_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___s_p_i.html#ga3af9d95bec7ea82f8c86737c016642f3">R_SAU_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="memitem:ga86e78f8990ff6d21ebcb30e76f3fd225"><td class="memItemLeft" align="right" valign="top"><a id="ga86e78f8990ff6d21ebcb30e76f3fd225"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga86e78f8990ff6d21ebcb30e76f3fd225">SAU_SPI_TRANSFER_MODE_RECEPTION</a></td></tr>
+<tr class="memdesc:ga86e78f8990ff6d21ebcb30e76f3fd225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reception only. <br /></td></tr>
+<tr class="separator:ga86e78f8990ff6d21ebcb30e76f3fd225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacba13074eefeaaca9a4de3b5cda20845"><td class="memItemLeft" align="right" valign="top"><a id="gacba13074eefeaaca9a4de3b5cda20845"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#gacba13074eefeaaca9a4de3b5cda20845">SAU_SPI_TRANSFER_MODE_TRANSMISSION</a></td></tr>
+<tr class="memdesc:gacba13074eefeaaca9a4de3b5cda20845"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmission only. <br /></td></tr>
+<tr class="separator:gacba13074eefeaaca9a4de3b5cda20845"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb28a206bd126f928ced08ec1f206149"><td class="memItemLeft" align="right" valign="top"><a id="gaeb28a206bd126f928ced08ec1f206149"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#gaeb28a206bd126f928ced08ec1f206149">SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION</a></td></tr>
+<tr class="memdesc:gaeb28a206bd126f928ced08ec1f206149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmission/reception. <br /></td></tr>
+<tr class="separator:gaeb28a206bd126f928ced08ec1f206149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab724f2ad5550a9969536053fc32619dc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#gab724f2ad5550a9969536053fc32619dc">sau_spi_operation_clock_t</a> </td></tr>
+<tr class="separator:gab724f2ad5550a9969536053fc32619dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b78666c2b6164a3abd7daa764e44d8a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga8b78666c2b6164a3abd7daa764e44d8a">sau_spi_transfer_mode_t</a> </td></tr>
+<tr class="separator:ga8b78666c2b6164a3abd7daa764e44d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga843ec5a20db278b500a80ce6e02a3a07"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#ga843ec5a20db278b500a80ce6e02a3a07">sau_spi_data_phase_t</a> </td></tr>
+<tr class="separator:ga843ec5a20db278b500a80ce6e02a3a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab303b3ca56c5ea687999572ff52b3835"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___s_p_i.html#gab303b3ca56c5ea687999572ff52b3835">sau_spi_clock_phase_t</a> </td></tr>
+<tr class="separator:gab303b3ca56c5ea687999572ff52b3835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gab724f2ad5550a9969536053fc32619dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab724f2ad5550a9969536053fc32619dc">&#9670;&nbsp;</a></span>sau_spi_operation_clock_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___s_p_i.html#gab724f2ad5550a9969536053fc32619dc">sau_spi_operation_clock_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Selection of operating clock (fMCK) of channel </p>
+
+</div>
+</div>
+<a id="ga8b78666c2b6164a3abd7daa764e44d8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b78666c2b6164a3abd7daa764e44d8a">&#9670;&nbsp;</a></span>sau_spi_transfer_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___s_p_i.html#ga8b78666c2b6164a3abd7daa764e44d8a">sau_spi_transfer_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Selection of transfer mode of channel </p>
+
+</div>
+</div>
+<a id="ga843ec5a20db278b500a80ce6e02a3a07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga843ec5a20db278b500a80ce6e02a3a07">&#9670;&nbsp;</a></span>sau_spi_data_phase_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___s_p_i.html#ga843ec5a20db278b500a80ce6e02a3a07">sau_spi_data_phase_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data phase </p>
+
+</div>
+</div>
+<a id="gab303b3ca56c5ea687999572ff52b3835"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab303b3ca56c5ea687999572ff52b3835">&#9670;&nbsp;</a></span>sau_spi_clock_phase_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___s_p_i.html#gab303b3ca56c5ea687999572ff52b3835">sau_spi_clock_phase_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clock phase </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga3babf301273a5576ccb5b9de1ca168f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3babf301273a5576ccb5b9de1ca168f0">&#9670;&nbsp;</a></span>R_SAU_SPI_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#structspi__cfg__t">spi_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize a channel for SPI communication mode. Implements <a class="el" href="group___s_p_i___a_p_i.html#a97177a6162ebad73907c7f23c1411426">spi_api_t::open</a>.</p>
+<p>This function performs the following tasks:</p><ul>
+<li>Performs parameter checking and processes error conditions.</li>
+<li>Enables the clock for the SAU channel.</li>
+<li>Initializes the associated registers with default value and the user-configurable options.</li>
+<li>Provides the channel handle for use with other API functions.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramname">p_cfg</td><td>Pointer to a configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel initialized successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter is invalid or NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The instance has already been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel number is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4b7b3ba7e709efe0f23cef126a252a60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b7b3ba7e709efe0f23cef126a252a60">&#9670;&nbsp;</a></span>R_SAU_SPI_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const&#160;</td>
+          <td class="paramname"><em>bit_width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receive data from an SPI device. Implements <a class="el" href="group___s_p_i___a_p_i.html#a43d0988501f90910690a3357bda1a936">spi_api_t::read</a>.</p>
+<p>The function performs the following tasks:</p><ul>
+<li>Performs parameter checking and processes error conditions.</li>
+<li>Enable transmitter.</li>
+<li>Enable receiver.</li>
+<li>Enable interrupts.</li>
+<li>Start data transmission by writing data to the TXD register.</li>
+<li>Receive data from receive buffer full interrupt occurs and copy data to the buffer of destination.</li>
+<li>Complete data reception via receive buffer full interrupt and transmitting dummy data.</li>
+<li>Disable transmitter.</li>
+<li>Disable receiver.</li>
+<li>Disable interrupts.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">p_dest</td><td>Pointer to the destination buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The number of bytes to transfer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Read operation successfully completed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One of the following invalid parameters passed:<ul>
+<li>Pointer p_api_ctrl is NULL</li>
+<li>Bit width is not 8 bits</li>
+<li>Length is equal to 0</li>
+<li>Pointer to destination is NULL </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The given bit_width is not supported. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transfer is already in progress.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a1e38b8ef4e4fa3e59efb257102e72b72">transfer_api_t::reconfigure</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga6fdec7c51d6405960065dd1ae24c271f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6fdec7c51d6405960065dd1ae24c271f">&#9670;&nbsp;</a></span>R_SAU_SPI_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const&#160;</td>
+          <td class="paramname"><em>bit_width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmit data to a SPI device. Implements <a class="el" href="group___s_p_i___a_p_i.html#af053cb19a14773a51d1e060c5a624555">spi_api_t::write</a>.</p>
+<p>The function performs the following tasks:</p><ul>
+<li>Performs parameter checking and processes error conditions.</li>
+<li>Enable transmitter.</li>
+<li>Enable interrupts.</li>
+<li>Start data transmission with data via transmit buffer empty interrupt.</li>
+<li>Copy data from source buffer to the SPI data register for transmission.</li>
+<li>Complete data transmission via transmit buffer empty interrupt.</li>
+<li>Disable transmitter.</li>
+<li>Disable receiver.</li>
+<li>Disable interrupts.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">p_src</td><td>Pointer to the source buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The number of bytes to transfer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Write operation successfully completed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One of the following invalid parameters passed:<ul>
+<li>Pointer p_api_ctrl is NULL</li>
+<li>Pointer to source is NULL</li>
+<li>Length is equal to 0</li>
+<li>Bit width is not equal to 8 bits </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The given bit_width is not supported. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transfer is already in progress.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a1e38b8ef4e4fa3e59efb257102e72b72">transfer_api_t::reconfigure</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga3af9d95bec7ea82f8c86737c016642f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3af9d95bec7ea82f8c86737c016642f3">&#9670;&nbsp;</a></span>R_SAU_SPI_WriteRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_WriteRead </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const&#160;</td>
+          <td class="paramname"><em>bit_width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Simultaneously transmit data to SPI device while receiving data from SPI device (full duplex). Implements <a class="el" href="group___s_p_i___a_p_i.html#a6ed153d8e5e54e417fda95b044ac2fd6">spi_api_t::writeRead</a>.</p>
+<p>The function performs the following tasks:</p><ul>
+<li>Performs parameter checking and processes error conditions.</li>
+<li>Enable transmitter.</li>
+<li>Enable receiver.</li>
+<li>Enable interrupts.</li>
+<li>Start data transmission using transmit buffer empty interrupt (or by writing to the TDR register).</li>
+<li>Copy data from source buffer to the SPI data register for transmission.</li>
+<li>Receive data from receive buffer full interrupt and copy data to the destination buffer.</li>
+<li>Complete data transmission and reception via transmit end interrupt.</li>
+<li>Disable transmitter.</li>
+<li>Disable receiver.</li>
+<li>Disable interrupts.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">p_src</td><td>Pointer to the source buffer. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">p_dest</td><td>Pointer to the destination buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The number of bytes to transfer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Write operation successfully completed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One of the following invalid parameters passed:<ul>
+<li>Pointer p_api_ctrl is NULL</li>
+<li>Pointer to source is NULL</li>
+<li>Pointer to destination is NULL</li>
+<li>Length is equal to 0</li>
+<li>Bit width is not equal to 8 bits </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The given bit_width is not supported. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transfer is already in progress.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a1e38b8ef4e4fa3e59efb257102e72b72">transfer_api_t::reconfigure</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga912d7f20c909ff0448985a35b43f91b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga912d7f20c909ff0448985a35b43f91b6">&#9670;&nbsp;</a></span>R_SAU_SPI_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#ad3409ec3b694f2d68043360f466c31ce">spi_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gadcf2aeb0190d5982df8ef5ab20f50932"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadcf2aeb0190d5982df8ef5ab20f50932">&#9670;&nbsp;</a></span>R_SAU_SPI_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disable the SAU channel and set the instance as not open. Implements <a class="el" href="group___s_p_i___a_p_i.html#aa23ca0243886b64c90aa17744d72aee5">spi_api_t::close</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_api_ctrl</td><td>Pointer to an opened instance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3c76702b7ca8108142d0b641759e0c8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c76702b7ca8108142d0b641759e0c8f">&#9670;&nbsp;</a></span>R_SAU_SPI_CalculateBitrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_SPI_CalculateBitrate </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bitrate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structsau__spi__div__setting__t.html">sau_spi_div_setting_t</a> *&#160;</td>
+          <td class="paramname"><em>sclk_div</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sau_unit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate the register settings required to achieve the desired bitrate.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bitrate</td><td>bitrate [bps]. For example, 250,000; 500,00; 16,000,000 (max), etc. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">sclk_div</td><td>Pointer to <a class="el" href="structsau__spi__div__setting__t.html">sau_spi_div_setting_t</a> used to configure baudrate settings. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">sau_unit</td><td>Sau unit. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">channel</td><td>Sau channel.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is set successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Baud rate is not achievable. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The application must pause for 1 bit time after the BRR register is loaded before transmitting/receiving to allow time for the clock to settle. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

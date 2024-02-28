@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('group___t_i_m_e_r___a_p_i.html','');})
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Timer Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">Timer Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_i_m_e_r_s___i_n_t_e_r_f_a_c_e_s.html">Timers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -855,13 +855,23 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___t_i_m_e_r___a_p_i.html#gac3bee51f7c9078f794c5ac19522f91eb">timer_event_t</a></td>
+          <td class="memname">enum timer_event_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Events that can trigger a callback function </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c"></a>TIMER_EVENT_CYCLE_END&#160;</td><td class="fielddoc"><p>Requested timer delay has expired or timer has wrapped around. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba5b13dcc7e2938312a7d59a5b1256097f"></a>TIMER_EVENT_HIGHER_8BIT_CYCLE_END&#160;</td><td class="fielddoc"><p>Requested higher 8-bit timer has expired. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91ebac0832c9d95bf0e885b896a87e3d93368"></a>TIMER_EVENT_CAPTURE_EDGE&#160;</td><td class="fielddoc"><p>A capture has occurred when detecting edge. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba3c14768251285ef48194ac5fc851a122"></a>TIMER_EVENT_SLAVE_CYCLE_END&#160;</td><td class="fielddoc"><p>Requested timer pulse width (One-shot) or duty cycle (PWM) has expired. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba68b7ff420ebcbe7d76962e27b008e656"></a>TIMER_EVENT_MASTER_CYCLE_END&#160;</td><td class="fielddoc"><p>Requested timer delay (One-shot) or period (PWM) has expired. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c"></a>TIMER_EVENT_CYCLE_END&#160;</td><td class="fielddoc"><p>Requested timer delay has expired or timer has wrapped around. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba73d4afde72c0b28a768c8e6d25c050f8"></a>TIMER_EVENT_CREST&#160;</td><td class="fielddoc"><p>Timer crest event (counter is at a maximum, triangle-wave PWM only) </p>
 </td></tr>
@@ -990,13 +1000,45 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___t_i_m_e_r___a_p_i.html#ga820b425b44d7b551afd1797ecca7a5ad">timer_source_div_t</a></td>
+          <td class="memname">enum timer_source_div_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Clock source divisors </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8"></a>TIMER_SOURCE_DIV_1&#160;</td><td class="fielddoc"><p>Timer clock source divided by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adafa4194764952e26c833bdaa26587f245"></a>TIMER_SOURCE_DIV_2&#160;</td><td class="fielddoc"><p>Timer clock source divided by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada6cf9f5fb4095fd15027e6d06a811a3f5"></a>TIMER_SOURCE_DIV_4&#160;</td><td class="fielddoc"><p>Timer clock source divided by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adaa2da1d2d669ae1f3baf715e96a803be3"></a>TIMER_SOURCE_DIV_8&#160;</td><td class="fielddoc"><p>Timer clock source divided by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adae36be19b8ae1b3b3918e39c738e62c82"></a>TIMER_SOURCE_DIV_16&#160;</td><td class="fielddoc"><p>Timer clock source divided by 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adacccb03dab14c93d036cdff662b1686a1"></a>TIMER_SOURCE_DIV_32&#160;</td><td class="fielddoc"><p>Timer clock source divided by 32. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada1cc7525fed9c5374c3a530e17453e670"></a>TIMER_SOURCE_DIV_64&#160;</td><td class="fielddoc"><p>Timer clock source divided by 64. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada8828520a3958955a4e2835785787c801"></a>TIMER_SOURCE_DIV_128&#160;</td><td class="fielddoc"><p>Timer clock source divided by 128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada6680e947eb6455f9d0ee007645ea707d"></a>TIMER_SOURCE_DIV_256&#160;</td><td class="fielddoc"><p>Timer clock source divided by 256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada2bcc6bb5346907da7e45b74449588132"></a>TIMER_SOURCE_DIV_512&#160;</td><td class="fielddoc"><p>Timer clock source divided by 512. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adaee99148dc7c32f0764c7cb3b3e45ca30"></a>TIMER_SOURCE_DIV_1024&#160;</td><td class="fielddoc"><p>Timer clock source divided by 1024. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adae133a7e555dee5d543c2133f7f270e00"></a>TIMER_SOURCE_DIV_2048&#160;</td><td class="fielddoc"><p>Timer clock source divided by 2048. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada1221f0e05956366e51b202e03f45c81b"></a>TIMER_SOURCE_DIV_4096&#160;</td><td class="fielddoc"><p>Timer clock source divided by 4096. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada7ab4ccede194937611a0d689c8ab0624"></a>TIMER_SOURCE_DIV_8192&#160;</td><td class="fielddoc"><p>Timer clock source divided by 8912. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada32e04440841704ebdbbae3ac8d0dfab9"></a>TIMER_SOURCE_DIV_16384&#160;</td><td class="fielddoc"><p>Timer clock source divided by 16384. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adad8af484f5615771cc824595a5dcfaf29"></a>TIMER_SOURCE_DIV_32768&#160;</td><td class="fielddoc"><p>Timer clock source divided by 32768. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8"></a>TIMER_SOURCE_DIV_1&#160;</td><td class="fielddoc"><p>Timer clock source divided by 1. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga820b425b44d7b551afd1797ecca7a5adafa4194764952e26c833bdaa26587f245"></a>TIMER_SOURCE_DIV_2&#160;</td><td class="fielddoc"><p>Timer clock source divided by 2. </p>
 </td></tr>
@@ -1028,7 +1070,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

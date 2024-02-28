@@ -1,0 +1,981 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Realtime Clock (r_rtc_c)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_t_c___c.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Realtime Clock (r_rtc_c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_i_m_e_r_s___m_o_d_u_l_e_s.html">Timers</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gabadf3306588a2e313cbc1dbc4fa9d570"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#gabadf3306588a2e313cbc1dbc4fa9d570">R_RTC_C_Open</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gabadf3306588a2e313cbc1dbc4fa9d570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9291454332f71034721bae03eaec89e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga9291454332f71034721bae03eaec89e6">R_RTC_C_Close</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga9291454332f71034721bae03eaec89e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef80e35dea63e8c545c68f68e4ce2e62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#gaef80e35dea63e8c545c68f68e4ce2e62">R_RTC_C_ClockSourceSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gaef80e35dea63e8c545c68f68e4ce2e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3356f86836cbea0224e1fad8e559d7ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> *const p_time)</td></tr>
+<tr class="separator:ga3356f86836cbea0224e1fad8e559d7ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa44f0d23f937470977a99e974c7dcb63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#gaa44f0d23f937470977a99e974c7dcb63">R_RTC_C_CalendarTimeGet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> *const p_time)</td></tr>
+<tr class="separator:gaa44f0d23f937470977a99e974c7dcb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf41a3a94cf190b5d35adeebec79408e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#gaf41a3a94cf190b5d35adeebec79408e6">R_RTC_C_CalendarAlarmSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__alarm__time__t">rtc_alarm_time_t</a> *const p_alarm)</td></tr>
+<tr class="separator:gaf41a3a94cf190b5d35adeebec79408e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a703208e814114f031c6faf8409ae45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga3a703208e814114f031c6faf8409ae45">R_RTC_C_CalendarAlarmGet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__alarm__time__t">rtc_alarm_time_t</a> *const p_alarm)</td></tr>
+<tr class="separator:ga3a703208e814114f031c6faf8409ae45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40d181ae28907cbcc41cebe7accb94d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga40d181ae28907cbcc41cebe7accb94d4">R_RTC_C_PeriodicIrqRateSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01">rtc_periodic_irq_select_t</a> const rate)</td></tr>
+<tr class="separator:ga40d181ae28907cbcc41cebe7accb94d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga257ff061873ecea1766ed74e9d6a8c14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga257ff061873ecea1766ed74e9d6a8c14">R_RTC_C_InfoGet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__info__t">rtc_info_t</a> *const p_rtc_info)</td></tr>
+<tr class="separator:ga257ff061873ecea1766ed74e9d6a8c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8f18b1c5a85b826c155b8c31ef90a8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#gaa8f18b1c5a85b826c155b8c31ef90a8a">R_RTC_C_ErrorAdjustmentSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__error__adjustment__cfg__t">rtc_error_adjustment_cfg_t</a> const *const err_adj_cfg)</td></tr>
+<tr class="separator:gaa8f18b1c5a85b826c155b8c31ef90a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08cee7c11b2b2b9b956f1f4bc29e91b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga08cee7c11b2b2b9b956f1f4bc29e91b2">R_RTC_C_CallbackSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga08cee7c11b2b2b9b956f1f4bc29e91b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52de4e5bf260e36124d7b358d039d003"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga52de4e5bf260e36124d7b358d039d003">R_RTC_C_TimeCaptureSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const p_time_capture)</td></tr>
+<tr class="separator:ga52de4e5bf260e36124d7b358d039d003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga134055e23980753d81f903275bea7288"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga134055e23980753d81f903275bea7288">R_RTC_C_TimeCaptureGet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const p_time_capture)</td></tr>
+<tr class="separator:ga134055e23980753d81f903275bea7288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the RTC peripheral on RA MCUs. This module implements the <a class="el" href="group___r_t_c___a_p_i.html">RTC Interface</a>. </p>
+<h1><a class="anchor" id="r-rtc_c-overview"></a>
+Overview</h1>
+<p>The RTC HAL module configures the RTC module and controls clock, calendar and alarm functions. A callback can be used to respond to the alarm and periodic interrupt.</p>
+<h2><a class="anchor" id="r-rtc_c-features"></a>
+Features</h2>
+<ul>
+<li>RTC_C time and date get and set.</li>
+<li>RTC_C time and date alarm get and set.</li>
+<li>RTC_C alarm and periodic event notification.</li>
+</ul>
+<p>The RTC HAL module supports two different interrupt types:</p>
+<ul>
+<li>An alarm interrupt generated on a match of any combination of minute, hour and day of the week.</li>
+<li>A periodic interrupt generated every 1 month, 1 day, 1 hour, 1 minute, 1 second and 1/2 second.</li>
+</ul>
+<p>A user-defined callback function can be registered (in the <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> API call) and will be called from the interrupt service routine (ISR) for alarm and periodic interrupt. When called, it is passed a pointer to a structure (<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a>) that holds a user-defined context pointer and an indication of which type of interrupt was fired.</p>
+<h2>Date and Time validation</h2>
+<p>"Parameter Checking" needs to be enabled if date and time validation is required for calendarTimeSet and calendarAlarmSet APIs. If "Parameter Checking" is enabled, the 'day of the week' field is automatically calculated and updated by the driver for the provided date. When using the calendarAlarmSet API, minute, hour and day of the week are written to the related registers.</p>
+<h2>Sub-Clock error adjustment (Time Error Adjustment Function)</h2>
+<p>The time error adjustment function is used to correct errors, running fast or slow, in the time caused by variation in the precision of oscillation by the sub-clock oscillator. Because 32,768 cycles of the sub-clock oscillator constitute 1 second of operation when the sub-clock oscillator is selected, the clock runs fast if the sub-clock frequency is high and slow if the sub-clock frequency is low.</p>
+<p><a class="anchor" id="um_rtc_set_time_error_adjustment"></a> The error adjustment is reset every time RTC is reconfigured or time is set.</p>
+<dl class="section note"><dt>Note</dt><dd>RTC driver configurations do not do error adjustment internally while initializing the driver. Application must make calls to the error adjustment api's for desired adjustment.</dd></dl>
+<h1><a class="anchor" id="r-rtc_c-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_rtc_c</h2>
+The following build time configurations are defined in fsp_cfg/r_rtc_c_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Timers &gt; Realtime Clock (r_rtc_c)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Realtime Clock (r_rtc_c).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rtc0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Operation clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+FSXP</li>
+<li>
+SOSC/256 (128 Hz)</li>
+</ul>
+</td><td>FSXP </td><td>Select the RTC operation clock. If using 'SOSC/256' as the source for RTCCLK, the FSXP source cannot be LOCO in Clock tab. </td></tr>
+<tr class="tree_none">
+<td>Automatic Adjustment Period</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+20 Seconds</li>
+<li>
+1 Minute</li>
+</ul>
+</td><td>20 Seconds </td><td>Select the Error Adjustment Period for Automatic Adjustment </td></tr>
+<tr class="tree_none">
+<td>Adjustment Type (Plus-Minus)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Addition</li>
+<li>
+Subtraction</li>
+</ul>
+</td><td>Addition </td><td>Select the Error Adjustment type </td></tr>
+<tr class="tree_none">
+<td>Error Adjustment Value</td><td>Refer to the RA Configuration tool for available options.</td><td>0 </td><td>Specify the Adjustment Value (the number of sub-clock cycles) from the prescaler </td></tr>
+<tr class="tree_none">
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<tr class="tree_none">
+<td>Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the period or alarm interrupt priority. </td></tr>
+</table>
+</p>
+<p><a class="anchor" id="um_rtc_set_the_calendar_time"></a><a class="anchor" id="um_rtc_get_the_calendar_time"></a><a class="anchor" id="um_rtc_set_the_calendar_alarm"></a><a class="anchor" id="um_rtc_get_the_calendar_alarm"></a><a class="anchor" id="um_rtc_date_and_time_value_standard"></a><a class="anchor" id="um_rtc_get_rtc_information"></a><a class="anchor" id="um_rtc_set_the_periodic_rate"></a></p>
+<h2><a class="anchor" id="r-rtc_c-interrupt-configuration"></a>
+Interrupt Configuration</h2>
+<p>To activate interrupts for the RTC module, the desired interrupts must be enabled, The underlying implementation will be expected to handle any interrupts it can support and notify higher layers via callback.</p>
+<h2><a class="anchor" id="r-rtc_c-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The RTC HAL module can use the following clock sources(setting in clock page):</p>
+<ul>
+<li>Sub-Clock: SOSC (32.768 kHz)</li>
+<li>SOSC/256 (128 Hz)</li>
+<li>LOCO (32.768 kHz)</li>
+</ul>
+<p>Users have to select the right source for their application. Sub-Clock is the default during configuration when it is available. </p>
+<h2><a class="anchor" id="r-rtc_c-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not use I/O pins.</p>
+<h1><a class="anchor" id="r-rtc_c-usage_notes"></a>
+Usage Notes</h1>
+<h2>System Initialization</h2>
+<ul>
+<li>RTC driver does not start the sub-clock. The application is responsible for ensuring required clocks are started and stable before accessing MCU peripheral registers.</li>
+</ul>
+<dl class="section warning"><dt>Warning</dt><dd>The subclock can take seconds to stabilize. The RA startup code does not wait for subclock stabilization unless the subclock is the main clock source. When running AGT or RTC off the subclock, the application must ensure the subclock is stable before starting operation.</dd></dl>
+<ul>
+<li>Even when only running in Periodic Interrupt mode <a class="el" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a> must be called successfully to start the RTC.</li>
+</ul>
+<h2><a class="anchor" id="r-rtc_c-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the RTC_C:</p><ul>
+<li>R_RTC_C operates in 24-hour mode.</li>
+<li>If using 'SOSC/256' as the source for RTC operation clock, the FSXP source cannot be LOCO in Clock tab.</li>
+<li>Time error correction function can only proceed when the setting of the RTCC0.RTC128EN bit is 0.</li>
+<li>Alarm clock interrupt can work under LOCO clock source, but it is unstable. Please use alarm clock interrupt function under other clocks.</li>
+</ul>
+<h1><a class="anchor" id="r-rtc_c-examples"></a>
+Examples</h1>
+<h2>RTC Basic Example</h2>
+<p>This is a basic example of minimal use of the RTC_C in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* rtc_time_t is an alias for the C Standard time.h struct &#39;tm&#39; */</span></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> set_time =</div><div class="line">{</div><div class="line">    .tm_sec  = 10,</div><div class="line">    .tm_min  = 11,</div><div class="line">    .tm_hour = 12,</div><div class="line">    .tm_mday = 6,</div><div class="line">    .tm_wday = 3,</div><div class="line">    .tm_mon  = 11,</div><div class="line">    .tm_year = YEARS_SINCE_1900,</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> get_time;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_c_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the RTC module */</span></div><div class="line">    err = <a class="code" href="group___r_t_c___c.html#gabadf3306588a2e313cbc1dbc4fa9d570">R_RTC_C_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c___c.html#gaa44f0d23f937470977a99e974c7dcb63">R_RTC_C_CalendarTimeGet</a>(&amp;g_rtc0_ctrl, &amp;get_time);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Periodic interrupt example</h2>
+<p>This is an example of periodic interrupt in RTC.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_c_periodic_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c___c.html#gabadf3306588a2e313cbc1dbc4fa9d570">R_RTC_C_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* R_RTC_C_CalendarTimeSet must be called at least once to start the RTC */</span></div><div class="line">    <a class="code" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c___c.html#ga40d181ae28907cbcc41cebe7accb94d4">R_RTC_C_PeriodicIrqRateSet</a>(&amp;g_rtc0_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the periodic interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Alarm interrupt example</h2>
+<p>This is an example of alarm interrupt in RTC.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_c_alarm_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Open the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c___c.html#gabadf3306588a2e313cbc1dbc4fa9d570">R_RTC_C_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c___c.html#gaf41a3a94cf190b5d35adeebec79408e6">R_RTC_C_CalendarAlarmSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the Alarm interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Error Adjustment example</h2>
+<p>This is an example of modifying error adjustment in RTC.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_c_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Open the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c___c.html#gabadf3306588a2e313cbc1dbc4fa9d570">R_RTC_C_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c___c.html#gaa8f18b1c5a85b826c155b8c31ef90a8a">R_RTC_C_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrtc__c__extended__cfg"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#structrtc__c__extended__cfg">rtc_c_extended_cfg</a></td></tr>
+<tr class="separator:structrtc__c__extended__cfg"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrtc__c__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#structrtc__c__instance__ctrl__t">rtc_c_instance_ctrl_t</a></td></tr>
+<tr class="separator:structrtc__c__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga98c72c4acf3b8c04823b8d1a8bab1ce8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#ga98c72c4acf3b8c04823b8d1a8bab1ce8">rtc_c_subclock_division_t</a> </td></tr>
+<tr class="separator:ga98c72c4acf3b8c04823b8d1a8bab1ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrtc__c__extended__cfg" id="structrtc__c__extended__cfg"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrtc__c__extended__cfg">&#9670;&nbsp;</a></span>rtc_c_extended_cfg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rtc_c_extended_cfg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RTC extended configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4b63714c361f6123f19ac9f30d013072"></a><a class="el" href="group___r_t_c___c.html#ga98c72c4acf3b8c04823b8d1a8bab1ce8">rtc_c_subclock_division_t</a></td>
+<td class="fieldname">
+clock_source_div</td>
+<td class="fielddoc">
+The sub clock division value. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrtc__c__instance__ctrl__t" id="structrtc__c__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrtc__c__instance__ctrl__t">&#9670;&nbsp;</a></span>rtc_c_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rtc_c_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> is called </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aca4d419b07e6028b28d0ef9f40c30e3b"><td class="memItemLeft" align="right" valign="top"><a id="aca4d419b07e6028b28d0ef9f40c30e3b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#aca4d419b07e6028b28d0ef9f40c30e3b">open</a></td></tr>
+<tr class="memdesc:aca4d419b07e6028b28d0ef9f40c30e3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not driver is open. <br /></td></tr>
+<tr class="separator:aca4d419b07e6028b28d0ef9f40c30e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9af3316beabb06bc4b8461d0785fa749"><td class="memItemLeft" align="right" valign="top"><a id="a9af3316beabb06bc4b8461d0785fa749"></a>
+const <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___c.html#a9af3316beabb06bc4b8461d0785fa749">p_cfg</a></td></tr>
+<tr class="memdesc:a9af3316beabb06bc4b8461d0785fa749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:a9af3316beabb06bc4b8461d0785fa749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga98c72c4acf3b8c04823b8d1a8bab1ce8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98c72c4acf3b8c04823b8d1a8bab1ce8">&#9670;&nbsp;</a></span>rtc_c_subclock_division_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_t_c___c.html#ga98c72c4acf3b8c04823b8d1a8bab1ce8">rtc_c_subclock_division_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RTC sub_clock division </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga98c72c4acf3b8c04823b8d1a8bab1ce8a1349348a3b7baf056de77653bc2bcd9a"></a>RTC_CLOCK_SOURCE_SUBCLOCK_DIV_BY_1&#160;</td><td class="fielddoc"><p>Using sub_clock for rct_c clock. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga98c72c4acf3b8c04823b8d1a8bab1ce8a665a5b27110039defde6033f7fb0a376"></a>RTC_CLOCK_SOURCE_SUBCLOCK_DIV_BY_256&#160;</td><td class="fielddoc"><p>Using (sub_clock / 256) for rct_c clock. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gabadf3306588a2e313cbc1dbc4fa9d570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabadf3306588a2e313cbc1dbc4fa9d570">&#9670;&nbsp;</a></span>R_RTC_C_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Opens and configures the RTC driver module. Implements <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a>. Configuration includes clock source, and interrupt callback function.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the RTC module */</span></div><div class="line">    err = <a class="code" href="group___r_t_c___c.html#gabadf3306588a2e313cbc1dbc4fa9d570">R_RTC_C_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful and RTC has started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Invalid clock source. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Subsystem clock should use SOSC before setting realtime clock to SOSC/256. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid time parameter field. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9291454332f71034721bae03eaec89e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9291454332f71034721bae03eaec89e6">&#9670;&nbsp;</a></span>R_RTC_C_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close the RTC driver. Implements <a class="el" href="group___r_t_c___a_p_i.html#af5b8ce71ff3d65a0f9a556151e6d3b5c">rtc_api_t::close</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>De-Initialization was successful and RTC driver closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for close. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaef80e35dea63e8c545c68f68e4ce2e62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaef80e35dea63e8c545c68f68e4ce2e62">&#9670;&nbsp;</a></span>R_RTC_C_ClockSourceSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_ClockSourceSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Setting clock source is not supported on the RTC_C.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Please set clock source in clock page. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3356f86836cbea0224e1fad8e559d7ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3356f86836cbea0224e1fad8e559d7ac">&#9670;&nbsp;</a></span>R_RTC_C_CalendarTimeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_CalendarTimeSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the calendar time.</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a9a389b61ac0714083083fd04d9223479">rtc_api_t::calendarTimeSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calendar time set operation was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid parameter field. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa44f0d23f937470977a99e974c7dcb63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa44f0d23f937470977a99e974c7dcb63">&#9670;&nbsp;</a></span>R_RTC_C_CalendarTimeGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_CalendarTimeGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the calendar time. </p><dl class="section warning"><dt>Warning</dt><dd>Do not call this function from a critical section or from an interrupt with higher priority than the carry interrupt, or the time returned may be inaccurate.</dd></dl>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#aef7d57fb6eb6e5e781743071793de36e">rtc_api_t::calendarTimeGet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calendar time get operation was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf41a3a94cf190b5d35adeebec79408e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf41a3a94cf190b5d35adeebec79408e6">&#9670;&nbsp;</a></span>R_RTC_C_CalendarAlarmSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_CalendarAlarmSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__alarm__time__t">rtc_alarm_time_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_alarm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the calendar alarm time. For the p_alarm, only minutes, hours and weekdays are valid. Minutes 0 to 59. Hours 0 to 23. Weekdays 0 to 127.</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a5bda4cf6957658e03d59db0cf11933e5">rtc_api_t::calendarAlarmSet</a>.</p>
+<dl class="section pre"><dt>Precondition</dt><dd>The calendar counter must be running before the alarm can be set.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calendar alarm time set operation was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid time parameter field. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3a703208e814114f031c6faf8409ae45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a703208e814114f031c6faf8409ae45">&#9670;&nbsp;</a></span>R_RTC_C_CalendarAlarmGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_CalendarAlarmGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__alarm__time__t">rtc_alarm_time_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_alarm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the calendar alarm time. For the p_alarm, only minutes, hours and weekdays will be got.</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#aaad6019c8b72db02966fc040676810b4">rtc_api_t::calendarAlarmGet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Calendar alarm time get operation was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga40d181ae28907cbcc41cebe7accb94d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga40d181ae28907cbcc41cebe7accb94d4">&#9670;&nbsp;</a></span>R_RTC_C_PeriodicIrqRateSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_PeriodicIrqRateSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01">rtc_periodic_irq_select_t</a> const&#160;</td>
+          <td class="paramname"><em>rate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the periodic interrupt rate and enable periodic interrupt.</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951">rtc_api_t::periodicIrqRateSet</a></p>
+<dl class="section note"><dt>Note</dt><dd>To start the RTC <a class="el" href="group___r_t_c___c.html#ga3356f86836cbea0224e1fad8e559d7ac">R_RTC_C_CalendarTimeSet</a> must be called at least once.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c___c.html#ga40d181ae28907cbcc41cebe7accb94d4">R_RTC_C_PeriodicIrqRateSet</a>(&amp;g_rtc0_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The periodic interrupt rate was successfully set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>User IRQ parameter not valid </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga257ff061873ecea1766ed74e9d6a8c14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga257ff061873ecea1766ed74e9d6a8c14">&#9670;&nbsp;</a></span>R_RTC_C_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__info__t">rtc_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_rtc_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get RTC_C running status information ad store it in provided pointer p_rtc_info</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb">rtc_api_t::infoGet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Get information Successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open already for operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa8f18b1c5a85b826c155b8c31ef90a8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa8f18b1c5a85b826c155b8c31ef90a8a">&#9670;&nbsp;</a></span>R_RTC_C_ErrorAdjustmentSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_ErrorAdjustmentSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__error__adjustment__cfg__t">rtc_error_adjustment_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>err_adj_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function sets time error adjustment</p>
+<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#ae1635364719444ad65541ce00953983e">rtc_api_t::errorAdjustmentSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Time error adjustment successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open for operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Not under sub-clock or invalid error adjustment value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga08cee7c11b2b2b9b956f1f4bc29e91b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08cee7c11b2b2b9b956f1f4bc29e91b2">&#9670;&nbsp;</a></span>R_RTC_C_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e">rtc_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to RTC control block is NULL or the RTC is not configured to use the internal clock. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga52de4e5bf260e36124d7b358d039d003"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52de4e5bf260e36124d7b358d039d003">&#9670;&nbsp;</a></span>R_RTC_C_TimeCaptureSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_TimeCaptureSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_time_capture</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Capture is not supported on the RTC_C.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga134055e23980753d81f903275bea7288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga134055e23980753d81f903275bea7288">&#9670;&nbsp;</a></span>R_RTC_C_TimeCaptureGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_C_TimeCaptureGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__time__capture__t">rtc_time_capture_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_time_capture</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Capture is not supported on the RTC_C.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

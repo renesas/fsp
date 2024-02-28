@@ -1,0 +1,1099 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: UART (r_uarta)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___u_a_r_t_a.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">UART (r_uarta)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga274a115dfa6945259b869b3f8f842480"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga274a115dfa6945259b869b3f8f842480">R_UARTA_Open</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__cfg__t">uart_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga274a115dfa6945259b869b3f8f842480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca130942011303e10b7f5ed4ce52e259"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#gaca130942011303e10b7f5ed4ce52e259">R_UARTA_Close</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gaca130942011303e10b7f5ed4ce52e259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbe209369007245cdb6a4f32c9526486"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#gafbe209369007245cdb6a4f32c9526486">R_UARTA_Read</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
+<tr class="separator:gafbe209369007245cdb6a4f32c9526486"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga011855e3038bf3d976329d7586751a0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga011855e3038bf3d976329d7586751a0d">R_UARTA_Write</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint8_t const *const p_src, uint32_t const bytes)</td></tr>
+<tr class="separator:ga011855e3038bf3d976329d7586751a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab040a3df77e5a8b5d503fb8c7d47ef4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#gab040a3df77e5a8b5d503fb8c7d47ef4e">R_UARTA_CallbackSet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gab040a3df77e5a8b5d503fb8c7d47ef4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70a1e7269d839ad7992d91937db9b6e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga70a1e7269d839ad7992d91937db9b6e5">R_UARTA_BaudSet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, void const *const p_baud_setting)</td></tr>
+<tr class="separator:ga70a1e7269d839ad7992d91937db9b6e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88234ec51812219a8bd521079524bb2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga88234ec51812219a8bd521079524bb2d">R_UARTA_InfoGet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__info__t">uart_info_t</a> *const p_info)</td></tr>
+<tr class="separator:ga88234ec51812219a8bd521079524bb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac87ed2cf537ebd57a86d87eb771ae4e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#gac87ed2cf537ebd57a86d87eb771ae4e9">R_UARTA_Abort</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#gac36c5a0dffa37b418fb9425a76c57740">uart_dir_t</a> communication_to_abort)</td></tr>
+<tr class="separator:gac87ed2cf537ebd57a86d87eb771ae4e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1dd2d0ffba032d16de9403f5f7bbae2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga1dd2d0ffba032d16de9403f5f7bbae2c">R_UARTA_ReadStop</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint32_t *p_remaining_bytes)</td></tr>
+<tr class="separator:ga1dd2d0ffba032d16de9403f5f7bbae2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2b4736f66bcb1bad4b234be78bf5ce0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#gae2b4736f66bcb1bad4b234be78bf5ce0">R_UARTA_BaudCalculate</a> (uint32_t baudrate, uint32_t baud_rate_percent_error_x1000, <a class="el" href="group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d">uarta_clock_source_t</a> clock_source, <a class="el" href="group___u_a_r_t_a.html#structuarta__baud__setting__t">uarta_baud_setting_t</a> *const p_baud_setting)</td></tr>
+<tr class="separator:gae2b4736f66bcb1bad4b234be78bf5ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the UARTA peripheral on RA MCUs. This module implements the <a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a>. </p>
+<h1><a class="anchor" id="r-uarta-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r-uarta-features"></a>
+Features</h2>
+<p>The UARTA module supports the following features:</p>
+<ul>
+<li>Full-duplex UART communication<a class="anchor" id="um_uarta_read"></a><a class="anchor" id="um_uarta_write"></a></li>
+<li>Interrupt-driven data transmission and reception<a class="anchor" id="um_uarta_transmission_end_notification"></a><a class="anchor" id="um_uarta_back_to_back_writes"></a><a class="anchor" id="um_uarta_reception_complete_notification"></a></li>
+<li>Baud-rate change at run-time<a class="anchor" id="um_uarta_baud_rate"></a></li>
+<li>Integration with the DTC transfer module</li>
+<li>Abort in-progress read/write operations<a class="anchor" id="um_uarta_abort"></a></li>
+<li>MSB or LSB first transfer selectable<a class="anchor" id="um_uarta_sequence"></a></li>
+<li>Inversion control of communication logic level provided </li>
+</ul>
+<h1><a class="anchor" id="r-uarta-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_uarta</h2>
+The following build time configurations are defined in fsp_cfg/r_uarta_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DTC support for the UARTA module. </td></tr>
+</table>
+ <h2>Configurations for Connectivity &gt; UART (r_uarta)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_uarta).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_uart0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the UARTA channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+8bits</li>
+<li>
+7bits</li>
+<li>
+5bits</li>
+</ul>
+</td><td>8bits </td><td>Select the number of bits per word. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Parity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+None</li>
+<li>
+Zero</li>
+<li>
+Odd</li>
+<li>
+Even</li>
+</ul>
+</td><td>None </td><td>Select the parity mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stop Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1bit</li>
+<li>
+2bits</li>
+</ul>
+</td><td>1bit </td><td>Select the number of stop bits. <br />
+Note: For the receive data, only the first 1 bit of the stop bits is checked regardless of the stop bit length. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Baud  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
+<br />
+If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transfer Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LSB first</li>
+<li>
+MSB first</li>
+</ul>
+</td><td>LSB first </td><td>Selection of the transmission/reception order. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transfer level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Positive logic</li>
+<li>
+Negative logic</li>
+</ul>
+</td><td>Positive logic </td><td>Selection of the transmission/reception level. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive Error Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Selection receive interrupt mode .<br />
+Disabled: The UARTA0_ERRI interrupt is generated when a reception error occurs.<br />
+Enabled: The UARTA0_RXI interrupt is generated when a reception error occurs. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-uarta-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The baud-rate clock generator can be selected from the clock source MOSC, HOCO, MOCO, SOSC/LOCO.<a class="anchor" id="um_uarta_clock_configuration"></a> </p>
+<h2><a class="anchor" id="r-uarta-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module uses TXDA and RXDA pin to communicate to external devices.</p>
+<h1><a class="anchor" id="r-uarta-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-uarta-limitations"></a>
+Limitations</h2>
+<ul>
+<li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+<li>The UARTA module does not have CTS or RTS signals.</li>
+</ul>
+<h2><a class="anchor" id="r-uarta-dtc"></a>
+DTC Limitations</h2>
+<ul>
+<li>DTC support is available for reception, but labeled as [Not recommended]. This is because the UART bytes are received asynchronously. Bytes can be received between calls to <a class="el" href="group___u_a_r_t_a.html#gafbe209369007245cdb6a4f32c9526486">R_UARTA_Read()</a>. The logic required to combine bytes received through <a class="el" href="group___u_a_r_t_a.html#gafbe209369007245cdb6a4f32c9526486">R_UARTA_Read()</a> (UART_EVENT_RX_COMPLETE) and bytes received between calls (UART_EVENT_RX_CHAR) is complex. Reception length may also be unknown, and the driver will not issue an interrupt unless the entire DTC buffer is filled.</li>
+<li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
+</ul>
+<h1><a class="anchor" id="r-uarta-examples"></a>
+Examples</h1>
+<h2>UARTA Example</h2>
+<div class="fragment"><div class="line">uint8_t  g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_src[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_out_of_band_received[TRANSFER_LENGTH];</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line">uint32_t g_receive_complete  = 0;</div><div class="line">uint32_t g_out_of_band_index = 0;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_uarta_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___u_a_r_t_a.html#ga274a115dfa6945259b869b3f8f842480">R_UARTA_Open</a>(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___u_a_r_t_a.html#gafbe209369007245cdb6a4f32c9526486">R_UARTA_Read</a>(&amp;g_uart0_ctrl, g_dest, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___u_a_r_t_a.html#ga011855e3038bf3d976329d7586751a0d">R_UARTA_Write</a>(&amp;g_uart0_ctrl, g_src, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_receive_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> example_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the UART event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Received a character */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Only put the next character in the receive buffer if there is space for it */</span></div><div class="line">            <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(g_out_of_band_received) &gt; g_out_of_band_index)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Write either the next one or two bytes depending on the receive data size */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db">UART_DATA_BITS_8</a> &gt;= g_uart0_cfg.data_bits)</div><div class="line">                {</div><div class="line">                    g_out_of_band_received[g_out_of_band_index++] = (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    uint16_t * p_dest = (uint16_t *) &amp;g_out_of_band_received[g_out_of_band_index];</div><div class="line">                    *p_dest              = (uint16_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                    g_out_of_band_index += 2;</div><div class="line">                }</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_receive_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Transmit complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da56867c1db03ea3ee2c704604ac94b767">UART_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_transfer_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>UARTA Baud Set Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define UARTA_BAUDRATE_19200                 (19200)</span></div><div class="line"><span class="preprocessor">#define UARTA_BAUDRATE_ERROR_PERCENT_4740    (4740)</span></div><div class="line"><span class="keywordtype">void</span> r_uarta_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_a_r_t_a.html#structuarta__baud__setting__t">uarta_baud_setting_t</a> baud_setting;</div><div class="line">    uint32_t             baud_rate         = UARTA_BAUDRATE_19200;</div><div class="line">    uint32_t             error_rate_x_1000 = UARTA_BAUDRATE_ERROR_PERCENT_4740;</div><div class="line">    <a class="code" href="group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d">uarta_clock_source_t</a> clock_source      = <a class="code" href="group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613da7c677d26414fc62556f3813e1e2c2488">UARTA_CLOCK_SOURCE_HOCO</a>;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___u_a_r_t_a.html#gae2b4736f66bcb1bad4b234be78bf5ce0">R_UARTA_BaudCalculate</a>(baud_rate, error_rate_x_1000, clock_source, &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___u_a_r_t_a.html#ga70a1e7269d839ad7992d91937db9b6e5">R_UARTA_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structuarta__baud__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#structuarta__baud__setting__t">uarta_baud_setting_t</a></td></tr>
+<tr class="separator:structuarta__baud__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structuarta__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#structuarta__extended__cfg__t">uarta_extended_cfg_t</a></td></tr>
+<tr class="separator:structuarta__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structuarta__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#structuarta__instance__ctrl__t">uarta_instance_ctrl_t</a></td></tr>
+<tr class="separator:structuarta__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga2fc258c61199990159af80fe3df1613d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d">uarta_clock_source_t</a> </td></tr>
+<tr class="separator:ga2fc258c61199990159af80fe3df1613d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2470b598ae8b90875f185826ca5a110"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#gab2470b598ae8b90875f185826ca5a110">uarta_clock_div_t</a> </td></tr>
+<tr class="separator:gab2470b598ae8b90875f185826ca5a110"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga258c1cb20a60654773daefece154b043"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga258c1cb20a60654773daefece154b043">uarta_rxi_mode_t</a> </td></tr>
+<tr class="separator:ga258c1cb20a60654773daefece154b043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86e16699bc814301eab02a25c7fbf05f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga86e16699bc814301eab02a25c7fbf05f">uarta_dir_bit_t</a> </td></tr>
+<tr class="separator:ga86e16699bc814301eab02a25c7fbf05f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga216a258d21194c6a0ff84a4bcb8613e8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t_a.html#ga216a258d21194c6a0ff84a4bcb8613e8">uarta_alv_bit_t</a> </td></tr>
+<tr class="separator:ga216a258d21194c6a0ff84a4bcb8613e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structuarta__baud__setting__t" id="structuarta__baud__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structuarta__baud__setting__t">&#9670;&nbsp;</a></span>uarta_baud_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct uarta_baud_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Register settings to acheive a desired baud rate and modulation duty. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5462388dff62a8ca9a822500cf7e93b4"></a>union <a class="el" href="group___u_a_r_t_a.html#unionuarta__baud__setting__t_8____unnamed____">uarta_baud_setting_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0e5255750966a185d843cfaed5ff4c0d"></a>uint8_t</td>
+<td class="fieldname">
+brgca</td>
+<td class="fielddoc">
+Baud rate generator control setting. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structuarta__extended__cfg__t" id="structuarta__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structuarta__extended__cfg__t">&#9670;&nbsp;</a></span>uarta_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct uarta_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>UART on UARTA device Configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a2d3a574b3f371c4b9b4393db99dd1d70"></a><a class="el" href="group___u_a_r_t_a.html#ga258c1cb20a60654773daefece154b043">uarta_rxi_mode_t</a></td>
+<td class="fieldname">
+rxi_mode</td>
+<td class="fielddoc">
+Receive interrupt mode select. </td></tr>
+<tr><td class="fieldtype">
+<a id="acb2838b0ee81214fdb0fbf987d0f4bfe"></a><a class="el" href="group___u_a_r_t_a.html#ga86e16699bc814301eab02a25c7fbf05f">uarta_dir_bit_t</a></td>
+<td class="fieldname">
+transfer_dir</td>
+<td class="fielddoc">
+Transmission/reception order configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad9a55a2bc5c93d5541a884b268edc86d"></a><a class="el" href="group___u_a_r_t_a.html#ga216a258d21194c6a0ff84a4bcb8613e8">uarta_alv_bit_t</a></td>
+<td class="fieldname">
+transfer_level</td>
+<td class="fielddoc">
+Transmission/reception level configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a88b8309638f1a246daf02b8c2bc4e07e"></a><a class="el" href="group___u_a_r_t_a.html#structuarta__baud__setting__t">uarta_baud_setting_t</a> *</td>
+<td class="fieldname">
+p_baud_setting</td>
+<td class="fielddoc">
+Register settings for a desired baud rate. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structuarta__instance__ctrl__t" id="structuarta__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structuarta__instance__ctrl__t">&#9670;&nbsp;</a></span>uarta_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct uarta_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>UARTA instance control block. </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga2fc258c61199990159af80fe3df1613d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2fc258c61199990159af80fe3df1613d">&#9670;&nbsp;</a></span>uarta_clock_source_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d">uarta_clock_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumeration for UARTA clock source </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2fc258c61199990159af80fe3df1613da9843c4b3f12d4be6d402f8b9944ecda7"></a>UARTA_CLOCK_SOURCE_SOSC_LOCO&#160;</td><td class="fielddoc"><p>SOSC/LOCO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2fc258c61199990159af80fe3df1613dabf6d88f18042a045d1bd4b0768c76e51"></a>UARTA_CLOCK_SOURCE_MOSC&#160;</td><td class="fielddoc"><p>MOSC. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2fc258c61199990159af80fe3df1613da7c677d26414fc62556f3813e1e2c2488"></a>UARTA_CLOCK_SOURCE_HOCO&#160;</td><td class="fielddoc"><p>HOCO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2fc258c61199990159af80fe3df1613daf95992183c56775459a547279a73b40a"></a>UARTA_CLOCK_SOURCE_MOCO&#160;</td><td class="fielddoc"><p>MOCO. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab2470b598ae8b90875f185826ca5a110"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab2470b598ae8b90875f185826ca5a110">&#9670;&nbsp;</a></span>uarta_clock_div_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_a_r_t_a.html#gab2470b598ae8b90875f185826ca5a110">uarta_clock_div_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumeration for UARTA clock divider </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110a412fe396680ab3ad2d53c84c2cfc2d7e"></a>UARTA_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>fSEL/1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110af4ff7fe565d940e3feb19a3a841c1de4"></a>UARTA_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>fSEL/2 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110a9040cb35374dfbd695007f9d429ec834"></a>UARTA_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>fSEL/4 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110a5c7157b4b3b9187769b5adb03914f6de"></a>UARTA_CLOCK_DIV_8&#160;</td><td class="fielddoc"><p>fSEL/8 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110a90bd7f14729bff878bb6a5d83b3ebaa6"></a>UARTA_CLOCK_DIV_16&#160;</td><td class="fielddoc"><p>fSEL/16 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110ab35a2bb66613172b5523b17efdb464b9"></a>UARTA_CLOCK_DIV_32&#160;</td><td class="fielddoc"><p>fSEL/32 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110a5c20e86b766db45eaf03bc76cc8f1c34"></a>UARTA_CLOCK_DIV_64&#160;</td><td class="fielddoc"><p>fSEL/64 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab2470b598ae8b90875f185826ca5a110a0c182ed3cce15a7c16d845d0579d4e20"></a>UARTA_CLOCK_DIV_COUNT&#160;</td><td class="fielddoc"><p>Total number of clock divider options. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga258c1cb20a60654773daefece154b043"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga258c1cb20a60654773daefece154b043">&#9670;&nbsp;</a></span>uarta_rxi_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_a_r_t_a.html#ga258c1cb20a60654773daefece154b043">uarta_rxi_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receive interrupt mode select </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga258c1cb20a60654773daefece154b043ab3e6a09189fd0bcc531b6dad9453670b"></a>UARTA_RXI_MODE_ERROR_TRIGGER_ERI&#160;</td><td class="fielddoc"><p>The receive error interrupt is generated when a reception error occurs. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga258c1cb20a60654773daefece154b043aef29cc7bd46b2f17b7304bc172ced0b7"></a>UARTA_RXI_MODE_ERROR_TRIGGER_RXI&#160;</td><td class="fielddoc"><p>The receive interrupt is generated when a reception error occurs. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga86e16699bc814301eab02a25c7fbf05f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga86e16699bc814301eab02a25c7fbf05f">&#9670;&nbsp;</a></span>uarta_dir_bit_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_a_r_t_a.html#ga86e16699bc814301eab02a25c7fbf05f">uarta_dir_bit_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmission/reception order configuration. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga86e16699bc814301eab02a25c7fbf05fac69e0263b404720810fa7fae869d5469"></a>UARTA_DIR_BIT_MSB_FIRST&#160;</td><td class="fielddoc"><p>MSB first. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga86e16699bc814301eab02a25c7fbf05fae1dc4537588badb596c92727294cddf1"></a>UARTA_DIR_BIT_LSB_FIRST&#160;</td><td class="fielddoc"><p>LSB first. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga216a258d21194c6a0ff84a4bcb8613e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga216a258d21194c6a0ff84a4bcb8613e8">&#9670;&nbsp;</a></span>uarta_alv_bit_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_a_r_t_a.html#ga216a258d21194c6a0ff84a4bcb8613e8">uarta_alv_bit_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmission/reception level configuration. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga216a258d21194c6a0ff84a4bcb8613e8a25a29997b6d9dd7af3fd5c65e5c31f6f"></a>UARTA_ALV_BIT_POSITIVE_LOGIC&#160;</td><td class="fielddoc"><p>Positive logic (wait state = high level, start bit = low level, stop bit = high level) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga216a258d21194c6a0ff84a4bcb8613e8ae1454759e075a3dfe2462dfd6f881bb0"></a>UARTA_ALV_BIT_NEGATIVE_LOGIC&#160;</td><td class="fielddoc"><p>Negative logic (wait state = low level, start bit = high level, stop bit = low level) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga274a115dfa6945259b869b3f8f842480"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga274a115dfa6945259b869b3f8f842480">&#9670;&nbsp;</a></span>R_UARTA_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__cfg__t">uart_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configures the UARTA driver based on the input configurations. If transmission/reception is enabled at compile time, transmission/reception is enabled at the end of this function. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a962363eebf6d497894b5ca569ebb87bb">uart_api_t::open</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block or configuration structure is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The requested channel does not exist on this MCU. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid clock select (f_UTA0) and baudrate configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a84d48960cdfe867ef54fd4635a85ceeb">transfer_api_t::open</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="gaca130942011303e10b7f5ed4ce52e259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca130942011303e10b7f5ed4ce52e259">&#9670;&nbsp;</a></span>R_UARTA_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Aborts any in progress transfers. Disables interrupts, receiver, and transmitter. Closes lower level transfer drivers if used. Removes power. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a4e7e47514702ff0e3515280590dd9659">uart_api_t::close</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafbe209369007245cdb6a4f32c9526486"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafbe209369007245cdb6a4f32c9526486">&#9670;&nbsp;</a></span>R_UARTA_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receives user specified number of bytes into destination buffer pointer. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a75ba1611c4bba17f25f1957348991829">uart_api_t::read</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Data reception successfully ends. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block is NULL. Number of transfers outside the max or min boundary when transfer instance used </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A previous read operation is still in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>UARTA_CFG_RX_ENABLE is set to 0</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9c096c8d0e78dfbf8b3809a4598b8619">transfer_api_t::reset</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga011855e3038bf3d976329d7586751a0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga011855e3038bf3d976329d7586751a0d">&#9670;&nbsp;</a></span>R_UARTA_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmits user specified number of bytes from the source buffer pointer. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a9a87e8764518ac3268cf1c9df3b6aad3">uart_api_t::write</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Data transmission finished successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block is NULL. Number of transfers outside the max or min boundary when transfer instance used </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A UARTA transmission is in progress </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>UART_CFG_TX_ENABLE is set to 0</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9c096c8d0e78dfbf8b3809a4598b8619">transfer_api_t::reset</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="gab040a3df77e5a8b5d503fb8c7d47ef4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab040a3df77e5a8b5d503fb8c7d47ef4e">&#9670;&nbsp;</a></span>R_UARTA_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acfd849190deedb8f9c35bed54dccc111">uart_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga70a1e7269d839ad7992d91937db9b6e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70a1e7269d839ad7992d91937db9b6e5">&#9670;&nbsp;</a></span>R_UARTA_BaudSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_BaudSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_baud_setting</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the baud rate using the clock selected in Open. p_baud_setting is a pointer to a <a class="el" href="group___u_a_r_t_a.html#structuarta__baud__setting__t">uarta_baud_setting_t</a> structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a8b0f901bcc26bd6836fe620235585f98">uart_api_t::baudSet</a></p>
+<dl class="section warning"><dt>Warning</dt><dd>This terminates any in-progress transmission.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block is NULL or the UART is not configured to use the internal clock. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid clock select (f_UTA0) and baudrate configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga88234ec51812219a8bd521079524bb2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga88234ec51812219a8bd521079524bb2d">&#9670;&nbsp;</a></span>R_UARTA_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__info__t">uart_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides the driver information, including the maximum number of bytes that can be received or transmitted at a time. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Information stored in provided p_info. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac87ed2cf537ebd57a86d87eb771ae4e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac87ed2cf537ebd57a86d87eb771ae4e9">&#9670;&nbsp;</a></span>R_UARTA_Abort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_Abort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gac36c5a0dffa37b418fb9425a76c57740">uart_dir_t</a>&#160;</td>
+          <td class="paramname"><em>communication_to_abort</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides API to abort ongoing transfer. Transmission is aborted after the current character is transmitted. Reception is still enabled after abort(). Any characters received after abort() and before the transfer is reset in the next call to read(), will arrive via the callback function with event UART_EVENT_RX_CHAR. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>UARTA transaction aborted successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The requested Abort direction is unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls: <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a3188207ba386da0ec85946e134b4327a">transfer_api_t::disable</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga1dd2d0ffba032d16de9403f5f7bbae2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1dd2d0ffba032d16de9403f5f7bbae2c">&#9670;&nbsp;</a></span>R_UARTA_ReadStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_ReadStop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>p_remaining_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides API to abort ongoing read. Reception is still enabled after abort(). Any characters received after abort() and before the transfer is reset in the next call to read(), will arrive via the callback function with event UART_EVENT_RX_CHAR. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acb47c360a2ac4ddd36e53f0a4ad71b92">uart_api_t::readStop</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>UARTA transaction aborted successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UARTA control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The requested Abort direction is unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls: <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a3188207ba386da0ec85946e134b4327a">transfer_api_t::disable</a> </dd></dl>
+
+</div>
+</div>
+<a id="gae2b4736f66bcb1bad4b234be78bf5ce0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2b4736f66bcb1bad4b234be78bf5ce0">&#9670;&nbsp;</a></span>R_UARTA_BaudCalculate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_UARTA_BaudCalculate </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baudrate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baud_rate_percent_error_x1000</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d">uarta_clock_source_t</a>&#160;</td>
+          <td class="paramname"><em>clock_source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t_a.html#structuarta__baud__setting__t">uarta_baud_setting_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_baud_setting</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate related registers.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate [bps]. For example, 19200, 57600, 115200, etc. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">baud_rate_percent_error_x1000</td><td>Max baud rate error. At most baud_rate_percent_error x 1000 required for module to function. Absolute max baud_rate_error is 4740 (4.74%). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Clock Source. Required for module to generate baudrate. The clock sources can be select include UARTA_CLOCK_SOURCE_MOSC, UARTA_CLOCK_SOURCE_HOCO, UARTA_CLOCK_SOURCE_MOCO, UARTA_CLOCK_SOURCE_SOSC_LOCO. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_baud_setting</td><td>Baud setting information stored here if successful</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is set successfully </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Argument is out of available range, baud rate is '0'. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_RATE</td><td>Baud rate error is outside the range or the baud rate could not be set given the current clock source. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

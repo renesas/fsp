@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -373,9 +373,9 @@ Hall</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Voltage range (V)</td><td>Must be a valid non-negative value.</td><td>111.0 </td><td>Voltage range to measure(Maximum input main line voltage) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Resolution of A/D conversion</td><td>Manual Entry</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
+<td class="tree_lvl_1_cell">Resolution of A/D conversion</td><td>Must be a valid Resolution of ADC.</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Offset of A/D conversion for current</td><td>Manual Entry</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
+<td class="tree_lvl_1_cell">Offset of A/D conversion for current</td><td>Must be a valid non-negative value.</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Conversion level of A/D conversion for voltage</td><td>Must be a valid non-negative value.</td><td>0.66 </td><td>Conversion level of A/D conversion for voltage </td></tr>
 <tr class="tree_lvl_1_item">
@@ -383,29 +383,29 @@ Hall</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Input voltage</td><td>Must be a valid non-negative value.</td><td>24.0 </td><td>Input voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion channel for U phase current</td><td>Manual Entry</td><td>ADC_CHANNEL_0 </td><td>Specify the A/D channel for U phase current </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion channel for U phase current</td><td>Value must be a supported channel number</td><td>0 </td><td>Specify the A/D channel for U phase current </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion channel for W phase current</td><td>Manual Entry</td><td>ADC_CHANNEL_2 </td><td>Specify the A/D channel for W phase current </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion channel for W phase current</td><td>Value must be a supported channel number</td><td>2 </td><td>Specify the A/D channel for W phase current </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion channel for main line voltage</td><td>Manual Entry</td><td>ADC_CHANNEL_5 </td><td>Specify the A/D channel for main line voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion channel for main line voltage</td><td>Value must be a supported channel number</td><td>5 </td><td>Specify the A/D channel for main line voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion channel for U phase voltage</td><td>Manual Entry</td><td>ADC_CHANNEL_18 </td><td>Specify the A/D channel for U phase voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion channel for U phase voltage</td><td>Value must be a supported channel number</td><td>18 </td><td>Specify the A/D channel for U phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion channel for V phase voltage</td><td>Manual Entry</td><td>ADC_CHANNEL_20 </td><td>Specify the A/D channel for V phase voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion channel for V phase voltage</td><td>Value must be a supported channel number</td><td>20 </td><td>Specify the A/D channel for V phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion channel for W phase voltage</td><td>Manual Entry</td><td>ADC_CHANNEL_6 </td><td>Specify the A/D channel for W phase voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion channel for W phase voltage</td><td>Value must be a supported channel number</td><td>6 </td><td>Specify the A/D channel for W phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for U phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for U phase current </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for U phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Specify the A/D unit for U phase current </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for W phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for W phase current </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for W phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Specify the A/D unit for W phase current </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for main line voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for main line voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for main line voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Specify the A/D unit for main line voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for U phase voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for U phase voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for U phase voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Specify the A/D unit for U phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for V phase voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for V phase voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for V phase voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Specify the A/D unit for V phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for W phase voltage</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D unit for W phase voltage </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for W phase voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Specify the A/D unit for W phase voltage </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">GTIOCA stop level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1226,7 +1226,7 @@ shared extended config </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

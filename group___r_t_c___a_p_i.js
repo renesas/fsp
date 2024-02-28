@@ -101,7 +101,8 @@ var group___r_t_c___a_p_i =
     [ "rtc_error_adjustment_period_t", "group___r_t_c___a_p_i.html#gaa9758f6f29579df6e9f5c64ff486c097", [
       [ "RTC_ERROR_ADJUSTMENT_PERIOD_1_MINUTE", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097a4c96e106ab367f0a811813e6077c3a8c", null ],
       [ "RTC_ERROR_ADJUSTMENT_PERIOD_10_SECOND", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097abb5d066f25aa8878ef57848e7a8a28aa", null ],
-      [ "RTC_ERROR_ADJUSTMENT_PERIOD_NONE", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097afe53e47d736acd5bd710bc610d1fd8bc", null ]
+      [ "RTC_ERROR_ADJUSTMENT_PERIOD_NONE", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097afe53e47d736acd5bd710bc610d1fd8bc", null ],
+      [ "RTC_ERROR_ADJUSTMENT_PERIOD_20_SECOND", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097aa25e82c25bba38523c95895d68fba586", null ]
     ] ],
     [ "rtc_periodic_irq_select_t", "group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01", [
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_256_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a2f22d5de616b4249e26741a2d1af200d", null ],

@@ -1,0 +1,347 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Low/Programmable Voltage Detection  (r_lvd)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_v_d-_p_v_d.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">Low/Programmable Voltage Detection (r_lvd)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___m_o_d_u_l_e_s.html">Monitoring</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>Driver for the LVD and PVD peripherals on RA MCUs. This module implements the <a class="el" href="group___l_v_d___a_p_i.html">Low Voltage Detection Interface</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>In the below usage notes, "LVD" refers to both LVD and PVD.</dd></dl>
+<h1><a class="anchor" id="r-lvd-overview"></a>
+Overview</h1>
+<p>The Low Voltage Detection module configures the voltage monitors to detect when a power supply pin or a voltage detector pin voltages crosses a specified threshold.</p>
+<h2><a class="anchor" id="r-lvd-features"></a>
+Features</h2>
+<p>The LVD HAL module supports the following functions:</p><ul>
+<li>Five run-time configurable voltage monitors (Voltage Monitor 1, Voltage Monitor 2, LVD VBAT, LVD VRTC, EXLVD)<ul>
+<li>Configurable voltage threshold</li>
+<li>Digital filter (Available on specific MCUs)</li>
+<li>Support for both interrupt or polling<ul>
+<li>NMI or maskable interrupt can be configured (NMI support for Voltage Monitor 1 &amp; Voltage Monitor 2 only).</li>
+</ul>
+</li>
+<li>Voltage monitor interrupt generation condition can be configured (rising, falling, or both edge event detection).</li>
+<li>Support for resetting the MCU when V<sub>CC</sub> falls below/rises above configured threshold.</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="r-lvd-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_lvd_reset"></a><a class="anchor" id="um_lvd_reset_on_rising"></a><a class="anchor" id="um_lvd_voltage_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_threshold"></a><a class="anchor" id="um_lvd_voltage_monitor"></a><a class="anchor" id="um_lvd_digital_filter"></a> <h2>Build Time Configurations for r_lvd</h2>
+The following build time configurations are defined in fsp_cfg/r_lvd_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Monitoring &gt; Low/Programmable Voltage Detection (r_lvd)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Low/Programmable Voltage Detection (r_lvd). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_lvd0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Monitor Number</td><td>MCU Specific Options</td><td></td><td>Select the LVD monitor. </td></tr>
+<tr class="tree_none">
+<td>Digital Filter</td><td>MCU Specific Options</td><td></td><td>Enable the digital filter and select the digital filter clock divider. </td></tr>
+<tr class="tree_none">
+<td>Voltage Threshold</td><td>MCU Specific Options</td><td></td><td>Select the low voltage detection threshold. </td></tr>
+<tr class="tree_none">
+<td>Detection Response</td><td>MCU Specific Options</td><td></td><td>Select what happens when the voltage crosses the threshold voltage. </td></tr>
+<tr class="tree_none">
+<td>Voltage Slope</td><td>MCU Specific Options</td><td></td><td>Select interrupt generation on rising voltage, falling voltage or both. </td></tr>
+<tr class="tree_none">
+<td>Negation Delay</td><td>MCU Specific Options</td><td></td><td>Negation of the monitor signal can either be delayed from the reset event or from voltage returning to normal range. </td></tr>
+<tr class="tree_none">
+<td>Monitor Interrupt Callback</td><td>Name must be a valid C symbol.</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
+<tr class="tree_none">
+<td>LVD Monitor Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the LVD Monitor interrupt priority. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-lvd-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The LOCO clock must be enabled in order to use the digital filter.</p>
+<h2><a class="anchor" id="r-lvd-pin-configuration"></a>
+Pin Configuration</h2>
+<p>To use LVD module, you need to switch pin funtion of EXLVDVBAT pin, VRTC pin, EXLVD pin to enable LVD function on this pin.</p>
+<h1><a class="anchor" id="r-lvd-usage_notes"></a>
+Usage Notes</h1>
+<h2>Startup Edge Detection</h2>
+<p>If V<sub>CC</sub> is below the threshold prior to configuring the voltage monitor for falling edge detection, the monitor will immediately detect the a falling edge condition. If V<sub>CC</sub> is above the threshold prior to configuring the monitor for rising edge detection, the monitor will not detect a rising edge condition until V<sub>CC</sub> falls below the threshold and then rises above it again.</p>
+<h2>Voltage Monitor 0</h2>
+<p>The LVD HAL module only supports configuring voltage monitor 1 and voltage monitor 2. Voltage monitor 0 can be configured by setting the appropriate bits in the OFS1 register. This means that voltage monitor 0 settings cannot be changed at runtime.</p>
+<p>Voltage monitor 0 supports the following features</p><ul>
+<li>Configurable Voltage Threshold (V<sub>DET0</sub>)</li>
+<li>Reset the device when V<sub>CC</sub> falls below V<sub>DET0</sub></li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li>The digital filter must be disabled when using voltage monitors in Software Standby or Deep Software Standby.</li>
+<li>Deep Software Standby mode is not possible if the voltage monitor is configured to reset the MCU.</li>
+<li>Reset generated by the VCC-rise detection is supported only on devices with PVD.</li>
+<li>On RA0, when LVD0 is used the detection voltage of LVD1 must be higher than LVD0's. See the section "LVD1CR : Voltage Monitor 1 Circuit Control Register" of the RA0 Hardware User's Manual (r01uh1040ej0100).</li>
+</ul>
+<h1><a class="anchor" id="r-lvd-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the LVD in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___l_v_d___a_p_i.html#structlvd__status__t">lvd_status_t</a> status;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___l_v_d.html#gae1af63498d91ee2ced63246e477faa8c">R_LVD_StatusGet</a>(&amp;g_lvd_ctrl, &amp;status);</div><div class="line"></div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#ggaad6c2ef7eb77fb3e002b8365ca042b76ae5caf5376bc83e65e556f3097f2a734a">LVD_THRESHOLD_CROSSING_DETECTED</a> == status.<a class="code" href="group___l_v_d___a_p_i.html#a03ad98ceabc205869874f6861d2cf8c9">crossing_detected</a>)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___l_v_d.html#ga2f8bf11a148ad673457d5afcabb85d7d">R_LVD_StatusClear</a>(&amp;g_lvd_ctrl);</div><div class="line"></div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">            <span class="comment">/* Do something */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Interrupt Example</h2>
+<p>This is a basic example of using a LVD instance that is configured to generate an interrupt.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> interrupt_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will be interrupted when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when Vcc crosses configured threshold. */</span></div><div class="line"><span class="keywordtype">void</span> lvd_callback (<a class="code" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#gga9d6a37d0481e360cf4db1a3374a0965aabc3dcdce3b10087e3eb7ac130fdb04fa">LVD_CURRENT_STATE_BELOW_THRESHOLD</a> == p_args-&gt;<a class="code" href="group___l_v_d___a_p_i.html#a5709e5f6ee2f70d1170e29db5c388286">current_state</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do Something */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reset Example</h2>
+<p>This is a basic example of using a LVD instance that is configured to reset the MCU.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> reset_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.LVD1RF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* The system is coming out of reset because Vcc crossed configured voltage threshold. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Clear Voltage Monitor 1 Reset Detect Flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR0_b.LVD1RF = 0;</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will reset when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

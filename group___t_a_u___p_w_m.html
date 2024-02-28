@@ -1,0 +1,1245 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Timer, Simultaneous Channel (r_tau_pwm)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___t_a_u___p_w_m.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Timer, Simultaneous Channel (r_tau_pwm)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_i_m_e_r_s___m_o_d_u_l_e_s.html">Timers</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaec9be2f0ca254943a17a426be77d8eac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gaec9be2f0ca254943a17a426be77d8eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29b0622e136ad18f5b926fdfc6a40159"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga29b0622e136ad18f5b926fdfc6a40159">R_TAU_PWM_Stop</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga29b0622e136ad18f5b926fdfc6a40159"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafac44e86209065231ecc6f701954a94d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gafac44e86209065231ecc6f701954a94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30638708378f5c77250b8b293bc483e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga30638708378f5c77250b8b293bc483e4">R_TAU_PWM_Reset</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga30638708378f5c77250b8b293bc483e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3921f3ee40b694e704df63724ac9893"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893">R_TAU_PWM_Enable</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gaa3921f3ee40b694e704df63724ac9893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2899559321da564ab8fdea77aa7b9c04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04">R_TAU_PWM_Disable</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga2899559321da564ab8fdea77aa7b9c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga553f930f29aaa77921c50f7634835ced"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced">R_TAU_PWM_PeriodSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const period_counts)</td></tr>
+<tr class="separator:ga553f930f29aaa77921c50f7634835ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae96758005a9259bc596d4f951130438b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#gae96758005a9259bc596d4f951130438b">R_TAU_PWM_DutyCycleSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin)</td></tr>
+<tr class="separator:gae96758005a9259bc596d4f951130438b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a6409ed7c3c3007baa7abd0a1bab0d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2">R_TAU_PWM_InfoGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const p_info)</td></tr>
+<tr class="separator:ga4a6409ed7c3c3007baa7abd0a1bab0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54b6a6c7e92c7f97c55dcda7cd3db5e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">R_TAU_PWM_StatusGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const p_status)</td></tr>
+<tr class="separator:ga54b6a6c7e92c7f97c55dcda7cd3db5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f184ff7648c6483a20efe4f319d0035"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga9f184ff7648c6483a20efe4f319d0035">R_TAU_PWM_CallbackSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga9f184ff7648c6483a20efe4f319d0035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff0cabe3c7d91667084f385b8f75384b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#gaff0cabe3c7d91667084f385b8f75384b">R_TAU_PWM_Close</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gaff0cabe3c7d91667084f385b8f75384b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the TAU_PWM peripheral on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
+<h1><a class="anchor" id="r-tau-pwm-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r-tau-pwm-features"></a>
+Features</h2>
+<p>The TAU_PWM module has the following features:</p>
+<ul>
+<li>Supports simultaneous channel operation functions: one-shot pulse output, PWM output and multiple PWM output.<a class="anchor" id="um_tau_pwm_register_setting_function"></a></li>
+<li>Configurable clock source (CK00, CK01).</li>
+<li>Configurable period (counts per timer cycle).</li>
+<li>Configurable trigger source (TImn input) for one-shot pulse output</li>
+<li>Supports noise filter on input source in one-shot pulse output mode (always enabled)</li>
+<li>Supports runtime reconfiguration of period/delay, pulse width or duty cycle percent.</li>
+<li>Signal can be output to a pin.<a class="anchor" id="um_tau_pwm_default_output"></a><a class="anchor" id="um_tau_pwm_output_pulse_setting"></a></li>
+<li>APIs are provided to start, stop, and reset the counter.</li>
+<li>APIs are provided to get the current period, source clock frequency, and count direction.<a class="anchor" id="um_timer_count_direction"></a></li>
+<li>APIs are provided to get the current timer status and counter value.<a class="anchor" id="um_timer_status"></a> </li>
+</ul>
+<h1><a class="anchor" id="r-tau-pwm-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_timer_multiple_channels"></a><a class="anchor" id="um_tau_pwm_open_all_channel"></a> <h2>Build Time Configurations for r_tau_pwm</h2>
+The following build time configurations are defined in fsp_cfg/r_tau_pwm_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>One-shot Pulse Output Mode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Controls whether one-shot pulse output mode support is included in the build. This setting applies globally to all r_tau_pwm_instances. If one shot mode is not used by any instance, disable this setting to reduce ROM usage. </td></tr>
+<tr class="tree_none">
+<td>PWM Output Mode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Controls whether PWM mode support is included in the build. This setting applies globally to all r_tau_pwm_instances. If PWM mode is not used by any instance, disable this setting to reduce ROM usage. </td></tr>
+</table>
+ <h2>Configurations for Timers &gt; Timer, Simultaneous Channel Operation (r_tau_pwm)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Timer, Simultaneous Channel Operation (r_tau_pwm).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+CK00</li>
+<li>
+CK01</li>
+</ul>
+</td><td>CK00 </td><td>Select the operation clock </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+One-shot pulse output</li>
+<li>
+PWM output</li>
+</ul>
+</td><td>PWM output </td><td>Mode selection. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Master Channel</td><td>Channel number must be even.</td><td>0 </td><td>Select the TAU master channel. When two or more master channels are to be used, slave channels with a master channel between them may not be set. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period</td><td>Value must be a non-negative integer</td><td>0x10000 </td><td>Specify the timer period based on the selected unit. In One-shot pulse output mode this value corresponds to the delay time.<br />
+<br />
+When the unit is set to 'Raw Counts', setting the period to 0x10000/0x10001 results in the maximum period for PWM Output function/One-shot pulse output function at the lowest divisor (fastest timer tick). The theoretical calculated period is printed in a comment in the <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Raw Counts</li>
+<li>
+Nanoseconds</li>
+<li>
+Microseconds</li>
+<li>
+Milliseconds</li>
+<li>
+Seconds</li>
+<li>
+Hertz</li>
+<li>
+Kilohertz</li>
+</ul>
+</td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input (One-shot pulse)  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Trigger Source</td><td>MCU Specific Options</td><td></td><td>Select the trigger source for master channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Detect Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Falling Edge</li>
+<li>
+Rising Edge</li>
+<li>
+Both Edges</li>
+</ul>
+</td><td>Falling Edge </td><td>Select the detect edge. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If provided, the callback function is called from the interrupt service routine (ISR) each time the timer period elapses in PWM mode, and when the timer delay elapses in one-shot mode. If the optional slave channel interrupt is enabled, the callback is also called when the signal switches state during the PWM cycle in PWM mode, and when the pulse output is complete in one-shot mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer interrupt priority. </td></tr>
+</table>
+ <h2>Configurations for Timers &gt; TAU PWM Channel Configuration (r_tau_pwm)</h2>
+<table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Manual Entry</td><td>1 </td><td>Specify the slave channel. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Start Level Low</li>
+<li>
+Start Level High</li>
+</ul>
+</td><td>Start Level Low </td><td>Output level of TAU slave channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Output Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Active-high</li>
+<li>
+Active-low</li>
+</ul>
+</td><td>Active-high </td><td>Output polarity of TAU slave channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">One-Shot Pulse Width</td><td>Value must be a non-negative integer</td><td>0xffff </td><td>Specify the pulse width based on the selected unit.<br />
+<br />
+When the unit is set to 'Raw Counts', setting the period to 0xffff results in the maximum period at the lowest divisor (fastest timer tick). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">One-Shot Pulse Width Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Raw Counts</li>
+<li>
+Nanoseconds</li>
+<li>
+Microseconds</li>
+<li>
+Milliseconds</li>
+<li>
+Seconds</li>
+<li>
+Hertz</li>
+<li>
+Kilohertz</li>
+</ul>
+</td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PWM Duty Cycle Percent</td><td>Value must be a non-negative integer between 0 and 100</td><td>50 </td><td>Specify the duty cycle percent for output pulse of slave channel. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer interrupt priority. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-tau-pwm-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The TAU_PWM clock is based on the clock CK00 and CK01. You can set the clock operation clock on <b>General&gt;Operation Clock</b> of property r_tau_pwm Configuration editor. The clock divider can be configured using the <b>Clocks</b> tab of the RA Configuration editor.</p>
+<h2><a class="anchor" id="r-tau-pwm-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module can use the TOmn pins as output pins for One-shot and PWM signals.</p>
+<p>This module can use the TImn pin as the input pin for One-shot signals.</p>
+<h2><a class="anchor" id="r-tau-pwm-timer-period"></a>
+Timer Period And Duty Cycle</h2>
+<p>The RA Configuration editor will automatically calculate the period/pulse width/duty cycle percent based on the selected period time, units, clock source, clock divider and mode.</p>
+<p>When the selected unit is "Raw counts", the maximum and minimum allowed period/pulse width/duty cycle setting are presented by the following tables:</p>
+<p>In One-shot pulse output mode:</p>
+<table class="doxtable">
+<tr>
+<th>Clock divider </th><th>Minimum period (counts) </th><th>Maximum period (counts) </th><th>Minimum pulse width (counts) </th><th>Maximum pulse width (counts)  </th></tr>
+<tr>
+<td>PCLK/1 </td><td>0x00003 </td><td>0x10001 </td><td>0x0001 </td><td>0xffff </td></tr>
+<tr>
+<td>PCLK/2 to PCLK/32768 </td><td>0x00002 </td><td>0x10000 </td><td>0x0000 </td><td>0xffff </td></tr>
+</table>
+<p>In PWM output mode:</p>
+<table class="doxtable">
+<tr>
+<th>Clock divider </th><th>Minimum period (counts) </th><th>Maximum period (counts) </th><th>Minimum duty cycle (%) </th><th>Maximum duty cycle (%)  </th></tr>
+<tr>
+<td>PCLK/1 </td><td>0x00002 </td><td>0x10001 </td><td>0 </td><td>100 </td></tr>
+<tr>
+<td>PCLK/2 to PCLK/32768 </td><td>0x00001 </td><td>0x10000 </td><td>0 </td><td>100 </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>If PCLK (undivided) is selected as the operation clock (CK00, CK01) and TDR0n is set to 0x0000 (n = 0 to 7), interrupt requests output from timer array units cannot be used. So, when PCLK is undivided, the minimum period must be plus one.</dd>
+<dd>
+Because the period interrupt occurs when the counter underflows, setting the period register to 0 results in an effective period of 1 count. For this reason, all user-provided raw count values reflect the actual number of period counts (not the raw register values).</dd></dl>
+<h1><a class="anchor" id="r-tau-pwm-usage_notes"></a>
+Usage Notes</h1>
+<h2>Updating Period and Duty Cycle</h2>
+<p>The period and duty cycle are updated after the next counter underflow after calling <a class="el" href="group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced">R_TAU_PWM_PeriodSet()</a> or <a class="el" href="group___t_a_u___p_w_m.html#gae96758005a9259bc596d4f951130438b">R_TAU_PWM_DutyCycleSet()</a>.</p>
+<h2>One-Shot Pulse Output Mode</h2>
+<p><a class="anchor" id="um_timer_one_shot_mode"></a><a class="anchor" id="um_timer_one_shot_output"></a><a class="anchor" id="um_tau_pwm_ti0n_pin_trigger"></a> By using two channels as a set, a one-shot pulse having any delay pulse width can be generated from the signal input to the TI0n pin.</p>
+<p>The delay time is counted by the master channel, and the pulse width is counted by the slave channel.</p>
+<h2>PWM Output</h2>
+<p><a class="anchor" id="um_timer_pwm_output"></a><a class="anchor" id="um_tau_pwm_multiple_pwm_output"></a> Two channels can be used as a set to generate a pulse of any period and duty factor (duty cycle). By extending the PWM function and using multiple slave channels, many PWM waveforms with different duty values can be output.</p>
+<dl class="section note"><dt>Note</dt><dd>When two or more master channels are to be used, slave channels with a master channel between them may not be set. For example, if channels 0 and 4 are set as master channels, channels 1 to 3 can be set as the slave channels of master channel 0, channels 5 to 7 cannot be set as the slave channels of master channel 0.</dd></dl>
+<p>The period is counted by the master channel, and the duty cycle is counted by the slave channel.</p>
+<h2>Controlling TAU_PWM with ELC Events</h2>
+<p><a class="anchor" id="um_tau_pwm_elc_event_trigger"></a> The TAU_PWM timer can be configured to trigger the timer counter when an ELC event occurs.</p>
+<dl class="section note"><dt>Note</dt><dd>Triggering the timer using ELC events is supported only when master channel is set to 0 and mode is set to One-shot pulse output.</dd>
+<dd>
+The event links for the ELC must be configured outside this module.</dd></dl>
+<h2>Triggering ELC Events with TAU_PWM</h2>
+<p>The TAU_PWM timer can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals.</p>
+<dl class="section note"><dt>Note</dt><dd>Only event signals from channel 00 to 03 are available.</dd></dl>
+<h2><a class="anchor" id="r-tau-pwm-limitations"></a>
+Limitations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h1><a class="anchor" id="r-tau-pwm-examples"></a>
+Examples</h1>
+<h2>TAU_PWM Basic Example</h2>
+<p>This is a basic example of minimal use of the TAU PWM (in PWM Output mode) in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> tau_pwm_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU_PWM Callback Example</h2>
+<p>This is an example of a timer callback.</p>
+<dl class="section note"><dt>Note</dt><dd>The callback function always called after the period time (in PWM output mode) or delay time (in One-shot pulse output mode) has expired. Additionally, it can be optionally called after the duty cycle (in PWM output mode) or pulse width (in One-shot pulse output mode) has expired by enabling the slave channel's interrupt.</dd></dl>
+<p><a class="anchor" id="um_timer_user_notification_of_events"></a> </p><div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when timer expires. */</span></div><div class="line"><span class="keywordtype">void</span> timer_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba68b7ff420ebcbe7d76962e27b008e656">TIMER_EVENT_MASTER_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba3c14768251285ef48194ac5fc851a122">TIMER_EVENT_SLAVE_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU_PWM One-Shot Pulse Output Mode Example</h2>
+<h3>TAU_PWM One-Shot Pulse Output Mode Example - Software Trigger</h3>
+<p>This example demonstrates the configuration and use of One-shot pulse output mode with TAU_PWM timer when using the software trigger.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a> g_one_shot_software_channel_cfg1 =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#aaafbc32e471830f039a23b2ecba9892c">channel</a>           = 1,</div><div class="line">    .duty_cycle_counts = (uint16_t) 0xffff,</div><div class="line">    .output_level      = <a class="code" href="group___t_a_u___p_w_m.html#ggaf38047cec038c743164130c4209e2883a9bb2712d0a3a8d7448d7adfdc0e4f34a">TAU_PWM_OUTPUT_LEVEL_LOW</a>,</div><div class="line">    .output_polarity   = <a class="code" href="group___t_a_u___p_w_m.html#gga979b0c791cd2a089d18d630f0f3d4b75af11a4f1dfb6a35a286acafcde66ef78b">TAU_PWM_OUTPUT_POLARITY_ACTIVE_HIGH</a>,</div><div class="line">    .cycle_end_ipl     = (<a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>),</div><div class="line">    .cycle_end_irq     = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__extended__cfg__t">tau_pwm_extended_cfg_t</a> g_timer0_one_shot_software_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#a345acd9456489969d7cf208a42f0b68c">operation_clock</a>         = <a class="code" href="group___t_a_u___p_w_m.html#gga0e31a1881e7d30d363f03cd15f69d57baae4143bd041d45ff4ed8d12b532954d1">TAU_PWM_OPERATION_CLOCK_CK00</a>,</div><div class="line">    .trigger_source          = <a class="code" href="group___t_a_u___p_w_m.html#gga472341e9f0a11485cfda11c7e106833aacd5662de506d55ec994b9199e7082972">TAU_PWM_SOURCE_PIN_INPUT</a>,</div><div class="line">    .detect_edge             = <a class="code" href="group___t_a_u___p_w_m.html#gga1dd5b49ea70df7abc4610d8c59297eb2a2a40f33a61206517dba7a7944371fd80">TAU_PWM_DETECT_EDGE_FALLING</a>,</div><div class="line">    .p_slave_channel_cfgs[0] = &amp;g_one_shot_software_channel_cfg1,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer0_one_shot_software_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#a9519afc7ea8aec3aaf1eb787b39cc97c">mode</a>          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a">TIMER_MODE_ONE_SHOT</a>,</div><div class="line">    .period_counts = (uint32_t) 0x10001,</div><div class="line">    .source_div    = (timer_source_div_t) BSP_CFG_TAU_CK00,</div><div class="line">    .channel       = 0,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer0_one_shot_software_extend,</div><div class="line">    .cycle_end_irq = TAU_PWM_VECTOR_TIMER_16BIT_MODE,</div><div class="line">};</div><div class="line"></div><div class="line">timer_event_t g_callback_event;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_pwm_one_shot_software_trigger_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_one_shot_software_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable triggering (including by software). */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893">R_TAU_PWM_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start trigger by software. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (g_callback_event != <a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba3c14768251285ef48194ac5fc851a122">TIMER_EVENT_SLAVE_CYCLE_END</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for one shot pulse output to complete */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Stop timer and disable the software trigger. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04">R_TAU_PWM_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">R_TAU_PWM_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>TAU_PWM One-Shot Pulse Output Mode Example - Pin Input Trigger</h3>
+<p>This example demonstrates the configuration and use of One-shot pulse output mode with TAU_PWM timer when using an external pin input trigger.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a> g_one_shot_input_pin_channel_cfg1 =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#aaafbc32e471830f039a23b2ecba9892c">channel</a>           = 1,</div><div class="line">    .duty_cycle_counts = (uint16_t) 0xffff,</div><div class="line">    .output_level      = <a class="code" href="group___t_a_u___p_w_m.html#ggaf38047cec038c743164130c4209e2883a9bb2712d0a3a8d7448d7adfdc0e4f34a">TAU_PWM_OUTPUT_LEVEL_LOW</a>,</div><div class="line">    .output_polarity   = <a class="code" href="group___t_a_u___p_w_m.html#gga979b0c791cd2a089d18d630f0f3d4b75af11a4f1dfb6a35a286acafcde66ef78b">TAU_PWM_OUTPUT_POLARITY_ACTIVE_HIGH</a>,</div><div class="line">    .cycle_end_ipl     = (<a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>),</div><div class="line">    .cycle_end_irq     = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__extended__cfg__t">tau_pwm_extended_cfg_t</a> g_timer0_one_shot_input_pin_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#a345acd9456489969d7cf208a42f0b68c">operation_clock</a>         = <a class="code" href="group___t_a_u___p_w_m.html#gga0e31a1881e7d30d363f03cd15f69d57baae4143bd041d45ff4ed8d12b532954d1">TAU_PWM_OPERATION_CLOCK_CK00</a>,</div><div class="line">    .trigger_source          = <a class="code" href="group___t_a_u___p_w_m.html#gga472341e9f0a11485cfda11c7e106833aacd5662de506d55ec994b9199e7082972">TAU_PWM_SOURCE_PIN_INPUT</a>,</div><div class="line">    .detect_edge             = <a class="code" href="group___t_a_u___p_w_m.html#gga1dd5b49ea70df7abc4610d8c59297eb2a2a40f33a61206517dba7a7944371fd80">TAU_PWM_DETECT_EDGE_FALLING</a>,</div><div class="line">    .p_slave_channel_cfgs[0] = &amp;g_one_shot_input_pin_channel_cfg1,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer0_one_shot_input_pin_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#a9519afc7ea8aec3aaf1eb787b39cc97c">mode</a>          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a">TIMER_MODE_ONE_SHOT</a>,</div><div class="line">    .period_counts = (uint32_t) 0x10001,</div><div class="line">    .source_div    = (timer_source_div_t) BSP_CFG_TAU_CK00,</div><div class="line">    .channel       = 0,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer0_one_shot_input_pin_extend,</div><div class="line">    .cycle_end_irq = TAU_PWM_VECTOR_TIMER_16BIT_MODE,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_pwm_one_shot_pin_input_trigger_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_one_shot_input_pin_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the input trigger. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893">R_TAU_PWM_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">// Wait for trigger source from the input pin</span></div><div class="line"></div><div class="line">    <span class="comment">/* Disable the input trigger. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04">R_TAU_PWM_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">R_TAU_PWM_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU_PWM PWM Output Mode Example</h2>
+<p><a class="anchor" id="um_timer_reset"></a><a class="anchor" id="um_timer_start"></a><a class="anchor" id="um_timer_stop"></a><a class="anchor" id="um_timer_counter"></a> This example demonstrates the configuration and use of PWM output mode with TAU_PWM timer.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a> g_pwm_output_channel_cfg1 =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#aaafbc32e471830f039a23b2ecba9892c">channel</a>           = 1,</div><div class="line">    .duty_cycle_counts = (uint16_t) 0x8000,</div><div class="line">    .output_level      = <a class="code" href="group___t_a_u___p_w_m.html#ggaf38047cec038c743164130c4209e2883a9bb2712d0a3a8d7448d7adfdc0e4f34a">TAU_PWM_OUTPUT_LEVEL_LOW</a>,</div><div class="line">    .output_polarity   = <a class="code" href="group___t_a_u___p_w_m.html#gga979b0c791cd2a089d18d630f0f3d4b75af11a4f1dfb6a35a286acafcde66ef78b">TAU_PWM_OUTPUT_POLARITY_ACTIVE_HIGH</a>,</div><div class="line">    .cycle_end_ipl     = (<a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>),</div><div class="line">    .cycle_end_irq     = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a> g_pwm_output_channel_cfg2 =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#aaafbc32e471830f039a23b2ecba9892c">channel</a>           = 2,</div><div class="line">    .duty_cycle_counts = (uint16_t) 0x4000,</div><div class="line">    .output_level      = <a class="code" href="group___t_a_u___p_w_m.html#ggaf38047cec038c743164130c4209e2883a9bb2712d0a3a8d7448d7adfdc0e4f34a">TAU_PWM_OUTPUT_LEVEL_LOW</a>,</div><div class="line">    .output_polarity   = <a class="code" href="group___t_a_u___p_w_m.html#gga979b0c791cd2a089d18d630f0f3d4b75af11a4f1dfb6a35a286acafcde66ef78b">TAU_PWM_OUTPUT_POLARITY_ACTIVE_HIGH</a>,</div><div class="line">    .cycle_end_ipl     = (<a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>),</div><div class="line">    .cycle_end_irq     = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__extended__cfg__t">tau_pwm_extended_cfg_t</a> g_tau_pwm_pwm_output_ext =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#a345acd9456489969d7cf208a42f0b68c">operation_clock</a>         = <a class="code" href="group___t_a_u___p_w_m.html#gga0e31a1881e7d30d363f03cd15f69d57baae4143bd041d45ff4ed8d12b532954d1">TAU_PWM_OPERATION_CLOCK_CK00</a>,</div><div class="line">    .trigger_source          = <a class="code" href="group___t_a_u___p_w_m.html#gga472341e9f0a11485cfda11c7e106833aacd5662de506d55ec994b9199e7082972">TAU_PWM_SOURCE_PIN_INPUT</a>,</div><div class="line">    .detect_edge             = <a class="code" href="group___t_a_u___p_w_m.html#gga1dd5b49ea70df7abc4610d8c59297eb2a2a40f33a61206517dba7a7944371fd80">TAU_PWM_DETECT_EDGE_FALLING</a>,</div><div class="line">    .p_slave_channel_cfgs[0] = &amp;g_pwm_output_channel_cfg1,</div><div class="line">    .p_slave_channel_cfgs[1] = &amp;g_pwm_output_channel_cfg2,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer0_pwm_output_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#a9519afc7ea8aec3aaf1eb787b39cc97c">mode</a>          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac">TIMER_MODE_PWM</a>,</div><div class="line">    .period_counts = (uint32_t) 0x10000,</div><div class="line">    .source_div    = (timer_source_div_t) BSP_CFG_TAU_CK00,</div><div class="line">    .channel       = 0,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_tau_pwm_pwm_output_ext,</div><div class="line">    .cycle_end_irq = TAU_PWM_VECTOR_TIMER_16BIT_MODE,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_pwm_multiple_pwm_output_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_pwm_output_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga29b0622e136ad18f5b926fdfc6a40159">R_TAU_PWM_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">R_TAU_PWM_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU_PWM Period Update Example</h2>
+<p><a class="anchor" id="um_timer_period_set"></a><a class="anchor" id="um_timer_clock_frequency"></a> This an example of updating the period.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define TAU_PWM_EXAMPLE_MSEC_PER_SEC           (1000)</span></div><div class="line"><span class="preprocessor">#define TAU_PWM_EXAMPLE_DESIRED_PERIOD_MSEC    (20)</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to calculate a new period value at runtime. */</span></div><div class="line"><span class="keywordtype">void</span> tau_pwm_period_calculation_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the source clock frequency (in Hz) */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2">R_TAU_PWM_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX. A cast to uint32_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) ((timer_freq_hz * TAU_PWM_EXAMPLE_DESIRED_PERIOD_MSEC) / TAU_PWM_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. This will return an error if parameter checking is enabled and the calculated</span></div><div class="line"><span class="comment">     * period is larger than UINT16_MAX. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced">R_TAU_PWM_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU_PWM Duty Cycle Update Example</h2>
+<p><a class="anchor" id="um_timer_duty_cycle_set"></a> This an example of updating the duty cycle.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define TAU_PWM_EXAMPLE_MSEC_PER_SEC           (1000)</span></div><div class="line"><span class="preprocessor">#define TAU_PWM_EXAMPLE_DESIRED_PERIOD_MSEC    (20)</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to calculate a new period value at runtime. */</span></div><div class="line"><span class="keywordtype">void</span> tau_pwm_period_calculation_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the source clock frequency (in Hz) */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2">R_TAU_PWM_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX. A cast to uint32_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) ((timer_freq_hz * TAU_PWM_EXAMPLE_DESIRED_PERIOD_MSEC) / TAU_PWM_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. This will return an error if parameter checking is enabled and the calculated</span></div><div class="line"><span class="comment">     * period is larger than UINT16_MAX. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced">R_TAU_PWM_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>ELC Example</h2>
+<p>This is an example of using TAU_PWM with ELC events.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a> g_elc_event_channel_cfg1 =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#aaafbc32e471830f039a23b2ecba9892c">channel</a>           = 1,</div><div class="line">    .duty_cycle_counts = (uint16_t) 0xffff,</div><div class="line">    .output_level      = <a class="code" href="group___t_a_u___p_w_m.html#ggaf38047cec038c743164130c4209e2883a9bb2712d0a3a8d7448d7adfdc0e4f34a">TAU_PWM_OUTPUT_LEVEL_LOW</a>,</div><div class="line">    .output_polarity   = <a class="code" href="group___t_a_u___p_w_m.html#gga979b0c791cd2a089d18d630f0f3d4b75af11a4f1dfb6a35a286acafcde66ef78b">TAU_PWM_OUTPUT_POLARITY_ACTIVE_HIGH</a>,</div><div class="line">    .cycle_end_ipl     = (<a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>),</div><div class="line">    .cycle_end_irq     = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u___p_w_m.html#structtau__pwm__extended__cfg__t">tau_pwm_extended_cfg_t</a> g_tau_pwm_elc_event_ext =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u___p_w_m.html#a345acd9456489969d7cf208a42f0b68c">operation_clock</a>         = <a class="code" href="group___t_a_u___p_w_m.html#gga0e31a1881e7d30d363f03cd15f69d57baae4143bd041d45ff4ed8d12b532954d1">TAU_PWM_OPERATION_CLOCK_CK00</a>,</div><div class="line">    .trigger_source          = <a class="code" href="group___t_a_u___p_w_m.html#gga472341e9f0a11485cfda11c7e106833aa12a3ecfa85643ca29a1e8510bd839637">TAU_PWM_SOURCE_ELC_EVENT</a>,</div><div class="line">    .detect_edge             = <a class="code" href="group___t_a_u___p_w_m.html#gga1dd5b49ea70df7abc4610d8c59297eb2a2a40f33a61206517dba7a7944371fd80">TAU_PWM_DETECT_EDGE_FALLING</a>,</div><div class="line">    .p_slave_channel_cfgs[0] = &amp;g_elc_event_channel_cfg1,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer0_elc_event_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#a9519afc7ea8aec3aaf1eb787b39cc97c">mode</a>          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a">TIMER_MODE_ONE_SHOT</a>,</div><div class="line">    .period_counts = (uint32_t) 0x10001,</div><div class="line">    .source_div    = (timer_source_div_t) BSP_CFG_TAU_CK00,</div><div class="line">    .channel       = 0,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_tau_pwm_elc_event_ext,</div><div class="line">    .cycle_end_irq = TAU_PWM_VECTOR_TIMER_16BIT_MODE,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to use ELC event to trigger the timer counters. */</span></div><div class="line"><span class="keywordtype">void</span> tau_pwm_elc_event_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_elc_event_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the elc event trigger. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893">R_TAU_PWM_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">// Wait for ELC event</span></div><div class="line"></div><div class="line">    <span class="comment">/* Disable the elc event trigger. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04">R_TAU_PWM_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">R_TAU_PWM_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structtau__pwm__channel__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a></td></tr>
+<tr class="separator:structtau__pwm__channel__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtau__pwm__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#structtau__pwm__extended__cfg__t">tau_pwm_extended_cfg_t</a></td></tr>
+<tr class="separator:structtau__pwm__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtau__pwm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#structtau__pwm__instance__ctrl__t">tau_pwm_instance_ctrl_t</a></td></tr>
+<tr class="separator:structtau__pwm__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga0e31a1881e7d30d363f03cd15f69d57b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga0e31a1881e7d30d363f03cd15f69d57b">tau_pwm_operation_clock_t</a> </td></tr>
+<tr class="separator:ga0e31a1881e7d30d363f03cd15f69d57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga472341e9f0a11485cfda11c7e106833a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga472341e9f0a11485cfda11c7e106833a">tau_pwm_source_t</a> </td></tr>
+<tr class="separator:ga472341e9f0a11485cfda11c7e106833a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1dd5b49ea70df7abc4610d8c59297eb2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga1dd5b49ea70df7abc4610d8c59297eb2">tau_pwm_detect_edge_t</a> </td></tr>
+<tr class="separator:ga1dd5b49ea70df7abc4610d8c59297eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf38047cec038c743164130c4209e2883"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#gaf38047cec038c743164130c4209e2883">tau_pwm_output_level_t</a> </td></tr>
+<tr class="separator:gaf38047cec038c743164130c4209e2883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga979b0c791cd2a089d18d630f0f3d4b75"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga979b0c791cd2a089d18d630f0f3d4b75">tau_pwm_output_polarity_t</a> </td></tr>
+<tr class="separator:ga979b0c791cd2a089d18d630f0f3d4b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga687926e64a39737dd42ec9d39351acb3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u___p_w_m.html#ga687926e64a39737dd42ec9d39351acb3">tau_pwm_io_pin_t</a> </td></tr>
+<tr class="separator:ga687926e64a39737dd42ec9d39351acb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structtau__pwm__channel__cfg__t" id="structtau__pwm__channel__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtau__pwm__channel__cfg__t">&#9670;&nbsp;</a></span>tau_pwm_channel_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tau_pwm_channel_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>TAU_PWM per channel configuration. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aaafbc32e471830f039a23b2ecba9892c"></a>uint8_t</td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Slave Channel Number (1..7) </td></tr>
+<tr><td class="fieldtype">
+<a id="a52aea7eba30d0a656c58411b00318a97"></a>uint16_t</td>
+<td class="fieldname">
+duty_cycle_counts</td>
+<td class="fielddoc">
+One-shot: Pulse_width_counts; PWM: Duty_cycle_counts. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab1b88018c20016a86900f0d3eb464328"></a><a class="el" href="group___t_a_u___p_w_m.html#gaf38047cec038c743164130c4209e2883">tau_pwm_output_level_t</a></td>
+<td class="fieldname">
+output_level</td>
+<td class="fielddoc">
+Setting of output level for TAU. </td></tr>
+<tr><td class="fieldtype">
+<a id="a33e5824f1f295725cf4da073e0c7d93a"></a><a class="el" href="group___t_a_u___p_w_m.html#ga979b0c791cd2a089d18d630f0f3d4b75">tau_pwm_output_polarity_t</a></td>
+<td class="fieldname">
+output_polarity</td>
+<td class="fielddoc">
+Setting of output polarity for TAU. </td></tr>
+<tr><td class="fieldtype">
+<a id="af50b1e9f67cc602515f31c44e389e828"></a>uint8_t</td>
+<td class="fieldname">
+cycle_end_ipl</td>
+<td class="fielddoc">
+TAU slave channel IPL. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa73269c201e66464e585417e5ca02b13"></a>IRQn_Type</td>
+<td class="fieldname">
+cycle_end_irq</td>
+<td class="fielddoc">
+TAU slave channel IRQ. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structtau__pwm__extended__cfg__t" id="structtau__pwm__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtau__pwm__extended__cfg__t">&#9670;&nbsp;</a></span>tau_pwm_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tau_pwm_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration structure for TAU_PWM </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a345acd9456489969d7cf208a42f0b68c"></a><a class="el" href="group___t_a_u___p_w_m.html#ga0e31a1881e7d30d363f03cd15f69d57b">tau_pwm_operation_clock_t</a></td>
+<td class="fieldname">
+operation_clock</td>
+<td class="fielddoc">
+Setting of operation clock for master and slave channels. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8c80b3a47f2c1c8c95486fa4da9d6cf9"></a><a class="el" href="group___t_a_u___p_w_m.html#ga472341e9f0a11485cfda11c7e106833a">tau_pwm_source_t</a></td>
+<td class="fieldname">
+trigger_source</td>
+<td class="fielddoc">
+Trigger source for master channel. </td></tr>
+<tr><td class="fieldtype">
+<a id="adb4f171bede0b3fdc54cf167141f61a5"></a><a class="el" href="group___t_a_u___p_w_m.html#ga1dd5b49ea70df7abc4610d8c59297eb2">tau_pwm_detect_edge_t</a></td>
+<td class="fieldname">
+detect_edge</td>
+<td class="fielddoc">
+Trigger edge to start pulse period measurement. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac73af5cdebb550c5ba7d6a17f16dd577"></a><a class="el" href="group___t_a_u___p_w_m.html#structtau__pwm__channel__cfg__t">tau_pwm_channel_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_slave_channel_cfgs[TAU_PWM_PRV_MAX_NUM_CHANNELS]</td>
+<td class="fielddoc">
+Configuration for each slave channel, at least 1 slave channel is required. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structtau__pwm__instance__ctrl__t" id="structtau__pwm__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtau__pwm__instance__ctrl__t">&#9670;&nbsp;</a></span>tau_pwm_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tau_pwm_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___t_i_m_e_r___a_p_i.html#af49a90087a53c8019d642a3f7abaa8ad">timer_api_t::open</a> is called. </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga0e31a1881e7d30d363f03cd15f69d57b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0e31a1881e7d30d363f03cd15f69d57b">&#9670;&nbsp;</a></span>tau_pwm_operation_clock_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u___p_w_m.html#ga0e31a1881e7d30d363f03cd15f69d57b">tau_pwm_operation_clock_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Operation clock. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0e31a1881e7d30d363f03cd15f69d57baae4143bd041d45ff4ed8d12b532954d1"></a>TAU_PWM_OPERATION_CLOCK_CK00&#160;</td><td class="fielddoc"><p>Operation Clock CK00. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e31a1881e7d30d363f03cd15f69d57ba0d8ca1561dd7bf88be4d7cdfec02791b"></a>TAU_PWM_OPERATION_CLOCK_CK01&#160;</td><td class="fielddoc"><p>Operation CLock CK01. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga472341e9f0a11485cfda11c7e106833a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga472341e9f0a11485cfda11c7e106833a">&#9670;&nbsp;</a></span>tau_pwm_source_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u___p_w_m.html#ga472341e9f0a11485cfda11c7e106833a">tau_pwm_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Trigger Source </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga472341e9f0a11485cfda11c7e106833aacd5662de506d55ec994b9199e7082972"></a>TAU_PWM_SOURCE_PIN_INPUT&#160;</td><td class="fielddoc"><p>Use TI0n pin input as trigger source. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga472341e9f0a11485cfda11c7e106833aa12a3ecfa85643ca29a1e8510bd839637"></a>TAU_PWM_SOURCE_ELC_EVENT&#160;</td><td class="fielddoc"><p>Use ELC events as trigger source. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1dd5b49ea70df7abc4610d8c59297eb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1dd5b49ea70df7abc4610d8c59297eb2">&#9670;&nbsp;</a></span>tau_pwm_detect_edge_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u___p_w_m.html#ga1dd5b49ea70df7abc4610d8c59297eb2">tau_pwm_detect_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TI0n pin input edge </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1dd5b49ea70df7abc4610d8c59297eb2a2a40f33a61206517dba7a7944371fd80"></a>TAU_PWM_DETECT_EDGE_FALLING&#160;</td><td class="fielddoc"><p>Detects falling edge. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1dd5b49ea70df7abc4610d8c59297eb2a2763c2b069d22c7e13bcf767a4453778"></a>TAU_PWM_DETECT_EDGE_RISING&#160;</td><td class="fielddoc"><p>Detects rising edge. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1dd5b49ea70df7abc4610d8c59297eb2a1ff4fee38dc1267503893abd0602341c"></a>TAU_PWM_DETECT_EDGES_BOTH&#160;</td><td class="fielddoc"><p>Detects both edges. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf38047cec038c743164130c4209e2883"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf38047cec038c743164130c4209e2883">&#9670;&nbsp;</a></span>tau_pwm_output_level_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u___p_w_m.html#gaf38047cec038c743164130c4209e2883">tau_pwm_output_level_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Level of TAU pin </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf38047cec038c743164130c4209e2883a9bb2712d0a3a8d7448d7adfdc0e4f34a"></a>TAU_PWM_OUTPUT_LEVEL_LOW&#160;</td><td class="fielddoc"><p>Pin level low. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf38047cec038c743164130c4209e2883a6aca3f84669c4b36b544ac7e712f10a6"></a>TAU_PWM_OUTPUT_LEVEL_HIGH&#160;</td><td class="fielddoc"><p>Pin level high. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga979b0c791cd2a089d18d630f0f3d4b75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga979b0c791cd2a089d18d630f0f3d4b75">&#9670;&nbsp;</a></span>tau_pwm_output_polarity_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u___p_w_m.html#ga979b0c791cd2a089d18d630f0f3d4b75">tau_pwm_output_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timer output polarity </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga979b0c791cd2a089d18d630f0f3d4b75af11a4f1dfb6a35a286acafcde66ef78b"></a>TAU_PWM_OUTPUT_POLARITY_ACTIVE_HIGH&#160;</td><td class="fielddoc"><p>Positive logic output (active-high) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga979b0c791cd2a089d18d630f0f3d4b75ad6dc360fcc65f0f3325489b100b62433"></a>TAU_PWM_OUTPUT_POLARITY_ACTIVE_LOW&#160;</td><td class="fielddoc"><p>Negative logic output (active-low) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga687926e64a39737dd42ec9d39351acb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga687926e64a39737dd42ec9d39351acb3">&#9670;&nbsp;</a></span>tau_pwm_io_pin_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u___p_w_m.html#ga687926e64a39737dd42ec9d39351acb3">tau_pwm_io_pin_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Input/Output pins, used to select which duty cycle to update in <a class="el" href="group___t_a_u___p_w_m.html#gae96758005a9259bc596d4f951130438b">R_TAU_PWM_DutyCycleSet()</a>. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3a66f48e6c483db19bc5e437da556103fa"></a>TAU_PWM_IO_PIN_CHANNEL_0&#160;</td><td class="fielddoc"><p>I/O pin of channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3afbcc4568f801b889308ec7fe419b434f"></a>TAU_PWM_IO_PIN_CHANNEL_1&#160;</td><td class="fielddoc"><p>I/O pin of channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3a52a3909ff83eca53ed9ab6497b9cdec0"></a>TAU_PWM_IO_PIN_CHANNEL_2&#160;</td><td class="fielddoc"><p>I/O pin of channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3a1218f2c97f00fd9ce6f987f1a0ad3798"></a>TAU_PWM_IO_PIN_CHANNEL_3&#160;</td><td class="fielddoc"><p>I/O pin of channel 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3a2d6cb94080d091274861ee75d566bb00"></a>TAU_PWM_IO_PIN_CHANNEL_4&#160;</td><td class="fielddoc"><p>I/O pin of channel 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3a6dfc39813ab278bfe15736cf1cf5d012"></a>TAU_PWM_IO_PIN_CHANNEL_5&#160;</td><td class="fielddoc"><p>I/O pin of channel 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3ab3178aeee239dceac28223b0b44d36d4"></a>TAU_PWM_IO_PIN_CHANNEL_6&#160;</td><td class="fielddoc"><p>I/O pin of channel 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga687926e64a39737dd42ec9d39351acb3a21ba041d5621c9b9bb84147166a29312"></a>TAU_PWM_IO_PIN_CHANNEL_7&#160;</td><td class="fielddoc"><p>I/O pin of channel 7. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaec9be2f0ca254943a17a426be77d8eac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaec9be2f0ca254943a17a426be77d8eac">&#9670;&nbsp;</a></span>R_TAU_PWM_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the timer module and applies configurations. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#af49a90087a53c8019d642a3f7abaa8ad">timer_api_t::open</a>.</p>
+<p>The TAU_PWM implementation of the timer requires a <a class="el" href="group___t_a_u___p_w_m.html#structtau__pwm__extended__cfg__t">tau_pwm_extended_cfg_t</a> extension parameter.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gaec9be2f0ca254943a17a426be77d8eac">R_TAU_PWM_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL, the source divider/period/duty cycle counts or number of slave channels is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>ISR of master channel must be enabled </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid configuration option provided for selected timer mode </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>The master/slave channel selected is not available on this device, slave channel number must be greater than master channel number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga29b0622e136ad18f5b926fdfc6a40159"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga29b0622e136ad18f5b926fdfc6a40159">&#9670;&nbsp;</a></span>R_TAU_PWM_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops timer. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#aed0139dbf5102e39719ddbc51f16a21e">timer_api_t::stop</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga29b0622e136ad18f5b926fdfc6a40159">R_TAU_PWM_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Timer successfully stopped. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>The mode is invalid, only called in TIMER_MODE_PWM mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported when pwm mode support is disabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafac44e86209065231ecc6f701954a94d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafac44e86209065231ecc6f701954a94d">&#9670;&nbsp;</a></span>R_TAU_PWM_Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts timer (pwm mode) or triggers the one-shot pulse output by software (one-shot mode). Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#afcc7e85d01c3d7dc0c6e09954631f47f">timer_api_t::start</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>In one-shot mode, this function is supported only after the timer has been placed into the start trigger detection wait state by calling <a class="el" href="group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893">R_TAU_PWM_Enable</a>.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d">R_TAU_PWM_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Timer successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>In One-shot mode, timer must be enabled first. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga30638708378f5c77250b8b293bc483e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga30638708378f5c77250b8b293bc483e4">&#9670;&nbsp;</a></span>R_TAU_PWM_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resets the counter value to the current period and duty cycle. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ab1c62157861ef1ea8393bb3cafd72102">timer_api_t::reset</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>If the timer is stopped when calling this function, the timer counter is not reset. The counter will be reset one cycle after the timer is next started (or restarted), since it takes one cycle to reload the initial count when starting the timer.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Counter value written successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa3921f3ee40b694e704df63724ac9893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3921f3ee40b694e704df63724ac9893">&#9670;&nbsp;</a></span>R_TAU_PWM_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Enable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables external event inputs that can start the counter and enables the software trigger. After a successful call to this function, the timer is placed into the trigger detection wait state. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a13cb48d1657a9eda3380c111ba33aa2a">timer_api_t::enable</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Enable triggering (including by software). */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893">R_TAU_PWM_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>External events successfully enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>The mode is invalid, only called in TIMER_MODE_ONE_SHOT mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported when one shot mode support is disabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2899559321da564ab8fdea77aa7b9c04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2899559321da564ab8fdea77aa7b9c04">&#9670;&nbsp;</a></span>R_TAU_PWM_Disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Disable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops timer and disables external event inputs and software trigger. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a8b69fad02aee5d83b941ed02fca18aca">timer_api_t::disable</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Stop timer and disable the software trigger. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04">R_TAU_PWM_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>External events successfully disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>The mode is invalid, only called in TIMER_MODE_ONE_SHOT mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported when one shot mode support is disabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga553f930f29aaa77921c50f7634835ced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga553f930f29aaa77921c50f7634835ced">&#9670;&nbsp;</a></span>R_TAU_PWM_PeriodSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_PeriodSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>period_counts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets period value provided. If the timer is running, the period will be updated after the next counter underflow. If the timer is stopped, this function resets the counter and updates the period. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ae9aad84a01ccd7ce0039ed491faeff19">timer_api_t::periodSet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get the source clock frequency (in Hz) */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2">R_TAU_PWM_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX. A cast to uint32_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) ((timer_freq_hz * TAU_PWM_EXAMPLE_DESIRED_PERIOD_MSEC) / TAU_PWM_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. This will return an error if parameter checking is enabled and the calculated</span></div><div class="line"><span class="comment">     * period is larger than UINT16_MAX. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced">R_TAU_PWM_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Period value written successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Period counts is out of range. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae96758005a9259bc596d4f951130438b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae96758005a9259bc596d4f951130438b">&#9670;&nbsp;</a></span>R_TAU_PWM_DutyCycleSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_DutyCycleSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>duty_cycle_counts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets duty cycle on requested pin. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a819ed0740ca426ace0d6b67e16c6ddfc">timer_api_t::dutyCycleSet</a>.</p>
+<p>Duty cycle is updated in the timer data register. The updated duty cycle is reflected after the next cycle end (counter underflow).</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the current period setting. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2">R_TAU_PWM_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t current_period_counts = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired duty cycle based on the current period. */</span></div><div class="line">    uint16_t duty_cycle_counts = (uint16_t) ((current_period_counts * TAU_PWM_EXAMPLE_DESIRED_DUTY_CYCLE_PERCENT) /</div><div class="line">                                             TAU_PWM_EXAMPLE_MAX_PERCENT);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated duty cycle. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u___p_w_m.html#gae96758005a9259bc596d4f951130438b">R_TAU_PWM_DutyCycleSet</a>(&amp;g_timer0_ctrl, duty_cycle_counts, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">duty_cycle_counts</td><td>Duty cycle to set in counts. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pin</td><td>Use tau_pwm_io_pin_t to select the target slave channel</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Duty cycle updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL or the pin is not one of tau_pwm_io_pin_t. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Duty cycle is out of range or larger than period. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4a6409ed7c3c3007baa7abd0a1bab0d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a6409ed7c3c3007baa7abd0a1bab0d2">&#9670;&nbsp;</a></span>R_TAU_PWM_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get timer information and store it in provided pointer p_info. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#aeaea79f26305c493566e4b45ae9e294c">timer_api_t::infoGet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get the current period setting. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2">R_TAU_PWM_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t current_period_counts = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Period, count direction, frequency written to caller's structure successfully </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_info was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga54b6a6c7e92c7f97c55dcda7cd3db5e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">&#9670;&nbsp;</a></span>R_TAU_PWM_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieves the current timer state and master channel counter value and stores them in provided pointer p_status. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a11321e8dde7c33a4e6835a1bf64f7689">timer_api_t::statusGet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7">R_TAU_PWM_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Current timer state and counter value retrieved successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_status was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9f184ff7648c6483a20efe4f319d0035"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9f184ff7648c6483a20efe4f319d0035">&#9670;&nbsp;</a></span>R_TAU_PWM_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ad2569f06e8034790e7b363142d93a816">timer_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_callback was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaff0cabe3c7d91667084f385b8f75384b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff0cabe3c7d91667084f385b8f75384b">&#9670;&nbsp;</a></span>R_TAU_PWM_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PWM_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops counter, disables output pins, and clears internal driver data. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a9e8b8140010a28082aedd758390fac97">timer_api_t::close</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

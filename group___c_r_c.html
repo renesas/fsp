@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -307,27 +307,9 @@ This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; CR
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_crc0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
-<td>CRC Polynomial</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-CRC-8</li>
-<li>
-CRC-16</li>
-<li>
-CRC-CCITT</li>
-<li>
-CRC-32</li>
-<li>
-CRC-32C</li>
-</ul>
-</td><td>CRC-32C </td><td>Select the CRC polynomial. </td></tr>
+<td>CRC Polynomial</td><td>MCU Specific Options</td><td></td><td>Select the CRC polynomial. </td></tr>
 <tr class="tree_none">
-<td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-LSB</li>
-<li>
-MSB</li>
-</ul>
-</td><td>MSB </td><td>Select the CRC bit order. </td></tr>
+<td>Bit Order</td><td>MCU Specific Options</td><td></td><td>Select the CRC bit order. </td></tr>
 <tr class="tree_none">
 <td>Snoop Address</td><td>MCU Specific Options</td><td></td><td>Select the SCI register address CRC snoop </td></tr>
 </table>
@@ -415,6 +397,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration was successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_cfg is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module already open </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Hardware not support this feature. </td></tr>
   </table>
   </dd>
 </dl>
@@ -609,7 +592,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -447,13 +447,7 @@ Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-One</li>
-<li>
-Max</li>
-</ul>
-</td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
+<td class="tree_lvl_1_cell">Receive FIFO Trigger Level</td><td>Refer to the RA Configuration tool for available options.</td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -744,6 +738,32 @@ RS-485 settings. </td></tr>
 <p>Receive FIFO trigger configuration. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84aa8f1e72bd48f194a0cd82112024850e1"></a>SCI_B_UART_RX_FIFO_TRIGGER_1&#160;</td><td class="fielddoc"><p>Callback after each byte is received without buffering. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a208c850e8682c076896882fbe8ebae38"></a>SCI_B_UART_RX_FIFO_TRIGGER_2&#160;</td><td class="fielddoc"><p>Callback when FIFO having 2 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a2b0f6342fd3b6be8ee7a250298f6d2d8"></a>SCI_B_UART_RX_FIFO_TRIGGER_3&#160;</td><td class="fielddoc"><p>Callback when FIFO having 3 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84acfab3e0285e525c2b51ed53f126c42f7"></a>SCI_B_UART_RX_FIFO_TRIGGER_4&#160;</td><td class="fielddoc"><p>Callback when FIFO having 4 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84ad1ec00ffbd6c7e7422ead7f4057c7b66"></a>SCI_B_UART_RX_FIFO_TRIGGER_5&#160;</td><td class="fielddoc"><p>Callback when FIFO having 5 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a90ee163c0cfcd423853d80894bcfc4c3"></a>SCI_B_UART_RX_FIFO_TRIGGER_6&#160;</td><td class="fielddoc"><p>Callback when FIFO having 6 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a9defc4cab0dd3e752ff1524ef3f6e47b"></a>SCI_B_UART_RX_FIFO_TRIGGER_7&#160;</td><td class="fielddoc"><p>Callback when FIFO having 7 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a2cbc368fe201771bb92b4c68009ed29b"></a>SCI_B_UART_RX_FIFO_TRIGGER_8&#160;</td><td class="fielddoc"><p>Callback when FIFO having 8 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a37cda8ea9aca8480a058939547b0a690"></a>SCI_B_UART_RX_FIFO_TRIGGER_9&#160;</td><td class="fielddoc"><p>Callback when FIFO having 9 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84ab80542cbbca6eaa617df0c2033a249fa"></a>SCI_B_UART_RX_FIFO_TRIGGER_10&#160;</td><td class="fielddoc"><p>Callback when FIFO having 10 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a2f1cdc915ca7b60804801c24640d465c"></a>SCI_B_UART_RX_FIFO_TRIGGER_11&#160;</td><td class="fielddoc"><p>Callback when FIFO having 11 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a02eea8277e5ce2e8f6071ca2fc1b5e35"></a>SCI_B_UART_RX_FIFO_TRIGGER_12&#160;</td><td class="fielddoc"><p>Callback when FIFO having 12 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84abb8ae955a060b8ba93afb72931a40e28"></a>SCI_B_UART_RX_FIFO_TRIGGER_13&#160;</td><td class="fielddoc"><p>Callback when FIFO having 13 bytes. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a1f0e104aa08cb093eb3be4b178cd1f68"></a>SCI_B_UART_RX_FIFO_TRIGGER_14&#160;</td><td class="fielddoc"><p>Callback when FIFO having 14 bytes. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga43307f95dde50ba9e4cf9b25f0d31d84a73839ba4bf30c0e127ba11f0ba4130a2"></a>SCI_B_UART_RX_FIFO_TRIGGER_MAX&#160;</td><td class="fielddoc"><p>Callback when FIFO is full or after 15 bit times with no data (fewer interrupts) </p>
 </td></tr>
@@ -1281,7 +1301,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -18,9 +18,12 @@ var searchData=
   ['crc_20interface',['CRC Interface',['../group___c_r_c___a_p_i.html',1,'']]],
   ['ctsu_20_28r_5fctsu_29',['CTSU (r_ctsu)',['../group___c_t_s_u.html',1,'']]],
   ['ctsu_20interface',['CTSU Interface',['../group___c_t_s_u___a_p_i.html',1,'']]],
+  ['captouch',['CapTouch',['../group___r_e_n_e_s_a_s___c_a_p_t_o_u_c_h___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['captouch',['CapTouch',['../group___r_e_n_e_s_a_s___c_a_p_t_o_u_c_h___m_o_d_u_l_e_s.html',1,'']]],
+  ['connectivity',['Connectivity',['../group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['connectivity',['Connectivity',['../group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html',1,'']]],
   ['common_20error_20codes',['Common Error Codes',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html',1,'']]],
   ['cellular_20comm_20interface_20on_20uart_20_28rm_5fcellular_5fcomm_5fuart_5faws_29',['Cellular Comm Interface on UART (rm_cellular_comm_uart_aws)',['../group___r_m___c_e_l_l_u_l_a_r___c_o_m_m___u_a_r_t___a_w_s.html',1,'']]],
+  ['cmsis_20dsp_20h_2fw_20acceleration_20_28rm_5fcmsis_5fdsp_29',['CMSIS DSP H/W Acceleration (rm_cmsis_dsp)',['../group___r_m___c_m_s_i_s___d_s_p.html',1,'']]],
   ['communicatons_20middleware_20interface',['Communicatons Middleware Interface',['../group___r_m___c_o_m_m_s___a_p_i.html',1,'']]]
 ];

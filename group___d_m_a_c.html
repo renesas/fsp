@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -265,6 +265,8 @@ Functions</h2></td></tr>
 <tr class="separator:gade7f6c387756ca9728194ac15f01fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga697b9273351d29eb3e0c9319dce2e382"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ga697b9273351d29eb3e0c9319dce2e382">R_DMAC_Reload</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const num_transfers)</td></tr>
 <tr class="separator:ga697b9273351d29eb3e0c9319dce2e382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ceeef1307c7e022a38aabfafcfb7e01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ga0ceeef1307c7e022a38aabfafcfb7e01">R_DMAC_CallbackSet</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga0ceeef1307c7e022a38aabfafcfb7e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3423bb11f0d76dbe760ed01cf03ccd45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ga3423bb11f0d76dbe760ed01cf03ccd45">R_DMAC_Close</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga3423bb11f0d76dbe760ed01cf03ccd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -362,10 +364,6 @@ Source</li>
 </ul>
 </td><td>Source </td><td>Select the repeat area. Either the source or destination address resets to its initial value after completing Number of Transfers in Repeat or Block mode. </td></tr>
 <tr class="tree_none">
-<td>Destination Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer destination pointer. </td></tr>
-<tr class="tree_none">
-<td>Source Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer source pointer. </td></tr>
-<tr class="tree_none">
 <td>Number of Transfers</td><td>Value must be a non-negative integer</td><td>1 </td><td>Specify the number of transfers for repeat and normal mode or block size for repeat-block transfer mode. </td></tr>
 <tr class="tree_none">
 <td>Number of Blocks (Valid only in Repeat,Block or Repeat-Block Mode)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the number of blocks to transfer in Repeat,Block or Repeat-Block mode. </td></tr>
@@ -373,8 +371,6 @@ Source</li>
 <td>Activation Source</td><td>MCU Specific Options</td><td></td><td>Select the DMAC transfer start event. If no ELC event is chosen then software start can be used. </td></tr>
 <tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback that is called at the end of the transfer. </td></tr>
-<tr class="tree_none">
-<td>Context</td><td>Manual Entry</td><td>NULL </td><td>Pointer to the context structure passed through the callback argument. </td></tr>
 <tr class="tree_none">
 <td>Transfer End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transfer end interrupt priority. </td></tr>
 <tr class="tree_none">
@@ -399,6 +395,8 @@ Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
 <h1><a class="anchor" id="r-dmac-usage_notes"></a>
 Usage Notes</h1>
+<h2>Source and Destination Configuration</h2>
+<p><a class="el" href="group___d_m_a_c.html#gaac8f15eacf61325ad50ca0778cfc7ffd">R_DMAC_Reset()</a> API function should be called to set the source and destination before starting transfer operation.</p>
 <h2>Transfer Modes</h2>
 <p>The DMAC Module supports three modes of operation.</p>
 <ul>
@@ -532,13 +530,11 @@ Examples</h1>
 <p>This is a basic example of minimal use of the DMAC in an application. In this case, one or more events have been routed to the DMAC for handling so it only needs to be enabled to start accepting transfers.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_minimal_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer_ctrl, &amp;g_transfer_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable the DMAC so that it responds to transfer requests. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>CRC32 Example</h2>
 <p>In this example the DMAC is used to feed the CRC peripheral to perform a CRC32 operation.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_callback (<a class="code" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> * cb_data)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(cb_data);</div><div class="line"></div><div class="line">    g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_crc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t p_src[TRANSFER_LENGTH];</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize p_src to [ABC..OP] */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        p_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set transfer source address to p_src */</span></div><div class="line">    g_transfer_cfg.p_info-&gt;p_src = (<span class="keywordtype">void</span> *) p_src;</div><div class="line"></div><div class="line">    <span class="comment">/* Set transfer destination address to the CRC data input register */</span></div><div class="line">    g_transfer_cfg.p_info-&gt;p_dest = (<span class="keywordtype">void</span> *) &amp;R_CRC-&gt;CRCDIR;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer_ctrl, &amp;g_transfer_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable DMAC transfers. */</span></div><div class="line">    (void) <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Open the CRC module. */</span></div><div class="line">    err = <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;g_crc_ctrl, &amp;g_crc_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Clear the transfer complete flag. */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Trigger the transfer using software. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#ga476c8ffd7c603f3c298a422e4f39b571">R_DMAC_SoftwareStart</a>(&amp;g_transfer_ctrl, <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga11917a0ab2cb8b878937c97691b07fd9aca210983d734307a694af55fbf11ed7e">TRANSFER_START_MODE_SINGLE</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer complete interrupt */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Get CRC result and perform final XOR. */</span></div><div class="line">    uint32_t crc32;</div><div class="line">    (void) <a class="code" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a>(&amp;g_crc_ctrl, &amp;crc32);</div><div class="line">    crc32 ^= CRC32_FINAL_XOR_VALUE;</div><div class="line"></div><div class="line">    <span class="comment">/* Verify that the CRC32 is calculated correctly. */</span></div><div class="line">    <span class="comment">/* CRC32(&quot;ABCD...NOP&quot;) = 0xE0E8FF4D. */</span></div><div class="line">    <span class="keyword">const</span> uint32_t expected_crc32 = 0xE0E8FF4D;</div><div class="line">    <span class="keywordflow">if</span> (expected_crc32 != crc32)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any CRC errors. This function should be defined by the user. */</span></div><div class="line">        handle_crc_error();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_callback (<a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> * cb_data)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(cb_data);</div><div class="line"></div><div class="line">    g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_crc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t p_src[TRANSFER_LENGTH];</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize p_src to [ABC..OP] */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        p_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set transfer source address to p_src */</span></div><div class="line">    g_transfer_cfg.p_info-&gt;p_src = (<span class="keywordtype">void</span> *) p_src;</div><div class="line"></div><div class="line">    <span class="comment">/* Set transfer destination address to the CRC data input register */</span></div><div class="line">    g_transfer_cfg.p_info-&gt;p_dest = (<span class="keywordtype">void</span> *) &amp;R_CRC-&gt;CRCDIR;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer_ctrl, &amp;g_transfer_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable DMAC transfers. */</span></div><div class="line">    (void) <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Open the CRC module. */</span></div><div class="line">    err = <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;g_crc_ctrl, &amp;g_crc_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Clear the transfer complete flag. */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Trigger the transfer using software. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#ga476c8ffd7c603f3c298a422e4f39b571">R_DMAC_SoftwareStart</a>(&amp;g_transfer_ctrl, <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga11917a0ab2cb8b878937c97691b07fd9aca210983d734307a694af55fbf11ed7e">TRANSFER_START_MODE_SINGLE</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer complete interrupt */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Get CRC result and perform final XOR. */</span></div><div class="line">    uint32_t crc32;</div><div class="line">    (void) <a class="code" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a>(&amp;g_crc_ctrl, &amp;crc32);</div><div class="line">    crc32 ^= CRC32_FINAL_XOR_VALUE;</div><div class="line"></div><div class="line">    <span class="comment">/* Verify that the CRC32 is calculated correctly. */</span></div><div class="line">    <span class="comment">/* CRC32(&quot;ABCD...NOP&quot;) = 0xE0E8FF4D. */</span></div><div class="line">    <span class="keyword">const</span> uint32_t expected_crc32 = 0xE0E8FF4D;</div><div class="line">    <span class="keywordflow">if</span> (expected_crc32 != crc32)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any CRC errors. This function should be defined by the user. */</span></div><div class="line">        handle_crc_error();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structdmac__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#structdmac__instance__ctrl__t">dmac_instance_ctrl_t</a></td></tr>
 <tr class="separator:structdmac__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structdmac__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a></td></tr>
-<tr class="separator:structdmac__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structdmac__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#structdmac__extended__cfg__t">dmac_extended_cfg_t</a></td></tr>
 <tr class="separator:structdmac__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -569,30 +565,6 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"><p>Control block used by driver. DO NOT INITIALIZE - this structure will be initialized in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a84d48960cdfe867ef54fd4635a85ceeb">transfer_api_t::open</a>. </p>
 </div>
-</div>
-</div>
-<a name="structdmac__callback__args__t" id="structdmac__callback__args__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structdmac__callback__args__t">&#9670;&nbsp;</a></span>dmac_callback_args_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct dmac_callback_args_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Callback function parameter data. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a48a5473d21e29781083979724b5d930d"></a>void const  *</td>
-<td class="fieldname">
-p_context</td>
-<td class="fielddoc">
-Placeholder for user data. Set in r_transfer_t::open function in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__cfg__t">transfer_cfg_t</a>. </td></tr>
-</table>
-
 </div>
 </div>
 <a name="structdmac__extended__cfg__t" id="structdmac__extended__cfg__t"></a>
@@ -627,9 +599,9 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:a4d8669f5a4263d19902385b7e6b48262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a54c3a163ff659e26a6f7ed319f4777"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#a6a54c3a163ff659e26a6f7ed319f4777">src_buffer_size</a></td></tr>
 <tr class="separator:a6a54c3a163ff659e26a6f7ed319f4777"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae520b30cee620c91a4aa4d123ef437bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_s_p___m_c_u___r_a4_w1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ae520b30cee620c91a4aa4d123ef437bc">activation_source</a></td></tr>
+<tr class="memitem:ae520b30cee620c91a4aa4d123ef437bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_s_p___m_c_u___r_a4_e2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#ae520b30cee620c91a4aa4d123ef437bc">activation_source</a></td></tr>
 <tr class="separator:ae520b30cee620c91a4aa4d123ef437bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aa5df5a650e272348c4bd6c71ad4392"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#a1aa5df5a650e272348c4bd6c71ad4392">p_callback</a> )(<a class="el" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> *cb_data)</td></tr>
+<tr class="memitem:a1aa5df5a650e272348c4bd6c71ad4392"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#a1aa5df5a650e272348c4bd6c71ad4392">p_callback</a> )(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> *cb_data)</td></tr>
 <tr class="separator:a1aa5df5a650e272348c4bd6c71ad4392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a179371bb68b6d1ae0f7c1da5a2c46d34"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#a179371bb68b6d1ae0f7c1da5a2c46d34">p_context</a></td></tr>
 <tr class="separator:a179371bb68b6d1ae0f7c1da5a2c46d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -657,7 +629,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___b_s_p___m_c_u___r_a4_w1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> dmac_extended_cfg_t::activation_source</td>
+          <td class="memname"><a class="el" href="group___b_s_p___m_c_u___r_a4_e2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> dmac_extended_cfg_t::activation_source</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -672,7 +644,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void(*  dmac_extended_cfg_t::p_callback) (<a class="el" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> *cb_data)</td>
+          <td class="memname">void(*  dmac_extended_cfg_t::p_callback) (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> *cb_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -691,7 +663,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Placeholder for user data. Passed to the user p_callback in <a class="el" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a>. </p>
+<p>Placeholder for user data. Passed to the user p_callback in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a>. </p>
 
 </div>
 </div>
@@ -1105,6 +1077,55 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
+<a id="ga0ceeef1307c7e022a38aabfafcfb7e01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0ceeef1307c7e022a38aabfafcfb7e01">&#9670;&nbsp;</a></span>R_DMAC_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DMAC_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">dmac_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga3423bb11f0d76dbe760ed01cf03ccd45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3423bb11f0d76dbe760ed01cf03ccd45">&#9670;&nbsp;</a></span>R_DMAC_Close()</h2>
 
@@ -1138,7 +1159,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

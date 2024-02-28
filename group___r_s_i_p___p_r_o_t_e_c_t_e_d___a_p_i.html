@@ -1,0 +1,2198 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: RSIP Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">RSIP Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for Renesas Secure IP (RSIP) functions. </p>
+<h1><a class="anchor" id="RSIP_PROTECTED_API_Summary"></a>
+Summary</h1>
+<p>The RSIP interface provides RSIP functionality. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrsip__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a></td></tr>
+<tr class="separator:structrsip__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__key__update__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__key__update__key__t">rsip_key_update_key_t</a></td></tr>
+<tr class="separator:structrsip__key__update__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__sha__handle__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__sha__handle__t">rsip_sha_handle_t</a></td></tr>
+<tr class="separator:structrsip__sha__handle__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__hmac__handle__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a></td></tr>
+<tr class="separator:structrsip__hmac__handle__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__cfg__t">rsip_cfg_t</a></td></tr>
+<tr class="separator:structrsip__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__api__t">rsip_api_t</a></td></tr>
+<tr class="separator:structrsip__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__instance__t">rsip_instance_t</a></td></tr>
+<tr class="separator:structrsip__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2042507aed5dec71014a96b91aeaa4fa"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a></td></tr>
+<tr class="separator:ga2042507aed5dec71014a96b91aeaa4fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaa1c75f60faec758866bff9dabed054f3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaa1c75f60faec758866bff9dabed054f3">rsip_alg_t</a> </td></tr>
+<tr class="separator:gaa1c75f60faec758866bff9dabed054f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef109dcf619aaccf8144f0953b4ea254"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaef109dcf619aaccf8144f0953b4ea254">rsip_key_subtype_t</a> </td></tr>
+<tr class="separator:gaef109dcf619aaccf8144f0953b4ea254"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga123baeaebf3b0eb3092b446a3aeed533"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> </td></tr>
+<tr class="separator:ga123baeaebf3b0eb3092b446a3aeed533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ed61c073c7b98245fd8e1c21410b083"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga4ed61c073c7b98245fd8e1c21410b083">rsip_key_pair_type_t</a> </td></tr>
+<tr class="separator:ga4ed61c073c7b98245fd8e1c21410b083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga385f2388cc3e87db6a1f385351b47235"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga385f2388cc3e87db6a1f385351b47235">rsip_byte_size_wrapped_key_t</a> </td></tr>
+<tr class="separator:ga385f2388cc3e87db6a1f385351b47235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c66b456dbaadee4c68a3afe29f52fc9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga7c66b456dbaadee4c68a3afe29f52fc9">rsip_aes_cipher_mode_t</a> </td></tr>
+<tr class="separator:ga7c66b456dbaadee4c68a3afe29f52fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga245b0a15ea6b2cca7b56224fda3e7522"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga245b0a15ea6b2cca7b56224fda3e7522">rsip_aes_aead_mode_t</a> </td></tr>
+<tr class="separator:ga245b0a15ea6b2cca7b56224fda3e7522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadccd218cdf9941b64b6b13b949a2985c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadccd218cdf9941b64b6b13b949a2985c">rsip_aes_mac_mode_t</a> </td></tr>
+<tr class="separator:gadccd218cdf9941b64b6b13b949a2985c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3820283ceb2beb99656e71bbb3ba4f89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> </td></tr>
+<tr class="separator:ga3820283ceb2beb99656e71bbb3ba4f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed858ab9713b13797a5e7e50589fbf52"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> </td></tr>
+<tr class="separator:gaed858ab9713b13797a5e7e50589fbf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25b0d42a8c06f2010d6f6561e1bc3ad6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga25b0d42a8c06f2010d6f6561e1bc3ad6">rsip_rsa_salt_length_t</a> </td></tr>
+<tr class="separator:ga25b0d42a8c06f2010d6f6561e1bc3ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrsip__wrapped__key__t" id="structrsip__wrapped__key__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_wrapped_key_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_wrapped_key_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Wrapped key structure for all supported algorithms. The struct length of each algorithm is defined by RSIP_BYTE_SIZE_WRAPPED_KEY macro. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4753a54111002084939fc8cdcb2c3e0b"></a>uint8_t</td>
+<td class="fieldname">
+alg</td>
+<td class="fielddoc">
+Key algorithm. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac2e1192f719af310f77dc9efb715aada"></a>uint8_t</td>
+<td class="fieldname">
+subtype</td>
+<td class="fielddoc">
+Key sub type. </td></tr>
+<tr><td class="fieldtype">
+<a id="a955f6209d83345dea2e8cd9d048a967f"></a>uint8_t</td>
+<td class="fieldname">
+info[2]</td>
+<td class="fielddoc">
+Reserved area. </td></tr>
+<tr><td class="fieldtype">
+<a id="ade21a6e17fe7e4121c40c6063660fea4"></a>uint8_t</td>
+<td class="fieldname">
+value[]</td>
+<td class="fielddoc">
+Variable length array to store the key value. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrsip__key__update__key__t" id="structrsip__key__update__key__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__key__update__key__t">&#9670;&nbsp;</a></span>rsip_key_update_key_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_key_update_key_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Key Update Key (KUK) </p>
+</div>
+</div>
+</div>
+<a name="structrsip__sha__handle__t" id="structrsip__sha__handle__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__sha__handle__t">&#9670;&nbsp;</a></span>rsip_sha_handle_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_sha_handle_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Working area for SHA functions. DO NOT MODIFY. </p>
+</div>
+</div>
+</div>
+<a name="structrsip__hmac__handle__t" id="structrsip__hmac__handle__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__hmac__handle__t">&#9670;&nbsp;</a></span>rsip_hmac_handle_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_hmac_handle_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Working area for HMAC functions. DO NOT MODIFY. </p>
+</div>
+</div>
+</div>
+<a name="structrsip__cfg__t" id="structrsip__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__cfg__t">&#9670;&nbsp;</a></span>rsip_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>User configuration structure, used in open function </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0ebcc6e070f143b87d72164bae5bfd75"></a>void const  *</td>
+<td class="fieldname">
+p_extend</td>
+<td class="fielddoc">
+Hardware-dependent configuration. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrsip__api__t" id="structrsip__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__api__t">&#9670;&nbsp;</a></span>rsip_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RSIP driver structure. General RSIP functions implemented at the HAL layer follow this API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aefa2a1387728e6d12e2d7220ba92f47b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aefa2a1387728e6d12e2d7220ba92f47b">open</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__cfg__t">rsip_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:aefa2a1387728e6d12e2d7220ba92f47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab449cb404dc3948210a8f004aeea96af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ab449cb404dc3948210a8f004aeea96af">close</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ab449cb404dc3948210a8f004aeea96af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa760603ec33d89beab0b565135dae2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a4fa760603ec33d89beab0b565135dae2">randomNumberGenerate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_random)</td></tr>
+<tr class="separator:a4fa760603ec33d89beab0b565135dae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abebea901feb3eaf6abfc0cb61cd005e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#abebea901feb3eaf6abfc0cb61cd005e5">keyGenerate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
+<tr class="separator:abebea901feb3eaf6abfc0cb61cd005e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe3818171befc79dd3bcf0fd1ecc63a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#acbe3818171befc79dd3bcf0fd1ecc63a">keyPairGenerate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga4ed61c073c7b98245fd8e1c21410b083">rsip_key_pair_type_t</a> const key_pair_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_private_key)</td></tr>
+<tr class="separator:acbe3818171befc79dd3bcf0fd1ecc63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6394c580867b78018e084fabc30be9de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a6394c580867b78018e084fabc30be9de">encryptedKeyWrap</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__key__update__key__t">rsip_key_update_key_t</a> const *const p_key_update_key, uint8_t const *const p_initial_vector, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_encrypted_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
+<tr class="separator:a6394c580867b78018e084fabc30be9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bfbcfe67660650dcd63a0bab01d9a30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a8bfbcfe67660650dcd63a0bab01d9a30">publicKeyExport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t *const p_raw_public_key)</td></tr>
+<tr class="separator:a8bfbcfe67660650dcd63a0bab01d9a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad24edf033b049963560e47f63537416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aad24edf033b049963560e47f63537416">aesCipherInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga7c66b456dbaadee4c68a3afe29f52fc9">rsip_aes_cipher_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_initial_vector)</td></tr>
+<tr class="separator:aad24edf033b049963560e47f63537416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13c1c5926cf64a47ae7ca920d2028163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a13c1c5926cf64a47ae7ca920d2028163">aesCipherUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_input, uint8_t *const p_output, uint32_t const length)</td></tr>
+<tr class="separator:a13c1c5926cf64a47ae7ca920d2028163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26f87f2c8f06b8be82f2f35ebbd774aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a26f87f2c8f06b8be82f2f35ebbd774aa">aesCipherFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a26f87f2c8f06b8be82f2f35ebbd774aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8d1c718430119a030de2179831b1218"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ab8d1c718430119a030de2179831b1218">aesAeadInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga245b0a15ea6b2cca7b56224fda3e7522">rsip_aes_aead_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_nonce, uint32_t const nonce_length)</td></tr>
+<tr class="separator:ab8d1c718430119a030de2179831b1218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdbecbf8dc7e5b98b6ad9dde4e04fd74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#acdbecbf8dc7e5b98b6ad9dde4e04fd74">aesAeadLengthsSet</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint32_t const total_aad_length, uint32_t const total_text_length, uint32_t const tag_length)</td></tr>
+<tr class="separator:acdbecbf8dc7e5b98b6ad9dde4e04fd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78014c948eebedaf204f2d970abb0e4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a78014c948eebedaf204f2d970abb0e4d">aesAeadAadUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_aad, uint32_t const aad_length)</td></tr>
+<tr class="separator:a78014c948eebedaf204f2d970abb0e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96cfec391c412fa7f5ffa5655ca308e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a96cfec391c412fa7f5ffa5655ca308e3">aesAeadUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_input, uint32_t const input_length, uint8_t *const p_output, uint32_t *const p_output_length)</td></tr>
+<tr class="separator:a96cfec391c412fa7f5ffa5655ca308e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa7de5e569d9d93d6d933ee3b04acef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aeaa7de5e569d9d93d6d933ee3b04acef">aesAeadFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t *const p_tag)</td></tr>
+<tr class="separator:aeaa7de5e569d9d93d6d933ee3b04acef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db092d6dddd636d015f1d3ed451dae8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a5db092d6dddd636d015f1d3ed451dae8">aesAeadVerify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t const *const p_tag, uint32_t const tag_length)</td></tr>
+<tr class="separator:a5db092d6dddd636d015f1d3ed451dae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca7c23ef3876218bbb3545c25f96af7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a9ca7c23ef3876218bbb3545c25f96af7">aesMacInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadccd218cdf9941b64b6b13b949a2985c">rsip_aes_mac_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key)</td></tr>
+<tr class="separator:a9ca7c23ef3876218bbb3545c25f96af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1cace9fc36f6e684af5607bbdade994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aa1cace9fc36f6e684af5607bbdade994">aesMacUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td></tr>
+<tr class="separator:aa1cace9fc36f6e684af5607bbdade994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5011902ad0222154ca8717e6da471a00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a5011902ad0222154ca8717e6da471a00">aesMacSignFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_mac)</td></tr>
+<tr class="separator:a5011902ad0222154ca8717e6da471a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb491edc4e7473fa3773bcbd7ad8fb14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aeb491edc4e7473fa3773bcbd7ad8fb14">aesMacVerifyFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_mac, uint32_t const mac_length)</td></tr>
+<tr class="separator:aeb491edc4e7473fa3773bcbd7ad8fb14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25851c0dd479946a30efa9de0a147865"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a25851c0dd479946a30efa9de0a147865">ecdsaSign</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_hash, uint8_t *const p_signature)</td></tr>
+<tr class="separator:a25851c0dd479946a30efa9de0a147865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a044eb8526276e854afd14ef9b7ca27bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a044eb8526276e854afd14ef9b7ca27bb">ecdsaVerify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_hash, uint8_t const *const p_signature)</td></tr>
+<tr class="separator:a044eb8526276e854afd14ef9b7ca27bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5025156300d6f5b9dbdc230e94bc3776"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a5025156300d6f5b9dbdc230e94bc3776">rsaEncrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_plain, uint8_t *const p_cipher)</td></tr>
+<tr class="separator:a5025156300d6f5b9dbdc230e94bc3776"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8968b7c05a9db8807b82dbe6797e585f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a8968b7c05a9db8807b82dbe6797e585f">rsaDecrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_cipher, uint8_t *const p_plain)</td></tr>
+<tr class="separator:a8968b7c05a9db8807b82dbe6797e585f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf1826824ba6fe2749972fe46b642247"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aaf1826824ba6fe2749972fe46b642247">rsaesPkcs1V15Encrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_plain, uint32_t const plain_length, uint8_t *const p_cipher)</td></tr>
+<tr class="separator:aaf1826824ba6fe2749972fe46b642247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a0412f39a9c5940b695c664cb76f991"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a5a0412f39a9c5940b695c664cb76f991">rsaesPkcs1V15Decrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_cipher, uint8_t *const p_plain, uint32_t *const p_plain_length, uint32_t const plain_buffer_length)</td></tr>
+<tr class="separator:a5a0412f39a9c5940b695c664cb76f991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff870e512679efed35b4b0bcee392085"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aff870e512679efed35b4b0bcee392085">rsaesOaepEncrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint8_t const *const p_label, uint32_t const label_length, uint8_t const *const p_plain, uint32_t const plain_length, uint8_t *const p_cipher)</td></tr>
+<tr class="separator:aff870e512679efed35b4b0bcee392085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4785336bb9e5219a8f6661506944de78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a4785336bb9e5219a8f6661506944de78">rsaesOaepDecrypt</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint8_t const *const p_label, uint32_t const label_length, uint8_t const *const p_cipher, uint8_t *const p_plain, uint32_t *const p_plain_length, uint32_t const plain_buffer_length)</td></tr>
+<tr class="separator:a4785336bb9e5219a8f6661506944de78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a20f081e14858f47d64d60b63be594e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a0a20f081e14858f47d64d60b63be594e">rsassaPkcs1V15Sign</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, uint8_t const *const p_hash, uint8_t *const p_signature)</td></tr>
+<tr class="separator:a0a20f081e14858f47d64d60b63be594e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a829f2fadf84400b81ed2652c568208dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a829f2fadf84400b81ed2652c568208dc">rsassaPkcs1V15Verify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, uint8_t const *const p_hash, uint8_t const *const p_signature)</td></tr>
+<tr class="separator:a829f2fadf84400b81ed2652c568208dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9637b29a442f9223add92d9d9f5bba70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a9637b29a442f9223add92d9d9f5bba70">rsassaPssSign</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint32_t const salt_length, uint8_t const *const p_hash, uint8_t *const p_signature)</td></tr>
+<tr class="separator:a9637b29a442f9223add92d9d9f5bba70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee3c79af20f73fd330bdec0e5ca33cde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aee3c79af20f73fd330bdec0e5ca33cde">rsassaPssVerify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint32_t const salt_length, uint8_t const *const p_hash, uint8_t const *const p_signature)</td></tr>
+<tr class="separator:aee3c79af20f73fd330bdec0e5ca33cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db03579fb59bfc716d57bfc7e75d40e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a4db03579fb59bfc716d57bfc7e75d40e">shaCompute</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_type, uint8_t const *const p_message, uint32_t const message_length, uint8_t *const p_digest)</td></tr>
+<tr class="separator:a4db03579fb59bfc716d57bfc7e75d40e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33f273ef1a0864ed3861ae40551e3bb4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a33f273ef1a0864ed3861ae40551e3bb4">shaInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_type)</td></tr>
+<tr class="separator:a33f273ef1a0864ed3861ae40551e3bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecf5ea697a2d11d7c79f1a1e27a4efc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aecf5ea697a2d11d7c79f1a1e27a4efc6">shaUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td></tr>
+<tr class="separator:aecf5ea697a2d11d7c79f1a1e27a4efc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a772a03cbed35aeca91cfd479957eaf88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a772a03cbed35aeca91cfd479957eaf88">shaFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_digest)</td></tr>
+<tr class="separator:a772a03cbed35aeca91cfd479957eaf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38deab4083606b892a986818463083a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a38deab4083606b892a986818463083a5">shaSuspend</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__sha__handle__t">rsip_sha_handle_t</a> *const p_handle)</td></tr>
+<tr class="separator:a38deab4083606b892a986818463083a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89dcf30dbb84a3f78be68443261b7357"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a89dcf30dbb84a3f78be68443261b7357">shaResume</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__sha__handle__t">rsip_sha_handle_t</a> const *const p_handle)</td></tr>
+<tr class="separator:a89dcf30dbb84a3f78be68443261b7357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf7a844bc6f5dc4d970f1c707390dbe4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aaf7a844bc6f5dc4d970f1c707390dbe4">hmacCompute</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *p_wrapped_key, uint8_t const *const p_message, uint32_t const message_length, uint8_t *const p_mac)</td></tr>
+<tr class="separator:aaf7a844bc6f5dc4d970f1c707390dbe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1282fb1437c8ce2a19f2f6f212de2c17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a1282fb1437c8ce2a19f2f6f212de2c17">hmacVerify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *p_wrapped_key, uint8_t const *const p_message, uint32_t const message_length, uint8_t const *const p_mac, uint32_t const mac_length)</td></tr>
+<tr class="separator:a1282fb1437c8ce2a19f2f6f212de2c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b1ea5b6ff96ac6218ac147dd9178ab1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a0b1ea5b6ff96ac6218ac147dd9178ab1">hmacInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key)</td></tr>
+<tr class="separator:a0b1ea5b6ff96ac6218ac147dd9178ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c16e62f1d6fd5bf2852cb3b5672e76b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a8c16e62f1d6fd5bf2852cb3b5672e76b">hmacUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td></tr>
+<tr class="separator:a8c16e62f1d6fd5bf2852cb3b5672e76b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c7c949eb1a0aeafb1b279854598ae0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a64c7c949eb1a0aeafb1b279854598ae0">hmacSignFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_mac)</td></tr>
+<tr class="separator:a64c7c949eb1a0aeafb1b279854598ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1277faa83003b764b187abb05cadc8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#af1277faa83003b764b187abb05cadc8b">hmacVerifyFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_mac, uint32_t const mac_length)</td></tr>
+<tr class="separator:af1277faa83003b764b187abb05cadc8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f58de5f366f79fb57060821b7b8fa9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#af4f58de5f366f79fb57060821b7b8fa9">hmacSuspend</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a> *const p_handle)</td></tr>
+<tr class="separator:af4f58de5f366f79fb57060821b7b8fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a206b031964651bc1a9805ba1a9e67c1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a206b031964651bc1a9805ba1a9e67c1b">hmacResume</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a> const *const p_handle)</td></tr>
+<tr class="separator:a206b031964651bc1a9805ba1a9e67c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="aefa2a1387728e6d12e2d7220ba92f47b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefa2a1387728e6d12e2d7220ba92f47b">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::open) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__cfg__t">rsip_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables use of Renesas Secure IP functionality.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab449cb404dc3948210a8f004aeea96af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab449cb404dc3948210a8f004aeea96af">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::close) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables use of Renesas Secure IP functionality.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4fa760603ec33d89beab0b565135dae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fa760603ec33d89beab0b565135dae2">&#9670;&nbsp;</a></span>randomNumberGenerate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::randomNumberGenerate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_random)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generates a 128-bit random number.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_random</td><td>128bit random numbers. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abebea901feb3eaf6abfc0cb61cd005e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abebea901feb3eaf6abfc0cb61cd005e5">&#9670;&nbsp;</a></span>keyGenerate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::keyGenerate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate a wrapped symmetric key from a random number. In this API, user key input is unnecessary. By encrypting data using the wrapped key is output by this API, dead copying of data can be prevented.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Outputs key type. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acbe3818171befc79dd3bcf0fd1ecc63a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe3818171befc79dd3bcf0fd1ecc63a">&#9670;&nbsp;</a></span>keyPairGenerate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::keyPairGenerate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga4ed61c073c7b98245fd8e1c21410b083">rsip_key_pair_type_t</a> const key_pair_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_private_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate a wrapped asymmetric key pair from a random number. In this API, user key input is unnecessary. By encrypting data using the wrapped key is output by this API, dead copying of data can be prevented.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_pair_type</td><td>Output key pair type. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_public_key</td><td>Key index for Public Key. The length depends on the key type. Refer "Key Size Table". </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_private_key</td><td>Key index for Private Key. The length depends on the key type. Refer "Key Size Table". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6394c580867b78018e084fabc30be9de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6394c580867b78018e084fabc30be9de">&#9670;&nbsp;</a></span>encryptedKeyWrap</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::encryptedKeyWrap) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__key__update__key__t">rsip_key_update_key_t</a> const *const p_key_update_key, uint8_t const *const p_initial_vector, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_encrypted_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypt the encrypted user key with Key Update Key (KUK) and wrap it with the Hardware Unique Key (HUK).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_key_update_key</td><td>Pointer to Key Update Key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted_key. The length is 16 bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Inputs/Outputs key type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encrypted_key</td><td>Encrypted user key. The length depends on the key type. Refer "Key Size Table". </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8bfbcfe67660650dcd63a0bab01d9a30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bfbcfe67660650dcd63a0bab01d9a30">&#9670;&nbsp;</a></span>publicKeyExport</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::publicKeyExport) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t *const p_raw_public_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exports public key parameters from a wrapped key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Key index for Public Key. The length depends on the key type. Refer "Key Size Table". </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_raw_public_key</td><td>Pointer to destination of raw public key. The length depends on the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aad24edf033b049963560e47f63537416"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad24edf033b049963560e47f63537416">&#9670;&nbsp;</a></span>aesCipherInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesCipherInit) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga7c66b456dbaadee4c68a3afe29f52fc9">rsip_aes_cipher_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_initial_vector)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set parameters of AES cipher.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Block cipher modes of operation for AES. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of AES or XTS-AES key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Pointer to initialization vector (IV) or nonce. The length is 16 bytes. <ul>
+<li>[ECB] Not required </li>
+<li>[CBC][XTS] IV </li>
+<li>[CTR] Nonce </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a13c1c5926cf64a47ae7ca920d2028163"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13c1c5926cf64a47ae7ca920d2028163">&#9670;&nbsp;</a></span>aesCipherUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesCipherUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_input, uint8_t *const p_output, uint32_t const length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypt plaintext.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_input</td><td>Pointer to input text. The length is given as the argument. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of output text. The length is given as the argument. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Byte length of input and output. <ul>
+<li>[ECB][CBC][CTR] Must be 0 or a multiple of 16. </li>
+<li>[XTS] Must be 0 or greater than or equal to 16. After an integer not divisible by 16 is input, update can no longer be executed. </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a26f87f2c8f06b8be82f2f35ebbd774aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26f87f2c8f06b8be82f2f35ebbd774aa">&#9670;&nbsp;</a></span>aesCipherFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesCipherFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalize AES operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab8d1c718430119a030de2179831b1218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8d1c718430119a030de2179831b1218">&#9670;&nbsp;</a></span>aesAeadInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesAeadInit) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga245b0a15ea6b2cca7b56224fda3e7522">rsip_aes_aead_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_nonce, uint32_t const nonce_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepares an AES-AEAD function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>AEAD mode of operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of AES key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_nonce</td><td>Pointer to nonce. The length is nonce_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nonce_length</td><td>Byte length of nonce. Input 1 or more. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acdbecbf8dc7e5b98b6ad9dde4e04fd74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdbecbf8dc7e5b98b6ad9dde4e04fd74">&#9670;&nbsp;</a></span>aesAeadLengthsSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesAeadLengthsSet) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint32_t const total_aad_length, uint32_t const total_text_length, uint32_t const tag_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set text and tag lengths for specific mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">total_aad_length</td><td>Total AAD length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">total_text_length</td><td>Total input and output text length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag_length</td><td>Input or output tag length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a78014c948eebedaf204f2d970abb0e4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78014c948eebedaf204f2d970abb0e4d">&#9670;&nbsp;</a></span>aesAeadAadUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesAeadAadUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_aad, uint32_t const aad_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs additional authentication data.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_aad</td><td>Additional authentication data. The length depends on aad_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aad_length</td><td>Byte length of additional authentication data (0 or more bytes). After starting input of plaintext, this value must always be 0. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a96cfec391c412fa7f5ffa5655ca308e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96cfec391c412fa7f5ffa5655ca308e3">&#9670;&nbsp;</a></span>aesAeadUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesAeadUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_input, uint32_t const input_length, uint8_t *const p_output, uint32_t *const p_output_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs test and executes encryption and decryption.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_input</td><td>Pointer to input text. The length is input_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_length</td><td>Byte length of input text (0 or more bytes). </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of output text. The length is p_output_length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of output text length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeaa7de5e569d9d93d6d933ee3b04acef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaa7de5e569d9d93d6d933ee3b04acef">&#9670;&nbsp;</a></span>aesAeadFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesAeadFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t *const p_tag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes an AES-GCM encryption.</p>
+<p>If there is 16-byte fractional data indicated by the total data length of the value of p_plain that was input by R_RSIP_AES_GCM_EncryptUpdate(), this API will output the result of encrypting that fractional data to p_cipher. Here, the portion that does not reach 16 bytes will be padded with zeros.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of output text. The fractional block is output. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of output text length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_tag</td><td>Pointer to destination of tag for authentication. GCM : The length is 16 bytes. *If a different tag length is required, truncate the 16-byte tag to the required tag length (NIST SP800-38D 7.1). CCM : The length is the value set by the API <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gab2032f95ca00ce78a703e5c546aa051c">R_RSIP_AES_AEAD_LengthsSet()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5db092d6dddd636d015f1d3ed451dae8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5db092d6dddd636d015f1d3ed451dae8">&#9670;&nbsp;</a></span>aesAeadVerify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesAeadVerify) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t const *const p_tag, uint32_t const tag_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes an AES-GCM decryption.</p>
+<p>If there is 16-byte fractional data indicated by the total data length of the value of p_cipher that was input by R_RSIP_AES_GCM_DecryptUpdate(), this API will output the result of decrypting that fractional data to p_cipher. Here, the portion that does not reach 16 bytes will be padded with zeros.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of decrypted data. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of decrypted data length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tag</td><td>Pointer to destination of tag for authentication.The length depends on tag_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag_length</td><td>Byte length of tag. Must be 1 to 16. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9ca7c23ef3876218bbb3545c25f96af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ca7c23ef3876218bbb3545c25f96af7">&#9670;&nbsp;</a></span>aesMacInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesMacInit) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadccd218cdf9941b64b6b13b949a2985c">rsip_aes_mac_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepares an AES-MAC generation and verification.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>MAC mode of operation </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of AES key. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa1cace9fc36f6e684af5607bbdade994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1cace9fc36f6e684af5607bbdade994">&#9670;&nbsp;</a></span>aesMacUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesMacUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Input message. Inside this function, the data that is input by the user is buffered until the input value of p_message exceeds 16 bytes. If the input value, p_message, is not a multiple of 16 bytes, it will be padded within the function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Pointer to message. The length is message_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message_length</td><td>Byte length of message (0 or more bytes). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5011902ad0222154ca8717e6da471a00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5011902ad0222154ca8717e6da471a00">&#9670;&nbsp;</a></span>aesMacSignFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesMacSignFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_mac)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes an AES-CMAC generation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_mac</td><td>Pointer to destination of MAC. The length is 16 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb491edc4e7473fa3773bcbd7ad8fb14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb491edc4e7473fa3773bcbd7ad8fb14">&#9670;&nbsp;</a></span>aesMacVerifyFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::aesMacVerifyFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_mac, uint32_t const mac_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes an AES-CMAC verification.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_mac</td><td>Pointer to MAC. The length depends on mac_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mac_length</td><td>Byte length of MAC. Must be 2 to 16. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a25851c0dd479946a30efa9de0a147865"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25851c0dd479946a30efa9de0a147865">&#9670;&nbsp;</a></span>ecdsaSign</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::ecdsaSign) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_hash, uint8_t *const p_signature)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signs a hashed message. The message hash should be generated in advance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_private_key</td><td>Pointer to wrapped key of ECC private key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hash</td><td>Pointer to hash value. The length is as same as the key length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_signature</td><td>Pointer to destination of signature (r, s). The length is twice as long as the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a044eb8526276e854afd14ef9b7ca27bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a044eb8526276e854afd14ef9b7ca27bb">&#9670;&nbsp;</a></span>ecdsaVerify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::ecdsaVerify) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_hash, uint8_t const *const p_signature)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verifies a hashed message. The message hash should be generated in advance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Pointer to wrapped key of ECC public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hash</td><td>Pointer to hash value. The length is as same as the key length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_signature</td><td>Pointer to signature (r, s).The length is twice as long as the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5025156300d6f5b9dbdc230e94bc3776"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5025156300d6f5b9dbdc230e94bc3776">&#9670;&nbsp;</a></span>rsaEncrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsaEncrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_plain, uint8_t *const p_cipher)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts plaintext with raw RSA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Pointer to wrapped key of RSA public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_plain</td><td>Pointer to plaintext. The length is as same as the key length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_cipher</td><td>Pointer to destination of ciphertext. The length is as same as the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8968b7c05a9db8807b82dbe6797e585f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8968b7c05a9db8807b82dbe6797e585f">&#9670;&nbsp;</a></span>rsaDecrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsaDecrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_cipher, uint8_t *const p_plain)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts ciphertext with raw RSA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_private_key</td><td>Pointer to wrapped key of RSA private key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cipher</td><td>Pointer to ciphertext. The length is as same as the key length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_plain</td><td>Pointer to destination of plaintext. The length is as same as the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaf1826824ba6fe2749972fe46b642247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf1826824ba6fe2749972fe46b642247">&#9670;&nbsp;</a></span>rsaesPkcs1V15Encrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsaesPkcs1V15Encrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_plain, uint32_t const plain_length, uint8_t *const p_cipher)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts plaintext with RSAES-PKCS1-v1_5.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Pointer to wrapped key of RSA public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_plain</td><td>Pointer to plaintext. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plain_length</td><td>Length of plaintext. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_cipher</td><td>Pointer to destination of ciphertext. The length is as same as the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5a0412f39a9c5940b695c664cb76f991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a0412f39a9c5940b695c664cb76f991">&#9670;&nbsp;</a></span>rsaesPkcs1V15Decrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsaesPkcs1V15Decrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_cipher, uint8_t *const p_plain, uint32_t *const p_plain_length, uint32_t const plain_buffer_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts with RSAES-PKCS1-v1_5.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_private_key</td><td>Pointer to wrapped key of RSA private key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cipher</td><td>Pointer to ciphertext. The length is as same as the key length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_plain</td><td>Pointer to destination of plaintext. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_plain_length</td><td>Pointer to destination of actual plaintext length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plain_buffer_length</td><td>Length of plaintext destination. It must be equal to or greater than *p_plain_length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aff870e512679efed35b4b0bcee392085"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff870e512679efed35b4b0bcee392085">&#9670;&nbsp;</a></span>rsaesOaepEncrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsaesOaepEncrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint8_t const *const p_label, uint32_t const label_length, uint8_t const *const p_plain, uint32_t const plain_length, uint8_t *const p_cipher)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts plaintext with RSAES-OAEP.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Pointer to wrapped key of RSA public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_function</td><td>Hash function for label. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask_generation_function</td><td>Mask generation function in EME-OAEP encoding. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_label</td><td>Pointer to label. If label_length != 0, p_label must not be NULL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">label_length</td><td>Length of label. Please set 0 or more. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_plain</td><td>Pointer to plaintext. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plain_length</td><td>Length of plaintext. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_cipher</td><td>Pointer to destination of ciphertext. The length is as same as the key length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4785336bb9e5219a8f6661506944de78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4785336bb9e5219a8f6661506944de78">&#9670;&nbsp;</a></span>rsaesOaepDecrypt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsaesOaepDecrypt) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint8_t const *const p_label, uint32_t const label_length, uint8_t const *const p_cipher, uint8_t *const p_plain, uint32_t *const p_plain_length, uint32_t const plain_buffer_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts ciphertext with RSAES-OAEP.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_private_key</td><td>Pointer to wrapped key of RSA private key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_function</td><td>Hash function for label. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask_generation_function</td><td>Mask generation function in EME-OAEP encoding. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_label</td><td>Pointer to label. If label_length != 0, p_label must not be NULL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">label_length</td><td>Length of label. Please set 0 or more. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cipher</td><td>Pointer to ciphertext. The length is as same as the key length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_plain</td><td>Pointer to destination of plaintext. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_plain_length</td><td>Pointer to destination of actual plaintext length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plain_buffer_length</td><td>Length of plaintext destination. It must be equal to or greater than *p_plain_length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0a20f081e14858f47d64d60b63be594e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a20f081e14858f47d64d60b63be594e">&#9670;&nbsp;</a></span>rsassaPkcs1V15Sign</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsassaPkcs1V15Sign) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, uint8_t const *const p_hash, uint8_t *const p_signature)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signs message with RSASSA-PKCS1-v1_5.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_private_key</td><td>Pointer to wrapped key of RSA private key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_function</td><td>Hash function in EMSA-PKCS1-v1_5. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hash</td><td>Pointer to input hash. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_signature</td><td>Pointer to destination of signature. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a829f2fadf84400b81ed2652c568208dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a829f2fadf84400b81ed2652c568208dc">&#9670;&nbsp;</a></span>rsassaPkcs1V15Verify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsassaPkcs1V15Verify) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, uint8_t const *const p_hash, uint8_t const *const p_signature)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verifies signature with RSASSA-PKCS1-v1_5.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Pointer to wrapped key of RSA public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_function</td><td>Hash function in EMSA-PKCS1-v1_5. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hash</td><td>Pointer to input hash. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_signature</td><td>Pointer to input signature. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9637b29a442f9223add92d9d9f5bba70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9637b29a442f9223add92d9d9f5bba70">&#9670;&nbsp;</a></span>rsassaPssSign</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsassaPssSign) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint32_t const salt_length, uint8_t const *const p_hash, uint8_t *const p_signature)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signs message with RSASSA-PSS.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_private_key</td><td>Pointer to wrapped key of RSA private key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_function</td><td>Hash function in EMSA-PSS-ENCODE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask_generation_function</td><td>Mask generation function in EMSA-PSS-ENCODE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">salt_length</td><td>Salt length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hash</td><td>Pointer to input hash. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_signature</td><td>Pointer to destination of signature. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aee3c79af20f73fd330bdec0e5ca33cde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee3c79af20f73fd330bdec0e5ca33cde">&#9670;&nbsp;</a></span>rsassaPssVerify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rsassaPssVerify) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a> const mask_generation_function, uint32_t const salt_length, uint8_t const *const p_hash, uint8_t const *const p_signature)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verifies signature with RSASSA-PSS.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_public_key</td><td>Pointer to wrapped key of RSA public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_function</td><td>Hash function in EMSA-PSS-VERIFY. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask_generation_function</td><td>Mask generation function in EMSA-PSS-VERIFY. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">salt_length</td><td>Salt length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hash</td><td>Pointer to input hash. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_signature</td><td>Pointer to input signature. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4db03579fb59bfc716d57bfc7e75d40e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4db03579fb59bfc716d57bfc7e75d40e">&#9670;&nbsp;</a></span>shaCompute</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::shaCompute) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_type, uint8_t const *const p_message, uint32_t const message_length, uint8_t *const p_digest)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generates SHA message digest.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_type</td><td>Generating hash type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Pointer to message. The length is message_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message_length</td><td>Byte length of message (0 or more bytes). </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_digest</td><td>Pointer to destination of message digest. The length depends on hash type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a33f273ef1a0864ed3861ae40551e3bb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33f273ef1a0864ed3861ae40551e3bb4">&#9670;&nbsp;</a></span>shaInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::shaInit) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_type)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepares a SHA generation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash_type</td><td>Generating hash type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aecf5ea697a2d11d7c79f1a1e27a4efc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecf5ea697a2d11d7c79f1a1e27a4efc6">&#9670;&nbsp;</a></span>shaUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::shaUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Pointer to message. The length is message_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message_length</td><td>Byte length of message (0 or more bytes). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a772a03cbed35aeca91cfd479957eaf88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a772a03cbed35aeca91cfd479957eaf88">&#9670;&nbsp;</a></span>shaFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::shaFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_digest)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes a SHA generation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_digest</td><td>Pointer to destination of message digest. The length depends on hash type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a38deab4083606b892a986818463083a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38deab4083606b892a986818463083a5">&#9670;&nbsp;</a></span>shaSuspend</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::shaSuspend) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__sha__handle__t">rsip_sha_handle_t</a> *const p_handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Suspend SHA generation. This API allows you to suspend processing, for example, if you are in the middle of computing digest value for successive chunks of the message and need to perform another process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Pointer to destination of SHA control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a89dcf30dbb84a3f78be68443261b7357"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89dcf30dbb84a3f78be68443261b7357">&#9670;&nbsp;</a></span>shaResume</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::shaResume) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__sha__handle__t">rsip_sha_handle_t</a> const *const p_handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resume SHA generation. This API allows you to resume a process that has been suspended by <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga5329dd593d8a6c33c6222bdbc3dbed83">R_RSIP_SHA_Suspend()</a> API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to SHA control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaf7a844bc6f5dc4d970f1c707390dbe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf7a844bc6f5dc4d970f1c707390dbe4">&#9670;&nbsp;</a></span>hmacCompute</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacCompute) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *p_wrapped_key, uint8_t const *const p_message, uint32_t const message_length, uint8_t *const p_mac)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generates HMAC.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of HMAC key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Pointer to message. The length is message_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message_length</td><td>Byte length of message (0 or more bytes). </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_mac</td><td>Pointer to destination of message digest. The length depends on MAC type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1282fb1437c8ce2a19f2f6f212de2c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1282fb1437c8ce2a19f2f6f212de2c17">&#9670;&nbsp;</a></span>hmacVerify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacVerify) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *p_wrapped_key, uint8_t const *const p_message, uint32_t const message_length, uint8_t const *const p_mac, uint32_t const mac_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verifies HMAC.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of HMAC key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Pointer to message. The length is message_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message_length</td><td>Byte length of message (0 or more bytes). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_mac</td><td>Pointer to MAC. The length depends on mac_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mac_length</td><td>Byte length of MAC. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0b1ea5b6ff96ac6218ac147dd9178ab1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b1ea5b6ff96ac6218ac147dd9178ab1">&#9670;&nbsp;</a></span>hmacInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacInit) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepares a HMAC generation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of HMAC key. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8c16e62f1d6fd5bf2852cb3b5672e76b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c16e62f1d6fd5bf2852cb3b5672e76b">&#9670;&nbsp;</a></span>hmacUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Pointer to message. The length is message_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message_length</td><td>Byte length of message (0 or more bytes). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a64c7c949eb1a0aeafb1b279854598ae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64c7c949eb1a0aeafb1b279854598ae0">&#9670;&nbsp;</a></span>hmacSignFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacSignFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_mac)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes a HMAC generation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_mac</td><td>Pointer to destination of message digest. The length depends on MAC type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af1277faa83003b764b187abb05cadc8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1277faa83003b764b187abb05cadc8b">&#9670;&nbsp;</a></span>hmacVerifyFinish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacVerifyFinish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_mac, uint32_t const mac_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes a HMAC verification.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_mac</td><td>Pointer to MAC. The length depends on mac_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mac_length</td><td>Byte length of MAC. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af4f58de5f366f79fb57060821b7b8fa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4f58de5f366f79fb57060821b7b8fa9">&#9670;&nbsp;</a></span>hmacSuspend</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacSuspend) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a> *const p_handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Suspend HMAC generation. This API allows you to suspend processing, for example, if you are in the middle of computing HMAC for successive chunks of the message and need to perform another process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Pointer to destination of HMAC control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a206b031964651bc1a9805ba1a9e67c1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a206b031964651bc1a9805ba1a9e67c1b">&#9670;&nbsp;</a></span>hmacResume</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::hmacResume) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a> const *const p_handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resume HMAC generation. This API allows you to resume a process that has been suspended by <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafaed3bf40a39f370ec3ad676de4891f5">R_RSIP_HMAC_Suspend()</a> API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to HMAC control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structrsip__instance__t" id="structrsip__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__instance__t">&#9670;&nbsp;</a></span>rsip_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0772a2ddeb2ed02d4c36edd86326272f"></a><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0bbc177db121e1b6f42b48a9be1ad739"></a><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__cfg__t">rsip_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae55e5e8127e37efa1f48519378bdcd66"></a><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__api__t">rsip_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga2042507aed5dec71014a96b91aeaa4fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2042507aed5dec71014a96b91aeaa4fa">&#9670;&nbsp;</a></span>rsip_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RSIP Control block. Allocate an instance specific control block to pass into the API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#structrsip__instance__ctrl__t">rsip_instance_ctrl_t</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaa1c75f60faec758866bff9dabed054f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa1c75f60faec758866bff9dabed054f3">&#9670;&nbsp;</a></span>rsip_alg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaa1c75f60faec758866bff9dabed054f3">rsip_alg_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Key algorithms </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3a7d0fec2e4305703bb99a520d975d8b6d"></a>RSIP_ALG_INVALID&#160;</td><td class="fielddoc"><p>Invalid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3aec52e956d5406a271368032da3424b6f"></a>RSIP_ALG_AES&#160;</td><td class="fielddoc"><p>AES. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3ae8eb1068791368c3f754f435d44bdee6"></a>RSIP_ALG_XTS_AES&#160;</td><td class="fielddoc"><p>XTS-AES. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3a420572ae635dba14546346872062149a"></a>RSIP_ALG_CHACHA&#160;</td><td class="fielddoc"><p>ChaCha. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3a92b631f07dde4b9bc76887d404fcb1aa"></a>RSIP_ALG_ECC_PUBLIC&#160;</td><td class="fielddoc"><p>ECC public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3a4861a6872b9afd6ab8570d107145de8b"></a>RSIP_ALG_ECC_PRIVATE&#160;</td><td class="fielddoc"><p>ECC private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3aaddaa84b0355ee4ebb2b86dc777ca500"></a>RSIP_ALG_RSA_PUBLIC&#160;</td><td class="fielddoc"><p>RSA public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3a67658524d2a861a4047299762e19b4fd"></a>RSIP_ALG_RSA_PRIVATE&#160;</td><td class="fielddoc"><p>RSA private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1c75f60faec758866bff9dabed054f3a4eff180225b408a8d1afeb1abd14d1f4"></a>RSIP_ALG_HMAC&#160;</td><td class="fielddoc"><p>HMAC. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaef109dcf619aaccf8144f0953b4ea254"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaef109dcf619aaccf8144f0953b4ea254">&#9670;&nbsp;</a></span>rsip_key_subtype_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaef109dcf619aaccf8144f0953b4ea254">rsip_key_subtype_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Key sub type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a3a49b209a47dc85d66617cc3956447a2"></a>RSIP_KEY_INVALID&#160;</td><td class="fielddoc"><p>Invalid key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a065a97837577efc7b1433c0d3c07d337"></a>RSIP_KEY_AES_128&#160;</td><td class="fielddoc"><p>AES-128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a6f7f432daca2be41d850696eabb676ee"></a>RSIP_KEY_AES_192&#160;</td><td class="fielddoc"><p>AES-192. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254ae297d4a7d78dec57dfa89a636a4fe031"></a>RSIP_KEY_AES_256&#160;</td><td class="fielddoc"><p>AES-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a9ab19ddeaaa237333f5358157e8068df"></a>RSIP_KEY_CHACHA_CHACHA20&#160;</td><td class="fielddoc"><p>ChaCha20. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a46c2125a57e085262e17452457c7955c"></a>RSIP_KEY_ECC_SECP256R1&#160;</td><td class="fielddoc"><p>secp256r1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a867810133f3c6bd886ee0e95d275a6b0"></a>RSIP_KEY_ECC_SECP384R1&#160;</td><td class="fielddoc"><p>secp384r1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a7a99c821d4138131da3a097763939fe0"></a>RSIP_KEY_ECC_SECP521R1&#160;</td><td class="fielddoc"><p>secp521r1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a9abef3ca1e8c196a065dad421e128165"></a>RSIP_KEY_ECC_SECP256K1&#160;</td><td class="fielddoc"><p>secp256k1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a98255432bc9605b7a15d5d7bb71bb599"></a>RSIP_KEY_ECC_BRAINPOOLP256R1&#160;</td><td class="fielddoc"><p>brainpoolP256r1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a143e5f201c2c7a56edb91dc0031258a6"></a>RSIP_KEY_ECC_BRAINPOOLP384R1&#160;</td><td class="fielddoc"><p>brainpoolP384r1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254aea3d50b330adabfeeb87c33b520eed33"></a>RSIP_KEY_ECC_BRAINPOOLP512R1&#160;</td><td class="fielddoc"><p>brainpoolP512r1 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254ad56eb264e4f2d67b3a7d8fd35523f8e7"></a>RSIP_KEY_ECC_EDWARDS25519&#160;</td><td class="fielddoc"><p>edwards25519 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254af34ae3615102075becdf89e7886853d9"></a>RSIP_KEY_RSA_1024&#160;</td><td class="fielddoc"><p>RSA-1024. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a08fc9f106f07ea0f4791b8d5e5fc2512"></a>RSIP_KEY_RSA_2048&#160;</td><td class="fielddoc"><p>RSA-2048. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a091997d7cb593d7bb6c14775212401df"></a>RSIP_KEY_RSA_3072&#160;</td><td class="fielddoc"><p>RSA-3072. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a31d027724951f1ec13753418e4828943"></a>RSIP_KEY_RSA_4096&#160;</td><td class="fielddoc"><p>RSA-4096. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254ac4616f5998b5dca0c957f94867a36e22"></a>RSIP_KEY_HMAC_SHA1&#160;</td><td class="fielddoc"><p>HMAC-SHA1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254a3c80e92133dc9f4d7e8249b76566c51d"></a>RSIP_KEY_HMAC_SHA224&#160;</td><td class="fielddoc"><p>HMAC-SHA224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef109dcf619aaccf8144f0953b4ea254aeeec4c62ccba49270873d98a9d19e0ec"></a>RSIP_KEY_HMAC_SHA256&#160;</td><td class="fielddoc"><p>HMAC-SHA256. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga123baeaebf3b0eb3092b446a3aeed533"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga123baeaebf3b0eb3092b446a3aeed533">&#9670;&nbsp;</a></span>rsip_key_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum rsip_key_type_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Key types </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ae95be99956cace7717544ddea792d0e9"></a>RSIP_KEY_TYPE_INVALID&#160;</td><td class="fielddoc"><p>Invalid key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a86a9d2eba8d8e913beb35a9ef77719ea"></a>RSIP_KEY_TYPE_AES_128&#160;</td><td class="fielddoc"><p>AES-128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a4ab5501d903f9462759dec22750c521e"></a>RSIP_KEY_TYPE_AES_192&#160;</td><td class="fielddoc"><p>AES-192. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ac73d8d9299a235cdd03315cc8d4cf10c"></a>RSIP_KEY_TYPE_AES_256&#160;</td><td class="fielddoc"><p>AES-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a42373d227654ba94eaf9bd837915e282"></a>RSIP_KEY_TYPE_RSA_2048_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-2048 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a5c3eee3902dcd6f2161a40c2b9ff081b"></a>RSIP_KEY_TYPE_RSA_2048_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-2048 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a3fb4b7a6660681c87ef8416bc8ef116d"></a>RSIP_KEY_TYPE_RSA_3072_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-2048 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a19f0822cd6c1399de2bc15e8a46913fe"></a>RSIP_KEY_TYPE_RSA_3072_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-2048 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a52e55e5000f62bf6258d188c2c86983d"></a>RSIP_KEY_TYPE_RSA_4096_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-2048 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a58dc7de7d13a8f3b4fa46aac0f637181"></a>RSIP_KEY_TYPE_RSA_4096_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-2048 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a48e3440c58cc26b43b80e4e5470e3d7c"></a>RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp256r1 public key (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aa2ac1e64ebfecb3c833d3e65cebe2356"></a>RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp256r1 private key (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a107be1be1d58a60280fabd53ce7346e0"></a>RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp384r1 public key (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a128974b2708ca0c26fdab1b711760c7c"></a>RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp384r1 private key (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a0dab958d7e42944db5ae9d3cc6dbb171"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpool256r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aa1283a39ddf31e2151a858b9adbe33ba"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpool256r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533adc74be12d6057717fa42f6aaca9a928a"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpool256r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a450d667fbef7c24a4cb217b8532d62c5"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpool256r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a6996bc07c13b7000227ac9a8c9184ab7"></a>RSIP_KEY_TYPE_ECC_SECP256K1_PUBLIC&#160;</td><td class="fielddoc"><p>secp256k1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aaafe6f7272586c45d06037755a4e1fdb"></a>RSIP_KEY_TYPE_ECC_SECP256K1_PRIVATE&#160;</td><td class="fielddoc"><p>secp256k1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ae95be99956cace7717544ddea792d0e9"></a>RSIP_KEY_TYPE_INVALID&#160;</td><td class="fielddoc"><p>Invalid key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a86a9d2eba8d8e913beb35a9ef77719ea"></a>RSIP_KEY_TYPE_AES_128&#160;</td><td class="fielddoc"><p>AES-128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a4ab5501d903f9462759dec22750c521e"></a>RSIP_KEY_TYPE_AES_192&#160;</td><td class="fielddoc"><p>AES-192. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ac73d8d9299a235cdd03315cc8d4cf10c"></a>RSIP_KEY_TYPE_AES_256&#160;</td><td class="fielddoc"><p>AES-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a4beb2565f4b4850148f7b01d386486fd"></a>RSIP_KEY_TYPE_XTS_AES_128&#160;</td><td class="fielddoc"><p>XTS-AES-128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a3f737c0cfc1b94bfdcee4c7e13c29039"></a>RSIP_KEY_TYPE_XTS_AES_256&#160;</td><td class="fielddoc"><p>XTS-AES-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aad3b71b72d1b813159f5a523e128f597"></a>RSIP_KEY_TYPE_CHACHA20&#160;</td><td class="fielddoc"><p>ChaCha20. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a48e3440c58cc26b43b80e4e5470e3d7c"></a>RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp256r1 public key (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a107be1be1d58a60280fabd53ce7346e0"></a>RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp384r1 public key (also known as NIST P-384) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ab85762518f245876807fd698000e1726"></a>RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp521r1 public key (also known as NIST P-521) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a6996bc07c13b7000227ac9a8c9184ab7"></a>RSIP_KEY_TYPE_ECC_SECP256K1_PUBLIC&#160;</td><td class="fielddoc"><p>secp256k1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a0dab958d7e42944db5ae9d3cc6dbb171"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpoolP256r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533adc74be12d6057717fa42f6aaca9a928a"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpoolP384r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a303f33724bf2ddbac8b8a75d28e6d23b"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpoolP512r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ae861da084419988c48b67f864922da6d"></a>RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC&#160;</td><td class="fielddoc"><p>edwards25519 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aa2ac1e64ebfecb3c833d3e65cebe2356"></a>RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp256r1 private key (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a128974b2708ca0c26fdab1b711760c7c"></a>RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp384r1 private key (also known as NIST P-384) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a92e720540b32b7ba8d024726f66477ac"></a>RSIP_KEY_TYPE_ECC_SECP521R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp521r1 private key (also known as NIST P-521) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aaafe6f7272586c45d06037755a4e1fdb"></a>RSIP_KEY_TYPE_ECC_SECP256K1_PRIVATE&#160;</td><td class="fielddoc"><p>secp256k1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aa1283a39ddf31e2151a858b9adbe33ba"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpoolP256r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a450d667fbef7c24a4cb217b8532d62c5"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpoolP384r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533af3fff2339f53b87c403c5d7e5daf2b12"></a>RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpoolP512r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533adefa46b11670b22c52ea466d57b20ad8"></a>RSIP_KEY_TYPE_ECC_EDWARDS25519_PRIVATE&#160;</td><td class="fielddoc"><p>edwards25519 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ac6591c74e327a8653791953332c57c59"></a>RSIP_KEY_TYPE_RSA_1024_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-1024 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a42373d227654ba94eaf9bd837915e282"></a>RSIP_KEY_TYPE_RSA_2048_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-2048 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a3fb4b7a6660681c87ef8416bc8ef116d"></a>RSIP_KEY_TYPE_RSA_3072_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-3072 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a52e55e5000f62bf6258d188c2c86983d"></a>RSIP_KEY_TYPE_RSA_4096_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-4096 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533adaf297b4383dd32f9f0ee1922032cdfc"></a>RSIP_KEY_TYPE_RSA_1024_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-1024 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a5c3eee3902dcd6f2161a40c2b9ff081b"></a>RSIP_KEY_TYPE_RSA_2048_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-2048 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a19f0822cd6c1399de2bc15e8a46913fe"></a>RSIP_KEY_TYPE_RSA_3072_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-3072 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a58dc7de7d13a8f3b4fa46aac0f637181"></a>RSIP_KEY_TYPE_RSA_4096_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-4096 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a34ac6f0f7727f34302ebe5f433e8679a"></a>RSIP_KEY_TYPE_HMAC_SHA1&#160;</td><td class="fielddoc"><p>HMAC-SHA1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533aa0ea2d8e02d46a57d4529a6a823af475"></a>RSIP_KEY_TYPE_HMAC_SHA224&#160;</td><td class="fielddoc"><p>HMAC-SHA224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795"></a>RSIP_KEY_TYPE_HMAC_SHA256&#160;</td><td class="fielddoc"><p>HMAC-SHA256. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga4ed61c073c7b98245fd8e1c21410b083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4ed61c073c7b98245fd8e1c21410b083">&#9670;&nbsp;</a></span>rsip_key_pair_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga4ed61c073c7b98245fd8e1c21410b083">rsip_key_pair_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Key pair types </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083ac5500d97824a55149bc601d071204952"></a>RSIP_KEY_PAIR_TYPE_INVALID&#160;</td><td class="fielddoc"><p>Invalid key pair type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a3509c1b5ab13e53a4cf354b2b1650118"></a>RSIP_KEY_PAIR_TYPE_ECC_SECP256R1&#160;</td><td class="fielddoc"><p>secp256r1 key pair (also known as NIST P-256, prime256v1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a800470bf58821170f4d1ca0a1e69fc4a"></a>RSIP_KEY_PAIR_TYPE_ECC_SECP384R1&#160;</td><td class="fielddoc"><p>secp384r1 key pair (also known as NIST P-384) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083aef00b44e30c4afcccb8c5515295e9d2e"></a>RSIP_KEY_PAIR_TYPE_ECC_SECP521R1&#160;</td><td class="fielddoc"><p>secp521r1 key pair (also known as NIST P-521) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a670e9faa3c490ebaadad9499f05ea582"></a>RSIP_KEY_PAIR_TYPE_ECC_SECP256K1&#160;</td><td class="fielddoc"><p>secp256k1 key pair </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083af618da4a0cf7b6870423dd88c144c04e"></a>RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP256R1&#160;</td><td class="fielddoc"><p>brainpoolP256r1 key pair </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083abce4cdc2b3b2a481fda13a0c71ac3e23"></a>RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP384R1&#160;</td><td class="fielddoc"><p>brainpoolP384r1 key pair </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083afa2184274ee180495305104cb5a7a0ab"></a>RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP512R1&#160;</td><td class="fielddoc"><p>brainpoolP512r1 key pair </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a5c4ae81ffaf879f40263225b8de54bae"></a>RSIP_KEY_PAIR_TYPE_ECC_EDWARDS25519&#160;</td><td class="fielddoc"><p>edwards25519 key pair </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a72612c53f93986bcb9cb92831ce1afd6"></a>RSIP_KEY_PAIR_TYPE_RSA_1024&#160;</td><td class="fielddoc"><p>RSA-1024 key pair. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083aa0cd2ab30ec0148ad600f992ce927aa3"></a>RSIP_KEY_PAIR_TYPE_RSA_2048&#160;</td><td class="fielddoc"><p>RSA-2048 key pair. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a4dcc7fec49147dce7515509226eedf6a"></a>RSIP_KEY_PAIR_TYPE_RSA_3072&#160;</td><td class="fielddoc"><p>RSA-3072 key pair. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4ed61c073c7b98245fd8e1c21410b083a579b04ccf5fa9a785775229ea6860273"></a>RSIP_KEY_PAIR_TYPE_RSA_4096&#160;</td><td class="fielddoc"><p>RSA-4096 key pair. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga385f2388cc3e87db6a1f385351b47235"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga385f2388cc3e87db6a1f385351b47235">&#9670;&nbsp;</a></span>rsip_byte_size_wrapped_key_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga385f2388cc3e87db6a1f385351b47235">rsip_byte_size_wrapped_key_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Byte size of wrapped key </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a5c087988d5082ae00e9703d1980a1f7f"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128&#160;</td><td class="fielddoc"><p>AES-128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ab0ea6ef1677b9abe7dd93f450ce32822"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_AES_192&#160;</td><td class="fielddoc"><p>AES-192. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235acc7cfcba1a5e5944e566276062d4ff54"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256&#160;</td><td class="fielddoc"><p>AES-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ace977f584f6dc8d0e207d3196d08319d"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_XTS_AES_128&#160;</td><td class="fielddoc"><p>XTS-AES-128. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235abc8c8c7570ee8e6d5f18105dcb00d8d1"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_XTS_AES_256&#160;</td><td class="fielddoc"><p>XTS-AES-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ac452e3e78ca6a66d2bbad44b88c6b2cb"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp256r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a5762ba71ff3a0e8c9e660e4912c80d4e"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP384R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp384r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235adb40e2d7c476409cae22649226961eb4"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP521R1_PUBLIC&#160;</td><td class="fielddoc"><p>secp521r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a13a9ba529add83dc841bf0b8d7a9e48b"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256K1_PUBLIC&#160;</td><td class="fielddoc"><p>secp256k1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a18ef67c162ed62273cc9326622ad2164"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP256R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpoolP256r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ae6a45d853b815bd62374973b14806b8c"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP384R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpoolP384r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a3fea03ff50209f0232b0284f5ad63cae"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP512R1_PUBLIC&#160;</td><td class="fielddoc"><p>brainpoolP512r1 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235af4e4639c84ec411fae8f17a610ad2055"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_EDWARDS25519_PUBLIC&#160;</td><td class="fielddoc"><p>edwards25519 public key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ae40b3553b653c9ceaa574cc81a2c5719"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp256r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a23abea61cdc073ac1e5cd9b81d108c0c"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP384R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp384r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a2a8b443c84a6d91a367f2f816bb91a95"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP521R1_PRIVATE&#160;</td><td class="fielddoc"><p>secp521r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a70c229a7c4728f5009e58ea228a22400"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256K1_PRIVATE&#160;</td><td class="fielddoc"><p>secp256k1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ac9ba8fb69cc3317264e05cde0249f06f"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP256R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpoolP256r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a7e94a859cbf7b95ce9ec73f3671f6cdd"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP384R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpoolP384r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235aca5070004b9f6a3ae0ba80561fe174d5"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP512R1_PRIVATE&#160;</td><td class="fielddoc"><p>brainpoolP512r1 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a64222da858a93b9cc1c63d0683756844"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_EDWARDS25519_PRIVATE&#160;</td><td class="fielddoc"><p>edwards25519 private key </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a26b4f71721119955a09c0047cd0ffcd9"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_1024_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-1024 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ad099a7dfd6a0563b3cb22778395075b4"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_2048_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-2048 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235acd089ec2a35f7c4086853b3e515272b7"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_3072_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-3072 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a386fcc985ae05b83322cb3944c1fb744"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PUBLIC&#160;</td><td class="fielddoc"><p>RSA-4096 public key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a5966f5696fc014554b3c04858f597960"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_1024_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-1024 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a1ba4097e9e7f15e1f2ad11e22c1bfe36"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_2048_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-2048 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235aaf8df7e54cd8052e03114852da2ffa31"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_3072_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-3072 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a5e882c6dc51ad72779ad19e9eb684330"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE&#160;</td><td class="fielddoc"><p>RSA-4096 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235aa0061976fb107bc4a118ff6d79ca8c29"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA1&#160;</td><td class="fielddoc"><p>HMAC-SHA1 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a1fae3fdbe5e142cee2b83fd2ee78c3fc"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA224&#160;</td><td class="fielddoc"><p>HMAC-SHA224 private key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ad302f44eb6bb360373f2c52ce0172993"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA256&#160;</td><td class="fielddoc"><p>HMAC-SHA256 private key. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7c66b456dbaadee4c68a3afe29f52fc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c66b456dbaadee4c68a3afe29f52fc9">&#9670;&nbsp;</a></span>rsip_aes_cipher_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga7c66b456dbaadee4c68a3afe29f52fc9">rsip_aes_cipher_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Block cipher modes of operation for AES </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9a4655147cc61a0a32a9aa8693ad18128b"></a>RSIP_AES_CIPHER_MODE_ECB_ENC&#160;</td><td class="fielddoc"><p>Electronic Codebook (ECB) encryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9a3d5b122b6aa8dd7520de5e10e9624abb"></a>RSIP_AES_CIPHER_MODE_ECB_DEC&#160;</td><td class="fielddoc"><p>Electronic Codebook (ECB) decryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9a356b777231c0c4441ae6c19023f55936"></a>RSIP_AES_CIPHER_MODE_CBC_ENC&#160;</td><td class="fielddoc"><p>Cipher Block Chaining (CBC) mode encryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9a01d10224aee2c030ef37eeaee23f1d38"></a>RSIP_AES_CIPHER_MODE_CBC_DEC&#160;</td><td class="fielddoc"><p>Cipher Block Chaining (CBC) mode decryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9ac0134f0da2a88744fae6c5f06b2a26fb"></a>RSIP_AES_CIPHER_MODE_CTR&#160;</td><td class="fielddoc"><p>Counter (CTR) encryption and decryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9a9df951e82bc8e5574a9f30b29ab1100a"></a>RSIP_AES_CIPHER_MODE_XTS_ENC&#160;</td><td class="fielddoc"><p>XEX-based tweaked-codebook mode with ciphertext stealing (XTS) encryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7c66b456dbaadee4c68a3afe29f52fc9a66f7070c99b3243380254ddf0de5baa6"></a>RSIP_AES_CIPHER_MODE_XTS_DEC&#160;</td><td class="fielddoc"><p>XEX-based tweaked-codebook mode with ciphertext stealing (XTS) decryption. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga245b0a15ea6b2cca7b56224fda3e7522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga245b0a15ea6b2cca7b56224fda3e7522">&#9670;&nbsp;</a></span>rsip_aes_aead_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga245b0a15ea6b2cca7b56224fda3e7522">rsip_aes_aead_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AEAD modes of operation for AES </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga245b0a15ea6b2cca7b56224fda3e7522a1bab5a424536f86e1018a8a7850763e7"></a>RSIP_AES_AEAD_MODE_GCM_ENC&#160;</td><td class="fielddoc"><p>Galois/Counter Mode (GCM) encryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga245b0a15ea6b2cca7b56224fda3e7522acfd3da023dadee53250613781a84cdb7"></a>RSIP_AES_AEAD_MODE_GCM_DEC&#160;</td><td class="fielddoc"><p>Galois/Counter Mode (GCM) decryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga245b0a15ea6b2cca7b56224fda3e7522ad98f5576a60c4c5670989ec6ccbb9a6a"></a>RSIP_AES_AEAD_MODE_CCM_ENC&#160;</td><td class="fielddoc"><p>Counter with CBC-MAC (CCM) encryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga245b0a15ea6b2cca7b56224fda3e7522a469cae63939ce2dae196af69502fd1b7"></a>RSIP_AES_AEAD_MODE_CCM_DEC&#160;</td><td class="fielddoc"><p>Counter with CBC-MAC (CCM) decryption. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gadccd218cdf9941b64b6b13b949a2985c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadccd218cdf9941b64b6b13b949a2985c">&#9670;&nbsp;</a></span>rsip_aes_mac_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadccd218cdf9941b64b6b13b949a2985c">rsip_aes_mac_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MAC modes of operation for AES </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadccd218cdf9941b64b6b13b949a2985cae82c4ed8936f022e9bd689f557a6e240"></a>RSIP_AES_MAC_MODE_CMAC&#160;</td><td class="fielddoc"><p>Cipher-based MAC (CMAC) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga3820283ceb2beb99656e71bbb3ba4f89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3820283ceb2beb99656e71bbb3ba4f89">&#9670;&nbsp;</a></span>rsip_hash_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Hash type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a1e606044965bcf60e62d360773020b45"></a>RSIP_HASH_TYPE_SHA1&#160;</td><td class="fielddoc"><p>SHA-1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89af64c98e1df3a92f08a6e68b20216b2d2"></a>RSIP_HASH_TYPE_SHA224&#160;</td><td class="fielddoc"><p>SHA-224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89aa9b386d1b29869e511efd8d28f95cf06"></a>RSIP_HASH_TYPE_SHA256&#160;</td><td class="fielddoc"><p>SHA-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a5d99501259f33a56446b2e924bce8dff"></a>RSIP_HASH_TYPE_SHA384&#160;</td><td class="fielddoc"><p>SHA-384. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89aa3336966c98485838aef21db86b4c9c4"></a>RSIP_HASH_TYPE_SHA512&#160;</td><td class="fielddoc"><p>SHA-512. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a42459c435a6732056efc9b0026efb69e"></a>RSIP_HASH_TYPE_SHA512_224&#160;</td><td class="fielddoc"><p>SHA-512/224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a42c1bdd5072314a38acd3f128577c1b5"></a>RSIP_HASH_TYPE_SHA512_256&#160;</td><td class="fielddoc"><p>SHA-512/256. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaed858ab9713b13797a5e7e50589fbf52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaed858ab9713b13797a5e7e50589fbf52">&#9670;&nbsp;</a></span>rsip_mgf_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52">rsip_mgf_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MGF type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52a467853f1da9a4d991cfa8a5dcd0bac8c"></a>RSIP_MGF_TYPE_MGF1_SHA1&#160;</td><td class="fielddoc"><p>MGF1 with SHA-1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52a3be5880de8b95f51bc3316dab173f26b"></a>RSIP_MGF_TYPE_MGF1_SHA224&#160;</td><td class="fielddoc"><p>MGF1 with SHA-224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52a706f017dd80223a4b21e3344a81b8188"></a>RSIP_MGF_TYPE_MGF1_SHA256&#160;</td><td class="fielddoc"><p>MGF1 with SHA-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52ab4928d0237db4c9107c99a07d2d45b55"></a>RSIP_MGF_TYPE_MGF1_SHA384&#160;</td><td class="fielddoc"><p>MGF1 with SHA-384. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52a85c5a243de79d7dc9937946c18b53d18"></a>RSIP_MGF_TYPE_MGF1_SHA512&#160;</td><td class="fielddoc"><p>MGF1 with SHA-512. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52a686e5d6dda2e85fbb1a5b6947242be0c"></a>RSIP_MGF_TYPE_MGF1_SHA512_224&#160;</td><td class="fielddoc"><p>MGF1 with SHA-512/224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaed858ab9713b13797a5e7e50589fbf52a97d5cd9aa8b6fa9ce232aea21b79de8f"></a>RSIP_MGF_TYPE_MGF1_SHA512_256&#160;</td><td class="fielddoc"><p>MGF1 with SHA-512/256. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga25b0d42a8c06f2010d6f6561e1bc3ad6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga25b0d42a8c06f2010d6f6561e1bc3ad6">&#9670;&nbsp;</a></span>rsip_rsa_salt_length_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga25b0d42a8c06f2010d6f6561e1bc3ad6">rsip_rsa_salt_length_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RSA salt length </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga25b0d42a8c06f2010d6f6561e1bc3ad6af85df0509e6d214fa15a0aaccd9e9745"></a>RSIP_RSA_SALT_LENGTH_AUTO&#160;</td><td class="fielddoc"><p>When signing, the salt length is set to <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga25b0d42a8c06f2010d6f6561e1bc3ad6a1d0231bd3583845e6a715b08240cb026">RSIP_RSA_SALT_LENGTH_MAX</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga25b0d42a8c06f2010d6f6561e1bc3ad6a1e6b9e390c9c1025fadc7e87424f87f2">RSIP_RSA_SALT_LENGTH_HASH</a>, whichever is shorter. When verifying, the salt length is detected automatically. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga25b0d42a8c06f2010d6f6561e1bc3ad6a1e6b9e390c9c1025fadc7e87424f87f2"></a>RSIP_RSA_SALT_LENGTH_HASH&#160;</td><td class="fielddoc"><p>The salt length is set to the hash length. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga25b0d42a8c06f2010d6f6561e1bc3ad6a1d0231bd3583845e6a715b08240cb026"></a>RSIP_RSA_SALT_LENGTH_MAX&#160;</td><td class="fielddoc"><p>The salt length is set to emLen - hLen - 2, where emLen is the same as the key length and hLen is the hash length. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,1337 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Independent Channel, 16-bit and 8-bit timer (r_tau)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___t_a_u.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Independent Channel, 16-bit and 8-bit timer (r_tau)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_i_m_e_r_s___m_o_d_u_l_e_s.html">Timers</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaae22c65a593824641232724043864c54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gaae22c65a593824641232724043864c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9931b6307c227c084427f3148d4e189c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga9931b6307c227c084427f3148d4e189c">R_TAU_Stop</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga9931b6307c227c084427f3148d4e189c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga577308fcc5c6a9e2068152e92536166d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga577308fcc5c6a9e2068152e92536166d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34950d8d6218348eaee3532ab02cfd18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga34950d8d6218348eaee3532ab02cfd18">R_TAU_Reset</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga34950d8d6218348eaee3532ab02cfd18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8ac6f320ddcf243f76ac3ac94739e0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gad8ac6f320ddcf243f76ac3ac94739e0b">R_TAU_Enable</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gad8ac6f320ddcf243f76ac3ac94739e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab94d332b4453d568bef27844a6f2ae6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gab94d332b4453d568bef27844a6f2ae6d">R_TAU_Disable</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gab94d332b4453d568bef27844a6f2ae6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8316d48a51dbaebd34fd4bae7f83526f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga8316d48a51dbaebd34fd4bae7f83526f">R_TAU_PeriodSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const period_counts)</td></tr>
+<tr class="separator:ga8316d48a51dbaebd34fd4bae7f83526f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd8050c7d20d5dd93a37eee6b42d9a0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gacd8050c7d20d5dd93a37eee6b42d9a0d">R_TAU_DutyCycleSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin)</td></tr>
+<tr class="separator:gacd8050c7d20d5dd93a37eee6b42d9a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ad87af7e02d049c83279e356bc958f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga0ad87af7e02d049c83279e356bc958f9">R_TAU_InfoGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const p_info)</td></tr>
+<tr class="separator:ga0ad87af7e02d049c83279e356bc958f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb5cd82ccaed5ebc7e74bbdeb1e71d78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const p_status)</td></tr>
+<tr class="separator:gafb5cd82ccaed5ebc7e74bbdeb1e71d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9326c9d701274f4a6b3cd64cf3a0e7ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga9326c9d701274f4a6b3cd64cf3a0e7ea">R_TAU_CallbackSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga9326c9d701274f4a6b3cd64cf3a0e7ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00bd9f206e4226cc150680204431ef63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga00bd9f206e4226cc150680204431ef63">R_TAU_Close</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga00bd9f206e4226cc150680204431ef63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the TAU peripheral on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
+<h1><a class="anchor" id="r-tau-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r-tau-features"></a>
+Features</h2>
+<p>The TAU module has the following features:</p><ul>
+<li>Supports Function Interval Timer, Square Wave Output, External Event Counter, Divider Function, Input Pulse Interval Measurement, Delay Counter, Input Signal High- or Low-Level Width Measurement.<a class="anchor" id="um_tau_register_setting_function"></a></li>
+<li>Configurable clock source and external sources input to TImn</li>
+<li>Configurable period (counts per timer cycle).</li>
+<li>Supports operation clocks: CK00, CK01, CK02, and CK03.</li>
+<li>Supports noise filter on input source.<a class="anchor" id="um_timer_input_noise_filter"></a></li>
+<li>Supports 16-bit and 8-bit timers.<a class="anchor" id="um_tau_8bit_timer_mode"></a></li>
+<li>Supports the runtime reconfiguration of the period.</li>
+<li>Signal can be output to a pin.<a class="anchor" id="um_timer_output_disable"></a></li>
+<li>Supports counting based on an external signal to TImn</li>
+<li>Supports measuring pulse width or pulse period.</li>
+<li>APIs are provided to start, stop, and reset the counter.</li>
+<li>APIs are provided to get the current period, source clock frequency, and count direction.<a class="anchor" id="um_timer_count_direction"></a></li>
+<li>APIs are provided to get the current timer status and counter value.<a class="anchor" id="um_timer_status"></a> Below table illustrates the channels and their corresponding supported features.</li>
+</ul>
+<table class="doxtable">
+<tr>
+<th>Channel </th><th>Interval Timer </th><th>Square Wave Output </th><th>External Event Counter </th><th>Divider</th><th>Input Pulse Interval Measurement </th><th>Delay Counter </th><th>Measure High-Low Level Pulse Width </th><th>8-bit timer operation </th><th>Operation clocks </th><th>Input signals </th><th>Output signals  </th></tr>
+<tr>
+<td>TAU00 </td><td>✓ </td><td>✓ </td><td>✓ </td><td>✓ </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI00, ELC </td><td>TO00 </td></tr>
+<tr>
+<td>TAU01 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td>✓ </td><td>CK00, CK01, CK02, CK03 </td><td>TI01, ELC </td><td>TO01 </td></tr>
+<tr>
+<td>TAU02 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI02 </td><td>TO02 </td></tr>
+<tr>
+<td>TAU03 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td>✓ </td><td>CK00, CK01, CK02, CK03 </td><td>TI03 </td><td>TO03 </td></tr>
+<tr>
+<td>TAU04 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI04 </td><td>TO04 </td></tr>
+<tr>
+<td>TAU05 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI05, MOCO, LOCO, FSUB </td><td>TO05 </td></tr>
+<tr>
+<td>TAU06 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI06 </td><td>TO06 </td></tr>
+<tr>
+<td>TAU07 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI07, RXD2 </td><td>TO07 </td></tr>
+</table>
+<h1><a class="anchor" id="r-tau-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_timer_multiple_channels"></a> <h2>Build Time Configurations for r_tau</h2>
+The following build time configurations are defined in fsp_cfg/r_tau_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Pin Output Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable output for either square wave or divider output </td></tr>
+<tr class="tree_none">
+<td>Pin Input Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable input for pulse width measurement, level width measurement, event counting or divider functions. </td></tr>
+</table>
+ <h2>Configurations for Timers &gt; Timer, Independent Channel, 16-bit and 8-bit Timer Operation (r_tau)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Timers &gt; Timer, Independent Channel, 16-bit and 8-bit Timer Operation (r_tau).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Channel number must be a non-negative integer</td><td>0 </td><td>Physical hardware channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Interval Timer</li>
+<li>
+Square Wave Output</li>
+<li>
+External Event Counter</li>
+<li>
+Divider</li>
+<li>
+Input Pulse Interval Measurement</li>
+<li>
+Measure Low Level Pulse Width</li>
+<li>
+Measure High Level Pulse Width</li>
+<li>
+Delay Counter</li>
+</ul>
+</td><td>Interval Timer </td><td>Function selection. Note: The calculation of the input pulse function and the high-low level pulse width measurement function is implemented using interrupts. ISR's must be enabled for these functions even if callback is unused. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bit Timer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+16-bit timer</li>
+<li>
+Higher 8-bit timer</li>
+<li>
+Lower 8-bit timer</li>
+<li>
+Higher and Lower 8-bit timer</li>
+</ul>
+</td><td>16-bit timer </td><td>Specify the 16 or 8-bit timer mode </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+CK00</li>
+<li>
+CK01</li>
+<li>
+CK02</li>
+<li>
+CK03</li>
+</ul>
+</td><td>CK00 </td><td>Specify the selection of operation clock </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period</td><td>Value must be a non-negative integer</td><td>0x10000 </td><td>Specify the timer period based on the selected units.<br />
+<br />
+When the unit is set to 'Raw Counts', setting the period to 0x10000 results in the maximum period at the lowest divisor (fastest timer tick). When Pulse width measurement or high-low level pulse width measurement is enabled, this period is always generated as zero.. The period should be set maximally 0x100 when lower 8-bit mode or higher and lower 8-bit mode is enabled. <br />
+When 'Input-&gt;Trigger Edge' is set to 'Trigger Edge Rising' or 'Trigger Edge Falling', this period can be maximally set to 0x20000 when using the divider function.<br />
+<br />
+If the requested period cannot be achieved, the settings with the largest possible period, that does not exceed the requested period, are used. The theoretical calculated period is printed in a comment in the <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Raw Counts</li>
+<li>
+Nanoseconds</li>
+<li>
+Microseconds</li>
+<li>
+Milliseconds</li>
+<li>
+Seconds</li>
+<li>
+Hertz</li>
+<li>
+Kilohertz</li>
+</ul>
+</td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period (Higher 8-bit timer)</td><td>Value must be a non-negative</td><td>0x100 </td><td>Specify the higher 8-bit timer period based on the selected unit.<br />
+<br />
+When the unit is set to 'Raw Counts', setting the period to 0x100 results in the maximum period at the lowest divisor (fastest timer tick). This setting is only applicable in interval timer function with higher 8bit mode or higher and lower 8bit mode.<br />
+<br />
+If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the <a class="el" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> structure. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit (Higher 8-bit timer)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Raw Counts</li>
+<li>
+Nanoseconds</li>
+<li>
+Microseconds</li>
+<li>
+Milliseconds</li>
+<li>
+Seconds</li>
+<li>
+Hertz</li>
+<li>
+Kilohertz</li>
+</ul>
+</td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input Source</td><td>MCU Specific Options</td><td></td><td>Input source, applies in input pulse width measurement function, high-low level pulse width measurement function, external event count function, and divider function. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Trigger Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Trigger Edge Rising</li>
+<li>
+Trigger Edge Falling</li>
+<li>
+Trigger Edge Both</li>
+</ul>
+</td><td>Trigger Edge Rising </td><td>Select the trigger edge. Applies in input pulse width measurement function, high-low level pulse width measurement function, external event count function, and divider function. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Input Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Input filter, applies in input pulse width measurement function, high-low level pulse width measurement function, external event count function, and divider function. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Initial Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Start Level High</li>
+<li>
+Start Level Low</li>
+</ul>
+</td><td>Disabled </td><td>Initial output, applies in divider function and square wave. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Setting of starting count and interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Timer interrupt is not generated when counting is started/Start trigger is invalid during counting operation.</li>
+<li>
+Timer interrupt is generated when counting is started/Start trigger is valid during counting operation.</li>
+</ul>
+</td><td>Timer interrupt is not generated when counting is started/Start trigger is invalid during counting operation. </td><td>Specify OPIRQ bit setting </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the timer period elapses. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Higher 8-bit Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer higher 8-bit interrupt priority. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-tau-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The TAU clock is based on the peripheral module clock (PCLKB) which is equal to the system clock (ICLK).</p>
+<p>Each TAU channel has certain operation clocks selections, these can be set with the <b>General&gt;Operation Clock</b> property in the module configuration. When the operation clock of a channel is set to CK00, CK00, CK01, or CK03, the TAU module provides divisor values for each of those clocks. These divisors may be set in the <b>Clocks</b> tab. As such, setting a divisor in the <b>Clocks</b> tab affects all TAU channels that use that CK0x clock as an input. Adjusting these settings determines the frequency range achievable by a TAU channel. If a desired frequency is not achievable, the divider in the <b>Clocks</b> tab may be adjusted.</p>
+<h2><a class="anchor" id="r-tau-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module should use the TOmn pins as output pins for Square Wave Output, Divider Function</p>
+<p>For input source, the input signal must be applied to External Event Counter, Divider, Input Pulse Interval Measurement, Delay Counter, and Measure High-Low Level Pulse Width Function</p>
+<h2><a class="anchor" id="r-tau-timer-period"></a>
+Timer Period</h2>
+<p>The RA Configuration editor will automatically calculate the period count value based on the selected period time, units, operation clock (set by <b>General&gt;Operation Clock</b> property in the module configuration), and clock divisor value (set in <b>Clocks</b> tab).</p>
+<p>When the selected unit is "Raw counts", the maximum and minimum allowed period setting varies depending on the selected clock source:</p>
+<table class="doxtable">
+<tr>
+<th>Clock divisor </th><th>Minimum period (counts) </th><th>Maximum period (counts)  </th></tr>
+<tr>
+<td>ICLK/1 </td><td>0x00002 </td><td>0x10000 </td></tr>
+<tr>
+<td>All other divisors </td><td>0x00001 </td><td>0x10000 </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>If ICLK (undivided) is selected as the operation clock (CK00, CK01) and TDR0n is set to 0x0000 (n = 0 to 7), interrupt requests output from timer array units cannot be used. For this reason When Clock Source is ICLK, Minimum period (counts) is 0x00002</dd></dl>
+<table class="doxtable">
+<tr>
+<th>Clock divisor </th><th>Minimum Higher 8-bit period (counts) </th><th>Maximum Higher 8-bit period (counts)  </th></tr>
+<tr>
+<td>All divisors </td><td>0x001 </td><td>0x100 </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>Though the TAU is a 16-bit timer, because the period interrupt occurs when the counter underflow, setting the period register to 0 results in an effective period of 1 count. For this reason all user-provided raw count values reflect the actual number of period counts (not the raw register values).</dd></dl>
+<h1><a class="anchor" id="r-TAU-usage_notes"></a>
+Usage Notes</h1>
+<h2>Interval Timer Function</h2>
+<p><a class="anchor" id="um_tau_interval_timer"></a> This function can be used as a reference timer to generate TAU0_TMI0n (timer interrupt) at fixed intervals. The interrupt generation period can be calculated by the following expression.</p>
+<ul>
+<li>Generation period of TAU0_TMI0n (timer interrupt) = Period of count clock × (Set value of TDR0n + 1)</li>
+</ul>
+<p>The Interval Timer Function can operate as the higher/lower 8-bits mode.</p>
+<p><a class="anchor" id="um_tau_interrupt_counting_start"></a>When "Interrupts &gt; Setting of starting count and interrupt" is "Timer interrupt is generated when counting is started/Start trigger is valid during counting operation.", an interrupt is generated immediately after <a class="el" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start()</a> function is called and timer output also changed.</p>
+<h2>Square Wave Output Function</h2>
+<p><a class="anchor" id="um_tau_squarewave_output"></a> This function can use TO0n to perform a toggle operation as soon as TAU0_TMI0n has been generated, and outputs a square wave with a duty factor of 50%.</p>
+<p>The period and frequency for outputting a square wave from TO0n can be calculated by the following expressions.</p><ul>
+<li>Period of square wave output from TO0n = Period of count clock × (Set value of TDR0n + 1) × 2</li>
+<li>Frequency of square wave output from TO0n = Frequency of count clock / {(Set value of TDR0n + 1) × 2}</li>
+</ul>
+<p>The Square Wave Output Function can operate as the lower 8-bits mode.</p>
+<p>When "Interrupts &gt; Setting of starting count and interrupt" is "Timer interrupt is generated when counting is started/Start trigger is valid during counting operation.", an interrupt is generated immediately after <a class="el" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start()</a> function is called and output pin is also changed.</p>
+<h2>External Event Counter Function</h2>
+<p><a class="anchor" id="um_tau_external_event_count"></a> The timer array unit can be used as an external event counter that counts the number of times the valid input edge (external event) is detected in the TI0n pin. When a specified count value is reached, the event counter generates an interrupt. The specified number of counts can be calculated by the following expression.</p><ul>
+<li>Specified number of counts = Set value of TDR0n + 1</li>
+</ul>
+<p><a class="anchor" id="um_tau_input_moco_loco_fsub"></a>Instead of using the TI0n pin input, a channel specified for the External Event Counter Function can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
+<p>The External Event Counter Function can operate as the lower 8-bits mode.</p>
+<h2>Delay Counter Function</h2>
+<p><a class="anchor" id="um_tau_delay_count"></a> It is possible to start counting down when the valid edge of the TI0n pin input is detected (an external event), and then generate TAU0_TMI0n (a timer interrupt) after any specified interval. The interrupt generation period can be calculated by the following expression. Generation period of TAU0_TMI0n (timer interrupt) = Period of count clock × (Set value of TDR0n + 1)</p>
+<p>Instead of using the TI0n pin input, a channel specified for the Delay Counter Function can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
+<p>The Delay Counter Function can operate as the lower 8-bits mode.</p>
+<p>When "Interrupts &gt; Setting of starting count and interrupt" is "Timer interrupt is generated when counting is started/Start trigger is valid during counting operation.", a start trigger is valid during counting operation.</p>
+<h2>Divider Function</h2>
+<p><a class="anchor" id="um_tau_divider_function"></a> The timer array unit can be used as a frequency divider that divides a clock input to the TI00 pin and outputs the result from the TO00 pin. The divided clock frequency output from TO00 can be calculated by the following expression. When rising edge/falling edge is selected:</p><ul>
+<li>Divided clock frequency = Input clock frequency / {(Set value of TDR00 + 1) × 2} When both edges are selected:</li>
+<li>Divided clock frequency ≈ Input clock frequency / (Set value of TDR00 + 1)</li>
+</ul>
+<p>When "Interrupts &gt; Setting of starting count and interrupt" is "Timer interrupt is generated when counting is started/Start trigger is valid during counting operation.", an interrupt is generated immediately after first input signal is detected and output pin is also changed.</p>
+<h2>Input Pulse Interval Measurement Function</h2>
+<p><a class="anchor" id="um_tau_inputpulse"></a> The count value can be captured at the TI0n valid edge and the interval of the pulse input to TI0n can be measured. The pulse interval can be calculated by the following expression.</p><ul>
+<li>TI0n input pulse interval = Period of count clock × ((0x10000 × TSR0n.OVF) + (Captured value of TDR0n + 1))</li>
+</ul>
+<p>Instead of using the TI0n pin input, a channel specified for the Input Pulse Interval Measurement can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", "Input signal of the RXD2 pin", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
+<h2>High-Low Level Pulse Width Measurement</h2>
+<p><a class="anchor" id="um_tau_highlow_measurement"></a> By starting counting at one edge of the TI0n pin input and capturing the number of counts at another edge, the signal width (high-level width or low-level width) of TI0n can be measured. The signal width of TI0n can be calculated by the following expression.</p><ul>
+<li>Signal width of TI0n input = Period of count clock × ((0x10000 × TSR0n.OVF) + (Captured value of TDR0n + 1))</li>
+</ul>
+<p>Instead of using the TI0n pin input, a channel specified for the High-Low Level Pulse Width Function can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", "Input signal of the RXD2 pin", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
+<h2>Triggering ELC Events with TAU</h2>
+<p><a class="anchor" id="um_tau_event_count_elc"></a>The TAU timer can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals.</p>
+<h2>Limitations</h2>
+<ul>
+<li>When using High-Low Level Pulse Width Measurement function, the counter can not be reset by invoking <a class="el" href="group___t_a_u.html#ga34950d8d6218348eaee3532ab02cfd18">R_TAU_Reset()</a>.</li>
+</ul>
+<h1><a class="anchor" id="r-tau-examples"></a>
+Examples</h1>
+<h2>TAU Basic Example</h2>
+<p>This is a basic example of minimal use of the TAU in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> tau_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU Callback Example</h2>
+<p>This is an example of a timer callback.</p>
+<p><a class="anchor" id="um_timer_user_notification_of_events"></a> </p><div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when timer expires. */</span></div><div class="line">uint32_t g_counter_underflow = 0U;</div><div class="line"><span class="keywordtype">void</span> timer_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called periodically here. */</span></div><div class="line">        g_counter_underflow++;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba5b13dcc7e2938312a7d59a5b1256097f">TIMER_EVENT_HIGHER_8BIT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called periodically here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU 16-bit or 8-bit mode Example</h2>
+<p><a class="anchor" id="um_timer_reset"></a><a class="anchor" id="um_timer_start"></a><a class="anchor" id="um_timer_stop"></a><a class="anchor" id="um_timer_counter"></a> To use the TAU as 16-bit or 8-bit mode, select Bit Mode Timer.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga9931b6307c227c084427f3148d4e189c">R_TAU_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> g_timer0_higher_8bit_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u.html#ac9bd70ca723f206ae3f81b1f49806251">opirq</a>           = TAU_INTERRUPT_OPIRQ_BIT_RESET,</div><div class="line">    .tau_func        = <a class="code" href="group___t_a_u.html#gga05073acfc2aa394f61bebc9de45982e9a368eec619252fce11a95fea3749c736b">TAU_FUNCTION_INTERVAL</a>,</div><div class="line">    .bit_mode        = <a class="code" href="group___t_a_u.html#gga4d6752303364642e16032e947ae018f6a974de891d3b289e7b1903141393781e0">TAU_BIT_MODE_HIGHER_8BIT</a>,</div><div class="line">    .initial_output  = <a class="code" href="group___t_a_u.html#gga3bbfa30fc80ffea2b07ccdb791e4c50baf9c2508605887f6ad61f2f8c0c7a615d">TAU_PIN_OUTPUT_CFG_DISABLED</a>,</div><div class="line">    .input_source    = <a class="code" href="group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4a9e54e1818d665530220493ca346628ac">TAU_INPUT_SOURCE_NONE</a>,</div><div class="line">    .tau_filter      = <a class="code" href="group___t_a_u.html#ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b">TAU_INPUT_NOISE_FILTER_DISABLE</a>,</div><div class="line">    .trigger_edge    = <a class="code" href="group___t_a_u.html#ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8">TAU_TRIGGER_EDGE_RISING</a>,</div><div class="line">    .operation_clock = TAU_OPERATION_CK02,</div><div class="line"></div><div class="line">    <span class="comment">/* Actual Higher 8-bit Period: 0.0000160000 seconds */</span></div><div class="line">    <span class="comment">/* Minimum Period ~ Maximum Period: 0.00000006 ~ 0.00001600 seconds. */</span></div><div class="line">    .period_higher_8bit_counts = (uint16_t) 0x100,</div><div class="line"></div><div class="line">    .higher_8bit_cycle_end_ipl = 0,</div><div class="line">    .higher_8bit_cycle_end_irq = TAU_VECTOR_TIMER_HIGHER_8BIT_MODE,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer0_higher_8bit_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#aa98df70bd7724ce80c42c0f4c263ef59">channel</a>       = 1,</div><div class="line"></div><div class="line">    <span class="comment">/* Not used for higher 8-bit mode */</span></div><div class="line">    .period_counts = 100,</div><div class="line"></div><div class="line">    .source_div    = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5adafa4194764952e26c833bdaa26587f245">TIMER_SOURCE_DIV_2</a>,</div><div class="line">    .mode          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e">TIMER_MODE_PERIODIC</a>,</div><div class="line">    .cycle_end_ipl = <a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>,</div><div class="line">    .cycle_end_irq = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer0_higher_8bit_extend,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_higher_8bit_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_higher_8bit_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga9931b6307c227c084427f3148d4e189c">R_TAU_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU Input Capture Example</h2>
+<p><a class="anchor" id="um_timer_capture_pulse_width"></a><a class="anchor" id="um_timer_capture_pulse_period"></a><a class="anchor" id="um_timer_enable_disable"></a> This is an example of using the TAU to capture pulse width or pulse period measurements.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___t_a_u.html#structtau__instance__ctrl__t">tau_instance_ctrl_t</a> g_timer_input_capture_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> g_timer_input_capture_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u.html#ac9bd70ca723f206ae3f81b1f49806251">opirq</a>           = TAU_INTERRUPT_OPIRQ_BIT_RESET,</div><div class="line">    .tau_func        = <a class="code" href="group___t_a_u.html#gga05073acfc2aa394f61bebc9de45982e9a1955da33199b80dbf45348d8badb6335">TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT</a>,</div><div class="line">    .bit_mode        = <a class="code" href="group___t_a_u.html#gga4d6752303364642e16032e947ae018f6a4b4204a664ce4075830ce977b56ca721">TAU_BIT_MODE_16BIT</a>,</div><div class="line">    .initial_output  = <a class="code" href="group___t_a_u.html#gga3bbfa30fc80ffea2b07ccdb791e4c50ba3f4e1159d1894d6b508bc38e1c580b9b">TAU_PIN_OUTPUT_CFG_START_LEVEL_HIGH</a>,</div><div class="line">    .input_source    = <a class="code" href="group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4a9e54e1818d665530220493ca346628ac">TAU_INPUT_SOURCE_NONE</a>,</div><div class="line">    .tau_filter      = <a class="code" href="group___t_a_u.html#ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b">TAU_INPUT_NOISE_FILTER_DISABLE</a>,</div><div class="line">    .trigger_edge    = <a class="code" href="group___t_a_u.html#ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8">TAU_TRIGGER_EDGE_RISING</a>,</div><div class="line">    .operation_clock = TAU_OPERATION_CK00,</div><div class="line"></div><div class="line">    <span class="comment">/* Not used for 16-bit or lower 8-bit mode */</span></div><div class="line">    .period_higher_8bit_counts = (uint16_t) 0x100,</div><div class="line"></div><div class="line">    .higher_8bit_cycle_end_ipl = <a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>,</div><div class="line">    .higher_8bit_cycle_end_irq = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer_input_capture_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#aa98df70bd7724ce80c42c0f4c263ef59">channel</a>       = 0,</div><div class="line"></div><div class="line">    <span class="comment">/* Input signal range can be detected: 0.03125 us ~ 4.096 ms */</span></div><div class="line">    .period_counts = 0,</div><div class="line">    .source_div    = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8">TIMER_SOURCE_DIV_1</a>,</div><div class="line">    .mode          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e">TIMER_MODE_PERIODIC</a>,</div><div class="line">    .cycle_end_ipl = 2,</div><div class="line">    .cycle_end_irq = TAU_VECTOR_TIMER_16BIT_MODE,</div><div class="line">    .p_callback    = NULL,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer_input_capture_extend,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a capture occurs. */</span></div><div class="line">uint32_t g_captured_time = 0U;</div><div class="line"><span class="keywordtype">void</span> timer_capture_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebac0832c9d95bf0e885b896a87e3d93368">TIMER_EVENT_CAPTURE_EDGE</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Process capture from TAUIO. */</span></div><div class="line">        g_captured_time = p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a8abd12cdf1a993cf8054be6ba9d96a6f">capture</a>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_input_capture_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer_input_capture_ctrl, &amp;g_timer_input_capture_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable captures. Captured values arrive in the interrupt. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gad8ac6f320ddcf243f76ac3ac94739e0b">R_TAU_Enable</a>(&amp;g_timer_input_capture_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Disable captures. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gab94d332b4453d568bef27844a6f2ae6d">R_TAU_Disable</a>(&amp;g_timer_input_capture_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2>TAU Period Update Example</h2>
+<p><a class="anchor" id="um_timer_period_set"></a><a class="anchor" id="um_timer_clock_frequency"></a> This is an example of updating the period.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define TAU_EXAMPLE_MSEC_PER_SEC           (1000)</span></div><div class="line"><span class="preprocessor">#define TAU_EXAMPLE_DESIRED_PERIOD_MSEC    (20)</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to calculate a new period value at runtime. */</span></div><div class="line"><span class="keywordtype">void</span> tau_period_calculation_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get operation clock frequency</span></div><div class="line"><span class="comment">     *  - Use the R_TAU_InfoGet function (it accounts for the clock source and divider of operation clock ).</span></div><div class="line"><span class="comment">     */</span>                                </div><div class="line"></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga0ad87af7e02d049c83279e356bc958f9">R_TAU_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX / iclk_freq_hz. A cast to uint32_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) ((timer_freq_hz * TAU_EXAMPLE_DESIRED_PERIOD_MSEC) / TAU_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. This will return an error if parameter checking is enabled and the calculated</span></div><div class="line"><span class="comment">     * period is larger than UINT16_MAX. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#ga8316d48a51dbaebd34fd4bae7f83526f">R_TAU_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU Square Wave Output Function Example</h2>
+<p><a class="anchor" id="um_timer_periodic_output"></a> This is an example of configuration for Square Wave Output Function.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This example shows how configure squarewave output function. */</span></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___t_a_u.html#structtau__instance__ctrl__t">tau_instance_ctrl_t</a> g_timer_squarewave_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> g_timer_squarewave_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u.html#ac9bd70ca723f206ae3f81b1f49806251">opirq</a>           = TAU_INTERRUPT_OPIRQ_BIT_RESET,</div><div class="line">    .tau_func        = <a class="code" href="group___t_a_u.html#gga05073acfc2aa394f61bebc9de45982e9a4b91d17b084e9b38c39da5ab3b8bd3d6">TAU_FUNCTION_SQUARE_WAVE</a>,</div><div class="line">    .bit_mode        = <a class="code" href="group___t_a_u.html#gga4d6752303364642e16032e947ae018f6a4b4204a664ce4075830ce977b56ca721">TAU_BIT_MODE_16BIT</a>,</div><div class="line">    .initial_output  = <a class="code" href="group___t_a_u.html#gga3bbfa30fc80ffea2b07ccdb791e4c50ba3f4e1159d1894d6b508bc38e1c580b9b">TAU_PIN_OUTPUT_CFG_START_LEVEL_HIGH</a>,</div><div class="line">    .input_source    = <a class="code" href="group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4a9e54e1818d665530220493ca346628ac">TAU_INPUT_SOURCE_NONE</a>,</div><div class="line">    .tau_filter      = <a class="code" href="group___t_a_u.html#ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b">TAU_INPUT_NOISE_FILTER_DISABLE</a>,</div><div class="line">    .trigger_edge    = <a class="code" href="group___t_a_u.html#ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8">TAU_TRIGGER_EDGE_RISING</a>,</div><div class="line">    .operation_clock = TAU_OPERATION_CK00,</div><div class="line"></div><div class="line">    <span class="comment">/* Not used for 16-bit or lower 8-bit mode */</span></div><div class="line">    .period_higher_8bit_counts = (uint16_t) 0x100,</div><div class="line"></div><div class="line">    .higher_8bit_cycle_end_ipl = <a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>,</div><div class="line">    .higher_8bit_cycle_end_irq = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer_squarewave_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#aa98df70bd7724ce80c42c0f4c263ef59">channel</a>       = 0,</div><div class="line">    .period_counts = 100,</div><div class="line">    .source_div    = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8">TIMER_SOURCE_DIV_1</a>,</div><div class="line">    .mode          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e">TIMER_MODE_PERIODIC</a>,</div><div class="line">    .cycle_end_ipl = 2,</div><div class="line">    .cycle_end_irq = TAU_VECTOR_TIMER_16BIT_MODE,</div><div class="line">    .p_callback    = NULL,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer_squarewave_extend,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_squarewave_output_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the timers. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer_squarewave_ctrl, &amp;g_timer_squarewave_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer_squarewave_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer_squarewave_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU External Event Counter Function Example</h2>
+<p>This is an example of configuration for External Event Counter Function.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This example shows how to configure the external event counter function. */</span></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___t_a_u.html#structtau__instance__ctrl__t">tau_instance_ctrl_t</a> g_timer_external_event_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> g_timer_external_event_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u.html#ac9bd70ca723f206ae3f81b1f49806251">opirq</a>           = TAU_INTERRUPT_OPIRQ_BIT_RESET,</div><div class="line">    .tau_func        = <a class="code" href="group___t_a_u.html#gga05073acfc2aa394f61bebc9de45982e9a16eafb15b8d8eaeb049eb5d87d21910c">TAU_FUNCTION_EXTERNAL_EVENT_COUNT</a>,</div><div class="line">    .bit_mode        = <a class="code" href="group___t_a_u.html#gga4d6752303364642e16032e947ae018f6a4b4204a664ce4075830ce977b56ca721">TAU_BIT_MODE_16BIT</a>,</div><div class="line">    .initial_output  = <a class="code" href="group___t_a_u.html#gga3bbfa30fc80ffea2b07ccdb791e4c50baf9c2508605887f6ad61f2f8c0c7a615d">TAU_PIN_OUTPUT_CFG_DISABLED</a>,</div><div class="line">    .input_source    = <a class="code" href="group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4ac3c51103ffa1296f78cd9945141c2b05">TAU_INPUT_SOURCE_TI_PIN</a>,</div><div class="line">    .tau_filter      = <a class="code" href="group___t_a_u.html#ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b">TAU_INPUT_NOISE_FILTER_DISABLE</a>,</div><div class="line">    .trigger_edge    = <a class="code" href="group___t_a_u.html#ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8">TAU_TRIGGER_EDGE_RISING</a>,</div><div class="line">    .operation_clock = TAU_OPERATION_CK00,</div><div class="line"></div><div class="line">    <span class="comment">/* Not used for 16-bit or lower 8-bit mode */</span></div><div class="line">    .period_higher_8bit_counts = (uint16_t) 0x100,</div><div class="line"></div><div class="line">    .higher_8bit_cycle_end_ipl = <a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>,</div><div class="line">    .higher_8bit_cycle_end_irq = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer_external_event_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#aa98df70bd7724ce80c42c0f4c263ef59">channel</a>       = 0,</div><div class="line">    .period_counts = 10,</div><div class="line">    .source_div    = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8">TIMER_SOURCE_DIV_1</a>,</div><div class="line">    .mode          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e">TIMER_MODE_PERIODIC</a>,</div><div class="line">    .cycle_end_ipl = 2,</div><div class="line">    .cycle_end_irq = TAU_VECTOR_TIMER_16BIT_MODE,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer_external_event_extend,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_external_event_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the timers. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer_external_event_ctrl, &amp;g_timer_external_event_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable external event counter */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gad8ac6f320ddcf243f76ac3ac94739e0b">R_TAU_Enable</a>(&amp;g_timer_external_event_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer_external_event_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU Divider Function Example</h2>
+<p>This is an example of configuration for Divider Function.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This example shows how configure divider function. */</span></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___t_a_u.html#structtau__instance__ctrl__t">tau_instance_ctrl_t</a> g_timer_divider_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> g_timer_divider_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u.html#ac9bd70ca723f206ae3f81b1f49806251">opirq</a>           = TAU_INTERRUPT_OPIRQ_BIT_RESET,</div><div class="line">    .tau_func        = <a class="code" href="group___t_a_u.html#gga05073acfc2aa394f61bebc9de45982e9a69d512b9c2c164f7132fa08d49755eba">TAU_FUNCTION_DIVIDER</a>,</div><div class="line">    .bit_mode        = <a class="code" href="group___t_a_u.html#gga4d6752303364642e16032e947ae018f6a4b4204a664ce4075830ce977b56ca721">TAU_BIT_MODE_16BIT</a>,</div><div class="line">    .initial_output  = <a class="code" href="group___t_a_u.html#gga3bbfa30fc80ffea2b07ccdb791e4c50ba8218d45e8ea47bbee91074a5eb941e0f">TAU_PIN_OUTPUT_CFG_START_LEVEL_LOW</a>,</div><div class="line">    .input_source    = <a class="code" href="group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4ac3c51103ffa1296f78cd9945141c2b05">TAU_INPUT_SOURCE_TI_PIN</a>,</div><div class="line">    .tau_filter      = <a class="code" href="group___t_a_u.html#ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b">TAU_INPUT_NOISE_FILTER_DISABLE</a>,</div><div class="line">    .trigger_edge    = <a class="code" href="group___t_a_u.html#ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8">TAU_TRIGGER_EDGE_RISING</a>,</div><div class="line">    .operation_clock = TAU_OPERATION_CK00,</div><div class="line"></div><div class="line">    <span class="comment">/* Not used for 16-bit or lower 8-bit mode */</span></div><div class="line">    .period_higher_8bit_counts = (uint16_t) 0x100,</div><div class="line"></div><div class="line">    .higher_8bit_cycle_end_ipl = <a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>,</div><div class="line">    .higher_8bit_cycle_end_irq = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer_divider_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#aa98df70bd7724ce80c42c0f4c263ef59">channel</a>       = 0,</div><div class="line">    .period_counts = 10,</div><div class="line">    .source_div    = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8">TIMER_SOURCE_DIV_1</a>,</div><div class="line">    .mode          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e">TIMER_MODE_PERIODIC</a>,</div><div class="line">    .cycle_end_ipl = 2,</div><div class="line">    .cycle_end_irq = TAU_VECTOR_TIMER_16BIT_MODE,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer_divider_extend,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_divider_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the timers. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer_divider_ctrl, &amp;g_timer_divider_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the divider. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer_divider_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer_divider_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TAU Delay Counter Function Example</h2>
+<p>This is an example of configuration for Delay Counter Function.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This example shows how configure delay counter function. */</span></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___t_a_u.html#structtau__instance__ctrl__t">tau_instance_ctrl_t</a> g_timer_delay_counter_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> g_timer_delay_counter_extend =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_a_u.html#ac9bd70ca723f206ae3f81b1f49806251">opirq</a>           = TAU_INTERRUPT_OPIRQ_BIT_RESET,</div><div class="line">    .tau_func        = <a class="code" href="group___t_a_u.html#gga05073acfc2aa394f61bebc9de45982e9a1b8234d425d3f80270a49ad4a1cc7184">TAU_FUNCTION_DELAY_COUNT</a>,</div><div class="line">    .bit_mode        = <a class="code" href="group___t_a_u.html#gga4d6752303364642e16032e947ae018f6a4b4204a664ce4075830ce977b56ca721">TAU_BIT_MODE_16BIT</a>,</div><div class="line">    .initial_output  = <a class="code" href="group___t_a_u.html#gga3bbfa30fc80ffea2b07ccdb791e4c50baf9c2508605887f6ad61f2f8c0c7a615d">TAU_PIN_OUTPUT_CFG_DISABLED</a>,</div><div class="line">    .input_source    = <a class="code" href="group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4ac3c51103ffa1296f78cd9945141c2b05">TAU_INPUT_SOURCE_TI_PIN</a>,</div><div class="line">    .tau_filter      = <a class="code" href="group___t_a_u.html#ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b">TAU_INPUT_NOISE_FILTER_DISABLE</a>,</div><div class="line">    .trigger_edge    = <a class="code" href="group___t_a_u.html#ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8">TAU_TRIGGER_EDGE_RISING</a>,</div><div class="line">    .operation_clock = TAU_OPERATION_CK00,</div><div class="line"></div><div class="line">    <span class="comment">/* Not used for 16-bit or lower 8-bit mode */</span></div><div class="line">    .period_higher_8bit_counts = (uint16_t) 0x100,</div><div class="line"></div><div class="line">    .higher_8bit_cycle_end_ipl = <a class="code" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a>,</div><div class="line">    .higher_8bit_cycle_end_irq = <a class="code" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> g_timer_delay_counter_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___t_i_m_e_r___a_p_i.html#aa98df70bd7724ce80c42c0f4c263ef59">channel</a>       = 0,</div><div class="line">    .period_counts = 10,</div><div class="line">    .source_div    = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8">TIMER_SOURCE_DIV_1</a>,</div><div class="line">    .mode          = <a class="code" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e">TIMER_MODE_PERIODIC</a>,</div><div class="line">    .cycle_end_ipl = 2,</div><div class="line">    .cycle_end_irq = TAU_VECTOR_TIMER_16BIT_MODE,</div><div class="line">    .p_callback    = timer_callback,</div><div class="line">    .p_context     = NULL,</div><div class="line">    .p_extend      = &amp;g_timer_delay_counter_extend,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tau_delay_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the timers. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer_delay_counter_ctrl, &amp;g_timer_delay_counter_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start Delay Counter. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gad8ac6f320ddcf243f76ac3ac94739e0b">R_TAU_Enable</a>(&amp;g_timer_delay_counter_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer_delay_counter_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structtau__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#structtau__instance__ctrl__t">tau_instance_ctrl_t</a></td></tr>
+<tr class="separator:structtau__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtau__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a></td></tr>
+<tr class="separator:structtau__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga05073acfc2aa394f61bebc9de45982e9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga05073acfc2aa394f61bebc9de45982e9">tau_function_t</a> </td></tr>
+<tr class="separator:ga05073acfc2aa394f61bebc9de45982e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d6752303364642e16032e947ae018f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga4d6752303364642e16032e947ae018f6">tau_bit_mode_t</a> </td></tr>
+<tr class="separator:ga4d6752303364642e16032e947ae018f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1ca2257225787e8fbd4bc777ebafef2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gaf1ca2257225787e8fbd4bc777ebafef2">tau_operation_ck_t</a> </td></tr>
+<tr class="separator:gaf1ca2257225787e8fbd4bc777ebafef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2b9b416e79b6d56bad5998822d6e4e6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gae2b9b416e79b6d56bad5998822d6e4e6">tau_trigger_edge_t</a> </td></tr>
+<tr class="separator:gae2b9b416e79b6d56bad5998822d6e4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebfce7daab3af8521f659c99d72da18e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gaebfce7daab3af8521f659c99d72da18e">tau_interrupt_opirq_bit_t</a> </td></tr>
+<tr class="separator:gaebfce7daab3af8521f659c99d72da18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a26bac075067f52ed7fac6ee6e40bf4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga9a26bac075067f52ed7fac6ee6e40bf4">tau_input_source_t</a> </td></tr>
+<tr class="separator:ga9a26bac075067f52ed7fac6ee6e40bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bbfa30fc80ffea2b07ccdb791e4c50b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga3bbfa30fc80ffea2b07ccdb791e4c50b">tau_pin_output_cfg_t</a> </td></tr>
+<tr class="separator:ga3bbfa30fc80ffea2b07ccdb791e4c50b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae87efc49b1b45d83e1fbe63dd2679762"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gae87efc49b1b45d83e1fbe63dd2679762">tau_input_noise_filter_t</a> </td></tr>
+<tr class="separator:gae87efc49b1b45d83e1fbe63dd2679762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structtau__instance__ctrl__t" id="structtau__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtau__instance__ctrl__t">&#9670;&nbsp;</a></span>tau_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tau_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___t_i_m_e_r___a_p_i.html#af49a90087a53c8019d642a3f7abaa8ad">timer_api_t::open</a> is called. </p>
+</div>
+</div>
+</div>
+<a name="structtau__extended__cfg__t" id="structtau__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtau__extended__cfg__t">&#9670;&nbsp;</a></span>tau_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tau_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Optional TAU extension data structure. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac9bd70ca723f206ae3f81b1f49806251"></a><a class="el" href="group___t_a_u.html#gaebfce7daab3af8521f659c99d72da18e">tau_interrupt_opirq_bit_t</a></td>
+<td class="fieldname">
+opirq: 1</td>
+<td class="fielddoc">
+Setting of starting count and interrupt. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1c639c718c86b7b62a4f4de1e5f06ae9"></a><a class="el" href="group___t_a_u.html#ga05073acfc2aa394f61bebc9de45982e9">tau_function_t</a></td>
+<td class="fieldname">
+tau_func</td>
+<td class="fielddoc">
+Setting of Function for TAU. </td></tr>
+<tr><td class="fieldtype">
+<a id="a22531859bea578db393a05aa2998fd2a"></a><a class="el" href="group___t_a_u.html#ga4d6752303364642e16032e947ae018f6">tau_bit_mode_t</a></td>
+<td class="fieldname">
+bit_mode</td>
+<td class="fielddoc">
+Setting of 16-bit timer or 8-bit timer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4eddbc6979e0ecaacf4604afe3c4145b"></a><a class="el" href="group___t_a_u.html#ga3bbfa30fc80ffea2b07ccdb791e4c50b">tau_pin_output_cfg_t</a></td>
+<td class="fieldname">
+initial_output</td>
+<td class="fielddoc">
+Setting of Function for TAU. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2049870319c8fec4b50206072b6473ab"></a><a class="el" href="group___t_a_u.html#ga9a26bac075067f52ed7fac6ee6e40bf4">tau_input_source_t</a></td>
+<td class="fieldname">
+input_source</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0f831947441ca33c093921eacab4b550"></a><a class="el" href="group___t_a_u.html#gae87efc49b1b45d83e1fbe63dd2679762">tau_input_noise_filter_t</a></td>
+<td class="fieldname">
+tau_filter</td>
+<td class="fielddoc">
+Input filter for TAU. </td></tr>
+<tr><td class="fieldtype">
+<a id="afe4eaa523f1d3b490442089ea9401e4f"></a><a class="el" href="group___t_a_u.html#gae2b9b416e79b6d56bad5998822d6e4e6">tau_trigger_edge_t</a></td>
+<td class="fieldname">
+trigger_edge</td>
+<td class="fielddoc">
+Trigger edge to start pulse period measurement or count external event. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4098faa09a1be5bacd2b7fdeaa309c33"></a><a class="el" href="group___t_a_u.html#gaf1ca2257225787e8fbd4bc777ebafef2">tau_operation_ck_t</a></td>
+<td class="fieldname">
+operation_clock</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a7411f46b60b2be7f7bc87c64a84c6ebb"></a>uint16_t</td>
+<td class="fieldname">
+period_higher_8bit_counts</td>
+<td class="fielddoc">
+Period in raw higher 8 bit timer counts. </td></tr>
+<tr><td class="fieldtype">
+<a id="a15e819f17374b324c8dee28f19e26a01"></a>uint8_t</td>
+<td class="fieldname">
+higher_8bit_cycle_end_ipl</td>
+<td class="fielddoc">
+Cycle higher 8-bit end interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="aee5e803a5e54b7714ed06485b22030e3"></a>IRQn_Type</td>
+<td class="fieldname">
+higher_8bit_cycle_end_irq</td>
+<td class="fielddoc">
+Cycle higher 8-bit end interrupt. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga05073acfc2aa394f61bebc9de45982e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga05073acfc2aa394f61bebc9de45982e9">&#9670;&nbsp;</a></span>tau_function_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#ga05073acfc2aa394f61bebc9de45982e9">tau_function_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timer function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a368eec619252fce11a95fea3749c736b"></a>TAU_FUNCTION_INTERVAL&#160;</td><td class="fielddoc"><p>Interval Timer Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a4b91d17b084e9b38c39da5ab3b8bd3d6"></a>TAU_FUNCTION_SQUARE_WAVE&#160;</td><td class="fielddoc"><p>Square Wave Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a16eafb15b8d8eaeb049eb5d87d21910c"></a>TAU_FUNCTION_EXTERNAL_EVENT_COUNT&#160;</td><td class="fielddoc"><p>External Event Count Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a69d512b9c2c164f7132fa08d49755eba"></a>TAU_FUNCTION_DIVIDER&#160;</td><td class="fielddoc"><p>Divider Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a1955da33199b80dbf45348d8badb6335"></a>TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT&#160;</td><td class="fielddoc"><p>Input Pulse Interval Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a432af8c784ac1afa7b20557b8be35709"></a>TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT&#160;</td><td class="fielddoc"><p>Low Level Width Measure Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a3472c9fd366677adec4a23a7a64ca84a"></a>TAU_FUNCTION_HIGH_LEVEL_WIDTH_MEASUREMENT&#160;</td><td class="fielddoc"><p>High Level Width Measure Function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga05073acfc2aa394f61bebc9de45982e9a1b8234d425d3f80270a49ad4a1cc7184"></a>TAU_FUNCTION_DELAY_COUNT&#160;</td><td class="fielddoc"><p>Delay Count Function. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga4d6752303364642e16032e947ae018f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4d6752303364642e16032e947ae018f6">&#9670;&nbsp;</a></span>tau_bit_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#ga4d6752303364642e16032e947ae018f6">tau_bit_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timer bit mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4d6752303364642e16032e947ae018f6a4b4204a664ce4075830ce977b56ca721"></a>TAU_BIT_MODE_16BIT&#160;</td><td class="fielddoc"><p>16-Bit Timer Mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4d6752303364642e16032e947ae018f6a974de891d3b289e7b1903141393781e0"></a>TAU_BIT_MODE_HIGHER_8BIT&#160;</td><td class="fielddoc"><p>Higher 8-bit Timer Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4d6752303364642e16032e947ae018f6af0653b48f9d78ee3da391b8d26db6133"></a>TAU_BIT_MODE_LOWER_8BIT&#160;</td><td class="fielddoc"><p>Lower 8-bit Timer Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4d6752303364642e16032e947ae018f6aecf01cd5ffe3f98711e1091fb5153b5e"></a>TAU_BIT_MODE_HIGHER_LOWER_8BIT&#160;</td><td class="fielddoc"><p>Lower and Higher 8-bit Timer Mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf1ca2257225787e8fbd4bc777ebafef2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf1ca2257225787e8fbd4bc777ebafef2">&#9670;&nbsp;</a></span>tau_operation_ck_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#gaf1ca2257225787e8fbd4bc777ebafef2">tau_operation_ck_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timer operation clock. </p>
+
+</div>
+</div>
+<a id="gae2b9b416e79b6d56bad5998822d6e4e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2b9b416e79b6d56bad5998822d6e4e6">&#9670;&nbsp;</a></span>tau_trigger_edge_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#gae2b9b416e79b6d56bad5998822d6e4e6">tau_trigger_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Trigger edge for pulse period measurement mode, high-low measurement, divider, delay counter and event counting mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae2b9b416e79b6d56bad5998822d6e4e6a3fbb027df5402506654b983965a24bea"></a>TAU_TRIGGER_EDGE_FALLING&#160;</td><td class="fielddoc"><p>Measurement starts or events are counted on falling edge. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2b9b416e79b6d56bad5998822d6e4e6ae85aff1dbc214450d6b6733a3f0613a8"></a>TAU_TRIGGER_EDGE_RISING&#160;</td><td class="fielddoc"><p>Measurement starts or events are counted on rising edge. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2b9b416e79b6d56bad5998822d6e4e6a0268d26012dc0c6e72cda6cf576a7b13"></a>TAU_TRIGGER_EDGE_BOTH&#160;</td><td class="fielddoc"><p>Events are counted on both edges (pulse period mode and high-low measurement) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaebfce7daab3af8521f659c99d72da18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaebfce7daab3af8521f659c99d72da18e">&#9670;&nbsp;</a></span>tau_interrupt_opirq_bit_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#gaebfce7daab3af8521f659c99d72da18e">tau_interrupt_opirq_bit_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Interrupt and starting Count Mode </p>
+
+</div>
+</div>
+<a id="ga9a26bac075067f52ed7fac6ee6e40bf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9a26bac075067f52ed7fac6ee6e40bf4">&#9670;&nbsp;</a></span>tau_input_source_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#ga9a26bac075067f52ed7fac6ee6e40bf4">tau_input_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Input source </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4ac3c51103ffa1296f78cd9945141c2b05"></a>TAU_INPUT_SOURCE_TI_PIN&#160;</td><td class="fielddoc"><p>Timer Input Source is input pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a063d0b75b143f4f6cc0be2e59e3cd6d2"></a>TAU_INPUT_SOURCE_ELC&#160;</td><td class="fielddoc"><p>ELC Timer Input Source. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4ae1389fcb62491aefc12736f65de43aca"></a>TAU_INPUT_SOURCE_RXD2_PIN&#160;</td><td class="fielddoc"><p>Timer Input Source is RXD2 pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a6f6dcd35275a8d3c8cd1380cad3a4153"></a>TAU_INPUT_SOURCE_MOCO&#160;</td><td class="fielddoc"><p>Timer Input Source is MOCO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a2b799b65de1e7c7b0daa93d2f7fea736"></a>TAU_INPUT_SOURCE_LOCO&#160;</td><td class="fielddoc"><p>Timer Input Source is LOCO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a117d4458775eff0362300ad9c730631b"></a>TAU_INPUT_SOURCE_FSUB&#160;</td><td class="fielddoc"><p>Timer Input Source is FSUB. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a9e54e1818d665530220493ca346628ac"></a>TAU_INPUT_SOURCE_NONE&#160;</td><td class="fielddoc"><p>No Timer Input Source. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga3bbfa30fc80ffea2b07ccdb791e4c50b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3bbfa30fc80ffea2b07ccdb791e4c50b">&#9670;&nbsp;</a></span>tau_pin_output_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#ga3bbfa30fc80ffea2b07ccdb791e4c50b">tau_pin_output_cfg_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Level of TAU pin </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3bbfa30fc80ffea2b07ccdb791e4c50ba8218d45e8ea47bbee91074a5eb941e0f"></a>TAU_PIN_OUTPUT_CFG_START_LEVEL_LOW&#160;</td><td class="fielddoc"><p>Pin level low. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3bbfa30fc80ffea2b07ccdb791e4c50ba3f4e1159d1894d6b508bc38e1c580b9b"></a>TAU_PIN_OUTPUT_CFG_START_LEVEL_HIGH&#160;</td><td class="fielddoc"><p>Pin level high. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3bbfa30fc80ffea2b07ccdb791e4c50baf9c2508605887f6ad61f2f8c0c7a615d"></a>TAU_PIN_OUTPUT_CFG_DISABLED&#160;</td><td class="fielddoc"><p>Not used as output pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae87efc49b1b45d83e1fbe63dd2679762"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae87efc49b1b45d83e1fbe63dd2679762">&#9670;&nbsp;</a></span>tau_input_noise_filter_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_a_u.html#gae87efc49b1b45d83e1fbe63dd2679762">tau_input_noise_filter_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Input filter, applies TAU in high-low measurement, pulse width measurement, delay counter, divider, or event counter mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae87efc49b1b45d83e1fbe63dd2679762a99d5c673e38417ad37590e2e0b3c718b"></a>TAU_INPUT_NOISE_FILTER_DISABLE&#160;</td><td class="fielddoc"><p>Disable noise filter. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae87efc49b1b45d83e1fbe63dd2679762ab3da003ffe6a5ed56920c045978e3704"></a>TAU_INPUT_NOISE_FILTER_ENABLE&#160;</td><td class="fielddoc"><p>Enable noise filter. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaae22c65a593824641232724043864c54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaae22c65a593824641232724043864c54">&#9670;&nbsp;</a></span>R_TAU_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the timer module and applies configurations. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#af49a90087a53c8019d642a3f7abaa8ad">timer_api_t::open</a>.</p>
+<p>The TAU implementation of the general timer can accept a <a class="el" href="group___t_a_u.html#structtau__extended__cfg__t">tau_extended_cfg_t</a> extension parameter.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful and timer has started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL or the period is not in the valid range </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>The channel does not support this feature. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>Timer_cfg_t::p_callback is not NULL, but ISR is not enabled. ISR must be enabled to use callback </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid configuration for p_extend. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9931b6307c227c084427f3148d4e189c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9931b6307c227c084427f3148d4e189c">&#9670;&nbsp;</a></span>R_TAU_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops timer. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#aed0139dbf5102e39719ddbc51f16a21e">timer_api_t::stop</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga9931b6307c227c084427f3148d4e189c">R_TAU_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Timer successfully stopped. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga577308fcc5c6a9e2068152e92536166d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga577308fcc5c6a9e2068152e92536166d">&#9670;&nbsp;</a></span>R_TAU_Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts timer. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#afcc7e85d01c3d7dc0c6e09954631f47f">timer_api_t::start</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Timer successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga34950d8d6218348eaee3532ab02cfd18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga34950d8d6218348eaee3532ab02cfd18">&#9670;&nbsp;</a></span>R_TAU_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resets the counter value to the period minus one. Input Pulse Function is reset counter value to 0. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ab1c62157861ef1ea8393bb3cafd72102">timer_api_t::reset</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function can not reset the counter when counter is stopped, and function High/Low Measurement Function is used.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The counter value written successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad8ac6f320ddcf243f76ac3ac94739e0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad8ac6f320ddcf243f76ac3ac94739e0b">&#9670;&nbsp;</a></span>R_TAU_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Enable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables external event triggers that start, stop, clear, or capture the counter. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a13cb48d1657a9eda3380c111ba33aa2a">timer_api_t::enable</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Enable captures. Captured values arrive in the interrupt. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gad8ac6f320ddcf243f76ac3ac94739e0b">R_TAU_Enable</a>(&amp;g_timer_input_capture_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>External events successfully enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab94d332b4453d568bef27844a6f2ae6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab94d332b4453d568bef27844a6f2ae6d">&#9670;&nbsp;</a></span>R_TAU_Disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Disable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables external event triggers that start, stop, clear, or capture the counter. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a8b69fad02aee5d83b941ed02fca18aca">timer_api_t::disable</a>. </p><dl class="section note"><dt>Note</dt><dd>The timer could be running after <a class="el" href="group___t_a_u.html#gab94d332b4453d568bef27844a6f2ae6d">R_TAU_Disable()</a>. To ensure it is stopped, call <a class="el" href="group___t_a_u.html#ga9931b6307c227c084427f3148d4e189c">R_TAU_Stop()</a>.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Disable captures. */</span></div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gab94d332b4453d568bef27844a6f2ae6d">R_TAU_Disable</a>(&amp;g_timer_input_capture_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>External events successfully disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8316d48a51dbaebd34fd4bae7f83526f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8316d48a51dbaebd34fd4bae7f83526f">&#9670;&nbsp;</a></span>R_TAU_PeriodSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_PeriodSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>period_counts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets period value provided. If the timer is running, the period will be updated after the next counter underflow. If the timer is stopped, this function resets the counter and updates the period. This Function is not supported for Input pulse Function, High-Low Measurement Function. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ae9aad84a01ccd7ce0039ed491faeff19">timer_api_t::periodSet</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>if timer mode is Lower and Higher 8-bit Timer Mode, the last 9 bits are the lower 8-bits of the timer, and the subsequent 9 bits are the higher 8-bits of the timer</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get operation clock frequency</span></div><div class="line"><span class="comment">     *  - Use the R_TAU_InfoGet function (it accounts for the clock source and divider of operation clock ).</span></div><div class="line"><span class="comment">     */</span>                                </div><div class="line"></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga0ad87af7e02d049c83279e356bc958f9">R_TAU_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX / iclk_freq_hz. A cast to uint32_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) ((timer_freq_hz * TAU_EXAMPLE_DESIRED_PERIOD_MSEC) / TAU_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. This will return an error if parameter checking is enabled and the calculated</span></div><div class="line"><span class="comment">     * period is larger than UINT16_MAX. */</span></div><div class="line">    err = <a class="code" href="group___t_a_u.html#ga8316d48a51dbaebd34fd4bae7f83526f">R_TAU_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Period value written successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL or period is invalid range. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported for Input pulse Function, High-Low Measurement Function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gacd8050c7d20d5dd93a37eee6b42d9a0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacd8050c7d20d5dd93a37eee6b42d9a0d">&#9670;&nbsp;</a></span>R_TAU_DutyCycleSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_DutyCycleSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>duty_cycle_counts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___t_i_m_e_r___a_p_i.html#a819ed0740ca426ace0d6b67e16c6ddfc">timer_api_t::dutyCycleSet</a> is not supported on the R_TAU Independent channels.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0ad87af7e02d049c83279e356bc958f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0ad87af7e02d049c83279e356bc958f9">&#9670;&nbsp;</a></span>R_TAU_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get timer information and store it in provided pointer p_info. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#aeaea79f26305c493566e4b45ae9e294c">timer_api_t::infoGet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#ga0ad87af7e02d049c83279e356bc958f9">R_TAU_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Period, count direction, frequency, and ELC event written to caller's structure successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_info was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafb5cd82ccaed5ebc7e74bbdeb1e71d78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">&#9670;&nbsp;</a></span>R_TAU_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get current timer status and store it in provided pointer p_status. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a11321e8dde7c33a4e6835a1bf64f7689">timer_api_t::statusGet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78">R_TAU_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Current timer state and counter value set successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_status was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9326c9d701274f4a6b3cd64cf3a0e7ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9326c9d701274f4a6b3cd64cf3a0e7ea">&#9670;&nbsp;</a></span>R_TAU_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ad2569f06e8034790e7b363142d93a816">timer_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga00bd9f206e4226cc150680204431ef63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00bd9f206e4226cc150680204431ef63">&#9670;&nbsp;</a></span>R_TAU_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops counter, disables output pins, and clears internal driver data. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a9e8b8140010a28082aedd758390fac97">timer_api_t::close</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

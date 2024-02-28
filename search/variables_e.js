@@ -3,6 +3,7 @@ var searchData=
   ['nanoseconds',['nanoseconds',['../group___p_t_p___a_p_i.html#a1b51aaa1cc5d99d8721c53e96d611ec9',1,'ptp_time_t']]],
   ['negation_5fdelay',['negation_delay',['../group___l_v_d___a_p_i.html#a4ee0cbde3ba8457e75b8475161a29704',1,'lvd_cfg_t']]],
   ['negation_5ftime',['negation_time',['../group___s_c_i___b___u_a_r_t.html#adeab6a6a24f0ccbf45a24fd0185f1e3b',1,'sci_b_uart_rs485_setting_t']]],
+  ['negative_5fvref',['negative_vref',['../group___a_d_c___d.html#a3a18ce046b2222f5f316acf2711f5078',1,'adc_d_extended_cfg_t']]],
   ['net_5frelay_5ftx_5fcount',['net_relay_tx_count',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a11e71e2c0853cdd5b3ec09b00dd05e5f',1,'rm_ble_mesh_cfg_t']]],
   ['net_5frelay_5ftx_5finterval_5fsteps',['net_relay_tx_interval_steps',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#ad2ea222c42c6e8c04dbea69430a3c4ba',1,'rm_ble_mesh_cfg_t']]],
   ['net_5fsequence_5fnumber_5fblock_5fsize',['net_sequence_number_block_size',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#a30f6ca6484749685d11868504888e6f9',1,'rm_ble_mesh_cfg_t']]],

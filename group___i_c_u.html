@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -302,37 +302,11 @@ This module can be added to the Stacks tab via New Stack &gt; Input &gt; Externa
 <tr class="tree_none">
 <td>Channel</td><td>Value must be an integer between 0 and 15</td><td>0 </td><td>Specify the hardware channel. </td></tr>
 <tr class="tree_none">
-<td>Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Falling</li>
-<li>
-Rising</li>
-<li>
-Both Edges</li>
-<li>
-Low Level</li>
-</ul>
-</td><td>Rising </td><td>Select the signal edge or state that triggers an interrupt. </td></tr>
+<td>Trigger</td><td>MCU Specific Options</td><td></td><td>Select the signal edge or state that triggers an interrupt. </td></tr>
 <tr class="tree_none">
-<td>Digital Filtering</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Select if the digital noise filter should be enabled. </td></tr>
+<td>Digital Filtering</td><td>MCU Specific Options</td><td></td><td>Select if the digital noise filter should be enabled. </td></tr>
 <tr class="tree_none">
-<td>Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-PCLK / 1</li>
-<li>
-PCLK / 8</li>
-<li>
-PCLK / 32</li>
-<li>
-PCLK / 64</li>
-</ul>
-</td><td>PCLK / 64 </td><td>Select the clock divider for the digital noise filter. </td></tr>
+<td>Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled)</td><td>MCU Specific Options</td><td></td><td>Select the clock divider for the digital noise filter. </td></tr>
 <tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided here. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the IRQn triggers </td></tr>
 <tr class="tree_none">
@@ -451,7 +425,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The channel specified has already been opened. No configurations were changed. Call the associated Close function to reconfigure the channel. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in p_cfg is not available on the device selected in r_bsp_cfg.h. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>p_cfg-&gt;p_callback is not NULL, but ISR is not enabled. ISR must be enabled to use callback function.</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>p_cfg-&gt;p_callback is not NULL, but ISR is not enabled. ISR must be enabled to use callback function. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>An input argument is not supported by selected mode.</td></tr>
   </table>
   </dd>
 </dl>
@@ -598,7 +573,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -12,6 +12,7 @@ var group___p_o_e_g___a_p_i =
       [ "noise_filter", "group___p_o_e_g___a_p_i.html#a7f4c9f27604cdf1b772dc2d4ed8c3a2f", null ],
       [ "p_callback", "group___p_o_e_g___a_p_i.html#a70ca0636c969217533571c505f2e68ca", null ],
       [ "p_context", "group___p_o_e_g___a_p_i.html#a4c643319683a792e608a1331f00c0d9c", null ],
+      [ "unit", "group___p_o_e_g___a_p_i.html#ac2badeb47b925853a420e184f35074e3", null ],
       [ "channel", "group___p_o_e_g___a_p_i.html#a540e9ef986cf2ad028ef51ba52454aab", null ],
       [ "irq", "group___p_o_e_g___a_p_i.html#a7f90a7d598df48543335416c0a4ab1a0", null ],
       [ "ipl", "group___p_o_e_g___a_p_i.html#a57cfcbb853533296afebab7d58f231c2", null ]

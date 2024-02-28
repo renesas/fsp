@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('group___t_r_a_n_s_f_e_r___a_p_i.html',
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Transfer Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">Transfer Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_r_a_n_s_f_e_r___i_n_t_e_r_f_a_c_e_s.html">Transfer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -252,6 +252,8 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structtransfer__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a></td></tr>
+<tr class="separator:structtransfer__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtransfer__properties__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__properties__t">transfer_properties_t</a></td></tr>
 <tr class="separator:structtransfer__properties__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtransfer__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a></td></tr>
@@ -286,6 +288,30 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga11917a0ab2cb8b878937c97691b07fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structtransfer__callback__args__t" id="structtransfer__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtransfer__callback__args__t">&#9670;&nbsp;</a></span>transfer_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct transfer_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Callback function parameter data. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aeee23b91e667d1988850e79d7bb12f01"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. Set in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a84d48960cdfe867ef54fd4635a85ceeb">transfer_api_t::open</a> function in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__cfg__t">transfer_cfg_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structtransfer__properties__t" id="structtransfer__properties__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structtransfer__properties__t">&#9670;&nbsp;</a></span>transfer_properties_t</h2>
 
@@ -348,7 +374,7 @@ When using DTC, this structure must not be allocated in a temporary location. An
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="acee59464084aeb34d88e2ea21e989258"></a>union <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#uniontransfer__info__t_8____unnamed____">transfer_info_t</a></td>
+<a id="a1f01ab85c7d2bc7c4f86b714c6931b58"></a>union <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#uniontransfer__info__t_8____unnamed____">transfer_info_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -448,6 +474,8 @@ Extension parameter for hardware specific settings. </td></tr>
 <tr class="separator:ade5973e7a8e994f9146e0db84bee8bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3af1d98295baf9bd92251f55c95f8868"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a3af1d98295baf9bd92251f55c95f8868">reload</a> )(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_ctrl, void const *p_src, void *p_dest, uint32_t const num_transfers)</td></tr>
 <tr class="separator:a3af1d98295baf9bd92251f55c95f8868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec396dcd365f215cabfa1097e2a963de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#aec396dcd365f215cabfa1097e2a963de">callbackSet</a> )(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:aec396dcd365f215cabfa1097e2a963de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a84d48960cdfe867ef54fd4635a85ceeb"></a>
@@ -668,6 +696,30 @@ Only applies for transfers started with TRANSFER_START_MODE_REPEAT. </dd></dl>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Pointer to source. Set to NULL if source pointer should not change. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Pointer to destination. Set to NULL if destination pointer should not change. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">num_transfers</td><td>Transfer length in normal mode or block mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aec396dcd365f215cabfa1097e2a963de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec396dcd365f215cabfa1097e2a963de">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  transfer_api_t::callbackSet) (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a84d48960cdfe867ef54fd4635a85ceeb">transfer_api_t::open</a> call for this transfer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -895,7 +947,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

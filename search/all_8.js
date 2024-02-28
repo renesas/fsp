@@ -162,7 +162,7 @@ var searchData=
   ['gpt_5fadc_5ftrigger_5ft',['gpt_adc_trigger_t',['../group___g_p_t.html#ga6dfe4ddfb53ba52c674039fd20b6c2b6',1,'r_gpt.h']]],
   ['gpt_5fadc_5ftrigger_5fup_5fcount_5fstart_5fadc_5fa',['GPT_ADC_TRIGGER_UP_COUNT_START_ADC_A',['../group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a2bd0475913403dab220b5e7d6c1acf72',1,'r_gpt.h']]],
   ['gpt_5fadc_5ftrigger_5fup_5fcount_5fstart_5fadc_5fb',['GPT_ADC_TRIGGER_UP_COUNT_START_ADC_B',['../group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a850b0227fd4a50c51c146d44efe7c838',1,'r_gpt.h']]],
-  ['gpt_5fbuffer_5fforce_5fpush',['GPT_BUFFER_FORCE_PUSH',['../group___g_p_t.html#gga8abd050b841fe99c9b641a22c69501c5a23c94706bd1a34c9f1b9cfffea30f4cc',1,'GPT_BUFFER_FORCE_PUSH():&#160;r_gpt.h'],['../group___g_p_t.html#ga8abd050b841fe99c9b641a22c69501c5',1,'gpt_buffer_force_push():&#160;r_gpt.h']]],
+  ['gpt_5fbuffer_5fforce_5fpush',['gpt_buffer_force_push',['../group___g_p_t.html#ga8abd050b841fe99c9b641a22c69501c5',1,'gpt_buffer_force_push():&#160;r_gpt.h'],['../group___g_p_t.html#gga8abd050b841fe99c9b641a22c69501c5a23c94706bd1a34c9f1b9cfffea30f4cc',1,'GPT_BUFFER_FORCE_PUSH():&#160;r_gpt.h']]],
   ['gpt_5fcapture_5ffilter_5fnone',['GPT_CAPTURE_FILTER_NONE',['../group___g_p_t.html#gga4781e2b42b2ef339318ea0a70b250cd5a9b2d993dbb736347b473101f14c1fde6',1,'r_gpt.h']]],
   ['gpt_5fcapture_5ffilter_5fpclkd_5fdiv_5f1',['GPT_CAPTURE_FILTER_PCLKD_DIV_1',['../group___g_p_t.html#gga4781e2b42b2ef339318ea0a70b250cd5adb3e7f4af05808c080e29f22c6b71c3a',1,'r_gpt.h']]],
   ['gpt_5fcapture_5ffilter_5fpclkd_5fdiv_5f16',['GPT_CAPTURE_FILTER_PCLKD_DIV_16',['../group___g_p_t.html#gga4781e2b42b2ef339318ea0a70b250cd5a4058fd8fd2af5d30c572dd8aacc5ae9a',1,'r_gpt.h']]],
@@ -295,5 +295,6 @@ var searchData=
   ['gtiocb',['gtiocb',['../group___g_p_t.html#a78476af74debd54ee8394dd0aa6d2505',1,'gpt_extended_cfg_t']]],
   ['gtiocb_5fdisable_5fsetting',['gtiocb_disable_setting',['../group___g_p_t.html#aa34079abac90aaced078650c626c9820',1,'gpt_extended_pwm_cfg_t']]],
   ['gtior_5fsetting',['gtior_setting',['../group___g_p_t.html#ad8b8b467339a151f016017d175df2f9c',1,'gpt_extended_cfg_t']]],
+  ['graphics',['Graphics',['../group___r_e_n_e_s_a_s___g_r_a_p_h_i_c_s___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['graphics',['Graphics',['../group___r_e_n_e_s_a_s___g_r_a_p_h_i_c_s___m_o_d_u_l_e_s.html',1,'']]]
 ];

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('group___c_g_c___a_p_i.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">CGC Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">CGC Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_y_s_t_e_m___i_n_t_e_r_f_a_c_e_s.html">System</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -389,7 +389,40 @@ PLL divisor for output clock R. </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Clock configuration structure - Used as an input parameter to the <a class="el" href="group___c_g_c___a_p_i.html#ac55d09984ea2ed00e0b9f67b21ca9953">cgc_api_t::systemClockSet</a> and <a class="el" href="group___c_g_c___a_p_i.html#aab4d84b9a18f5ff223fa9d5dbdf2104c">cgc_api_t::systemClockGet</a> functions. </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a839bbaf4f8e14ee81168a4899cff35db"></a><a class="el" href="group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d">cgc_sys_clock_div_t</a></td>
+<td class="fieldname">
+moco_divider</td>
+<td class="fielddoc">
+MOCO divider. </td></tr>
+<tr><td class="fieldtype">
+<a id="abf8bbaa7af1d17dbee46453c50dc14f7"></a><a class="el" href="group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d">cgc_sys_clock_div_t</a></td>
+<td class="fieldname">
+hoco_divider</td>
+<td class="fielddoc">
+HOCO divider. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae000b3fadee4fd715032f5980d1f343a"></a><a class="el" href="group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d">cgc_sys_clock_div_t</a></td>
+<td class="fieldname">
+mosc_divider</td>
+<td class="fielddoc">
+Main oscillator divider. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6767b6a37a5bbab8e6c4d6a85e7cbe25"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a2af1341a0b708d11dbaf655f5ce9a172"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
 </div>
 </div>
 <a name="structcgc__cfg__t" id="structcgc__cfg__t"></a>
@@ -967,13 +1000,25 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___c_g_c___a_p_i.html#ga78ac772149fadd3ec1fb21dc674e2b8d">cgc_sys_clock_div_t</a></td>
+          <td class="memname">enum cgc_sys_clock_div_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>System clock divider values - The individually selectable divider of each of the system clocks, ICLK, BCLK, FCLK, PCLKS A-D. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326"></a>CGC_SYS_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>System clock divided by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6"></a>CGC_SYS_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>System clock divided by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0"></a>CGC_SYS_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>System clock divided by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8daecead8b5b6ef0f7fc4e0c684720736b4"></a>CGC_SYS_CLOCK_DIV_8&#160;</td><td class="fielddoc"><p>System clock divided by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da5fb7e35f2b14f47d71fc3ddce999d9a9"></a>CGC_SYS_CLOCK_DIV_16&#160;</td><td class="fielddoc"><p>System clock divided by 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dadd88ebecf942a2a5d0ee88cbadec6bdf"></a>CGC_SYS_CLOCK_DIV_32&#160;</td><td class="fielddoc"><p>System clock divided by 32. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326"></a>CGC_SYS_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>System clock divided by 1. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6"></a>CGC_SYS_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>System clock divided by 2. </p>
 </td></tr>
@@ -1068,7 +1113,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

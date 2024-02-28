@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -277,6 +277,11 @@ Features</h2>
 <li>Writes to I2C bus, then reads with restart<a class="anchor" id="um_rm_comms_writeread"></a></li>
 <li>A single I2C bus used by multiple I2C devices<a class="anchor" id="um_rm_comms_special_case"></a> </li>
 </ul>
+<h2><a class="anchor" id="rm-comms-i2c-limitations"></a>
+Limitations</h2>
+<ul>
+<li><a class="el" href="group___r_m___c_o_m_m_s___i2_c.html#ga58164da5f2284c73a72902f85814438e">RM_COMMS_I2C_WriteRead()</a> is not supported when <a class="el" href="group___s_a_u___i2_c.html">I2C Master (r_sau_i2c)</a> is selected for I2C bus interface. Please refer to Limitations of <a class="el" href="group___s_a_u___i2_c.html">I2C Master (r_sau_i2c)</a>.</li>
+</ul>
 <h1><a class="anchor" id="rm-comms-i2c-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_comms_i2c</h2>
@@ -301,9 +306,9 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr class="tree_none">
-<td>Name</td><td>Manual Entry</td><td>g_comms_i2c_bus0 </td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_comms_i2c_bus0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
-<td>Bus Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Set timeout for locking bus in using RTOS. </td></tr>
+<td>Bus Timeout</td><td>Value must be a non-negative integer less than or equal to 0xFFFFFFFF</td><td>0xFFFFFFFF </td><td>Set timeout for locking bus in using RTOS. </td></tr>
 <tr class="tree_none">
 <td>Semaphore for Blocking (RTOS only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -327,9 +332,9 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr class="tree_none">
-<td>Name</td><td>Manual Entry</td><td>g_comms_i2c_device0 </td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_comms_i2c_device0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
-<td>Semaphore Timeout (RTOS only)</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Set timeout for blocking in using RTOS. </td></tr>
+<td>Semaphore Timeout (RTOS only)</td><td>Value must be a non-negative integer less than or equal to 0xFFFFFFFF</td><td>0xFFFFFFFF </td><td>Set timeout for blocking in using RTOS. </td></tr>
 <tr class="tree_none">
 <td>Slave Address</td><td>Value must be non-negative</td><td>0x00 </td><td>Specify the slave address. </td></tr>
 <tr class="tree_none">
@@ -346,7 +351,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p>
 <h2><a class="anchor" id="rm-comms-i2c-pin-configuration"></a>
 Pin Configuration</h2>
-<p>This module uses SDA and SCL pins of I2C Master and SCI I2C.</p>
+<p>This module uses SDA and SCL pins of I2C Master, SCI I2C and SAU I2C.</p>
 <h1><a class="anchor" id="rm-comms-i2c-usage-notes"></a>
 Usage Notes</h1>
 <p>If an RTOS is used, blocking and bus lock is available.</p><ul>
@@ -613,7 +618,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

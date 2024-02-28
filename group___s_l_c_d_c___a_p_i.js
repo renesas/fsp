@@ -97,8 +97,8 @@ var group___s_l_c_d_c___a_p_i =
       [ "SLCDC_CLOCK_LOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182aa88846667ea9e23c466eb42aa10b8d80", null ],
       [ "SLCDC_CLOCK_SOSC", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182abaa07e88bf54e9d01886959c3efff60a", null ],
       [ "SLCDC_CLOCK_MOSC", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182a952aa70dfb403ca8f649fe1250419d32", null ],
-      [ "SLCDC_CLOCK_HOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182a54ab7b6831d12efba429e55c8c73ace5", null ],
-      [ "SLCDC_CLOCK_MOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182ae6e2f4b15129add6feecbcd1ab0c8cb8", null ]
+      [ "SLCDC_CLOCK_MOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182ae6e2f4b15129add6feecbcd1ab0c8cb8", null ],
+      [ "SLCDC_CLOCK_HOCO", "group___s_l_c_d_c___a_p_i.html#gga523bcce722f0cd96e3e02a2ee3650182a54ab7b6831d12efba429e55c8c73ace5", null ]
     ] ],
     [ "slcdc_clk_div_t", "group___s_l_c_d_c___a_p_i.html#ga0e3ba070cac938eacf3fafe14607aac3", [
       [ "SLCDC_CLK_DIVISOR_LOCO_4", "group___s_l_c_d_c___a_p_i.html#gga0e3ba070cac938eacf3fafe14607aac3a753f3cb16bf0b020ec4877fda8494cbe", null ],

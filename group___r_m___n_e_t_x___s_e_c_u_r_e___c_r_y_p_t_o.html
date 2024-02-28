@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -501,6 +501,8 @@ RSA Usage</h2>
 <h3>Wrapped Key Usage</h3>
 <p>To use the NetX Crypto stack with wrapped private keys (for signature generation/decryption), a dummy pointer (non-NULL) should be passed to the 'key' parameter during _nx_crypto_method_rsa_init API call. However, the 'key_size_in_bits' parameter should be equal to the intended RSA modulus length in bits. The actual wrapped key must be passed as the 'key' parameter to the _nx_crypto_method_rsa_operation API call with its length in bits passed through the 'key_size_in_bits' parameter.</p>
 <p>For PKCS1V15 operation 'key' and 'key_size_in_bits' parameters of _nx_crypto_method_pkcs1_v1_5_init are unused. These can be passed as NULL and 0 respectively. The actual wrapped key must be passed as the 'key' parameter to the _nx_crypto_method_pkcs1_v1_5_operation API call and the intended modulus length in bits must be passed through the 'key_size_in_bits' parameter.</p>
+<h3>Software Implementation</h3>
+<p>The plaintext data passed in to the RSA encryption API must be 4-byte aligned. If it is not aligned then when the resultant encrypted data is decrypted using the decryption API, the unaligned data will be endian-swapped. For instance, if {0x01, 0x02,0x03, 0x04, 0x05} is passed as input data for encryption, when decrypted, the result will be {0x01, 0x02, 0x03, 0x04, 0x00, 0x00, 0x00, 0x05}. Note that this alignment of input data need not be taken care while using Hardware accelerated RSA.</p>
 <h2>Limitations</h2>
 <ul>
 <li>Only little endian mode is supported.</li>
@@ -534,7 +536,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

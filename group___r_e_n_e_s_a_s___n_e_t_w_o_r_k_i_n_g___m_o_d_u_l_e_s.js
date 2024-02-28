@@ -10,7 +10,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "BLE Driver (r_ble_balance)", "group___b_l_e___b_a_l_a_n_c_e.html", null ],
     [ "BLE Driver (r_ble_compact)", "group___b_l_e___c_o_m_p_a_c_t.html", null ],
     [ "BLE Driver (r_ble_extended)", "group___b_l_e___e_x_t_e_n_d_e_d.html", null ],
-    [ "Bluetooth Low Energy Mesh Network Modules", "group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s" ],
+    [ "BLE Mesh Network Modules", "group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html", "group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s" ],
     [ "Cellular Comm Interface on UART (rm_cellular_comm_uart_aws)", "group___r_m___c_e_l_l_u_l_a_r___c_o_m_m___u_a_r_t___a_w_s.html", "group___r_m___c_e_l_l_u_l_a_r___c_o_m_m___u_a_r_t___a_w_s" ],
     [ "DA16XXX Transport Layer (rm_at_transport_da16xxx_uart)", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t" ],
     [ "Ethernet (r_ether)", "group___e_t_h_e_r.html", "group___e_t_h_e_r" ],

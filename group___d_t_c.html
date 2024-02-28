@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -265,6 +265,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaa9e2c3dc5b7271551b2cd470bfe0e000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f76bce1981837af6bc7e9dd20a036fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_t_c.html#ga7f76bce1981837af6bc7e9dd20a036fb">R_DTC_Reload</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const num_transfers)</td></tr>
 <tr class="separator:ga7f76bce1981837af6bc7e9dd20a036fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada65011161d1e5ae7a72678d9c4834d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_t_c.html#gada65011161d1e5ae7a72678d9c4834d0">R_DTC_CallbackSet</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gada65011161d1e5ae7a72678d9c4834d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2139f7cdd0e8d8dcb0ce07b705ea1ef4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_t_c.html#ga2139f7cdd0e8d8dcb0ce07b705ea1ef4">R_DTC_Close</a> (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga2139f7cdd0e8d8dcb0ce07b705ea1ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -492,9 +494,11 @@ Supported</li>
 <li>The DTC interrupts the CPU using the activation source's IRQ. Each DMAC channel has its own IRQ.</li>
 </ul>
 <h3>Interrupts</h3>
-<p>The DTC and DMAC interrupts behave differently. The DTC uses the configured IELSR event IRQ as the interrupt source whereas each DMAC channel has its own IRQ.</p>
+<p>The DTC and DMAC interrupts behave differently. The DTC uses the configured event IRQ as the interrupt source whereas each DMAC channel has its own IRQ.</p>
 <p>The transfer_info_t::irq setting also behaves a little differently depending on which mode is selected.</p>
-<h4>Normal Mode</h4>
+<ul>
+<li><b>Normal Mode</b></li>
+</ul>
 <table class="doxtable">
 <tr>
 <th></th><th>DTC </th><th>DMAC  </th></tr>
@@ -503,7 +507,9 @@ Supported</li>
 <tr>
 <td>TRANSFER_IRQ_END </td><td>Interrupt after last transfer </td><td>Interrupt after last transfer </td></tr>
 </table>
-<h4>Repeat Mode</h4>
+<ul>
+<li><b>Repeat Mode</b></li>
+</ul>
 <table class="doxtable">
 <tr>
 <th></th><th>DTC </th><th>DMAC  </th></tr>
@@ -512,7 +518,9 @@ Supported</li>
 <tr>
 <td>TRANSFER_IRQ_END </td><td>Interrupt after each repeat </td><td>Interrupt after last transfer </td></tr>
 </table>
-<h4>Block Mode</h4>
+<ul>
+<li><b>Block Mode</b></li>
+</ul>
 <table class="doxtable">
 <tr>
 <th></th><th>DTC </th><th>DMAC  </th></tr>
@@ -524,16 +532,18 @@ Supported</li>
 <dl class="section note"><dt>Note</dt><dd>DTC_VECTOR_TABLE_SIZE = (ICU_NVIC_IRQ_SOURCES x 4) Bytes</dd></dl>
 <h2><a class="anchor" id="r-dtc-peripheral-interrupts"></a>
 Peripheral Interrupts and DTC</h2>
-<p>When an interrupt is configured to trigger DTC transfers, the peripheral ISR will trigger on the following conditions:</p><ul>
+<p>When an interrupt is configured to trigger DTC transfers, the peripheral ISR will trigger on the following conditions:</p>
+<ul>
 <li>Each transfer completed (transfer_info_t::irq = TRANSFER_IRQ_EACH)</li>
 <li>Last transfer completed (transfer_info_t::irq = TRANSFER_IRQ_END)</li>
 </ul>
-<p>For example, if SCI1_RXI is configured to trigger DTC transfers and a SCI1_RXI event occurs, the interrupt will not fire until the DTC transfer is completed. If the DTC transfer_info_t::irq is configured to only interrupt on the last transfer, than no RXI interrupts will occur until the last transfer is completed.</p>
+<p>For example, if SCI1_RXI is configured to trigger DTC transfers and a SCI1_RXI event occurs, the interrupt will not fire until the DTC transfer is completed. If the DTC transfer_info_t::irq is configured to only interrupt on the last transfer, then no RXI interrupts will occur until the last transfer is completed.</p>
 <dl class="section note"><dt>Note</dt><dd>1. The DTC activation source must be enabled in the NVIC in order to trigger DTC transfers (Modules that are designed to integrate the R_DTC module will automatically handle this). </dd>
 <dd>
 2. The DTC prioritizes activation sources by granting the smaller interrupt vector numbers higher priority. The priority of interrupts to the CPU is determined by the NVIC priority.</dd></dl>
 <h2>Low Power Modes</h2>
-<p>DTCST must be set to 0 before transitioning to any of the following:</p><ul>
+<p>DTCST must be set to 0 before transitioning to any of the following:</p>
+<ul>
 <li>Module-stop state</li>
 <li>Software Standby mode without Snooze mode transition</li>
 <li>Deep Software Standby mode</li>
@@ -744,7 +754,7 @@ activation_source</td>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Transfer is configured and will start when trigger occurs. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Handle is not initialized. Call R_DTC_Open to initialize the control block. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Transfer source address is NULL or is not aligned corrrectly. Transfer destination address is NULL or is not aligned corrrectly.</td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Transfer source address is NULL or is not aligned correctly. Transfer destination address is NULL or is not aligned correctly.</td></tr>
   </table>
   </dd>
 </dl>
@@ -795,7 +805,7 @@ activation_source</td>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Transfer reset successfully (transfers are enabled). </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Handle is not initialized. Call R_DTC_Open to initialize the control block. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Transfer source address is NULL or is not aligned corrrectly. Transfer destination address is NULL or is not aligned corrrectly. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Transfer source address is NULL or is not aligned correctly. Transfer destination address is NULL or is not aligned correctly. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1001,6 +1011,53 @@ activation_source</td>
 
 </div>
 </div>
+<a id="gada65011161d1e5ae7a72678d9c4834d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gada65011161d1e5ae7a72678d9c4834d0">&#9670;&nbsp;</a></span>R_DTC_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DTC_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga665f80fc984ccf7585606be8eeccbb98">transfer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__callback__args__t">transfer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Placeholder for unsupported callbackset function. Implements <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#aec396dcd365f215cabfa1097e2a963de">transfer_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>DTC does not support direct callbacks. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga2139f7cdd0e8d8dcb0ce07b705ea1ef4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2139f7cdd0e8d8dcb0ce07b705ea1ef4">&#9670;&nbsp;</a></span>R_DTC_Close()</h2>
 
@@ -1034,7 +1091,7 @@ activation_source</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

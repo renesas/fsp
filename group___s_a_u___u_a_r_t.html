@@ -1,0 +1,1101 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: UART (r_sau_uart)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.2.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___s_a_u___u_a_r_t.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">UART (r_sau_uart)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga7dd00eddb4e0c68298a6b9229f217b99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga7dd00eddb4e0c68298a6b9229f217b99">R_SAU_UART_Open</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__cfg__t">uart_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga7dd00eddb4e0c68298a6b9229f217b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44aa57284d470646bec07941e1ae6798"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga44aa57284d470646bec07941e1ae6798">R_SAU_UART_Close</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:ga44aa57284d470646bec07941e1ae6798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c0a09a86897da8cc826c9e44b746d35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga9c0a09a86897da8cc826c9e44b746d35">R_SAU_UART_Read</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
+<tr class="separator:ga9c0a09a86897da8cc826c9e44b746d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd51dd62aee9b28e297374d74b377984"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#gabd51dd62aee9b28e297374d74b377984">R_SAU_UART_Write</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint8_t const *const p_src, uint32_t const bytes)</td></tr>
+<tr class="separator:gabd51dd62aee9b28e297374d74b377984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae47c940b0b65cad496c345db200fb216"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, void const *const p_baud_setting)</td></tr>
+<tr class="separator:gae47c940b0b65cad496c345db200fb216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44758fce8138f2b5a356291ee33f0737"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga44758fce8138f2b5a356291ee33f0737">R_SAU_UART_CallbackSet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga44758fce8138f2b5a356291ee33f0737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31c43e2e65f20dfe0f7429049df3a96c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga31c43e2e65f20dfe0f7429049df3a96c">R_SAU_UART_InfoGet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__info__t">uart_info_t</a> *const p_info)</td></tr>
+<tr class="separator:ga31c43e2e65f20dfe0f7429049df3a96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50cfcb1b9f53fe905f821cfc2e123bcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga50cfcb1b9f53fe905f821cfc2e123bcf">R_SAU_UART_Abort</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#gac36c5a0dffa37b418fb9425a76c57740">uart_dir_t</a> communication_to_abort)</td></tr>
+<tr class="separator:ga50cfcb1b9f53fe905f821cfc2e123bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga875303c862e3b831b320fa5a178eb81c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga875303c862e3b831b320fa5a178eb81c">R_SAU_UART_ReadStop</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint32_t *remaining_bytes)</td></tr>
+<tr class="separator:ga875303c862e3b831b320fa5a178eb81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ea689deb534b17167fde0abc5ec2d59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga1ea689deb534b17167fde0abc5ec2d59">R_SAU_UART_BaudCalculate</a> (uint32_t baudrate, sau_uart_baudrate_setting_t *const p_baud_setting)</td></tr>
+<tr class="separator:ga1ea689deb534b17167fde0abc5ec2d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>UART driver for the SAU peripheral on RA MCUs. This module implements the <a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a>. </p>
+<h1><a class="anchor" id="r_sau_uart-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r-sau-uart-features"></a>
+Features</h2>
+<p>The SAU UART module supports the following features:</p>
+<ul>
+<li>Full-duplex UART communication</li>
+<li>Interrupt-driven data transmission and reception<a class="anchor" id="um_sau_uart_back_to_back_writes"></a><a class="anchor" id="um_sau_uart_reception_complete_notification"></a></li>
+<li>Invoking the user-callback function with an event code (RX/TX complete, TX data empty, RX char, error, etc)</li>
+<li>Baud-rate change at run-time</li>
+<li>Integration with the DTC transfer module</li>
+<li>Abort in-progress read/write operations</li>
+</ul>
+<h1><a class="anchor" id="r-sau-uart-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_sau_uart_read"></a><a class="anchor" id="um_sau_uart_write"></a><a class="anchor" id="um_sau_uart_data_bits"></a><a class="anchor" id="um_sau_uart_query_maximum_read_length"></a><a class="anchor" id="um_sau_uart_query_maximum_write_length"></a><a class="anchor" id="um_sau_uart_parity"></a><a class="anchor" id="um_sau_uart_multiple_channel_support"></a><a class="anchor" id="um_sau_uart_transfer_mode"></a><a class="anchor" id="um_sau_uart_abort"></a><a class="anchor" id="um_sau_uart_operation_clock"></a><a class="anchor" id="um_sau_uart_sequence"></a><a class="anchor" id="um_sau_uart_stop_bits"></a><a class="anchor" id="um_sau_uart_callback_set"></a> <h2>Build Time Configurations for r_sau_uart</h2>
+The following build time configurations are defined in fsp_cfg/r_sau_uart_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Critical Section Guarding</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable critical section guarding around peripheral configuration updates. This should be enabled if the R_SAU_I2C module is being used simultaneously with this module. </td></tr>
+<tr class="tree_none">
+<td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DTC support for the SAU_UART module. </td></tr>
+</table>
+ <h2>Configurations for Connectivity &gt; UART (r_sau_uart)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_sau_uart).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_uart0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the UART channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+7 bits</li>
+<li>
+8 bits</li>
+<li>
+9 bits</li>
+</ul>
+</td><td>8 bits </td><td>Select the number of bits per word. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Parity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+None</li>
+<li>
+Zero</li>
+<li>
+Odd</li>
+<li>
+Even</li>
+</ul>
+</td><td>None </td><td>Select the parity mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Stop Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 bit</li>
+<li>
+2 bits</li>
+</ul>
+</td><td>1 bit </td><td>Select the number of stop bits. In receive, 2 bit is not available. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LSB First</li>
+<li>
+MSB First</li>
+</ul>
+</td><td>LSB First </td><td>Select of data transfer sequence. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Baud  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
+<br />
+If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+CK0</li>
+<li>
+CK1</li>
+</ul>
+</td><td>CK0 </td><td>Select the operating clock. <br />
+<br />
+Note: when creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transfer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Single transfer mode</li>
+<li>
+Continuous transfer mode</li>
+</ul>
+</td><td>Single transfer mode </td><td>Select the transfer mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Tx Signal Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Standard</li>
+<li>
+Inverted</li>
+</ul>
+</td><td>Standard </td><td>Select the level of transmitted signal. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-sau-uart-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The SAU clock is based on the peripheral module clock which is the system clock (ICLK).</p>
+<h2><a class="anchor" id="r-sau-uart-pin-configuration"></a>
+Pin Configuration</h2>
+<h1><a class="anchor" id="r-sau-uart-usage_notes"></a>
+Usage Notes</h1>
+<h2>9-bit data transfers</h2>
+<ul>
+<li>p_src: the address for the send data buffer. p_src in R_SAU_UART_Write must be aligned on a 16-bit boundary. (the data order in buffer: the lower 8-bits of the first number, the highest 1-bit of the first number, the lower 8-bits of the second number, the highest 1-bit of the second number, etc)</li>
+<li>byte: the size of send data buffer.</li>
+</ul>
+<h2><a class="anchor" id="r-sau-uart-limitations"></a>
+Limitations</h2>
+<ul>
+<li>When creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. Related SAU modules: SAU-SPI, SAU-IIC and SAU-UART.</li>
+<li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+<li>If 9-bit data length is specified at R_SAU_UART_Open call, p_src in R_SAU_UART_Write must be aligned on a 16-bit boundary.</li>
+<li>When multiple channels on the same SAU unit need to be used, and one is configured as UART, then critical section property needs to be enabled.</li>
+</ul>
+<h2><a class="anchor" id="r-sau-uart-dtc"></a>
+DTC Limitations</h2>
+<ul>
+<li>DTC support is available for reception, but labeled as [Not recommended]. This is because the UART bytes are received asynchronously. Bytes can be received between calls to <a class="el" href="group___s_a_u___u_a_r_t.html#ga9c0a09a86897da8cc826c9e44b746d35">R_SAU_UART_Read()</a>. The logic required to combine bytes received through <a class="el" href="group___s_a_u___u_a_r_t.html#ga9c0a09a86897da8cc826c9e44b746d35">R_SAU_UART_Read()</a> (UART_EVENT_RX_COMPLETE) and bytes received between calls (UART_EVENT_RX_CHAR) is complex. Reception length may also be unknown, and the driver will not issue an interrupt unless the entire DTC buffer is filled.</li>
+<li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
+<li>When using 9-bit reception with DTC, clear the upper 7 bits of data before processing the read data. The upper 7 bits contain status flags that are part of the register used to read data in 9-bit mode.</li>
+</ul>
+<h1><a class="anchor" id="r-sau-uart-examples"></a>
+Examples</h1>
+<h2>SAU UART Example</h2>
+<div class="fragment"><div class="line">uint8_t  g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_src[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_out_of_band_received[TRANSFER_LENGTH];</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line">uint32_t g_receive_complete  = 0;</div><div class="line">uint32_t g_out_of_band_index = 0;</div><div class="line"><span class="keywordtype">void</span> r_sau_uart_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga7dd00eddb4e0c68298a6b9229f217b99">R_SAU_UART_Open</a>(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga9c0a09a86897da8cc826c9e44b746d35">R_SAU_UART_Read</a>(&amp;g_uart0_ctrl, g_dest, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#gabd51dd62aee9b28e297374d74b377984">R_SAU_UART_Write</a>(&amp;g_uart0_ctrl, g_src, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_receive_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> example_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the UART event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Received a character */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Only put the next character in the receive buffer if there is space for it */</span></div><div class="line">            <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(g_out_of_band_received) &gt; g_out_of_band_index)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Write either the next one or two bytes depending on the receive data size */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db">UART_DATA_BITS_8</a> &gt;= g_uart0_cfg.data_bits)</div><div class="line">                {</div><div class="line">                    g_out_of_band_received[g_out_of_band_index++] = (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    uint16_t * p_dest = (uint16_t *) &amp;g_out_of_band_received[g_out_of_band_index];</div><div class="line">                    *p_dest              = (uint16_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                    g_out_of_band_index += 2;</div><div class="line">                }</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_receive_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Transmit complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da56867c1db03ea3ee2c704604ac94b767">UART_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_transfer_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>SAU UART Baud Set Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define SAU_UART_BAUDRATE_19200              (19200)</span></div><div class="line"><span class="preprocessor">#define SAU_UART_BAUDRATE_ERROR_PERCENT_5    (5000)</span></div><div class="line"><span class="keywordtype">void</span> r_sau_uart_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    sau_uart_baudrate_setting_t baud_setting;</div><div class="line">    uint32_t baud_rate = SAU_UART_BAUDRATE_19200;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga1ea689deb534b17167fde0abc5ec2d59">R_SAU_UART_BaudCalculate</a>(baud_rate, &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structsau__uart__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#structsau__uart__extended__cfg__t">sau_uart_extended_cfg_t</a></td></tr>
+<tr class="separator:structsau__uart__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsau__uart__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#structsau__uart__instance__ctrl__t">sau_uart_instance_ctrl_t</a></td></tr>
+<tr class="separator:structsau__uart__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gacf645f3e96a43332a7a1359a253f68e9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#gacf645f3e96a43332a7a1359a253f68e9">sau_uart_data_sequence_t</a> </td></tr>
+<tr class="separator:gacf645f3e96a43332a7a1359a253f68e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga744591125c42fee7abe363e198945c5e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga744591125c42fee7abe363e198945c5e">sau_operation_clock_t</a> </td></tr>
+<tr class="separator:ga744591125c42fee7abe363e198945c5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f51ebcde22f72b364dbf55f50573f7e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga1f51ebcde22f72b364dbf55f50573f7e">sau_uart_transfer_mode_t</a> </td></tr>
+<tr class="separator:ga1f51ebcde22f72b364dbf55f50573f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf54caf6e76a362e2ed16f7cfb26408dd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#gaf54caf6e76a362e2ed16f7cfb26408dd">sau_uart_signal_level_t</a> </td></tr>
+<tr class="separator:gaf54caf6e76a362e2ed16f7cfb26408dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structsau__uart__extended__cfg__t" id="structsau__uart__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsau__uart__extended__cfg__t">&#9670;&nbsp;</a></span>sau_uart_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sau_uart_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>UART Configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3fa9d846113b45ab439a456e2872befa"></a><a class="el" href="group___s_a_u___u_a_r_t.html#ga744591125c42fee7abe363e198945c5e">sau_operation_clock_t</a></td>
+<td class="fieldname">
+operation_clock</td>
+<td class="fielddoc">
+Select operation clock. </td></tr>
+<tr><td class="fieldtype">
+<a id="acd094dded96a4cbc7afd7dde2d50cf69"></a><a class="el" href="group___s_a_u___u_a_r_t.html#ga1f51ebcde22f72b364dbf55f50573f7e">sau_uart_transfer_mode_t</a></td>
+<td class="fieldname">
+transfer_mode</td>
+<td class="fielddoc">
+Select single transfer mode or continuous transfer mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="afa168b462163ce35954f23c8981d1f60"></a><a class="el" href="group___s_a_u___u_a_r_t.html#gacf645f3e96a43332a7a1359a253f68e9">sau_uart_data_sequence_t</a></td>
+<td class="fieldname">
+sequence</td>
+<td class="fielddoc">
+Transfer sequence (LSB or MSB) </td></tr>
+<tr><td class="fieldtype">
+<a id="aaab7fc6d2539a49fae9e661b25d3436f"></a><a class="el" href="group___s_a_u___u_a_r_t.html#gaf54caf6e76a362e2ed16f7cfb26408dd">sau_uart_signal_level_t</a></td>
+<td class="fieldname">
+signal_level</td>
+<td class="fielddoc">
+Transfer data signal level (standard or inverted) </td></tr>
+<tr><td class="fieldtype">
+<a id="a086e709e8c5036174f1bf77da4ae31ef"></a>sau_uart_baudrate_setting_t *</td>
+<td class="fieldname">
+p_baudrate</td>
+<td class="fielddoc">
+Baud rate setting (SPS and SDR value) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structsau__uart__instance__ctrl__t" id="structsau__uart__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsau__uart__instance__ctrl__t">&#9670;&nbsp;</a></span>sau_uart_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sau_uart_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>UART instance control block. DO NOT INITIALIZE. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a6beb1b06bedf3974e443db0d079c1e59"><td class="memItemLeft" align="right" valign="top"><a id="a6beb1b06bedf3974e443db0d079c1e59"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a6beb1b06bedf3974e443db0d079c1e59">extra_data_byte</a></td></tr>
+<tr class="memdesc:a6beb1b06bedf3974e443db0d079c1e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 for 7 or 8 bit data length(1-byte), 1 for 9 bit data length(2-byte) <br /></td></tr>
+<tr class="separator:a6beb1b06bedf3974e443db0d079c1e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1a10b2f8bb65bcaed8fe48b1b912f56"><td class="memItemLeft" align="right" valign="top"><a id="ac1a10b2f8bb65bcaed8fe48b1b912f56"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ac1a10b2f8bb65bcaed8fe48b1b912f56">open</a></td></tr>
+<tr class="memdesc:ac1a10b2f8bb65bcaed8fe48b1b912f56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:ac1a10b2f8bb65bcaed8fe48b1b912f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d86d46c553f6277d446616bc86c1ad6"><td class="memItemLeft" align="right" valign="top"><a id="a2d86d46c553f6277d446616bc86c1ad6"></a>
+<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__cfg__t">uart_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a2d86d46c553f6277d446616bc86c1ad6">p_cfg</a></td></tr>
+<tr class="memdesc:a2d86d46c553f6277d446616bc86c1ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the configuration block. <br /></td></tr>
+<tr class="separator:a2d86d46c553f6277d446616bc86c1ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac574d62d86b1f8f9543b3a4ee12391e6"><td class="memItemLeft" align="right" valign="top"><a id="ac574d62d86b1f8f9543b3a4ee12391e6"></a>
+R_SAU0_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ac574d62d86b1f8f9543b3a4ee12391e6">p_reg</a></td></tr>
+<tr class="memdesc:ac574d62d86b1f8f9543b3a4ee12391e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base register for the transmit channel. <br /></td></tr>
+<tr class="separator:ac574d62d86b1f8f9543b3a4ee12391e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad076951cd9dca0177ad88b7423acc84f"><td class="memItemLeft" align="right" valign="top"><a id="ad076951cd9dca0177ad88b7423acc84f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ad076951cd9dca0177ad88b7423acc84f">sau_unit</a></td></tr>
+<tr class="memdesc:ad076951cd9dca0177ad88b7423acc84f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAU unit information. <br /></td></tr>
+<tr class="separator:ad076951cd9dca0177ad88b7423acc84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50d2180fc1492c07ea436e5e0d4ac78c"><td class="memItemLeft" align="right" valign="top"><a id="a50d2180fc1492c07ea436e5e0d4ac78c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a50d2180fc1492c07ea436e5e0d4ac78c">sau_tx_channel</a></td></tr>
+<tr class="memdesc:a50d2180fc1492c07ea436e5e0d4ac78c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAU channel information. <br /></td></tr>
+<tr class="separator:a50d2180fc1492c07ea436e5e0d4ac78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a891b7d9838d51e863b4932108eba53bb"><td class="memItemLeft" align="right" valign="top"><a id="a891b7d9838d51e863b4932108eba53bb"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a891b7d9838d51e863b4932108eba53bb">p_src</a></td></tr>
+<tr class="memdesc:a891b7d9838d51e863b4932108eba53bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source buffer pointer. <br /></td></tr>
+<tr class="separator:a891b7d9838d51e863b4932108eba53bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a950917335d9e41cb6978217d7b6dc47d"><td class="memItemLeft" align="right" valign="top"><a id="a950917335d9e41cb6978217d7b6dc47d"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a950917335d9e41cb6978217d7b6dc47d">p_dest</a></td></tr>
+<tr class="memdesc:a950917335d9e41cb6978217d7b6dc47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destination buffer pointer. <br /></td></tr>
+<tr class="separator:a950917335d9e41cb6978217d7b6dc47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafa46a049fea3d7182a4b3a8eabb8e90"><td class="memItemLeft" align="right" valign="top"><a id="aafa46a049fea3d7182a4b3a8eabb8e90"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#aafa46a049fea3d7182a4b3a8eabb8e90">tx_count</a></td></tr>
+<tr class="memdesc:aafa46a049fea3d7182a4b3a8eabb8e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of destination buffer pointer from transmit ISR. <br /></td></tr>
+<tr class="separator:aafa46a049fea3d7182a4b3a8eabb8e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4054cf4fa0254512a3bb7ba14d441f82"><td class="memItemLeft" align="right" valign="top"><a id="a4054cf4fa0254512a3bb7ba14d441f82"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a4054cf4fa0254512a3bb7ba14d441f82">rx_count</a></td></tr>
+<tr class="memdesc:a4054cf4fa0254512a3bb7ba14d441f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of destination buffer pointer used for receiving data. <br /></td></tr>
+<tr class="separator:a4054cf4fa0254512a3bb7ba14d441f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d55fa54879a36c69fdce41104f72bd6"><td class="memItemLeft" align="right" valign="top"><a id="a9d55fa54879a36c69fdce41104f72bd6"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a9d55fa54879a36c69fdce41104f72bd6">tx_number</a></td></tr>
+<tr class="memdesc:a9d55fa54879a36c69fdce41104f72bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data sent. <br /></td></tr>
+<tr class="separator:a9d55fa54879a36c69fdce41104f72bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15e7e9ee784d1ccc917914ec5f305c6f"><td class="memItemLeft" align="right" valign="top"><a id="a15e7e9ee784d1ccc917914ec5f305c6f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a15e7e9ee784d1ccc917914ec5f305c6f">rx_number</a></td></tr>
+<tr class="memdesc:a15e7e9ee784d1ccc917914ec5f305c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data received. <br /></td></tr>
+<tr class="separator:a15e7e9ee784d1ccc917914ec5f305c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gacf645f3e96a43332a7a1359a253f68e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf645f3e96a43332a7a1359a253f68e9">&#9670;&nbsp;</a></span>sau_uart_data_sequence_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___u_a_r_t.html#gacf645f3e96a43332a7a1359a253f68e9">sau_uart_data_sequence_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART Data transfer sequence definition </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacf645f3e96a43332a7a1359a253f68e9ac0547cd81674726eaed5767b5e88e1ce"></a>SAU_UART_DATA_SEQUENCE_MSB&#160;</td><td class="fielddoc"><p>Data sequence MSB first. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacf645f3e96a43332a7a1359a253f68e9abefdf83c187e61e2ea2a62a9cb3f1fba"></a>SAU_UART_DATA_SEQUENCE_LSB&#160;</td><td class="fielddoc"><p>Data sequence LSB first. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga744591125c42fee7abe363e198945c5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga744591125c42fee7abe363e198945c5e">&#9670;&nbsp;</a></span>sau_operation_clock_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___u_a_r_t.html#ga744591125c42fee7abe363e198945c5e">sau_operation_clock_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART operation clock selection definition </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga744591125c42fee7abe363e198945c5ea4040b92a3bf00f44fd0f1ecb2e90a50f"></a>SAU_UART_OPERATION_CLOCK_CK0&#160;</td><td class="fielddoc"><p>Operating clock use CK0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga744591125c42fee7abe363e198945c5eaf663cb1d5a37a9e86c61a69e46048ac4"></a>SAU_UART_OPERATION_CLOCK_CK1&#160;</td><td class="fielddoc"><p>Operating clock use CK1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1f51ebcde22f72b364dbf55f50573f7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f51ebcde22f72b364dbf55f50573f7e">&#9670;&nbsp;</a></span>sau_uart_transfer_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___u_a_r_t.html#ga1f51ebcde22f72b364dbf55f50573f7e">sau_uart_transfer_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART transfer mode selection definition </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1f51ebcde22f72b364dbf55f50573f7ea7df4720f2cc158370b4967a786e68089"></a>SAU_UART_TRANSFER_MODE_SINGLE&#160;</td><td class="fielddoc"><p>Single transfer mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f51ebcde22f72b364dbf55f50573f7eaedea3bb4c3c562a5e9ab7aaf77de37fe"></a>SAU_UART_TRANSFER_MODE_CONTINUOUS&#160;</td><td class="fielddoc"><p>Continuous transfer mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf54caf6e76a362e2ed16f7cfb26408dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf54caf6e76a362e2ed16f7cfb26408dd">&#9670;&nbsp;</a></span>sau_uart_signal_level_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_a_u___u_a_r_t.html#gaf54caf6e76a362e2ed16f7cfb26408dd">sau_uart_signal_level_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART data signal level definition </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf54caf6e76a362e2ed16f7cfb26408dda696912088d01ac2323a60a865341b926"></a>SAU_UART_SIGNAL_LEVEL_STANDARD&#160;</td><td class="fielddoc"><p>Uart data signal level standard. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf54caf6e76a362e2ed16f7cfb26408dda575aaa7f5c25a8c4a0bcb2d7eaf663e2"></a>SAU_UART_SIGNAL_LEVEL_INVERTED&#160;</td><td class="fielddoc"><p>Uart data signal level inverted. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga7dd00eddb4e0c68298a6b9229f217b99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7dd00eddb4e0c68298a6b9229f217b99">&#9670;&nbsp;</a></span>R_SAU_UART_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__cfg__t">uart_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configures the UART driver based on the input configurations. If reception is enabled at compile time, reception is enabled at the end of this function. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a962363eebf6d497894b5ca569ebb87bb">uart_api_t::open</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block or configuration structure is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The requested channel does not exist on this MCU. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flow control is enabled but flow control pin is not defined or selected channel does not support "Hardware CTS and Hardware RTS" flow control. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a84d48960cdfe867ef54fd4635a85ceeb">transfer_api_t::open</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga44aa57284d470646bec07941e1ae6798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga44aa57284d470646bec07941e1ae6798">&#9670;&nbsp;</a></span>R_SAU_UART_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Aborts any in progress transfers. Disables interrupts, receiver, and transmitter. Closes lower level transfer drivers if used. Removes power. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a4e7e47514702ff0e3515280590dd9659">uart_api_t::close</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9c0a09a86897da8cc826c9e44b746d35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9c0a09a86897da8cc826c9e44b746d35">&#9670;&nbsp;</a></span>R_SAU_UART_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receives user specified number of bytes into destination buffer pointer. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a75ba1611c4bba17f25f1957348991829">uart_api_t::read</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Data reception successfully ends. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. Number of transfers outside the max or min boundary when transfer instance used </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Destination address or data size is not valid for 9-bit mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A previous read operation is still in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>current operation mode is transmission only.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9c096c8d0e78dfbf8b3809a4598b8619">transfer_api_t::reset</a></li>
+</ul>
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If 9-bit data length is specified at R_SAU_UART_Open call, p_dest must be aligned 16-bit boundary. </dd></dl>
+
+</div>
+</div>
+<a id="gabd51dd62aee9b28e297374d74b377984"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabd51dd62aee9b28e297374d74b377984">&#9670;&nbsp;</a></span>R_SAU_UART_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmits user specified number of bytes from the source buffer pointer. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a9a87e8764518ac3268cf1c9df3b6aad3">uart_api_t::write</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Data transmission finished successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. Number of transfers outside the max or min boundary when transfer instance used </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Source address or data size is not valid for 9-bit mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A UART transmission is in progress </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SAU_UART_CFG_TX_ENABLE is set to 0</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9c096c8d0e78dfbf8b3809a4598b8619">transfer_api_t::reset</a></li>
+</ul>
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If 9-bit data length is specified at R_SAU_UART_Open call, p_src must be aligned on a 16-bit boundary. </dd></dl>
+
+</div>
+</div>
+<a id="gae47c940b0b65cad496c345db200fb216"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae47c940b0b65cad496c345db200fb216">&#9670;&nbsp;</a></span>R_SAU_UART_BaudSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_BaudSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_baud_setting</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the baud rate using the clock selected in Open. p_baud_setting is a pointer to a sau_uart_baudrate_setting_t structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a8b0f901bcc26bd6836fe620235585f98">uart_api_t::baudSet</a></p>
+<dl class="section warning"><dt>Warning</dt><dd>This terminates any in-progress transmission.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer p_ctrl is NULL </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>p_api_ctrl is empty. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga44758fce8138f2b5a356291ee33f0737"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga44758fce8138f2b5a356291ee33f0737">&#9670;&nbsp;</a></span>R_SAU_UART_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback for callback structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acfd849190deedb8f9c35bed54dccc111">uart_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer p_ctrl is NULL or p_callback_memory is not NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga31c43e2e65f20dfe0f7429049df3a96c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga31c43e2e65f20dfe0f7429049df3a96c">&#9670;&nbsp;</a></span>R_SAU_UART_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#structuart__info__t">uart_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides the driver information, including the maximum number of bytes that can be received or transmitted at a time. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Information stored in provided p_info. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Pointer to UART control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga50cfcb1b9f53fe905f821cfc2e123bcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50cfcb1b9f53fe905f821cfc2e123bcf">&#9670;&nbsp;</a></span>R_SAU_UART_Abort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_Abort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gac36c5a0dffa37b418fb9425a76c57740">uart_dir_t</a>&#160;</td>
+          <td class="paramname"><em>communication_to_abort</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides API to abort ongoing transfer. Transmission is aborted after the current character is transmitted. Reception is still enabled after abort(). Any characters received after abort() and before the transfer is reset in the next call to read(), will arrive via the callback function with event UART_EVENT_RX_CHAR. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>UART transaction aborted successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The requested Abort direction is unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a3188207ba386da0ec85946e134b4327a">transfer_api_t::disable</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga875303c862e3b831b320fa5a178eb81c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga875303c862e3b831b320fa5a178eb81c">&#9670;&nbsp;</a></span>R_SAU_UART_ReadStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_ReadStop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>remaining_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides API to abort ongoing read. Reception is still enabled after abort(). Any characters received after abort() and before the transfer is reset in the next call to read(), will arrive via the callback function with event UART_EVENT_RX_CHAR. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acb47c360a2ac4ddd36e53f0a4ad71b92">uart_api_t::readStop</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>UART transaction aborted successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The requested Abort direction is unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a3188207ba386da0ec85946e134b4327a">transfer_api_t::disable</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga1ea689deb534b17167fde0abc5ec2d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1ea689deb534b17167fde0abc5ec2d59">&#9670;&nbsp;</a></span>R_SAU_UART_BaudCalculate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_BaudCalculate </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baudrate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sau_uart_baudrate_setting_t *const&#160;</td>
+          <td class="paramname"><em>p_baud_setting</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate related registers.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate [bps]. For example, 19200, 57600, 115200, etc. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_baud_setting</td><td>Baud setting information stored here if successful</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is set successfully </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Baud rate is not in intput range max error, or requested max error in baud rate is larger than 15%. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

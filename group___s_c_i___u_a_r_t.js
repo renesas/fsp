@@ -35,6 +35,19 @@ var group___s_c_i___u_a_r_t =
     ] ],
     [ "sci_uart_rx_fifo_trigger_t", "group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6", [
       [ "SCI_UART_RX_FIFO_TRIGGER_1", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6acbf7b549f4da64e02ba6a63e7fb96f43", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_2", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a70fe7f56c7e3c69d336ed632b34e67b6", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_3", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6abd125add1ea2e6bc657778252b0a35db", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_4", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6aad32310b4a403e26c1183d458bd5a775", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_5", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a97226e33c067a061d700840b7ee8da27", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_6", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a79b01254089af1d371d2a4a40b4ac7b4", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_7", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a7ff0f7183551216a3c82023e6d18120c", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_8", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6ac891c3d01b14bd3c103410bf5f63eb45", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_9", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a367841ce768861d718115e062405cd23", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_10", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a9cc438db90c412b0b37b7e585939bab6", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_11", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a707aad2aa3f05405bc529f3ab3afa40a", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_12", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6af43237ea46192f4d836146e03a52f216", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_13", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6aacff35e10eff0d27cc7d1db5b5823fb4", null ],
+      [ "SCI_UART_RX_FIFO_TRIGGER_14", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a342f707751db3524cbc5512752bc848a", null ],
       [ "SCI_UART_RX_FIFO_TRIGGER_MAX", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6a8e41b6d8ad370ac8220019171cd2cbfd", null ]
     ] ],
     [ "sci_uart_start_bit_t", "group___s_c_i___u_a_r_t.html#ga8d278bc6b5096aa0dbe36e5c953cf073", [

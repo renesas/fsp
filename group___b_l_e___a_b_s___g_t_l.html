@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -247,7 +247,7 @@ Overview</h1>
 <p>The module supports the Renesas Electronics DA14531 Bluetooth® Low Energy 5 Module. The rm_ble_abs_gtl driver interfaces with the DA14531 module over UART.</p>
 <h2><a class="anchor" id="rm_ble_abs_gtl-features"></a>
 Features</h2>
-<p>The Bluetooth Low Energy Abstraction module with GTL supports the following features:</p><ul>
+<p>The Bluetooth Low Energy (BLE) Abstraction module with GTL supports the following features:</p><ul>
 <li>Common functionality<ul>
 <li>Open/Close the BLE protocol stack.</li>
 </ul>
@@ -285,10 +285,16 @@ Pin Configuration</h2>
 </ul>
 <h1><a class="anchor" id="rm_ble_abs_gtl-usage_notes"></a>
 Usage Notes</h1>
+<h2>Getting Started Guide</h2>
+<p>The below guide walks users through building a fully working solution that allows booting from the host via 1-wire UART in order to run a BLE application from the RA MCU using the GTL interface.</p>
+<p><a href="https://lpccs-docs.renesas.com/DA1453x-FSP_BLE_Framework/UM-B-172/index.html">https://lpccs-docs.renesas.com/DA1453x-FSP_BLE_Framework/UM-B-172/index.html</a></p>
+<h2>Addresses</h2>
 <p>When using a public BD address the address pre-programmed into the DA14531 will be used and can't be overridden.</p>
 <p>A random address can be set by calling the R_BLE_VS_SetBdAddr function before the R_BLE_GAP_Init function is called.</p>
+<h2>Heap Requirements</h2>
 <p>Ensure the BSP heap size is set to at least 2K bytes.</p>
 <p>When using FreeRTOS ensure the heap 4 size is set to a minimum of 2K bytes.</p>
+<h2>Module Firmware Compatibility</h2>
 <p>This middleware module is compatible with GTL binary version 6.0.18 and later. You must ensure that the DA14531 Module (or PMOD) you are using contains this version (or later) firmware or that you use the boot from host feature and have the host MCU load the binary into the DA14531.</p>
 <p>Instructions detailing how to upgrade the firmware in a DA14531 Module can be found here:</p>
 <p><a href="https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html">https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html</a></p>
@@ -381,7 +387,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

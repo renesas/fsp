@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -238,7 +238,8 @@ $(document).ready(function(){initNavTree('group___d_a_c.html','');});
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">DAC (r_dac)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
 </div><!--header-->
@@ -321,6 +322,8 @@ Left Justified</li>
 <td>Internal Output</td><td>MCU Specific Options</td><td></td><td>Enable DAC output to internal modules. </td></tr>
 <tr class="tree_none">
 <td>ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC event source that will trigger the DAC to start a conversion. </td></tr>
+<tr class="tree_none">
+<td>Reference Voltage</td><td>MCU Specific Options</td><td></td><td>Select the DAC reference voltage. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-dac-clock-configuration"></a>
@@ -364,6 +367,11 @@ Data Structures</h2></td></tr>
 <tr class="separator:structdac__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structdac__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c.html#structdac__extended__cfg__t">dac_extended_cfg_t</a></td></tr>
 <tr class="separator:structdac__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga151b6056fe8dfc1d877265675872e8fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c.html#ga151b6056fe8dfc1d877265675872e8fc">dac_ref_volt_sel_t</a> </td></tr>
+<tr class="separator:ga151b6056fe8dfc1d877265675872e8fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structdac__instance__ctrl__t" id="structdac__instance__ctrl__t"></a>
@@ -419,6 +427,38 @@ Internal output enable available on selected MCUs. </td></tr>
 data_format</td>
 <td class="fielddoc">
 Data format. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab2bfff716ab8765e40d7aa491e78534a"></a><a class="el" href="group___d_a_c.html#ga151b6056fe8dfc1d877265675872e8fc">dac_ref_volt_sel_t</a></td>
+<td class="fieldname">
+ref_volt_sel</td>
+<td class="fielddoc">
+Reference voltage selection. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga151b6056fe8dfc1d877265675872e8fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga151b6056fe8dfc1d877265675872e8fc">&#9670;&nbsp;</a></span>dac_ref_volt_sel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_a_c.html#ga151b6056fe8dfc1d877265675872e8fc">dac_ref_volt_sel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DAC Reference voltage selection. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga151b6056fe8dfc1d877265675872e8fca40bf91e652bd95209caf6564d14b33fe"></a>DAC_VREF_NONE&#160;</td><td class="fielddoc"><p>No reference voltage selected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga151b6056fe8dfc1d877265675872e8fca75991eb3e916e3bbd34ede85d9e4c952"></a>DAC_VREF_AVCC0_AVSS0&#160;</td><td class="fielddoc"><p>Select AVCC0/AVSS0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga151b6056fe8dfc1d877265675872e8fca8d65ea6fbea7d792af77bf940979c459"></a>DAC_VREF_IVREF_AVSS0&#160;</td><td class="fielddoc"><p>Select Internal reference voltage/AVSS0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga151b6056fe8dfc1d877265675872e8fca3fc4d1ce51ae0aef3631d2d2bc24d86a"></a>DAC_VREF_VREFH_VREFL&#160;</td><td class="fielddoc"><p>Select VREFH/VREFL. </p>
+</td></tr>
 </table>
 
 </div>
@@ -592,7 +632,7 @@ Data format. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

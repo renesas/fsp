@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: /PVD Low/Programmable Voltage Detection  (r_lvd)</title>
+<title>RA Flexible Software Package Documentation: LVD</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.1.0</span>
+   &#160;<span id="projectnumber">Release v5.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -240,7 +240,7 @@ $(document).ready(function(){initNavTree('group___l_v_d.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">/PVD Low/Programmable Voltage Detection (r_lvd)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___m_o_n_i_t_o_r_i_n_g___m_o_d_u_l_e_s.html">Monitoring</a></div></div>  </div>
+<div class="title">LVD</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -258,114 +258,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga9548fb81b4659985ce9aed2343a2e34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the LVD and PVD peripherals on RA MCUs. This module implements the <a class="el" href="group___l_v_d___a_p_i.html">Low Voltage Detection Interface</a>. </p>
-<dl class="section note"><dt>Note</dt><dd>In the below usage notes, "LVD" refers to both LVD and PVD.</dd></dl>
-<h1><a class="anchor" id="r-lvd-overview"></a>
-Overview</h1>
-<p>The Low Voltage Detection module configures the voltage monitors to detect when a power supply pin or a voltage detector pin voltages crosses a specified threshold.</p>
-<h2><a class="anchor" id="r-lvd-features"></a>
-Features</h2>
-<p>The LVD HAL module supports the following functions:</p><ul>
-<li>Five run-time configurable voltage monitors (Voltage Monitor 1, Voltage Monitor 2, LVD VBAT, LVD VRTC, EXLVD)<ul>
-<li>Configurable voltage threshold</li>
-<li>Digital filter (Available on specific MCUs)</li>
-<li>Support for both interrupt or polling<ul>
-<li>NMI or maskable interrupt can be configured (NMI support for Voltage Monitor 1 &amp; Voltage Monitor 2 only).</li>
-</ul>
-</li>
-<li>Voltage monitor interrupt generation condition can be configured (rising, falling, or both edge event detection).</li>
-<li>Support for resetting the MCU when V<sub>CC</sub> falls below/rises above configured threshold.</li>
-</ul>
-</li>
-</ul>
-<h1><a class="anchor" id="r-lvd-configuration"></a>
-Configuration</h1>
-<p><a class="anchor" id="um_lvd_reset"></a><a class="anchor" id="um_lvd_reset_on_rising"></a><a class="anchor" id="um_lvd_voltage_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_interrupt"></a><a class="anchor" id="um_lvd_voltage_rising_falling_interrupt"></a><a class="anchor" id="um_lvd_voltage_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_nmi"></a><a class="anchor" id="um_lvd_voltage_rising_falling_nmi"></a><a class="anchor" id="um_lvd_voltage_threshold"></a><a class="anchor" id="um_lvd_voltage_monitor"></a><a class="anchor" id="um_lvd_digital_filter"></a> <h2>Build Time Configurations for r_lvd</h2>
-The following build time configurations are defined in fsp_cfg/r_lvd_cfg.h:<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr class="tree_none">
-<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Default (BSP)</li>
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
-</table>
- <h2>Configurations for Monitoring &gt; Low/Programmable Voltage Detection (r_lvd)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Low/Programmable Voltage Detection (r_lvd). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr class="tree_none">
-<td>Name</td><td>Name must be a valid C symbol</td><td>g_lvd0 </td><td>Module name. </td></tr>
-<tr class="tree_none">
-<td>Monitor Number</td><td>MCU Specific Options</td><td></td><td>Select the LVD monitor. </td></tr>
-<tr class="tree_none">
-<td>Digital Filter</td><td>MCU Specific Options</td><td></td><td>Enable the digital filter and select the digital filter clock divider. </td></tr>
-<tr class="tree_none">
-<td>Voltage Threshold</td><td>MCU Specific Options</td><td></td><td>Select the low voltage detection threshold. </td></tr>
-<tr class="tree_none">
-<td>Detection Response</td><td>MCU Specific Options</td><td></td><td>Select what happens when the voltage crosses the threshold voltage. </td></tr>
-<tr class="tree_none">
-<td>Voltage Slope</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Falling voltage</li>
-<li>
-Rising voltage</li>
-<li>
-Rising and falling voltage</li>
-</ul>
-</td><td>Falling voltage </td><td>Select interrupt generation on rising voltage, falling voltage or both. </td></tr>
-<tr class="tree_none">
-<td>Negation Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Delay from reset</li>
-<li>
-Delay from voltage returning to normal range</li>
-</ul>
-</td><td>Delay from reset </td><td>Negation of the monitor signal can either be delayed from the reset event or from voltage returning to normal range. </td></tr>
-<tr class="tree_none">
-<td>Monitor Interrupt Callback</td><td>Name must be a valid C symbol.</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
-<tr class="tree_none">
-<td>LVD Monitor Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the LVD Monitor interrupt priority. </td></tr>
-</table>
-</p>
-<h2><a class="anchor" id="r-lvd-clock-configuration"></a>
-Clock Configuration</h2>
-<p>The LOCO clock must be enabled in order to use the digital filter.</p>
-<h2><a class="anchor" id="r-lvd-pin-configuration"></a>
-Pin Configuration</h2>
-<p>To use LVD module, you need to switch pin funtion of EXLVDVBAT pin, VRTC pin, EXLVD pin to enable LVD function on this pin.</p>
-<h1><a class="anchor" id="r-lvd-usage_notes"></a>
-Usage Notes</h1>
-<h2>Startup Edge Detection</h2>
-<p>If V<sub>CC</sub> is below the threshold prior to configuring the voltage monitor for falling edge detection, the monitor will immediately detect the a falling edge condition. If V<sub>CC</sub> is above the threshold prior to configuring the monitor for rising edge detection, the monitor will not detect a rising edge condition until V<sub>CC</sub> falls below the threshold and then rises above it again.</p>
-<h2>Voltage Monitor 0</h2>
-<p>The LVD HAL module only supports configuring voltage monitor 1 and voltage monitor 2. Voltage monitor 0 can be configured by setting the appropriate bits in the OFS1 register. This means that voltage monitor 0 settings cannot be changed at runtime.</p>
-<p>Voltage monitor 0 supports the following features</p><ul>
-<li>Configurable Voltage Threshold (V<sub>DET0</sub>)</li>
-<li>Reset the device when V<sub>CC</sub> falls below V<sub>DET0</sub></li>
-</ul>
-<h2>Limitations</h2>
-<ul>
-<li>The digital filter must be disabled when using voltage monitors in Software Standby or Deep Software Standby.</li>
-<li>Deep Software Standby mode is not possible if the voltage monitor is configured to reset the MCU.</li>
-<li>Reset generated by the VCC-rise detection is supported only on devices with PVD.</li>
-</ul>
-<h1><a class="anchor" id="r-lvd-examples"></a>
-Examples</h1>
-<h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the LVD in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___l_v_d___a_p_i.html#structlvd__status__t">lvd_status_t</a> status;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___l_v_d.html#gae1af63498d91ee2ced63246e477faa8c">R_LVD_StatusGet</a>(&amp;g_lvd_ctrl, &amp;status);</div><div class="line"></div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#ggaad6c2ef7eb77fb3e002b8365ca042b76ae5caf5376bc83e65e556f3097f2a734a">LVD_THRESHOLD_CROSSING_DETECTED</a> == status.<a class="code" href="group___l_v_d___a_p_i.html#a03ad98ceabc205869874f6861d2cf8c9">crossing_detected</a>)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___l_v_d.html#ga2f8bf11a148ad673457d5afcabb85d7d">R_LVD_StatusClear</a>(&amp;g_lvd_ctrl);</div><div class="line"></div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">            <span class="comment">/* Do something */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Interrupt Example</h2>
-<p>This is a basic example of using a LVD instance that is configured to generate an interrupt.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> interrupt_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will be interrupted when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when Vcc crosses configured threshold. */</span></div><div class="line"><span class="keywordtype">void</span> lvd_callback (<a class="code" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#gga9d6a37d0481e360cf4db1a3374a0965aabc3dcdce3b10087e3eb7ac130fdb04fa">LVD_CURRENT_STATE_BELOW_THRESHOLD</a> == p_args-&gt;<a class="code" href="group___l_v_d___a_p_i.html#a5709e5f6ee2f70d1170e29db5c388286">current_state</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do Something */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reset Example</h2>
-<p>This is a basic example of using a LVD instance that is configured to reset the MCU.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> reset_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.LVD1RF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* The system is coming out of reset because Vcc crossed configured voltage threshold. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Clear Voltage Monitor 1 Reset Detect Flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR0_b.LVD1RF = 0;</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will reset when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlvd__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#structlvd__instance__ctrl__t">lvd_instance_ctrl_t</a></td></tr>
@@ -603,7 +496,7 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.1.0 User's Manual Copyright © (2023) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
