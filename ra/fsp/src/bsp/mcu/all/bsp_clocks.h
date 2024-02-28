@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -36,23 +36,45 @@ FSP_HEADER
 
 /* The following definitions are macros instead of enums because the values are used in preprocessor conditionals. */
 /* Must match SCKCR.CKSEL values. */
-#define BSP_CLOCKS_SOURCE_CLOCK_HOCO        (0)  // The high speed on chip oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_MOCO        (1)  // The middle speed on chip oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_LOCO        (2)  // The low speed on chip oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC    (3)  // The main oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK    (4)  // The subclock oscillator.
-#if 0 == BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS && 0 == BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL        (5)  // The PLL oscillator.
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL2       (6)  // The PLL2 oscillator.
-#elif (0 != BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS && 0 != BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS)
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL        (5)  // The PLL oscillator. Treated as PLL1P.
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL1P      (BSP_CLOCKS_SOURCE_CLOCK_PLL)
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL2       (6)  // The PLL2 oscillator. Treated as PLL2P.
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL2P      (BSP_CLOCKS_SOURCE_CLOCK_PLL2)
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL1Q      (7)  // The PLL1Q oscillator.
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL1R      (8)  // The PLL1R oscillator.
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL2Q      (9)  // The PLL2Q oscillator.
- #define BSP_CLOCKS_SOURCE_CLOCK_PLL2R      (10) // The PLL2R oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_HOCO               (0)  // The high speed on chip oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_MOCO               (1)  // The middle speed on chip oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_LOCO               (2)  // The low speed on chip oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC           (3)  // The main oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK           (4)  // The subclock oscillator.
+
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+ #if 0 == BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS && 0 == BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL              (5)  // The PLL oscillator.
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2             (6)  // The PLL2 oscillator.
+ #elif (0 != BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS && 0 != BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS)
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL              (5)  // The PLL oscillator. Treated as PLL1P.
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL1P            (BSP_CLOCKS_SOURCE_CLOCK_PLL)
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2             (6)  // The PLL2 oscillator. Treated as PLL2P.
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2P            (BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL1Q            (7)  // The PLL1Q oscillator.
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL1R            (8)  // The PLL1R oscillator.
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2Q            (9)  // The PLL2Q oscillator.
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2R            (10) // The PLL2R oscillator.
+ #endif
+#else
+ #define BSP_CLOCKS_SOURCE_CLOCK_FSXP              (11) // Subsystem Clock (FSXP) source.
+
+/* The following definitions are macros instead of enums because the values are used in preprocessor conditionals. */
+/* Must match ICLKSCR.CKSEL, FMAINSCR.CKSEL, FOCOSCR.CKSEL, FSUBSCR.CKSEL, OSMC.WUTMMCK0 and CKS0.CSEL values. */
+ #define BSP_CLOCKS_SOURCE_CLOCK_FMAIN             (0)  // Use Main System clock (FMAIN) as System clock (ICLK) source.
+ #define BSP_CLOCKS_SOURCE_CLOCK_FSUB              (1)  // Use Sub System clock (FSUB) as System clock (ICLK) source.
+ #define BSP_CLOCKS_FMAIN_SOURCE_CLOCK_FOCO        (0)  // Use Main on-chip oscillator clock (FOCO) as Main System clock (FMAIN) source.
+ #define BSP_CLOCKS_FMAIN_SOURCE_CLOCK_MAIN_OSC    (1)  // Use Main clock oscillator (MOSC) as Main System clock (FMAIN) source.
+ #define BSP_CLOCKS_FOCO_SOURCE_CLOCK_HOCO         (0)  // Use High-speed on-chip oscillator (HOCO) as Main on-chip oscillator clock (FOCO) source.
+ #define BSP_CLOCKS_FOCO_SOURCE_CLOCK_MOCO         (1)  // Use Middle-speed on-chip oscillator (MOCO) as Main on-chip oscillator clock (FOCO) source.
+ #define BSP_CLOCKS_FSUB_SOURCE_CLOCK_SUBCLOCK     (0)  // Use Sub-clock oscillator (SOSC) as Sub System clock (FSUB) source.
+ #define BSP_CLOCKS_FSUB_SOURCE_CLOCK_LOCO         (1)  // Use Low-speed on-chip oscillator clock (LOCO) as Sub System clock (FSUB) source.
+ #define BSP_CLOCKS_CLKOUT_SOURCE_CLOCK_FMAIN      (0)  // Use Main System clock (FMAIN) as Clock Out (CLKOUT) source.
+ #define BSP_CLOCKS_CLKOUT_SOURCE_CLOCK_FSUB       (1)  // Use Subsystem Clock (FSUB) as Clock Out (CLKOUT) source.
+
+/* Offset to convert OSTS setting to OSTC value (OSTC = ~(BSP_PRV_OSTC_OFFSET >> OSTS)) */
+ #define BSP_PRV_OSTC_OFFSET                       (0x7FU)
+
 #endif
 
 /* PLLs are not supported in the following scenarios:
@@ -65,15 +87,15 @@ FSP_HEADER
     (3U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     (4U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     !BSP_CLOCK_CFG_MAIN_OSC_POPULATED)
- #define BSP_PRV_PLL_SUPPORTED              (1)
+ #define BSP_PRV_PLL_SUPPORTED      (1)
  #if BSP_FEATURE_CGC_HAS_PLL2
-  #define BSP_PRV_PLL2_SUPPORTED            (1)
+  #define BSP_PRV_PLL2_SUPPORTED    (1)
  #else
-  #define BSP_PRV_PLL2_SUPPORTED            (0)
+  #define BSP_PRV_PLL2_SUPPORTED    (0)
  #endif
 #else
- #define BSP_PRV_PLL_SUPPORTED              (0)
- #define BSP_PRV_PLL2_SUPPORTED             (0)
+ #define BSP_PRV_PLL_SUPPORTED      (0)
+ #define BSP_PRV_PLL2_SUPPORTED     (0)
 #endif
 
 /* The ICLK frequency at startup is used to determine the ideal operating mode to set after startup. The PLL frequency
@@ -93,10 +115,11 @@ FSP_HEADER
  #endif
 #endif
 
+#define BSP_MOCO_FREQ_HZ                 (BSP_MOCO_HZ)
+
 /* Frequencies of clocks with fixed freqencies. */
-#define BSP_LOCO_FREQ_HZ                 (32768U)   // LOCO frequency is fixed at 32768 Hz
-#define BSP_SUBCLOCK_FREQ_HZ             (32768U)   // Subclock frequency is 32768 Hz
-#define BSP_MOCO_FREQ_HZ                 (8000000U) // MOCO frequency is fixed at 8 MHz
+#define BSP_LOCO_FREQ_HZ                 (32768U) // LOCO frequency is fixed at 32768 Hz
+#define BSP_SUBCLOCK_FREQ_HZ             (32768U) // Subclock frequency is 32768 Hz
 
 #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_CLOCK_SOURCE
  #define BSP_STARTUP_SOURCE_CLOCK_HZ     (BSP_HOCO_HZ)
@@ -129,7 +152,13 @@ FSP_HEADER
 /* Convert divisor bitfield settings into divisor values to calculate startup clocks */
 #define BSP_PRV_SCKDIVCR_DIV_VALUE(div)    (((div) & 8U) ? (3U << ((div) & ~8U)) : (1U << (div)))
 #define BSP_PRV_CPUCLK_DIV_VALUE         BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_CPUCLK_DIV)
-#define BSP_PRV_ICLK_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_ICLK_DIV)
+
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+ #define BSP_PRV_ICLK_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_ICLK_DIV)
+#else
+ #define BSP_PRV_ICLK_DIV_VALUE          (1U << BSP_CFG_ICLK_DIV)
+#endif
+
 #define BSP_PRV_PCLKA_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKA_DIV)
 #define BSP_PRV_PCLKB_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKB_DIV)
 #define BSP_PRV_PCLKC_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKC_DIV)
@@ -306,81 +335,87 @@ FSP_HEADER
 #endif
 
 /* Configuration option used to disable clock output. */
-#define BSP_CLOCKS_CLOCK_DISABLED              (0xFFU)
+#define BSP_CLOCKS_CLOCK_DISABLED               (0xFFU)
 
 /* HOCO cycles per microsecond. */
-#define BSP_PRV_HOCO_CYCLES_PER_US             (BSP_HOCO_HZ / 1000000U)
+#define BSP_PRV_HOCO_CYCLES_PER_US              (BSP_HOCO_HZ / 1000000U)
 
 /* Maximum number of delay cycles required to ensure 1 us passes between setting PLLCCR and clearing PLLCR. */
 #if BSP_HOCO_HZ < 48000000U
- #define BSP_PRV_MAX_HOCO_CYCLES_PER_US        (BSP_PRV_HOCO_CYCLES_PER_US)
+ #define BSP_PRV_MAX_HOCO_CYCLES_PER_US         (BSP_PRV_HOCO_CYCLES_PER_US)
 #else
- #define BSP_PRV_MAX_HOCO_CYCLES_PER_US        (48U)
+ #define BSP_PRV_MAX_HOCO_CYCLES_PER_US         (48U)
 #endif
 
 /* Create a mask of valid bits in SCKDIVCR. */
-#define BSP_PRV_SCKDIVCR_ICLK_MASK             (FSP_PRV_SCKDIVCR_DIV_MASK << 24)
+#define BSP_PRV_SCKDIVCR_ICLK_MASK              (FSP_PRV_SCKDIVCR_DIV_MASK << 24)
 #if BSP_FEATURE_CGC_HAS_PCLKD
- #define BSP_PRV_SCKDIVCR_PCLKD_MASK           (FSP_PRV_SCKDIVCR_DIV_MASK << 0)
+ #define BSP_PRV_SCKDIVCR_PCLKD_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 0)
 #else
- #define BSP_PRV_SCKDIVCR_PCLKD_MASK           (0U)
+ #define BSP_PRV_SCKDIVCR_PCLKD_MASK            (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKC
- #define BSP_PRV_SCKDIVCR_PCLKC_MASK           (FSP_PRV_SCKDIVCR_DIV_MASK << 4)
+ #define BSP_PRV_SCKDIVCR_PCLKC_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 4)
 #else
- #define BSP_PRV_SCKDIVCR_PCLKC_MASK           (0U)
+ #define BSP_PRV_SCKDIVCR_PCLKC_MASK            (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKB
- #define BSP_PRV_SCKDIVCR_PCLKB_MASK           (FSP_PRV_SCKDIVCR_DIV_MASK << 8)
+ #define BSP_PRV_SCKDIVCR_PCLKB_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 8)
 #else
- #define BSP_PRV_SCKDIVCR_PCLKB_MASK           (0U)
+ #define BSP_PRV_SCKDIVCR_PCLKB_MASK            (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKA
- #define BSP_PRV_SCKDIVCR_PCLKA_MASK           (FSP_PRV_SCKDIVCR_DIV_MASK << 12)
+ #define BSP_PRV_SCKDIVCR_PCLKA_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 12)
 #else
- #define BSP_PRV_SCKDIVCR_PCLKA_MASK           (0U)
+ #define BSP_PRV_SCKDIVCR_PCLKA_MASK            (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_BCLK || BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
- #define BSP_PRV_SCKDIVCR_BCLK_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 16)
+ #define BSP_PRV_SCKDIVCR_BCLK_MASK             (FSP_PRV_SCKDIVCR_DIV_MASK << 16)
 #else
- #define BSP_PRV_SCKDIVCR_BCLK_MASK            (0U)
+ #define BSP_PRV_SCKDIVCR_BCLK_MASK             (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKE
- #define BSP_PRV_SCKDIVCR_PCLKE_MASK           (FSP_PRV_SCKDIVCR_DIV_MASK << 24)
+ #define BSP_PRV_SCKDIVCR_PCLKE_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 24)
 #else
- #define BSP_PRV_SCKDIVCR_PCLKE_MASK           (0U)
+ #define BSP_PRV_SCKDIVCR_PCLKE_MASK            (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_FCLK
- #define BSP_PRV_SCKDIVCR_FCLK_MASK            (FSP_PRV_SCKDIVCR_DIV_MASK << 28)
+ #define BSP_PRV_SCKDIVCR_FCLK_MASK             (FSP_PRV_SCKDIVCR_DIV_MASK << 28)
 #else
- #define BSP_PRV_SCKDIVCR_FCLK_MASK            (0U)
+ #define BSP_PRV_SCKDIVCR_FCLK_MASK             (0U)
 #endif
-#define BSP_PRV_SCKDIVCR_MASK                  (BSP_PRV_SCKDIVCR_ICLK_MASK | BSP_PRV_SCKDIVCR_PCLKD_MASK |  \
-                                                BSP_PRV_SCKDIVCR_PCLKC_MASK | BSP_PRV_SCKDIVCR_PCLKB_MASK | \
-                                                BSP_PRV_SCKDIVCR_PCLKA_MASK | BSP_PRV_SCKDIVCR_BCLK_MASK |  \
-                                                BSP_PRV_SCKDIVCR_PCLKE_MASK | BSP_PRV_SCKDIVCR_FCLK_MASK)
+#define BSP_PRV_SCKDIVCR_MASK                   (BSP_PRV_SCKDIVCR_ICLK_MASK | BSP_PRV_SCKDIVCR_PCLKD_MASK |  \
+                                                 BSP_PRV_SCKDIVCR_PCLKC_MASK | BSP_PRV_SCKDIVCR_PCLKB_MASK | \
+                                                 BSP_PRV_SCKDIVCR_PCLKA_MASK | BSP_PRV_SCKDIVCR_BCLK_MASK |  \
+                                                 BSP_PRV_SCKDIVCR_PCLKE_MASK | BSP_PRV_SCKDIVCR_FCLK_MASK)
 
 /* FLL is only used when enabled, present and the subclock is populated. */
 #if BSP_FEATURE_CGC_HAS_FLL && BSP_CFG_FLL_ENABLE && BSP_CLOCK_CFG_SUBCLOCK_POPULATED
- #define BSP_PRV_HOCO_USE_FLL                  (1)
+ #define BSP_PRV_HOCO_USE_FLL                   (1)
  #ifndef BSP_PRV_FLL_STABILIZATION_TIME_US
-  #define BSP_PRV_FLL_STABILIZATION_TIME_US    (1800)
+  #define BSP_PRV_FLL_STABILIZATION_TIME_US     (1800)
  #endif
 #else
- #define BSP_PRV_HOCO_USE_FLL                  (0)
- #define BSP_PRV_FLL_STABILIZATION_TIME_US     (0)
+ #define BSP_PRV_HOCO_USE_FLL                   (0)
+ #define BSP_PRV_FLL_STABILIZATION_TIME_US      (0)
 #endif
 
 #if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
- #define BSP_PRV_RTC_RESET_DELAY_US            (200)
+ #define BSP_PRV_RTC_RESET_DELAY_US             (200)
 #endif
 
 /* Operating power control modes. */
-#define BSP_PRV_OPERATING_MODE_HIGH_SPEED      (0U) // Should match OPCCR OPCM high speed
-#define BSP_PRV_OPERATING_MODE_MIDDLE_SPEED    (1U) // Should match OPCCR OPCM middle speed
-#define BSP_PRV_OPERATING_MODE_LOW_VOLTAGE     (2U) // Should match OPCCR OPCM low voltage
-#define BSP_PRV_OPERATING_MODE_LOW_SPEED       (3U) // Should match OPCCR OPCM low speed
-#define BSP_PRV_OPERATING_MODE_SUBOSC_SPEED    (4U) // Can be any value not otherwise used
+#if BSP_FEATURE_CGC_REGISTER_SET_B
+ #define BSP_PRV_OPERATING_MODE_LOW_SPEED       (1U) // Should match FLMODE low speed
+ #define BSP_PRV_OPERATING_MODE_MIDDLE_SPEED    (2U) // Should match FLMODE middle speed
+ #define BSP_PRV_OPERATING_MODE_HIGH_SPEED      (3U) // Should match FLMODE high speed
+#else
+ #define BSP_PRV_OPERATING_MODE_HIGH_SPEED      (0U) // Should match OPCCR OPCM high speed
+ #define BSP_PRV_OPERATING_MODE_MIDDLE_SPEED    (1U) // Should match OPCCR OPCM middle speed
+ #define BSP_PRV_OPERATING_MODE_LOW_VOLTAGE     (2U) // Should match OPCCR OPCM low voltage
+ #define BSP_PRV_OPERATING_MODE_LOW_SPEED       (3U) // Should match OPCCR OPCM low speed
+#endif
+#define BSP_PRV_OPERATING_MODE_SUBOSC_SPEED     (4U) // Can be any value not otherwise used
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -1099,7 +1134,15 @@ void     bsp_prv_power_change_mstp_clear(uint32_t mstp_clear_bitmask);
 #endif
 
 void bsp_prv_prepare_pll(uint32_t pll_freq_hz);
+
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
 void bsp_prv_clock_set(uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2);
+
+#else
+void     bsp_prv_clock_set(uint32_t clock, uint8_t hocodiv, uint8_t mocodiv, uint8_t moscdiv);
+uint32_t bsp_prv_clock_source_get(void);
+
+#endif
 
 /* RTC Initialization */
 #if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR

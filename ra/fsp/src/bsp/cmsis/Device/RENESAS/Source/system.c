@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -226,7 +226,7 @@ static void bsp_init_mpu(void);
 /*******************************************************************************************************************//**
  * Initialize the MCU and the runtime environment.
  **********************************************************************************************************************/
-void SystemInit (void)
+BSP_SECTION_FLASH_GAP void SystemInit (void)
 {
 #if defined(RENESAS_CORTEX_M85)
 
@@ -257,9 +257,6 @@ void SystemInit (void)
 #endif
 
 #if !BSP_TZ_NONSECURE_BUILD
- #if BSP_FEATURE_BSP_SECURITY_PREINIT
-    R_BSP_SecurityPreinit();
- #endif
 
     /* VTOR is in undefined state out of RESET:
      * https://developer.arm.com/documentation/100235/0004/the-cortex-m33-peripherals/system-control-block/system-control-block-registers-summary?lang=en.
@@ -288,6 +285,12 @@ void SystemInit (void)
 
 #if BSP_FEATURE_TFU_SUPPORTED
     R_BSP_MODULE_START(FSP_IP_TFU, 0U);
+#endif
+
+#if BSP_FEATURE_MACL_SUPPORTED
+ #if __has_include("arm_math_types.h")
+    R_BSP_MODULE_START(FSP_IP_MACL, 0U);
+ #endif
 #endif
 
 #if BSP_CFG_EARLY_INIT
@@ -426,10 +429,6 @@ void SystemInit (void)
  #endif
 #endif                                 // BSP_CFG_C_RUNTIME_INIT
 
-#if BSP_FEATURE_BSP_POST_CRUNTIME_INIT
-    R_BSP_PostCRuntimeInit();
-#endif
-
     /* Initialize SystemCoreClock variable. */
     SystemCoreClockUpdate();
 
@@ -443,7 +442,7 @@ void SystemInit (void)
  #endif
 #endif
 
-#if !BSP_CFG_PFS_PROTECT && defined(R_PMISC)
+#if !BSP_CFG_PFS_PROTECT
  #if BSP_TZ_SECURE_BUILD || (BSP_FEATURE_TZ_VERSION == 2 && FSP_PRIV_TZ_USE_SECURE_REGS)
     R_PMISC->PWPRS = 0;                              ///< Clear BOWI bit - writing to PFSWE bit enabled
     R_PMISC->PWPRS = 1U << BSP_IO_PWPR_PFSWE_OFFSET; ///< Set PFSWE bit - writing to PFS register enabled
@@ -473,6 +472,17 @@ void SystemInit (void)
 
     /* Initialize security features. */
     R_BSP_SecurityInit();
+#else
+ #if FSP_PRIV_TZ_USE_SECURE_REGS
+
+    /* Initialize peripherals to secure mode for flat projects */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
+    R_PSCU->PSARB = 0;
+    R_PSCU->PSARC = 0;
+    R_PSCU->PSARD = 0;
+    R_PSCU->PSARE = 0;
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
+ #endif
 #endif
 
 #if BSP_CFG_DCACHE_ENABLED

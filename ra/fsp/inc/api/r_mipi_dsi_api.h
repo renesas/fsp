@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_GRAPHICS_INTERFACES
  * @defgroup MIPI_DSI_API MIPI DSI Interface
  * @brief Interface for MIPI DSI communications.
  *
@@ -101,10 +101,10 @@ typedef enum e_mipi_dsi_cmd_id
     MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_36      = 0x1D,         ///< (Long) Packed Pixel Stream, 36-bit RGB, 12-12-12 Format
     MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_YCBCR12 = 0x3D,         ///< (Long) Packed Pixel Stream, 12-bit YCbCr, 4:2:0 Format
 
-    MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_16 = 0x0E,              ///< (Long) Packed Pixel Stream, 16-bit RGB, 5-6-5 Format
-    MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_18 = 0x1E,              ///< (Long) Packed Pixel Stream, 18-bit RGB, 6-6-6 Format
-    MIPI_DSI_CMD_ID_LOOSELY_PACKED_PIXEL_STREAM_18  = 0x2E,     ///< (Long) Loosely Packed Pixel Stream, 18-bit RGB, 6-6-6 Format
-    MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_24 = 0x3E,              ///< (Long) Packed Pixel Stream, 24-bit RGB, 8-8-8 Format
+    MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_16         = 0x0E,      ///< (Long) Packed Pixel Stream, 16-bit RGB, 5-6-5 Format
+    MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_18         = 0x1E,      ///< (Long) Packed Pixel Stream, 18-bit RGB, 6-6-6 Format
+    MIPI_DSI_CMD_ID_LOOSELY_PACKED_PIXEL_STREAM_18 = 0x2E,      ///< (Long) Loosely Packed Pixel Stream, 18-bit RGB, 6-6-6 Format
+    MIPI_DSI_CMD_ID_PACKED_PIXEL_STREAM_24         = 0x3E,      ///< (Long) Packed Pixel Stream, 24-bit RGB, 8-8-8 Format
 } mipi_dsi_cmd_id_t;
 
 /** MIPI DCS ID types - See MIPI DCS specification for additional information */
@@ -210,11 +210,11 @@ typedef enum e_mipi_dsi_ack_err
 /* MIPI DSI Virtual Channel ID Type*/
 typedef enum e_mipi_dsi_vc
 {
-    MIPI_DSI_VC_NONE = 0x0,    ///< No channels selected
-    MIPI_DSI_VC_0    = 0x1,    ///< Virtual channel 0
-    MIPI_DSI_VC_1    = 0x2,    ///< Virtual channel 1
-    MIPI_DSI_VC_2    = 0x4,    ///< Virtual channel 2
-    MIPI_DSI_VC_3    = 0x8,    ///< Virtual channel 3
+    MIPI_DSI_VC_NONE = 0x0,            ///< No channels selected
+    MIPI_DSI_VC_0    = 0x1,            ///< Virtual channel 0
+    MIPI_DSI_VC_1    = 0x2,            ///< Virtual channel 1
+    MIPI_DSI_VC_2    = 0x4,            ///< Virtual channel 2
+    MIPI_DSI_VC_3    = 0x8,            ///< Virtual channel 3
 } mipi_dsi_vc_t;
 
 /** MIPI DSI Message Flags */
@@ -363,12 +363,12 @@ typedef enum e_mipi_dsi_lane
 /** MIPI DSI Command */
 typedef struct st_mipi_dsi_cmd
 {
-    uint8_t              channel;      ///< Virtual Channel ID
-    mipi_dsi_cmd_id_t    cmd_id;       ///< Message ID
-    mipi_dsi_cmd_flag_t  flags;        ///< Flags controlling this message transition
-    uint16_t             tx_len;       ///< Transmit buffer size
-    const uint8_t      * p_tx_buffer;  ///< Transmit buffer pointer
-    const uint8_t      * p_rx_buffer;  ///< Receive buffer pointer
+    uint8_t             channel;       ///< Virtual Channel ID
+    mipi_dsi_cmd_id_t   cmd_id;        ///< Message ID
+    mipi_dsi_cmd_flag_t flags;         ///< Flags controlling this message transition
+    uint16_t            tx_len;        ///< Transmit buffer size
+    const uint8_t     * p_tx_buffer;   ///< Transmit buffer pointer
+    const uint8_t     * p_rx_buffer;   ///< Receive buffer pointer
 } mipi_dsi_cmd_t;
 
 /** MIPI DSI Acknowledge and Error status type */

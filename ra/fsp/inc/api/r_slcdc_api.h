@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_GRAPHICS_INTERFACES
  * @defgroup SLCDC_API SLCDC Interface
  * @brief Interface for Segment LCD controllers.
  *
@@ -154,14 +154,14 @@ typedef enum e_slcd_display_clock
     SLCDC_CLOCK_LOCO = 0x00,           ///< Display clock source LOCO
     SLCDC_CLOCK_SOSC = 0x01,           ///< Display clock source SOSC
     SLCDC_CLOCK_MOSC = 0x02,           ///< Display clock source MOSC
-    SLCDC_CLOCK_HOCO = 0x03,           ///< Display clock source HOCO
-    SLCDC_CLOCK_MOCO = 0x04,           ///< Display clock source MOCO
+    SLCDC_CLOCK_MOCO = 0x03,           ///< Display clock source MOCO
+    SLCDC_CLOCK_HOCO = 0x04,           ///< Display clock source HOCO
 } slcdc_display_clock_t;
 
 /** LCD clock settings */
 typedef enum e_slcdc_clk_div
 {
-    SLCDC_CLK_DIVISOR_LOCO_4 = 1,          ///< LOCO Clock/4
+    SLCDC_CLK_DIVISOR_LOCO_4 = 0x1,        ///< LOCO Clock/4
     SLCDC_CLK_DIVISOR_LOCO_8,              ///< LOCO Clock/8
     SLCDC_CLK_DIVISOR_LOCO_16,             ///< LOCO Clock/16
     SLCDC_CLK_DIVISOR_LOCO_32,             ///< LOCO Clock/32

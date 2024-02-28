@@ -1,8 +1,13 @@
 ## Software Modules Packaged with FSP
 
 ### FSP Top Level Modules
+  * AI
+    * [Arm CMSIS5 NN Library Source](https://arm-software.github.io/CMSIS-NN/latest/index.html)
+    * [Data Collector (rm_rai_data_collector)](https://renesas.github.io/fsp/group___r_m___r_a_i__d_a_t_a___c_o_l_l_e_c_t_o_r.html)
+    * [Data Shipper (rm_rai_data_shipper)](https://renesas.github.io/fsp/group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html)
   * Analog
     * [ADC (r_adc)](https://renesas.github.io/fsp/group___a_d_c.html)
+    * [ADC (r_adc_d)](https://renesas.github.io/fsp/group___a_d_c___d.html)
     * [ADC (r_sdadc)](https://renesas.github.io/fsp/group___s_d_a_d_c.html)
     * [ADC (r_sdadc_b)](https://renesas.github.io/fsp/group___s_d_a_d_c___b.html)
     * [ADC Driver on r_adc_b](https://renesas.github.io/fsp/group___a_d_c___b.html)
@@ -12,10 +17,6 @@
     * [DAC (r_dac)](https://renesas.github.io/fsp/group___d_a_c.html)
     * [DAC8 (r_dac8)](https://renesas.github.io/fsp/group___d_a_c8.html)
     * [Operational Amplifier (r_opamp)](https://renesas.github.io/fsp/group___o_p_a_m_p.html)
-  * Artificial Intelligence
-    * [Arm CMSIS5 NN Library Source](https://arm-software.github.io/CMSIS-NN/latest/index.html)
-    * [Data Collector (rm_rai_data_collector)](https://renesas.github.io/fsp/group___r_m___r_a_i__d_a_t_a___c_o_l_l_e_c_t_o_r.html)
-    * [Data Shipper (rm_rai_data_shipper)](https://renesas.github.io/fsp/group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html)
   * Audio
     * [ADPCM Decoder (rm_adpcm_decoder)](https://renesas.github.io/fsp/group___r_m___a_d_p_c_m___d_e_c_o_d_e_r.html)
     * [Audio Playback PWM (rm_audio_playback_pwm)](https://renesas.github.io/fsp/group___r_m___a_u_d_i_o___p_l_a_y_b_a_c_k___p_w_m.html)
@@ -45,6 +46,7 @@
     * [I2C Communication Device (rm_comms_i2c)](https://renesas.github.io/fsp/group___r_m___c_o_m_m_s___i2_c.html)
     * [I2C Master (r_iic_b_master)](https://renesas.github.io/fsp/group___i_i_c___b___m_a_s_t_e_r.html)
     * [I2C Master (r_iic_master)](https://renesas.github.io/fsp/group___i_i_c___m_a_s_t_e_r.html)
+    * [I2C Master (r_sau_i2c)](https://renesas.github.io/fsp/group___s_a_u___i2_c.html)
     * [I2C Master (r_sci_b_i2c)](https://renesas.github.io/fsp/group___s_c_i___b___i2_c.html)
     * [I2C Master (r_sci_i2c)](https://renesas.github.io/fsp/group___s_c_i___i2_c.html)
     * [I2C Shared Bus (rm_comms_i2c)](https://renesas.github.io/fsp/group___r_m___c_o_m_m_s___i2_c.html)
@@ -54,12 +56,15 @@
     * [I3C (r_i3c)](https://renesas.github.io/fsp/group___i3_c.html)
     * [LIN (r_sci_b_lin)](https://renesas.github.io/fsp/group___s_c_i___b___l_i_n.html)
     * [SMCI (r_sci_smci)](https://renesas.github.io/fsp/group___s_c_i___s_m_c_i.html)
+    * [SPI (r_sau_spi)](https://renesas.github.io/fsp/group___s_a_u___s_p_i.html)
     * [SPI (r_sci_b_spi)](https://renesas.github.io/fsp/group___s_c_i___b___s_p_i.html)
     * [SPI (r_sci_spi)](https://renesas.github.io/fsp/group___s_c_i___s_p_i.html)
     * [SPI (r_spi)](https://renesas.github.io/fsp/group___s_p_i.html)
     * [SPI (r_spi_b)](https://renesas.github.io/fsp/group___s_p_i___b.html)
+    * [UART (r_sau_uart)](https://renesas.github.io/fsp/group___s_a_u___u_a_r_t.html)
     * [UART (r_sci_b_uart)](https://renesas.github.io/fsp/group___s_c_i___b___u_a_r_t.html)
     * [UART (r_sci_uart)](https://renesas.github.io/fsp/group___s_c_i___u_a_r_t.html)
+    * [UART (r_uarta)](https://renesas.github.io/fsp/group___u_a_r_t_a.html)
     * [UART Communication Device (rm_comms_uart)](https://renesas.github.io/fsp/group___r_m___c_o_m_m_s___u_a_r_t.html)
     * [USB Composite (r_usb_composite)](https://renesas.github.io/fsp/group___u_s_b.html)
     * [USB HCDC (r_usb_hcdc)](https://renesas.github.io/fsp/group___u_s_b___h_c_d_c.html)
@@ -116,7 +121,7 @@
     * [Shared ADC module (on rm_motor_120_driver)](https://renesas.github.io/fsp/group___m_o_t_o_r__120___d_r_i_v_e_r.html)
     * [Shared ADC module (on rm_motor_driver)](https://renesas.github.io/fsp/group___m_o_t_o_r___d_r_i_v_e_r.html)
   * Networking
-    * Bluetooth Low Energy Mesh Network modules
+    * BLE Mesh Network modules
       * [BLE Mesh (rm_ble_mesh)](https://renesas.github.io/fsp/group___r_m___b_l_e___m_e_s_h.html)
       * [BLE Mesh Access (rm_ble_mesh_access)](https://renesas.github.io/fsp/group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html)
       * [BLE Mesh Bearer (rm_ble_mesh_bearer)](https://renesas.github.io/fsp/group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r.html)
@@ -207,8 +212,8 @@
     * [Ethernet (r_ether_phy)](https://renesas.github.io/fsp/group___e_t_h_e_r___p_h_y.html)
     * [FreeRTOS+TCP](https://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_IP_Configuration.html)
     * [GTL BLE Abstraction (rm_ble_abs_gtl)](https://renesas.github.io/fsp/group___b_l_e___a_b_s.html)
-    * [HTTP Client on DA16XXX (rm_http_onchip_da16xxx)](https://renesas.github.io/fsp/)
-    * [MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)](https://renesas.github.io/fsp/)
+    * [HTTP Client on DA16XXX (rm_http_onchip_da16xxx)](https://renesas.github.io/fsp/group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html)
+    * [MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)](https://renesas.github.io/fsp/group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html)
     * [PTP (r_ptp)](https://renesas.github.io/fsp/group___p_t_p.html)
     * [SPP BLE Abstraction (rm_ble_abs_spp)](https://renesas.github.io/fsp/group___b_l_e___a_b_s.html)
   * Power
@@ -227,6 +232,7 @@
     * [Azure RTOS NetX Secure](https://docs.microsoft.com/en-us/azure/rtos/netx-duo/netx-secure-tls/chapter1)
     * [MbedTLS](https://www.trustedfirmware.org/projects/mbed-tls/)
     * [MbedTLS (Crypto Only)](https://github.com/ARMmbed/mbed-crypto/blob/mbedcrypto-2.0.0/docs/getting_started.md)
+    * [RSIP Protected Mode (r_rsip)](https://renesas.github.io/fsp/group___r_s_i_p___p_r_o_t_e_c_t_e_d.html)
     * [SCE Protected Mode](https://renesas.github.io/fsp/group___s_c_e___p_r_o_t_e_c_t_e_d.html)
     * [TinyCrypt (H/W Accelerated)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)
     * [TinyCrypt (S/W Only)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)
@@ -268,10 +274,13 @@
   * Timers
     * [Port Output Enable for GPT (r_poeg)](https://renesas.github.io/fsp/group___p_o_e_g.html)
     * [Realtime Clock (r_rtc)](https://renesas.github.io/fsp/group___r_t_c.html)
-    * [Realtime Clock with Independent Power Supply (r_irtc)](https://renesas.github.io/fsp/group___i_r_t_c.html)
+    * [Realtime Clock (r_rtc_c)](https://renesas.github.io/fsp/group___r_t_c___c.html)
+    * [Realtime Clock with Independent Power Supply (r_rtc)](https://renesas.github.io/fsp/group___r_t_c.html)
     * [Three-Phase PWM (r_gpt_three_phase)](https://renesas.github.io/fsp/group___g_p_t___t_h_r_e_e___p_h_a_s_e.html)
     * [Timer, General PWM (r_gpt)](https://renesas.github.io/fsp/group___g_p_t.html)
+    * [Timer, Independent Channel, 16-bit and 8-bit Timer Operation (r_tau)](https://renesas.github.io/fsp/group___t_a_u.html)
     * [Timer, Low-Power (r_agt)](https://renesas.github.io/fsp/group___a_g_t.html)
+    * [Timer, Simultaneous Channel Operation (r_tau_pwm)](https://renesas.github.io/fsp/group___t_a_u___p_w_m.html)
     * [Timer, Ultra-Low-Power (r_ulpt)](https://renesas.github.io/fsp/group___u_l_p_t.html)
   * Transfer
     * [Transfer (r_dmac)](https://renesas.github.io/fsp/group___d_m_a_c.html)
@@ -307,6 +316,8 @@
     * [USB PMSC (r_usb_pmsc_class)](https://renesas.github.io/fsp/group___u_s_b___p_m_s_c.html)
     * [USB PPRN (r_usb_pprn_class)](https://renesas.github.io/fsp/group___u_s_b___p_p_r_n.html)
     * [USB PVND (r_usb_pvnd_class)](https://renesas.github.io/fsp/group___u_s_b___p_v_n_d.html)
+  * DSP
+    * [MACL (rm_cmsis_dsp)](https://renesas.github.io/fsp/group___r_m___c_m_s_i_s___d_s_p.html)
   * Graphics
     * [Azure RTOS GUIX Port (rm_guix_port)](https://renesas.github.io/fsp/group___r_m___g_u_i_x___p_o_r_t.html)
     * [MIPI Display (r_mipi_dsi)](https://renesas.github.io/fsp/group___m_i_p_i___d_s_i.html)
@@ -351,7 +362,7 @@
     * [BLE Mesh Timer on FreeRTOS (rm_mesh_timer_freertos)](https://renesas.github.io/fsp/group___m_e_s_h___t_i_m_e_r___f_r_e_e_r_t_o_s.html)
     * [Cellular Comm Interface on UART (rm_cellular_comm_uart_aws)](https://www.freertos.org/Documentation/api-ref/cellular/cellular__comm__interface_8h.html)
     * [DA14531 GTL Driver Layer](https://renesas.github.io/fsp/group___b_l_e___a_b_s___g_t_l.html)
-    * [DA16XXX Transport on UART (rm_at_transport_da16xxx_uart)](https://renesas.github.io/fsp/group___a_t__t_r_a_n_s_p_o_r_t__d_a16_x_x_x.html)
+    * [DA16XXX Transport on UART (rm_at_transport_da16xxx_uart)](https://renesas.github.io/fsp/group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html)
     * [FreeRTOS+TCP Wrapper to r_ether (rm_freertos_plus_tcp)](https://renesas.github.io/fsp/group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html)
     * [NetX Duo Ethernet Driver (rm_netxduo_ether)](https://docs.microsoft.com/en-us/azure/rtos/netx-duo/chapter5)
     * [NetX Duo WiFi Driver (rm_netxduo_wifi)](https://renesas.github.io/fsp/group___r_m___n_e_t_x_d_u_o___w_i_f_i.html)
@@ -368,6 +379,7 @@
     * [FreeRTOS MbedTLS Port](https://renesas.github.io/fsp/)
     * [Key Injection for PSA Crypto](https://renesas.github.io/fsp/group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n.html)
     * [MCUBoot TinyCrypt H/W Acceleration (rm_mcuboot_tinycrypt_port)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
+    * [MCUBoot TinyCrypt H/W Acceleration (rm_mcuboot_tinycrypt_port_aes2)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
     * [MCUboot TinyCrypt (H/W Accelerated)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)
     * [MCUboot TinyCrypt (S/W Only)](https://github.com/01org/tinycrypt/blob/master/documentation/tinycrypt.rst)
     * [Mbed Crypto H/W Acceleration (rm_psa_crypto)](https://renesas.github.io/fsp/group___r_m___p_s_a___c_r_y_p_t_o.html)
@@ -380,6 +392,7 @@
     * [TRNG](https://renesas.github.io/fsp/)
     * [TinyCrypt H/W Acceleration (TRNG Only)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
     * [TinyCrypt H/W Acceleration (rm_tinycrypt_port)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
+    * [TinyCrypt H/W Acceleration (rm_tinycrypt_port_aes2)](https://renesas.github.io/fsp/group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html)
     * [Trusted Firmware-M BL2 Port (rm_bl2_port)](https://github.com/ARM-software/arm-trusted-firmware/blob/master/docs/design/firmware-design.rst#bl2)
     * [Trusted Firmware-M FreeRTOS Integration](https://tf-m-user-guide.trustedfirmware.org/)
     * [Trusted Firmware-M Port (rm_tfm_port)](https://tf-m-user-guide.trustedfirmware.org/)
@@ -410,5 +423,7 @@
     * [LittleFS on Flash (rm_littlefs_flash)](https://renesas.github.io/fsp/group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html)
   * System
     * [Arm CMSIS5 Core (M)](https://arm-software.github.io/CMSIS_5/Core/html/index.html)
+  * Timers
+    * [TAU PWM Channel Configuration (r_tau_pwm)](https://renesas.github.io/fsp/group___t_a_u___p_w_m.html)
   * Transfer
     * [Ethernet DMA (r_edmac)](https://renesas.github.io/fsp/)

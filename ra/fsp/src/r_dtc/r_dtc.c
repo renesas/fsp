@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -88,6 +88,7 @@ static fsp_err_t r_dtc_source_destination_parameter_check(transfer_info_t * p_in
 #endif
 
 static void r_dtc_wait_for_transfer_complete(dtc_instance_ctrl_t * p_ctrl);
+static void r_dtc_disable_transfer(const IRQn_Type irq);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -112,6 +113,7 @@ const transfer_api_t g_transfer_on_dtc =
     .enable        = R_DTC_Enable,
     .disable       = R_DTC_Disable,
     .reload        = R_DTC_Reload,
+    .callbackSet   = R_DTC_CallbackSet,
     .close         = R_DTC_Close,
 };
 
@@ -192,8 +194,8 @@ fsp_err_t R_DTC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const *
  * @retval FSP_SUCCESS              Transfer is configured and will start when trigger occurs.
  * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
  * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DTC_Open to initialize the control block.
- * @retval FSP_ERR_NOT_ENABLED      Transfer source address is NULL or is not aligned corrrectly.
- *                                  Transfer destination address is NULL or is not aligned corrrectly.
+ * @retval FSP_ERR_NOT_ENABLED      Transfer source address is NULL or is not aligned correctly.
+ *                                  Transfer destination address is NULL or is not aligned correctly.
  *
  * @note p_info must persist until all transfers are completed.
  **********************************************************************************************************************/
@@ -209,7 +211,7 @@ fsp_err_t R_DTC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_t
 #endif
 
     /* Disable transfers on this activation source. */
-    R_ICU->IELSR_b[p_ctrl->irq].DTCE = 0U;
+    r_dtc_disable_transfer(p_ctrl->irq);
 
     /* Wait for current transfer to finish. */
     r_dtc_wait_for_transfer_complete(p_ctrl);
@@ -230,8 +232,8 @@ fsp_err_t R_DTC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_t
  * @retval FSP_SUCCESS              Transfer reset successfully (transfers are enabled).
  * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
  * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DTC_Open to initialize the control block.
- * @retval FSP_ERR_NOT_ENABLED      Transfer source address is NULL or is not aligned corrrectly.
- *                                  Transfer destination address is NULL or is not aligned corrrectly.
+ * @retval FSP_ERR_NOT_ENABLED      Transfer source address is NULL or is not aligned correctly.
+ *                                  Transfer destination address is NULL or is not aligned correctly.
  **********************************************************************************************************************/
 fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
                        void const * volatile   p_src,
@@ -245,8 +247,11 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
     FSP_ERROR_RETURN(p_ctrl->open == DTC_OPEN, FSP_ERR_NOT_OPEN);
 #endif
 
+    const IRQn_Type         irq           = p_ctrl->irq;
+    transfer_info_t * const gp_dtc_vector = gp_dtc_vector_table[irq];
+
     /* Disable transfers on this activation source. */
-    R_ICU->IELSR_b[p_ctrl->irq].DTCE = 0U;
+    r_dtc_disable_transfer(irq);
 
     /* Wait for current transfer to finish. */
     r_dtc_wait_for_transfer_complete(p_ctrl);
@@ -262,23 +267,23 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
     /* Reset transfer based on input parameters. */
     if (NULL != p_src)
     {
-        gp_dtc_vector_table[p_ctrl->irq]->p_src = p_src;
+        gp_dtc_vector->p_src = p_src;
     }
 
     if (NULL != p_dest)
     {
-        gp_dtc_vector_table[p_ctrl->irq]->p_dest = p_dest;
+        gp_dtc_vector->p_dest = p_dest;
     }
 
-    if (TRANSFER_MODE_BLOCK == gp_dtc_vector_table[p_ctrl->irq]->transfer_settings_word_b.mode)
+    if (TRANSFER_MODE_BLOCK == gp_dtc_vector->transfer_settings_word_b.mode)
     {
-        gp_dtc_vector_table[p_ctrl->irq]->num_blocks = num_transfers;
+        gp_dtc_vector->num_blocks = num_transfers;
     }
-    else if (TRANSFER_MODE_NORMAL == gp_dtc_vector_table[p_ctrl->irq]->transfer_settings_word_b.mode)
+    else if (TRANSFER_MODE_NORMAL == gp_dtc_vector->transfer_settings_word_b.mode)
     {
-        gp_dtc_vector_table[p_ctrl->irq]->length = num_transfers;
+        gp_dtc_vector->length = num_transfers;
     }
-    else                               /* (TRANSFER_MODE_REPEAT == gp_dtc_vector_table[p_ctrl->irq]->transfer_settings_word_b.mode) */
+    else                               /* TRANSFER_MODE_REPEAT */
     {
         /* Do nothing. */
     }
@@ -365,7 +370,7 @@ fsp_err_t R_DTC_Disable (transfer_ctrl_t * const p_api_ctrl)
 #endif
 
     /* Disable transfer. */
-    R_ICU->IELSR_b[p_ctrl->irq].DTCE = 0U;
+    r_dtc_disable_transfer(p_ctrl->irq);
 
     return FSP_SUCCESS;
 }
@@ -434,6 +439,26 @@ fsp_err_t R_DTC_Reload (transfer_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Placeholder for unsupported callbackset function. Implements @ref transfer_api_t::callbackSet.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      DTC does not support direct callbacks.
+ **********************************************************************************************************************/
+fsp_err_t R_DTC_CallbackSet (transfer_ctrl_t * const       p_api_ctrl,
+                             void (                      * p_callback)(transfer_callback_args_t *),
+                             void const * const            p_context,
+                             transfer_callback_args_t * const  p_callback_memory)
+{
+    /* This function isn't supported.  It is defined only to implement a required function of transfer_api_t.
+     * Mark the input parameter as unused since this function isn't supported. */
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_callback);
+    FSP_PARAMETER_NOT_USED(p_context);
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Disables DTC activation in the ICU, then clears transfer data from the DTC vector table.
  * Implements @ref transfer_api_t::close.
  *
@@ -451,11 +476,13 @@ fsp_err_t R_DTC_Close (transfer_ctrl_t * const p_api_ctrl)
     FSP_ERROR_RETURN(p_ctrl->open == DTC_OPEN, FSP_ERR_NOT_OPEN);
 #endif
 
+    const IRQn_Type irq = p_ctrl->irq;
+
     /* Clear DTC enable bit in ICU. */
-    R_ICU->IELSR_b[p_ctrl->irq].DTCE = 0U;
+    r_dtc_disable_transfer(irq);
 
     /* Clear pointer in vector table. */
-    gp_dtc_vector_table[p_ctrl->irq] = NULL;
+    gp_dtc_vector_table[irq] = NULL;
 
     /* Mark instance as closed. */
     p_ctrl->open = 0U;
@@ -482,7 +509,11 @@ static fsp_err_t r_dtc_prv_enable (dtc_instance_ctrl_t * p_ctrl)
 #endif
 
     /* Enable transfers on this activation source. */
+#if BSP_FEATURE_ICU_HAS_IELSR
     R_ICU->IELSR_b[p_ctrl->irq].DTCE = 1U;
+#else
+    R_ICU->DTCENSET[(((uint32_t) p_ctrl->irq) >> 5UL)] = 1UL << ((uint32_t) p_ctrl->irq & (uint32_t) 0x1FUL);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -524,13 +555,13 @@ static void r_dtc_state_initialize (void)
         if (1 == R_CPSCU->DTCSAR_b.DTCSTSA)
         {
             /* Enable the DTC Peripheral */
-            R_DTC->DTCST = 1;
+            R_DTC->DTCST = 1U;
         }
 
 #else
 
         /* Enable the DTC Peripheral */
-        R_DTC->DTCST = 1;
+        R_DTC->DTCST = 1U;
 #endif
     }
 }
@@ -576,7 +607,7 @@ static void r_dtc_block_repeat_initialize (transfer_info_t * p_info)
             uint8_t CRAL = p_info[i].length & DTC_PRV_MASK_CRAL;
             p_info[i].length = (uint16_t) ((CRAL << DTC_PRV_OFFSET_CRAH) | CRAL);
         }
-    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode); /* Increment 'i' after checking. */
+    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode);
 }
 
 #if DTC_CFG_PARAM_CHECKING_ENABLE
@@ -606,7 +637,7 @@ static fsp_err_t r_dtc_length_assert (transfer_info_t * p_info)
             /* transfer_length_max is the same for Block and repeat mode. */
             FSP_ASSERT(p_info[i].length <= DTC_MAX_REPEAT_TRANSFER_LENGTH);
         }
-    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode); /* Increment 'i' after checking. */
+    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode);
 
     return FSP_SUCCESS;
 }
@@ -636,7 +667,7 @@ static fsp_err_t r_dtc_source_destination_parameter_check (transfer_info_t * p_i
                    ((uint32_t) p_info[i].p_dest & DTC_PRV_MASK_ALIGN_N_BYTES(p_info[i].transfer_settings_word_b.size)));
         FSP_ASSERT(0U ==
                    ((uint32_t) p_info[i].p_src & DTC_PRV_MASK_ALIGN_N_BYTES(p_info[i].transfer_settings_word_b.size)));
-    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode); /* Increment 'i' after checking. */
+    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode);
 
     return FSP_SUCCESS;
 }
@@ -652,4 +683,16 @@ static void r_dtc_wait_for_transfer_complete (dtc_instance_ctrl_t * p_ctrl)
 
     /* Wait for the DTCSTS.ACT flag to be clear if the current vector is the activation source.*/
     FSP_HARDWARE_REGISTER_WAIT((FSP_STYPE3_REG16_READ(R_DTC->DTCSTS, !R_CPSCU->DTCSAR_b.DTCSTSA) == in_progress), 0);
+}
+
+/*******************************************************************************************************************//**
+ * Disable transfers on activation source.
+ **********************************************************************************************************************/
+static void r_dtc_disable_transfer (const IRQn_Type irq)
+{
+#if BSP_FEATURE_ICU_HAS_IELSR
+    R_ICU->IELSR_b[((uint32_t) irq)].DTCE = 0U;
+#else
+    R_ICU->DTCENCLR[(((uint32_t) irq) >> 5UL)] = 1UL << (((uint32_t) irq) & (uint32_t) 0x1FUL);
+#endif
 }

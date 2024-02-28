@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,12 +22,12 @@
 #define RM_BLE_MESH_UPPER_TRANS_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup  RENESAS_INTERFACES
+ * @ingroup  RENESAS_BLE_MESH_INTERFACES
  * @defgroup RM_BLE_MESH_UPPER_TRANS_API BLE Mesh Upper Trans Interface
- * @brief    Interface for Bluetooth Low Energy Mesh Upper Trans functions.
+ * @brief    Interface for BLE Mesh Upper Trans functions.
  *
  * @section RM_BLE_MESH_UPPER_TRANS_API_Summary Summary
- * The BLE Mesh interface for the Bluetooth Low Energy Mesh Upper Trans peripheral provides Bluetooth Low Energy Mesh Upper Trans functionality.
+ * The BLE Mesh Upper Trans middleware provides a high-level transfer interface for BLE Mesh services.
  *
  *
  * @{

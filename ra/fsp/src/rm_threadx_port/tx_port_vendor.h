@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -61,8 +61,9 @@ extern "C" {
 
 #if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM33, CM85
  #define TX_PORT_PSPLIM_PRESENT
-#else
+#elif (1 == __MPU_PRESENT)
  #define TX_PORT_VENDOR_STACK_MONITOR_ENABLE
+#else
 #endif
 
 #ifdef TX_PORT_VENDOR_STACK_MONITOR_ENABLE

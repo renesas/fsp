@@ -272,7 +272,7 @@ static uint32_t xMaximumPossibleSuppressedTicks = 0;
  */
 #if (configASSERT_DEFINED == 1)
 static uint8_t ucMaxSysCallPriority = 0;
- #ifdef __ARM_ARCH_7EM__
+ #ifndef __ARM_ARCH_8M_BASE__
 static uint32_t ulMaxPRIGROUPValue = 0;
  #endif
 #endif
@@ -1139,11 +1139,14 @@ static void prvTaskExitError (void)
 BaseType_t xPortStartScheduler (void)
 {
 #if (configASSERT_DEFINED == 1)
- #ifdef __ARM_ARCH_7EM__               // CM4
+ #ifndef __ARM_ARCH_8M_BASE__               // Exclude CM23
     {
-  #ifdef __ARM_ARCH_7EM__              // CM4
+  #if defined(__ARM_ARCH_7EM__)             // CM4
         volatile uint8_t         ulOriginalPriority;
         volatile uint8_t * const pucFirstUserPriorityRegister = &NVIC->IP[0];
+  #elif defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__)      // CM33 or CM85
+        volatile uint8_t         ulOriginalPriority;
+        volatile uint8_t * const pucFirstUserPriorityRegister = &NVIC->IPR[0];
   #else
         volatile uint32_t         ulOriginalPriority;
         volatile uint32_t * const pucFirstUserPriorityRegister = &NVIC->IPR[0];
@@ -1316,8 +1319,6 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
         saved_lpm_state = R_SYSTEM->SBYCR;
   #elif BSP_FEATURE_LPM_HAS_LPSCR
         saved_lpm_state = R_SYSTEM->LPSCR;
-  #elif BSP_FEATURE_LPM_HAS_LPCSR
-        saved_lpm_state = SYS_REG0->LPCSR;
   #endif
 
         /** Check if the LPM peripheral is set to go to Software Standby mode with WFI instruction.
@@ -1369,13 +1370,6 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
             /* Restore register lock */
             R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
    #endif
-        }
-
-  #elif BSP_FEATURE_LPM_HAS_LPCSR
-        if (SYS_REG0_LPCSR_LPSTS_Msk & saved_lpm_state)
-        {
-            /* Clear to set to sleep low power mode (not standby or deep standby) */
-            SYS_REG0->LPCSR = 0;
         }
   #endif
 
@@ -1465,13 +1459,6 @@ void rm_freertos_port_sleep_preserving_lpm (uint32_t xExpectedIdleTime)
         /* Restore register lock */
         R_SYSTEM->PRCR = (uint16_t) (RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS | saved_prcr);
    #endif
-    }
-
-  #elif BSP_FEATURE_LPM_HAS_LPCSR
-    if (SYS_REG0_LPCSR_LPSTS_Msk & saved_lpm_state)
-    {
-        /* Clear to set to sleep low power mode (not standby or deep standby) */
-        SYS_REG0->LPCSR = saved_lpm_state;
     }
   #endif
  #endif
@@ -1648,7 +1635,7 @@ void vPortValidateInterruptPriority (void)
         configASSERT(ulCurrentPriority >= ucMaxSysCallPriority);
     }
 
- #ifdef __ARM_ARCH_7EM__
+ #ifndef __ARM_ARCH_8M_BASE__
 
     /* Priority grouping:  The interrupt controller (NVIC) allows the bits
      * that define each interrupt's priority to be split between bits that
@@ -1663,7 +1650,7 @@ void vPortValidateInterruptPriority (void)
      * scheduler.  Note however that some vendor specific peripheral libraries
      * assume a non-zero priority group setting, in which cases using a value
      * of zero will result in unpredictable behaviour. */
-    configASSERT(NVIC_GetPriorityGrouping() <= ulMaxPRIGROUPValue);
+    configASSERT(NVIC_GetPriorityGrouping() <= (ulMaxPRIGROUPValue >> portPRIGROUP_SHIFT));
  #endif
 }
 

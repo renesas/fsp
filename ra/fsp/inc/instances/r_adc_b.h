@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -595,11 +595,11 @@ typedef struct st_adc_b_extended_cfg
         uint32_t sync_operation_control; ///< Synchronous Operation Control register data
         __PACKED_STRUCT
         {
-            uint32_t period_cycle       : 10;
+            uint32_t period_cycle       : 11;
             uint32_t                    : 5;
             uint32_t adc_0_disable_sync : 1;
             uint32_t adc_1_disable_sync : 1;
-            uint32_t                    : 15;
+            uint32_t                    : 14;
         } sync_operation_control_bits;
     };
     union

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_CONNECTIVITY_INTERFACES
  * @defgroup UART_API UART Interface
  * @brief Interface for UART communications.
  *
@@ -88,6 +88,7 @@ typedef enum e_uart_data_bits
 typedef enum e_uart_parity
 {
     UART_PARITY_OFF  = 0U,             ///< No parity
+    UART_PARITY_ZERO = 1U,             ///< Zero parity
     UART_PARITY_EVEN = 2U,             ///< Even parity
     UART_PARITY_ODD  = 3U,             ///< Odd parity
 } uart_parity_t;

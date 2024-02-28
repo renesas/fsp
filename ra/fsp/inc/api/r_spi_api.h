@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,7 +22,7 @@
 #define R_SPI_API_H
 
 /*****************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_CONNECTIVITY_INTERFACES
  * @defgroup SPI_API SPI Interface
  * @brief Interface for SPI communications.
  *
@@ -57,35 +57,35 @@ FSP_HEADER
 /** Data bit width */
 typedef enum e_spi_bit_width
 {
-    SPI_BIT_WIDTH_4_BITS  = (3),       ///< Data bit width is 4 bits (byte)
-    SPI_BIT_WIDTH_5_BITS  = (4),       ///< Data bit width is 5 bits (byte)
-    SPI_BIT_WIDTH_6_BITS  = (5),       ///< Data bit width is 6 bits (byte)
-    SPI_BIT_WIDTH_7_BITS  = (6),       ///< Data bit width is 7 bits (byte)
-    SPI_BIT_WIDTH_8_BITS  = (7),       ///< Data bit width is 8 bits (byte)
-    SPI_BIT_WIDTH_9_BITS  = (8),       ///< Data bit width is 9 bits (halfword)
-    SPI_BIT_WIDTH_10_BITS = (9),       ///< Data bit width is 10 bits (halfword)
-    SPI_BIT_WIDTH_11_BITS = (10),      ///< Data bit width is 11 bits (halfword)
-    SPI_BIT_WIDTH_12_BITS = (11),      ///< Data bit width is 12 bits (halfword)
-    SPI_BIT_WIDTH_13_BITS = (12),      ///< Data bit width is 13 bits (halfword)
-    SPI_BIT_WIDTH_14_BITS = (13),      ///< Data bit width is 14 bits (halfword)
-    SPI_BIT_WIDTH_15_BITS = (14),      ///< Data bit width is 15 bits (halfword)
-    SPI_BIT_WIDTH_16_BITS = (15),      ///< Data bit width is 16 bits (halfword)
-    SPI_BIT_WIDTH_17_BITS = (16),      ///< Data bit width is 17 bits (word)
-    SPI_BIT_WIDTH_18_BITS = (17),      ///< Data bit width is 18 bits (word)
-    SPI_BIT_WIDTH_19_BITS = (18),      ///< Data bit width is 19 bits (word)
-    SPI_BIT_WIDTH_20_BITS = (19),      ///< Data bit width is 20 bits (word)
-    SPI_BIT_WIDTH_21_BITS = (20),      ///< Data bit width is 21 bits (word)
-    SPI_BIT_WIDTH_22_BITS = (21),      ///< Data bit width is 22 bits (word)
-    SPI_BIT_WIDTH_23_BITS = (22),      ///< Data bit width is 23 bits (word)
-    SPI_BIT_WIDTH_24_BITS = (23),      ///< Data bit width is 24 bits (word)
-    SPI_BIT_WIDTH_25_BITS = (24),      ///< Data bit width is 25 bits (word)
-    SPI_BIT_WIDTH_26_BITS = (25),      ///< Data bit width is 26 bits (word)
-    SPI_BIT_WIDTH_27_BITS = (26),      ///< Data bit width is 27 bits (word)
-    SPI_BIT_WIDTH_28_BITS = (27),      ///< Data bit width is 28 bits (word)
-    SPI_BIT_WIDTH_29_BITS = (28),      ///< Data bit width is 29 bits (word)
-    SPI_BIT_WIDTH_30_BITS = (29),      ///< Data bit width is 30 bits (word)
-    SPI_BIT_WIDTH_31_BITS = (30),      ///< Data bit width is 31 bits (word)
-    SPI_BIT_WIDTH_32_BITS = (31)       ///< Data bit width is 32 bits (word)
+    SPI_BIT_WIDTH_4_BITS  = (3),       ///< Data bit width is 4 bits
+    SPI_BIT_WIDTH_5_BITS  = (4),       ///< Data bit width is 5 bits
+    SPI_BIT_WIDTH_6_BITS  = (5),       ///< Data bit width is 6 bits
+    SPI_BIT_WIDTH_7_BITS  = (6),       ///< Data bit width is 7 bits
+    SPI_BIT_WIDTH_8_BITS  = (7),       ///< Data bit width is 8 bits
+    SPI_BIT_WIDTH_9_BITS  = (8),       ///< Data bit width is 9 bits
+    SPI_BIT_WIDTH_10_BITS = (9),       ///< Data bit width is 10 bits
+    SPI_BIT_WIDTH_11_BITS = (10),      ///< Data bit width is 11 bits
+    SPI_BIT_WIDTH_12_BITS = (11),      ///< Data bit width is 12 bits
+    SPI_BIT_WIDTH_13_BITS = (12),      ///< Data bit width is 13 bits
+    SPI_BIT_WIDTH_14_BITS = (13),      ///< Data bit width is 14 bits
+    SPI_BIT_WIDTH_15_BITS = (14),      ///< Data bit width is 15 bits
+    SPI_BIT_WIDTH_16_BITS = (15),      ///< Data bit width is 16 bits
+    SPI_BIT_WIDTH_17_BITS = (16),      ///< Data bit width is 17 bits
+    SPI_BIT_WIDTH_18_BITS = (17),      ///< Data bit width is 18 bits
+    SPI_BIT_WIDTH_19_BITS = (18),      ///< Data bit width is 19 bits
+    SPI_BIT_WIDTH_20_BITS = (19),      ///< Data bit width is 20 bits
+    SPI_BIT_WIDTH_21_BITS = (20),      ///< Data bit width is 21 bits
+    SPI_BIT_WIDTH_22_BITS = (21),      ///< Data bit width is 22 bits
+    SPI_BIT_WIDTH_23_BITS = (22),      ///< Data bit width is 23 bits
+    SPI_BIT_WIDTH_24_BITS = (23),      ///< Data bit width is 24 bits
+    SPI_BIT_WIDTH_25_BITS = (24),      ///< Data bit width is 25 bits
+    SPI_BIT_WIDTH_26_BITS = (25),      ///< Data bit width is 26 bits
+    SPI_BIT_WIDTH_27_BITS = (26),      ///< Data bit width is 27 bits
+    SPI_BIT_WIDTH_28_BITS = (27),      ///< Data bit width is 28 bits
+    SPI_BIT_WIDTH_29_BITS = (28),      ///< Data bit width is 29 bits
+    SPI_BIT_WIDTH_30_BITS = (29),      ///< Data bit width is 30 bits
+    SPI_BIT_WIDTH_31_BITS = (30),      ///< Data bit width is 31 bits
+    SPI_BIT_WIDTH_32_BITS = (31)       ///< Data bit width is 32 bits
 } spi_bit_width_t;
 #endif
 

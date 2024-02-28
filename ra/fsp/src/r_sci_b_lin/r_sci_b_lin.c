@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -43,12 +43,7 @@
 /* Max value of CKS for setting baud rate */
 #define SCI_B_LIN_CKS_MAX                                   (3U)
 
-/* Number of divisors in the data table used for LIN timer setting calculation. */
-#define SCI_B_LIN_NUM_TIMER_DIVISORS                        (3U)
-
-/* Lookup table bounds for LIN baud setting calculation. */
-#define SCI_B_LIN_NUM_BAUD_DIVISORS_PER_CLOCK_SELECT        (4U)
-#define SCI_B_LIN_NUM_ASYNC_MODE_BASE_CLOCK_MODES           (2U)
+#define SCI_B_LIN_MIN_BAUD_DIVISOR_SHIFT                    (5)
 
 /* Used to validate the checksum of received data */
 #define SCI_B_LIN_CHECKSUM_OK                               (0xff)
@@ -76,7 +71,13 @@
         R_SCI_B0_XFCLR_BCDC_Msk | R_SCI_B0_XFCLR_BFOC_Msk)
 
 /* SCI CCR2 register masks */
-#define SCI_B_LIN_CCR2_RESETVALUE                           (0xFF00FF04)
+#define SCI_B_LIN_CCR2_RESETVALUE                           (0xFF00FF04U)
+
+/* SCI CCR2 value with all used bits zeroed and all unused bits set to their reset values (used for baud calculation result) */
+#define SCI_B_LIN_CCR2_BAUD_SETTING                         (SCI_B_LIN_CCR2_RESETVALUE &           \
+                                                             (uint32_t) ~(R_SCI_B0_CCR2_BRR_Msk |  \
+                                                                          R_SCI_B0_CCR2_ABCS_Msk | \
+                                                                          R_SCI_B0_CCR2_CKS_Msk))
 
 /* SCI CCR3 register masks */
 #define SCI_B_LIN_CCR3_SIMPLE_LIN_MODE                      (6U << R_SCI_B0_CCR3_MOD_Pos)
@@ -95,7 +96,7 @@
 /* SCI XCR0 register masks */
 #define SCI_B_LIN_XCR0_MASK_MASTER                          (R_SCI_B0_XCR0_BFOIE_Msk)
 #define SCI_B_LIN_XCR0_MASK_SLAVE                           (R_SCI_B0_XCR0_BFE_Msk | R_SCI_B0_XCR0_CF0RE_Msk | \
-                                                             R_SCI_B0_XCR0_BFDIE_Msk)
+                                                             R_SCI_B0_XCR0_BFDIE_Msk | R_SCI_B0_XCR0_COFIE_Msk)
 #define SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE    ~(R_SCI_B0_XCR0_AEDIE_Msk | R_SCI_B0_XCR0_COFIE_Msk)
 
 /* SCI XCR1 register masks */
@@ -111,8 +112,8 @@
 /* SCI ERI mask helpers */
 #define SCI_B_LIN_ERI_CSR_EVENTS_MASK                       (LIN_EVENT_ERR_PARITY | LIN_EVENT_ERR_FRAMING | \
                                                              LIN_EVENT_ERR_OVERRUN)
-#define SCI_B_LIN_ERI_XSR_TX_EVENTS_MASK                    (LIN_EVENT_ERR_BUS_COLLISION_DETECTED)
-#define SCI_B_LIN_ERI_XSR_RX_EVENTS_MASK                    (LIN_EVENT_ERR_COUNTER_OVERFLOW)
+#define SCI_B_LIN_ERI_XSR_EVENTS_MASK                       (LIN_EVENT_ERR_BUS_COLLISION_DETECTED | \
+                                                             LIN_EVENT_ERR_COUNTER_OVERFLOW)
 #define SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK               (R_SCI_B0_CFCLR_PERC_Msk | R_SCI_B0_CFCLR_FERC_Msk | \
                                                              R_SCI_B0_CFCLR_ORERC_Msk | R_SCI_B0_CFCLR_RDRFC_Msk)
 #define SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK               (R_SCI_B0_XFCLR_BCDC_Msk | R_SCI_B0_XFCLR_COFC_Msk | \
@@ -122,6 +123,9 @@
 
 /* Number of consecutive measurements used to synchronize the bit rate */
 #define SCI_B_LIN_SYNC_EDGES                                (6)
+
+#define SCI_B_LIN_IRQS_ENABLE()     r_sci_b_lin_irqs_enable_disable(p_ctrl, r_sci_b_lin_irq_enable)
+#define SCI_B_LIN_IRQS_DISABLE()    r_sci_b_lin_irqs_enable_disable(p_ctrl, r_sci_b_lin_irq_disable)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -155,6 +159,8 @@ const lin_api_t g_lin_on_sci_b =
 
 /* PID and checksum helper functions */
 static uint8_t r_sci_b_lin_pid_calculate(uint8_t id);
+
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
 static uint8_t r_sci_b_lin_checksum_calculate(uint8_t               id,
                                               uint8_t const * const p_information,
                                               uint8_t               num_bytes,
@@ -162,16 +168,26 @@ static uint8_t r_sci_b_lin_checksum_calculate(uint8_t               id,
 static uint8_t r_sci_b_lin_checksum_initialize(uint8_t id, lin_checksum_type_t checksum_type);
 static uint8_t r_sci_b_lin_checksum_add_byte_to_sum(uint8_t byte, uint8_t current_sum);
 
+#endif
+
 /* Initialization helper functions */
 static void r_sci_b_lin_hw_configure(sci_b_lin_instance_ctrl_t * const p_ctrl);
-static void r_sci_b_lin_irq_cfg(sci_b_lin_instance_ctrl_t * const p_ctrl, uint8_t const ipl, IRQn_Type const irq);
+static void r_sci_b_lin_irq_cfg(IRQn_Type const irq);
 static void r_sci_b_lin_irqs_cfg(sci_b_lin_instance_ctrl_t * const p_ctrl);
-static void r_sci_b_lin_irqs_enable(lin_cfg_t const * const p_cfg);
-static void r_sci_b_lin_irqs_disable(lin_cfg_t const * const p_cfg);
+static void r_sci_b_lin_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
+static void r_sci_b_lin_irq_disable(IRQn_Type irq, uint8_t ipl, void * p_context);
+static void r_sci_b_lin_irqs_enable_disable(sci_b_lin_instance_ctrl_t * const p_ctrl,
+                                            void (* irqEnableDisableFunc)(IRQn_Type irq, uint8_t ipl,
+                                                                          void * p_context));
+
+static void r_sci_b_lin_filter_settings_configure(uint32_t * const                            xcr0,
+                                                  uint32_t * const                            xcr1,
+                                                  sci_b_lin_id_filter_setting_t const * const p_config);
 
 #if (SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE)
-static fsp_err_t r_sci_b_information_read_write_param_check(sci_b_lin_instance_ctrl_t const * const p_ctrl,
-                                                            lin_transfer_params_t const * const     p_transfer_params);
+static fsp_err_t r_sci_b_lin_common_parameter_checking(sci_b_lin_instance_ctrl_t const * const p_ctrl);
+static fsp_err_t r_sci_b_lin_information_read_write_param_check(sci_b_lin_instance_ctrl_t const * const p_ctrl,
+                                                                lin_transfer_params_t const * const     p_transfer_params);
 
 #endif
 
@@ -182,8 +198,12 @@ static void        r_sci_b_lin_call_callback(sci_b_lin_instance_ctrl_t * p_ctrl,
 static lin_event_t r_sci_b_lin_rxi_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
 static void        r_sci_b_lin_txi_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
 static lin_event_t r_sci_b_lin_eri_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
-static lin_event_t r_sci_b_lin_aed_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
 static void        r_sci_b_lin_bfd_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+static void r_sci_b_lin_aed_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
+
+#endif
 
 /* Baud and timing helper functions */
 static uint32_t r_sci_b_lin_clock_freq_get(sci_b_lin_clock_source_t clock_source);
@@ -194,9 +214,15 @@ static fsp_err_t r_sci_b_lin_baud_setting_calculate(sci_b_lin_baud_params_t cons
 static fsp_err_t r_sci_b_lin_timer_setting_calculate(sci_b_lin_baud_params_t const * const p_baud_params,
                                                      sci_b_lin_timer_setting_t * const     p_timer_setting);
 
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
 /* Auto Synchronization helper functions */
 static void r_sci_b_lin_aed_synchronize(sci_b_lin_instance_ctrl_t * const p_ctrl);
 static bool r_sci_b_lin_aed_latest_bit_has_error(sci_b_lin_instance_ctrl_t * const p_ctrl, uint16_t tcnt);
+
+#endif
+
+static void r_sci_b_lin_flags_clear(R_SCI_B0_Type * const p_reg, uint32_t cfclr, uint32_t xfclr);
 
 /* Interrupt service routines */
 void sci_b_lin_rxi_isr(void);
@@ -212,23 +238,6 @@ void sci_b_lin_bfd_isr(void);
 
 /* 1 byte "buffer" used to transmit start frame sync word. */
 static const uint8_t g_start_frame_sync_word = SCI_B_LIN_SYNC;
-
-static const int32_t g_sci_b_lin_baud_divisor_lut[SCI_B_LIN_NUM_BAUD_DIVISORS_PER_CLOCK_SELECT][
-    SCI_B_LIN_NUM_ASYNC_MODE_BASE_CLOCK_MODES] =
-{
-    /* ABCS=0, ABCS=1 */
-    {32,   16      },
-    {128,  64      },
-    {512,  256     },
-    {2048, 1024    },
-};
-
-static const uint16_t g_sci_b_lin_div_tcss[SCI_B_LIN_NUM_TIMER_DIVISORS] =
-{
-    4U,
-    16U,
-    64U
-};
 
 /*******************************************************************************************************************//**
  * @addtogroup SCI_B_LIN
@@ -280,19 +289,22 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
 
-    /* Auto Synchronization not supported in master mode */
-    FSP_ERROR_RETURN((p_extend->sci_b_settings_b.auto_synchronization == SCI_B_LIN_AUTO_SYNCHRONIZATION_DISABLE) ||
-                     (LIN_MODE_SLAVE == p_cfg->mode),
-                     FSP_ERR_INVALID_MODE);
-
     /* Check for required IRQs */
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
     FSP_ASSERT(p_cfg->txi_irq >= 0);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
     FSP_ASSERT(p_cfg->eri_irq >= 0);
     FSP_ASSERT(p_extend->bfd_irq >= 0 || (LIN_MODE_MASTER == p_cfg->mode));
+ #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Auto Synchronization not supported in master mode */
+    FSP_ERROR_RETURN((p_extend->sci_b_settings_b.auto_synchronization == SCI_B_LIN_AUTO_SYNCHRONIZATION_DISABLE) ||
+                     (LIN_MODE_SLAVE == p_cfg->mode),
+                     FSP_ERR_INVALID_MODE);
+
     FSP_ASSERT((p_extend->aed_irq >= 0) ||
                (((p_extend->sci_b_settings_b.auto_synchronization == SCI_B_LIN_AUTO_SYNCHRONIZATION_DISABLE))));
+ #endif
 
     /* Check timer settings in range */
     FSP_ERROR_RETURN(p_extend->baud_setting.timer_setting.bflw <= SCI_B_LIN_BFLW_MAX, FSP_ERR_INVALID_ARGUMENT);
@@ -367,12 +379,8 @@ fsp_err_t R_SCI_B_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t co
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check for null parameters */
-    FSP_ASSERT(NULL != p_ctrl);
-
-    /* Check control block is open */
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Check ID is at most 6 bits */
     FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
@@ -416,25 +424,26 @@ fsp_err_t R_SCI_B_LIN_InformationFrameWrite (lin_ctrl_t * const                 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
 
     /* Common parameter checking */
-    fsp_err_t err = FSP_SUCCESS;
-    err = r_sci_b_information_read_write_param_check(p_api_ctrl, p_transfer_params);
+    fsp_err_t err = r_sci_b_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Disable transmit interrupts, reception interrupts, and transmission */
-    p_ctrl->p_reg->CCR0 &=
+    p_reg->CCR0 &=
         (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_RIE_Msk | R_SCI_B0_CCR0_TE_Msk);
 
     /* Wait until internal state of TE is 0 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Please refer "26.2.29 CESR : Communication Enable Status Register" description
+     * rewriting the control register. Refer to "26.2.29 CESR : Communication Enable Status Register" description
      * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
-    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.TIST, 0U);
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
     /* Prepare the information frame transmission state. */
     p_ctrl->p_information = p_transfer_params->p_information;
     p_ctrl->tx_src_bytes  = p_transfer_params->num_bytes;
     p_ctrl->event         = LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE;
 
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
     if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
     {
         /* If checksum generation is enabled, calculate the checksum */
@@ -445,6 +454,7 @@ fsp_err_t R_SCI_B_LIN_InformationFrameWrite (lin_ctrl_t * const                 
         p_ctrl->tx_src_bytes++;
     }
     else
+#endif
     {
         /* User requested not to append checksum. Therefore either we are not using a checksum,
          * or we are using a custom checksum. Copy last byte into 'tx_checksum' field.
@@ -454,12 +464,11 @@ fsp_err_t R_SCI_B_LIN_InformationFrameWrite (lin_ctrl_t * const                 
     }
 
     /* Clear flags */
-    p_ctrl->p_reg->CFCLR = SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS;
-    p_ctrl->p_reg->XFCLR = SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS;
+    r_sci_b_lin_flags_clear(p_ctrl->p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
 
     /* Enable transmit interrupt to start transmission. Setting TE and TIE together causes a
      * TXI interrupt which will kick of transmission of the first byte. */
-    p_ctrl->p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk);
+    p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk);
 
     return FSP_SUCCESS;
 }
@@ -498,18 +507,19 @@ fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
-    fsp_err_t err = FSP_SUCCESS;
-    err = r_sci_b_information_read_write_param_check(p_api_ctrl, p_transfer_params);
+    fsp_err_t err = r_sci_b_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Disable reception interrupts */
-    p_ctrl->p_reg->CCR0_b.RIE = 0;
+    p_reg->CCR0_b.RIE = 0;
 
     /* Prepare receive state */
     p_ctrl->p_information     = p_transfer_params->p_information;
     p_ctrl->rx_bytes_expected = p_transfer_params->num_bytes;
     p_ctrl->rx_bytes_received = 0;
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
     p_ctrl->rx_checksum       = 0;
     p_ctrl->validate_checksum = p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE;
 
@@ -519,10 +529,11 @@ fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_
         p_ctrl->rx_bytes_expected++;
         p_ctrl->rx_checksum = r_sci_b_lin_checksum_initialize(p_transfer_params->id, p_transfer_params->checksum_type);
     }
+#endif
 
     /* Enable reception interrupts */
-    p_ctrl->p_reg->CFCLR      = SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK;
-    p_ctrl->p_reg->CCR0_b.RIE = 1;
+    p_reg->CFCLR      = SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK;
+    p_reg->CCR0_b.RIE = 1;
 
     return FSP_SUCCESS;
 }
@@ -545,23 +556,20 @@ fsp_err_t R_SCI_B_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check for null parameters */
-    FSP_ASSERT(NULL != p_ctrl);
-
-    /* Check control block is open */
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Disable transmit interrupts, transmission, and reception interrupts  */
-    p_ctrl->p_reg->CCR0 &=
+    p_reg->CCR0 &=
         (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_RIE_Msk);
 
     /* Wait until internal  state of TE is 0 as it takes some time for the state to be reflected
-     * internally after rewriting the control register. Please refer "26.2.29 CESR : Communication
+     * internally after rewriting the control register. Refer to "26.2.29 CESR : Communication
      * Enable Status Register" description in the RA6T2 manual R01UH0951EJ0100 or the relevant section
      * for the MCU being used  */
-    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.TIST, 0U);
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
     /* Cancel information frame or start frame write */
     p_ctrl->tx_src_bytes = 0U;
@@ -596,13 +604,11 @@ fsp_err_t R_SCI_B_LIN_CallbackSet (lin_ctrl_t * const          p_api_ctrl,
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Check for null parameters */
-    FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_callback);
-
-    /* Check control block is open */
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
 #if BSP_TZ_SECURE_BUILD
@@ -707,13 +713,11 @@ fsp_err_t R_SCI_B_LIN_IdFilterSet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Check for null parameters */
-    FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_config);
-
-    /* Check control block is open */
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Function only supported for slave mode */
     FSP_ERROR_RETURN(LIN_MODE_SLAVE == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
@@ -732,18 +736,11 @@ fsp_err_t R_SCI_B_LIN_IdFilterSet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
     /* Clear current XCR0 filter settings */
     xcr0 &= (uint32_t) ~(R_SCI_B0_XCR0_PIBS_Msk | R_SCI_B0_XCR0_PIBE_Msk | R_SCI_B0_XCR0_CF1DS_Msk);
 
-    /* Apply new XCR0 filter settings */
-    xcr0 |= ((uint32_t) p_config->priority_interrupt_bit_select << R_SCI_B0_XCR0_PIBS_Pos);
-    xcr0 |= ((uint32_t) p_config->priority_interrupt_enable << R_SCI_B0_XCR0_PIBE_Pos);
-    xcr0 |= ((uint32_t) p_config->compare_data_select << R_SCI_B0_XCR0_CF1DS_Pos);
-
     /* Clear current XCR1 filter settings */
     xcr1 &= (uint32_t) ~(R_SCI_B0_XCR1_CF1CE_Msk | R_SCI_B0_XCR1_PCF1D_Msk | R_SCI_B0_XCR1_SCF1D_Msk);
 
-    /* Apply new XCR1 filter settings */
-    xcr1 |= ((uint32_t) p_config->compare_data_mask << R_SCI_B0_XCR1_CF1CE_Pos);
-    xcr1 |= ((uint32_t) p_config->priority_compare_data << R_SCI_B0_XCR1_PCF1D_Pos);
-    xcr1 |= ((uint32_t) p_config->secondary_compare_data << R_SCI_B0_XCR1_SCF1D_Pos);
+    /* Apply new filter settings */
+    r_sci_b_lin_filter_settings_configure(&xcr0, &xcr1, p_config);
 
     /* Apply new settings and reenable start frame reception (TCST should never be set in slave mode) */
     p_reg->XCR0 = xcr0;
@@ -771,13 +768,11 @@ fsp_err_t R_SCI_B_LIN_IdFilterGet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Check for null parameters */
-    FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_config);
-
-    /* Check control block is open */
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Function only supported for slave mode */
     FSP_ERROR_RETURN(LIN_MODE_SLAVE == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
@@ -817,23 +812,20 @@ fsp_err_t R_SCI_B_LIN_Close (lin_ctrl_t * const p_api_ctrl)
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check for NULL parameters */
-    FSP_ASSERT(NULL != p_ctrl);
-
-    /* Check control block is open */
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Disable transmission and reception */
-    p_ctrl->p_reg->CCR0 = 0;
+    p_reg->CCR0 = 0;
 
     /* Wait until internal state of TE is 0. See "26.2.29 CESR : Communication Enable Status
      * Register" description in the RA6T2 manual R01UH0951EJ0100. */
-    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.TIST, 0U);
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
     /* Disable irqs */
-    r_sci_b_lin_irqs_disable(p_ctrl->p_cfg);
+    SCI_B_LIN_IRQS_DISABLE();
 
     /* Disable the clock to the SCI channel. */
     R_BSP_MODULE_STOP(FSP_IP_SCI, p_ctrl->p_cfg->channel);
@@ -845,7 +837,7 @@ fsp_err_t R_SCI_B_LIN_Close (lin_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * @} (end addtogroup SCI_LIN)
+ * @} (end addtogroup SCI_B_LIN)
  **********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -853,6 +845,24 @@ fsp_err_t R_SCI_B_LIN_Close (lin_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 
 #if (SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE)
+
+/*******************************************************************************************************************//**
+ * Verifies the control structure is not NULL and the module is open. This reduces code size when parameter checking is
+ * enabled.
+ *
+ * @param[in] p_ctrl                    Pointer to the control block for the channel
+ *
+ * @retval FSP_SUCCESS                  No error detected.
+ * @retval FSP_ERR_ASSERTION            NULL input argument.
+ * @retval FSP_ERR_NOT_OPEN             Module is not open.
+ **********************************************************************************************************************/
+static fsp_err_t r_sci_b_lin_common_parameter_checking (sci_b_lin_instance_ctrl_t const * const p_ctrl)
+{
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    return FSP_SUCCESS;
+}
 
 /*******************************************************************************************************************//**
  * Parameter error check function for informationFrameWrite and informationFrameRead
@@ -866,10 +876,11 @@ fsp_err_t R_SCI_B_LIN_Close (lin_ctrl_t * const p_api_ctrl)
  *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
  * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided
  **********************************************************************************************************************/
-static fsp_err_t r_sci_b_information_read_write_param_check (sci_b_lin_instance_ctrl_t const * const p_ctrl,
-                                                             lin_transfer_params_t const * const     p_transfer_params)
+static fsp_err_t r_sci_b_lin_information_read_write_param_check (sci_b_lin_instance_ctrl_t const * const p_ctrl,
+                                                                 lin_transfer_params_t const * const     p_transfer_params)
 {
-    FSP_ASSERT(NULL != p_ctrl);
+    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     FSP_ASSERT(NULL != p_transfer_params);
     FSP_ASSERT(NULL != p_transfer_params->p_information);
     FSP_ASSERT(0U != p_transfer_params->num_bytes);
@@ -878,8 +889,6 @@ static fsp_err_t r_sci_b_information_read_write_param_check (sci_b_lin_instance_
     {
         FSP_ASSERT(p_transfer_params->num_bytes < UINT8_MAX);
     }
-
-    FSP_ERROR_RETURN(SCI_B_LIN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* If information buffer is still set, then a transmit/receive is already
      * in progress and we don't want to overwrite the buffer pointer. */
@@ -927,7 +936,7 @@ static uint32_t r_sci_b_lin_clock_freq_get (sci_b_lin_clock_source_t clock_sourc
 static uint32_t r_sci_b_lin_timer_freq_get (sci_b_lin_clock_source_t  clock_source,
                                             sci_b_lin_timer_divider_t lin_divider)
 {
-    return r_sci_b_lin_clock_freq_get(clock_source) / g_sci_b_lin_div_tcss[lin_divider - 1];
+    return r_sci_b_lin_clock_freq_get(clock_source) / (1U << (lin_divider << 1U));
 }
 
 /*******************************************************************************************************************//**
@@ -943,9 +952,10 @@ static fsp_err_t r_sci_b_lin_baud_setting_calculate (sci_b_lin_baud_params_t con
                                                      sci_b_lin_baud_setting_t * const      p_baud_setting)
 {
     uint32_t freq_hz = r_sci_b_lin_clock_freq_get(p_baud_params->clock_source);
-    int32_t  divisor = 0;
-    int32_t  brr     = 0;
-    int32_t  cks     = -1;
+    uint32_t divisor = 0;
+    uint32_t divisor_shift;
+    uint32_t brr = 0;
+    int32_t  cks = -1;
     int32_t  abcs;
 
     int32_t abcs_init = 1;
@@ -963,8 +973,9 @@ static fsp_err_t r_sci_b_lin_baud_setting_calculate (sci_b_lin_baud_params_t con
         cks++;
         for (abcs = abcs_init; abcs >= 0; abcs--)
         {
-            divisor = g_sci_b_lin_baud_divisor_lut[cks][abcs] * (int32_t) p_baud_params->baudrate;
-            brr     = ((int32_t) freq_hz / divisor) - 1;
+            divisor_shift = SCI_B_LIN_MIN_BAUD_DIVISOR_SHIFT + ((uint32_t) cks << 1U) - (uint32_t) abcs;
+            divisor       = (1U << divisor_shift) * p_baud_params->baudrate;
+            brr           = (freq_hz / divisor) - 1U;
 
             if (brr <= UINT8_MAX)
             {
@@ -978,10 +989,10 @@ static fsp_err_t r_sci_b_lin_baud_setting_calculate (sci_b_lin_baud_params_t con
 
     /* Ensure unused bits are set to reset values so that unexpected baud setting is not generated
      * when passing in uninitialized stack variable. MSB of CCR2 is fixed to 1. */
-    p_baud_setting->baudrate_bits        = SCI_B_LIN_CCR2_RESETVALUE;
-    p_baud_setting->baudrate_bits_b.abcs = (uint8_t) (abcs & 0x1);
-    p_baud_setting->baudrate_bits_b.brr  = (uint8_t) brr;
-    p_baud_setting->baudrate_bits_b.cks  = (uint8_t) (cks & 0x3);
+    p_baud_setting->baudrate_bits = SCI_B_LIN_CCR2_BAUD_SETTING |
+                                    ((uint32_t) abcs << R_SCI_B0_CCR2_ABCS_Pos) |
+                                    (brr << R_SCI_B0_CCR2_BRR_Pos) |
+                                    ((uint32_t) cks << R_SCI_B0_CCR2_CKS_Pos);
 
     return FSP_SUCCESS;
 }
@@ -1051,6 +1062,8 @@ static uint8_t r_sci_b_lin_pid_calculate (uint8_t id)
     return pid;
 }
 
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
+
 /*******************************************************************************************************************//**
  * Add byte to checksum
  *
@@ -1076,6 +1089,10 @@ static uint8_t r_sci_b_lin_checksum_add_byte_to_sum (uint8_t byte, uint8_t curre
     return (uint8_t) new_sum;
 }
 
+#endif
+
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
+
 /*******************************************************************************************************************//**
  * Initialize the checksum based on the checksum type
  *
@@ -1096,6 +1113,10 @@ static uint8_t r_sci_b_lin_checksum_initialize (uint8_t id, lin_checksum_type_t 
 
     return checksum;
 }
+
+#endif
+
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Calculates the LIN checksum on information frame data to be transmitted. For received frames,
@@ -1122,6 +1143,8 @@ static uint8_t r_sci_b_lin_checksum_calculate (uint8_t               id,
 
     return (uint8_t) ~checksum;
 }
+
+#endif
 
 /*******************************************************************************************************************//**
  * Initializes the SCI common (CCRn) and Simple LIN (XCRn) register settings and enable LIN interrupts.
@@ -1166,17 +1189,15 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     xcr0 |= ((uint32_t) p_extend->baud_setting.timer_setting.tcss << R_SCI_B0_XCR0_TCSS_Pos);
     xcr0 |= ((uint32_t) p_extend->sci_b_settings_b.bus_conflict_clock << R_SCI_B0_XCR0_BCCS_Pos);
     xcr0 |= ((uint32_t) p_extend->sci_b_settings_b.bus_conflict_detection << R_SCI_B0_XCR0_BCDIE_Pos);
-    xcr0 |= ((uint32_t) p_extend->filter_setting.priority_interrupt_bit_select << R_SCI_B0_XCR0_PIBS_Pos);
-    xcr0 |= ((uint32_t) p_extend->filter_setting.priority_interrupt_enable << R_SCI_B0_XCR0_PIBE_Pos);
-    xcr0 |= ((uint32_t) p_extend->filter_setting.compare_data_select << R_SCI_B0_XCR0_CF1DS_Pos);
 
-    /* Configure remaining CF1 filter settings */
-    xcr1 |= ((uint32_t) p_extend->filter_setting.compare_data_mask << R_SCI_B0_XCR1_CF1CE_Pos);
-    xcr1 |= ((uint32_t) p_extend->filter_setting.priority_compare_data << R_SCI_B0_XCR1_PCF1D_Pos);
-    xcr1 |= ((uint32_t) p_extend->filter_setting.secondary_compare_data << R_SCI_B0_XCR1_SCF1D_Pos);
+    /* Configure ID filter settings */
+    r_sci_b_lin_filter_settings_configure(&xcr0, &xcr1, &p_extend->filter_setting);
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
     /* Configure auto synchronization setting. */
     xcr1 |= ((uint32_t) (p_extend->sci_b_settings_b.auto_synchronization) << R_SCI_B0_XCR1_BMEN_Pos);
+#endif
 
     /* Configure LIN break field length setting */
     xcr2 |= ((uint32_t) p_extend->baud_setting.timer_setting.bflw << R_SCI_B0_XCR2_BFLW_Pos);
@@ -1189,8 +1210,8 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     /* Set baud rate */
     uint32_t ccr2 = p_extend->baud_setting.baudrate_bits;
 
-    /* Configure TXD pin to output high level when TE is 0 and apply noise filter setting. */
-    uint32_t ccr1 = R_SCI_B0_CCR1_SPB2DT_Msk | R_SCI_B0_CCR1_SPB2IO_Msk | SCI_B_LIN_CCR1_NOISE_FILTER_CLOCK;
+    /* Apply noise filter setting. */
+    uint32_t ccr1 = SCI_B_LIN_CCR1_NOISE_FILTER_CLOCK;
     ccr1 |= ((uint32_t) p_extend->sci_b_settings_b.noise_cancel << R_SCI_B0_CCR1_NFEN_Pos);
 
     /* Write the settings to the SCI. Do not write XCR1 settings yet, they
@@ -1201,8 +1222,7 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     p_reg->XCR2 = xcr2;
 
     /* Clear flags */
-    p_reg->CFCLR = SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS;
-    p_reg->XFCLR = SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS;
+    r_sci_b_lin_flags_clear(p_ctrl->p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
 
     /* Write the settings to the SCI control registers in the order specified by the initialization flow. */
     p_reg->CCR3 = ccr3;
@@ -1211,7 +1231,7 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     p_reg->CCR4 = 0;
 
     /* Enable interrupt handlers in the NVIC */
-    r_sci_b_lin_irqs_enable(p_ctrl->p_cfg);
+    SCI_B_LIN_IRQS_ENABLE();
 
     /* Enable reception. RE and RIE must be set simultaneously (see RA6T2 manual R01UH0951EJ0130 Table 26.26
      * "Example flow of SCI initialization in asynchronous mode with non-FIFO selected."). The CFCLR
@@ -1234,23 +1254,93 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Sets interrupt priority and initializes vector info.
+ * Configures the ID filter settings. Existing register settings are not modified.
  *
- * @param[in]  p_ctrl                    Pointer to driver control block
- * @param[in]  ipl                       Interrupt priority level
- * @param[in]  irq                       IRQ number for this interrupt
+ * @param[out]  xcr0       Pointer to XCR0 variable to update
+ * @param[out]  xcr1       Pointer to XCR1 settings variable to update
+ * @param[in]   p_config   Configuration to apply
+ *
  **********************************************************************************************************************/
-static void r_sci_b_lin_irq_cfg (sci_b_lin_instance_ctrl_t * const p_ctrl, uint8_t const ipl, IRQn_Type const irq)
+static void r_sci_b_lin_filter_settings_configure (uint32_t * const                            xcr0,
+                                                   uint32_t * const                            xcr1,
+                                                   sci_b_lin_id_filter_setting_t const * const p_config)
 {
-    /* Disable interrupts, set priority, and store control block in the vector information so it can be accessed
-     * from the callback. */
-    R_BSP_IrqDisable(irq);
-    R_BSP_IrqStatusClear(irq);
-    R_BSP_IrqCfg(irq, ipl, p_ctrl);
+    /* Apply XCR0 filter settings */
+    *xcr0 |= ((uint32_t) p_config->priority_interrupt_bit_select << R_SCI_B0_XCR0_PIBS_Pos) |
+             ((uint32_t) p_config->priority_interrupt_enable << R_SCI_B0_XCR0_PIBE_Pos) |
+             ((uint32_t) p_config->compare_data_select << R_SCI_B0_XCR0_CF1DS_Pos);
+
+    /* Apply XCR1 filter settings */
+    *xcr1 |= ((uint32_t) p_config->compare_data_mask << R_SCI_B0_XCR1_CF1CE_Pos) |
+             ((uint32_t) p_config->priority_compare_data << R_SCI_B0_XCR1_PCF1D_Pos) |
+             ((uint32_t) p_config->secondary_compare_data << R_SCI_B0_XCR1_SCF1D_Pos);
 }
 
 /*******************************************************************************************************************//**
- * Sets interrupt priority and initializes vector info for all interrupts.
+ * Clear LIN status flags (CFCLR and XFCLR)
+ *
+ * @param[in]  p_reg      SCI register pointer
+ * @param[in]  cfclr      CFCLR flags to clear
+ * @param[in]  xfclr      XFCLR flags to clear
+ *
+ **********************************************************************************************************************/
+static void r_sci_b_lin_flags_clear (R_SCI_B0_Type * const p_reg, uint32_t cfclr, uint32_t xfclr)
+{
+    p_reg->CFCLR = cfclr;
+    p_reg->XFCLR = xfclr;
+}
+
+/*******************************************************************************************************************//**
+ * Enables the requested IRQ and sets the interrupt context
+ *
+ * @param[in]  irq        IRQ to enable
+ * @param[in]  ipl        Interrupt priority
+ * @param[in]  p_context  Pointer to interrupt context
+ **********************************************************************************************************************/
+static void r_sci_b_lin_irq_enable (IRQn_Type irq, uint8_t ipl, void * p_context)
+{
+    if (irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(irq, ipl, p_context);
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Disables the requested IRQ.
+ *
+ * @param[in]  irq  IRQ to disable
+ * @param[in]  ipl        Interrupt priority
+ * @param[in]  p_context  Pointer to interrupt context
+ **********************************************************************************************************************/
+static void r_sci_b_lin_irq_disable (IRQn_Type irq, uint8_t ipl, void * p_context)
+{
+    /* Parameters unused to allow using same function signature in r_sci_b_lin_irqs_enable_disable which reduces codes size */
+    FSP_PARAMETER_NOT_USED(ipl);
+    FSP_PARAMETER_NOT_USED(p_context);
+
+    if (irq >= 0)
+    {
+        R_BSP_IrqDisable(irq);
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Disables interrupt and clears pending status
+ *
+ * @param[in]  irq                       IRQ number for this interrupt
+ **********************************************************************************************************************/
+static void r_sci_b_lin_irq_cfg (IRQn_Type const irq)
+{
+    r_sci_b_lin_irq_disable(irq, 0, 0);
+
+    if (irq >= 0)
+    {
+        R_BSP_IrqStatusClear(irq);
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Intializes interrupts in the NVIC, but does not enable them
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  **********************************************************************************************************************/
@@ -1260,73 +1350,39 @@ static void r_sci_b_lin_irqs_cfg (sci_b_lin_instance_ctrl_t * const p_ctrl)
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 
     /* Required */
-    r_sci_b_lin_irq_cfg(p_ctrl, p_cfg->rxi_ipl, p_cfg->rxi_irq);
-    r_sci_b_lin_irq_cfg(p_ctrl, p_cfg->txi_ipl, p_cfg->txi_irq);
-    r_sci_b_lin_irq_cfg(p_ctrl, p_cfg->tei_ipl, p_cfg->tei_irq);
-    r_sci_b_lin_irq_cfg(p_ctrl, p_cfg->eri_ipl, p_cfg->eri_irq);
+    r_sci_b_lin_irq_cfg(p_cfg->rxi_irq);
+    r_sci_b_lin_irq_cfg(p_cfg->txi_irq);
+    r_sci_b_lin_irq_cfg(p_cfg->tei_irq);
+    r_sci_b_lin_irq_cfg(p_cfg->eri_irq);
 
-    /* BFD IRQ is only configured in slave mode */
-    if (LIN_MODE_SLAVE == p_cfg->mode)
-    {
-        r_sci_b_lin_irq_cfg(p_ctrl, p_extend->bfd_ipl, p_extend->bfd_irq);
-    }
-
-    /* AED IRQ is only configured when auto synchronization is enabled */
-    if (p_extend->sci_b_settings_b.auto_synchronization)
-    {
-        r_sci_b_lin_irq_cfg(p_ctrl, p_extend->aed_ipl, p_extend->aed_irq);
-    }
+    /* Slave mode only */
+    r_sci_b_lin_irq_cfg(p_extend->bfd_irq);
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+    r_sci_b_lin_irq_cfg(p_extend->aed_irq);
+#endif
 }
 
 /*******************************************************************************************************************//**
- * Enables all LIN interrupts in the NVIC. This does not necessarily enable them in the SCI.
+ * Enables or disables all LIN interrupts in the NVIC. Enable does not necessarily enable them in the SCI.
  *
- * @param[in]  p_cfg                     Pointer to driver configuration structure
+ * @param[in]  p_ctrl                    Pointer to driver control block
+ * @param[in]  irqEnableDisableFunc      r_sci_b_lin_irq_enable to enable interrupts. r_sci_b_lin_irq_disable to disable interrupts.
  **********************************************************************************************************************/
-static void r_sci_b_lin_irqs_enable (lin_cfg_t const * const p_cfg)
+static void r_sci_b_lin_irqs_enable_disable (sci_b_lin_instance_ctrl_t * const p_ctrl,
+                                             void (* irqEnableDisableFunc)(IRQn_Type irq, uint8_t ipl,
+                                                                           void * p_context))
 {
+    lin_cfg_t const * p_cfg = p_ctrl->p_cfg;
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 
-    R_BSP_IrqEnable(p_cfg->txi_irq);
-    R_BSP_IrqEnable(p_cfg->tei_irq);
-    R_BSP_IrqEnable(p_cfg->rxi_irq);
-    R_BSP_IrqEnable(p_cfg->eri_irq);
-
-    if (LIN_MODE_SLAVE == p_cfg->mode)
-    {
-        R_BSP_IrqEnable(p_extend->bfd_irq);
-    }
-
-    /* AED IRQ is only enabled when auto synchronization is enabled */
-    if (p_extend->sci_b_settings_b.auto_synchronization)
-    {
-        R_BSP_IrqEnable(p_extend->aed_irq);
-    }
-}
-
-/*******************************************************************************************************************//**
- * Disables all LIN interrupts in the NVIC.
- *
- * @param[in]  p_cfg                     Pointer to driver configuration structure
- **********************************************************************************************************************/
-static void r_sci_b_lin_irqs_disable (lin_cfg_t const * const p_cfg)
-{
-    sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
-
-    R_BSP_IrqDisable(p_cfg->txi_irq);
-    R_BSP_IrqDisable(p_cfg->tei_irq);
-    R_BSP_IrqDisable(p_cfg->rxi_irq);
-    R_BSP_IrqDisable(p_cfg->eri_irq);
-
-    if (LIN_MODE_SLAVE == p_cfg->mode)
-    {
-        R_BSP_IrqDisable(p_extend->bfd_irq);
-    }
-
-    if (p_extend->sci_b_settings_b.auto_synchronization)
-    {
-        R_BSP_IrqDisable(p_extend->aed_irq);
-    }
+    irqEnableDisableFunc(p_cfg->rxi_irq, p_cfg->rxi_ipl, p_ctrl);
+    irqEnableDisableFunc(p_cfg->txi_irq, p_cfg->txi_ipl, p_ctrl);
+    irqEnableDisableFunc(p_cfg->tei_irq, p_cfg->tei_ipl, p_ctrl);
+    irqEnableDisableFunc(p_cfg->eri_irq, p_cfg->eri_ipl, p_ctrl);
+    irqEnableDisableFunc(p_extend->bfd_irq, p_extend->bfd_ipl, p_ctrl);
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+    irqEnableDisableFunc(p_extend->aed_irq, p_extend->aed_ipl, p_ctrl);
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -1376,14 +1432,15 @@ static fsp_err_t r_sci_b_lin_start_frame_write (sci_b_lin_instance_ctrl_t * cons
     p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TIE_Msk);
 
     /* Clear flags */
-    p_reg->CFCLR = SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS;
-    p_reg->XFCLR = SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS;
+    r_sci_b_lin_flags_clear(p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
 
     /* Start outputting break field. */
     p_reg->XCR1_b.TCST = 1;
 
     return FSP_SUCCESS;
 }
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Calculates the detected baud rate and updates the baud and break field threshold register settings to synchronize
@@ -1395,6 +1452,7 @@ static fsp_err_t r_sci_b_lin_start_frame_write (sci_b_lin_instance_ctrl_t * cons
  **********************************************************************************************************************/
 static void r_sci_b_lin_aed_synchronize (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
+    R_SCI_B0_Type * const p_reg = p_ctrl->p_reg;
     sci_b_lin_extended_cfg_t const * const p_extend     = (sci_b_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     sci_b_lin_clock_source_t               clock_source =
         (sci_b_lin_clock_source_t) p_extend->sci_b_settings_b.clock_source;
@@ -1415,11 +1473,15 @@ static void r_sci_b_lin_aed_synchronize (sci_b_lin_instance_ctrl_t * const p_ctr
         if (FSP_SUCCESS == r_sci_b_lin_baud_setting_calculate(&baud_params, &baud_setting))
         {
             /* Adjust new baud rate and BFLW setting.*/
-            p_ctrl->p_reg->XCR2_b.BFLW = (uint16_t) bflw_setting;
-            p_ctrl->p_reg->CCR2        = baud_setting.baudrate_bits;
+            p_reg->XCR2_b.BFLW = (uint16_t) bflw_setting;
+            p_reg->CCR2        = baud_setting.baudrate_bits;
         }
     }
 }
+
+#endif
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Check for errors in received AED measurement data. Because the AED interrupt detects edges, the level of the
@@ -1452,6 +1514,8 @@ static bool r_sci_b_lin_aed_latest_bit_has_error (sci_b_lin_instance_ctrl_t * co
     return has_error;
 }
 
+#endif
+
 /*******************************************************************************************************************//**
  * Handle error interrupt
  *
@@ -1459,30 +1523,31 @@ static bool r_sci_b_lin_aed_latest_bit_has_error (sci_b_lin_instance_ctrl_t * co
  **********************************************************************************************************************/
 static lin_event_t r_sci_b_lin_eri_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
-    uint32_t ccr0 = p_ctrl->p_reg->CCR0;
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
+    uint32_t        ccr0  = p_reg->CCR0;
 
-    uint32_t xsr_events_mask = SCI_B_LIN_ERI_XSR_RX_EVENTS_MASK;
-    if (ccr0 & R_SCI_B0_CCR0_TE_Msk)
-    {
-        xsr_events_mask = SCI_B_LIN_ERI_XSR_TX_EVENTS_MASK;
-    }
+    /* If we are outputting break field, stop */
+    p_reg->XCR1_b.TCST = 0;
 
     /* Suspend transmission and transmit interrupts, and reception interrupts */
-    p_ctrl->p_reg->CCR0 = ccr0 &
-                          (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk |
-                                       R_SCI_B0_CCR0_RIE_Msk);
+    p_reg->CCR0 = ccr0 &
+                  (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk |
+                               R_SCI_B0_CCR0_RIE_Msk);
 
     /* Determine cause of error. */
     uint32_t    csr    = p_ctrl->p_reg->CSR;
     uint32_t    xsr    = p_ctrl->p_reg->XSR0;
-    lin_event_t events = (lin_event_t) ((csr & SCI_B_LIN_ERI_CSR_EVENTS_MASK) | (xsr & xsr_events_mask));
+    lin_event_t events = (lin_event_t) ((csr & SCI_B_LIN_ERI_CSR_EVENTS_MASK) | (xsr & SCI_B_LIN_ERI_XSR_EVENTS_MASK));
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
     /* Disable auto synchronization until next break field */
-    p_ctrl->p_reg->XCR0 &= (uint32_t) (SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE);
+    p_reg->XCR0 &= (uint32_t) (SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE);
+#endif
 
     /* Clear error conditions and discard RDR data. */
-    p_ctrl->p_reg->CFCLR = SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK;
-    p_ctrl->p_reg->XFCLR = SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK;
+    r_sci_b_lin_flags_clear(p_ctrl->p_reg, SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK,
+                            SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK);
 
     return events;
 }
@@ -1496,26 +1561,24 @@ static lin_event_t r_sci_b_lin_eri_handler (sci_b_lin_instance_ctrl_t * const p_
  **********************************************************************************************************************/
 lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
-    lin_event_t event = LIN_EVENT_NONE;
-    uint32_t    xsr0  = p_ctrl->p_reg->XSR0;
+    lin_event_t     event = LIN_EVENT_NONE;
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
+    uint32_t        xsr0  = p_reg->XSR0;
 
     /* Check if control field 0 was received*/
     if (xsr0 & R_SCI_B0_XSR0_CF0MF_Msk)
     {
-        /* Clear the flag to advance start frame reception state */
-        p_ctrl->p_reg->XFCLR = R_SCI_B0_XFCLR_CF0MC_Msk;
-
-        /* Discard received data */
-        p_ctrl->p_reg->CFCLR = R_SCI_B0_CFCLR_RDRFC_Msk;
+        /* Discard received data and clear the CF0 received flag to advance start frame reception state */
+        r_sci_b_lin_flags_clear(p_reg, R_SCI_B0_CFCLR_RDRFC_Msk, R_SCI_B0_XFCLR_CF0MC_Msk);
     }
     /* Check if control field 1 was received */
     else if (xsr0 & (R_SCI_B0_XSR0_CF1MF_Msk | R_SCI_B0_XSR0_PIBDF_Msk))
     {
         /* Advance start frame reception state */
-        p_ctrl->p_reg->XFCLR = R_SCI_B0_XFCLR_CF1MC_Msk | R_SCI_B0_XFCLR_PIBDC_Msk;
+        p_reg->XFCLR = R_SCI_B0_XFCLR_CF1MC_Msk | R_SCI_B0_XFCLR_PIBDC_Msk;
 
         /* Read the received data */
-        uint8_t pid = p_ctrl->p_reg->RDR_BY;
+        uint8_t pid = p_reg->RDR_BY;
 
         /* Set the event to notify the application (slave node only). */
         event = LIN_EVENT_RX_START_FRAME_COMPLETE;
@@ -1537,12 +1600,14 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
         uint8_t bytes_remaining = p_ctrl->rx_bytes_expected - p_ctrl->rx_bytes_received;
 
         /* Read data byte from RDR */
-        uint8_t rx_byte = p_ctrl->p_reg->RDR_BY;
+        uint8_t rx_byte = p_reg->RDR_BY;
 
         /* Check if this is the last byte in the transfer */
         if (1 == bytes_remaining)
         {
             event = LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE;
+
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
 
             /* Perform checksum validation if requested */
             if (p_ctrl->validate_checksum)
@@ -1557,6 +1622,7 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
                 p_ctrl->rx_checksum = rx_byte;
             }
             else
+#endif
             {
                 /* Checksum validation skipped (nonstandard checksum or checksum not present).
                  * Store the received byte as data. */
@@ -1567,16 +1633,19 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
             /* Information frame reception complete. Reset receive state and stop reception interrupts. */
             p_ctrl->rx_bytes_expected = 0;
             p_ctrl->p_information     = NULL;
-            p_ctrl->p_reg->CCR0_b.RIE = 0;
+            p_reg->CCR0_b.RIE         = 0;
         }
         /* Received a byte which is not the last byte */
         else
         {
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
+
             /* Add the received byte to the running checksum */
             if (p_ctrl->validate_checksum)
             {
                 p_ctrl->rx_checksum = r_sci_b_lin_checksum_add_byte_to_sum(rx_byte, p_ctrl->rx_checksum);
             }
+#endif
 
             /* Store the received byte */
             *p_ctrl->p_information++ = rx_byte;
@@ -1588,10 +1657,10 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
         /* Byte received out of sequence. */
 
         /* Discard the byte */
-        p_ctrl->p_reg->CFCLR = R_SCI_B0_CFCLR_RDRFC_Msk;
+        p_reg->CFCLR = R_SCI_B0_CFCLR_RDRFC_Msk;
 
         /* Stop reception interrupts. */
-        p_ctrl->p_reg->CCR0_b.RIE = 0;
+        p_reg->CCR0_b.RIE = 0;
     }
 
     return event;
@@ -1604,28 +1673,30 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_sci_b_lin_txi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
+
     /* Check for break field output completion flag */
-    if (p_ctrl->p_reg->XSR0 & R_SCI_B0_XSR0_BFOF_Msk)
+    if (p_reg->XSR0 & R_SCI_B0_XSR0_BFOF_Msk)
     {
         /* Clear break field transmission complete. Currently the break delimeter is still being
          * transmitted. But we can still write the next byte to TDR. If transmit data is written
          * while the Break Delimiter length is being counted, transmission  does not start until
          * the Break Delimiter length counting is completed.*/
-        p_ctrl->p_reg->XFCLR = R_SCI_B0_XFCLR_BFOC_Msk;
+        p_reg->XFCLR = R_SCI_B0_XFCLR_BFOC_Msk;
     }
 
-    if ((p_ctrl->tx_src_bytes > 0U) && p_ctrl->p_information)
+    if (p_ctrl->tx_src_bytes > 0U)
     {
         /* Check if there is only 1 byte remaining to transmit */
         if (1 == p_ctrl->tx_src_bytes)
         {
             /* Write checksum byte (or PID byte, if this is a start frame) */
-            p_ctrl->p_reg->TDR = p_ctrl->last_tx_byte;
+            p_reg->TDR = p_ctrl->last_tx_byte;
         }
         else
         {
             /* Write next byte */
-            p_ctrl->p_reg->TDR = *p_ctrl->p_information++;
+            p_reg->TDR = *p_ctrl->p_information++;
         }
 
         /* Update the driver state */
@@ -1634,10 +1705,10 @@ static void r_sci_b_lin_txi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     else
     {
         /* After all data has been transmitted, disable transmit interrupts and enable the transmit end interrupt. */
-        uint32_t ccr0_temp = p_ctrl->p_reg->CCR0;
+        uint32_t ccr0_temp = p_reg->CCR0;
         ccr0_temp            |= R_SCI_B0_CCR0_TEIE_Msk;
         ccr0_temp            &= (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk);
-        p_ctrl->p_reg->CCR0   = ccr0_temp;
+        p_reg->CCR0           = ccr0_temp;
         p_ctrl->p_information = NULL;
     }
 }
@@ -1649,18 +1720,20 @@ static void r_sci_b_lin_txi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_sci_b_lin_bfd_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
-    sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
+    R_SCI_B0_Type * const p_reg                 = p_ctrl->p_reg;
+    uint32_t              ccr0                  = p_reg->CCR0;
+    uint32_t              xsr_events_clear_mask = SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK;
 
-    uint32_t ccr0 = p_reg->CCR0;
+    /* Enable reception interrupts to receive incoming data following the break field */
+    ccr0 |= R_SCI_B0_CCR0_RIE_Msk;
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
     uint32_t xcr0 = p_reg->XCR0;
+    sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
     /* Enable active edge detect interrupt when auto synchronization is enabled. Always enable counter overflow interrupt.*/
     xcr0 |= ((uint32_t) (p_extend->sci_b_settings_b.auto_synchronization) << R_SCI_B0_XCR0_AEDIE_Pos) |
             R_SCI_B0_XCR0_COFIE_Msk;
-
-    /* Enable reception interrupts to receive incoming data following the break field */
-    ccr0 |= R_SCI_B0_CCR0_RIE_Msk;
 
     /* Reset auto synchronization state */
     p_ctrl->sync_bits_received = 0;
@@ -1669,11 +1742,14 @@ static void r_sci_b_lin_bfd_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     /* Clear flags and apply register settings. Ensure to clear AEDC as we only use it for CF0 measurement,
      * but it can be used to measure CF1 as well, so the flag may have been set during CF1 reception even
      * though AEDIE interrupts were disabled. */
-    p_reg->XCR0  = xcr0;
-    p_reg->XFCLR = SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK | R_SCI_B0_XFCLR_AEDC_Msk;
-    p_reg->CFCLR = SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK;
-    p_reg->CCR0  = ccr0;
+    p_reg->XCR0            = xcr0;
+    xsr_events_clear_mask |= R_SCI_B0_XFCLR_AEDC_Msk;
+#endif
+    r_sci_b_lin_flags_clear(p_reg, SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK, xsr_events_clear_mask);
+    p_reg->CCR0 = ccr0;
 }
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Handles active edge detection when auto synchronization is enabled.
@@ -1703,13 +1779,13 @@ static void r_sci_b_lin_bfd_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  **********************************************************************************************************************/
-static lin_event_t r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
+static void r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
-    lin_event_t event = LIN_EVENT_NONE;
+    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Get the bit duration (in LIN timer ticks) of the most recently received bit of
      * control field 0. XSR0.AEDF is cleared automatically upon reading. */
-    uint16_t tcnt = p_ctrl->p_reg->XSR1_b.TCNT;
+    uint16_t tcnt = p_reg->XSR1_b.TCNT;
 
     /* Check for bit errors  */
     bool error = r_sci_b_lin_aed_latest_bit_has_error(p_ctrl, tcnt);
@@ -1726,7 +1802,7 @@ static lin_event_t r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_
 
             /* Once all sync edges are received, disable edge detection and counter overflow
              * interrupt until the next start frame */
-            p_ctrl->p_reg->XCR0 &= (uint32_t) (SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE);
+            p_reg->XCR0 &= (uint32_t) (SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE);
         }
     }
     else
@@ -1736,9 +1812,9 @@ static lin_event_t r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_
         p_ctrl->sync_bits_received = 0;
         p_ctrl->sync_bits_sum      = 0;
     }
-
-    return event;
 }
+
+#endif
 
 /*******************************************************************************************************************//**
  * Calls user callback.
@@ -1899,20 +1975,11 @@ void sci_b_lin_eri_isr (void)
     /* Recover ISR context saved in open. */
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* If we are outputting break field, stop */
-    if (p_ctrl->p_reg->XCR1_b.TCST)
-    {
-        p_ctrl->p_reg->XCR1_b.TCST = 0;
-    }
-
     /* Determine the error event */
     lin_event_t event = r_sci_b_lin_eri_handler(p_ctrl);
 
     /* Call user callback */
-    if (event)
-    {
-        r_sci_b_lin_call_callback(p_ctrl, event);
-    }
+    r_sci_b_lin_call_callback(p_ctrl, event);
 
     /* Stop any in progress transmission/reception */
     p_ctrl->rx_bytes_expected = 0;
@@ -1945,7 +2012,8 @@ void sci_b_lin_bfd_isr (void)
     /* Recover ISR context saved in open. */
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Check if break field was detected */
+    /* Check if break field was detected. XSR0.BFDF must be confirmed according to Figure 26.105
+     * "Example of Start Frame Reception Flowchart" of the RA6T2 manual R01UH0951EJ0130  */
     if (p_ctrl->p_reg->XSR0 & R_SCI_B0_XSR0_BFDF_Msk)
     {
         r_sci_b_lin_bfd_handler(p_ctrl);
@@ -1957,6 +2025,8 @@ void sci_b_lin_bfd_isr (void)
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
 }
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Active edge detection interrupt processing for Simple LIN mode auto synchronization during control field 0 reception
@@ -1977,15 +2047,11 @@ void sci_b_lin_aed_isr (void)
     /* Recover ISR context saved in open. */
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Process the received data and determine whether there is a callback event present */
-    lin_event_t event = r_sci_b_lin_aed_handler(p_ctrl);
-
-    /* If callback event occurred, call the callback */
-    if (event)
-    {
-        r_sci_b_lin_call_callback(p_ctrl, event);
-    }
+    /* Process the edge detect event */
+    r_sci_b_lin_aed_handler(p_ctrl);
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
 }
+
+#endif

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -317,6 +317,8 @@ typedef enum e_ioport_port_pin_t
     IOPORT_PORT_14_PIN_15 = 0x0E0F,    ///< IO port 14 pin 15
 } ioport_port_pin_t;
 
+#ifndef BSP_OVERRIDE_IOPORT_PERIPHERAL_T
+
 /** Superset of all peripheral functions.  */
 typedef enum e_ioport_peripheral
 {
@@ -374,21 +376,21 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a segment LCD peripheral pin */
     IOPORT_PERIPHERAL_LCDC = (0x0DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
-#if BSP_FEATURE_SCI_UART_DE_IS_INVERTED
+ #if BSP_FEATURE_SCI_UART_DE_IS_INVERTED
 
     /** Pin will function as an SCI peripheral DEn pin */
     IOPORT_PERIPHERAL_DE_SCI1_3_5_7_9 = (0x0DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
     /** Pin will function as an SCI DEn peripheral pin */
     IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8 = (0x0EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
-#else
+ #else
 
     /** Pin will function as an SCI peripheral DEn pin */
     IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8 = (0x0DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
     /** Pin will function as an SCI DEn peripheral pin */
     IOPORT_PERIPHERAL_DE_SCI1_3_5_7_9 = (0x0EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
-#endif
+ #endif
 
     /** Pin will function as a DALI peripheral pin */
     IOPORT_PERIPHERAL_DALI = (0x0EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
@@ -459,6 +461,9 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a MIPI DSI peripheral pin */
     IOPORT_PERIPHERAL_MIPI = (0x1FUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 } ioport_peripheral_t;
+#endif
+
+#ifndef BSP_OVERRIDE_IOPORT_CFG_OPTIONS_T
 
 /** Options to configure pin functions  */
 typedef enum e_ioport_cfg_options
@@ -473,7 +478,7 @@ typedef enum e_ioport_cfg_options
     IOPORT_CFG_PMOS_ENABLE           = 0x00000080, ///< Enables the pin's PMOS open-drain ouput
     IOPORT_CFG_DRIVE_MID             = 0x00000400, ///< Sets pin drive output to medium
     IOPORT_CFG_DRIVE_HS_HIGH         = 0x00000800, ///< Sets pin drive output to high along with supporting high speed
-    IOPORT_CFG_DRIVE_MID_IIC         = 0x00000C00, ///< Sets pin to drive output needed for IIC on a 20mA port
+    IOPORT_CFG_DRIVE_MID_IIC         = 0x00000800, ///< Sets pin to drive output needed for IIC on a 20mA port
     IOPORT_CFG_DRIVE_HIGH            = 0x00000C00, ///< Sets pin drive output to high
     IOPORT_CFG_EVENT_RISING_EDGE     = 0x00001000, ///< Sets pin event trigger to rising edge
     IOPORT_CFG_EVENT_FALLING_EDGE    = 0x00002000, ///< Sets pin event trigger to falling edge
@@ -482,6 +487,7 @@ typedef enum e_ioport_cfg_options
     IOPORT_CFG_ANALOG_ENABLE         = 0x00008000, ///< Enables pin to operate as an analog pin
     IOPORT_CFG_PERIPHERAL_PIN        = 0x00010000  ///< Enables pin to operate as a peripheral pin
 } ioport_cfg_options_t;
+#endif
 
 /**********************************************************************************************************************
  * Exported global variables

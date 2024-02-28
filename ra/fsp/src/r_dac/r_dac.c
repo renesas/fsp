@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -31,7 +31,6 @@
 /* D/A Control Register Mask */
 /** Driver ID (DTC in ASCII), used to identify Digital to Analog Converter (DAC) configuration  */
 #define DAC_OPEN                                     (0x44414300)
-#define DAC_VREF_AVCC0_AVSS0                         (0x01U)
 #define DAC_DAADSCR_REG_DAADST_BIT_POS               (0x07U)
 #define DAC_DAADUSR_REG_MASK                         BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
 #define DAC_DADPR_REG_DPSEL_BIT_POS                  (0x07U)
@@ -49,6 +48,9 @@
 /* Conversion time with Output Amplifier. See hardware manual (see Table 60.44
  *'D/A conversion characteristics' of the RA6M3 manual R01UH0886EJ0100). */
 #define DAC_CONVERSION_TIME_WITH_OUTPUT_AMPLIFIER    (0x04U) /* Unit: Microseconds. */
+
+#define DAC_VREF_DISCHARGING_DELAY_US                (10)
+#define DAC_INTERNAL_VREF_WAIT_TIME_US               (5)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -111,10 +113,9 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(p_cfg->channel < (uint8_t) BSP_FEATURE_DAC_MAX_CHANNELS, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     FSP_ERROR_RETURN(false == p_ctrl->channel_opened, FSP_ERR_ALREADY_OPEN);
-    if (1U == BSP_FEATURE_DAC_HAS_CHARGEPUMP)
-    {
-        FSP_ASSERT(NULL != p_cfg->p_extend)
-    }
+ #if (BSP_FEATURE_DAC_HAS_CHARGEPUMP || BSP_FEATURE_DAC_HAS_DAVREFCRP)
+    FSP_ASSERT(NULL != p_cfg->p_extend)
+ #endif
 #endif
 
 #if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
@@ -190,7 +191,30 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 
     /* Set the reference voltage. */
 #if BSP_FEATURE_DAC_HAS_DAVREFCR
-    p_ctrl->p_reg->DAVREFCR = (uint8_t) DAC_VREF_AVCC0_AVSS0;
+
+    /* D/A Reference Voltage Select. Described in hardware manual (see Section 36.2.5
+     * 'D/A VREF Control Register (DAVREFCR) and Section 36.3.2
+     * 'Notes on Using the Internal Reference Voltage as the Reference Voltage of the RA4M1 manual R01UH0887EJ0110). */
+
+    /* Clear REF bits before changing the value of these bits. */
+    p_ctrl->p_reg->DAVREFCR = 0x00;
+    if (DAC_VREF_IVREF_AVSS0 == p_extend->ref_volt_sel)
+    {
+        p_ctrl->p_reg->DADR[0] = 0x00U;
+
+        /* Discharge for 10 us. */
+        R_BSP_SoftwareDelay(DAC_VREF_DISCHARGING_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+        p_ctrl->p_reg->DAVREFCR     = (uint8_t) p_extend->ref_volt_sel;
+        p_ctrl->p_reg->DACR_b.DAOE0 = 1U;
+
+        /* Wait 5 us, the stabilization wait time of the internal reference voltage. */
+        R_BSP_SoftwareDelay(DAC_INTERNAL_VREF_WAIT_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+    else
+    {
+        p_ctrl->p_reg->DAVREFCR = (uint8_t) p_extend->ref_volt_sel;
+    }
+    FSP_REGISTER_READ(p_ctrl->p_reg->DAVREFCR)
 #endif
 
 #if (1U == BSP_FEATURE_DAC_HAS_CHARGEPUMP)

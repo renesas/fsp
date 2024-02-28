@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_NETWORKING_INTERFACES
  * @defgroup WIFI_API WiFi Interface
  * @brief Interface for common WiFi APIs.
  * @note This API has been moved over from the deprecated AWS iot_wifi API. It may not fully conform to FSP standards.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -58,6 +58,8 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+typedef transfer_callback_args_t dmac_callback_args_t;
+
 /** Control block used by driver. DO NOT INITIALIZE - this structure will be initialized in @ref transfer_api_t::open. */
 typedef struct st_dmac_instance_ctrl
 {
@@ -67,13 +69,11 @@ typedef struct st_dmac_instance_ctrl
 
     /* Pointer to base register. */
     R_DMAC0_Type * p_reg;
-} dmac_instance_ctrl_t;
 
-/** Callback function parameter data. */
-typedef struct st_dmac_callback_args_t
-{
-    void const * p_context;            ///< Placeholder for user data.  Set in r_transfer_t::open function in ::transfer_cfg_t.
-} dmac_callback_args_t;
+    void (* p_callback)(dmac_callback_args_t *); // Pointer to callback
+    dmac_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const            * p_context;           // Pointer to context to be passed into callback function
+} dmac_instance_ctrl_t;
 
 /** DMAC transfer configuration extension. This extension is required. */
 typedef struct st_dmac_extended_cfg
@@ -93,8 +93,9 @@ typedef struct st_dmac_extended_cfg
 
     /** Callback for transfer end interrupt. */
     void (* p_callback)(dmac_callback_args_t * cb_data);
+    dmac_callback_args_t * p_callback_memory;
 
-    /** Placeholder for user data.  Passed to the user p_callback in ::dmac_callback_args_t. */
+    /** Placeholder for user data.  Passed to the user p_callback in ::transfer_callback_args_t. */
     void const * p_context;
 } dmac_extended_cfg_t;
 
@@ -133,6 +134,10 @@ fsp_err_t R_DMAC_BlockReset(transfer_ctrl_t * const p_ctrl,
                             uint16_t const          length,
                             transfer_size_t         size,
                             uint16_t const          num_transfers);
+fsp_err_t R_DMAC_CallbackSet(transfer_ctrl_t * const      p_api_ctrl,
+                             void (                     * p_callback)(dmac_callback_args_t *),
+                             void const * const           p_context,
+							 dmac_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

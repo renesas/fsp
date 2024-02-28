@@ -1,23 +1,21 @@
 /*
- * This software is supplied by Renesas Electronics Corporation and is only intended for
- * use with Renesas products. No other uses are authorized. This software is owned by
- * Renesas Electronics Corporation and is protected under all applicable laws, including
- * copyright laws.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * THIS SOFTWARE IS PROVIDED 'AS IS' AND RENESAS MAKES NO WARRANTIES REGARDING
- * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT LIMITED TO
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
- * ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED. TO THE MAXIMUM EXTENT PERMITTED NOT
- * PROHIBITED BY LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED
- * COMPANIES SHALL BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL
- * DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
- * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- *
- * Renesas reserves the right, without notice, to make changes to this software and to
- * discontinue the availability of this software. By using this software, you agree to
- * the additional terms and conditions found by accessing the following link:
- * http://www.renesas.com/disclaimer
- *
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  *
  * @file     ./out/R7FA2E1A9.h
  * @brief    CMSIS HeaderFile
@@ -4096,7 +4094,9 @@ typedef struct                         /*!< (@ 0x4001B000) R_DEBUG Structure    
         {
             __IOM uint32_t DBGSTOP_IWDT  : 1; /*!< [0..0] Mask bit for IWDT reset/interrupt                                  */
             __IOM uint32_t DBGSTOP_WDT   : 1; /*!< [1..1] Mask bit for WDT reset/interrupt                                   */
-            uint32_t                     : 14;
+            uint32_t                     : 12;
+            __IOM uint32_t DBGSTOP_TIM   : 1; /*!< [14..14] Mask bit for RTC, TAU reset/interrupt                            */
+            __IOM uint32_t DBGSTOP_SIR   : 1; /*!< [15..15] Mask bit for SAU, IICA, PORT_IRQ0-5 reset/interrupt              */
             __IOM uint32_t DBGSTOP_LVD0  : 1; /*!< [16..16] Mask bit for LVD reset/interupt                                  */
             __IOM uint32_t DBGSTOP_LVD1  : 1; /*!< [17..17] Mask bit for LVD reset/interupt                                  */
             __IOM uint32_t DBGSTOP_LVD2  : 1; /*!< [18..18] Mask bit for LVD reset/interupt                                  */
@@ -4745,7 +4745,45 @@ typedef struct                         /*!< (@ 0x407EC000) R_FACI_LP Structure  
             uint32_t                : 26;
         } FSTATR2_b;
     };
-    __IM uint32_t RESERVED24[95];
+    __IM uint32_t RESERVED24[3];
+
+    union
+    {
+        __IOM uint8_t HIOTRM;          /*!< (@ 0x00000200) High-speed On-chip Oscillator Trimming Register            */
+
+        struct
+        {
+            __IOM uint8_t HIOTRM : 6;  /*!< [5..0] HOCO User Trimming                                                 */
+            uint8_t              : 2;
+        } HIOTRM_b;
+    };
+    __IM uint8_t  RESERVED25;
+    __IM uint16_t RESERVED26;
+    __IM uint32_t RESERVED27;
+    __IM uint16_t RESERVED28;
+
+    union
+    {
+        __IOM uint8_t FLMODE;          /*!< (@ 0x0000020A) Flash Operating Mode Control Register                      */
+
+        struct
+        {
+            uint8_t            : 6;
+            __IOM uint8_t MODE : 2;    /*!< [7..6] Operating Mode Select                                              */
+        } FLMODE_b;
+    };
+
+    union
+    {
+        __IOM uint8_t FLMWRP;          /*!< (@ 0x0000020B) Flash Operating Mode Protect Register                      */
+
+        struct
+        {
+            __IOM uint8_t FLMWEN : 1;  /*!< [0..0] Control of Flash Operation Mode Select Register                    */
+            uint8_t              : 7;
+        } FLMWRP_b;
+    };
+    __IM uint32_t RESERVED29[89];
 
     union
     {
@@ -4757,13 +4795,13 @@ typedef struct                         /*!< (@ 0x407EC000) R_FACI_LP Structure  
             uint32_t               : 29;
         } FCTLFR_b;
     };
-    __IM uint32_t  RESERVED25[3855];
+    __IM uint32_t  RESERVED30[3855];
     __IOM uint16_t FENTRYR_MF4;        /*!< (@ 0x00003FB0) Flash P/E Mode Entry Register for MF4                      */
     __IOM uint16_t FENTRYR;            /*!< (@ 0x00003FB2) Flash P/E Mode Entry Register                              */
-    __IM uint32_t  RESERVED26[3];
+    __IM uint32_t  RESERVED31[3];
     __IOM uint8_t  FLWAITR;            /*!< (@ 0x00003FC0) Flash Wait Cycle Register                                  */
-    __IM uint8_t   RESERVED27;
-    __IM uint16_t  RESERVED28;
+    __IM uint8_t   RESERVED32;
+    __IM uint16_t  RESERVED33;
 
     union
     {
@@ -4775,12 +4813,12 @@ typedef struct                         /*!< (@ 0x407EC000) R_FACI_LP Structure  
             uint8_t                : 7;
         } FLDWAITR_b;
     };
-    __IM uint8_t  RESERVED29;
-    __IM uint16_t RESERVED30;
+    __IM uint8_t  RESERVED34;
+    __IM uint16_t RESERVED35;
     __IOM uint8_t PFBER;               /*!< (@ 0x00003FC8) Prefetch Buffer Enable Register                            */
-    __IM uint8_t  RESERVED31;
-    __IM uint16_t RESERVED32;
-    __IM uint32_t RESERVED33;
+    __IM uint8_t  RESERVED36;
+    __IM uint16_t RESERVED37;
+    __IM uint32_t RESERVED38;
 
     union
     {
@@ -4793,7 +4831,7 @@ typedef struct                         /*!< (@ 0x407EC000) R_FACI_LP Structure  
             __OM uint16_t FEKEY   : 8; /*!< [15..8] Key Code                                                          */
         } FBKPGCR_b;
     };
-    __IM uint16_t RESERVED34;
+    __IM uint16_t RESERVED39;
 
     union
     {
@@ -4806,7 +4844,7 @@ typedef struct                         /*!< (@ 0x407EC000) R_FACI_LP Structure  
             __OM uint16_t FEKEY     : 8; /*!< [15..8] Key Code                                                          */
         } FBKSWCR_b;
     };
-    __IM uint16_t RESERVED35;
+    __IM uint16_t RESERVED40;
 } R_FACI_LP_Type;                        /*!< Size = 16344 (0x3fd8)                                                     */
 
 /* =========================================================================================================================== */
@@ -13469,6 +13507,10 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
 /* =======================================================  DBGSTOPCR  ======================================================= */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RPER_Pos     (24UL)         /*!< DBGSTOP_RPER (Bit 24)                                 */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RPER_Msk     (0x1000000UL)  /*!< DBGSTOP_RPER (Bitfield-Mask: 0x01)                    */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_TIM_Pos      (14UL)         /*!< DBGSTOP_TIM (Bit 14)                                  */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_TIM_Msk      (0x4000UL)     /*!< DBGSTOP_TIM (Bitfield-Mask: 0x01)                     */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_SIR_Pos      (15UL)         /*!< DBGSTOP_SIR (Bit 15)                                  */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_SIR_Msk      (0x8000UL)     /*!< DBGSTOP_SIR (Bitfield-Mask: 0x01)                     */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_LVD_Pos      (16UL)         /*!< DBGSTOP_LVD (Bit 16)                                  */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_LVD_Msk      (0x10000UL)    /*!< DBGSTOP_LVD (Bitfield-Mask: 0x01)                     */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RECCR_Pos    (25UL)         /*!< DBGSTOP_RECCR (Bit 25)                                */
@@ -13756,6 +13798,15 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_FACI_LP_FBKSWCR_BKSWUPEN_Msk     (0x1UL)    /*!< BKSWUPEN (Bitfield-Mask: 0x01)                        */
  #define R_FACI_LP_FBKSWCR_FEKEY_Pos        (8UL)      /*!< FEKEY (Bit 8)                                         */
  #define R_FACI_LP_FBKSWCR_FEKEY_Msk        (0xff00UL) /*!< FEKEY (Bitfield-Mask: 0xff)                           */
+/* ========================================================  HIOTRM  ========================================================= */
+ #define R_FACI_LP_HIOTRM_HIOTRM_Pos        (0UL)      /*!< HIOTRM (Bit 0)                                        */
+ #define R_FACI_LP_HIOTRM_HIOTRM_Msk        (0x3fUL)   /*!< HIOTRM (Bitfield-Mask: 0x3f)                          */
+/* ========================================================  FLMODE  ========================================================= */
+ #define R_FACI_LP_FLMODE_MODE_Pos          (6UL)      /*!< MODE (Bit 6)                                          */
+ #define R_FACI_LP_FLMODE_MODE_Msk          (0xc0UL)   /*!< MODE (Bitfield-Mask: 0x03)                            */
+/* ========================================================  FLMWRP  ========================================================= */
+ #define R_FACI_LP_FLMWRP_FLMWEN_Pos        (0UL)      /*!< FLMWEN (Bit 0)                                        */
+ #define R_FACI_LP_FLMWRP_FLMWEN_Msk        (0x1UL)    /*!< FLMWEN (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
 /* ================                                        R_CTSUTRIM                                         ================ */

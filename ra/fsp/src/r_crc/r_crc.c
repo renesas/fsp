@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -54,6 +54,11 @@ static void crc_calculate_polynomial(crc_instance_ctrl_t * const p_instance_ctrl
 static void     crc_seed_value_update(crc_instance_ctrl_t * const p_instance_ctrl, uint32_t crc_seed);
 static uint32_t crc_calculated_value_get(crc_instance_ctrl_t * const p_instance_ctrl);
 
+#if CRC_CFG_PARAM_CHECKING_ENABLE
+static fsp_err_t r_crc_open_cfg_check(crc_cfg_t const * const p_cfg);
+
+#endif
+
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
@@ -89,6 +94,7 @@ const crc_api_t g_crc_on_crc =
  * @retval FSP_SUCCESS             Configuration was successful.
  * @retval FSP_ERR_ASSERTION       p_ctrl or p_cfg is NULL.
  * @retval FSP_ERR_ALREADY_OPEN    Module already open
+ * @retval FSP_ERR_UNSUPPORTED     Hardware not support this feature.
  **********************************************************************************************************************/
 fsp_err_t R_CRC_Open (crc_ctrl_t * const p_ctrl, crc_cfg_t const * const p_cfg)
 {
@@ -96,7 +102,10 @@ fsp_err_t R_CRC_Open (crc_ctrl_t * const p_ctrl, crc_cfg_t const * const p_cfg)
 
 #if CRC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl);
-    FSP_ASSERT(p_cfg);
+
+    /* Verify the configuration parameters are valid */
+    fsp_err_t err = r_crc_open_cfg_check(p_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Verify the control block has not already been initialized. */
     FSP_ERROR_RETURN(CRC_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
@@ -112,9 +121,11 @@ fsp_err_t R_CRC_Open (crc_ctrl_t * const p_ctrl, crc_cfg_t const * const p_cfg)
     R_BSP_MODULE_START(FSP_IP_CRC, 0);
 
     uint8_t crccr0 = 0;
+#if BSP_FEATURE_CRC_HAS_CRCCR0_LMS
 
     /* Set bit order value */
     crccr0 = (uint8_t) (p_instance_ctrl->p_cfg->bit_order << R_CRC_CRCCR0_LMS_Pos);
+#endif
 
     /* Set CRC polynomial */
     crccr0 |= (uint8_t) (p_instance_ctrl->p_cfg->polynomial << R_CRC_CRCCR0_GPS_Pos);
@@ -449,3 +460,32 @@ static void crc_calculate_polynomial (crc_instance_ctrl_t * const p_instance_ctr
     /* Return the calculated value */
     *calculatedValue = crc_calculated_value_get(p_instance_ctrl);
 }
+
+#if CRC_CFG_PARAM_CHECKING_ENABLE
+
+/*******************************************************************************************************************//**
+ * Validates the configuration arguments for illegal combinations or options.
+ *
+ * @param[in]  p_cfg                   Pointer to configuration structure
+ *
+ * @retval FSP_SUCCESS                     No configuration errors detected
+ * @retval FSP_ERR_ASSERTION               An input argument is invalid.
+ * @retval FSP_ERR_UNSUPPORTED             Hardware not support this feature.
+ **********************************************************************************************************************/
+static fsp_err_t r_crc_open_cfg_check (crc_cfg_t const * const p_cfg)
+{
+    FSP_ASSERT(NULL != p_cfg);
+
+ #if !BSP_FEATURE_CRC_HAS_CRCCR0_LMS
+
+    /* Verify the configuration bit order */
+    FSP_ERROR_RETURN(CRC_BIT_ORDER_LMS_LSB == p_cfg->bit_order, FSP_ERR_UNSUPPORTED);
+ #endif
+
+    /* Verify the configuration polynomial */
+    FSP_ERROR_RETURN((1 << p_cfg->polynomial) & BSP_FEATURE_CRC_POLYNOMIAL_MASK, FSP_ERR_UNSUPPORTED);
+
+    return FSP_SUCCESS;
+}
+
+#endif

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -34,14 +34,9 @@ int tc_aes128_set_decrypt_key (TCAesKeySched_t s, const uint8_t * k)
     return tc_aes128_set_encrypt_key(s, k);
 }
 
-int tc_aes192_set_decrypt_key (TCAesKeySched_t s, const uint8_t * k)
+int tc_aes_set_decrypt_key_extended (TCAesKeySched_t s, const uint8_t * k, unsigned int key_size)
 {
-    return tc_aes192_set_encrypt_key(s, k);
-}
-
-int tc_aes256_set_decrypt_key (TCAesKeySched_t s, const uint8_t * k)
-{
-    return tc_aes256_set_encrypt_key(s, k);
+    return tc_aes_set_encrypt_key_extended(s, k, key_size);
 }
 
 int tc_aes_decrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
@@ -87,7 +82,7 @@ int tc_aes_decrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
             p_out = (uint32_t *) out;
         }
 
-        if (SIZE_AES_192BIT_KEYLEN_BITS == (*s).key_size)
+        if (SIZE_AES_192BIT_KEYLEN_BYTES == (*s).key_size)
         {
             err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) &s->words[0], dummy_iv);
             if (err == FSP_SUCCESS)
@@ -97,7 +92,7 @@ int tc_aes_decrypt (uint8_t * out, const uint8_t * in, const TCAesKeySched_t s)
 
             err = HW_SCE_Aes192EncryptDecryptFinalSub();
         }
-        else if (SIZE_AES_256BIT_KEYLEN_BITS == (*s).key_size)
+        else if (SIZE_AES_256BIT_KEYLEN_BYTES == (*s).key_size)
         {
             err =
                 HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &s->words[0], dummy_iv);

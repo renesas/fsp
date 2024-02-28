@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -224,12 +224,20 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
 #else                                  // MOTOR_120_DRIVER_CFG_SUPPORT_SHARED_ADC == 0
     if (p_extended_cfg->p_adc_instance != NULL)
     {
+        adc_status_t status = {.state = ADC_STATE_SCAN_IN_PROGRESS};
+
         p_extended_cfg->p_adc_instance->p_api->open(p_extended_cfg->p_adc_instance->p_ctrl,
                                                     p_extended_cfg->p_adc_instance->p_cfg);
         p_extended_cfg->p_adc_instance->p_api->scanCfg(p_extended_cfg->p_adc_instance->p_ctrl,
                                                        p_extended_cfg->p_adc_instance->p_channel_cfg);
         p_extended_cfg->p_adc_instance->p_api->calibrate(p_extended_cfg->p_adc_instance->p_ctrl,
                                                          p_extended_cfg->p_adc_instance->p_cfg->p_extend);
+
+        while (ADC_STATE_IDLE != status.state)
+        {
+            p_extended_cfg->p_adc_instance->p_api->scanStatusGet(p_extended_cfg->p_adc_instance->p_ctrl, &status);
+        }
+
         p_extended_cfg->p_adc_instance->p_api->scanStart(p_extended_cfg->p_adc_instance->p_ctrl);
     }
 #endif
@@ -1706,33 +1714,37 @@ static void rm_motor_120_driver_pin_cfg (bsp_io_port_pin_t pin, uint32_t cfg)
  **********************************************************************************************************************/
 void rm_motor_120_driver_cyclic (adc_callback_args_t * p_args)
 {
-    motor_120_driver_instance_t    * p_instance = (motor_120_driver_instance_t *) p_args->p_context;
-    motor_120_driver_callback_args_t temp_args_t;
+    motor_120_driver_instance_t      * p_instance      = (motor_120_driver_instance_t *) p_args->p_context;
+    motor_120_driver_instance_ctrl_t * p_instance_ctrl = (motor_120_driver_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_120_driver_callback_args_t   temp_args_t;
 
     /* Get A/D converted data (Phase current & main line voltage) */
     rm_motor_120_driver_current_get(p_instance->p_ctrl);
 
-    /* Invoke the callback function if it is set. */
-    if (NULL != p_instance->p_cfg->p_callback)
+    if (MOTOR_120_DRIVER_OPEN == p_instance_ctrl->open)
     {
-        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_FORWARD;
-        temp_args_t.p_context = p_instance->p_cfg->p_context;
-        (p_instance->p_cfg->p_callback)(&temp_args_t);
-    }
+        /* Invoke the callback function if it is set. */
+        if (NULL != p_instance->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_120_DRIVER_EVENT_FORWARD;
+            temp_args_t.p_context = p_instance->p_cfg->p_context;
+            (p_instance->p_cfg->p_callback)(&temp_args_t);
+        }
 
-    if (NULL != p_instance->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_120_CONTROL;
-        temp_args_t.p_context = p_instance->p_cfg->p_context;
-        (p_instance->p_cfg->p_callback)(&temp_args_t);
-    }
+        if (NULL != p_instance->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_120_DRIVER_EVENT_120_CONTROL;
+            temp_args_t.p_context = p_instance->p_cfg->p_context;
+            (p_instance->p_cfg->p_callback)(&temp_args_t);
+        }
 
-    /* Invoke the callback function if it is set. */
-    if (NULL != p_instance->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_BACKWARD;
-        temp_args_t.p_context = p_instance->p_cfg->p_context;
-        (p_instance->p_cfg->p_callback)(&temp_args_t);
+        /* Invoke the callback function if it is set. */
+        if (NULL != p_instance->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_120_DRIVER_EVENT_BACKWARD;
+            temp_args_t.p_context = p_instance->p_cfg->p_context;
+            (p_instance->p_cfg->p_callback)(&temp_args_t);
+        }
     }
 }
 
@@ -2040,69 +2052,69 @@ void rm_motor_120_driver_adc_close (motor_120_driver_instance_ctrl_t * p_instanc
  **********************************************************************************************************************/
 void rm_motor_120_driver_shared_cyclic (adc_callback_args_t * p_args)
 {
-    motor_120_driver_callback_args_t temp_args_t;
+    motor_120_driver_instance_ctrl_t * p_instance_ctrl = (motor_120_driver_instance_ctrl_t *) p_args->p_context;
+    motor_120_driver_callback_args_t   temp_args_t;
 
- #if (MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 1)
-    motor_120_driver_instance_ctrl_t * p_instance_ctrl;
-    uint8_t i;
-    motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl =
-        (motor_120_driver_shared_instance_ctrl_t *) p_args->p_context;
-
-    switch (p_args->event)
+    if (MOTOR_120_DRIVER_OPEN == p_instance_ctrl->open)
     {
-        default:
-        {
-            break;
-        }
+ #if (MOTOR_120_DRIVER_CFG_ADC_B_SUPPORTED == 1)
+        uint8_t i;
+        motor_120_driver_shared_instance_ctrl_t * p_shared_ctrl =
+            (motor_120_driver_shared_instance_ctrl_t *) p_args->p_context;
 
-        case ADC_EVENT_SCAN_COMPLETE:
-        case ADC_EVENT_SCAN_COMPLETE_GROUP_B:
+        switch (p_args->event)
         {
-            for (i = 0; i < MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM; i++)
+            default:
             {
-                p_instance_ctrl = (motor_driver_instance_ctrl_t *) p_shared_ctrl->p_context[i];
-                motor_driver_extended_cfg_t * p_extended_cfg =
-                    (motor_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-
-                /* Check scan complete ad channel */
-                if (p_args->group_mask == p_extended_cfg->adc_group)
-                {
-                    break;
-                }
+                break;
             }
 
-            break;
-        }
-    }
+            case ADC_EVENT_SCAN_COMPLETE:
+            case ADC_EVENT_SCAN_COMPLETE_GROUP_B:
+            {
+                for (i = 0; i < MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM; i++)
+                {
+                    p_instance_ctrl = (motor_driver_instance_ctrl_t *) p_shared_ctrl->p_context[i];
+                    motor_driver_extended_cfg_t * p_extended_cfg =
+                        (motor_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
- #else
-    motor_120_driver_instance_ctrl_t * p_instance_ctrl = (motor_120_driver_instance_ctrl_t *) p_args->p_context;
+                    /* Check scan complete ad channel */
+                    if (p_args->group_mask == p_extended_cfg->adc_group)
+                    {
+                        break;
+                    }
+                }
+
+                break;
+            }
+        }
  #endif
 
-    /* Get A/D converted data (Phase current & main line voltage) */
-    rm_motor_120_driver_shared_current_get(p_instance_ctrl);
+        /* Get A/D converted data (Phase current & main line voltage) */
+        rm_motor_120_driver_shared_current_get(p_instance_ctrl);
 
-    /* Invoke the callback function if it is set. */
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_FORWARD;
-        temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
-        (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
-    }
+        /* Invoke the callback function if it is set. */
+        if (NULL != p_instance_ctrl->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_120_DRIVER_EVENT_FORWARD;
+            temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+            (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+        }
 
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_120_CONTROL;
-        temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
-        (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
-    }
+        if (NULL != p_instance_ctrl->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_120_DRIVER_EVENT_120_CONTROL;
+            temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+            (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+        }
 
-    /* Invoke the callback function if it is set. */
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_120_DRIVER_EVENT_BACKWARD;
-        temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
-        (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+        /* Invoke the callback function if it is set. */
+        if (NULL != p_instance_ctrl->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_120_DRIVER_EVENT_BACKWARD;
+            temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+            (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+        }
     }
 }
 

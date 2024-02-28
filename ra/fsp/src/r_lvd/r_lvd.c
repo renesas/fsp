@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -27,80 +27,99 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define LVD_OPENED                          (0x4C5644U)
+#define LVD_OPENED                            (0x4C5644U)
 
-#define LVD_PRV_NUMBER_OF_MONITORS          (5U)
+#define LVD_MONITOR_LVD1                      (1U)
+#define LVD_MONITOR_LVD2                      (2U)
+#define LVD_MONITOR_LVD_VBAT                  (3U)
+#define LVD_MONITOR_LVD_VRTC                  (4U)
+#define LVD_MONITOR_EXLVD                     (5U)
 
-#define LVD_MONITOR_LVD1                    (1U)
-#define LVD_MONITOR_LVD2                    (2U)
-#define LVD_MONITOR_LVD_VBAT                (3U)
-#define LVD_MONITOR_LVD_VRTC                (4U)
-#define LVD_MONITOR_EXLVD                   (5U)
+#define LVD_PRV_FIRST_MONITOR_NUMBER          (1U)
 
-#define LVD_PRV_FIRST_MONITOR_NUMBER        (1U)
-#define LVD_PRV_NUMBER_OF_NMI               (2U)
-#define LVD_PRV_NUMBER_OF_VCC_MONITOR       (2U)
+#if (1U == BSP_FEATURE_LVD_VERSION)
+ #define LVD_PRV_NUMBER_OF_MONITORS           (5U)
+ #define LVD_PRV_NUMBER_OF_NMI                (2U)
+ #define LVD_PRV_NUMBER_OF_VCC_MONITOR        (2U)
+#else
+ #define LVD_PRV_NUMBER_OF_MONITORS           (4U)
+ #define LVD_PRV_NUMBER_OF_NMI                (1U)
+ #define LVD_PRV_NUMBER_OF_VCC_MONITOR        (1U)
+#endif
 
 /* LVDNCR1 Bit Field Definitions */
-#define LVD_PRV_LVDNCR1_IDTSEL_OFFSET       (0U)
-#define LVD_PRV_LVDNCR1_IDTSEL_MASK         (3U << LVD_PRV_LVDNCR1_IDTSEL_OFFSET)
-#define LVD_PRV_LVDNCR1_IRQSEL_OFFSET       (2U)
-#define LVD_PRV_LVDNCR1_IRQSEL_MASK         (1U << LVD_PRV_LVDNCR1_IRQSEL_OFFSET)
+#define LVD_PRV_LVDNCR1_IDTSEL_OFFSET         (0U)
+#define LVD_PRV_LVDNCR1_IDTSEL_MASK           (3U << LVD_PRV_LVDNCR1_IDTSEL_OFFSET)
+#define LVD_PRV_LVDNCR1_IRQSEL_OFFSET         (2U)
+#define LVD_PRV_LVDNCR1_IRQSEL_MASK           (1U << LVD_PRV_LVDNCR1_IRQSEL_OFFSET)
 
 /* LVDNSR Bit Field Definitions */
-#define LVD_PRV_LVDNSR_DET_OFFSET           (0U)
-#define LVD_PRV_LVDNSR_DET_MASK             (1U << LVD_PRV_LVDNSR_DET_OFFSET)
-#define LVD_PRV_LVDNSR_MON_OFFSET           (1U)
-#define LVD_PRV_LVDNSR_MON_MASK             (1U << LVD_PRV_LVDNSR_MON_OFFSET)
+#define LVD_PRV_LVDNSR_DET_OFFSET             (0U)
+#define LVD_PRV_LVDNSR_DET_MASK               (1U << LVD_PRV_LVDNSR_DET_OFFSET)
+#define LVD_PRV_LVDNSR_MON_OFFSET             (1U)
+#define LVD_PRV_LVDNSR_MON_MASK               (1U << LVD_PRV_LVDNSR_MON_OFFSET)
 
 /* LVCMPCR Bit Field Definitions */
-#define LVD_PRV_LVCMPCR_LVD1E_OFFSET        (5U)
-#define LVD_PRV_LVCMPCR_LVD1E_MASK          (1U << LVD_PRV_LVCMPCR_LVD1E_OFFSET)
-#define LVD_PRV_LVCMPCR_LVD2E_OFFSET        (6U)
-#define LVD_PRV_LVCMPCR_LVD2E_MASK          (1U << LVD_PRV_LVCMPCR_LVD2E_OFFSET)
+#define LVD_PRV_LVCMPCR_LVD1E_OFFSET          (5U)
+#define LVD_PRV_LVCMPCR_LVD1E_MASK            (1U << LVD_PRV_LVCMPCR_LVD1E_OFFSET)
+#define LVD_PRV_LVCMPCR_LVD2E_OFFSET          (6U)
+#define LVD_PRV_LVCMPCR_LVD2E_MASK            (1U << LVD_PRV_LVCMPCR_LVD2E_OFFSET)
 
 /* LVDLVLR Bit Field Definitions */
-#define LVD_PRV_LVDLVLR_LVD1LVL_OFFSET      (0U)
-#define LVD_PRV_LVDLVLR_LVD1LVL_MASK        (0x1FU << LVD_PRV_LVDLVLR_LVD1LVL_OFFSET)
-#define LVD_PRV_LVDLVLR_LVD2LVL_OFFSET      (5U)
-#define LVD_PRV_LVDLVLR_LVD2LVL_MASK        (0x07U << LVD_PRV_LVDLVLR_LVD2LVL_OFFSET)
+#define LVD_PRV_LVDLVLR_LVD1LVL_OFFSET        (0U)
+#define LVD_PRV_LVDLVLR_LVD1LVL_MASK          (0x1FU << LVD_PRV_LVDLVLR_LVD1LVL_OFFSET)
+#define LVD_PRV_LVDLVLR_LVD2LVL_OFFSET        (5U)
+#define LVD_PRV_LVDLVLR_LVD2LVL_MASK          (0x07U << LVD_PRV_LVDLVLR_LVD2LVL_OFFSET)
 
 /* LVDNCR0 Bit Field Definitions */
-#define LVD_PRV_LVDNCR0_RIE_OFFSET          (0U)
-#define LVD_PRV_LVDNCR0_RIE_MASK            (1U << LVD_PRV_LVDNCR0_RIE_OFFSET)
-#define LVD_PRV_LVDNCR0_DFDIS_OFFSET        (1U)
-#define LVD_PRV_LVDNCR0_DFDIS_MASK          (1U << LVD_PRV_LVDNCR0_DFDIS_OFFSET)
-#define LVD_PRV_LVDNCR0_CMPE_OFFSET         (2U)
-#define LVD_PRV_LVDNCR0_CMPE_MASK           (1U << LVD_PRV_LVDNCR0_CMPE_OFFSET)
-#define LVD_PRV_LVDNCR0_FSAMP_OFFSET        (4U)
-#define LVD_PRV_LVDNCR0_FSAMP_MASK          (3U << LVD_PRV_LVDNCR0_FSAMP_OFFSET)
-#define LVD_PRV_LVDNCR0_RI_OFFSET           (6U)
-#define LVD_PRV_LVDNCR0_RI_MASK             (1U << LVD_PRV_LVDNCR0_RI_OFFSET)
-#define LVD_PRV_LVDNCR0_RN_OFFSET           (7U)
-#define LVD_PRV_LVDNCR0_RN_MASK             (1U << LVD_PRV_LVDNCR0_RN_OFFSET)
+#define LVD_PRV_LVDNCR0_RIE_OFFSET            (0U)
+#define LVD_PRV_LVDNCR0_RIE_MASK              (1U << LVD_PRV_LVDNCR0_RIE_OFFSET)
+#define LVD_PRV_LVDNCR0_DFDIS_OFFSET          (1U)
+#define LVD_PRV_LVDNCR0_DFDIS_MASK            (1U << LVD_PRV_LVDNCR0_DFDIS_OFFSET)
+#define LVD_PRV_LVDNCR0_CMPE_OFFSET           (2U)
+#define LVD_PRV_LVDNCR0_CMPE_MASK             (1U << LVD_PRV_LVDNCR0_CMPE_OFFSET)
+#define LVD_PRV_LVDNCR0_FSAMP_OFFSET          (4U)
+#define LVD_PRV_LVDNCR0_FSAMP_MASK            (3U << LVD_PRV_LVDNCR0_FSAMP_OFFSET)
+#define LVD_PRV_LVDNCR0_RI_OFFSET             (6U)
+#define LVD_PRV_LVDNCR0_RI_MASK               (1U << LVD_PRV_LVDNCR0_RI_OFFSET)
+#define LVD_PRV_LVDNCR0_RN_OFFSET             (7U)
+#define LVD_PRV_LVDNCR0_RN_MASK               (1U << LVD_PRV_LVDNCR0_RN_OFFSET)
 
 /* nLVDICR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_LVDICR_IDTSEL_OFFSET    (4U)
-#define LVD_PRV_EXT_LVDICR_IE_OFFSET        (0U)
-#define LVD_PRV_EXT_LVDICR_IE_ENABLE        (1U << LVD_PRV_EXT_LVDICR_IE_OFFSET)
+#define LVD_PRV_EXT_LVDICR_IDTSEL_OFFSET      (4U)
+#define LVD_PRV_EXT_LVDICR_IE_OFFSET          (0U)
+#define LVD_PRV_EXT_LVDICR_IE_ENABLE          (1U << LVD_PRV_EXT_LVDICR_IE_OFFSET)
 
 /* nLVDCR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_LVDCR_LVDE_OFFSET       (4U)
-#define LVD_PRV_EXT_LVDCR_LVDE_ENABLE       (1U << LVD_PRV_EXT_LVDCR_LVDE_OFFSET)
-#define LVD_PRV_EXT_VBTLVDCR_LVL_OFFSET     (5U)
-#define LVD_PRV_EXT_VRTLVDCR_LVL_OFFSET     (6U)
+#define LVD_PRV_EXT_LVDCR_LVDE_OFFSET         (4U)
+#define LVD_PRV_EXT_LVDCR_LVDE_ENABLE         (1U << LVD_PRV_EXT_LVDCR_LVDE_OFFSET)
+#define LVD_PRV_EXT_VBTLVDCR_LVL_OFFSET       (5U)
+#define LVD_PRV_EXT_VRTLVDCR_LVL_OFFSET       (6U)
 
 /* nLVDSR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_LVDSR_DET_OFFSET        (1U)
-#define LVD_PRV_EXT_LVDSR_DET_MASK          (1U << LVD_PRV_EXT_LVDSR_DET_OFFSET)
-#define LVD_PRV_EXT_LVDSR_MON_OFFSET        (5U)
-#define LVD_PRV_EXT_LVDSR_MON_MASK          (1U << LVD_PRV_EXT_LVDSR_MON_OFFSET)
+#define LVD_PRV_EXT_LVDSR_DET_OFFSET          (1U)
+#define LVD_PRV_EXT_LVDSR_DET_MASK            (1U << LVD_PRV_EXT_LVDSR_DET_OFFSET)
+#define LVD_PRV_EXT_LVDSR_MON_OFFSET          (5U)
+#define LVD_PRV_EXT_LVDSR_MON_MASK            (1U << LVD_PRV_EXT_LVDSR_MON_OFFSET)
 
 /* nCMPCR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_CMPCR_CMPE_OFFSET       (0U)
-#define LVD_PRV_EXT_CMPCR_CMPE_MASK         (1U << LVD_PRV_EXT_CMPCR_CMPE_OFFSET)
+#define LVD_PRV_EXT_CMPCR_CMPE_OFFSET         (0U)
+#define LVD_PRV_EXT_CMPCR_CMPE_MASK           (1U << LVD_PRV_EXT_CMPCR_CMPE_OFFSET)
 
-#define LVD_PRV_SECONDS_TO_MICROSECONDS     (1000000U)
+/* LVD1MKR Bit Field Definitions */
+#define LVD_PRV_LVD1MKR_MK_ENABLE             (1U)
+#define LVD_PRV_LVD1MKR_MK_DISABLE            (0U)
+
+/* LVD1CR Bit Field Definitions */
+#define LVD_PRV_LVD1CR_LVD1V_MASK             (0x1FU << R_SYSTEM_LVD1CR_LVD1V_Pos)
+#define LVD_PRV_LVD1CR_IRQSEL_NON_MASKABLE    (0U)
+#define LVD_PRV_LVD1CR_IRQSEL_MASKABLE        (1U)
+#define LVD_PRV_LVD1CR_LVD1SEL_INTERRUPT      (0U)
+#define LVD_PRV_LVD1CR_LVD1SEL_RESET          (1U)
+#define LVD_PRV_LVD1CR_LVD1EN_DISABLE         (0U)
+#define LVD_PRV_LVD1CR_LVD1EN_ENABLE          (1U)
+
+#define LVD_PRV_SECONDS_TO_MICROSECONDS       (1000000U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -150,11 +169,15 @@ void        lvd_ext_isr(void);
 /** Stored context for NMI handler. */
 static lvd_instance_ctrl_t * gp_ctrls[LVD_PRV_NUMBER_OF_NMI] = {NULL};
 
+#if (1U == BSP_FEATURE_LVD_VERSION)
+
 /* Look-up tables for writing to monitor 1 and monitor 2 registers. */
 static uint8_t volatile * const g_lvdncr0_lut[] = {&(R_SYSTEM->LVD1CR0), &(R_SYSTEM->LVD2CR0)};
 static uint8_t volatile * const g_lvdncr1_lut[] = {&(R_SYSTEM->LVD1CR1), &(R_SYSTEM->LVD2CR1)};
 static uint8_t volatile * const g_lvdnsr_lut[]  = {&(R_SYSTEM->LVD1SR), &(R_SYSTEM->LVD2SR)};
-
+#else
+static uint8_t volatile * const g_lvdnsr_lut[] = {&(R_SYSTEM->LVD1SR)};
+#endif
 #if BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE
 static uint8_t volatile * const g_lvdnfcr_lut[] = {&(R_SYSTEM->LVD1FCR), &(R_SYSTEM->LVD2FCR)};
 #endif
@@ -182,7 +205,7 @@ static uint32_t const g_lvdlvlr_offset_lut[] =
     LVD_PRV_LVDLVLR_LVD1LVL_OFFSET, LVD_PRV_LVDLVLR_LVD2LVL_OFFSET
 };
 static uint32_t const g_lvdlvlr_mask_lut[] = {LVD_PRV_LVDLVLR_LVD1LVL_MASK, LVD_PRV_LVDLVLR_LVD2LVL_MASK};
-#else
+#elif (1U == BSP_FEATURE_LVD_VERSION)
 static uint8_t volatile * const g_lvdncmpcr_lut[]    = {&(R_SYSTEM->LVD1CMPCR), &(R_SYSTEM->LVD2CMPCR)};
 static uint32_t const           g_lvdnlvl_mask_lut[] = {R_SYSTEM_LVD1CMPCR_LVD1LVL_Msk, R_SYSTEM_LVD2CMPCR_LVD2LVL_Msk};
 #endif
@@ -435,29 +458,41 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
         /* Shutdown procedure from Table 8.5 in the RA6M3 Hardware Manual R01UH0886EJ0100. */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
+#if 2U == BSP_FEATURE_LVD_VERSION
+
+        /* Enable writing to the LVD1CR register. */
+        R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_ENABLE;
+
+        /* Disable LVD1 operation */
+        R_SYSTEM->LVD1CR_b.LVD1EN = LVD_PRV_LVD1CR_LVD1EN_DISABLE;
+
+        /* Disable writing to the LVD1CR register. */
+        R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_DISABLE;
+#else
+
         /* Disable output of comparison results by voltage monitor. */
         *(g_lvdncr0_lut[monitor_index]) &= (uint8_t) ~(LVD_PRV_LVDNCR0_CMPE_MASK);
 
-#if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
+ #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
         if (LVD_SAMPLE_CLOCK_DISABLED != p_ctrl->p_cfg->sample_clock_divisor)
         {
             /* Wait for at least 2n + 3 LOCO cycles, where n = [2,4,8,16]. */
             R_BSP_SoftwareDelay(r_lvd_filter_delay(p_ctrl->p_cfg->sample_clock_divisor), BSP_DELAY_UNITS_MICROSECONDS);
         }
-#endif
+ #endif
         uint8_t lvdncr0 = *(g_lvdncr0_lut[monitor_index]);
 
         /* Disable voltage monitor interrupt or reset. */
         lvdncr0 &= (uint8_t) ~LVD_PRV_LVDNCR0_RIE_MASK;
 
-#if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
+ #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
 
         /* Disable digital filter. */
         lvdncr0 |= (uint8_t) LVD_PRV_LVDNCR0_DFDIS_MASK;
-#endif
+ #endif
 
         *(g_lvdncr0_lut[monitor_index]) = lvdncr0;
-#if BSP_FEATURE_LVD_HAS_LVDLVLR == 1
+ #if BSP_FEATURE_LVD_HAS_LVDLVLR == 1
 
         /* Critical section required because LVCMPCR register is shared with other instances. */
         FSP_CRITICAL_SECTION_ENTER;
@@ -466,8 +501,9 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
         R_SYSTEM->LVCMPCR &= (uint8_t) ~(p_ctrl->p_cfg->monitor_number << LVD_PRV_LVCMPCR_LVD1E_OFFSET);
 
         FSP_CRITICAL_SECTION_EXIT;
-#else
+ #else
         *(g_lvdncmpcr_lut[monitor_index]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
+ #endif
 #endif
 
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_LVD);
@@ -517,6 +553,65 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 {
+#if 2U == BSP_FEATURE_LVD_VERSION
+    uint32_t lvd1cr = 0;
+
+    /* Configure the voltage threshold setting. */
+    lvd1cr &= (uint8_t) ~(LVD_PRV_LVD1CR_LVD1V_MASK);
+    lvd1cr |= (uint32_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_LVD1CR_LVD1V_Pos);
+
+    if (LVD_RESPONSE_NONE != p_ctrl->p_cfg->detection_response)
+    {
+        if (LVD_RESPONSE_INTERRUPT == p_ctrl->p_cfg->detection_response)
+        {
+            /* Configure the voltage monitor as interrupt mode. */
+            lvd1cr |= LVD_PRV_LVD1CR_LVD1SEL_INTERRUPT << R_SYSTEM_LVD1CR_LVD1SEL_Pos;
+
+            /* Configure the voltage monitor interrupt type as maskable. */
+            lvd1cr |= LVD_PRV_LVD1CR_IRQSEL_MASKABLE << R_SYSTEM_LVD1CR_IRQSEL_Pos;
+
+            /* Enable interrupt in NVIC */
+            R_BSP_IrqCfgEnable(p_ctrl->p_cfg->irq, p_ctrl->p_cfg->monitor_ipl, p_ctrl);
+        }
+        else if (LVD_RESPONSE_NMI == p_ctrl->p_cfg->detection_response)
+        {
+            /* Enable the NMI handler. */
+            R_BSP_GroupIrqWrite((bsp_grp_irq_t) (BSP_GRP_IRQ_LVD1), lvd_nmi_handler);
+
+            /* Configure the voltage monitor as interrupt mode. */
+            lvd1cr |= LVD_PRV_LVD1CR_LVD1SEL_INTERRUPT << R_SYSTEM_LVD1CR_LVD1SEL_Pos;
+
+            /* Configure the voltage monitor interrupt type as non-maskable. */
+            lvd1cr |= LVD_PRV_LVD1CR_IRQSEL_NON_MASKABLE << R_SYSTEM_LVD1CR_IRQSEL_Pos;
+
+            /* Enable NMI for this LVD monitor. NMIER bits can only be set. They cannot be cleared. */
+            R_ICU->NMIER = (uint16_t) (R_ICU_NMIER_LVD1EN_Msk);
+        }
+        else                           /* LVD_RESPONSE_RESET */
+        {
+            /* Enable voltage monitor reset when the voltage falls to below threshold. */
+            lvd1cr |= LVD_PRV_LVD1CR_LVD1SEL_RESET << R_SYSTEM_LVD1CR_LVD1SEL_Pos;
+        }
+    }
+
+    /* Enable LVD1 operation. */
+    lvd1cr |= LVD_PRV_LVD1CR_LVD1EN_ENABLE << R_SYSTEM_LVD1CR_LVD1EN_Pos;
+
+    /* Enable access to LVD registers. */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
+
+    /* Enable writing to the LVD1CR register. */
+    R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_ENABLE;
+
+    /* Writing to the LVD1CR register */
+    R_SYSTEM->LVD1CR = (uint8_t) lvd1cr;
+
+    /* Disable writing to the LVD1CR register. */
+    R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_DISABLE;
+
+    /* Wait for LVD1 stabilization. */
+    R_BSP_SoftwareDelay(BSP_FEATURE_LVD_MONITOR_1_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+#else
     FSP_CRITICAL_SECTION_DEFINE;
 
     uint32_t lvdncr0 = 0;
@@ -571,7 +666,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
         delay = BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US;
     }
 
-#if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
+ #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
     if (LVD_SAMPLE_CLOCK_DISABLED != p_ctrl->p_cfg->sample_clock_divisor)
     {
         /* Configure the digital filter clock divider. */
@@ -591,14 +686,14 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
         /* Disable the digital filter. */
         lvdncr0 |= LVD_PRV_LVDNCR0_DFDIS_MASK;
     }
-#endif
+ #endif
 
     /* Setup procedure from Table 8.4 in the RA6M3 Hardware Manual R01UH0886EJ0100. */
 
     /* Enable access to LVD registers. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
-#if (BSP_FEATURE_LVD_HAS_LVDLVLR == 1)
+ #if (BSP_FEATURE_LVD_HAS_LVDLVLR == 1)
     uint32_t lvdne_mask    = p_ctrl->p_cfg->monitor_number << LVD_PRV_LVCMPCR_LVD1E_OFFSET;
     uint32_t lvdlvr_offset = g_lvdlvlr_offset_lut[monitor_index];
 
@@ -620,7 +715,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     R_SYSTEM->LVCMPCR |= (uint8_t) lvdne_mask;
 
     FSP_CRITICAL_SECTION_EXIT;
-#else
+ #else
     uint8_t lvdne[LVD_PRV_NUMBER_OF_NMI];
     uint8_t i;
 
@@ -644,7 +739,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     /* Write the voltage level setting. */
     *(g_lvdncmpcr_lut[monitor_index]) = lvdncmpcr;
 
- #if BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE
+  #if BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE
     if (LVD_RESPONSE_RESET_ON_RISING == p_ctrl->p_cfg->detection_response)
     {
         /* When LVD reset generated by the VCC-rise detection is required, RHSEL must be set to 1. */
@@ -654,7 +749,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     {
         *(g_lvdnfcr_lut[monitor_index]) = 0;
     }
- #endif
+  #endif
 
     /* Enable the voltage detection circuits. */
     for (i = 0; i < LVD_PRV_NUMBER_OF_NMI; i++)
@@ -669,7 +764,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
         }
     }
     FSP_CRITICAL_SECTION_EXIT;
-#endif
+ #endif
 
     /* Write settings to control registers. */
     *(g_lvdncr0_lut[monitor_index]) = (uint8_t) lvdncr0;
@@ -689,6 +784,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 
     /* Enable output of comparison results by voltage monitor 2. */
     *(g_lvdncr0_lut[monitor_index]) |= (LVD_PRV_LVDNCR0_CMPE_MASK);
+#endif
 
     /* Disable access to LVD registers. */
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_LVD);
@@ -733,10 +829,12 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
     FSP_ASSERT(NULL != p_cfg);
  #if (BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1)
     FSP_ASSERT(1U <= p_cfg->monitor_number && 5U >= p_cfg->monitor_number);
- #else
+ #elif (1U == BSP_FEATURE_LVD_VERSION)
     FSP_ASSERT(1U == p_cfg->monitor_number || 2U == p_cfg->monitor_number);
+ #else
+    FSP_ASSERT(1U == p_cfg->monitor_number);
  #endif
-    if (p_cfg->monitor_number < 3U)
+    if (p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
     {
         FSP_ERROR_RETURN(NULL == gp_ctrls[p_cfg->monitor_number - 1], FSP_ERR_IN_USE);
     }
@@ -993,8 +1091,11 @@ void lvd_lvd_isr (void)
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
+#if BSP_FEATURE_ICU_HAS_IELSR
+
     /* Clear the Interrupt Request */
     R_BSP_IrqStatusClear(irq);
+#endif
 
     /* Call common isr handler. */
     lvd_common_isr_handler((lvd_instance_ctrl_t *) R_FSP_IsrContextGet(irq));

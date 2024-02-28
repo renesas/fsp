@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1581,7 +1581,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         {
             break;
         }
-
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         rm_wifi_onchip_silex_send_scan(p_instance_ctrl,
                                        p_instance_ctrl->curr_cmd_port,
                                        false,
@@ -1589,6 +1589,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
                                        WIFI_ONCHIP_SILEX_TIMEOUT_8SEC);
 
         ptr = (char *) (p_instance_ctrl->cmd_rx_buff);
+#endif
     } while (++idx < maxNetworks);
 
     /* Clear out the rest of the access points returned from the module */

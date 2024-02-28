@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -58,7 +58,7 @@ int32_t main(void);
 /*******************************************************************************************************************//**
  * MCU starts executing here out of reset. Main stack pointer is set up already.
  **********************************************************************************************************************/
-void Reset_Handler (void)
+BSP_SECTION_FLASH_GAP void Reset_Handler (void)
 {
     /* Initialize system using BSP. */
     SystemInit();
@@ -75,7 +75,7 @@ void Reset_Handler (void)
 /*******************************************************************************************************************//**
  * Default exception handler.
  **********************************************************************************************************************/
-void Default_Handler (void)
+BSP_SECTION_FLASH_GAP void Default_Handler (void)
 {
     /** A error has occurred. The user will need to investigate the cause. Common problems are stack corruption
      *  or use of an invalid pointer. Use the Fault Status window in e2 studio or manually check the fault status

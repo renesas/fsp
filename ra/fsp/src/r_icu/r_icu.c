@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -29,11 +29,14 @@
  **********************************************************************************************************************/
 
 /** "ICU" in ASCII, used to determine if channel is open. */
-#define ICU_OPEN              (0x00494355U)
+#define ICU_OPEN               (0x00494355U)
 
-#define ICU_IRQMD_OFFSET      (0)
-#define ICU_FCLKSEL_OFFSET    (4)
-#define ICU_FLTEN_OFFSET      (7)
+#define ICU_IRQMD_OFFSET       (0)
+
+#if BSP_FEATURE_ICU_HAS_FILTER
+ #define ICU_FCLKSEL_OFFSET    (4)
+ #define ICU_FLTEN_OFFSET      (7)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -91,6 +94,7 @@ const external_irq_api_t g_external_irq_on_icu =
  *                                        r_bsp_cfg.h.
  * @retval FSP_ERR_INVALID_ARGUMENT       p_cfg->p_callback is not NULL, but ISR is not enabled. ISR must be enabled to
  *                                        use callback function.
+ * @retval FSP_ERR_UNSUPPORTED            An input argument is not supported by selected mode.
  *
  * @note This function is reentrant for different channels.  It is not reentrant for the same channel.
  **********************************************************************************************************************/
@@ -101,7 +105,17 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 #if ICU_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(ICU_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
+
     FSP_ASSERT(NULL != p_cfg);
+ #if !BSP_FEATURE_ICU_HAS_FILTER
+
+    /* Verify the configuration trigger source is correct */
+    FSP_ERROR_RETURN((EXTERNAL_IRQ_TRIG_FALLING == p_cfg->trigger) ||
+                     (EXTERNAL_IRQ_TRIG_RISING == p_cfg->trigger) ||
+                     (EXTERNAL_IRQ_TRIG_BOTH_EDGE == p_cfg->trigger),
+                     FSP_ERR_UNSUPPORTED);
+ #endif
+
     FSP_ERROR_RETURN(0 != ((1U << p_cfg->channel) & BSP_FEATURE_ICU_IRQ_CHANNELS_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     /* Callback must be used with a valid interrupt priority otherwise it will never be called. */
@@ -113,10 +127,13 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 
     p_ctrl->irq = p_cfg->irq;
 
+#if BSP_FEATURE_ICU_HAS_IELSR
+
     /* IELSR Must be zero when modifying the IRQCR bits.
      * (See ICU Section 14.2.1 of the RA6M3 manual R01UH0886EJ0100). */
     uint32_t ielsr = R_ICU->IELSR[p_ctrl->irq];
     R_ICU->IELSR[p_ctrl->irq] = 0;
+#endif
 
 #if BSP_TZ_SECURE_BUILD
 
@@ -129,6 +146,8 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     p_ctrl->p_context  = p_cfg->p_context;
     p_ctrl->channel    = p_cfg->channel;
 
+#if BSP_FEATURE_ICU_HAS_FILTER
+
     /* Disable digital filter */
     R_ICU->IRQCR[p_ctrl->channel] = 0U;
 
@@ -140,12 +159,18 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 
     /* Set the IRQ trigger. */
     irqcr |= (uint8_t) (p_cfg->trigger << ICU_IRQMD_OFFSET);
+#else
+    uint8_t irqcr = (uint8_t) (p_cfg->trigger << ICU_IRQMD_OFFSET);
+#endif
 
     /* Write IRQCR */
     R_ICU->IRQCR[p_ctrl->channel] = irqcr;
 
+#if BSP_FEATURE_ICU_HAS_IELSR
+
     /* Restore IELSR. */
     R_ICU->IELSR[p_ctrl->irq] = ielsr;
+#endif
 
     /* NOTE: User can have the driver opened when the IRQ is not in the vector table. This is for use cases
      * where the external IRQ driver is used to generate ELC events only (without CPU interrupts).
@@ -306,6 +331,7 @@ void r_icu_isr (void)
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     icu_instance_ctrl_t * p_ctrl = (icu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
+#if BSP_FEATURE_ICU_HAS_IELSR
     bool level_irq = false;
     if (EXTERNAL_IRQ_TRIG_LEVEL_LOW == R_ICU->IRQCR_b[p_ctrl->channel].IRQMD)
     {
@@ -317,6 +343,7 @@ void r_icu_isr (void)
          * it will not be missed. */
         R_BSP_IrqStatusClear(irq);
     }
+#endif
 
     if ((NULL != p_ctrl) && (NULL != p_ctrl->p_callback))
     {
@@ -358,12 +385,14 @@ void r_icu_isr (void)
 #endif
     }
 
+#if BSP_FEATURE_ICU_HAS_IELSR
     if (level_irq)
     {
         /* Clear the IR bit after calling the user callback so that if the condition is cleared the ISR will not
          * be called again. */
         R_BSP_IrqStatusClear(irq);
     }
+#endif
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE

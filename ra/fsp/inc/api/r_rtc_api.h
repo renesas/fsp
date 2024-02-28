@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,7 +22,7 @@
 #define R_RTC_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_TIMERS_INTERFACES
  * @defgroup RTC_API RTC Interface
  * @brief Interface for accessing the Realtime Clock.
  *
@@ -116,6 +116,7 @@ typedef enum e_rtc_error_adjustment_period
     RTC_ERROR_ADJUSTMENT_PERIOD_1_MINUTE  = 0, ///< Adjustment period is set to every one minute
     RTC_ERROR_ADJUSTMENT_PERIOD_10_SECOND = 1, ///< Adjustment period is set to every ten second
     RTC_ERROR_ADJUSTMENT_PERIOD_NONE      = 2, ///< Adjustment period not supported in manual mode
+    RTC_ERROR_ADJUSTMENT_PERIOD_20_SECOND = 3, ///< Adjustment period is set to every twenty seconds
 } rtc_error_adjustment_period_t;
 
 /** Time error adjustment value configuration */
@@ -152,10 +153,10 @@ typedef enum e_rtc_periodic_irq_select
 /** Time capture trigger source */
 typedef enum e_rtc_time_capture_source
 {
-    RTC_TIME_CAPTURE_SOURCE_DISABLED     = 0, ///< Disable trigger
-    RTC_TIME_CAPTURE_SOURCE_PIN_RISING   = 1, ///< Rising edge pin trigger
-    RTC_TIME_CAPTURE_SOURCE_PIN_FALLING  = 2, ///< Falling edge pin trigger
-    RTC_TIME_CAPTURE_SOURCE_PIN_BOTH     = 3, ///< Both edges pin trigger
+    RTC_TIME_CAPTURE_SOURCE_DISABLED    = 0, ///< Disable trigger
+    RTC_TIME_CAPTURE_SOURCE_PIN_RISING  = 1, ///< Rising edge pin trigger
+    RTC_TIME_CAPTURE_SOURCE_PIN_FALLING = 2, ///< Falling edge pin trigger
+    RTC_TIME_CAPTURE_SOURCE_PIN_BOTH    = 3, ///< Both edges pin trigger
 } rtc_time_capture_source_t;
 
 /** Time capture noise filter control */

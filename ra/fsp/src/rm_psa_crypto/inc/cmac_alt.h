@@ -31,6 +31,10 @@
 
 #include "mbedtls/cipher.h"
 
+#if defined(MBEDTLS_CMAC_ALT)
+#include "hw_sce_ra_private.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

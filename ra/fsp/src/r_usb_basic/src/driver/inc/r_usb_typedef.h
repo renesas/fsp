@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -103,10 +103,10 @@ typedef struct usb_utr
 #endif                                         /* USB_NUM_USBIP == 2 */
     };
 #if (BSP_CFG_RTOS == 1)                        /* Azure RTOS */
- #if defined(USB_CFG_PPRN_USE)
+ #if (defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PCDC_USE))
     uint32_t timeout;
     uint8_t  is_timeout;
- #endif /* define(USB_CFG_PPRN_USE) */
+ #endif /* define(USB_CFG_PPRN_USE) ||  defined(USB_CFG_PCDC_USE) */
 #endif                                 /* (BSP_CFG_RTOS == 1) */
 } usb_message_t;
 

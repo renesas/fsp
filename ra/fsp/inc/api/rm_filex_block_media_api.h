@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,7 +22,7 @@
  #define RM_FILEX_BLOCK_MEDIA_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_STORAGE_INTERFACES
  * @defgroup RM_FILEX_BLOCK_MEDIA_API FileX Block Media Port Interface
  * @brief Interface for FileX Block Media port.
  *

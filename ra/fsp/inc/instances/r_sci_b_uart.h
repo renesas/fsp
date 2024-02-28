@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -103,6 +103,19 @@ typedef struct st_sci_b_uart_instance_ctrl
 typedef enum e_sci_b_uart_rx_fifo_trigger
 {
     SCI_B_UART_RX_FIFO_TRIGGER_1   = 0x1, ///< Callback after each byte is received without buffering
+    SCI_B_UART_RX_FIFO_TRIGGER_2   = 0x2, ///< Callback when FIFO having 2 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_3   = 0x3, ///< Callback when FIFO having 3 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_4   = 0x4, ///< Callback when FIFO having 4 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_5   = 0x5, ///< Callback when FIFO having 5 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_6   = 0x6, ///< Callback when FIFO having 6 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_7   = 0x7, ///< Callback when FIFO having 7 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_8   = 0x8, ///< Callback when FIFO having 8 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_9   = 0x9, ///< Callback when FIFO having 9 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_10  = 0xA, ///< Callback when FIFO having 10 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_11  = 0xB, ///< Callback when FIFO having 11 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_12  = 0xC, ///< Callback when FIFO having 12 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_13  = 0xD, ///< Callback when FIFO having 13 bytes
+    SCI_B_UART_RX_FIFO_TRIGGER_14  = 0xE, ///< Callback when FIFO having 14 bytes
     SCI_B_UART_RX_FIFO_TRIGGER_MAX = 0xF, ///< Callback when FIFO is full or after 15 bit times with no data (fewer interrupts)
 } sci_b_uart_rx_fifo_trigger_t;
 

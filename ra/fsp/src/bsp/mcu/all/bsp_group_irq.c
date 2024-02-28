@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -56,7 +56,7 @@ static void bsp_group_irq_call(bsp_grp_irq_t irq);
  *
  * @warning This function is called from within an interrupt
  **********************************************************************************************************************/
-static void bsp_group_irq_call (bsp_grp_irq_t irq)
+BSP_SECTION_FLASH_GAP static void bsp_group_irq_call (bsp_grp_irq_t irq)
 {
     /** Check for valid callback */
     if (NULL != g_bsp_group_irq_sources[irq])
@@ -82,7 +82,7 @@ static void bsp_group_irq_call (bsp_grp_irq_t irq)
  * @retval     FSP_SUCCESS                  Callback registered
  * @retval     FSP_ERR_ASSERTION            Callback pointer is NULL
  **********************************************************************************************************************/
-fsp_err_t R_BSP_GroupIrqWrite (bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_irq_t irq))
+BSP_SECTION_FLASH_GAP fsp_err_t R_BSP_GroupIrqWrite (bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_irq_t irq))
 {
 #if BSP_CFG_PARAM_CHECKING_ENABLE
 
@@ -100,7 +100,7 @@ fsp_err_t R_BSP_GroupIrqWrite (bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_ir
  * Non-maskable interrupt handler. This exception is defined by the BSP, unlike other system exceptions, because
  * there are many sources that map to the NMI exception.
  **********************************************************************************************************************/
-void NMI_Handler (void)
+BSP_SECTION_FLASH_GAP void NMI_Handler (void)
 {
     /* NMISR is masked by NMIER to prevent iterating over NMI status flags that are not enabled. */
     uint16_t nmier = R_ICU->NMIER;

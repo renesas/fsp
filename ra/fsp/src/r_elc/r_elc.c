@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -115,7 +115,7 @@ fsp_err_t R_ELC_Open (elc_ctrl_t * const p_ctrl, elc_cfg_t const * const p_cfg)
     for (i = 0; i < ELC_PERIPHERAL_NUM; i++)
     {
         /* Check to ensure the MCU we are using actually has this event link option */
-        if (BSP_FEATURE_ELC_PERIPHERAL_MASK & i_shift)
+        if (BSP_ELC_PERIPHERAL_MASK & i_shift)
         {
             R_ELC->ELSR[i].HA = (uint16_t) p_cfg->link[i];
         }

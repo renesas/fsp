@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -122,6 +122,12 @@ typedef enum e_fsp_ip
     FSP_IP_IIRFA  = 75,                ///< IIR Filter Accelerator
     FSP_IP_CANFD  = 76,                ///< CAN-FD
     FSP_IP_ULPT   = 77,                ///< Ultra Low Power Timer ULPT
+    FSP_IP_SAU    = 78,                ///< Serial Array Unit
+    FSP_IP_IICA   = 79,                ///< Serial Interface IICA
+    FSP_IP_UARTA  = 80,                ///< Serial Interface UARTA
+    FSP_IP_TAU    = 81,                ///< Timer Array Unit
+    FSP_IP_TML32  = 82,                ///< 32-bit Interval Timer
+    FSP_IP_MACL   = 83,                ///< 32-bit Multiply-Accumulator
 } fsp_ip_t;
 
 /** Signals that can be mapped to an interrupt. */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -433,7 +433,12 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if (BSP_CFG_RTOS == 1)
     g_usb_apl_callback[p_ctrl->module_number] = usb_cstd_usbx_callback;
 #else                                  /* #if (BSP_CFG_RTOS == 1) */
+ #if defined(USB_CFG_HCDC_USE) && defined(USB_CFG_HMSC_USE)
+
+    /* Callback registration is not done yet. */
+ #else
     g_usb_apl_callback[p_ctrl->module_number] = p_cfg->p_usb_apl_callback;
+ #endif
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)

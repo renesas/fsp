@@ -1,19 +1,21 @@
 /*
- * Copyright (c) 2009-2019 ARM Limited. All rights reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  *
  * @file     ./out/R7FA8M1AH.h
  * @brief    CMSIS HeaderFile
@@ -5519,7 +5521,9 @@ typedef struct                         /*!< (@ 0x4001B000) R_DEBUG Structure    
         {
             __IOM uint32_t DBGSTOP_IWDT  : 1; /*!< [0..0] Mask bit for IWDT reset/interrupt                                  */
             __IOM uint32_t DBGSTOP_WDT   : 1; /*!< [1..1] Mask bit for WDT reset/interrupt                                   */
-            uint32_t                     : 14;
+            uint32_t                     : 12;
+            __IOM uint32_t DBGSTOP_TIM   : 1; /*!< [14..14] Mask bit for RTC, TAU reset/interrupt                            */
+            __IOM uint32_t DBGSTOP_SIR   : 1; /*!< [15..15] Mask bit for SAU, IICA, PORT_IRQ0-5 reset/interrupt              */
             __IOM uint32_t DBGSTOP_LVD0  : 1; /*!< [16..16] Mask bit for LVD reset/interupt                                  */
             __IOM uint32_t DBGSTOP_LVD1  : 1; /*!< [17..17] Mask bit for LVD reset/interupt                                  */
             __IOM uint32_t DBGSTOP_LVD2  : 1; /*!< [18..18] Mask bit for LVD reset/interupt                                  */
@@ -24868,6 +24872,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =======================================================  DBGSTOPCR  ======================================================= */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RPER_Pos     (24UL)         /*!< DBGSTOP_RPER (Bit 24)                                 */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RPER_Msk     (0x1000000UL)  /*!< DBGSTOP_RPER (Bitfield-Mask: 0x01)                    */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_TIM_Pos      (14UL)         /*!< DBGSTOP_TIM (Bit 14)                                  */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_TIM_Msk      (0x4000UL)     /*!< DBGSTOP_TIM (Bitfield-Mask: 0x01)                     */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_SIR_Pos      (15UL)         /*!< DBGSTOP_SIR (Bit 15)                                  */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_SIR_Msk      (0x8000UL)     /*!< DBGSTOP_SIR (Bitfield-Mask: 0x01)                     */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_LVD_Pos      (16UL)         /*!< DBGSTOP_LVD (Bit 16)                                  */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_LVD_Msk      (0x10000UL)    /*!< DBGSTOP_LVD (Bitfield-Mask: 0x01)                     */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RECCR_Pos    (25UL)         /*!< DBGSTOP_RECCR (Bit 25)                                */

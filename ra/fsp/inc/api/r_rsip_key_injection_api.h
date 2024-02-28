@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_SECURITY_INTERFACES
  * @defgroup RSIP_KEY_INJECTION_API RSIP key injection Interface
  * @brief Interface for key injection by Renesas Secure IP (RSIP) functions.
  *
@@ -145,8 +145,6 @@ typedef struct rsip_ecc_private_wrapped_key
 typedef struct st_rsip_key_injection_api
 {
     /** This API outputs 128-bit AES wrapped key.
-     * @par Implemented as
-     * - @ref R_RSIP_AES128_InitialKeyWrap "R_RSIP_AES128_InitialKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -163,8 +161,6 @@ typedef struct st_rsip_key_injection_api
                                         rsip_aes_wrapped_key_t * const  p_wrapped_key);
 
     /** This API outputs 256-bit AES wrapped key.
-     * @par Implemented as
-     * - @ref R_RSIP_AES256_InitialKeyWrap "R_RSIP_AES256_InitialKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -181,8 +177,6 @@ typedef struct st_rsip_key_injection_api
                                         rsip_aes_wrapped_key_t * const  p_wrapped_key);
 
     /** This API outputs 2048-bit RSA wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_RSA2048_InitialPublicKeyWrap "R_RSIP_RSA2048_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -199,8 +193,6 @@ typedef struct st_rsip_key_injection_api
                                                rsip_rsa2048_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 2048-bit RSA wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_RSA2048_InitialPrivateKeyWrap "R_RSIP_RSA2048_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -217,8 +209,6 @@ typedef struct st_rsip_key_injection_api
                                                 rsip_rsa2048_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 3072-bit RSA wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_RSA3072_InitialPublicKeyWrap "R_RSIP_RSA3072_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -235,8 +225,6 @@ typedef struct st_rsip_key_injection_api
                                                rsip_rsa3072_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 3072-bit RSA wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_RSA3072_InitialPrivateKeyWrap "R_RSIP_RSA3072_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -253,8 +241,6 @@ typedef struct st_rsip_key_injection_api
                                                 rsip_rsa3072_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 4096-bit RSA wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_RSA4096_InitialPublicKeyWrap "R_RSIP_RSA4096_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -271,8 +257,6 @@ typedef struct st_rsip_key_injection_api
                                                rsip_rsa4096_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 4096-bit RSA wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_RSA4096_InitialPrivateKeyWrap "R_RSIP_RSA4096_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -289,8 +273,6 @@ typedef struct st_rsip_key_injection_api
                                                 rsip_rsa4096_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit ECC wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_secp256r1_InitialPublicKeyWrap "R_RSIP_ECC_secp256r1_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -307,8 +289,6 @@ typedef struct st_rsip_key_injection_api
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit ECC wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_secp256r1_InitialPrivateKeyWrap "R_RSIP_ECC_secp256r1_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -325,8 +305,6 @@ typedef struct st_rsip_key_injection_api
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 384-bit ECC wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_secp384r1_InitialPublicKeyWrap "R_RSIP_ECC_secp384r1_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -343,8 +321,6 @@ typedef struct st_rsip_key_injection_api
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 384-bit ECC wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_secp384r1_InitialPrivateKeyWrap "R_RSIP_ECC_secp384r1_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -361,8 +337,6 @@ typedef struct st_rsip_key_injection_api
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit ECC wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_secp256k1_InitialPublicKeyWrap "R_RSIP_ECC_secp256k1_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -379,8 +353,6 @@ typedef struct st_rsip_key_injection_api
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit ECC wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_secp256k1_InitialPrivateKeyWrap "R_RSIP_ECC_secp256k1_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -397,8 +369,6 @@ typedef struct st_rsip_key_injection_api
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit brainpool ECC wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_brainpoolP256r1_InitialPublicKeyWrap "R_RSIP_ECC_brainpoolP256r1_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -415,8 +385,6 @@ typedef struct st_rsip_key_injection_api
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit brainpool ECC wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_brainpoolP256r1_InitialPrivateKeyWrap "R_RSIP_ECC_brainpoolP256r1_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -433,8 +401,6 @@ typedef struct st_rsip_key_injection_api
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 384-bit brainpool ECC wrapped public key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap "R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -451,8 +417,6 @@ typedef struct st_rsip_key_injection_api
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 384-bit brainpool ECC wrapped private key.
-     * @par Implemented as
-     * - @ref R_RSIP_ECC_brainpoolP384r1_InitialPrivateKeyWrap "R_RSIP_ECC_brainpoolP384r1_InitialPrivateKeyWrap()"
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,12 +22,12 @@
 #define RM_BLE_MESH_PROVISION_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup  RENESAS_INTERFACES
+ * @ingroup  RENESAS_BLE_MESH_INTERFACES
  * @defgroup RM_BLE_MESH_PROVISION_API BLE Mesh Provision Interface
- * @brief    Interface for Bluetooth Low Energy Mesh Provision functions.
+ * @brief    Interface for BLE Mesh Provision functions.
  *
  * @section RM_BLE_MESH_PROVISION_API_Summary Summary
- * The BLE Mesh Provision interface for the Bluetooth Low Energy Mesh Provision (BLE MESH PROVISION) peripheral provides Bluetooth Low Energy Mesh Provision functionality.
+ * The BLE Mesh Provision interface for the BLE Mesh Provision (BLE MESH PROVISION) peripheral provides BLE Mesh Provision functionality.
  *
  *
  * @{

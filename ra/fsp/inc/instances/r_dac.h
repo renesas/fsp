@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -45,6 +45,15 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** DAC Reference voltage selection. */
+typedef enum e_dac_ref_volt_sel
+{
+    DAC_VREF_NONE        = 0x00,       ///< No reference voltage selected
+    DAC_VREF_AVCC0_AVSS0 = 0x01,       ///< Select AVCC0/AVSS0
+    DAC_VREF_IVREF_AVSS0 = 0x03,       ///< Select Internal reference voltage/AVSS0
+    DAC_VREF_VREFH_VREFL = 0x06        ///< Select VREFH/VREFL
+} dac_ref_volt_sel_t;
+
 /** DAC instance control block. */
 typedef struct st_dac_instance_ctrl
 {
@@ -59,10 +68,11 @@ typedef struct st_dac_instance_ctrl
 /** DAC extended configuration */
 typedef struct st_dac_extended_cfg
 {
-    bool              enable_charge_pump;       ///< Enable DAC charge pump available on selected MCUs.
-    bool              output_amplifier_enabled; ///< Output amplifier enable available on selected MCUs.
-    bool              internal_output_enabled;  ///< Internal output enable available on selected MCUs.
-    dac_data_format_t data_format;              ///< Data format
+    bool               enable_charge_pump;       ///< Enable DAC charge pump available on selected MCUs.
+    bool               output_amplifier_enabled; ///< Output amplifier enable available on selected MCUs.
+    bool               internal_output_enabled;  ///< Internal output enable available on selected MCUs.
+    dac_data_format_t  data_format;              ///< Data format
+    dac_ref_volt_sel_t ref_volt_sel;             ///< Reference voltage selection
 } dac_extended_cfg_t;
 
 /**********************************************************************************************************************

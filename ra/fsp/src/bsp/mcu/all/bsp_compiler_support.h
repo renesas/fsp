@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -68,6 +68,9 @@ extern "C" {
 
  #ifndef BSP_SECTION_STACK
   #define BSP_SECTION_STACK                 BSP_UNINIT_SECTION_PREFIX ".stack"
+ #endif
+ #ifndef BSP_SECTION_FLASH_GAP
+  #define BSP_SECTION_FLASH_GAP
  #endif
  #define BSP_SECTION_NOINIT                 BSP_UNINIT_SECTION_PREFIX ".noinit"
  #define BSP_SECTION_FIXED_VECTORS          ".fixed_vectors"

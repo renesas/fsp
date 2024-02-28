@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -132,7 +132,7 @@ static void iwdt_nmi_initialize(iwdt_instance_ctrl_t * const p_instance_ctrl, wd
  **********************************************************************************************************************/
 
 /* Convert IWDT timeout value to an integer */
-static const uint32_t g_iwdt_timeout[] =
+static const uint16_t g_iwdt_timeout[] =
 {
     128U,                              ///< OFS0[3:0] value for WDT_TIMEOUT_128
     512U,                              ///< OFS0[3:0] value for WDT_TIMEOUT_512
@@ -432,7 +432,7 @@ fsp_err_t R_IWDT_TimeoutGet (wdt_ctrl_t * const p_api_ctrl, wdt_timeout_values_t
     timeout        = IWDT_PRV_OFS0_SETTING_GET(TIMEOUT);
 #endif
 
-    p_timeout->timeout_clocks = g_iwdt_timeout[timeout];
+    p_timeout->timeout_clocks = (uint32_t) g_iwdt_timeout[timeout];
 
     /* Get the frequency of the clock supplying the watchdog */
     frequency = (uint32_t) BSP_FEATURE_IWDT_CLOCK_FREQUENCY;

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1747,8 +1747,18 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                 /* Check Strage drive no. */
                 if (side < USB_MAXSTRAGE)
                 {
+   #if (USB_PIPE2 >= USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 >= USB_CFG_HCDC_BULK_OUT)
+
+                    /* Calculate the pipe number corresponding to the drive number */
+                    if ((USB_PIPE3 + side) <= USB_PIPE5)
+                    {
+                        pipe_no = (uint8_t) (USB_PIPE3 + side);
+                    }
+
+   #else                               /* (USB_PIPE2 >= USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 >= USB_CFG_HCDC_BULK_OUT) */
                     /* Calculate the pipe number corresponding to the drive number */
                     pipe_no = (uint8_t) (USB_PIPE1 + side);
+   #endif                              /* (USB_PIPE2 >= USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 >= USB_CFG_HCDC_BULK_OUT) */
                 }
 
   #else                                /* #if (BSP_CFG_RTOS != 1) */
@@ -1987,19 +1997,39 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
   #endif                               /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_HMSC_USE)
+   #if defined(USB_CFG_HCDC_USE)
+    #if (USB_PIPE2 < USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 < USB_CFG_HCDC_BULK_OUT)
+        case USB_PIPE1:
+        case USB_PIPE2:
+    #else                              /* (USB_PIPE2 < USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 < USB_CFG_HCDC_BULK_OUT) */
+        case USB_PIPE3:
+        case USB_PIPE4:
+        case USB_PIPE5:
+    #endif                             /* (USB_PIPE2 < USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 < USB_CFG_HCDC_BULK_OUT) */
+            {
+    #if USB_CFG_DTC == USB_CFG_ENABLE
+                pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+    #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
+                pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+    #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
+                break;
+            }
+
+   #else /* defined(USB_CFG_HCDC_USE) */
         case USB_PIPE1:
         case USB_PIPE2:
         case USB_PIPE3:
         case USB_PIPE4:
         case USB_PIPE5:
         {
-   #if USB_CFG_DTC == USB_CFG_ENABLE
+    #if USB_CFG_DTC == USB_CFG_ENABLE
             pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
-   #else                               /* USB_CFG_DTC == USB_CFG_ENABLE */
+    #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
             pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
-   #endif                              /* USB_CFG_DTC == USB_CFG_ENABLE */
+    #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
             break;
         }
+   #endif /* defined(USB_CFG_HCDC_USE) */
   #endif /* defined(USB_CFG_HMSC_USE) */
 
   #if defined(USB_CFG_HVND_USE)

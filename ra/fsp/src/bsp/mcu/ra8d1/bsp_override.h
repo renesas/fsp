@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -38,39 +38,11 @@
 
 /* Define overrides required for this MCU. */
 
-#define BSP_OVERRIDE_ELC_PERIPHERAL_T
 #define BSP_OVERRIDE_GROUP_IRQ_T
-
-/* Override definitions. */
-
-#define ELC_PERIPHERAL_NUM    (30U)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
-
-typedef enum e_elc_peripheral
-{
-    ELC_PERIPHERAL_GPT_A   = (0),
-    ELC_PERIPHERAL_GPT_B   = (1),
-    ELC_PERIPHERAL_GPT_C   = (2),
-    ELC_PERIPHERAL_GPT_D   = (3),
-    ELC_PERIPHERAL_GPT_E   = (4),
-    ELC_PERIPHERAL_GPT_F   = (5),
-    ELC_PERIPHERAL_GPT_G   = (6),
-    ELC_PERIPHERAL_GPT_H   = (7),
-    ELC_PERIPHERAL_ADC0    = (8),
-    ELC_PERIPHERAL_ADC0_B  = (9),
-    ELC_PERIPHERAL_ADC1    = (10),
-    ELC_PERIPHERAL_ADC1_B  = (11),
-    ELC_PERIPHERAL_DAC0    = (12),
-    ELC_PERIPHERAL_DAC1    = (13),
-    ELC_PERIPHERAL_IOPORT1 = (14),
-    ELC_PERIPHERAL_IOPORT2 = (15),
-    ELC_PERIPHERAL_IOPORT3 = (16),
-    ELC_PERIPHERAL_IOPORT4 = (17),
-    ELC_PERIPHERAL_I3C     = (30),
-} elc_peripheral_t;
 
 /* Which interrupts can have callbacks registered. */
 typedef enum e_bsp_grp_irq

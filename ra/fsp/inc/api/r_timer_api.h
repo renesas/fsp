@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -23,7 +23,7 @@
 
 /*******************************************************************************************************************//**
  * @defgroup TIMER_API Timer Interface
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_TIMERS_INTERFACES
  * @brief Interface for timer functions.
  *
  * @section TIMER_API_SUMMARY Summary
@@ -55,6 +55,8 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+#ifndef BSP_OVERRIDE_TIMER_EVENT_T
+
 /** Events that can trigger a callback function */
 typedef enum e_timer_event
 {
@@ -71,6 +73,7 @@ typedef enum e_timer_event
     TIMER_EVENT_COMPARE_F,                     ///< A compare has occurred on signal F
     TIMER_EVENT_DEAD_TIME                      ///< Dead time event
 } timer_event_t;
+#endif
 
 /** Timer variant types. */
 typedef enum e_timer_variant

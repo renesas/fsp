@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -887,6 +887,11 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
                                       (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
                                                  timeout_scl_low << R_IIC0_ICMR2_TMOL_Pos));
 
+    /* Set the response as ACK */
+    p_ctrl->p_reg->ICMR3_b.ACKWP = 1;  /* Write Enable */
+    p_ctrl->p_reg->ICMR3_b.ACKBT = 0;  /* Write */
+    p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
+
     /* Enable timeout function */
     p_ctrl->p_reg->ICFER_b.TMOE = 1U;
 
@@ -958,6 +963,7 @@ static void iic_master_rxi_master (iic_master_instance_ctrl_t * p_ctrl)
              */
             p_ctrl->p_reg->ICMR3_b.ACKWP = 1; /* Write enable ACKBT */
             p_ctrl->p_reg->ICMR3_b.ACKBT = 1;
+            p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
         }
 
 #if IIC_MASTER_CFG_DTC_ENABLE
@@ -1259,6 +1265,7 @@ static void iic_master_rxi_read_data (iic_master_instance_ctrl_t * const p_ctrl)
          */
         p_ctrl->p_reg->ICMR3_b.ACKWP = 1; /* Write enable ACKBT */
         p_ctrl->p_reg->ICMR3_b.ACKBT = 1;
+        p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
     }
     /* If next data = final byte, send STOP or RESTART */
     else if (1U == p_ctrl->remain)
@@ -1277,6 +1284,7 @@ static void iic_master_rxi_read_data (iic_master_instance_ctrl_t * const p_ctrl)
              * For restart condition, clear bit by software.
              */
             p_ctrl->p_reg->ICMR3_b.ACKBT = 0;
+            p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
 
             /* Request IIC to issue the restart condition */
             p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_RS_BIT_MASK;

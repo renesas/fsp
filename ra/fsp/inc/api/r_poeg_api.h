@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_TIMERS_INTERFACES
  * @defgroup POEG_API POEG Interface
  *
  * @brief Interface for the Port Output Enable for GPT.
@@ -53,6 +53,7 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#ifndef BSP_OVERRIDE_POEG_STATE_T
 
 /** POEG states. */
 typedef enum e_poeg_state
@@ -67,6 +68,10 @@ typedef enum e_poeg_state
      * the filtered input. */
     POEG_STATE_PIN_DISABLE_REQUEST_ACTIVE = 1U << 16,
 } poeg_state_t;
+
+#endif
+
+#ifndef BSP_OVERRIDE_POEG_TRIGGER_T
 
 /** Triggers that will disable GPT output pins. */
 typedef enum e_poeg_trigger
@@ -83,6 +88,8 @@ typedef enum e_poeg_trigger
     POEG_TRIGGER_ACMPHS4          = 1U << 8, ///< Disable GPT output based on ACMPHS4 comparator result
     POEG_TRIGGER_ACMPHS5          = 1U << 9, ///< Disable GPT output based on ACMPHS5 comparator result
 } poeg_trigger_t;
+
+#endif
 
 /** GTETRG polarity. */
 typedef enum e_poeg_gtetrg_polarity
@@ -131,6 +138,7 @@ typedef struct st_poeg_cfg
 
     /** Placeholder for user data. Passed to the user callback in @ref poeg_callback_args_t. */
     void const * p_context;
+    uint32_t     unit;                 ///< POEG unit to be used
     uint32_t     channel;              ///< Channel 0 corresponds to GTETRGA, 1 to GTETRGB, etc.
     IRQn_Type    irq;                  ///< Interrupt number assigned to this instance
     uint8_t      ipl;                  ///< POEG interrupt priority

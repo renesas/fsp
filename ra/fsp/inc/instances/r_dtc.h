@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -98,6 +98,10 @@ fsp_err_t R_DTC_Reload(transfer_ctrl_t * const p_api_ctrl,
                        void const            * p_src,
                        void                  * p_dest,
                        uint32_t const          num_transfers);
+fsp_err_t R_DTC_CallbackSet(transfer_ctrl_t * const      p_api_ctrl,
+                            void (                     * p_callback)(transfer_callback_args_t *),
+                            void const * const           p_context,
+                            transfer_callback_args_t * const p_callback_memory);
 fsp_err_t R_DTC_Close(transfer_ctrl_t * const p_api_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

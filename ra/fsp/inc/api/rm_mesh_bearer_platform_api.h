@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,12 +22,12 @@
 #define RM_MESH_BEARER_PLATFORM_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup  RENESAS_INTERFACES
+ * @ingroup  RENESAS_BLE_MESH_INTERFACES
  * @defgroup RM_MESH_BEARER_PLATFORM_API BLE Mesh Bearer Platform Interface
- * @brief    Interface for Bluetooth Low Energy Mesh Bearer Platform functions.
+ * @brief    Interface for BLE Mesh Bearer Platform functions.
  *
  * @section RM_MESH_BEARER_PLATFORM_API_Summary Summary
- * The BLE Mesh interface for the Bluetooth Low Energy Mesh Bearer Platform (BLE MESH BEARER PLATFORM) peripheral provides Bluetooth Low Energy Mesh Bearer Platform functionality.
+ * The BLE Mesh interface for the BLE Mesh Bearer Platform (BLE MESH BEARER PLATFORM) peripheral provides BLE Mesh Bearer Platform functionality.
  *
  *
  * @{

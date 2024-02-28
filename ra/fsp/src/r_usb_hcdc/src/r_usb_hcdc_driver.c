@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -426,7 +426,11 @@ void usb_hcdc_configured (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     usb_hcdc_set_pipe_registration(ptr, devadr); /* Host CDC Pipe registration */
     ctrl.module_number  = ptr->ip;               /* Module number setting */
     ctrl.device_address = (uint8_t) devadr;
-    ctrl.type           = (usb_class_t) USB_CLASS_INTERNAL_HCDC;
+#if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+    ctrl.type = (usb_class_t) USB_CLASS_HCDC;
+#else
+    ctrl.type = (usb_class_t) USB_CLASS_INTERNAL_HCDC;
+#endif
 
     usb_set_event(USB_STATUS_CONFIGURED, &ctrl); /* Set Event()  */
 }
@@ -449,8 +453,11 @@ void usb_hcdc_detach (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
 
     (void) data2;
     usb_hstd_clr_pipe_table(ptr->ip, devadr);
-    ctrl.module_number  = ptr->ip;           /* Module number setting */
+    ctrl.module_number  = ptr->ip;     /* Module number setting */
     ctrl.device_address = (uint8_t) devadr;
+#if (defined(USB_CFG_HMSC_USE) && defined(USB_CFG_HCDC_USE))
+    ctrl.type = (usb_class_t) USB_CLASS_HCDC;
+#endif
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
 
     g_usb_hcdc_smpl_class_seq[ptr->ip]    = 0;

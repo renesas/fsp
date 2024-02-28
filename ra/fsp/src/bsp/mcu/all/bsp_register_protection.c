@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -66,7 +66,7 @@ static const uint16_t g_prcr_masks[] =
  *
  * @param[in] regs_to_protect Registers which have write protection enabled.
  **********************************************************************************************************************/
-void R_BSP_RegisterProtectEnable (bsp_reg_protect_t regs_to_protect)
+BSP_SECTION_FLASH_GAP void R_BSP_RegisterProtectEnable (bsp_reg_protect_t regs_to_protect)
 {
     /** Get/save the current state of interrupts */
     FSP_CRITICAL_SECTION_DEFINE;
@@ -103,7 +103,7 @@ void R_BSP_RegisterProtectEnable (bsp_reg_protect_t regs_to_protect)
  *
  * @param[in] regs_to_unprotect Registers which have write protection disabled.
  **********************************************************************************************************************/
-void R_BSP_RegisterProtectDisable (bsp_reg_protect_t regs_to_unprotect)
+BSP_SECTION_FLASH_GAP void R_BSP_RegisterProtectDisable (bsp_reg_protect_t regs_to_unprotect)
 {
     /** Get/save the current state of interrupts */
     FSP_CRITICAL_SECTION_DEFINE;

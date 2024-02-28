@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -33,12 +33,12 @@
 FSP_HEADER
 
 /*******************************************************************************************************************//**
- * @ingroup  RENESAS_INTERFACES
+ * @ingroup  RENESAS_BLE_MESH_INTERFACES
  * @defgroup RM_BLE_MESH_SCENE_SERVER_API BLE Mesh Scene Server Interface
- * @brief    Interface for Bluetooth Low Energy Mesh Model Scene Server functions.
+ * @brief    Interface for BLE Mesh Model Scene Server functions.
  *
  * @section RM_BLE_MESH_SCENE_SERVER_API_Summary Summary
- * The BLE Mesh interface for the Bluetooth Low Energy Mesh Model Scene Server (BLE MESH HEALTH SERVER) middleware provides Bluetooth Low Energy Mesh Model Scene Server functionality.
+ * The BLE Mesh interface for the BLE Mesh Model Scene Server (BLE MESH HEALTH SERVER) middleware provides BLE Mesh Model Scene Server functionality.
  *
  *
  * @{

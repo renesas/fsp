@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_MONITORING_INTERFACES
  * @defgroup LVD_API Low Voltage Detection Interface
  * @brief Interface for Low Voltage Detection
  *
@@ -50,6 +50,8 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+#ifndef BSP_OVERRIDE_LVD_PERIPHERAL_T
+
 /** Voltage detection level */
 
 /** The thresholds supported by each MCU are in the MCU User's Manual as well as
@@ -57,8 +59,11 @@ FSP_HEADER
 typedef enum
 {
     LVD_THRESHOLD_MONITOR_1_LEVEL_4_29V = 0x00UL, ///< 4.29V
+    LVD_THRESHOLD_MONITOR_1_LEVEL_4_16V = 0x01UL, ///< 4.16V
     LVD_THRESHOLD_MONITOR_1_LEVEL_4_14V = 0x01UL, ///< 4.14V
+    LVD_THRESHOLD_MONITOR_1_LEVEL_4_03V = 0x02UL, ///< 4.03V
     LVD_THRESHOLD_MONITOR_1_LEVEL_4_02V = 0x02UL, ///< 4.02V
+    LVD_THRESHOLD_MONITOR_1_LEVEL_3_86V = 0x03UL, ///< 3.86V
     LVD_THRESHOLD_MONITOR_1_LEVEL_3_84V = 0x03UL, ///< 3.84V
     LVD_THRESHOLD_MONITOR_1_LEVEL_3_10V = 0x04UL, ///< 3.10V
     LVD_THRESHOLD_MONITOR_1_LEVEL_3_00V = 0x05UL, ///< 3.00V
@@ -75,8 +80,11 @@ typedef enum
     LVD_THRESHOLD_MONITOR_1_LEVEL_2_99V = 0x11UL, ///< 2.99V
     LVD_THRESHOLD_MONITOR_1_LEVEL_2_92V = 0x12UL, ///< 2.92V
     LVD_THRESHOLD_MONITOR_1_LEVEL_2_85V = 0x13UL, ///< 2.85V
+    LVD_THRESHOLD_MONITOR_2_LEVEL_4_31V = 0x00UL, ///< 4.31V
     LVD_THRESHOLD_MONITOR_2_LEVEL_4_29V = 0x00UL, ///< 4.29V
+    LVD_THRESHOLD_MONITOR_2_LEVEL_4_17V = 0x01UL, ///< 4.17V
     LVD_THRESHOLD_MONITOR_2_LEVEL_4_14V = 0x01UL, ///< 4.14V
+    LVD_THRESHOLD_MONITOR_2_LEVEL_4_03V = 0x02UL, ///< 4.03V
     LVD_THRESHOLD_MONITOR_2_LEVEL_4_02V = 0x02UL, ///< 4.02V
     LVD_THRESHOLD_MONITOR_2_LEVEL_3_84V = 0x03UL, ///< 3.84V
     LVD_THRESHOLD_MONITOR_2_LEVEL_2_99V = 0x05UL, ///< 2.99V
@@ -96,6 +104,7 @@ typedef enum
     LVD_THRESHOLD_LVDVRTC_LEVEL_2_4V = 0x01UL,    ///< 2.4V
     LVD_THRESHOLD_LVDVRTC_LEVEL_2_2V = 0x00UL     ///< 2.2V
 } lvd_threshold_t;
+#endif
 
 /** Response types for handling threshold crossing event. */
 typedef enum e_lvd_response

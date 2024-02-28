@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -181,24 +181,27 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile cgc_prv_ns_callback)(cgc_callbac
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
-static bool      r_cgc_low_speed_or_voltage_mode_possible(uint32_t sckdivcr, uint8_t ostdcr);
-static fsp_err_t r_cgc_clock_check(cgc_clock_t const clock_source);
-static bool      r_cgc_stabilization_check(cgc_clock_t clock, cgc_prv_clock_state_t status);
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+static bool r_cgc_low_speed_or_voltage_mode_possible(uint32_t sckdivcr, uint8_t ostdcr);
 
-#if BSP_FEATURE_CGC_OSCILLATON_STOP_DETECT
+ #if BSP_FEATURE_CGC_OSCILLATON_STOP_DETECT
 static void r_cgc_nmi_internal_callback(bsp_grp_irq_t irq);
 
+ #endif
+
+ #if BSP_FEATURE_CGC_HAS_OSTDCSE
+static fsp_err_t r_cgc_open_irq_cfg(cgc_instance_ctrl_t * const p_instance_ctrl, cgc_extended_cfg_t * const p_extend);
+static void      r_cgc_disable_irq(IRQn_Type irq);
+
+ #endif
 #endif
+
+static fsp_err_t             r_cgc_clock_check(cgc_clock_t const clock_source);
+static bool                  r_cgc_stabilization_check(cgc_clock_t clock, cgc_prv_clock_state_t status);
 static void                  r_cgc_clock_change(cgc_clock_t clock, cgc_clock_change_t state);
 static cgc_prv_clock_state_t r_cgc_clock_run_state_get(cgc_clock_t clock);
 static void                  r_cgc_post_change(cgc_prv_change_t change);
 static void                  r_cgc_pre_change(cgc_prv_change_t change);
-
-#if BSP_FEATURE_CGC_HAS_OSTDCSE
-static fsp_err_t r_cgc_open_irq_cfg(cgc_instance_ctrl_t * const p_instance_ctrl, cgc_extended_cfg_t * const p_extend);
-static void      r_cgc_disable_irq(IRQn_Type irq);
-
-#endif
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
 
@@ -377,6 +380,7 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  *   - start or stop clocks
  *   - change the system clock source
  *   - configure the PLL/PLL2 multiplication and division ratios when starting the PLL
+ *   - configure the division ratios when starting the HOCO/MOCO/MOSC
  *   - change the system dividers
  *
  * If the requested system clock source has a stabilization flag, this function blocks waiting for the stabilization
@@ -436,7 +440,11 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 #endif
 
     cgc_clock_t requested_system_clock = p_clock_cfg->system_clock;
-    cgc_clock_t current_system_clock   = (cgc_clock_t) R_SYSTEM->SCKSCR;
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+    cgc_clock_t current_system_clock = (cgc_clock_t) R_SYSTEM->SCKSCR;
+#else
+    cgc_clock_t current_system_clock = (cgc_clock_t) bsp_prv_clock_source_get();
+#endif
 
     cgc_clock_change_t options[CGC_PRV_NUM_CLOCKS];
     options[CGC_CLOCK_HOCO]     = p_clock_cfg->hoco_state;
@@ -738,20 +746,35 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         }
     }
 
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+
     /* Set which clock to use for system clock and dividers for all system clocks. */
     cgc_divider_cfg_t clock_cfg;
     clock_cfg.sckdivcr_w = p_clock_cfg->divider_cfg.sckdivcr_w;
-#if BSP_FEATURE_CGC_HAS_CPUCLK
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
     clock_cfg.sckdivcr2 = p_clock_cfg->divider_cfg.sckdivcr2;
-#else
+ #else
     clock_cfg.sckdivcr2 = 0;
-#endif
-#if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
+ #endif
+ #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
     /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
     clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
-#endif
+ #endif
     bsp_prv_clock_set(requested_system_clock, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
+#else
+    if ((requested_system_clock == CGC_CLOCK_MAIN_OSC) && (options[requested_system_clock] == CGC_CLOCK_CHANGE_START))
+    {
+        uint8_t mainosc_stable_value = (uint8_t) ~(BSP_PRV_OSTC_OFFSET >> BSP_CLOCK_CFG_MAIN_OSC_WAIT);
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSTC, mainosc_stable_value);
+    }
+
+    /* Set which clock to use for system clock and dividers. */
+    uint8_t hoco_divider = (uint8_t) p_clock_cfg->divider_cfg.hoco_divider;
+    uint8_t moco_divider = (uint8_t) p_clock_cfg->divider_cfg.moco_divider;
+    uint8_t mosc_divider = (uint8_t) p_clock_cfg->divider_cfg.mosc_divider;
+    bsp_prv_clock_set(requested_system_clock, hoco_divider, moco_divider, mosc_divider);
+#endif
 
     /* If the system clock has changed, stop previous system clock if requested. */
     if (requested_system_clock != current_system_clock)
@@ -834,6 +857,17 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
  #endif
  #if BSP_PRV_HOCO_USE_FLL
     FSP_ERROR_RETURN(!((CGC_CLOCK_HOCO == clock_source) && R_SYSTEM->SOSCCR), FSP_ERR_INVALID_STATE);
+ #endif
+
+ #if BSP_FEATURE_CGC_REGISTER_SET_B
+
+    /* If the current operating mode is Subosc-speed mode, the HOCO, MOCO and main oscillator can not be started */
+    if (1U == R_SYSTEM->ICLKSCR_b.CKST)
+    {
+        FSP_ERROR_RETURN((CGC_CLOCK_HOCO == clock_source) || (CGC_CLOCK_MOCO == clock_source) ||
+                         (CGC_CLOCK_MAIN_OSC == clock_source),
+                         FSP_ERR_ASSERTION);
+    }
  #endif
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
@@ -946,7 +980,12 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
  #endif
 
     /* If clock source is the current system clock, return error */
-    cgc_clock_t current_clock = (cgc_clock_t) R_SYSTEM->SCKSCR;
+    cgc_clock_t current_clock;
+ #if !BSP_FEATURE_CGC_REGISTER_SET_B
+    current_clock = (cgc_clock_t) R_SYSTEM->SCKSCR;
+ #else
+    current_clock = (cgc_clock_t) bsp_prv_clock_source_get();
+ #endif
     FSP_ERROR_RETURN(clock_source != current_clock, FSP_ERR_IN_USE);
 
  #if BSP_PRV_PLL_SUPPORTED
@@ -960,6 +999,8 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
                      FSP_ERR_IN_USE);
  #endif
 
+ #if !BSP_FEATURE_CGC_REGISTER_SET_B
+
     /* MOCO cannot be stopped if oscillation stop detection is enabled. */
     FSP_ERROR_RETURN(!((clock_source == CGC_CLOCK_MOCO) && (R_SYSTEM->OSTDCR_b.OSTDE == 1U)),
                      FSP_ERR_OSC_STOP_DET_ENABLED);
@@ -967,6 +1008,7 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
     /* Make sure the oscillator is stable. */
     FSP_ERROR_RETURN(r_cgc_stabilization_check(clock_source, r_cgc_clock_run_state_get(clock_source)),
                      FSP_ERR_NOT_STABILIZED);
+ #endif
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
@@ -990,7 +1032,11 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
 
     /* Reduce the operating speed mode if possible based on the new clock configuration. */
     r_cgc_pre_change(CGC_PRV_CHANGE_LPM);
+ #if !BSP_FEATURE_CGC_REGISTER_SET_B
     r_cgc_operating_mode_reduce(R_SYSTEM->SCKDIVCR);
+ #else
+    r_cgc_operating_mode_reduce(0U);
+ #endif
     r_cgc_post_change(CGC_PRV_CHANGE_LPM);
 #endif
 
@@ -1056,21 +1102,28 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
     /* Prerequisite to starting clocks or changing the system clock. */
     r_cgc_pre_change(CGC_PRV_CHANGE_LPM_CGC);
 
+#if BSP_FEATURE_CGC_REGISTER_SET_B
+    uint8_t hoco_divider = (uint8_t) p_divider_cfg->hoco_divider;
+    uint8_t moco_divider = (uint8_t) p_divider_cfg->moco_divider;
+    uint8_t mosc_divider = (uint8_t) p_divider_cfg->mosc_divider;
+    bsp_prv_clock_set(clock_source, hoco_divider, moco_divider, mosc_divider);
+#else
     cgc_divider_cfg_t clock_cfg;
     clock_cfg.sckdivcr_w = p_divider_cfg->sckdivcr_w;
-#if BSP_FEATURE_CGC_HAS_CPUCLK
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
     clock_cfg.sckdivcr2 = p_divider_cfg->sckdivcr2;
-#else
+ #else
     clock_cfg.sckdivcr2 = 0;
-#endif
+ #endif
 
-#if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
+ #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
     /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
     clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
-#endif
+ #endif
 
     bsp_prv_clock_set(clock_source, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
+#endif
 
     /* Apply the optimal operating power mode and restore the cache to it's previous state. */
     r_cgc_post_change(CGC_PRV_CHANGE_LPM_CGC);
@@ -1103,16 +1156,25 @@ fsp_err_t R_CGC_SystemClockGet (cgc_ctrl_t * const        p_ctrl,
     /* Get the system clock source */
     if (NULL != p_clock_source)
     {
+#if BSP_FEATURE_CGC_REGISTER_SET_B
+        *p_clock_source = (cgc_clock_t) bsp_prv_clock_source_get();
+#else
         *p_clock_source = (cgc_clock_t) R_SYSTEM->SCKSCR;
+#endif
     }
 
     /* Get current dividers. */
     if (NULL != p_divider_cfg)
     {
+#if BSP_FEATURE_CGC_REGISTER_SET_B
+        p_divider_cfg->moco_divider = (cgc_sys_clock_div_t) R_SYSTEM->MOCODIV;
+        p_divider_cfg->hoco_divider = (cgc_sys_clock_div_t) R_SYSTEM->HOCODIV;
+        p_divider_cfg->mosc_divider = (cgc_sys_clock_div_t) R_SYSTEM->MOSCDIV;
+#else
         p_divider_cfg->sckdivcr_w = R_SYSTEM->SCKDIVCR;
-
-#if BSP_FEATURE_CGC_HAS_CPUCLK
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
         p_divider_cfg->sckdivcr2 = R_SYSTEM->SCKDIVCR2;
+ #endif
 #endif
     }
 
@@ -1163,7 +1225,7 @@ fsp_err_t R_CGC_ClockCheck (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
  * @retval FSP_ERR_ASSERTION           Invalid input argument.
  * @retval FSP_ERR_NOT_OPEN            Module is not open.
  * @retval FSP_ERR_LOW_VOLTAGE_MODE    Settings not allowed in low voltage mode.
- * @retval FSP_ERR_UNSUPPORTED         RA2E2 do not support this feature.
+ * @retval FSP_ERR_UNSUPPORTED         Function not supported.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_OscStopDetectEnable (cgc_ctrl_t * const p_ctrl)
 {
@@ -1288,7 +1350,7 @@ fsp_err_t R_CGC_OscStopDetectEnable (cgc_ctrl_t * const p_ctrl)
  * @retval FSP_ERR_NOT_OPEN            Module is not open.
  * @retval FSP_ERR_OSC_STOP_DETECTED   The Oscillation stop detect status flag is set. Under this condition it is not
  *                                     possible to disable the Oscillation stop detection function.
- * @retval FSP_ERR_UNSUPPORTED         RA2E2 do not support this feature.
+ * @retval FSP_ERR_UNSUPPORTED         Function not supported.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_OscStopDetectDisable (cgc_ctrl_t * const p_ctrl)
 {
@@ -1358,7 +1420,7 @@ fsp_err_t R_CGC_OscStopDetectDisable (cgc_ctrl_t * const p_ctrl)
  *                                          Main Osc or PLL is set as the system clock. Change the
  *                                          system clock before attempting to clear this bit.
  * @retval FSP_ERR_INVALID_HW_CONDITION     Oscillation stop status was not cleared.  Check preconditions and try again.
- * @retval FSP_ERR_UNSUPPORTED              RA2E2 do not support this feature.
+ * @retval FSP_ERR_UNSUPPORTED              Function not supported.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
 {
@@ -1433,20 +1495,22 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
  * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ * @retval  FSP_ERR_UNSUPPORTED          Function not supported.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_CallbackSet (cgc_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(cgc_callback_args_t *),
                              void const * const          p_context,
                              cgc_callback_args_t * const p_callback_memory)
 {
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
     cgc_instance_ctrl_t * p_ctrl = (cgc_instance_ctrl_t *) p_api_ctrl;
 
-#if BSP_TZ_SECURE_BUILD
+ #if BSP_TZ_SECURE_BUILD
     bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
-#endif
+ #endif
 
-#if CGC_CFG_PARAM_CHECKING_ENABLE
+ #if CGC_CFG_PARAM_CHECKING_ENABLE
 
     /* Verify p_ctrl is not NULL and the module is open. */
     fsp_err_t err = r_cgc_common_parameter_checking(p_ctrl);
@@ -1455,25 +1519,33 @@ fsp_err_t R_CGC_CallbackSet (cgc_ctrl_t * const          p_api_ctrl,
     /* Verify that the callback is not NULL. */
     FSP_ASSERT(NULL != p_callback);
 
- #if BSP_TZ_SECURE_BUILD
+  #if BSP_TZ_SECURE_BUILD
 
     /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
     cgc_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
                                                                                       CMSE_AU_NONSECURE);
     FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+  #endif
  #endif
-#endif
 
-#if BSP_TZ_SECURE_BUILD
+ #if BSP_TZ_SECURE_BUILD
     p_ctrl->p_callback = callback_is_secure ? p_callback :
                          (void (*)(cgc_callback_args_t *))cmse_nsfptr_create(p_callback);
-#else
+ #else
     p_ctrl->p_callback = p_callback;
-#endif
+ #endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
     return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_callback);
+    FSP_PARAMETER_NOT_USED(p_context);
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /******************************************************************************************************************//**
@@ -1577,7 +1649,11 @@ static void r_cgc_post_change (cgc_prv_change_t change)
     {
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
+ #if !BSP_FEATURE_CGC_REGISTER_SET_B
         r_cgc_operating_mode_reduce(R_SYSTEM->SCKDIVCR);
+ #else
+        r_cgc_operating_mode_reduce(0U);
+ #endif
 #endif
     }
 
@@ -1631,6 +1707,8 @@ static bool r_cgc_subosc_mode_possible (uint32_t sckdivcr)
 
 #endif
 
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+
 /*******************************************************************************************************************//**
  * Verifies divisor, oscillation stop, and PLL settings to determine if low-speed or low-voltage mode is possible.
  * Maximum frequency must be verified outside this function. Checks if low voltage mode is possible if
@@ -1643,45 +1721,47 @@ static bool r_cgc_subosc_mode_possible (uint32_t sckdivcr)
  **********************************************************************************************************************/
 static bool r_cgc_low_speed_or_voltage_mode_possible (uint32_t sckdivcr, uint8_t ostdcr)
 {
-#if BSP_CFG_USE_LOW_VOLTAGE_MODE
+ #if BSP_CFG_USE_LOW_VOLTAGE_MODE
 
     /* HOCO must be operating in low voltage mode. */
     if (0U != R_SYSTEM->HOCOCR)
     {
         return false;
     }
-#endif
+ #endif
 
     /* When oscillation stop detection is enabled, clock division of 1, 2, 4, or 8 is prohibited for all clocks in
      * low speed mode. The remaining dividers (16, 32, and 64) all have the upper bit of the bitfield set. */
     if (0U != ostdcr)
     {
         uint32_t test = sckdivcr;
-#if BSP_CFG_USE_LOW_VOLTAGE_MODE
+ #if BSP_CFG_USE_LOW_VOLTAGE_MODE
 
         /* When oscillation stop detection is enabled, clock division of 1 or 2 is prohibited for all clocks in
          * low voltage mode. The remaining dividers (4, 8, 16, 32, and 64) all have either bit 2 or bit 1 of
          * the bitfield set. */
         test = sckdivcr | (sckdivcr << 1);
-#endif
+ #endif
         if ((CGC_PRV_SCKDIVCR_UPPER_BIT & test) != CGC_PRV_SCKDIVCR_UPPER_BIT)
         {
             return false;
         }
     }
 
-#if BSP_PRV_PLL_SUPPORTED
+ #if BSP_PRV_PLL_SUPPORTED
 
     /* Low speed mode is only possible if the PLL is stopped. */
     return (bool) R_SYSTEM->PLLCR
- #if BSP_PRV_PLL2_SUPPORTED
+  #if BSP_PRV_PLL2_SUPPORTED
            || R_SYSTEM->PLL2CR
- #endif
+  #endif
     ;
-#else                                  /* BSP_PRV_PLL_SUPPORTED */
+ #else                                 /* BSP_PRV_PLL_SUPPORTED */
     return true;
-#endif
+ #endif
 }
+
+#endif
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
 
@@ -1692,9 +1772,10 @@ static bool r_cgc_low_speed_or_voltage_mode_possible (uint32_t sckdivcr, uint8_t
  **********************************************************************************************************************/
 static void r_cgc_operating_mode_reduce (uint32_t sckdivcr)
 {
+ #if !BSP_FEATURE_CGC_REGISTER_SET_B
     uint8_t ostdcr = R_SYSTEM->OSTDCR;
 
- #if BSP_FEATURE_CGC_HAS_SOPCCR
+  #if BSP_FEATURE_CGC_HAS_SOPCCR
 
     /* Switch to subosc-speed mode if possible. */
     if (r_cgc_subosc_mode_possible(sckdivcr))
@@ -1703,11 +1784,15 @@ static void r_cgc_operating_mode_reduce (uint32_t sckdivcr)
         bsp_prv_operating_mode_set(BSP_PRV_OPERATING_MODE_SUBOSC_SPEED);
     }
     else
- #endif
+  #endif
 
     /* Switch to low-speed mode if possible. */
     if (r_cgc_low_speed_or_voltage_mode_possible(sckdivcr, ostdcr) &&
         (SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ))
+ #else
+    FSP_PARAMETER_NOT_USED(sckdivcr);
+    if (SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ)
+ #endif
     {
         /* Switch to low speed mode */
         bsp_prv_operating_mode_set(BSP_PRV_OPERATING_MODE_LOW_SPEED);
@@ -1775,6 +1860,20 @@ static cgc_prv_clock_state_t r_cgc_clock_run_state_get (cgc_clock_t clock)
  **********************************************************************************************************************/
 static bool r_cgc_stabilization_check (cgc_clock_t clock, cgc_prv_clock_state_t status)
 {
+#if BSP_FEATURE_CGC_REGISTER_SET_B
+    if (CGC_PRV_CLOCK_STATE_STOPPED == status)
+    {
+        return true;
+    }
+
+    if (CGC_CLOCK_MAIN_OSC == clock)
+    {
+        uint8_t mainosc_stable_value = (uint8_t) ~(BSP_PRV_OSTC_OFFSET >> BSP_CLOCK_CFG_MAIN_OSC_WAIT);
+
+        return R_SYSTEM->OSTC == mainosc_stable_value;
+    }
+#endif
+
     /* MOCO, LOCO, and subclock have no stabilization flags, so return true if the clock is any of these. */
     uint32_t bitmask_moco_loco_subclock =
         ((1U << CGC_CLOCK_MOCO) | (1U << CGC_CLOCK_LOCO) | (1U << CGC_CLOCK_SUBCLOCK));
@@ -1867,6 +1966,29 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
 
     /* CPUCLK divider must be less than or equal to ICLK divider. */
     FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk_div <= p_divider_cfg->sckdivcr_b.iclk_div);
+ #endif
+
+ #if BSP_FEATURE_CGC_REGISTER_SET_B
+
+    /* MOCODIV only supports CGC_SYS_CLOCK_DIV_1, CGC_SYS_CLOCK_DIV_2, CGC_SYS_CLOCK_DIV_4 */
+    FSP_ASSERT((p_divider_cfg->moco_divider == CGC_SYS_CLOCK_DIV_1) ||
+               (p_divider_cfg->moco_divider == CGC_SYS_CLOCK_DIV_2) ||
+               (p_divider_cfg->moco_divider == CGC_SYS_CLOCK_DIV_4));
+
+    /* MOSCDIV only supports CGC_SYS_CLOCK_DIV_1, CGC_SYS_CLOCK_DIV_2, CGC_SYS_CLOCK_DIV_4, CGC_SYS_CLOCK_DIV_8, CGC_SYS_CLOCK_DIV_16 */
+    FSP_ASSERT((p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_1) ||
+               (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_2) ||
+               (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_4) ||
+               (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_8) ||
+               (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_16));
+
+  #if (BSP_CFG_HOCO_FREQUENCY == 0)
+
+    /* When OFS1.HOCOFRQ1[2:0] = 000b (HOCO = 24 MHz), HOCODIV only supports CGC_SYS_CLOCK_DIV_1, CGC_SYS_CLOCK_DIV_2, CGC_SYS_CLOCK_DIV_4, CGC_SYS_CLOCK_DIV_8 */
+    FSP_ASSERT((p_divider_cfg->hoco_divider == CGC_SYS_CLOCK_DIV_1) ||
+               (p_divider_cfg->hoco_divider == CGC_SYS_CLOCK_DIV_2) ||
+               (p_divider_cfg->hoco_divider == CGC_SYS_CLOCK_DIV_4));
+  #endif
  #endif
 
     return FSP_SUCCESS;
@@ -2482,8 +2604,6 @@ static void r_cgc_disable_irq (IRQn_Type irq)
     }
 }
 
-#endif
-
 /*******************************************************************************************************************//**
  * Clears interrupt flag and calls a callback to notify application of the event.
  *
@@ -2534,3 +2654,5 @@ void cgc_sostd_isr (void)
     /* Call common isr handler. */
     r_cgc_ostd_common_isr(CGC_EVENT_OSC_STOP_DETECT_SUBCLOCK);
 }
+
+#endif

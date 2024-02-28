@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -90,6 +90,7 @@ BSP_DONT_REMOVE static const uint32_t g_bsp_rom_registers[] BSP_PLACE_IN_SECTION
 {
     (uint32_t) BSP_CFG_ROM_REG_OFS0,
     (uint32_t) BSP_ROM_REG_OFS1_SETTING,
+  #if __MPU_PRESENT
     ((uint32_t) BSP_CFG_ROM_REG_MPU_PC0_START & 0xFFFFFFFCU),
     ((uint32_t) BSP_CFG_ROM_REG_MPU_PC0_END | 0x00000003U),
     ((uint32_t) BSP_CFG_ROM_REG_MPU_PC1_START & 0xFFFFFFFCU),
@@ -103,6 +104,7 @@ BSP_DONT_REMOVE static const uint32_t g_bsp_rom_registers[] BSP_PLACE_IN_SECTION
     (((uint32_t) BSP_CFG_ROM_REG_MPU_REGION3_START & 0x407FFFFCU) | 0x40000000U),
     (((uint32_t) BSP_CFG_ROM_REG_MPU_REGION3_END & 0x407FFFFCU) | 0x40000003U),
     (uint32_t) BSP_ROM_REG_MPU_CONTROL_SETTING
+  #endif
 };
 
  #elif BSP_FEATURE_FLASH_SUPPORTS_ID_CODE == 1

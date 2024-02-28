@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -270,36 +270,37 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS == 0
+    usb_er_t usb_err;
 
     /* Wait USB read sequence(READ10) */
     do
     {
         /* Check Detach */
         data = usb_hmsc_get_dev_sts(p_drive);
-        rm_block_media_usb_waitloop();                                           /* Task Schedule */
-        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
-    } while ((err != USB_OK) && (data != USB_FALSE));
+        rm_block_media_usb_waitloop();                                               /* Task Schedule */
+        usb_err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+    } while ((usb_err != USB_OK) && (data != USB_FALSE));
 
-    if (err == USB_OK)
+    if (usb_err == USB_OK)
     {
         /* Complete R_USB_HmscStrgReadSector() */
-        err = p_mess->result;          /* Set result for R_USB_HmscStrgReadSector() */
+        usb_err = p_mess->result;      /* Set result for R_USB_HmscStrgReadSector() */
         USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
     }
     else
     {
         /* Device detach */
-        rm_block_media_usb_waitloop();                                           /* Task Schedule */
-        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
-        if (USB_OK == err)
+        rm_block_media_usb_waitloop();                                               /* Task Schedule */
+        usb_err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+        if (USB_OK == usb_err)
         {
             USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
         }
 
-        err = USB_ERROR;
+        usb_err = USB_ERROR;
     }
 
-    if (err != USB_OK)
+    if (usb_err != USB_OK)
     {
         return FSP_ERR_USB_FAILED;
     }
@@ -365,36 +366,37 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Write (rm_block_media_ctrl_t * const p_ctrl,
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS == 0
+    usb_er_t usb_err;
 
     /* Wait USB write sequence(WRITE10) */
     do
     {
         /* Check Detach */
         data = usb_hmsc_get_dev_sts(p_drive);
-        rm_block_media_usb_waitloop();                                           /* Task Schedule */
-        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
-    } while ((err != USB_OK) && (data != USB_FALSE));
+        rm_block_media_usb_waitloop();                                               /* Task Schedule */
+        usb_err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+    } while ((usb_err != USB_OK) && (data != USB_FALSE));
 
-    if (err == USB_OK)
+    if (usb_err == USB_OK)
     {
         /* Complete R_USB_HmscStrgReadSector() */
-        err = p_mess->result;          /* Set result for R_USB_HmscStrgReadSector() */
+        usb_err = p_mess->result;      /* Set result for R_USB_HmscStrgReadSector() */
         USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
     }
     else
     {
         /* Device detach */
-        rm_block_media_usb_waitloop();                                           /* Task Schedule */
-        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
-        if (USB_OK == err)
+        rm_block_media_usb_waitloop();                                               /* Task Schedule */
+        usb_err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+        if (USB_OK == usb_err)
         {
             USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
         }
 
-        err = USB_ERROR;
+        usb_err = USB_ERROR;
     }
 
-    if (err != USB_OK)
+    if (usb_err != USB_OK)
     {
         return FSP_ERR_USB_FAILED;
     }
@@ -425,6 +427,10 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
                                     uint32_t const                block_address,
                                     uint32_t const                num_blocks)
 {
+#if BSP_CFG_RTOS == 0
+    uint16_t    data;
+    usb_utr_t * p_mess;
+#endif                                 /* BSP_CFG_RTOS == 0 */
     rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
 
 #if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
@@ -452,6 +458,43 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
     {
         err = R_USB_HMSC_StorageWriteSector(p_drive, &g_block_media_usb_erase_data[0], block_address + i, 1U);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+#if BSP_CFG_RTOS == 0
+        usb_er_t usb_err;
+
+        /* Wait USB write sequence(WRITE10) */
+        do
+        {
+            /* Check Detach */
+            data = usb_hmsc_get_dev_sts(p_drive);
+            rm_block_media_usb_waitloop();                                               /* Task Schedule */
+            usb_err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+        } while ((usb_err != USB_OK) && (data != USB_FALSE));
+
+        if (usb_err == USB_OK)
+        {
+            /* Complete R_USB_HmscStrgReadSector() */
+            usb_err = p_mess->result;  /* Set result for R_USB_HmscStrgReadSector() */
+            USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
+        }
+        else
+        {
+            /* Device detach */
+            rm_block_media_usb_waitloop();                                               /* Task Schedule */
+            usb_err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+            if (USB_OK == usb_err)
+            {
+                USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
+            }
+
+            usb_err = USB_ERROR;
+        }
+
+        if (usb_err != USB_OK)
+        {
+            return FSP_ERR_USB_FAILED;
+        }
+#endif                                 /* BSP_CFG_RTOS == 0 */
     }
 
     rm_block_media_callback_args_t args;

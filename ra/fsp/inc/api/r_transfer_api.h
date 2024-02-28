@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_TRANSFER_INTERFACES
  * @defgroup TRANSFER_API Transfer Interface
  *
  * @brief Interface for data transfer functions.
@@ -179,6 +179,16 @@ typedef enum e_transfer_irq
      *  @note     Not available in all HAL drivers.  See HAL driver for details. */
     TRANSFER_IRQ_EACH = 1
 } transfer_irq_t;
+
+#endif
+
+#ifndef BSP_OVERRIDE_TRANSFER_CALLBACK_ARGS_T
+
+/** Callback function parameter data. */
+typedef struct st_transfer_callback_args_t
+{
+    void const * p_context;            ///< Placeholder for user data.  Set in @ref transfer_api_t::open function in ::transfer_cfg_t.
+} transfer_callback_args_t;
 
 #endif
 
@@ -361,6 +371,17 @@ typedef struct st_transfer_api
      */
     fsp_err_t (* reload)(transfer_ctrl_t * const p_ctrl, void const * p_src, void * p_dest,
                          uint32_t const num_transfers);
+
+    /** Specify callback function and optional context pointer and working memory pointer.
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref transfer_api_t::open call for this transfer.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_callback_memory        Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(transfer_ctrl_t * const p_ctrl, void (* p_callback)(transfer_callback_args_t *),
+                              void const * const p_context, transfer_callback_args_t * const p_callback_memory);
 } transfer_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

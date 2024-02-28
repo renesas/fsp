@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_CONNECTIVITY_INTERFACES
  * @defgroup USB_API USB Interface
  * @brief Interface for USB functions.
  *
@@ -38,11 +38,7 @@
  ******************************************************************************/
 #include "bsp_api.h"
 #include "r_transfer_api.h"
-#ifndef BSP_OVERRIDE_USB_BASIC_INCLUDE
- #include "../../src/r_usb_basic/src/driver/inc/r_usb_basic_define.h"
-#else
- #include "../../src/r_usb_basic_usod/src/driver/inc/r_usb_basic_define.h"
-#endif
+#include "../../src/r_usb_basic/src/driver/inc/r_usb_basic_define.h"
 
 #if (BSP_CFG_RTOS == 2)
  #include "FreeRTOS.h"
@@ -590,16 +586,12 @@ typedef struct st_usb_api
     fsp_err_t (* remoteWakeup)(usb_ctrl_t * const p_ctrl);
 
     /** Activate USB Driver
-     * @par Implemented as
-     * - @ref R_USB_DriverActivate()
      *
      * @param[in]     p_api_ctrl  USB control structure.
      */
     fsp_err_t (* driverActivate)(usb_ctrl_t * const p_api_ctrl);
 
     /** Set callback memory to USB driver.
-     * @par Implemented as
-     * - @ref R_USB_CallbackMemorySet()
      *
      * @param[in]     p_api_ctrl  USB control structure.
      * @param[in]     p_callback_memory  Pointer to store USB event information.

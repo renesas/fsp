@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -669,11 +669,15 @@ uint16_t usb_hmsc_no_data (usb_utr_t * ptr, uint16_t side)
  #else                                 /* (BSP_CFG_RTOS == 2) */
     usb_utr_t mess;
 
-    mess.ip                    = ptr->ip;
-    mess.ipp                   = ptr->ipp;
-    mess.keyword               = side;
-    mess.result                = USB_DATA_NONE;
-    mess.tranlen               = 0;
+    mess.ip      = ptr->ip;
+    mess.ipp     = ptr->ipp;
+    mess.keyword = side;
+    mess.result  = USB_DATA_NONE;
+    mess.tranlen = 0;
+  #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    mess.p_transfer_rx = ptr->p_transfer_rx;
+    mess.p_transfer_tx = ptr->p_transfer_tx;
+  #endif                               /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
     usb_shmsc_process[ptr->ip] = USB_MSG_HMSC_NO_DATA;
     usb_hmsc_specified_path(&mess);
     usb_shmsc_data_seq[ptr->ip] = USB_SEQ_0;
@@ -890,8 +894,9 @@ static uint16_t usb_hmsc_data_act (usb_utr_t * mess)
     }
 
     return hmsc_retval;
- #else                                 /* (BSP_CFG_RTOS == 2) */
+ #else                                                 /* (BSP_CFG_RTOS == 2) */
     static uint16_t side;
+    static uint8_t  g_usb_hmsc_rs_data[USB_VALUE_512]; /* Request Sense Data Buffer */
     uint16_t        hmsc_retval;
     uint16_t        result;
     uint8_t       * pbuff;
@@ -1048,7 +1053,7 @@ static uint16_t usb_hmsc_data_act (usb_utr_t * mess)
                     if (USB_MSG_HMSC_STRG_USER_COMMAND != g_usb_hmsc_strg_process[mess->ip])
                     {
                         usb_hmsc_csw_err_loop[mess->ip] = USB_ON;
-                        usb_hmsc_request_sense(mess, side, pbuff);
+                        usb_hmsc_request_sense(mess, side, g_usb_hmsc_rs_data);
                     }
                     else
                     {

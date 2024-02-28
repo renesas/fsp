@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -97,7 +97,7 @@ typedef struct st_dmac_callback
     /** Callback for transfer end interrupt. Set to NULL for no CPU interrupt. */
     void (* p_callback)(dmac_callback_args_t * cb_data);
 
-    /** Placeholder for user data.  Passed to the user p_callback in ::dmac_callback_args_t. */
+    /** Placeholder for user data.  Passed to the user p_callback in ::transfer_callback_args_t. */
     void const * p_context;
 } dmac_callback_t;
 
@@ -137,6 +137,7 @@ const transfer_api_t g_transfer_on_dmac =
     .enable        = R_DMAC_Enable,
     .disable       = R_DMAC_Disable,
     .reload        = R_DMAC_Reload,
+    .callbackSet   = R_DMAC_CallbackSet,
     .close         = R_DMAC_Close,
 };
 
@@ -171,6 +172,11 @@ fsp_err_t R_DMAC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const 
 
     p_ctrl->p_cfg = p_cfg;
     p_ctrl->p_reg = DMAC_PRV_REG(p_extend->channel);
+
+    /* Set callback and context pointers, if configured */
+    p_ctrl->p_callback        = p_extend->p_callback;
+    p_ctrl->p_context         = p_extend->p_context;
+    p_ctrl->p_callback_memory = NULL;
 
     /* Enable DMAC Operation. */
     R_BSP_MODULE_START(FSP_IP_DMAC, p_extend->channel);
@@ -406,6 +412,35 @@ fsp_err_t R_DMAC_Reload (transfer_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_CallbackSet (transfer_ctrl_t * const       p_api_ctrl,
+                              void (                      * p_callback)(dmac_callback_args_t *),
+                              void const * const            p_context,
+                              dmac_callback_args_t * const  p_callback_memory)
+{
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
+
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+#endif
+
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+
+    return FSP_SUCCESS;
+}
+
+
+/*******************************************************************************************************************//**
  * Disable transfer and clean up internal data. Implements @ref transfer_api_t::close.
  *
  * @retval FSP_SUCCESS           Successful close.
@@ -563,7 +598,7 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
         dmtmd |= 1U << DMAC_PRV_DMTMD_DCTG_OFFSET;
     }
 
-    if (NULL != p_extend->p_callback)
+    if (NULL != p_ctrl->p_callback)
     {
         /* Enable transfer end interrupt requests. */
         dmint |= DMAC_PRV_DMINT_DTIE_MASK;
@@ -745,13 +780,14 @@ void dmac_int_isr (void)
     /* Clear IRQ to make sure it doesn't fire again after exiting */
     R_BSP_IrqStatusClear(irq);
 
-    dmac_instance_ctrl_t * p_ctrl   = R_FSP_IsrContextGet(irq);
-    dmac_extended_cfg_t  * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    dmac_instance_ctrl_t * p_ctrl   = (dmac_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+
+    /* Call the callback routine if one is available */
+    dmac_callback_args_t args;
+    args.p_context = p_ctrl->p_context;
 
     /* Call user callback */
-    dmac_callback_args_t args;
-    args.p_context = p_extend->p_context;
-    p_extend->p_callback(&args);
+    p_ctrl->p_callback(&args);
 
     /* Transfers are disabled during the interrupt if an interrupt is requested after each block or after each repeat
      * length. If not all transfers are complete, reenable transfer here. See section 17.4.2 Transfer End by Repeat

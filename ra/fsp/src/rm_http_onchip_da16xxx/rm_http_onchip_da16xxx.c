@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -368,9 +368,9 @@ fsp_err_t RM_HTTP_DA16XXX_Close (http_onchip_da16xxx_instance_ctrl_t * p_ctrl)
 /*******************************************************************************************************************//**
  *  Optional configurations for DA16XXX HTTP Client service.
  *
- * @param[in]  p_request              Pointer to HTTP request control structure.
+ * @param[in]  p_request           Pointer to HTTP request control structure.
  * @param[in]  p_req_buf           Pointer to HTTP user buffer for request and response.
- * @param[in]  length               Size of HTTP user buffer.
+ * @param[in]  length              Size of HTTP user buffer.
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter checking was unsuccessful.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -276,6 +276,17 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
 
     memset(work_buffer, 0, HW_SCE_AES_CCM_B_FORMAT_BYTE_SIZE);
 
+    /* CCM expects non-empty tag.
+     * CCM* allows empty tag. For CCM* without tag, ignore plaintext length.
+     */
+    if (tag_len == 0) {
+        if (mode == MBEDTLS_CCM_STAR_ENCRYPT || mode == MBEDTLS_CCM_STAR_DECRYPT) {
+        	length = 0;
+        } else {
+            return MBEDTLS_ERR_CCM_BAD_INPUT;
+        }
+    }
+
     if ((ret = ccm_counter_block_format(ctx, iv, iv_len, work_buffer)) != 0)
     {
         return ret;
@@ -335,7 +346,7 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
 
     if (FSP_SUCCESS != err)
     {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        return MBEDTLS_ERR_CCM_AUTH_FAILED;
     }
 
     return ret;

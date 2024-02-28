@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -87,12 +87,12 @@ int tc_ctr_mode (uint8_t             * out,
             p_out = &local_out[0];
         }
 
-        if (SIZE_AES_192BIT_KEYLEN_BITS == (*sched).key_size)
+        if (SIZE_AES_192BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err =
                 HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) &sched->words[0], (uint32_t *) &ctr[0]);
         }
-        else if (SIZE_AES_256BIT_KEYLEN_BITS == (*sched).key_size)
+        else if (SIZE_AES_256BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err =
                 HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &sched->words[0],
@@ -114,12 +114,12 @@ int tc_ctr_mode (uint8_t             * out,
 
             if (err == FSP_SUCCESS)
             {
-                if (SIZE_AES_192BIT_KEYLEN_BITS == (*sched).key_size)
+                if (SIZE_AES_192BIT_KEYLEN_BYTES == (*sched).key_size)
                 {
                     HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t const *) &p_in[0], (uint32_t *) &p_out[0],
                                                          (TC_AES_BLOCK_SIZE / 4U));
                 }
-                else if (SIZE_AES_256BIT_KEYLEN_BITS == (*sched).key_size)
+                else if (SIZE_AES_256BIT_KEYLEN_BYTES == (*sched).key_size)
                 {
                     HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t const *) &p_in[0], (uint32_t *) &p_out[0],
                                                          (TC_AES_BLOCK_SIZE / 4U));
@@ -163,11 +163,11 @@ int tc_ctr_mode (uint8_t             * out,
             }
         }
 
-        if (SIZE_AES_192BIT_KEYLEN_BITS == (*sched).key_size)
+        if (SIZE_AES_192BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err = HW_SCE_Aes192EncryptDecryptFinalSub();
         }
-        else if (SIZE_AES_256BIT_KEYLEN_BITS == (*sched).key_size)
+        else if (SIZE_AES_256BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err = HW_SCE_Aes256EncryptDecryptFinalSub();
         }
@@ -186,7 +186,7 @@ int tc_ctr_mode (uint8_t             * out,
         uint32_t local_inlen;
         local_inlen = (uint32_t) ((inlen / TC_AES_BLOCK_SIZE) * TC_AES_BLOCK_SIZE);
 
-        if (SIZE_AES_192BIT_KEYLEN_BITS == (*sched).key_size)
+        if (SIZE_AES_192BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err =
                 HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) &sched->words[0], (uint32_t *) &ctr[0]);
@@ -198,7 +198,7 @@ int tc_ctr_mode (uint8_t             * out,
 
             err = HW_SCE_Aes192EncryptDecryptFinalSub();
         }
-        else if (SIZE_AES_256BIT_KEYLEN_BITS == (*sched).key_size)
+        else if (SIZE_AES_256BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err =
                 HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &sched->words[0],
@@ -244,7 +244,7 @@ int tc_ctr_mode (uint8_t             * out,
         _copy(&local_in[0], sizeof(local_in), &in[((inlen / TC_AES_BLOCK_SIZE) * TC_AES_BLOCK_SIZE)],
               (inlen % TC_AES_BLOCK_SIZE));
 
-        if (SIZE_AES_192BIT_KEYLEN_BITS == (*sched).key_size)
+        if (SIZE_AES_192BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err =
                 HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) &sched->words[0], (uint32_t *) &ctr[0]);
@@ -256,7 +256,7 @@ int tc_ctr_mode (uint8_t             * out,
 
             err = HW_SCE_Aes192EncryptDecryptFinalSub();
         }
-        else if (SIZE_AES_256BIT_KEYLEN_BITS == (*sched).key_size)
+        else if (SIZE_AES_256BIT_KEYLEN_BYTES == (*sched).key_size)
         {
             err =
                 HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) &sched->words[0],

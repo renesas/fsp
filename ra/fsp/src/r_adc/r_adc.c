@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1473,17 +1473,8 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
     p_instance_ctrl->p_reg->ADANSB[1] = (uint16_t) ((scan_mask_group_b >> 16));
     p_instance_ctrl->p_reg->ADADS[1]  = (uint16_t) ((add_mask >> 16));
 
-    /* If either voltage or temperature sensor are used, configure them. */
-    uint32_t temp_mask = p_channel_cfg->scan_mask | p_channel_cfg->scan_mask_group_b;
-    if (temp_mask & ADC_MASK_SENSORS)
-    {
-        /* Calculate sample state values such that the sample time for the temperature and voltage sensor is the
-         * minimum defined by the hardware manual. The minimum is 4.15 microseconds for MF3 devices and
-         * 5 microseconds for RV40. The sample states will be calculated to allow sampling for this duration. */
-
-        /* Retrieve the clock source and frequency used by the ADC peripheral and sampling time required for the sensor. */
-        r_adc_sensor_cfg(p_instance_ctrl, p_channel_cfg);
-    }
+    /* Configure voltage and/or temperature sensors, if used. */
+    r_adc_sensor_cfg(p_instance_ctrl, p_channel_cfg);
 
 #if BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG
 

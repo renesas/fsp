@@ -1,23 +1,21 @@
 /*
- * This software is supplied by Renesas Electronics Corporation and is only intended for
- * use with Renesas products. No other uses are authorized. This software is owned by
- * Renesas Electronics Corporation and is protected under all applicable laws, including
- * copyright laws.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * THIS SOFTWARE IS PROVIDED 'AS IS' AND RENESAS MAKES NO WARRANTIES REGARDING
- * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT LIMITED TO
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
- * ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED. TO THE MAXIMUM EXTENT PERMITTED NOT
- * PROHIBITED BY LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED
- * COMPANIES SHALL BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL
- * DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
- * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- *
- * Renesas reserves the right, without notice, to make changes to this software and to
- * discontinue the availability of this software. By using this software, you agree to
- * the additional terms and conditions found by accessing the following link:
- * http://www.renesas.com/disclaimer
- *
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  *
  * @file     ./out/R7FA4E2B9.h
  * @brief    CMSIS HeaderFile
@@ -5018,7 +5016,9 @@ typedef struct                         /*!< (@ 0x4001B000) R_DEBUG Structure    
         {
             __IOM uint32_t DBGSTOP_IWDT  : 1; /*!< [0..0] Mask bit for IWDT reset/interrupt                                  */
             __IOM uint32_t DBGSTOP_WDT   : 1; /*!< [1..1] Mask bit for WDT reset/interrupt                                   */
-            uint32_t                     : 14;
+            uint32_t                     : 12;
+            __IOM uint32_t DBGSTOP_TIM   : 1; /*!< [14..14] Mask bit for RTC, TAU reset/interrupt                            */
+            __IOM uint32_t DBGSTOP_SIR   : 1; /*!< [15..15] Mask bit for SAU, IICA, PORT_IRQ0-5 reset/interrupt              */
             __IOM uint32_t DBGSTOP_LVD0  : 1; /*!< [16..16] Mask bit for LVD reset/interupt                                  */
             __IOM uint32_t DBGSTOP_LVD1  : 1; /*!< [17..17] Mask bit for LVD reset/interupt                                  */
             __IOM uint32_t DBGSTOP_LVD2  : 1; /*!< [18..18] Mask bit for LVD reset/interupt                                  */
@@ -18167,6 +18167,10 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
 /* =======================================================  DBGSTOPCR  ======================================================= */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RPER_Pos     (24UL)         /*!< DBGSTOP_RPER (Bit 24)                                 */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RPER_Msk     (0x1000000UL)  /*!< DBGSTOP_RPER (Bitfield-Mask: 0x01)                    */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_TIM_Pos      (14UL)         /*!< DBGSTOP_TIM (Bit 14)                                  */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_TIM_Msk      (0x4000UL)     /*!< DBGSTOP_TIM (Bitfield-Mask: 0x01)                     */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_SIR_Pos      (15UL)         /*!< DBGSTOP_SIR (Bit 15)                                  */
+ #define R_DEBUG_DBGSTOPCR_DBGSTOP_SIR_Msk      (0x8000UL)     /*!< DBGSTOP_SIR (Bitfield-Mask: 0x01)                     */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_LVD_Pos      (16UL)         /*!< DBGSTOP_LVD (Bit 16)                                  */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_LVD_Msk      (0x10000UL)    /*!< DBGSTOP_LVD (Bitfield-Mask: 0x01)                     */
  #define R_DEBUG_DBGSTOPCR_DBGSTOP_RECCR_Pos    (25UL)         /*!< DBGSTOP_RECCR (Bit 25)                                */

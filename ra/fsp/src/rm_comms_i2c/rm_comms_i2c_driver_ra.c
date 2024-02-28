@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -173,6 +173,7 @@ fsp_err_t rm_comms_i2c_bus_write (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * 
  * @brief  Writes to I2C bus, then reads with restart.
  *
  * @retval FSP_SUCCESS              successfully configured.
+ * @retval FSP_ERR_UNSUPPORTED      unsupported when SAU I2C is selected for the bus interface.
  **********************************************************************************************************************/
 fsp_err_t rm_comms_i2c_bus_write_read (rm_comms_ctrl_t * const            p_api_ctrl,
                                        rm_comms_write_read_params_t const write_read_params)
@@ -194,6 +195,9 @@ fsp_err_t rm_comms_i2c_bus_write_read (rm_comms_ctrl_t * const            p_api_
                                           write_read_params.p_src,
                                           write_read_params.src_bytes,
                                           true);
+
+    /* When the 4th argument "restart" of Write API of r_sau_i2c is set to "true", FSP_ERR_ASSERTION is returned. */
+    FSP_ERROR_RETURN(FSP_ERR_ASSERTION != err, FSP_ERR_UNSUPPORTED);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS

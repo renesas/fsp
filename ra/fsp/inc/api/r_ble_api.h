@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,12 +19,12 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_NETWORKING_INTERFACES
  * @defgroup BLE_API BLE Interface
- * @brief Interface for Bluetooth Low Energy functions.
+ * @brief Interface for Bluetooth Low Energy (BLE) functions.
  *
  * @section BLE_API_SUMMARY Summary
- * The BLE interface for the Bluetooth Low Energy (BLE) peripheral provides Bluetooth Low Energy functionality.
+ * The BLE interface for the Bluetooth Low Energy (BLE) peripheral provides BLE functionality.
  *
  *
  * @{
@@ -1268,7 +1268,7 @@ enum RBLE_STATUS_enum
 
 /**
  * @def BLE_PAST_ALL_PERD
- * @brief 
+ * @brief
  */
 #define BLE_PAST_ALL_PERD                                (0x00)
 
@@ -1299,7 +1299,6 @@ enum RBLE_STATUS_enum
 
 /**@} (end addtogroup GAP_API)*/
 
-
 /* =================================================== ISO Macro =================================================== */
 
 /** @addtogroup ISO_API
@@ -1311,92 +1310,91 @@ enum RBLE_STATUS_enum
  * @def BLE_ISO_MAX_GROUP_ISO_COUNT
  * @brief
  */
-#define BLE_ISO_MAX_GROUP_ISO_COUNT                      (4)
+#define BLE_ISO_MAX_GROUP_ISO_COUNT     (4)
 
 /**
  * @def BLE_ISO_PACKING_SEQUENTIAL
  * @brief sequential method of arranging subevents of multiple ISO stream
  */
-#define BLE_ISO_PACKING_SEQUENTIAL                       (0x00)
+#define BLE_ISO_PACKING_SEQUENTIAL      (0x00)
 
 /**
  * @def BLE_ISO_PACKING_INTERLEAVED
  * @brief interleaved method of arranging subevents of multiple ISO stream
  */
-#define BLE_ISO_PACKING_INTERLEAVED                      (0x01)
+#define BLE_ISO_PACKING_INTERLEAVED     (0x01)
 
 /**
  * @def BLE_ISO_FRAMING_UNFRAMED
  * @brief Unframed format for sending ISO PDUs
  */
-#define BLE_ISO_FRAMING_UNFRAMED                         (0x00)
+#define BLE_ISO_FRAMING_UNFRAMED        (0x00)
 
 /**
  * @def BLE_ISO_FRAMING_FRAMED
  * @brief Framed format for sending ISO PDUs
  */
-#define BLE_ISO_FRAMING_FRAMED                           (0x01)
+#define BLE_ISO_FRAMING_FRAMED          (0x01)
 
 /**
  * @def BLE_ISO_BROADCAST_CODE_SIZE
  * @brief Broadcast code size in BIG
  */
-#define BLE_ISO_BROADCAST_CODE_SIZE                      (16)
+#define BLE_ISO_BROADCAST_CODE_SIZE     (16)
 
 /**
  * @def BLE_ISO_TIMESTAMP_NONE
  * @brief timestamp value when ts_valid is 0
  */
-#define BLE_ISO_TIMESTAMP_NONE                           (0)
+#define BLE_ISO_TIMESTAMP_NONE          (0)
 
 /**
  * @def BLE_ISO_SYNC_MSE_AUTO
  * @brief Let controller choose the max subevent
  */
-#define BLE_ISO_SYNC_MSE_AUTO                            (0x00)
+#define BLE_ISO_SYNC_MSE_AUTO           (0x00)
 
 /**
  * @def BLE_ISO_CIS_ACCEPT
  * @brief  Accept a CIS request.
  */
-#define BLE_ISO_CIS_ACCEPT                               (0x00)
+#define BLE_ISO_CIS_ACCEPT              (0x00)
 
 /**
  * @def BLE_ISO_CIS_REJECT
  * @brief  Reject a CIS request.
  */
-#define BLE_ISO_CIS_REJECT                               (0x01)
+#define BLE_ISO_CIS_REJECT              (0x01)
 
-/** 
+/**
  * @def BLE_ISO_DATA_PATH_HCI
  * @brief Value to set the ISO data path over HCI.
  */
-#define BLE_ISO_DATA_PATH_HCI                            (0x00)
-
+#define BLE_ISO_DATA_PATH_HCI           (0x00)
 
 /**
  * @def BLE_ISO_DATA_PATH_DIR_INPUT
  * @brief audio datapath directions: App to BLE
  */
-#define BLE_ISO_DATA_PATH_DIR_INPUT                      (0x00)
+#define BLE_ISO_DATA_PATH_DIR_INPUT     (0x00)
 
 /**
  * @def BLE_ISO_DATA_PATH_DIR_OUTPUT
  * @brief audio datapath directions: BLE to App
  */
-#define BLE_ISO_DATA_PATH_DIR_OUTPUT                     (0x01)
+#define BLE_ISO_DATA_PATH_DIR_OUTPUT    (0x01)
 
 /**
  * @def BLE_ISO_DATA_MAX_PDU
- * @brief maximum number of data octets of ISO Data PDU 
+ * @brief maximum number of data octets of ISO Data PDU
  */
-#define BLE_ISO_DATA_MAX_PDU                             (251)
+#define BLE_ISO_DATA_MAX_PDU            (251)
 
 /**
  * @def BLE_ISO_DATA_MAX_SDU
- * @brief maximum number of data octets of ISO Data SDU 
+ * @brief maximum number of data octets of ISO Data SDU
  */
-#define BLE_ISO_DATA_MAX_SDU                             (4095)
+#define BLE_ISO_DATA_MAX_SDU            (4095)
 
 /**@} (end addtogroup ISO_API)*/
 
@@ -3161,7 +3159,6 @@ typedef void (* ble_gap_app_cb_t)(uint16_t event_type, ble_status_t event_result
  **********************************************************************************************************************/
 typedef void (* ble_gap_del_bond_cb_t)(st_ble_dev_addr_t * p_addr);
 
-
 /* =========================================== GAP API Params Definitions =========================================== */
 
 /******************************************************************************************************************//**
@@ -4452,7 +4449,6 @@ typedef struct BLE_PACKED_OPTION
     /** Periodic Advertising Sync Transfer options */
     uint8_t cte_type;
 } st_ble_gap_past_param_t;
-
 
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_cte_antenna_info_t
@@ -6342,7 +6338,6 @@ typedef struct BLE_PACKED_OPTION
     st_ble_gap_key_ex_param_t * p_keys;
 } st_ble_gap_bond_info_t;
 
-
 /******************************************************************************************************************//**
  *  @struct st_cte_iq_sample_t
  *  @brief  CTE IQ sample data
@@ -6364,6 +6359,7 @@ typedef struct BLE_PACKED_OPTION
 } st_cte_iq_sample_t;
 
 /* Event Code : BLE_GAP_EVENT_CTE_CONNLESS_REPT */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_cte_connless_rept_t
  *  @brief  connectionless CTE data report
@@ -6376,6 +6372,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_cte_connless_rept_t;
 
 /* Event Code : BLE_GAP_EVENT_CTE_CONN_REPT */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_cte_conn_rept_t
  *  @brief  connection CTE data report
@@ -6389,6 +6386,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_cte_conn_rept_t;
 
 /* Event Code : BLE_GAP_EVENT_SUBRATE_CHANGE */
+
 /******************************************************************************************************************//**
  *  @struct  st_ble_subrate_upd_t
  *  @brief  subrating update event
@@ -6403,6 +6401,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_subrate_upd_t;
 
 /* Event Code : BLE_GAP_EVENT_PAST_RECV : st_ble_gap_past_est_evt_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_past_est_evt_t
  *  @brief  This structure notifies that
@@ -6416,6 +6415,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_past_est_evt_t;
 
 /* Event Code : BLE_GAP_EVENT_TX_POWER_REPT: st_ble_gap_tx_power_reporting_evt_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_tx_power_reporting_evt_t
  *  @brief  This structure notifies that
@@ -6431,6 +6431,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_tx_power_reporting_evt_t;
 
 /* Event Code : BLE_GAP_EVENT_PATH_LOSS_THR: st_ble_gap_pass_loss_thr_evt_t */
+
 /******************************************************************************************************************//**
  *  @struct  st_ble_gap_pass_loss_thr_evt_t
  *  @brief  This structure notifies that a path loss report has been received.
@@ -6443,6 +6444,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_pass_loss_thr_evt_t;
 
 /* Event Code : BLE_GAP_EVENT_REQ_PEER_SCA_COMP: st_ble_gap_req_peer_sca_evt_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_req_peer_sca_evt_t
  *  @brief  This structure notifies that a SCA request to a remote device has been completed.
@@ -6454,6 +6456,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_req_peer_sca_evt_t;
 
 /* Event Code : BLE_GAP_EVENT_DTM_TEST_END_COMP: st_ble_gap_dtm_test_end_evt_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_dtm_test_end_evt_t
  *  @brief  report of dtm transmit/receive test end
@@ -6467,6 +6470,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gap_dtm_test_end_evt_t;
 
 /* Event Code : BLE_GAP_EVENT_ENHANCED_READ_TX_POWER_LEVEL_COMP: st_ble_gap_enhanced_read_tx_power_level_evt_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gap_enhanced_read_tx_power_level_evt_t
  *  @brief  Power level report of remove device.
@@ -6781,6 +6785,7 @@ typedef struct BLE_PACKED_OPTION
  * @details Event Code : BLE_ISO_EVENT_ISO_RX_DATA_IND.
  *  Also the param of R_BLE_ISO_SendData and R_BLE_ISO_SendDataNoCopy.
  */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_sdu_t
  *  @brief  ISO SDU structure
@@ -7052,6 +7057,7 @@ typedef struct BLE_PACKED_OPTION
 /** Event Code : BLE_ISO_EVENT_CREATE_BIG_COMP
  *              BLE_ISO_EVENT_CREATE_BIG_SYNC_COMP: st_ble_iso_big_comp_evt_t
  */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_big_comp_evt_t
  *  @brief  BIG info of a created BIG.
@@ -7100,6 +7106,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_big_comp_evt_t;
 
 /* Event Code : BLE_ISO_EVENT_BIGINFO_REPT */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_biginfo_rept_evt_t
  *  @brief  BIG info report in a periodic adv.
@@ -7173,9 +7180,10 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_biginfo_rept_evt_t;
 
 /* Event Code : BLE_ISO_EVENT_CIG_PARAM_SET_COMP */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_cig_set_evt_t
- *  @brief  CIS 
+ *  @brief  CIS
  **********************************************************************************************************************/
 typedef struct BLE_PACKED_OPTION
 {
@@ -7201,6 +7209,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_cig_set_evt_t;
 
 /* Event Code : BLE_ISO_EVENT_CIS_REQ */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_cis_req_evt_t
  *  @brief  CIS reqest from remote device.
@@ -7259,6 +7268,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_cis_qos_t;
 
 /* Event Code : BLE_ISO_EVENT_CIS_EST */
+
 /******************************************************************************************************************//**
  *  @struct  st_ble_iso_cis_est_evt_t
  *  @brief  Information of CIS that was estabilished.
@@ -7299,6 +7309,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_cis_est_evt_t;
 
 /* Event Code : BLE_ISO_EVENT_ISO_TX_COMP */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_tx_comp_evt_t
  *  @brief  Information of ISO SDU that was sent.
@@ -7313,6 +7324,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_tx_comp_evt_t;
 
 /* Event Code : BLE_ISO_EVENT_READ_TEST_CNT_COMP: st_ble_iso_test_cnt_info_t */
+
 /******************************************************************************************************************//**
  *  @struct  st_ble_iso_test_cnt_info_t
  *  @brief   ISO test count
@@ -7341,9 +7353,10 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_test_cnt_info_t;
 
 /* Event Code : BLE_ISO_EVENT_TEST_ENDED: st_ble_iso_test_end_rept_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_test_end_rept_t
- *  @brief  ISO test report 
+ *  @brief  ISO test report
  **********************************************************************************************************************/
 typedef struct BLE_PACKED_OPTION
 {
@@ -7369,6 +7382,7 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_iso_test_end_rept_t;
 
 /* Event Code : BLE_ISO_EVENT_READ_LINK_QUALITY_COMP: st_ble_iso_link_quality_info_t */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_link_quality_info_t
  *  @brief  ISO link qulity information
@@ -7437,6 +7451,7 @@ typedef struct BLE_PACKED_OPTION
 
 /* Event Code : BLE_ISO_EVENT_SYNC_TERM */
 /* Event Code : BLE_ISO_EVENT_SYNC_LOST */
+
 /******************************************************************************************************************//**
  *  @struct st_ble_iso_group_hdl_evt_t
  *  @brief  ISO gourp handle
@@ -11275,17 +11290,17 @@ typedef struct BLE_PACKED_OPTION
     uint16_t psm;
 
     /**
-     *  @brief MTU of local/remote device.
+     *  @brief MTU of local (specified in @ref BLE_L2CAP_EVENT_CF_CONN_IND) / remote (notified in @ref BLE_L2CAP_EVENT_CF_CONN_CNF) device.
      */
     uint16_t mtu;
 
     /**
-     *  @brief MPS of local/remote device.
+     *  @brief MPS of local (specified in @ref BLE_L2CAP_EVENT_CF_CONN_IND) / remote (notified in @ref BLE_L2CAP_EVENT_CF_CONN_CNF) device.
      */
     uint16_t mps;
 
     /**
-     *  @brief Credit of local/remote device.
+     *  @brief Credit of local (specified in @ref BLE_L2CAP_EVENT_CF_CONN_IND) / remote (notified in @ref BLE_L2CAP_EVENT_CF_CONN_CNF) device.
      */
     uint16_t credit;
 } st_ble_l2cap_cf_conn_evt_t;
@@ -13814,7 +13829,6 @@ void R_BLE_GAP_DeleteBondInfo(int32_t               local,
  **********************************************************************************************************************/
 ble_status_t R_BLE_GAP_ReplyLtkReq(uint16_t conn_hdl, uint16_t ediv, uint8_t * p_peer_rand, uint8_t response);
 
-
 /******************************************************************************************************************//**
  *  @fn ble_status_t R_BLE_GAP_SetCteConnlessParam(st_ble_gap_cte_connless_t * p_cte_param)
  *  @brief Set the parameters for the transmission of Constant Tone Extensions in any periodic advertising.
@@ -14024,7 +14038,7 @@ ble_status_t R_BLE_GAP_ModifySleepClockAccuracy(uint8_t act);
 /******************************************************************************************************************//**
  * @fn ble_status_t R_BLE_GAP_ReadRemoteTransmitPowerLevel(uint16_t conn_hdl, uint8_t phy)
  * @brief   Read the transmit power level used by the remote device.
- * @details BLE_GAP_EVENT_TX_POWER_REPT is received as a result when R_BLE_GAP_SetTransmitPowerReportingEnable is enabled. 
+ * @details BLE_GAP_EVENT_TX_POWER_REPT is received as a result when R_BLE_GAP_SetTransmitPowerReportingEnable is enabled.
  * @param[in] conn_hdl Connection handle.
  * @param[in] phy The transmitter PHY of packets.
  * @retval  BLE_SUCCESS(0x0000) Success
@@ -14126,6 +14140,7 @@ ble_status_t R_BLE_GAP_SetHostFeat(uint8_t bit_number, uint8_t bit_value);
  *  @ingroup BLE_API
  *  @{
  */
+
 /******************************************************************************************************************//**
  *  @fn ble_status_t R_BLE_ISO_CreateBig(uint8_t * p_big_hdl, uint8_t adv_hdl, st_ble_iso_big_param_t * p_big_param)
  *  @brief Create a BIG.
@@ -14147,8 +14162,8 @@ ble_status_t R_BLE_ISO_StopBig(uint8_t big_hdl, uint8_t reason);
 
 /******************************************************************************************************************//**
  *  @fn ble_status_t R_BLE_ISO_CreateBigSync(uint8_t* p_big_hdl,
-                                     uint16_t sync_hdl,
-                                     st_ble_iso_big_sync_param_t * p_big_sync_param);
+ *                                   uint16_t sync_hdl,
+ *                                   st_ble_iso_big_sync_param_t * p_big_sync_param);
  *  @brief  Create a BIG sync
  *  @param[out] p_big_hdl BIG handle is assigned by host stack, and value is passed out.
  *  @param[in] sync_hdl Periodic adv sid which carries the biginfo.

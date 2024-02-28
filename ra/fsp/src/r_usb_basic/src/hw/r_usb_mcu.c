@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -377,18 +377,30 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
          * b7 IEN7 Interrupt enable bit
          */
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-        R_BSP_IrqCfgEnable(cfg->irq_d0, cfg->ipl_d0, (void *) cfg); /* Enable D0FIFO interrupt */
+        if (cfg->irq_d0 >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->irq_d0, cfg->ipl_d0, (void *) cfg); /* Enable D0FIFO interrupt */
+        }
 
-        R_BSP_IrqCfgEnable(cfg->irq_d1, cfg->ipl_d1, (void *) cfg); /* Enable D1FIFO interrupt */
+        if (cfg->irq_d1 >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->irq_d1, cfg->ipl_d1, (void *) cfg); /* Enable D1FIFO interrupt */
+        }
 #endif  /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 
-        R_BSP_IrqCfgEnable(cfg->irq_r, cfg->ipl_r, (void *) cfg);   /* USBR enable */
+        if (cfg->irq_r >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->irq_r, cfg->ipl_r, (void *) cfg); /* USBR enable */
+        }
 
-        R_BSP_IrqCfgEnable(cfg->irq, cfg->ipl, (void *) cfg);       /* USBI enable */
+        if (cfg->irq >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->irq, cfg->ipl, (void *) cfg); /* USBI enable */
+        }
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         g_p_usb_cfg_ip0 = (usb_cfg_t *) cfg;
-#endif  /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
+#endif                                 /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
     }
 
     if (ip_type == USB_IP1)
@@ -406,16 +418,26 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
          * b7 IEN7 Interrupt enable bit
          */
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-        R_BSP_IrqCfgEnable(cfg->hsirq_d0, cfg->hsipl_d0, (void *) cfg); /* Enable D0FIFO interrupt */
+        if (cfg->hsirq_d0 >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->hsirq_d0, cfg->hsipl_d0, (void *) cfg); /* Enable D0FIFO interrupt */
+        }
 
-        R_BSP_IrqCfgEnable(cfg->hsirq_d1, cfg->hsipl_d1, (void *) cfg); /* Enable D1FIFO interrupt */
+        if (cfg->hsirq_d1 >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->hsirq_d1, cfg->hsipl_d1, (void *) cfg); /* Enable D1FIFO interrupt */
+        }
  #endif /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 
-        R_BSP_IrqCfgEnable(cfg->hsirq, cfg->hsipl, (void *) cfg);       /* USBIR enable */
+        if (cfg->hsirq >= 0)
+        {
+            R_BSP_IrqCfgEnable(cfg->hsirq, cfg->hsipl, (void *) cfg); /* USBIR enable */
+        }
+
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         g_p_usb_cfg_ip1 = (usb_cfg_t *) cfg;
- #endif  /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
-#endif /* defined (USB_HIGH_SPEED_MODULE) */
+ #endif                                /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
+#endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -489,7 +511,10 @@ void usb_cpu_int_enable (void)
     {
         if (USB_MODE_HOST == g_p_usb_cfg_ip0->usb_mode)
         {
-            R_BSP_IrqCfgEnable(g_p_usb_cfg_ip0->irq, g_p_usb_cfg_ip0->ipl, g_p_usb_cfg_ip0); /* USBI enable */
+            if (g_p_usb_cfg_ip0->irq >= 0)
+            {
+                R_BSP_IrqCfgEnable(g_p_usb_cfg_ip0->irq, g_p_usb_cfg_ip0->ipl, g_p_usb_cfg_ip0); /* USBI enable */
+            }
 
             USB_M0->INTENB0 = g_usb_hstd_m0_reg_intenb0;
             USB_M0->INTENB1 = g_usb_hstd_m0_reg_intenb1;
@@ -512,7 +537,10 @@ void usb_cpu_int_enable (void)
     {
         if (USB_MODE_HOST == g_p_usb_cfg_ip1->usb_mode)
         {
-            R_BSP_IrqCfgEnable(g_p_usb_cfg_ip1->hsirq, g_p_usb_cfg_ip1->hsipl, g_p_usb_cfg_ip1); /* USBIR enable */
+            if (g_p_usb_cfg_ip1->hsirq >= 0)
+            {
+                R_BSP_IrqCfgEnable(g_p_usb_cfg_ip1->hsirq, g_p_usb_cfg_ip1->hsipl, g_p_usb_cfg_ip1); /* USBIR enable */
+            }
 
             USB_M1->INTENB0 = g_usb_hstd_m1_reg_intenb0;
             USB_M1->INTENB1 = g_usb_hstd_m1_reg_intenb1;

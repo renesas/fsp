@@ -210,7 +210,7 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x00000000U);
-    HW_SCE_func001(0xd0bb95fcU, 0x6cb2f6c8U, 0x980484d5U, 0x3779c1ceU);
+    HW_SCE_func001(0x236030deU, 0xf7044cf3U, 0x42e830e0U, 0x3c4f3f08U);
     SCE->REG_E0H = 0x80040000U;
     SCE->REG_1D0H = 0x00000000U;
     SCE->REG_00H = 0x00008113U;
@@ -237,9 +237,8 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x213f32e4U);
-    SCE->REG_104H = 0x00000761U;
-    SCE->REG_B0H = 0x00000100U;
-    SCE->REG_A4H = 0x00d0c9afU;
+    SCE->REG_104H = 0x00000361U;
+    SCE->REG_A4H = 0x00d049adU;
     /* WAIT_LOOP */
     while (1U != SCE->REG_104H_b.B31)
     {
@@ -249,25 +248,15 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
     SCE->REG_100H = InData_InstData[1];
     SCE->REG_100H = InData_InstData[2];
     SCE->REG_100H = InData_InstData[3];
-    /* WAIT_LOOP */
-    while (1U != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = InData_InstData[4];
-    SCE->REG_100H = InData_InstData[5];
-    SCE->REG_100H = InData_InstData[6];
-    SCE->REG_100H = InData_InstData[7];
-    SCE->REG_B0H = 0x00000100U;
-    SCE->REG_A4H = 0x43e086bfU;
-    SCE->REG_00H = 0x00001123U;
+    SCE->REG_A4H = 0x43e006bdU;
+    SCE->REG_00H = 0x00001113U;
     /* WAIT_LOOP */
     while (0U != SCE->REG_00H_b.B25)
     {
         /* waiting */
     }
     SCE->REG_1CH = 0x00001800U;
-    SCE->REG_04H = 0x00000122U;
+    SCE->REG_04H = 0x00000112U;
     /* WAIT_LOOP */
     while (1U != SCE->REG_04H_b.B30)
     {
@@ -277,6 +266,27 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
     OutData_KeyIndex[5] = SCE->REG_100H;
     OutData_KeyIndex[6] = SCE->REG_100H;
     OutData_KeyIndex[7] = SCE->REG_100H;
+    HW_SCE_func001(0xad91bbdaU, 0x42a3b34dU, 0x8a149661U, 0xda279a22U);
+    SCE->REG_104H = 0x00000361U;
+    SCE->REG_A4H = 0x00d049adU;
+    /* WAIT_LOOP */
+    while (1U != SCE->REG_104H_b.B31)
+    {
+        /* waiting */
+    }
+    SCE->REG_100H = InData_InstData[4];
+    SCE->REG_100H = InData_InstData[5];
+    SCE->REG_100H = InData_InstData[6];
+    SCE->REG_100H = InData_InstData[7];
+    SCE->REG_A4H = 0x41e006bdU;
+    SCE->REG_00H = 0x00001113U;
+    /* WAIT_LOOP */
+    while (0U != SCE->REG_00H_b.B25)
+    {
+        /* waiting */
+    }
+    SCE->REG_1CH = 0x00001800U;
+    SCE->REG_04H = 0x00000112U;
     /* WAIT_LOOP */
     while (1U != SCE->REG_04H_b.B30)
     {
@@ -286,7 +296,7 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
     OutData_KeyIndex[9] = SCE->REG_100H;
     OutData_KeyIndex[10] = SCE->REG_100H;
     OutData_KeyIndex[11] = SCE->REG_100H;
-    HW_SCE_func001(0x091e6e25U, 0x0cb5fdc4U, 0x3cf7d0a1U, 0x372c284cU);
+    HW_SCE_func001(0x4c79ec6dU, 0x055e07b6U, 0x3d7a992aU, 0x0296a067U);
     SCE->REG_104H = 0x00000051U;
     SCE->REG_A4H = 0x01000684U;
     /* WAIT_LOOP */
@@ -332,12 +342,12 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
         /* waiting */
     }
     SCE->REG_1CH = 0x00001800U;
-    HW_SCE_func001(0x1bbcbf79U, 0x1650fa12U, 0x63e1c77aU, 0xf0fd53c7U);
+    HW_SCE_func001(0xe7e70d69U, 0xc2efe34dU, 0xc963fef6U, 0xc28c1c04U);
     SCE->REG_1CH = 0x00400000U;
     SCE->REG_1D0H = 0x00000000U;
     if (1U == (SCE->REG_1CH_b.B22))
     {
-        HW_SCE_func003(0x1a097363U, 0xd8d9c488U, 0x04e448f1U, 0xc5fe782aU);
+        HW_SCE_func003(0x729dd717U, 0xe7a38086U, 0xd4c37b0fU, 0x98b1a911U);
         SCE->REG_1B4H = 0x00000040U;
         /* WAIT_LOOP */
         while (0U != SCE->REG_18H_b.B12)
@@ -348,7 +358,7 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
     }
     else
     {
-        HW_SCE_func001(0x38ca35afU, 0xadf8c25cU, 0x32d5028fU, 0x8c48f71bU);
+        HW_SCE_func001(0xb0cdd070U, 0xed1befb5U, 0x3adbbaefU, 0xa7462121U);
         SCE->REG_E0H = 0x81040000U;
         SCE->REG_1D0H = 0x00000000U;
         SCE->REG_04H = 0x00000612U;
@@ -376,7 +386,7 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
             /* waiting */
         }
         OutData_KeyIndex[3] = SCE->REG_100H;
-        HW_SCE_func003(0x6ee6495eU, 0x677a09edU, 0xc585141dU, 0xbcde6653U);
+        HW_SCE_func003(0x8f863da1U, 0xfd0d8173U, 0x684c5b5dU, 0x7393d27cU);
         SCE->REG_1B4H = 0x00000040U;
         /* WAIT_LOOP */
         while (0U != SCE->REG_18H_b.B12)
@@ -388,5 +398,5 @@ fsp_err_t HW_SCE_UpdateAes256KeyIndexSub(uint32_t *InData_IV, uint32_t *InData_I
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/HW_SCE_Sec_200408/200408/RA4M1/Cryptographic/HW_SCE_p92.prc
+End of function ./input_dir/HW_SCE_Sec_230630/230630/RA4M1/Cryptographic/HW_SCE_p92_r1.prc
 ***********************************************************************************************************************/

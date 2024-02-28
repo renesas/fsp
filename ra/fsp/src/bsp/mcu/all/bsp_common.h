@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -61,7 +61,7 @@ FSP_HEADER
 #if 1 == BSP_CFG_RTOS                  /* ThreadX */
  #include "tx_user.h"
  #if defined(TX_ENABLE_EVENT_TRACE) || defined(TX_ENABLE_EXECUTION_CHANGE_NOTIFY)
-  #include "tx_api.h"
+  #include "tx_port.h"
   #define FSP_CONTEXT_SAVE       tx_isr_start((uint32_t) R_FSP_CurrentIrqGet());
   #define FSP_CONTEXT_RESTORE    tx_isr_end((uint32_t) R_FSP_CurrentIrqGet());
  #else
@@ -365,10 +365,11 @@ __STATIC_INLINE IRQn_Type R_FSP_CurrentIrqGet (void)
  **********************************************************************************************************************/
 __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
 {
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
     uint32_t sckdivcr  = FSP_STYPE3_REG32_READ(R_SYSTEM->SCKDIVCR, BSP_CFG_CLOCKS_SECURE);
     uint32_t clock_div = (sckdivcr >> clock) & FSP_PRV_SCKDIVCR_DIV_MASK;
 
-#if BSP_FEATURE_CGC_HAS_CPUCLK
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
     if (FSP_PRIV_CLOCK_CPUCLK == clock)
     {
         return SystemCoreClock;
@@ -392,10 +393,15 @@ __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
         return (SystemCoreClock << cpuclk_div) >> clock_div;
     }
 
-#else
+ #else
     uint32_t iclk_div = (sckdivcr >> FSP_PRIV_CLOCK_ICLK) & FSP_PRV_SCKDIVCR_DIV_MASK;
 
     return (SystemCoreClock << iclk_div) >> clock_div;
+ #endif
+#else
+    FSP_PARAMETER_NOT_USED(clock);
+
+    return SystemCoreClock;
 #endif
 }
 

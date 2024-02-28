@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,12 +22,12 @@
 #define RM_BLE_ABS_API_H
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_NETWORKING_INTERFACES
  * @defgroup BLE_ABS_API BLE ABS Interface
- * @brief Interface for Bluetooth Low Energy Abstraction functions.
+ * @brief Interface for BLE Abstraction functions.
  *
  * @section BLE_ABS_API_Summary Summary
- * The BLE ABS interface for the Bluetooth Low Energy Abstraction (BLE ABS) peripheral provides Bluetooth Low Energy Abstraction functionality.
+ * The BLE Abstraction (BLE ABS) interface provides an abstraction layer for various Renesas BLE hardware.
  *
  *
  * @{

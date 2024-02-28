@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -265,8 +265,8 @@ fsp_err_t R_SDADC_B_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     }
 
     /* Specify the peripheral name in the ELC list */
-    p_adc_info->elc_event      = ELC_EVENT_SDADC_B0_ADI;
-    p_adc_info->elc_peripheral = ELC_PERIPHERAL_SDADC0;
+    p_adc_info->elc_event      = ELC_EVENT_SDADC0_ADI;
+    p_adc_info->elc_peripheral = (elc_peripheral_t) UINT32_MAX;
 
     /* Set sensor information to invalid value */
     p_adc_info->calibration_data = UINT32_MAX;

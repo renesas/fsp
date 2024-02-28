@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1665,17 +1665,24 @@ void rm_motor_driver_shared_cyclic (adc_callback_args_t * p_args)
                 {
                     p_ctrl = (motor_driver_instance_ctrl_t *) p_instance->p_context[i];
 
-                    motor_driver_extended_cfg_t * p_extended_cfg =
-                        (motor_driver_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-
-                    /* Check scan complete ad channel */
-                    if (p_args->group_mask & (1 << p_extended_cfg->adc_group))
+                    if (NULL == p_ctrl)
                     {
-                        temp_args_t = *p_args;
+                        /* Do nothing */
+                    }
+                    else
+                    {
+                        motor_driver_extended_cfg_t * p_extended_cfg =
+                            (motor_driver_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-                        /* Set motor_driver instance */
-                        temp_args_t.p_context = p_instance->p_context[i];
-                        rm_motor_driver_cyclic(&temp_args_t);
+                        /* Check scan complete ad channel */
+                        if (p_args->group_mask & (1 << p_extended_cfg->adc_group))
+                        {
+                            temp_args_t = *p_args;
+
+                            /* Set motor_driver instance */
+                            temp_args_t.p_context = p_instance->p_context[i];
+                            rm_motor_driver_cyclic(&temp_args_t);
+                        }
                     }
                 }
 
@@ -1949,6 +1956,11 @@ static void rm_motor_driver_adc_open (motor_driver_instance_ctrl_t   * p_instanc
                                                            rm_motor_driver_cyclic,
                                                            p_instance_ctrl,
                                                            &(p_instance_ctrl->adc_callback_args));
+                    }
+
+                    /* Not 1 shunt, start 2nd adc here */
+                    if (p_cfg->shunt != MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT)
+                    {
                         p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
                     }
                 }

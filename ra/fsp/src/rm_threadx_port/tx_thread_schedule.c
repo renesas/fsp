@@ -237,7 +237,7 @@ VOID _tx_thread_schedule (VOID)
 
 /* These variables are global because this function is called from PendSV_Handler, which is a stackless
  * function. */
-__attribute((weak)) void * _tx_port_wait_thread_ready(VOID)
+__attribute((weak, used)) void * _tx_port_wait_thread_ready(VOID)
 {
     /* The following is the idle wait processing. In this case, no threads are ready for execution and the
      * system will simply be idle until an interrupt occurs that makes a thread ready. Note that interrupts

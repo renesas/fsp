@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2023] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -85,9 +85,20 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
         p_aligned_output = aligned_output_buffer;
         process_length   = RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE);
 
-        /* Setup the first block */
-        NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, NX_CRYPTO_AES_BLOCK_SIZE);
-        misaligned = true;
+        if(total_length != 0U)
+        {
+            /* Setup the first block */
+            NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, NX_CRYPTO_AES_BLOCK_SIZE);
+            misaligned = true;
+        }
+        else
+        {
+            /* Setup the first block */
+            NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, length);
+            total_length = process_length;
+            bytes_remaining = 0U;
+            misaligned = true;
+        }
     }
     else
     {
@@ -98,6 +109,8 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
     /* total_length is a multiple of block size */
     while ((total_length != 0U) || (0U != bytes_remaining))
     {
+        if(process_length != 0U)
+        {
         /* Select the correct method based on the key type and size. */
         switch (aes_ptr->nx_crypto_aes_rounds)
         {
@@ -150,6 +163,8 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
         }
 
         FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+
+        }
 
         uint8_t * out_iv = (uint8_t *) ctr_metadata->nx_crypto_ctr_counter_block;
         for (uint32_t i = 0; i < (process_length / sizeof(uint32_t)); i++)
