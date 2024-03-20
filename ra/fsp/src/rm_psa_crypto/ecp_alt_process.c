@@ -261,7 +261,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     uint32_t   indata_key_type = 0;
     uint8_t    padding = 0U;
 
-#if !BSP_FEATURE_CRYPTO_HAS_SCE7
+#if !(BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_SCE9)
     if((bool)(grp->vendor_ctx) == false)
     {
     	/* ECC plaintext key generation is not supported currently. */
