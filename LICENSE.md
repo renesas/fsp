@@ -19,12 +19,12 @@
 | [mbedTLS](https://github.com/Mbed-TLS/mbedtls)        | ARM Limited                        | Apache-2.0 License                                                                          |
 | [TF-M](https://github.com/renesas/trusted-firmware-m) | ARM Limited                        | BSD-3-Clause                                                                                |
 | [Littlefs](https://github.com/renesas/littlefs)       | ARM Limited                        | BSD-3-Clause                                                                                |
-| [MCUBoot](https://github.com/mcu-tools/mcuboot)       | ARM Limited                        | Apache-2.0 License                                                                          |
+| [MCUBoot](https://github.com/mcu-tools/mcuboot)       | TrustedFirmware.org                | Apache-2.0 License                                                                          |
 | exFAT                                                 | Microsoft Corporation              | Microsoft License                                                                           |
 | [Azure RTOS](https://github.com/eclipse-threadx)      | Microsoft Corporation              | MIT                                                                                         |
 | [FreeRTOS Kernel](https://github.com/renesas/FreeRTOS)| Amazon.com, Inc. or its affiliates | MIT                                                                                         |
 | [emWin](https://www.renesas.com/us/en/software-tool/segger-emwin-gui-library-renesas-ra-products#overview), AppWizard | SEGGER-Renesas | Renesas Sub-license Agreement                   |
-| TES Dave2D                                            | Renesas Electronics Corporation    | Renesas Licensed with TES                                                                   |
+| TES Dave2D                                            | TES Electronics Solutions GmBH     | [Renesas Open License v1.0](#renesas-open-license-v10)                                      |
 | [TinyCrypt](https://github.com/intel/tinycrypt/)      | Intel Corporation                  | BSD-3-Clause and BSD-2-Clause. See [LICENSE](https://github.com/intel/tinycrypt/blob/master/LICENSE)|
 
 ## BSD 3-Clause License
