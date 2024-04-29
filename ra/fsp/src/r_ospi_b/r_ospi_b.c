@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -1241,6 +1227,11 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     uint32_t      wrapped_key[HW_SCE_AES256_KEY_INDEX_WORD_SIZE] = {0};
     sce_oem_cmd_t key_cmd = SCE_OEM_CMD_AES128;
 
+    if((((uint32_t) &(p_dotf_cfg->p_key[0])) & 0x03) && (((uint32_t) &(p_dotf_cfg->p_iv[0])) & 0x03))
+    {
+        return FSP_ERR_INVALID_ARGUMENT; 
+    }
+
     if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
     {
         key_cmd = SCE_OEM_CMD_AES128;
@@ -1294,10 +1285,10 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
         R_DOTF->REG00 = (OSPI_B_PRV_DOTF_REG00_RESET_VALUE | R_DOTF_REG00_B09_Msk);
 
         /* Load the IV. */
-        R_DOTF->REG03 = p_dotf_cfg->p_iv[0];
-        R_DOTF->REG03 = p_dotf_cfg->p_iv[1];
-        R_DOTF->REG03 = p_dotf_cfg->p_iv[2];
-        R_DOTF->REG03 = p_dotf_cfg->p_iv[3];
+        R_DOTF->REG03 = change_endian_long(p_dotf_cfg->p_iv[0]);
+        R_DOTF->REG03 = change_endian_long(p_dotf_cfg->p_iv[1]);
+        R_DOTF->REG03 = change_endian_long(p_dotf_cfg->p_iv[2]);
+        R_DOTF->REG03 = change_endian_long(p_dotf_cfg->p_iv[3]);
     }
 
     /* Set the start and end area for DOTF conversion. */

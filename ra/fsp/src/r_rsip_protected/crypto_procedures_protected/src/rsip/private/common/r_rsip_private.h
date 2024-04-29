@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_RSIP_PRIVATE_H
 #define R_RSIP_PRIVATE_H
@@ -53,6 +39,14 @@ typedef rsip_ret_t (* rsip_func_key_pair_generate_t)(uint32_t OutData_PubKeyInde
 typedef rsip_ret_t (* rsip_func_encrypted_key_wrap_t)(const uint32_t InData_IV[], const uint32_t InData_InstData[],
                                                       uint32_t OutData_KeyIndex[]);
 
+/* RFC3394 Key Wrap */
+typedef rsip_ret_t (* rsip_func_rfc3394_key_wrap_t)(const uint32_t InData_KeyIndex[], const rsip_key_type_t key_type,
+                                                    const uint32_t InData_WrappedKeyIndex[], uint32_t OutData_Text[]);
+
+/* RFC3394 Key Unwrap */
+typedef rsip_ret_t (* rsip_func_rfc3394_key_unwrap_t)(const uint32_t InData_KeyIndex[], const rsip_key_type_t key_type,
+                                                      const uint32_t InData_Text[], uint32_t OutData_KeyIndex[]);
+
 /* AES-ECB/CBC/CTR */
 typedef rsip_ret_t (* rsip_func_aes_cipher_init_t)(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
 
@@ -69,7 +63,8 @@ typedef rsip_ret_t (* rsip_func_ecdsa_verify_t)(const uint32_t InData_KeyIndex[]
 /* RSA */
 typedef rsip_ret_t (* rsip_func_rsa_t)(const uint32_t InData_KeyIndex[], const uint32_t InData_Text[],
                                        uint32_t OutData_Text[]);
-
+/* OTF */
+typedef rsip_ret_t (* rsip_func_otf_t)(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
 /*
  * Private/Primitive function subsets
  */
@@ -171,6 +166,9 @@ typedef struct st_rsip_func
     rsip_func_encrypted_key_wrap_t p_encrypted_key_wrap_rsa_priv[RSIP_KEY_RSA_NUM];
     rsip_func_encrypted_key_wrap_t p_encrypted_key_wrap_hmac[RSIP_KEY_HMAC_NUM];
 
+    rsip_func_rfc3394_key_wrap_t   p_rfc3394_key_wrap[RSIP_KEY_AES_NUM];
+    rsip_func_rfc3394_key_unwrap_t p_rfc3394_key_unwrap[RSIP_KEY_AES_NUM];
+
     rsip_func_subset_aes_cipher_t p_aes_cipher[RSIP_KEY_AES_NUM];
     rsip_func_subset_aes_xts_t    p_aes_xts_enc[RSIP_KEY_AES_NUM];
     rsip_func_subset_aes_xts_t    p_aes_xts_dec[RSIP_KEY_AES_NUM];
@@ -182,6 +180,7 @@ typedef struct st_rsip_func
 
     rsip_func_ecdsa_sign_t   p_ecdsa_sign[RSIP_KEY_ECC_NUM];
     rsip_func_ecdsa_verify_t p_ecdsa_verify[RSIP_KEY_ECC_NUM];
+    rsip_func_otf_t  p_func_otf[RSIP_OTF_CHANNEL_NUM][RSIP_KEY_AES_NUM];
 
     rsip_func_rsa_t p_rsa_public[RSIP_KEY_RSA_NUM];
     rsip_func_rsa_t p_rsa_private[RSIP_KEY_RSA_NUM];

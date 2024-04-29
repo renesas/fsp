@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -24,8 +10,10 @@
 #include "rm_at_transport_da16xxx_uart.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "FreeRTOS.h"
-#include "semphr.h"
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+ #include "FreeRTOS.h"
+ #include "semphr.h"
+#endif
 
 /***********************************************************************************************************************
  * Defines
@@ -152,7 +140,7 @@ static rm_at_transport_da16xxx_baud_setting_t g_baud_setting =
     .mddr = 0,
 #endif
 };
-
+#if (BSP_CFG_RTOS == 2)                          /* FreeRTOS */
 /* Structure that hold state information on the buffer. */
 typedef struct StreamBufferDef_t                 /*lint !e9058 Style convention uses tag. */
 {
@@ -164,27 +152,186 @@ typedef struct StreamBufferDef_t                 /*lint !e9058 Style convention 
     volatile TaskHandle_t xTaskWaitingToSend;    /* Holds the handle of a task waiting to send data to a message buffer that is full. */
     uint8_t             * pucBuffer;             /* Points to the buffer itself - that is - the RAM that stores the data passed through the buffer. */
     uint8_t               ucFlags;
-#if (configUSE_TRACE_FACILITY == 1)
+ #if (configUSE_TRACE_FACILITY == 1)
     UBaseType_t uxStreamBufferNumber;            /* Used for tracing purposes. */
-#endif
+ #endif
 } StreamBuffer_t;
 
 /* Transmit and receive mutexes for UARTs */
 static StaticSemaphore_t g_socket_mutexes[2];
 static StaticSemaphore_t g_uart_tei_mutex[2];
 
-#define RX_CMD_BUFFER_SIZE    100
-static uint8_t rx_cmd_buffer[RX_CMD_BUFFER_SIZE];
-
 /**
  *  Maximum time in ticks to wait for obtaining a semaphore.
  */
 static const TickType_t wifi_sx_wifi_da16xxx_sem_block_timeout =
     pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_CFG_SEM_MAX_TIMEOUT);
+#endif
+
+#define RX_CMD_BUFFER_SIZE    100
+static uint8_t rx_cmd_buffer[RX_CMD_BUFFER_SIZE];
+
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+typedef struct rm_at_transport_da16xxx_fifo
+{
+    uint8_t * p_buffer;
+    uint32_t  size;
+    uint32_t  items;
+    uint32_t  head;
+    uint32_t  tail;
+} rm_at_transport_da16xxx_fifo_t;
+
+static rm_at_transport_da16xxx_fifo_t g_at_transport_da16xxx_queue;
+volatile uint8_t g_tx_flag = 0;
+#endif
+
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+static bool rm_at_transport_da16xxx_fifo_empty(rm_at_transport_da16xxx_fifo_t * p_fifo);
+static bool rm_at_transport_da16xxx_fifo_full(rm_at_transport_da16xxx_fifo_t * p_fifo);
+static bool rm_at_transport_da16xxx_fifo_put(rm_at_transport_da16xxx_fifo_t * p_fifo, uint8_t * p_data);
+static bool rm_at_transport_da16xxx_fifo_get(rm_at_transport_da16xxx_fifo_t * p_fifo,
+                                             uint8_t                        * p_data,
+                                             uint32_t                         timeout_ms);
+static void rm_at_transport_da16xxx_fifo_init(rm_at_transport_da16xxx_fifo_t * p_fifo, uint8_t * p_buf, uint32_t size);
+
+#endif
 
 static void      rm_at_transport_da16xxx_cleanup_open(at_transport_da16xxx_ctrl_t * const p_ctrl);
 static fsp_err_t rm_at_transport_da16xxx_error_lookup(char * p_resp);
 static void      rm_at_transport_da16xxx_reset(at_transport_da16xxx_ctrl_t * const p_ctrl);
+
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+
+/*******************************************************************************************************************//**
+ *  Initialize FIFO
+ *
+ * @param[in]  p_fifo   Pointer to FIFO to be initialized
+ * @param[in]  p_buf    Pointer to buffer that FIFO can use as storage
+ * @param[in]  size     Length of buffer storage
+ *
+ **********************************************************************************************************************/
+static void rm_at_transport_da16xxx_fifo_init (rm_at_transport_da16xxx_fifo_t * p_fifo, uint8_t * p_buf, uint32_t size)
+{
+    p_fifo->p_buffer = p_buf;
+    p_fifo->size     = size;
+    p_fifo->head     = 0;
+    p_fifo->tail     = 0;
+    p_fifo->items    = 0;
+}
+
+/*******************************************************************************************************************//**
+ *  Check if FIFO is empty
+ *
+ * @param[in]  p_fifo   Pointer to FIFO to be checked
+ *
+ * @retval true         FIFO empty
+ * @retval false        FIFO not empty
+ **********************************************************************************************************************/
+static bool rm_at_transport_da16xxx_fifo_empty (rm_at_transport_da16xxx_fifo_t * p_fifo)
+{
+    return p_fifo->items == 0;
+}
+
+/*******************************************************************************************************************//**
+ *  Check if FIFO is full
+ *
+ * @param[in]  p_fifo   Pointer to FIFO to be checked
+ *
+ * @retval true         FIFO full
+ * @retval false        FIFO not full
+ **********************************************************************************************************************/
+static bool rm_at_transport_da16xxx_fifo_full (rm_at_transport_da16xxx_fifo_t * p_fifo)
+{
+    return p_fifo->items == p_fifo->size;
+}
+
+/*******************************************************************************************************************//**
+ *  Add item to the FIFO
+ *
+ * @param[in]  p_fifo   Pointer to FIFO
+ * @param[in]  p_data   Pointer to data that is to be added
+ *
+ * @retval true         Added
+ * @retval false        Not added
+ **********************************************************************************************************************/
+static bool rm_at_transport_da16xxx_fifo_put (rm_at_transport_da16xxx_fifo_t * p_fifo, uint8_t * p_data)
+{
+    bool added = false;
+
+    /* Check that the FIFO is not full before adding data */
+    if (rm_at_transport_da16xxx_fifo_full(p_fifo) == 0)
+    {
+        /* Assign the data to the head of the buffer */
+        p_fifo->p_buffer[p_fifo->head] = *p_data;
+
+        /* If the next index for the head is at the end of the buffer, loop around */
+        if (++p_fifo->head >= p_fifo->size)
+        {
+            p_fifo->head = 0;
+        }
+
+        /* Add to items parameter to track current number of bytes */
+        p_fifo->items++;
+
+        added = true;
+    }
+
+    return added;
+}
+
+/*******************************************************************************************************************//**
+ *  Remove item from the FIFO
+ *
+ * @param[in]  p_fifo   Pointer to FIFO
+ * @param[in]  p_data   Pointer to data to be pulled from the buffer
+ *
+ * @retval true         Removed
+ * @retval false        Not removed
+ **********************************************************************************************************************/
+static bool rm_at_transport_da16xxx_fifo_get (rm_at_transport_da16xxx_fifo_t * p_fifo,
+                                              uint8_t                        * p_data,
+                                              uint32_t                         timeout_ms)
+{
+    bool removed = false;
+
+    do
+    {
+        /* Check that the FIFO is not empty before removing data from the buffer */
+        if (false == rm_at_transport_da16xxx_fifo_empty(p_fifo))
+        {
+            /* Data to be returned is assigned to the tail of the buffer */
+            *p_data = p_fifo->p_buffer[p_fifo->tail];
+
+            /* If the next index for the tail is at the end of the buffer, loop around */
+            if (++p_fifo->tail >= p_fifo->size)
+            {
+                p_fifo->tail = 0;
+            }
+
+            /* Make sure that decrementing items is not interrupted by put function */
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
+
+            /* Subtract from items parameter to track current number of bytes */
+            p_fifo->items--;
+            FSP_CRITICAL_SECTION_EXIT;
+
+            removed = true;
+        }
+        else
+        {
+            if (0 < timeout_ms)
+            {
+                R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_1MS, BSP_DELAY_UNITS_MILLISECONDS);
+                timeout_ms--;
+            }
+        }
+    } while ((0 < timeout_ms) && (false == removed));
+
+    return removed;
+}
+
+#endif
 
 /*******************************************************************************************************************//**
  *  Opens and configures the WIFI_DA16XXX Middleware module.
@@ -240,6 +387,7 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
         p_instance_ctrl->uart_instance_objects[i] =
             (uart_instance_t *) p_da16xxx_transport_extended_cfg->uart_instances[i];
 
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
         p_instance_ctrl->uart_tei_sem[i] = xSemaphoreCreateBinaryStatic(&g_uart_tei_mutex[i]);
         if (NULL == p_instance_ctrl->uart_tei_sem[i])
         {
@@ -249,8 +397,10 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
         FSP_ERROR_RETURN(NULL != p_instance_ctrl->uart_tei_sem[i], FSP_ERR_OUT_OF_MEMORY);
 
         xSemaphoreTake(p_instance_ctrl->uart_tei_sem[i], 0);
+#endif
     }
 
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     /* Create the Tx/Rx mutexes */
     if (p_instance_ctrl->tx_sem != NULL)
     {
@@ -287,8 +437,14 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
     {
         rm_at_transport_da16xxx_cleanup_open(p_instance_ctrl);
     }
-
     FSP_ERROR_RETURN(NULL != p_instance_ctrl->socket_byteq_hdl, FSP_ERR_OUT_OF_MEMORY);
+#endif
+
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    rm_at_transport_da16xxx_fifo_init((rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                                      p_instance_ctrl->cmd_rx_queue_buf,
+                                      AT_TRANSPORT_DA16XXX_CFG_CMD_RX_BUF_SIZE);
+#endif
 
     /* Create memory copy of uart extended configuration and then copy new configuration values in. */
     memcpy((void *) &uart0_cfg_extended, (void *) p_instance_ctrl->uart_instance_objects[0]->p_cfg->p_extend,
@@ -327,7 +483,12 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
 
         /* Delay after open */
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+        R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_10MS, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
         vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_10MS));
+#endif
         atcmd.p_at_cmd_string      = (uint8_t *) "ATZ\r";
         atcmd.at_cmd_string_length = 0;
         atcmd.p_response_buffer    = rx_cmd_buffer;
@@ -341,7 +502,12 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
 
         if (FSP_SUCCESS != err)
         {
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+            R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_2SEC, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
             vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_2SEC));
+#endif
 
             /* Test basic communications with an AT command. */
             atcmd.p_at_cmd_string      = (uint8_t *) "ATZ\r";
@@ -367,7 +533,12 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
                 }
 
                 /* Delay after close */
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+                R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_10MS, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
                 vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_10MS));
+#endif
             }
             else
             {
@@ -423,7 +594,12 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
     }
 
     /* Delay after close */
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_10MS, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_10MS));
+#endif
 
     /* Open uart port with config values from the configurator */
     p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
@@ -438,7 +614,12 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
     p_uart->p_api->callbackSet(p_uart->p_ctrl, rm_at_transport_da16xxx_uart_callback, p_instance_ctrl, NULL);
 
     /* Delay after open */
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_100MS, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_100MS));
+#endif
 
     /* Test basic communications with an AT command. */
     atcmd.p_at_cmd_string      = (uint8_t *) "ATZ\r";
@@ -575,26 +756,45 @@ size_t rm_at_transport_da16xxx_uart_bufferRecv (at_transport_da16xxx_ctrl_t * co
 #endif
     uint8_t * p_rcv      = (uint8_t *) p_data;
     uint32_t  recv_index = 0;
+    size_t    incomeBytes;
 
     mutex_flag = (AT_TRANSPORT_DA16XXX_MUTEX_RX);
     rm_at_transport_da16xxx_uart_takeMutex(p_instance_ctrl, mutex_flag);
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     xStreamBufferSetTriggerLevel(p_instance_ctrl->socket_byteq_hdl, 1);
-    size_t incomeBytes =
+    incomeBytes =
         xStreamBufferReceive(p_instance_ctrl->socket_byteq_hdl,
                              &p_rcv[recv_index],
                              (length - recv_index),
                              pdMS_TO_TICKS(rx_timeout));
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    incomeBytes = rm_at_transport_da16xxx_fifo_get((rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                                                   &p_rcv[recv_index],
+                                                   rx_timeout);
+#endif
+
     if (incomeBytes > 0)
     {
         xReceivedBytes = incomeBytes;
         recv_index     = recv_index + incomeBytes;
         do
         {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
             incomeBytes =
                 xStreamBufferReceive(p_instance_ctrl->socket_byteq_hdl,
                                      &p_rcv[recv_index],
                                      (length - recv_index),
                                      pdMS_TO_TICKS(100));
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+            incomeBytes = rm_at_transport_da16xxx_fifo_get(
+                (rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                &p_rcv[recv_index],
+                rx_timeout);
+#endif
+
             if (incomeBytes > 0)
             {
                 xReceivedBytes += incomeBytes;
@@ -616,8 +816,9 @@ size_t rm_at_transport_da16xxx_uart_bufferRecv (at_transport_da16xxx_ctrl_t * co
  **********************************************************************************************************************/
 void rm_at_transport_da16xxx_uart_callback (uart_callback_args_t * p_args)
 {
+#if (BSP_CFG_RTOS == 2)                            /* FreeRTOS */
     BaseType_t xHigherPriorityTaskWoken = pdFALSE; // Initialized to pdFALSE.
-
+#endif
     at_transport_da16xxx_instance_ctrl_t * p_instance_ctrl = (at_transport_da16xxx_instance_ctrl_t *) p_args->p_context;
     volatile uint32_t uart_context_index = 0;
     at_transport_da16xxx_callback_args_t at_transp_da16xxx_callback_args;
@@ -650,42 +851,71 @@ void rm_at_transport_da16xxx_uart_callback (uart_callback_args_t * p_args)
                     /* Call callback function */
                     if (0 == p_instance_ctrl->p_callback(&at_transp_da16xxx_callback_args))
                     {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
                         xStreamBufferSendFromISR(p_instance_ctrl->socket_byteq_hdl,
                                                  &data_byte,
                                                  1,
                                                  &xHigherPriorityTaskWoken);
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+                        rm_at_transport_da16xxx_fifo_put(
+                            (rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                            &data_byte);
+#endif
                     }
                 }
                 else
                 {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
                     xStreamBufferSendFromISR(p_instance_ctrl->socket_byteq_hdl, &data_byte, 1,
                                              &xHigherPriorityTaskWoken);
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+                    rm_at_transport_da16xxx_fifo_put((rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                                                     &data_byte);
+#endif
                 }
             }
             else if (uart_context_index == AT_TRANSPORT_DA16XXX_UART_SECOND_PORT)
             {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
                 xStreamBufferSendFromISR(p_instance_ctrl->socket_byteq_hdl, &data_byte, 1, &xHigherPriorityTaskWoken);
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+                rm_at_transport_da16xxx_fifo_put((rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                                                 &data_byte);
+#endif
             }
             else
             {
                 /* Do Nothing */
             }
 
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+#endif
             break;
         }
 
         case UART_EVENT_TX_DATA_EMPTY:
         {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
             if ((0 == uxQueueMessagesWaitingFromISR((QueueHandle_t) p_instance_ctrl->uart_tei_sem[uart_context_index])))
             {
                 xSemaphoreGiveFromISR(p_instance_ctrl->uart_tei_sem[uart_context_index], &xHigherPriorityTaskWoken);
             }
-
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+#endif
             break;
         }
 
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+        case UART_EVENT_TX_COMPLETE:
+        {
+            g_tx_flag = 1;
+            break;
+        }
+#endif
         default:
         {
             /* Do Nothing */
@@ -709,21 +939,31 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSend (at_transport_da16xxx_ctrl_
     fsp_err_t        err         = FSP_SUCCESS;
     volatile uint8_t retry_count = 0U;
     char           * ret         = NULL;
+    size_t           xReceivedBytes;
     at_transport_da16xxx_instance_ctrl_t * p_instance_ctrl = (at_transport_da16xxx_instance_ctrl_t *) p_ctrl;
+
 #if (AT_TRANSPORT_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_at_cmd);
     FSP_ERROR_RETURN(AT_TRANSPORT_DA16XXX_UART_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     xStreamBufferReset(p_instance_ctrl->socket_byteq_hdl);
+#endif
     memset(p_at_cmd->p_response_buffer, 0, p_at_cmd->response_buffer_size);
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    g_tx_flag = 0;
+#endif
 
     if (p_at_cmd->p_at_cmd_string != NULL)
     {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
         if (uxQueueMessagesWaiting((QueueHandle_t) p_instance_ctrl->uart_tei_sem[p_at_cmd->comm_ch_id]) != 0)
         {
             return FSP_ERR_WIFI_FAILED;
         }
+#endif
 
         if (0 == p_at_cmd->at_cmd_string_length)
         {
@@ -744,32 +984,53 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSend (at_transport_da16xxx_ctrl_
         }
 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
-
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
         FSP_ERROR_RETURN(pdTRUE ==
                          xSemaphoreTake(p_instance_ctrl->uart_tei_sem[p_at_cmd->comm_ch_id],
                                         (p_at_cmd->timeout_ms / portTICK_PERIOD_MS)),
                          FSP_ERR_WIFI_FAILED);
+#endif
     }
 
     if (NULL != p_at_cmd->p_expect_code)
     {
         uint8_t * p_rcv      = (p_at_cmd->p_response_buffer);
         uint32_t  recv_index = 0;
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
         xStreamBufferSetTriggerLevel(p_instance_ctrl->socket_byteq_hdl, 1);
+#endif
         for (retry_count = 0; retry_count < AT_TRANSPORT_DA16XXX_CFG_MAX_RETRIES_UART_COMMS; retry_count++)
         {
-            size_t xReceivedBytes =
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+            xReceivedBytes =
                 xStreamBufferReceive(p_instance_ctrl->socket_byteq_hdl, &p_rcv[recv_index],
                                      (p_at_cmd->response_buffer_size - recv_index),
                                      pdMS_TO_TICKS(p_at_cmd->timeout_ms));
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+            xReceivedBytes = rm_at_transport_da16xxx_fifo_get(
+                (rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                &p_rcv[recv_index],
+                p_at_cmd->timeout_ms);
+#endif
             if (xReceivedBytes > 0)
             {
                 recv_index = recv_index + xReceivedBytes;
                 do
                 {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
                     xReceivedBytes =
                         xStreamBufferReceive(p_instance_ctrl->socket_byteq_hdl, &p_rcv[recv_index],
                                              (p_at_cmd->response_buffer_size - recv_index), pdMS_TO_TICKS(10));
+#endif
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+                    xReceivedBytes =
+                        rm_at_transport_da16xxx_fifo_get(
+                            (rm_at_transport_da16xxx_fifo_t *) &g_at_transport_da16xxx_queue,
+                            &p_rcv[recv_index],
+                            p_at_cmd->timeout_ms);
+#endif
+
                     if (xReceivedBytes > 0)
                     {
                         recv_index = recv_index + xReceivedBytes;
@@ -784,6 +1045,18 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSend (at_transport_da16xxx_ctrl_
             }
         }
     }
+
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    else
+    {
+        /* Wait for data to be sent out */
+        while (!g_tx_flag)
+        {
+            ;
+        }
+    }
+    g_tx_flag = 0;
+#endif
 
     FSP_ERROR_RETURN(AT_TRANSPORT_DA16XXX_CFG_MAX_RETRIES_UART_COMMS != (retry_count), FSP_ERR_WIFI_FAILED);
     if (ret == NULL)
@@ -809,14 +1082,20 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSend (at_transport_da16xxx_ctrl_
 fsp_err_t rm_at_transport_da16xxx_uart_giveMutex (at_transport_da16xxx_ctrl_t * const p_ctrl, uint32_t mutex_flag)
 {
     at_transport_da16xxx_instance_ctrl_t * p_instance_ctrl = (at_transport_da16xxx_instance_ctrl_t *) p_ctrl;
-    BaseType_t volatile xSemRet = pdFALSE;
-    fsp_err_t           err     = FSP_SUCCESS;
+    fsp_err_t err = FSP_SUCCESS;
 
 #if (AT_TRANSPORT_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(AT_TRANSPORT_DA16XXX_UART_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    FSP_PARAMETER_NOT_USED(mutex_flag);
+#endif
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+    BaseType_t volatile xSemRet = pdFALSE;
     if (0 != (mutex_flag & AT_TRANSPORT_DA16XXX_MUTEX_RX))
     {
         xSemRet = xSemaphoreGive(p_instance_ctrl->rx_sem);
@@ -834,6 +1113,7 @@ fsp_err_t rm_at_transport_da16xxx_uart_giveMutex (at_transport_da16xxx_ctrl_t * 
             return FSP_ERR_WIFI_FAILED;
         }
     }
+#endif
 
     return err;
 }
@@ -850,14 +1130,21 @@ fsp_err_t rm_at_transport_da16xxx_uart_giveMutex (at_transport_da16xxx_ctrl_t * 
 fsp_err_t rm_at_transport_da16xxx_uart_takeMutex (at_transport_da16xxx_ctrl_t * const p_ctrl, uint32_t mutex_flag)
 {
     at_transport_da16xxx_instance_ctrl_t * p_instance_ctrl = (at_transport_da16xxx_instance_ctrl_t *) p_ctrl;
-    BaseType_t volatile xSemRet = pdFALSE;
-    fsp_err_t           err     = FSP_SUCCESS;
+
+    fsp_err_t err = FSP_SUCCESS;
 
 #if (AT_TRANSPORT_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(AT_TRANSPORT_DA16XXX_UART_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    FSP_PARAMETER_NOT_USED(mutex_flag);
+#endif
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+    BaseType_t volatile xSemRet = pdFALSE;
     if (0 != (mutex_flag & AT_TRANSPORT_DA16XXX_MUTEX_TX))
     {
         if (NULL != p_instance_ctrl->tx_sem)
@@ -888,12 +1175,13 @@ fsp_err_t rm_at_transport_da16xxx_uart_takeMutex (at_transport_da16xxx_ctrl_t * 
             }
         }
     }
+#endif
 
     return err;
 }
 
 /*******************************************************************************************************************//**
- *  Parse the incoming DA16XXX error code and translates into FSP error.
+ *  Deletes semaphores and stream buffer, and closes any open UART channels
  *
  *  @param[in]  p_ctrl               Pointer to Transport layer instance control structure.
  *
@@ -901,7 +1189,7 @@ fsp_err_t rm_at_transport_da16xxx_uart_takeMutex (at_transport_da16xxx_ctrl_t * 
 static void rm_at_transport_da16xxx_cleanup_open (at_transport_da16xxx_ctrl_t * const p_ctrl)
 {
     at_transport_da16xxx_instance_ctrl_t * p_instance_ctrl = (at_transport_da16xxx_instance_ctrl_t *) p_ctrl;
-
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     /* Delete the semaphores */
     if (NULL != p_instance_ctrl->tx_sem)
     {
@@ -927,25 +1215,30 @@ static void rm_at_transport_da16xxx_cleanup_open (at_transport_da16xxx_ctrl_t * 
         vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT]);
         p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT] = NULL;
     }
+#endif
 
     uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
-    if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+    if (NULL != p_uart)
     {
-        p_uart->p_api->close(p_uart->p_ctrl);
-    }
-
-    if (p_instance_ctrl->num_uarts > 1)
-    {
-        if (NULL != p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT])
-        {
-            vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT]);
-            p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT] = NULL;
-        }
-
-        p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT];
         if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
         {
             p_uart->p_api->close(p_uart->p_ctrl);
+        }
+
+        if (p_instance_ctrl->num_uarts > 1)
+        {
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+            if (NULL != p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT])
+            {
+                vSemaphoreDelete(p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT]);
+                p_instance_ctrl->uart_tei_sem[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT] = NULL;
+            }
+#endif
+            p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_SECOND_PORT];
+            if (SCIU_OPEN == ((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+            {
+                p_uart->p_api->close(p_uart->p_ctrl);
+            }
         }
     }
 }
@@ -1083,9 +1376,19 @@ static void rm_at_transport_da16xxx_reset (at_transport_da16xxx_ctrl_t * const p
     /* Reset the wifi module */
     g_ioport.p_api->pinWrite(g_ioport.p_ctrl, p_extend->reset_pin, BSP_IO_LEVEL_LOW);
 
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_20MS, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_20MS));
+#endif
 
     g_ioport.p_api->pinWrite(g_ioport.p_ctrl, p_extend->reset_pin, BSP_IO_LEVEL_HIGH);
 
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+    R_BSP_SoftwareDelay(AT_TRANSPORT_DA16XXX_TIMEOUT_1MS, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
     vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_1MS));
+#endif
 }

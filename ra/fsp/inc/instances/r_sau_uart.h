@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 #ifndef R_SAU_UART_H
 #define R_SAU_UART_H
 
@@ -73,19 +59,18 @@ typedef enum e_sau_uart_signal_level
 
 typedef struct
 {
-    uint16_t prs;                      ///< Selection of operation clock
-    uint16_t stclk;                    ///< Transfer clock setting by dividing the operation clock
+    sau_operation_clock_t operation_clock; ///< Select operation clock
+    uint8_t               stclk;           ///< Transfer clock setting by dividing the operation clock
 } sau_uart_baudrate_setting_t;
 
 /** UART Configuration */
 typedef struct st_sau_uart_extended_cfg
 {
     /* UART generic configuration */
-    sau_operation_clock_t         operation_clock; ///< Select operation clock
-    sau_uart_transfer_mode_t      transfer_mode;   ///< Select single transfer mode or continuous transfer mode
-    sau_uart_data_sequence_t      sequence;        ///< Transfer sequence (LSB or MSB)
-    sau_uart_signal_level_t       signal_level;    ///< Transfer data signal level (standard or inverted)
-    sau_uart_baudrate_setting_t * p_baudrate;      ///< Baud rate setting (SPS and SDR value)
+    sau_uart_transfer_mode_t      transfer_mode; ///< Select single transfer mode or continuous transfer mode
+    sau_uart_data_sequence_t      sequence;      ///< Transfer sequence (LSB or MSB)
+    sau_uart_signal_level_t       signal_level;  ///< Transfer data signal level (standard or inverted)
+    sau_uart_baudrate_setting_t * p_baudrate;    ///< Baud rate setting (SPS and SDR value)
 } sau_uart_extended_cfg_t;
 
 /** UART instance control block. DO NOT INITIALIZE. */
@@ -98,11 +83,9 @@ typedef struct st_sau_uart_instance_ctrl
     uint8_t            sau_unit;        ///< SAU unit information
     uint8_t            sau_tx_channel;  ///< SAU channel information
     uint8_t          * p_src;           ///< Source buffer pointer
-    uint8_t          * p_dest;          ///< Destination buffer pointer
     uint32_t           tx_count;        ///< Size of destination buffer pointer from transmit ISR
+    uint8_t          * p_dest;          ///< Destination buffer pointer
     uint32_t           rx_count;        ///< Size of destination buffer pointer used for receiving data
-    uint32_t           tx_number;       ///< Number of data sent
-    uint32_t           rx_number;       ///< Number of data received
 
     /* Pointer to callback and optional working memory. */
     void (* p_callback)(uart_callback_args_t *);
@@ -128,12 +111,14 @@ fsp_err_t R_SAU_UART_BaudSet(uart_ctrl_t * const p_api_ctrl, void const * const 
 fsp_err_t R_SAU_UART_InfoGet(uart_ctrl_t * const p_api_ctrl, uart_info_t * const p_info);
 fsp_err_t R_SAU_UART_Close(uart_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SAU_UART_Abort(uart_ctrl_t * const p_api_ctrl, uart_dir_t communication_to_abort);
-fsp_err_t R_SAU_UART_BaudCalculate(uint32_t baudrate, sau_uart_baudrate_setting_t * const p_baud_setting);
 fsp_err_t R_SAU_UART_CallbackSet(uart_ctrl_t * const          p_api_ctrl,
                                  void (                     * p_callback)(uart_callback_args_t *),
                                  void const * const           p_context,
                                  uart_callback_args_t * const p_callback_memory);
 fsp_err_t R_SAU_UART_ReadStop(uart_ctrl_t * const p_api_ctrl, uint32_t * remaining_bytes);
+fsp_err_t R_SAU_UART_BaudCalculate(sau_uart_instance_ctrl_t * const    p_ctrl,
+                                   uint32_t                            baudrate,
+                                   sau_uart_baudrate_setting_t * const p_baud_setting);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SAU_UART)

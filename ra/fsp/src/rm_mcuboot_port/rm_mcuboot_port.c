@@ -46,7 +46,11 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     uint32_t vector_table = rsp->br_image_off + rsp->br_hdr->ih_hdr_size;
 
 #if RM_MCUBOOT_DUAL_BANK_ENABLED
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+    if (vector_table & (BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START - BSP_FEATURE_FLASH_CODE_FLASH_START))
+#else
     if (vector_table & BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START)
+#endif
     {
         R_FLASH_HP_BankSwap(gp_mcuboot_flash_ctrl);
 
@@ -71,7 +75,7 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     /* Disable MSP monitoring. */
 #if BSP_FEATURE_TZ_HAS_TRUSTZONE
     __set_MSPLIM(0);
-#else
+#elif BSP_FEATURE_BSP_HAS_SP_MON
     R_MPU_SPMON->SP[0].CTL = 0;
 #endif
 

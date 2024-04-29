@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -37,17 +23,25 @@
 #define SAU_SPI_SMR_INIT_VALUE       (0x0020U)
 #define SAU_SPI_SCR_INIT_VALUE       (0x0007U)
 
+#define SAU0_SPS_REG_INIT            ((BSP_CFG_SAU_CK01_DIV << R_SAU0_SPS_PRS1_Pos) | BSP_CFG_SAU_CK00_DIV)
+#define SAU1_SPS_REG_INIT            ((BSP_CFG_SAU_CK11_DIV << R_SAU0_SPS_PRS1_Pos) | BSP_CFG_SAU_CK10_DIV)
+
 #define SAU_SPI_PSR_MIN_DIV_2        (2U)
 #define SAU_SPI_PSR_MIN_DIV_4        (4U)
 #define SAU_SPI_SDR_STCLK_MAX_DIV    (256U)
 #define SAU_SPI_PSR_MAX_DIV          (32768U)
 #define R_SAU_SDR_DUMMY_DATA         (0xFFU)
+#define SAU_SPI_STCLK_MAX            (127)
+
 #if SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE == 1
  #define SAU_REG                     (R_SAU0)
+ #define SAU_SPS_REG_INIT            (SAU0_SPS_REG_INIT)
 #elif SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE == 2
  #define SAU_REG                     (R_SAU1)
+ #define SAU_SPS_REG_INIT            (SAU1_SPS_REG_INIT)
 #else
  #define SAU_REG                     (p_ctrl->p_reg)
+ #define SAU_SPS_REG_INIT            ((p_extend->sau_unit) ? SAU1_SPS_REG_INIT : SAU0_SPS_REG_INIT)
 #endif
 
 /** "SAU" in ASCII, used to determine if channel is open. */
@@ -399,15 +393,16 @@ fsp_err_t R_SAU_SPI_Close (spi_ctrl_t * const p_api_ctrl)
 /*******************************************************************************************************************//**
  * Calculate the register settings required to achieve the desired bitrate.
  *
- * @param[in]  bitrate            bitrate [bps]. For example, 250,000; 500,00; 16,000,000 (max), etc.
- * @param      sclk_div           Pointer to sau_spi_div_setting_t used to configure baudrate settings.
- * @param      sau_unit           Sau unit.
- * @param      channel            Sau channel.
+ * @note This function calculates the bitrate settings with both operation clocks CK0 and CK1, then selects the operation
+ * clock and register setting combination that would produce the lowest error.
  *
- * @retval     FSP_SUCCESS        Baud rate is set successfully.
- * @retval     FSP_ERR_ASSERTION  Baud rate is not achievable.
- * @note       The application must pause for 1 bit time after the BRR register is loaded before transmitting/receiving
- *             to allow time for the clock to settle.
+ * @param[in]  bitrate            bitrate [bps]. For example, 250,000; 500,00; 16,000,000 (max), etc.
+ * @param[out] sclk_div           Pointer to sau_spi_div_setting_t used to configure baudrate settings.
+ * @param      sau_unit           SAU unit.
+ * @param      channel            SAU channel.
+ *
+ * @retval     FSP_SUCCESS        Bitrate is calculated successfully.
+ * @retval     FSP_ERR_ASSERTION  Bitrate is not achievable or not valid for the selected unit/channel.
  **********************************************************************************************************************/
 fsp_err_t R_SAU_SPI_CalculateBitrate (uint32_t                bitrate,
                                       sau_spi_div_setting_t * sclk_div,
@@ -430,29 +425,44 @@ fsp_err_t R_SAU_SPI_CalculateBitrate (uint32_t                bitrate,
 
     FSP_ASSERT(bitrate >= (peripheral_clock) / SAU_SPI_SDR_STCLK_MAX_DIV / SAU_SPI_PSR_MAX_DIV);
 #else
-    FSP_PARAMETER_NOT_USED(sau_unit);
     FSP_PARAMETER_NOT_USED(channel);
 #endif
-    uint32_t temp_sdr            = 0;
-    uint32_t delta_error         = INT32_MAX;
-    uint32_t temp_delta_error    = 0;
-    uint32_t temp_actual_bitrate = 0;
+    uint32_t best_delta_error = UINT32_MAX;
 
-    for (uint8_t i = 0; i <= R_SAU0_SPS_PRS0_Msk; i++)
+#if SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE
+    const uint32_t sps = SAU_SPS_REG_INIT;
+    FSP_PARAMETER_NOT_USED(sau_unit);
+#else
+    const uint32_t sps = sau_unit ? SAU1_SPS_REG_INIT : SAU0_SPS_REG_INIT;
+#endif
+
+    /* Calculate settings twice, once for CK0 and once for CK1, selecting the result with the lowest error */
+    for (uint8_t prs_shift = 0; prs_shift <= R_SAU0_SPS_PRS1_Pos; prs_shift += R_SAU0_SPS_PRS1_Pos)
     {
-        /* Calculate BRR so that the bit rate is the largest possible value less than or equal to the desired
-         * bitrate. */
-        temp_sdr            = (uint32_t) (((peripheral_clock >> (i + 1)) / bitrate - 1) + 0.5); // NOLINT(readability-magic-numbers)
-        temp_actual_bitrate = (peripheral_clock >> (i + 1)) / ((temp_sdr + 1));
-        temp_delta_error    = bitrate >=
-                              temp_actual_bitrate ? (bitrate - temp_actual_bitrate) : (temp_actual_bitrate - bitrate);
-        if ((temp_delta_error < delta_error) && (temp_sdr <= INT8_MAX))
+        uint8_t prs = (sps >> prs_shift) & R_SAU0_SPS_PRS0_Msk;
+
+        /* To get the stclk divider calculate the divisor to apply to ICLK. There's a built in div/2. */
+        const uint32_t divisor = bitrate << (prs + 1);
+
+        /* Calculate stclk register value: STCLK = (f_mck / (2*bitrate)) - 1 */
+        const uint32_t stclk = (peripheral_clock + (divisor >> 1)) / divisor - 1;
+
+        /* Get the actual bitrate given the current settings.
+         * peripheral_clock / 2^prs / (2 * (stclk + 1)) */
+        const uint32_t actual_bitrate = (peripheral_clock >> (prs + 1)) / (stclk + 1);
+        uint32_t       delta_error    = bitrate > actual_bitrate ? bitrate - actual_bitrate : actual_bitrate - bitrate;
+
+        /* Keep settings which are valid and provide the lowest error. */
+        if ((stclk <= SAU_SPI_STCLK_MAX) && (delta_error < best_delta_error))
         {
-            sclk_div->stclk = (uint8_t) temp_sdr;
-            delta_error     = temp_delta_error;
-            sclk_div->prs   = i;
+            best_delta_error          = delta_error;
+            sclk_div->stclk           = (uint8_t) stclk;
+            sclk_div->operation_clock = (sau_spi_operation_clock_t) (prs_shift == R_SAU0_SPS_PRS1_Pos);
         }
     }
+
+    /* Return an error if no valid STCLK setting was found with either operation clock */
+    FSP_ERROR_RETURN(best_delta_error != UINT32_MAX, FSP_ERR_INVALID_ARGUMENT);
 
     return FSP_SUCCESS;
 }
@@ -486,19 +496,12 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
     /* Select the baud rate generator clock divider. */
     if (SPI_MODE_MASTER == p_cfg->operating_mode)
     {
-        if (SAU_SPI_OPERATION_CLOCK_CK0 == p_extend->operation_clock)
-        {
-            SAU_REG->SPS_b.PRS0 = (uint16_t) (p_extend->clk_div.prs & 0x0F);
-        }
-        else
-        {
-            SAU_REG->SPS_b.PRS1 = (uint16_t) (p_extend->clk_div.prs & 0x0F);
-        }
-
-        smr |= (uint16_t) (p_extend->operation_clock << R_SAU0_SMR_CKS_Pos);
+        /* Configure the operation clock divisor based on BSP settings */
+        SAU_REG->SPS = SAU_SPS_REG_INIT;
     }
 
     smr |=
+        (uint16_t) (p_extend->clk_div.operation_clock << R_SAU0_SMR_CKS_Pos) |
         (uint16_t) ((uint16_t) (p_cfg->operating_mode << R_SAU0_SMR_CCS_Pos) |
                     (uint16_t) (p_extend->transfer_mode << R_SAU0_SMR_MD0_Pos));
 
@@ -525,7 +528,8 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
 
     if (SPI_MODE_MASTER == p_cfg->operating_mode)
     {
-        SAU_REG->SDR[p_cfg->channel] = ((uint16_t) (p_extend->clk_div.stclk << R_SAU0_SDR_STCLK_Pos));
+        SAU_REG->SDR[p_cfg->channel] = (uint16_t) (p_extend->clk_div.stclk << R_SAU0_SDR_STCLK_Pos);
+
         if (SAU_SPI_CLOCK_PHASE_REVERSE == p_extend->clock_phase)
         {
             so &= (uint16_t) ~(1 << (R_SAU0_SO_CKO_Pos + p_cfg->channel));
@@ -540,6 +544,10 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
         SAU_REG->SDR[p_cfg->channel] = 0;
     }
 
+#if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
+    FSP_CRITICAL_SECTION_ENTER;
+#endif
+
 #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
     if (SPI_MODE_MASTER == p_cfg->operating_mode)
     {
@@ -547,16 +555,11 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
     }
 
 #else
-    so &= (uint16_t) ~(1 << (p_cfg->channel));
- #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_ENTER;
- #endif
+    so           &= (uint16_t) ~(1 << (p_cfg->channel));
     SAU_REG->SO   = so;
     SAU_REG->SOE |= (uint16_t) (1 << (p_cfg->channel));
- #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_EXIT;
- #endif
 #endif
+
     if ((0 == p_extend->sau_unit) && (0 == p_cfg->channel))
     {
         if (SPI_MODE_SLAVE == p_cfg->operating_mode)
@@ -565,9 +568,6 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
         }
     }
 
-#if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_ENTER;
-#endif
     SAU_REG->SS |= (uint16_t) (1 << (p_cfg->channel));
 #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
     FSP_CRITICAL_SECTION_EXIT;
@@ -678,16 +678,13 @@ static void r_sau_spi_start_transfer (sau_spi_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_sau_spi_transmit (sau_spi_instance_ctrl_t * p_ctrl)
 {
-    spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
-    if (p_ctrl->p_src)
-    {
-        SAU_REG->SDR_b[p_cfg->channel].DAT = (p_ctrl->p_src[p_ctrl->tx_count]);
-    }
-    else
-    {
-        /* start receive by dummy write */
-        SAU_REG->SDR_b[p_cfg->channel].DAT = R_SAU_SDR_DUMMY_DATA;
-    }
+    spi_cfg_t const        * p_cfg    = p_ctrl->p_cfg;
+    sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_cfg->p_extend;
+
+    uint16_t dat = (uint16_t) (p_extend->clk_div.stclk << R_SAU0_SDR_STCLK_Pos);
+
+    dat |= p_ctrl->p_src ? p_ctrl->p_src[p_ctrl->tx_count] : R_SAU_SDR_DUMMY_DATA;
+    SAU_REG->SDR[p_cfg->channel] = dat;
 
     p_ctrl->tx_count++;
 }
@@ -704,14 +701,10 @@ static void r_sau_spi_transmit (sau_spi_instance_ctrl_t * p_ctrl)
 static void r_sau_spi_receive (sau_spi_instance_ctrl_t * p_ctrl)
 {
     spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
-    if (p_ctrl->p_dest)
+    uint8_t           dat   = (uint8_t) (SAU_REG->SDR[p_cfg->channel] & R_SAU_SDR_DUMMY_DATA);
+    if (p_ctrl)
     {
-        p_ctrl->p_dest[p_ctrl->rx_count] = (uint8_t) SAU_REG->SDR_b[p_cfg->channel].DAT;
-    }
-    else
-    {
-        /* Read the received data but do nothing with it. */
-        SAU_REG->SDR_b[p_cfg->channel].DAT;
+        p_ctrl->p_dest[p_ctrl->rx_count] = dat;
     }
 
     p_ctrl->rx_count++;
@@ -744,16 +737,17 @@ static void r_sau_spi_call_callback (sau_spi_instance_ctrl_t * p_ctrl, spi_event
  **********************************************************************************************************************/
 void sau_spi_txrxi_isr (void)
 {
-    uint8_t                   err_type;
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE;
+
     IRQn_Type                 irq    = R_FSP_CurrentIrqGet();
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     spi_cfg_t const         * p_cfg  = p_ctrl->p_cfg;
 
-    err_type = (uint8_t) (SAU_REG->SSR[p_cfg->channel] & R_SAU0_SSR_OVF_Msk);
-    SAU_REG->SIR[p_cfg->channel] = (uint16_t) err_type;
-
-    if (1U == err_type)
+    uint16_t err_type = SAU_REG->SSR[p_cfg->channel] & R_SAU0_SSR_OVF_Msk;
+    if (err_type)
     {
+        SAU_REG->SIR[p_cfg->channel] = err_type;
         r_sau_spi_call_callback(p_ctrl, SPI_EVENT_ERR_READ_OVERFLOW);
     }
     else
@@ -766,6 +760,9 @@ void sau_spi_txrxi_isr (void)
         r_sau_spi_do_transmission_reception(p_ctrl, p_cfg);
 #endif
     }
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE;
 }
 
 #if (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION)

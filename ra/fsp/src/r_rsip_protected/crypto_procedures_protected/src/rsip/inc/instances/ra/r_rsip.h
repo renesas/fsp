@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup RSIP_PROTECTED
@@ -162,6 +148,19 @@ fsp_err_t R_RSIP_EncryptedKeyWrap(rsip_ctrl_t * const                 p_ctrl,
                                   rsip_key_type_t const               key_type,
                                   uint8_t const * const               p_encrypted_key,
                                   rsip_wrapped_key_t * const          p_wrapped_key);
+fsp_err_t R_RSIP_RFC3394_KeyWrap (rsip_ctrl_t * const              p_ctrl,
+                                  rsip_wrapped_key_t const * const p_wrapped_kek,
+                                  rsip_wrapped_key_t const * const p_wrapped_target_key,
+                                  uint8_t * const                  p_rfc3394_wrapped_target_key);
+fsp_err_t R_RSIP_RFC3394_KeyUnwrap (rsip_ctrl_t * const              p_ctrl,
+                                    rsip_wrapped_key_t const * const p_wrapped_kek,
+                                    rsip_key_type_t const            key_type,
+                                    uint8_t const * const            p_rfc3394_wrapped_target_key,
+                                    rsip_wrapped_key_t * const       p_wrapped_target_key);
+fsp_err_t R_RSIP_InjectedKeyImport (rsip_key_type_t const      key_type,
+                                    uint8_t const * const      p_injected_key,
+                                    rsip_wrapped_key_t * const p_wrapped_key,
+                                    uint32_t const             wrapped_key_buffer_length);
 fsp_err_t R_RSIP_PublicKeyExport(rsip_wrapped_key_t const * const p_wrapped_public_key,
                                  uint8_t * const                  p_raw_public_key);
 
@@ -316,6 +315,12 @@ fsp_err_t R_RSIP_HMAC_SignFinish(rsip_ctrl_t * const p_ctrl, uint8_t * const p_m
 fsp_err_t R_RSIP_HMAC_VerifyFinish(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_mac, uint32_t const mac_length);
 fsp_err_t R_RSIP_HMAC_Suspend(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t * const p_handle);
 fsp_err_t R_RSIP_HMAC_Resume(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t const * const p_handle);
+
+/* r_rsip_otf.c */
+fsp_err_t R_RSIP_OTF_Init(rsip_ctrl_t * const        p_ctrl,
+                          rsip_otf_channel_t const   channel,
+                          rsip_wrapped_key_t * const p_wrapped_key,
+                          uint8_t const * const      p_seed);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

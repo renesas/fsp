@@ -1,25 +1,10 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #include "common.h"
-
 
 #if defined(MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C)
 
@@ -28,7 +13,7 @@
 /* Auto-generated values depending on which drivers are registered.
  * ID 0 is reserved for unallocated operations.
  * ID 1 is reserved for the Mbed TLS software driver. */
-#define PSA_CRYPTO_MBED_TLS_DRIVER_ID (1)
+ #define PSA_CRYPTO_MBED_TLS_DRIVER_ID    (1)
 
 /** Determine standard key size in bits for a vendor type key bit size associated with an elliptic curve.
  *  THis function is invoked during key generation and the user specifies the bits which will be the
@@ -202,10 +187,10 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 void psa_aead_setup_vendor (void * ctx)
 {
     (void) ctx;
-#if defined(MBEDTLS_AES_ALT)	
-    mbedtls_aes_context *context = (mbedtls_aes_context *)ctx;
+ #if defined(MBEDTLS_AES_ALT)
+    mbedtls_aes_context * context = (mbedtls_aes_context *) ctx;
     context->vendor_ctx = (bool *) true;
-#endif	
+ #endif
 }
 
 #endif                                 /* MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C */

@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_RSIP_WRAPPER_H
 #define R_RSIP_WRAPPER_H
@@ -36,6 +22,8 @@
 #define RSIP_OEM_KEY_SIZE_ECC_SECP256R1_PRIVATE_KEY_INST_DATA_WORD    (12)
 #define RSIP_OEM_KEY_SIZE_ECC_SECP384R1_PUBLIC_KEY_INST_DATA_WORD     (28)
 #define RSIP_OEM_KEY_SIZE_ECC_SECP384R1_PRIVATE_KEY_INST_DATA_WORD    (16)
+#define RSIP_OEM_KEY_SIZE_ECC_SECP521R1_PUBLIC_KEY_INST_DATA_WORD     (44)
+#define RSIP_OEM_KEY_SIZE_ECC_SECP521R1_PRIVATE_KEY_INST_DATA_WORD    (24)
 
 #define RSIP_OEM_KEY_SIZE_HMAC_SHA256_KEY_INST_DATA_WORD              (12)
 
@@ -77,7 +65,16 @@ rsip_ret_t r_rsip_wrapper_pf6_secp384r1(const uint32_t InData_KeyIndex[],
                                         const uint32_t InData_MsgDgst[],
                                         const uint32_t InData_Signature[]);
 rsip_ret_t r_rsip_wrapper_pf9_secp384r1(uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p11_secp521r1(const uint32_t InData_KeyIndex[],
+                                        const uint32_t InData_MsgDgst[],
+                                        uint32_t       OutData_Signature[]);
+rsip_ret_t r_rsip_wrapper_p12_secp521r1(const uint32_t InData_KeyIndex[],
+                                        const uint32_t InData_MsgDgst[],
+                                        const uint32_t InData_Signature[]);
+rsip_ret_t r_rsip_wrapper_p13_secp521r1(uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 rsip_ret_t r_rsip_wrapper_p2b_rsa2048(uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p3a_rsa3072(uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p3b_rsa4096(uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 rsip_ret_t r_rsip_wrapper_p6f_aes128(const uint32_t InData_IV[],
                                      const uint32_t InData_InstData[],
                                      uint32_t       OutData_KeyIndex[]);
@@ -102,6 +99,12 @@ rsip_ret_t r_rsip_wrapper_p6f_secp384r1_pub(const uint32_t InData_IV[],
 rsip_ret_t r_rsip_wrapper_p6f_secp384r1_priv(const uint32_t InData_IV[],
                                              const uint32_t InData_InstData[],
                                              uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p6f_secp521r1_pub(const uint32_t InData_IV[],
+                                            const uint32_t InData_InstData[],
+                                            uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p6f_secp521r1_priv(const uint32_t InData_IV[],
+                                             const uint32_t InData_InstData[],
+                                             uint32_t       OutData_KeyIndex[]);
 rsip_ret_t r_rsip_wrapper_p6f_rsa2048_pub(const uint32_t InData_IV[],
                                           const uint32_t InData_InstData[],
                                           uint32_t       OutData_KeyIndex[]);
@@ -123,6 +126,22 @@ rsip_ret_t r_rsip_wrapper_p6f_rsa4096_priv(const uint32_t InData_IV[],
 rsip_ret_t r_rsip_wrapper_p6f_hmacsha256(const uint32_t InData_IV[],
                                          const uint32_t InData_InstData[],
                                          uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p8f_aes128 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_WrappedKeyIndex[],
+                                      uint32_t              OutData_Text[]);
+rsip_ret_t r_rsip_wrapper_p8f_aes256 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_WrappedKeyIndex[],
+                                      uint32_t              OutData_Text[]);
+rsip_ret_t r_rsip_wrapper_p90_aes128 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_Text[],
+                                      uint32_t              OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p90_aes256 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_Text[],
+                                      uint32_t              OutData_KeyIndex[]);
 
 /* AES-ECB/CBC/CTR */
 rsip_ret_t r_rsip_wrapper_p47i_aes128ecb_encrypt(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);

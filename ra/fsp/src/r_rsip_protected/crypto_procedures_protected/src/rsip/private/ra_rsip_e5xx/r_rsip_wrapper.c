@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -27,6 +13,8 @@
 #include "r_rsip_reg.h"
 #include "r_rsip_addr.h"
 #include "r_rsip_util.h"
+#include "r_rsip_public.h"
+#include "r_rsip_cfg.h"
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -53,8 +41,17 @@
 #define RSIP_PRV_CMD_AES_CMAC_VERIFY_WITH_REMAINDER         (3U)
 
 /* For RSA */
-/* Maximum retry count of RSA key generation derived from FIPS186-4 B.3.3. 4.7 and 5.8 */
+/*
+ * Maximum retry count of RSA key generation derived from FIPS186-4 B.3.3. 4.7 and 5.8 (1024, 2048, 3072)
+ * Maximum retry count of RSA key generation derived from FIPS186-5 A.1.3. 4.7 and 5.8 (4096)
+ */
 #define RSIP_PRV_MAX_RETRY_COUNT_KEY_GEN_RSA_2048           (2 * (5 * 2048 / 2))
+#define RSIP_PRV_MAX_RETRY_COUNT_KEY_GEN_RSA_3072           (2 * (5 * 3072 / 2))
+#define RSIP_PRV_MAX_RETRY_COUNT_KEY_GEN_RSA_4096           (5 * 4096 + 10 * 4096)
+
+/* For RFC3394 Key Wrap */
+#define RSIP_PRV_WORD_SIZE_RFC3394_WRAPPED_KEY_AES_128      (6U)
+#define RSIP_PRV_WORD_SIZE_RFC3394_WRAPPED_KEY_AES_256      (10U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -124,9 +121,19 @@ typedef enum e_rsip_oem_cmd
     RSIP_OEM_CMD_NUM
 } rsip_oem_cmd_t;
 
+typedef enum e_rsip_rfc3394_key_wrap_type
+{
+    RSIP_RFC3394_KEY_WRAP_TYPE_AES128,
+    RSIP_RFC3394_KEY_WRAP_TYPE_AES192,
+    RSIP_RFC3394_KEY_WRAP_TYPE_AES256
+} rsip_rfc3394_key_wrap_type_t;
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
+
+static rsip_ret_t select_rfc3394_key_wrap_mode (const rsip_key_type_t key_type,
+                                                uint32_t              WrappedKeyType[]);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -199,9 +206,45 @@ rsip_ret_t r_rsip_wrapper_pf9_secp384r1 (uint32_t OutData_PubKeyIndex[], uint32_
     return r_rsip_pf9(InData_CurveType, p_domain_param, OutData_PubKeyIndex, OutData_PrivKeyIndex);
 }
 
+
+rsip_ret_t r_rsip_wrapper_p11_secp521r1 (const uint32_t InData_KeyIndex[],
+                                         const uint32_t InData_MsgDgst[],
+                                         uint32_t       OutData_Signature[])
+{
+    const uint32_t * InData_DomainParam = DomainParam_NIST_P521;
+
+    return r_rsip_p11(InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature);
+}
+
+rsip_ret_t r_rsip_wrapper_p12_secp521r1 (const uint32_t InData_KeyIndex[],
+                                         const uint32_t InData_MsgDgst[],
+                                         const uint32_t InData_Signature[])
+{
+    const uint32_t * InData_DomainParam = DomainParam_NIST_P521;
+
+    return r_rsip_p12(InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam);
+}
+
+rsip_ret_t r_rsip_wrapper_p13_secp521r1 (uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[])
+{
+    uint32_t const * p_domain_param      = DomainParam_NIST_P521;
+
+    return r_rsip_p13(p_domain_param, OutData_PubKeyIndex, OutData_PrivKeyIndex);
+}
+
 rsip_ret_t r_rsip_wrapper_p2b_rsa2048 (uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[])
 {
     return r_rsip_p2b(RSIP_PRV_MAX_RETRY_COUNT_KEY_GEN_RSA_2048, OutData_PubKeyIndex, OutData_PrivKeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_p3a_rsa3072 (uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[])
+{
+    return r_rsip_p3a(RSIP_PRV_MAX_RETRY_COUNT_KEY_GEN_RSA_3072, OutData_PubKeyIndex, OutData_PrivKeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_p3b_rsa4096 (uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[])
+{
+    return r_rsip_p3b(RSIP_PRV_MAX_RETRY_COUNT_KEY_GEN_RSA_4096, OutData_PubKeyIndex, OutData_PrivKeyIndex);
 }
 
 rsip_ret_t r_rsip_wrapper_p6f_aes128 (const uint32_t InData_IV[],
@@ -300,6 +343,30 @@ rsip_ret_t r_rsip_wrapper_p6f_secp384r1_priv (const uint32_t InData_IV[],
     return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
 }
 
+rsip_ret_t r_rsip_wrapper_p6f_secp521r1_pub (const uint32_t InData_IV[],
+                                             const uint32_t InData_InstData[],
+                                             uint32_t       OutData_KeyIndex[])
+{
+    uint32_t CMD[1] = {bswap_32big(RSIP_OEM_CMD_ECC_SECP521R1_PUBLIC)};
+    uint32_t LC[1]  = {0};
+    LC[0]          = R_PSCU->DLMMON;
+    INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_ECC_SECP521R1_PUBLIC_KEY_INST_DATA_WORD;
+
+    return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_p6f_secp521r1_priv (const uint32_t InData_IV[],
+                                              const uint32_t InData_InstData[],
+                                              uint32_t       OutData_KeyIndex[])
+{
+    uint32_t CMD[1] = {bswap_32big(RSIP_OEM_CMD_ECC_SECP521R1_PRIVATE)};
+    uint32_t LC[1]  = {0};
+    LC[0]          = R_PSCU->DLMMON;
+    INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_ECC_SECP521R1_PRIVATE_KEY_INST_DATA_WORD;
+
+    return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
 rsip_ret_t r_rsip_wrapper_p6f_rsa2048_pub (const uint32_t InData_IV[],
                                            const uint32_t InData_InstData[],
                                            uint32_t       OutData_KeyIndex[])
@@ -382,6 +449,76 @@ rsip_ret_t r_rsip_wrapper_p6f_hmacsha256 (const uint32_t InData_IV[],
     INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_HMAC_SHA256_KEY_INST_DATA_WORD;
 
     return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_p8f_aes128 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_WrappedKeyIndex[],
+                                      uint32_t              OutData_Text[])
+{
+    uint32_t InData_Cmd[1] = {bswap_32big(0)};
+    uint32_t InData_WrappedKeyType[1];
+
+    rsip_ret_t err = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
+    if (RSIP_RET_PASS == err)
+    {
+        err = r_rsip_p8f(InData_Cmd, InData_KeyIndex, InData_WrappedKeyType, InData_WrappedKeyIndex, OutData_Text);
+    }
+
+    return err;
+}
+
+rsip_ret_t r_rsip_wrapper_p8f_aes256 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_WrappedKeyIndex[],
+                                      uint32_t              OutData_Text[])
+{
+    uint32_t InData_Cmd[1] = {bswap_32big(1)};
+    uint32_t InData_WrappedKeyType[1];
+
+    rsip_ret_t err = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
+    if (RSIP_RET_PASS == err)
+    {
+        err = r_rsip_p8f(InData_Cmd, InData_KeyIndex, InData_WrappedKeyType, InData_WrappedKeyIndex, OutData_Text);
+    }
+
+    return err;
+}
+
+rsip_ret_t r_rsip_wrapper_p90_aes128 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_Text[],
+                                      uint32_t              OutData_KeyIndex[])
+{
+    uint32_t InData_KeyType[1] = {bswap_32big(0)};
+    uint32_t InData_Cmd[1]     = {bswap_32big(0)};
+    uint32_t InData_WrappedKeyType[1];
+
+    rsip_ret_t err = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
+    if (RSIP_RET_PASS == err)
+    {
+        err = r_rsip_p90(InData_KeyType, InData_Cmd, InData_KeyIndex, InData_WrappedKeyType, InData_Text, OutData_KeyIndex);
+    }
+
+    return err;
+}
+
+rsip_ret_t r_rsip_wrapper_p90_aes256 (const uint32_t        InData_KeyIndex[],
+                                      const rsip_key_type_t key_type,
+                                      const uint32_t        InData_Text[],
+                                      uint32_t              OutData_KeyIndex[])
+{
+    uint32_t InData_KeyType[1] = {bswap_32big(0)};
+    uint32_t InData_Cmd[1]     = {bswap_32big(1)};
+    uint32_t InData_WrappedKeyType[1];
+
+    rsip_ret_t err = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
+    if (RSIP_RET_PASS == err)
+    {
+        err = r_rsip_p90(InData_KeyType, InData_Cmd, InData_KeyIndex, InData_WrappedKeyType, InData_Text, OutData_KeyIndex);
+    }
+
+    return err;
 }
 
 rsip_ret_t r_rsip_wrapper_p47i_aes128ecb_encrypt (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
@@ -677,3 +814,49 @@ rsip_ret_t r_rsip_wrapper_p44f_aes256mac_verify (const uint32_t * InData_Text,
 /***********************************************************************************************************************
  * Private Functions
  **********************************************************************************************************************/
+
+static rsip_ret_t select_rfc3394_key_wrap_mode (const rsip_key_type_t key_type,
+                                                uint32_t              WrappedKeyType[])
+{
+    rsip_alg_t alg     = r_rsip_key_type_to_alg(key_type);
+    uint32_t   subtype = r_rsip_key_type_to_subtype(key_type);
+
+    rsip_ret_t err = RSIP_RET_PASS;
+    switch (alg)
+    {
+        case RSIP_ALG_AES:
+        {
+            switch (subtype)
+            {
+                case RSIP_KEY_AES_128:
+                {
+                    WrappedKeyType[0] = bswap_32big(RSIP_RFC3394_KEY_WRAP_TYPE_AES128);
+                    KEY_INDEX_SIZE    = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_128);
+                    WRAPPED_KEY_SIZE  = RSIP_PRV_WORD_SIZE_RFC3394_WRAPPED_KEY_AES_128;
+                    break;
+                }
+
+                case RSIP_KEY_AES_256:
+                {
+                    WrappedKeyType[0] = bswap_32big(RSIP_RFC3394_KEY_WRAP_TYPE_AES256);
+                    KEY_INDEX_SIZE    = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_256);
+                    WRAPPED_KEY_SIZE  = RSIP_PRV_WORD_SIZE_RFC3394_WRAPPED_KEY_AES_256;
+                    break;
+                }
+
+                default:
+                {
+                    err = RSIP_RET_KEY_FAIL;
+                }
+            }
+            break;
+        }
+
+        default:
+        {
+            err = RSIP_RET_KEY_FAIL;
+        }
+    }
+
+    return err;
+}

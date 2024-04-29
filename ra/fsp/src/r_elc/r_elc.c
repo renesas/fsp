@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -152,9 +138,11 @@ fsp_err_t R_ELC_Close (elc_ctrl_t * const p_ctrl)
     uint8_t volatile * p_elcr = &R_ELC->ELCR;
 
 #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
-
-    /* Access ELCR using the non-secure alias. */
-    p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+    if (1 == R_ELC->ELCSARA_b.ELCR)
+    {
+        /* Access ELCR using the non-secure alias. */
+        p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+    }
 #endif
 
     /* Globally disable the operation of the Event Link Controller */
@@ -227,6 +215,34 @@ fsp_err_t R_ELC_LinkSet (elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral,
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
+#if BSP_TZ_SECURE_BUILD
+
+    /* Disable write protection to SAR registers */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
+
+    /* Configure security attribution for ELSRn */
+    /* Devices that only have ELCSARB */
+ #if BSP_FEATURE_ELC_VERSION == 2
+
+    R_ELC->ELCSARB &= (uint32_t)  ~(1 << peripheral);
+
+    /* Devices that have ELCSARB and ELCSARC */
+ #elif BSP_FEATURE_ELC_VERSION == 1
+    if (peripheral < 16)
+    {
+        R_ELC->ELCSARB &= (uint16_t) ~(1U << peripheral);
+    }
+    else
+    {
+        R_ELC->ELCSARC &= (uint16_t) ~(1U << (peripheral - 16U));
+    }
+ #endif
+
+    /* Restore write protection to SAR registers */
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
+
+#endif
+
     /* Set the event link register for the corresponding peripheral to the given signal */
     R_ELC->ELSR[(uint32_t) peripheral].HA = (uint16_t) signal;
 
@@ -278,9 +294,11 @@ fsp_err_t R_ELC_Enable (elc_ctrl_t * const p_ctrl)
     uint8_t volatile * p_elcr = &R_ELC->ELCR;
 
 #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
-
-    /* Access ELCR using the non-secure alias. */
-    p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+    if (1 == R_ELC->ELCSARA_b.ELCR)
+    {
+        /* Access ELCR using the non-secure alias. */
+        p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+    }
 #endif
 
     /* Globally enable ELC function */
@@ -310,9 +328,11 @@ fsp_err_t R_ELC_Disable (elc_ctrl_t * const p_ctrl)
     uint8_t volatile * p_elcr = &R_ELC->ELCR;
 
 #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
-
-    /* Access ELCR using the non-secure alias. */
-    p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+    if (1 == R_ELC->ELCSARA_b.ELCR)
+    {
+        /* Access ELCR using the non-secure alias. */
+        p_elcr = (uint8_t volatile *) ((uint32_t) p_elcr | BSP_FEATURE_TZ_NS_OFFSET);
+    }
 #endif
 
     /* Globally disable ELC function */

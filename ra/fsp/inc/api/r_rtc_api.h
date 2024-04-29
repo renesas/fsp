@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_RTC_API_H
 #define R_RTC_API_H
@@ -157,7 +143,16 @@ typedef enum e_rtc_time_capture_source
     RTC_TIME_CAPTURE_SOURCE_PIN_RISING  = 1, ///< Rising edge pin trigger
     RTC_TIME_CAPTURE_SOURCE_PIN_FALLING = 2, ///< Falling edge pin trigger
     RTC_TIME_CAPTURE_SOURCE_PIN_BOTH    = 3, ///< Both edges pin trigger
+    RTC_TIME_CAPTURE_SOURCE_SOFTWARE    = 4, ///< Software trigger
+    RTC_TIME_CAPTURE_SOURCE_ELC_EVENT   = 5, ///< ELC event trigger
 } rtc_time_capture_source_t;
+
+/** Time capture trigger mode */
+typedef enum e_rtc_time_capture_mode
+{
+    RTC_TIME_CAPTURE_MODE_CONTINUOUS  = 0, ///< Continuous capturing to all capturing channels
+    RTC_TIME_CAPTURE_MODE_ONE_SHOT    = 1, ///< Single capture to a particular channel
+} rtc_time_capture_mode_t;
 
 /** Time capture noise filter control */
 typedef enum e_rtc_time_capture_noise_filter
@@ -171,6 +166,8 @@ typedef enum e_rtc_time_capture_noise_filter
 
 /** Date and time structure defined in C standard library <time.h> */
 typedef struct tm rtc_time_t;
+
+#ifndef BSP_OVERRIDE_RTC_ALARM_TIME_T
 
 /** Alarm time setting structure */
 typedef struct st_rtc_alarm_time
@@ -192,14 +189,16 @@ typedef struct st_rtc_alarm_time
     bool                saturday_match;  ///< Enable the alarm on Saturday
     rtc_alarm_channel_t channel;         ///< Select alarm 0 or alarm 1
 } rtc_alarm_time_t;
+#endif
 
 /** Time capture configuration structure */
 typedef struct st_rtc_time_capture
 {
-    rtc_time_t                      time;         ///< Time structure
-    uint8_t                         channel;      ///< Capture channel
-    rtc_time_capture_source_t       source;       ///< Trigger source
-    rtc_time_capture_noise_filter_t noise_filter; ///< Noise filter
+    rtc_time_t                      time;             ///< Time structure
+    uint8_t                         channel;          ///< Capture channel
+    rtc_time_capture_source_t       source;           ///< Trigger source
+    rtc_time_capture_noise_filter_t noise_filter;     ///< Noise filter
+    rtc_time_capture_mode_t         mode;             ///< Capture mode
 } rtc_time_capture_t;
 
 /** RTC Information Structure for information returned by  infoGet() */

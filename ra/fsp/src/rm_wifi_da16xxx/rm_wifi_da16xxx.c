@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -30,52 +16,53 @@
  **********************************************************************************************************************/
 
 /* Mutex give/take defines */
-#define WIFI_DA16XXX_MUTEX_TX                  (1 << 0)
-#define WIFI_DA16XXX_MUTEX_RX                  (1 << 1)
+#define WIFI_DA16XXX_MUTEX_TX                   (1 << 0)
+#define WIFI_DA16XXX_MUTEX_RX                   (1 << 1)
 
-#define WIFI_DA16XXX_TEMP_BUFFER_SIZE          (256)
+#define WIFI_DA16XXX_TEMP_BUFFER_SIZE           (256)
 
 /* Text full versions of AT command returns */
-#define WIFI_DA16XXX_RETURN_TEXT_OK            "OK"
-#define WIFI_DA16XXX_RETURN_CONN_TEXT          "+WFJAP:1"
+#define WIFI_DA16XXX_RETURN_TEXT_OK             "OK"
+#define WIFI_DA16XXX_RETURN_CONN_TEXT           "+WFJAP:1"
 
 /* Predefined timeout values */
-#define WIFI_DA16XXX_TIMEOUT_1MS               (1)
-#define WIFI_DA16XXX_TIMEOUT_3MS               (3)
-#define WIFI_DA16XXX_TIMEOUT_5MS               (5)
-#define WIFI_DA16XXX_TIMEOUT_10MS              (10)
-#define WIFI_DA16XXX_TIMEOUT_20MS              (20)
-#define WIFI_DA16XXX_TIMEOUT_30MS              (30)
-#define WIFI_DA16XXX_TIMEOUT_100MS             (100)
-#define WIFI_DA16XXX_TIMEOUT_200MS             (200)
-#define WIFI_DA16XXX_TIMEOUT_300MS             (300)
-#define WIFI_DA16XXX_TIMEOUT_400MS             (400)
-#define WIFI_DA16XXX_TIMEOUT_500MS             (500)
-#define WIFI_DA16XXX_TIMEOUT_1SEC              (1000)
-#define WIFI_DA16XXX_TIMEOUT_2SEC              (2000)
-#define WIFI_DA16XXX_TIMEOUT_3SEC              (3000)
-#define WIFI_DA16XXX_TIMEOUT_4SEC              (4000)
-#define WIFI_DA16XXX_TIMEOUT_5SEC              (5000)
-#define WIFI_DA16XXX_TIMEOUT_8SEC              (8000)
-#define WIFI_DA16XXX_TIMEOUT_15SEC             (15000)
-#define WIFI_DA16XXX_TIMEOUT_20SEC             (20000)
+#define WIFI_DA16XXX_TIMEOUT_1MS                (1)
+#define WIFI_DA16XXX_TIMEOUT_3MS                (3)
+#define WIFI_DA16XXX_TIMEOUT_5MS                (5)
+#define WIFI_DA16XXX_TIMEOUT_10MS               (10)
+#define WIFI_DA16XXX_TIMEOUT_20MS               (20)
+#define WIFI_DA16XXX_TIMEOUT_30MS               (30)
+#define WIFI_DA16XXX_TIMEOUT_100MS              (100)
+#define WIFI_DA16XXX_TIMEOUT_200MS              (200)
+#define WIFI_DA16XXX_TIMEOUT_300MS              (300)
+#define WIFI_DA16XXX_TIMEOUT_400MS              (400)
+#define WIFI_DA16XXX_TIMEOUT_500MS              (500)
+#define WIFI_DA16XXX_TIMEOUT_1SEC               (1000)
+#define WIFI_DA16XXX_TIMEOUT_2SEC               (2000)
+#define WIFI_DA16XXX_TIMEOUT_3SEC               (3000)
+#define WIFI_DA16XXX_TIMEOUT_4SEC               (4000)
+#define WIFI_DA16XXX_TIMEOUT_5SEC               (5000)
+#define WIFI_DA16XXX_TIMEOUT_8SEC               (8000)
+#define WIFI_DA16XXX_TIMEOUT_15SEC              (15000)
+#define WIFI_DA16XXX_TIMEOUT_20SEC              (20000)
 
 /* Minimum string size for getting local time string */
-#define WIFI_DA16XXX_LOCAL_TIME_STR_SIZE       (25)
+#define WIFI_DA16XXX_LOCAL_TIME_STR_SIZE        (25)
 
-#define HOURS_IN_SECONDS                       (3600)
-
+#define HOURS_IN_SECONDS                        (3600)
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
 /* Socket Types supported */
-#define WIFI_DA16XXX_SOCKET_TYPE_TCP_SERVER    (0)
-#define WIFI_DA16XXX_SOCKET_TYPE_TCP_CLIENT    (1)
-#define WIFI_DA16XXX_SOCKET_TYPE_UDP           (2)
-#define WIFI_DA16XXX_SOCKET_TYPE_MAX           (3)
+ #define WIFI_DA16XXX_SOCKET_TYPE_TCP_SERVER    (0)
+ #define WIFI_DA16XXX_SOCKET_TYPE_TCP_CLIENT    (1)
+ #define WIFI_DA16XXX_SOCKET_TYPE_UDP           (2)
+ #define WIFI_DA16XXX_SOCKET_TYPE_MAX           (3)
 
-#define sbFLAGS_IS_MESSAGE_BUFFER              ((uint8_t) 1)   /* Set if the stream buffer was created as a message buffer, in which case it holds discrete messages rather than a stream. */
-#define sbBYTES_TO_STORE_MESSAGE_LENGTH        (sizeof(configMESSAGE_BUFFER_LENGTH_TYPE))
+ #define sbFLAGS_IS_MESSAGE_BUFFER              ((uint8_t) 1) /* Set if the stream buffer was created as a message buffer, in which case it holds discrete messages rather than a stream. */
+ #define sbBYTES_TO_STORE_MESSAGE_LENGTH        (sizeof(configMESSAGE_BUFFER_LENGTH_TYPE))
+#endif
 
 /* Unique number for WIFI Open status */
-#define WIFI_OPEN                              (0x57495749ULL) // Is "WIFI" in ASCII
+#define WIFI_OPEN                               (0x57495749ULL) // Is "WIFI" in ASCII
 
 /***********************************************************************************************************************
  * Enumerations
@@ -100,6 +87,7 @@ typedef enum
 /* Control instance for the da16xxx wifi module */
 static wifi_da16xxx_instance_ctrl_t g_rm_wifi_da16xxx_instance;
 
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
 static uint8_t rx_buffer[WIFI_DA16XXX_TEMP_BUFFER_SIZE] = {0};
 static uint8_t rx_data_index = 0;
 
@@ -114,13 +102,13 @@ typedef struct StreamBufferDef_t                 /*lint !e9058 Style convention 
     volatile TaskHandle_t xTaskWaitingToSend;    /* Holds the handle of a task waiting to send data to a message buffer that is full. */
     uint8_t             * pucBuffer;             /* Points to the buffer itself - that is - the RAM that stores the data passed through the buffer. */
     uint8_t               ucFlags;
-#if (configUSE_TRACE_FACILITY == 1)
+ #if (configUSE_TRACE_FACILITY == 1)
     UBaseType_t uxStreamBufferNumber;            /* Used for tracing purposes. */
-#endif
+ #endif
 } StreamBuffer_t;
 
-#ifndef sbRECEIVE_COMPLETED
- #define sbRECEIVE_COMPLETED(pxStreamBuffer)                                                   \
+ #ifndef sbRECEIVE_COMPLETED
+  #define sbRECEIVE_COMPLETED(pxStreamBuffer)                                                  \
     vTaskSuspendAll();                                                                         \
     {                                                                                          \
         if ((pxStreamBuffer)->xTaskWaitingToSend != NULL)                                      \
@@ -130,13 +118,15 @@ typedef struct StreamBufferDef_t                 /*lint !e9058 Style convention 
         }                                                                                      \
     }                                                                                          \
     (void) xTaskResumeAll();
-#endif                                 /* sbRECEIVE_COMPLETED */
+ #endif                                /* sbRECEIVE_COMPLETED */
 
 /***********************************************************************************************************************
  * Local function prototypes
  **********************************************************************************************************************/
 
 static bool rm_wifi_da16xxx_handle_incoming_socket_data(da16xxx_socket_t * pSocket, uint8_t data_byte);
+
+#endif
 
 #if (1 == WIFI_DA16XXX_CFG_SNTP_ENABLE)
 static fsp_err_t rm_wifi_da16xxx_sntp_service_init(wifi_da16xxx_instance_ctrl_t * const p_instance_ctrl);
@@ -1173,6 +1163,8 @@ fsp_err_t rm_wifi_da16xxx_dns_query (const char * p_textstring, uint8_t * p_ip_a
     return func_ret;
 }
 
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+
 /*******************************************************************************************************************//**
  *  Get the next available socket ID.
  *
@@ -1187,10 +1179,10 @@ fsp_err_t rm_wifi_da16xxx_avail_socket_get (uint32_t * p_socket_id)
 {
     wifi_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_da16xxx_instance;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_socket_id);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     for (uint32_t i = 0; i < p_instance_ctrl->num_creatable_sockets; i++)
     {
@@ -1222,11 +1214,11 @@ fsp_err_t rm_wifi_da16xxx_socket_status_get (uint32_t socket_no, uint32_t * p_so
 {
     wifi_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_da16xxx_instance;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_socket_status);
     FSP_ASSERT(socket_no < p_instance_ctrl->num_creatable_sockets);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     *p_socket_status = p_instance_ctrl->sockets[socket_no].socket_status;
 
@@ -1250,10 +1242,10 @@ fsp_err_t rm_wifi_da16xxx_socket_create (uint32_t socket_no, uint32_t type, uint
 {
     wifi_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_da16xxx_instance;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(type <= WIFI_DA16XXX_SOCKET_TYPE_MAX);
-#endif
+ #endif
 
     if ((1 == p_instance_ctrl->sockets[socket_no].socket_create_flag) || (1 < p_instance_ctrl->num_creatable_sockets))
     {
@@ -1319,9 +1311,9 @@ fsp_err_t rm_wifi_da16xxx_tcp_connect (uint32_t socket_no, uint32_t ipaddr, uint
         p_instance_ctrl->p_wifi_da16xxx_cfg->p_transport_instance;
     at_transport_da16xxx_data_t atcmd;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     mutex_flag = (WIFI_DA16XXX_MUTEX_TX | WIFI_DA16XXX_MUTEX_RX);
     FSP_ERROR_RETURN(FSP_SUCCESS == p_transport_instance->p_api->takeMutex(p_transport_instance->p_ctrl, mutex_flag),
@@ -1389,11 +1381,11 @@ int32_t rm_wifi_da16xxx_send (uint32_t socket_no, const uint8_t * p_data, uint32
         p_instance_ctrl->p_wifi_da16xxx_cfg->p_transport_instance;
     at_transport_da16xxx_data_t atcmd;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(WIFI_DA16XXX_CFG_CMD_TX_BUF_SIZE > length, FSP_ERR_INVALID_ARGUMENT);
-#endif
+ #endif
 
     /* If socket write has been disabled by shutdown call then return 0 bytes sent */
     if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_DA16XXX_SOCKET_WRITE))
@@ -1404,23 +1396,23 @@ int32_t rm_wifi_da16xxx_send (uint32_t socket_no, const uint8_t * p_data, uint32
     if ((0 == p_instance_ctrl->sockets[socket_no].socket_create_flag) ||
         (WIFI_DA16XXX_SOCKET_STATUS_CONNECTED != p_instance_ctrl->sockets[socket_no].socket_status))
     {
-        return FSP_ERR_WIFI_FAILED;
+        return -FSP_ERR_WIFI_FAILED;
     }
 
     mutex_flag = WIFI_DA16XXX_MUTEX_TX;
     FSP_ERROR_RETURN(FSP_SUCCESS == p_transport_instance->p_api->takeMutex(p_transport_instance->p_ctrl, mutex_flag),
-                     FSP_ERR_WIFI_FAILED);
+                     -FSP_ERR_WIFI_FAILED);
 
     if (socket_no != p_instance_ctrl->curr_socket_index)
     {
         p_transport_instance->p_api->giveMutex(p_transport_instance->p_ctrl, mutex_flag);
 
-        return FSP_ERR_WIFI_FAILED;
+        return -FSP_ERR_WIFI_FAILED;
     }
 
     memset(p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
-#define DATA_IP_MODE    "\x1B"
+ #define DATA_IP_MODE    "\x1B"
 
     while (sent_count < length)
     {
@@ -1467,7 +1459,7 @@ int32_t rm_wifi_da16xxx_send (uint32_t socket_no, const uint8_t * p_data, uint32
             p_transport_instance->p_api->giveMutex(p_transport_instance->p_ctrl, mutex_flag);
         }
 
-        FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
+        FSP_ERROR_RETURN(FSP_SUCCESS == ret, -FSP_ERR_WIFI_FAILED);
 
         sent_count += tx_length;
         p_data      = p_data + sent_count;
@@ -1500,11 +1492,11 @@ int32_t rm_wifi_da16xxx_recv (uint32_t socket_no, uint8_t * p_data, uint32_t len
     at_transport_da16xxx_instance_t const * p_transport_instance =
         p_instance_ctrl->p_wifi_da16xxx_cfg->p_transport_instance;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(0 != length, FSP_ERR_INVALID_ARGUMENT);
-#endif
+ #endif
 
     /* if socket read has been disabled by shutdown call then return any bytes left in the stream buffer.
      * However if 0 bytes left, return error. */
@@ -1609,9 +1601,9 @@ fsp_err_t rm_wifi_da16xxx_socket_disconnect (uint32_t socket_no)
         p_instance_ctrl->p_wifi_da16xxx_cfg->p_transport_instance;
     at_transport_da16xxx_data_t atcmd;
 
-#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Test if socket has been created for socket index passed in to function */
     if (1 == p_instance_ctrl->sockets[socket_no].socket_create_flag)
@@ -1656,6 +1648,8 @@ fsp_err_t rm_wifi_da16xxx_socket_disconnect (uint32_t socket_no)
 
     return ret;
 }
+
+#endif
 
 #if (1 == WIFI_DA16XXX_CFG_SNTP_ENABLE)
 
@@ -1979,20 +1973,30 @@ fsp_err_t RM_WIFI_DA16XXX_LocalTimeGet (uint8_t * p_local_time, uint32_t size_st
  **********************************************************************************************************************/
 bool rm_wifi_da16xxx_callback (at_transport_da16xxx_callback_args_t * p_args)
 {
-    wifi_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_da16xxx_instance;
     bool ret = 0;
+
     if (p_args->event == AT_TRANSPORT_RX_BYTE_EVENT)
     {
+#if (BSP_CFG_RTOS == 0)                /* Baremetal */
+        ret = false;
+#endif
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+        wifi_da16xxx_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_da16xxx_instance;
+
         if (1 == p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_create_flag)
         {
             ret = rm_wifi_da16xxx_handle_incoming_socket_data(&p_instance_ctrl->sockets[p_instance_ctrl->
                                                                                         curr_socket_index],
                                                               p_args->data);
         }
+#endif
     }
 
     return ret;
 }
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
 
 /*******************************************************************************************************************//**
  *  Handles incoming socket data.
@@ -2136,5 +2140,7 @@ static bool rm_wifi_da16xxx_handle_incoming_socket_data (da16xxx_socket_t * pSoc
 
     return err;
 }
+
+#endif
 
 /*! \endcond */

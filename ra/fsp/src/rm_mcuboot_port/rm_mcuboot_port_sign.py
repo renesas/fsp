@@ -11,19 +11,6 @@ if not sys.version_info >= (3, 3):
     print("ERROR: The MCUboot signing script requires version Python version 3.3 or later. The python command can be modified in the MCUboot properties. Current Python version used is:\n" + sys.version)
     sys.exit(1)
 
-# Verify requirements
-with open(boot_project_root + '/ra/mcu-tools/MCUboot/scripts/requirements.txt') as f:
-    mcuboot_requirements = f.readlines()
-
-try:
-    import pkg_resources
-    pkg_resources.require(mcuboot_requirements)
-except:
-    import traceback
-    traceback.print_exc()
-    print('ERROR: Required python packages are missing. Run the following command to install:\npip install -r ra/mcu-tools/MCUboot/scripts/requirements.txt')
-    sys.exit(1)
-
 # Determine version
 if os.getenv('MCUBOOT_IMAGE_VERSION') is not None:
     # Version defined in environment variable

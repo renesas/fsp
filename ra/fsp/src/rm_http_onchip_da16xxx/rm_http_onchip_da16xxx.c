@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -455,27 +441,39 @@ static fsp_err_t rm_http_da16xxx_read_header (http_onchip_da16xxx_instance_ctrl_
     at_transport_da16xxx_instance_t const * p_transport_instance =
         p_ctrl->p_cfg->p_transport_instance;
 
-    size_t xReceivedBytes = p_transport_instance->p_api->bufferRecv(p_transport_instance->p_ctrl,
-                                                                    p_resp_buf,
-                                                                    length,
-                                                                    HTTP_ONCHIP_DA16XXX_TIMEOUT_5SEC);
-
-    /* Check for response data */
-    FSP_ERROR_RETURN(xReceivedBytes > 0, FSP_ERR_INVALID_DATA)
-
+    /* Check if the buffer has contents already */
     char * ptr = (p_resp_buf);
-    int64_t header_size;
-    int64_t data_size;
-    int64_t content_length;
-    uint8_t data_multiplier = 0;
-
-    /* Ensure that the end of HTTP buffer is NULL-terminated for string safety */
-    p_resp_buf[xReceivedBytes] = 0;
 
     /* Check for meta data header */
     ptr = strstr(ptr, "+NWHTCDATA:");
 
-    FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
+    /* If the buffer doesn't have the response, attempt to get response data */
+    if (NULL == ptr)
+    {
+        size_t xReceivedBytes = p_transport_instance->p_api->bufferRecv(p_transport_instance->p_ctrl,
+                                                                        p_resp_buf,
+                                                                        length,
+                                                                        HTTP_ONCHIP_DA16XXX_TIMEOUT_5SEC);
+
+        /* Check for response data */
+        FSP_ERROR_RETURN(xReceivedBytes > 0, FSP_ERR_INVALID_DATA)
+
+        ptr = (p_resp_buf);
+
+        /* Ensure that the end of HTTP buffer is NULL-terminated for string safety */
+        p_resp_buf[xReceivedBytes] = 0;
+
+        /* Check for meta data header */
+        ptr = strstr(ptr, "+NWHTCDATA:");
+
+        FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
+    }
+
+    int64_t header_size;
+    int64_t data_size;
+    int64_t payload_size = 0;
+    int64_t content_length;
+    uint8_t data_multiplier = 0;
 
     /* Advance pointer and track start of header data length */
     ptr = ptr + strlen("+NWHTCDATA:");
@@ -517,47 +515,36 @@ static fsp_err_t rm_http_da16xxx_read_header (http_onchip_da16xxx_instance_ctrl_
     /* Compare expected length with current length */
     FSP_ERROR_RETURN(0 == *check_ptr, FSP_ERR_INVALID_DATA);
 
-    /* Advance pointer and track start of payload data length*/
-    ptr = ptr + strlen("\r\n+NWHTCDATA:");
-
-    /* Parse data length for data payload */
-    data_size = strtol(ptr, NULL, 10);
-
-    FSP_ERROR_RETURN(0 != data_size, FSP_ERR_INVALID_DATA);
-
-    if (content_length > HTTP_ONCHIP_DA16XXX_PAYLOAD_MAX)
+    /* Loop around to check the data size matches the expected content length */
+    do
     {
-        /* Internal buffer max is 1460 bytes, need to repeat for full payload */
-        while (data_size == HTTP_ONCHIP_DA16XXX_PAYLOAD_MAX)
-        {
-            /* Advance pointer to payload tag */
-            ptr = strstr(ptr, "NWHTCDATA:");
+        /* Advance pointer to payload tag */
+        ptr = strstr(ptr, "NWHTCDATA:");
 
-            FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
+        FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
 
-            /* Advance pointer and track start of payload data length*/
-            ptr = ptr + strlen("NWHTCDATA:");
+        /* Advance pointer and track start of payload data length*/
+        ptr = ptr + strlen("NWHTCDATA:");
 
-            /* Parse data length for data payload */
-            data_size = strtol(ptr, NULL, 10);
+        /* Parse data length for data payload */
+        data_size = strtol(ptr, NULL, 10);
 
-            FSP_ERROR_RETURN(0 != data_size, FSP_ERR_INVALID_DATA);
+        FSP_ERROR_RETURN(0 != data_size, FSP_ERR_INVALID_DATA);
 
-            data_multiplier++;
-        }
+        /* Add current data packet to total data size */
+        payload_size += data_size;
 
-        /* Check that header and payload is not bigger than length of buffer */
-        FSP_ERROR_RETURN((uint32_t) (header_size + data_size + HTTP_ONCHIP_DA16XXX_RESPONSE_TAG_SIZE +
-                                     (HTTP_ONCHIP_DA16XXX_PAYLOAD_MAX * data_multiplier) +
-                                     (HTTP_ONCHIP_DA16XXX_DATA_TAG_SIZE * data_multiplier)) < length,
-                         FSP_ERR_INVALID_DATA);
-    }
-    else
-    {
-        /* Check that header and payload is not bigger than length of buffer */
-        FSP_ERROR_RETURN((uint32_t) (header_size + data_size + HTTP_ONCHIP_DA16XXX_RESPONSE_TAG_SIZE) < length,
-                         FSP_ERR_INVALID_DATA);
-    }
+        data_multiplier++;
+    } while (content_length != payload_size);
+
+    /* Add header size to the total payload size */
+    payload_size += header_size + HTTP_ONCHIP_DA16XXX_RESPONSE_TAG_SIZE;
+
+    /* Add data tag to the total payload size */
+    payload_size += (HTTP_ONCHIP_DA16XXX_DATA_TAG_SIZE * data_multiplier);
+
+    /* Check that header and payload is not bigger than length of buffer */
+    FSP_ERROR_RETURN((uint32_t) payload_size < length, FSP_ERR_INVALID_DATA);
 
     /* Advance pointer to final status tag */
     ptr = strstr(ptr, "\r\n+NWHTCSTATUS:");

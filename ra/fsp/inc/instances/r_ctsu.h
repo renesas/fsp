@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup CTSU
@@ -46,12 +32,6 @@ FSP_HEADER
 
  #define CTSU_DIAG_HIGH_CURRENT_SOURCE    (16) ///< number of high current source table at Diagnosis
  #define CTSU_DIAG_LOW_CURRENT_SOURCE     (10) ///< number of low current source table at Diagnosis
-#endif
-
-#if (CTSU_CFG_JUDGEMENT_MODE == 1)
- #define CTSU_DATA_NUM_IN_ELEM            (CTSU_CFG_NUM_SUMULTI)
-#else
- #define CTSU_DATA_NUM_IN_ELEM            (1)
 #endif
 
 /***********************************************************************************************************************
@@ -176,27 +156,27 @@ typedef struct st_ctsu_mutual_buf
 /** Correction information */
 typedef struct st_ctsu_correction_info
 {
-    ctsu_correction_status_t status;                                 ///< Correction status
-    ctsu_ctsuwr_t            ctsuwr;                                 ///< Correction scan parameter
-    volatile ctsu_self_buf_t scanbuf;                                ///< Correction scan buffer
+    ctsu_correction_status_t status;                               ///< Correction status
+    ctsu_ctsuwr_t            ctsuwr;                               ///< Correction scan parameter
+    volatile ctsu_self_buf_t scanbuf;                              ///< Correction scan buffer
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
-    uint16_t scan_index;                                             ///< Scan point index
-    uint16_t update_counter;                                         ///< Coefficient update counter
-    uint16_t ex_base_value;                                          ///< Value of external registance measurement
-    uint8_t  suadj0;                                                 ///< Stored SUADJ0 value
+    uint16_t scan_index;                                           ///< Scan point index
+    uint16_t update_counter;                                       ///< Coefficient update counter
+    uint16_t ex_base_value;                                        ///< Value of external registance measurement
+    uint8_t  suadj0;                                               ///< Stored SUADJ0 value
  #endif
-    uint16_t base_value[CTSU_RANGE_NUM];                             ///< Value of internal registance measurement
-    uint16_t error_rate[CTSU_RANGE_NUM];                             ///< Error rate of base vs DAC
-    uint16_t range_ratio[CTSU_RANGE_NUM - 1];                        ///< Ratio between 160uA range and other ranges
-    uint16_t dac_value[CTSU_CORRECTION_POINT_NUM];                   ///< Value of internal DAC measurement
-    uint32_t coefficient[CTSU_RANGE_NUM][CTSU_CORRECTION_POINT_NUM]; ///< Coefficient table
+    uint16_t base_value[CTSU_RANGE_NUM];                           ///< Value of internal registance measurement
+    uint16_t error_rate[CTSU_RANGE_NUM];                           ///< Error rate of base vs DAC
+    uint16_t range_ratio[CTSU_RANGE_NUM - 1];                      ///< Ratio between 160uA range and other ranges
+    uint16_t dac_value[CTSU_CORRECTION_POINT_NUM];                 ///< Value of internal DAC measurement
+    uint16_t ref_value[CTSU_RANGE_NUM][CTSU_CORRECTION_POINT_NUM]; ///< Value of reference
 #else
-    uint16_t first_val;                                              ///< 1st correction value
-    uint16_t second_val;                                             ///< 2nd correction value
-    uint32_t first_coefficient;                                      ///< 1st correction coefficient
-    uint32_t second_coefficient;                                     ///< 2nd correction coefficient
-    uint32_t ctsu_clock;                                             ///< CTSU clock [MHz]
+    uint16_t first_val;                                            ///< 1st correction value
+    uint16_t second_val;                                           ///< 2nd correction value
+    uint32_t first_coefficient;                                    ///< 1st correction coefficient
+    uint32_t second_coefficient;                                   ///< 2nd correction coefficient
+    uint32_t ctsu_clock;                                           ///< CTSU clock [MHz]
 #endif
 } ctsu_correction_info_t;
 
@@ -206,17 +186,17 @@ typedef struct st_ctsu_correction_info
 /** CFC correction information */
 typedef struct st_ctsu_corrcfc_info
 {
-    ctsu_correction_status_t status;                                                ///< Correction status
-    ctsu_ctsuwr_t            ctsuwr;                                                ///< Correction scan parameter
-    volatile ctsu_self_buf_t scanbuf[CTSU_CFG_NUM_CFC];                             ///< Correction scan buffer
-    uint16_t                 base_value[CTSU_CFG_NUM_CFC];                          ///< Value of CFC circuit measurement
-    uint16_t                 error_rate[CTSU_CFG_NUM_CFC];                          ///< Error rate of base vs DAC
-    uint16_t                 dac_value[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM];   ///< Value of internal DAC measurement
-    uint32_t                 coefficient[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM]; ///< Value of reference
-    uint8_t  ts_table[CTSU_CFG_NUM_CFC];                                            ///< Number of TS terminal
-    uint8_t  index;                                                                 ///< Index of ts_table
-    uint8_t  num_ts;                                                                ///< Number of CFC-TS for instance
-    uint64_t stored_rx_bitmap;                                                      ///< Bitmap of registered CFC terminal
+    ctsu_correction_status_t status;                                              ///< Correction status
+    ctsu_ctsuwr_t            ctsuwr;                                              ///< Correction scan parameter
+    volatile ctsu_self_buf_t scanbuf[CTSU_CFG_NUM_CFC];                           ///< Correction scan buffer
+    uint16_t                 base_value[CTSU_CFG_NUM_CFC];                        ///< Value of CFC circuit measurement
+    uint16_t                 error_rate[CTSU_CFG_NUM_CFC];                        ///< Error rate of base vs DAC
+    uint16_t                 dac_value[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM]; ///< Value of internal DAC measurement
+    uint16_t                 ref_value[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM]; ///< Value of reference
+    uint8_t  ts_table[CTSU_CFG_NUM_CFC];                                          ///< Number of TS terminal
+    uint8_t  index;                                                               ///< Index of ts_table
+    uint8_t  num_ts;                                                              ///< Number of CFC-TS for instance
+    uint64_t stored_rx_bitmap;                                                    ///< Bitmap of registered CFC terminal
 } ctsu_corrcfc_info_t;
  #endif
 #endif

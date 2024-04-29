@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -117,24 +103,16 @@ static const uint8_t days_in_months[12] = {31U, 28U, 31U, 30U, 31U, 30U, 31U, 31
  * Functions
  **********************************************************************************************************************/
 
-static void r_rtc_c_config_rtc_interrupts(rtc_c_instance_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg);
-
 static void r_rtc_c_call_callback(rtc_c_instance_ctrl_t * p_ctrl, rtc_event_t event);
 
 #if RTC_C_CFG_PARAM_CHECKING_ENABLE
-static fsp_err_t r_rtc_c_err_adjustment_parameter_check(rtc_error_adjustment_cfg_t const * const err_adj_cfg);
+static fsp_err_t r_rtc_c_time_and_date_validate(rtc_time_t const * const p_time);
 
-static fsp_err_t r_rtc_c_time_and_date_validate(rtc_time_t * const p_time);
+static fsp_err_t r_rtc_c_time_validate(rtc_time_t const * const p_time);
 
-static fsp_err_t r_rtc_c_time_validate(rtc_time_t * const p_time);
-
-static fsp_err_t r_rtc_c_date_validate(rtc_time_t * const p_time);
-
-static fsp_err_t r_rtc_c_alarm_time_validate(rtc_alarm_time_t * const p_time);
+static fsp_err_t r_rtc_c_date_validate(rtc_time_t const * const p_time);
 
 #endif
-
-static void r_rtc_c_error_adjustment_set(rtc_error_adjustment_cfg_t const * const err_adj_cfg);
 
 /*******************************************************************************************************************//**
  * @addtogroup RTC_C
@@ -148,6 +126,8 @@ static void r_rtc_c_error_adjustment_set(rtc_error_adjustment_cfg_t const * cons
 /*******************************************************************************************************************//**
  * Opens and configures the RTC driver module. Implements @ref rtc_api_t::open.
  * Configuration includes clock source, and interrupt callback function.
+ *
+ * R_RTC_Open should be called to manipulate the RTC instead of setting register directly.
  *
  * Example:
  * @snippet r_rtc_c_example.c R_RTC_C_Open
@@ -183,13 +163,18 @@ fsp_err_t R_RTC_C_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg
     p_instance_ctrl->p_callback = p_cfg->p_callback;
     p_instance_ctrl->p_context  = p_cfg->p_context;
 
-    /* Enable the RTC channel and reset the registers to their initial state. */
+    /* Enable the RTC channel */
     R_BSP_MODULE_START(FSP_IP_RTC, 0);
 
-    R_RTC_C->RTCC0 = (uint8_t) ((uint8_t) (p_extend_cfg->clock_source_div << R_RTC_C_RTCC0_RTC128EN_Pos) |
-                                R_RTC_C_RTCC0_AMPM_Msk);
+    /* Set new values only for RTCC0 bits 3 & 4 */
+    R_RTC_C->RTCC0 = (R_RTC_C->RTCC0 & ((uint8_t) ~(R_RTC_C_RTCC0_RTC128EN_Msk | R_RTC_C_RTCC0_AMPM_Msk))) |
+                     ((uint8_t) (p_extend_cfg->clock_source_div << R_RTC_C_RTCC0_RTC128EN_Pos) |
+                      R_RTC_C_RTCC0_AMPM_Msk);
 
-    r_rtc_c_config_rtc_interrupts(p_instance_ctrl, p_cfg);
+    if (p_cfg->periodic_irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_cfg->periodic_irq, p_cfg->periodic_ipl, p_ctrl);
+    }
 
     /* Mark driver as open by initializing it to "RTC" in its ASCII equivalent. */
     p_instance_ctrl->open = RTC_C_OPEN;
@@ -215,15 +200,13 @@ fsp_err_t R_RTC_C_Close (rtc_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /* Set the START bit to 0 */
-    R_RTC_C->RTCC0_b.RTCE = 0U;
+    p_instance_ctrl->open = 0U;
 
-    if (p_instance_ctrl->p_cfg->periodic_irq >= 0)
-    {
-        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->periodic_irq);
-    }
+    /* Disable counting of the RTC */
+    R_RTC_C->RTCC0 = 0U;
+    R_RTC_C->RTCC1 = 0U;
 
-    /* Enable the RTC_C and reset the registers to their initial state. */
+    /* Disable the RTC_C. */
     R_BSP_MODULE_STOP(FSP_IP_RTC, 0);
 
     if (p_instance_ctrl->p_cfg->periodic_irq >= 0)
@@ -231,8 +214,6 @@ fsp_err_t R_RTC_C_Close (rtc_ctrl_t * const p_ctrl)
         R_BSP_IrqDisable(p_instance_ctrl->p_cfg->periodic_irq);
         R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->periodic_irq, NULL);
     }
-
-    p_instance_ctrl->open = 0U;
 
     return FSP_SUCCESS;
 }
@@ -261,55 +242,43 @@ fsp_err_t R_RTC_C_ClockSourceSet (rtc_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_RTC_C_CalendarTimeSet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p_time)
 {
-    fsp_err_t               err             = FSP_SUCCESS;
-    rtc_c_instance_ctrl_t * p_instance_ctrl = (rtc_c_instance_ctrl_t *) p_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
 
 #if RTC_C_CFG_PARAM_CHECKING_ENABLE
+    rtc_c_instance_ctrl_t * p_instance_ctrl = (rtc_c_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(NULL != p_instance_ctrl);
-    rtc_c_extended_cfg * p_extend_cfg = (rtc_c_extended_cfg *) p_instance_ctrl->p_cfg->p_extend;
-    FSP_ASSERT(NULL != p_extend_cfg);
     FSP_ASSERT(NULL != p_time);
     FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    if (0 != p_instance_ctrl->p_cfg->p_err_cfg->adjustment_value)
-    {
-        FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->p_err_cfg->adjustment_type != RTC_ERROR_ADJUSTMENT_NONE,
-                         FSP_ERR_INVALID_ARGUMENT);
-        FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->p_err_cfg->adjustment_period != RTC_ERROR_ADJUSTMENT_PERIOD_10_SECOND,
-                         FSP_ERR_INVALID_ARGUMENT);
-        FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->p_err_cfg->adjustment_period != RTC_ERROR_ADJUSTMENT_PERIOD_NONE,
-                         FSP_ERR_INVALID_ARGUMENT);
-    }
+    /* The count of years, months, weeks, days, hours, minutes, and seconds can only proceed when the sub-clock
+     * oscillator (SOSC = 32.768 kHz) is selected as the operating clock of the realtime clock (RTCCLK).
+     * (reference section 19.1 "Overview" in the RA0E1 manual R01UH1040EJ0100.)*/
+    FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
 
     /* Verify the seconds, minutes, hours, year ,day of the week, day of the month, month and year are valid values */
     FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_c_time_and_date_validate(p_time), FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
-    rtc_c_extended_cfg * p_extend_cfg = (rtc_c_extended_cfg *) p_instance_ctrl->p_cfg->p_extend;
 #endif
 
     /* Set the START bit to 1 */
     R_RTC_C->RTCC0_b.RTCE = 1U;
 
-    R_RTC_C->RTCC1 |= R_RTC_C_RTCC1_RWAIT_Msk;
+    /* Procedure for Writing to the RTC (reference section 19.3.3 "Reading from and Writing to the Counters of the
+     * Realtime Clock" in the RA0E1 manual R01UH1040EJ0100.) */
+    R_RTC_C->RTCC1_b.RWAIT = 1;
     FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RWST, 1);
 
     /* Set the year, month, day of the week, ... */
     R_RTC_C->SEC   = r_rtc_c_dec_to_bcd((uint8_t) p_time->tm_sec);
     R_RTC_C->MIN   = r_rtc_c_dec_to_bcd((uint8_t) p_time->tm_min);
     R_RTC_C->HOUR  = r_rtc_c_dec_to_bcd((uint8_t) p_time->tm_hour);
-    R_RTC_C->WEEK  = r_rtc_c_dec_to_bcd((uint8_t) p_time->tm_wday);
+    R_RTC_C->WEEK  = (uint8_t) p_time->tm_wday;
     R_RTC_C->DAY   = r_rtc_c_dec_to_bcd((uint8_t) p_time->tm_mday);
     R_RTC_C->MONTH = r_rtc_c_dec_to_bcd((uint8_t) (p_time->tm_mon + 1));
     R_RTC_C->YEAR  = r_rtc_c_dec_to_bcd((uint8_t) (p_time->tm_year - RTC_C_YEAR_VALUE_MIN));
 
-    if (RTC_CLOCK_SOURCE_SUBCLOCK_DIV_BY_1 == p_extend_cfg->clock_source_div)
-    {
-        /* Set Error Adjustment values */
-        r_rtc_c_error_adjustment_set(p_instance_ctrl->p_cfg->p_err_cfg);
-    }
-
-    R_RTC_C->RTCC1 &= (uint8_t) ~R_RTC_C_RTCC1_RWAIT_Msk;
+    R_RTC_C->RTCC1_b.RWAIT = 0;
     FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RWST, 0);
 
     return err;
@@ -333,28 +302,30 @@ fsp_err_t R_RTC_C_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_time);
     FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    fsp_err_t err = FSP_SUCCESS;
-
-    R_RTC_C->RTCC1 |= R_RTC_C_RTCC1_RWAIT_Msk;
+    /* Procedure for reading from the RTC (reference section 19.3.3 "Reading from and Writing to the Counters of the
+     * Realtime Clock" in the RA0E1 manual R01UH1040EJ0100. */
+    R_RTC_C->RTCC1_b.RWAIT = 1;
     FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RWST, 1);
 
     /* Get the year, month, day of the week, ... */
     p_time->tm_sec  = r_rtc_c_bcd_to_dec(R_RTC_C->SEC);
     p_time->tm_min  = r_rtc_c_bcd_to_dec(R_RTC_C->MIN);
     p_time->tm_hour = r_rtc_c_bcd_to_dec(R_RTC_C->HOUR);
-    p_time->tm_wday = r_rtc_c_bcd_to_dec(R_RTC_C->WEEK);
+    p_time->tm_wday = R_RTC_C->WEEK;
     p_time->tm_mday = r_rtc_c_bcd_to_dec(R_RTC_C->DAY);
     p_time->tm_mon  = r_rtc_c_bcd_to_dec(R_RTC_C->MONTH) - 1;
     p_time->tm_year = r_rtc_c_bcd_to_dec(R_RTC_C->YEAR) + RTC_C_YEAR_VALUE_MIN;
 
-    R_RTC_C->RTCC1 &= (uint8_t) ~R_RTC_C_RTCC1_RWAIT_Msk;
+    R_RTC_C->RTCC1_b.RWAIT = 0;
     FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RWST, 0);
 
-    return err;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -367,40 +338,51 @@ fsp_err_t R_RTC_C_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const
  *
  * @pre The calendar counter must be running before the alarm can be set.
  *
- * @retval FSP_SUCCESS              Calendar alarm time set operation was successful.
- * @retval FSP_ERR_INVALID_ARGUMENT Invalid time parameter field.
- * @retval FSP_ERR_ASSERTION        Invalid input argument.
- * @retval FSP_ERR_NOT_OPEN         Driver not open already for operation.
+ * @retval FSP_SUCCESS                  Calendar alarm time set operation was successful.
+ * @retval FSP_ERR_INVALID_ARGUMENT     Invalid time parameter field.
+ * @retval FSP_ERR_ASSERTION            Invalid input argument.
+ * @retval FSP_ERR_NOT_OPEN             Driver not open already for operation.
+ * @retval FSP_ERR_IRQ_BSP_DISABLED     Interrupt must be enabled to use the alarm.
  **********************************************************************************************************************/
 fsp_err_t R_RTC_C_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * const p_alarm)
 {
-    fsp_err_t               err             = FSP_SUCCESS;
-    rtc_c_instance_ctrl_t * p_instance_ctrl = (rtc_c_instance_ctrl_t *) p_ctrl;
-
 #if RTC_C_CFG_PARAM_CHECKING_ENABLE
+    rtc_c_instance_ctrl_t * p_instance_ctrl = (rtc_c_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_alarm);
     FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    /* Verify the seconds, minutes, hours, year ,day of the week, day of the month and month are valid values */
-    FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_c_alarm_time_validate(p_alarm), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
+
+    /* Verify the minutes and hours are valid values. */
+    FSP_ERROR_RETURN((p_alarm->time_minute >= 0) && (p_alarm->time_minute <= RTC_C_MINUTES_IN_A_HOUR),
+                     FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((p_alarm->time_hour >= 0) && (p_alarm->time_hour <= RTC_C_HOURS_IN_A_DAY),
+                     FSP_ERR_INVALID_ARGUMENT);
+
+    // Verify valid alarm days are selected
+    FSP_ERROR_RETURN(0x7F >= p_alarm->weekday_match, FSP_ERR_INVALID_ARGUMENT);
+
+    // Verify interrupts are enabled.
+    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->periodic_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    R_BSP_IrqDisable(p_instance_ctrl->p_cfg->periodic_irq);
+    /* Alarm Processing Procedure (reference section 19.3.4 "Setting Alarm by the Realtime Clock"
+     * in the RA0E1 manual R01UH1040EJ0100. */
     R_RTC_C->RTCC1 &= (uint8_t) ~(R_RTC_C_RTCC1_WAFG_Msk | R_RTC_C_RTCC1_WALE_Msk);
-    R_RTC_C->RTCC1 |= R_RTC_C_RTCC1_WALIE_Msk;
+
+    R_RTC_C->RTCC1_b.WALIE = 1;
 
     /* Set alarm time */
-    R_RTC_C->ALARMWM = r_rtc_c_dec_to_bcd((uint8_t) p_alarm->time.tm_min);
+    R_RTC_C->ALARMWM = r_rtc_c_dec_to_bcd((uint8_t) p_alarm->time_minute);
+    R_RTC_C->ALARMWH = r_rtc_c_dec_to_bcd((uint8_t) p_alarm->time_hour);
+    R_RTC_C->ALARMWW = p_alarm->weekday_match;
 
-    R_RTC_C->ALARMWH = r_rtc_c_dec_to_bcd((uint8_t) p_alarm->time.tm_hour);
+    R_RTC_C->RTCC1_b.WALE = 1;
 
-    R_RTC_C->ALARMWW = (uint8_t) p_alarm->time.tm_wday;
-
-    R_RTC_C->RTCC1 |= R_RTC_C_RTCC1_WALE_Msk;
-    R_BSP_IrqEnable(p_instance_ctrl->p_cfg->periodic_irq);
-
-    return err;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -419,16 +401,16 @@ fsp_err_t R_RTC_C_CalendarAlarmGet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t 
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_alarm);
     FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    /* Set alarm time */
-    p_alarm->time.tm_min = r_rtc_c_bcd_to_dec(R_RTC_C->ALARMWM);
-
-    p_alarm->time.tm_hour = r_rtc_c_bcd_to_dec(R_RTC_C->ALARMWH);
-
-    p_alarm->time.tm_wday = R_RTC_C->ALARMWW;
+    /* Get alarm time */
+    p_alarm->time_minute   = r_rtc_c_bcd_to_dec(R_RTC_C->ALARMWM);
+    p_alarm->time_hour     = r_rtc_c_bcd_to_dec(R_RTC_C->ALARMWH);
+    p_alarm->weekday_match = R_RTC_C->ALARMWW;
 
     return FSP_SUCCESS;
 }
@@ -455,26 +437,15 @@ fsp_err_t R_RTC_C_PeriodicIrqRateSet (rtc_ctrl_t * const p_ctrl, rtc_periodic_ir
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->periodic_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
-    FSP_ERROR_RETURN(RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND <= rate, FSP_ERR_ASSERTION);
-    FSP_ERROR_RETURN(RTC_PERIODIC_IRQ_SELECT_2_SECOND != rate, FSP_ERR_ASSERTION);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
     R_BSP_IrqDisable(p_instance_ctrl->p_cfg->periodic_irq);
 
-    uint8_t rtcc0 = R_RTC_C->RTCC0;
-    rtcc0 &= (uint8_t) ~R_RTC_C_RTCC0_CT_Msk;
-
-    /* The rtc_periodic_irq_select_t enum is from a shared API, and has some offsets from the bit value */
-    if (rate < RTC_PERIODIC_IRQ_SELECT_2_SECOND)
-    {
-        R_RTC_C->RTCC0 = (uint8_t) (rtcc0 | (rate - RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_4_SECOND));
-    }
-    else
-    {
-        R_RTC_C->RTCC0 = (uint8_t) (rtcc0 | (rate - RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND));
-    }
+    R_RTC_C->RTCC0 = (uint8_t) (R_RTC_C->RTCC0 & ~R_RTC_C_RTCC0_CT_Msk) | (uint8_t) rate |
+                     (uint8_t) (1U << R_RTC_C_RTCC0_RTCE_Pos);
 
     R_RTC_C->RTCC1_b.RIFG = 0;
-    FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RIFG, 0);
 
     R_BSP_IrqEnable(p_instance_ctrl->p_cfg->periodic_irq);
 
@@ -488,7 +459,7 @@ fsp_err_t R_RTC_C_PeriodicIrqRateSet (rtc_ctrl_t * const p_ctrl, rtc_periodic_ir
  *
  * @retval FSP_SUCCESS              Get information Successful.
  * @retval FSP_ERR_ASSERTION        Invalid input argument.
- * @retval FSP_ERR_NOT_OPEN         Driver not open already for operation.
+ * @retval FSP_ERR_NOT_OPEN         Realtime clock module is stopped.
  **********************************************************************************************************************/
 fsp_err_t R_RTC_C_InfoGet (rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info)
 {
@@ -496,12 +467,14 @@ fsp_err_t R_RTC_C_InfoGet (rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_i
     rtc_c_instance_ctrl_t * p_instance_ctrl = (rtc_c_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_rtc_info);
-    FSP_ERROR_RETURN(RTC_C_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(0 == R_MSTP->MSTPCRD_b.MSTPD23, FSP_ERR_NOT_OPEN);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    p_rtc_info->status = (rtc_status_t) R_RTC_C->RTCC0_b.RTCE;
+    p_rtc_info->status       = (rtc_status_t) R_RTC_C->RTCC0_b.RTCE;
+    p_rtc_info->clock_source = (rtc_clock_source_t) ((R_SYSTEM->OSMC & R_SYSTEM_OSMC_WUTMMCK0_Msk) >>
+                                                     R_SYSTEM_OSMC_WUTMMCK0_Pos);
 
     return FSP_SUCCESS;
 }
@@ -525,20 +498,58 @@ fsp_err_t R_RTC_C_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjus
 
     rtc_c_extended_cfg * p_extend_cfg = (rtc_c_extended_cfg *) p_instance_ctrl->p_cfg->p_extend;
 
-    /* Error adjustment is supported only if clock source is sub-clock */
-    if (RTC_CLOCK_SOURCE_SUBCLOCK_DIV_BY_256 == p_extend_cfg->clock_source_div)
-    {
-        return FSP_ERR_INVALID_ARGUMENT;
-    }
-
     /* Verify the frequency comparison value for RFRL when using LOCO */
-    FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_c_err_adjustment_parameter_check(err_adj_cfg), FSP_ERR_INVALID_ARGUMENT);
+    rtc_error_adjustment_period_t period = err_adj_cfg->adjustment_period;
+
+    /* Validate period value */
+    FSP_ERROR_RETURN((RTC_ERROR_ADJUSTMENT_PERIOD_20_SECOND == period) ||
+                     (RTC_ERROR_ADJUSTMENT_PERIOD_1_MINUTE == period),
+                     FSP_ERR_INVALID_ARGUMENT);
+
+    /* Validate adjustment type */
+    FSP_ERROR_RETURN(RTC_ERROR_ADJUSTMENT_NONE != err_adj_cfg->adjustment_type, FSP_ERR_INVALID_ARGUMENT)
+
+    /* Validate adjustment mode */
+    FSP_ERROR_RETURN(RTC_ERROR_ADJUSTMENT_MODE_MANUAL != err_adj_cfg->adjustment_mode, FSP_ERR_INVALID_ARGUMENT)
+
+    /* Verify source clock is SUBOSC */
+    FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
+
+    /* Time error correction cannot be used when the setting of this bit is 1. (reference section 19.2.2 "RTC128EN Bit"
+     * in the RA0E1 manual R01UH1040EJ0100.)*/
+    FSP_ERROR_RETURN(RTC_CLOCK_SOURCE_SUBCLOCK_DIV_BY_1 == p_extend_cfg->clock_source_div, FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    rtc_error_adjustment_period_t period = err_adj_cfg->adjustment_period;
 #endif
 
     /* Set Error Adjustment values */
-    r_rtc_c_error_adjustment_set(err_adj_cfg);
+    rtc_error_adjustment_t type = err_adj_cfg->adjustment_type;
+
+    uint8_t  reg_subcud = 0;
+    uint32_t value      = err_adj_cfg->adjustment_value;
+
+    if (RTC_ERROR_ADJUSTMENT_PERIOD_1_MINUTE == period)
+    {
+        reg_subcud = 1 << R_RTC_C_SUBCUD_DEV_Pos;
+    }
+
+    if (0 != value)
+    {
+        uint8_t adjustValue = 0U;
+        adjustValue = (uint8_t) ((value / 2) + 1);
+
+        if (RTC_ERROR_ADJUSTMENT_ADD_PRESCALER == type)
+        {
+            reg_subcud |= adjustValue;
+        }
+        else
+        {
+            reg_subcud |= (uint8_t) (R_RTC_C_SUBCUD_F6_Msk | (RTC_C_INVERTED_ADJUSTMENT_VALUE_SUM - adjustValue));
+        }
+    }
+
+    R_RTC_C->SUBCUD = reg_subcud;
 
     return FSP_SUCCESS;
 }
@@ -610,20 +621,6 @@ fsp_err_t R_RTC_C_TimeCaptureGet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t 
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Set IRQ priority and control info for IRQ handler .
- *
- * @param[in]  p_ctrl                  Instance control block
- * @param[in]  p_cfg                   Pointer to rtc configuration.
- **********************************************************************************************************************/
-static void r_rtc_c_config_rtc_interrupts (rtc_c_instance_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
-{
-    if (p_cfg->periodic_irq >= 0)
-    {
-        R_BSP_IrqCfg(p_cfg->periodic_irq, p_cfg->periodic_ipl, p_ctrl);
-    }
-}
-
-/*******************************************************************************************************************//**
  * Calls user callback.
  *
  * @param[in]     p_ctrl     Pointer to RTC instance control block
@@ -641,34 +638,6 @@ static void r_rtc_c_call_callback (rtc_c_instance_ctrl_t * p_ctrl, rtc_event_t e
 #if RTC_C_CFG_PARAM_CHECKING_ENABLE
 
 /*******************************************************************************************************************//**
- * Validate Error Adjustment configuration when using SubClock
- *
- * @param[in]  err_adj_cfg             Pointer to error adjustment config
- * @retval FSP_SUCCESS                 Validation successful
- * @retval FSP_ERR_INVALID_ARGUMENT    Invalid error configuration
- **********************************************************************************************************************/
-static fsp_err_t r_rtc_c_err_adjustment_parameter_check (rtc_error_adjustment_cfg_t const * const err_adj_cfg)
-{
-    rtc_error_adjustment_period_t period = err_adj_cfg->adjustment_period;
-
-    /* Validate period value */
-    if ((RTC_ERROR_ADJUSTMENT_PERIOD_10_SECOND == period) || (RTC_ERROR_ADJUSTMENT_PERIOD_NONE == period))
-    {
-        return FSP_ERR_INVALID_ARGUMENT;
-    }
-
-    rtc_error_adjustment_t mode = err_adj_cfg->adjustment_type;
-
-    /* Validate adjustment type value */
-    if (RTC_ERROR_ADJUSTMENT_NONE == mode)
-    {
-        return FSP_ERR_INVALID_ARGUMENT;
-    }
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
  * Validate time and date fields of time parameter fields
  * Checking for seconds, minutes, hours are valid values by calling sub-function time validate.
  * Checking for year, month, day of the week and day of a month are valid values by calling sub-function
@@ -678,7 +647,7 @@ static fsp_err_t r_rtc_c_err_adjustment_parameter_check (rtc_error_adjustment_cf
  * @retval FSP_SUCCESS                    Validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT       Invalid field in rtc_time_t structure
  **********************************************************************************************************************/
-static fsp_err_t r_rtc_c_time_and_date_validate (rtc_time_t * const p_time)
+static fsp_err_t r_rtc_c_time_and_date_validate (rtc_time_t const * const p_time)
 {
     fsp_err_t err = FSP_SUCCESS;
     err = r_rtc_c_time_validate(p_time);
@@ -700,7 +669,7 @@ static fsp_err_t r_rtc_c_time_and_date_validate (rtc_time_t * const p_time)
  * @retval FSP_SUCCESS                    Validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT       Invalid field in rtc_time_t structure
  **********************************************************************************************************************/
-static fsp_err_t r_rtc_c_time_validate (rtc_time_t * p_time)
+static fsp_err_t r_rtc_c_time_validate (rtc_time_t const * const p_time)
 {
     fsp_err_t err;
     err = FSP_SUCCESS;
@@ -726,7 +695,7 @@ static fsp_err_t r_rtc_c_time_validate (rtc_time_t * p_time)
  * This difference will be taken care in the Set and Get functions.
  *
  * As per HW manual, value of Year is between 0 to 99, the RTC has a 100 year calendar from 2000 to 2099.
- * (see section 26.1 "Overview" of the RA6M3 manual R01UH0886EJ0100)
+ * (see section 19.1 "Overview" of the RA0E1 manual R01UH1040EJ0100)
  * But as per C standards, tm_year is years since 1900.
  * A sample year set in an application would be like time.tm_year = 2019-1900; (to set year 2019)
  * Since RTC API follows the Date and time structure defined in C standard library <time.h>, the valid value of year is
@@ -736,7 +705,7 @@ static fsp_err_t r_rtc_c_time_validate (rtc_time_t * p_time)
  * @retval FSP_SUCCESS                    Validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT       Invalid field in rtc_time_t structure
  **********************************************************************************************************************/
-static fsp_err_t r_rtc_c_date_validate (rtc_time_t * const p_time)
+static fsp_err_t r_rtc_c_date_validate (rtc_time_t const * const p_time)
 {
     uint32_t day_of_week;
     uint32_t num_days_month;
@@ -791,7 +760,7 @@ static fsp_err_t r_rtc_c_date_validate (rtc_time_t * const p_time)
 
         /* Day of week between 0 to 6 :- Sunday to Saturday */
         /* d = (h + 6)mod 7 (mod : modulo) */
-        p_time->tm_wday = (int16_t) ((day_of_week + 6U) % 7U);
+        FSP_ERROR_RETURN((int16_t) ((day_of_week + 6U) % 7U) == p_time->tm_wday, FSP_ERR_INVALID_ARGUMENT);
 
         return FSP_SUCCESS;
     }
@@ -799,76 +768,17 @@ static fsp_err_t r_rtc_c_date_validate (rtc_time_t * const p_time)
     return FSP_ERR_INVALID_ARGUMENT;
 }
 
-/*******************************************************************************************************************//**
- * Validate alarm time fields of Alarm time type parameter
- * Checking for alarm enable bit with the seconds, minutes, hours value for valid specified range.
- * Minutes 0 to 59.
- * Hours   0 to 23.
- *
- * @param[in]  p_time                     Pointer to rtc_alarm_time_t
- * @retval FSP_SUCCESS                    Validation successful
- * @retval FSP_ERR_INVALID_ARGUMENT       Invalid field in rtc_time_t structure
- **********************************************************************************************************************/
-static fsp_err_t r_rtc_c_alarm_time_validate (rtc_alarm_time_t * const p_time)
-{
-    fsp_err_t err;
-    err = FSP_SUCCESS;
-    if ((p_time->time.tm_min < 0) || (p_time->time.tm_min > RTC_C_MINUTES_IN_A_HOUR) ||
-        (p_time->time.tm_hour < 0) || (p_time->time.tm_hour > RTC_C_HOURS_IN_A_DAY) ||
-        (p_time->time.tm_mday < 0) || (p_time->time.tm_mday > RTC_C_ACTUAL_DAYS_IN_A_WEEK))
-    {
-        err = FSP_ERR_INVALID_ARGUMENT;
-    }
-
-    return err;
-}
-
 #endif
-
-/*******************************************************************************************************************//**
- * This function sets time error adjustment mode, period, type and value.
- *
- *@param[in] err_adj_cfg  Pointer to the Error Adjustment Configuration
- **********************************************************************************************************************/
-static void r_rtc_c_error_adjustment_set (rtc_error_adjustment_cfg_t const * const err_adj_cfg)
-{
-    rtc_error_adjustment_period_t period = err_adj_cfg->adjustment_period;
-    rtc_error_adjustment_t        type   = err_adj_cfg->adjustment_type;
-
-    uint8_t  reg_subcud = 0;
-    uint32_t value      = err_adj_cfg->adjustment_value;
-
-    if (RTC_ERROR_ADJUSTMENT_PERIOD_1_MINUTE == period)
-    {
-        reg_subcud = R_RTC_C_SUBCUD_DEV_Msk;
-    }
-
-    if (0 != value)
-    {
-        uint8_t adjustValue = 0U;
-        adjustValue = (uint8_t) ((value / 2) + 1);
-
-        if (RTC_ERROR_ADJUSTMENT_ADD_PRESCALER == type)
-        {
-            reg_subcud |= adjustValue;
-        }
-        else
-        {
-            reg_subcud |= (uint8_t) (R_RTC_C_SUBCUD_F6_Msk | (RTC_C_INVERTED_ADJUSTMENT_VALUE_SUM - adjustValue));
-        }
-    }
-
-    R_RTC_C->SUBCUD = reg_subcud;
-}
 
 /*******************************************************************************************************************//**
  * Convert decimal to BCD
  *
  * @param[in] to_convert   Decimal Value to be converted
  **********************************************************************************************************************/
+
 static uint8_t r_rtc_c_dec_to_bcd (uint8_t to_convert)
 {
-    return (uint8_t) ((((to_convert / (uint8_t) 10) << 4) & (uint8_t) RTC_C_MASK_LSB) | (to_convert % (uint8_t) 10));
+    return (uint8_t) (((to_convert / 10U) << 4) | (to_convert % 10U));
 }
 
 /*******************************************************************************************************************//**
@@ -878,8 +788,7 @@ static uint8_t r_rtc_c_dec_to_bcd (uint8_t to_convert)
  **********************************************************************************************************************/
 static uint8_t r_rtc_c_bcd_to_dec (uint8_t to_convert)
 {
-    return (uint8_t) ((((to_convert & (uint8_t) RTC_C_MASK_LSB) >> 4) * (uint8_t) 10) +
-                      (to_convert & (uint8_t) RTC_C_MASK_MSB));
+    return (uint8_t) ((to_convert >> 4) * 10U) + (to_convert & RTC_C_MASK_MSB);
 }
 
 /*******************************************************************************************************************//**
@@ -895,24 +804,25 @@ void rtc_c_alarm_prd_or_alm_isr (void)
     {
         /* Set data to identify callback to user, then call user callback. */
         rtc_event_t event;
-        if (1 == R_RTC_C->RTCC1_b.WAFG)
-        {
-            /* Alarm event is unstable with LOCO clock source. Do not call user callback */
-            if (1 == R_SYSTEM->OSMC_b.WUTMMCK0)
-            {
-                return;
-            }
 
-            event           = RTC_EVENT_ALARM_IRQ;
-            R_RTC_C->RTCC1 &= (uint8_t) ~R_RTC_C_RTCC1_WAFG_Msk;
-        }
-        else
+        uint8_t flags = R_RTC_C->RTCC1 & (R_RTC_C_RTCC1_WAFG_Msk | R_RTC_C_RTCC1_RIFG_Msk);
+
+        if (0 != (flags & R_RTC_C_RTCC1_WAFG_Msk))
         {
-            event           = RTC_EVENT_PERIODIC_IRQ;
-            R_RTC_C->RTCC1 &= (uint8_t) ~R_RTC_C_RTCC1_RIFG_Msk;
+            event = RTC_EVENT_ALARM_IRQ;
+
+            /* Call callback */
+            r_rtc_c_call_callback(p_ctrl, event);
         }
 
-        /* Call callback */
-        r_rtc_c_call_callback(p_ctrl, event);
+        if (0 != (flags & R_RTC_C_RTCC1_RIFG_Msk))
+        {
+            event = RTC_EVENT_PERIODIC_IRQ;
+
+            /* Call callback */
+            r_rtc_c_call_callback(p_ctrl, event);
+        }
+
+        R_RTC_C->RTCC1 &= (uint8_t) ~flags;
     }
 }

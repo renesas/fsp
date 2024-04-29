@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -45,12 +31,16 @@
 #define RSIP_PRV_CMD_RESUME_TO_COMP_FINAL                   (5U)
 #define RSIP_PRV_CMD_SHA_256                                (2U)
 #define RSIP_PRV_CMD_SHA_384                                (5U)
+#define RSIP_PRV_CMD_SHA_512                                (6U)
 #define RSIP_PRV_WORD_SIZE_HMAC_MAC_BUFFER                  (8U)
 
 /* Primitive function names */
 #if RSIP_CFG_AES_128_ENABLE
  #define RSIP_PRV_FUNC_KEY_GENERATE_AES_128                 r_rsip_p07
  #define RSIP_PRV_FUNC_KEY_WRAP_AES_128                     r_rsip_wrapper_p6f_aes128
+ #define RSIP_PRV_FUNC_RFC3394_AES_128_KEY_WRAP             r_rsip_wrapper_p8f_aes128
+ #define RSIP_PRV_FUNC_RFC3394_AES_128_KEY_UNWRAP           r_rsip_wrapper_p90_aes128
+ #define RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_128                r_rsip_p2c
  #if RSIP_CFG_AES_ECB_CBC_CTR_ENABLE
   #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_128         r_rsip_wrapper_p47i_aes128ecb_encrypt
   #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_128         r_rsip_wrapper_p47i_aes128ecb_decrypt
@@ -71,6 +61,9 @@
 #else
  #define RSIP_PRV_FUNC_KEY_GENERATE_AES_128                 NULL
  #define RSIP_PRV_FUNC_KEY_WRAP_AES_128                     NULL
+ #define RSIP_PRV_FUNC_RFC3394_AES_128_KEY_WRAP             NULL
+ #define RSIP_PRV_FUNC_RFC3394_AES_128_KEY_UNWRAP           NULL
+ #define RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_128                NULL
  #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_128          NULL
  #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_128          NULL
  #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_128          NULL
@@ -132,6 +125,9 @@
 #if RSIP_CFG_AES_256_ENABLE
  #define RSIP_PRV_FUNC_KEY_GENERATE_AES_256                 r_rsip_p08
  #define RSIP_PRV_FUNC_KEY_WRAP_AES_256                     r_rsip_wrapper_p6f_aes256
+ #define RSIP_PRV_FUNC_RFC3394_AES_256_KEY_WRAP             r_rsip_wrapper_p8f_aes256
+ #define RSIP_PRV_FUNC_RFC3394_AES_256_KEY_UNWRAP           r_rsip_wrapper_p90_aes256
+ #define RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_256                r_rsip_p2e
  #if RSIP_CFG_AES_ECB_CBC_CTR_ENABLE
   #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_256         r_rsip_wrapper_p50i_aes256ecb_encrypt
   #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_256         r_rsip_wrapper_p50i_aes256ecb_decrypt
@@ -152,6 +148,9 @@
 #else
  #define RSIP_PRV_FUNC_KEY_GENERATE_AES_256                 NULL
  #define RSIP_PRV_FUNC_KEY_WRAP_AES_256                     NULL
+ #define RSIP_PRV_FUNC_RFC3394_AES_256_KEY_WRAP             NULL
+ #define RSIP_PRV_FUNC_RFC3394_AES_256_KEY_UNWRAP           NULL
+ #define RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_256                NULL
  #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_256          NULL
  #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_256          NULL
  #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_256          NULL
@@ -302,6 +301,22 @@
  #define RSIP_PRV_FUNC_ECDSA_VERIFY_SECP384R1               NULL
 #endif
 
+#if RSIP_CFG_ECC_SECP521R1_ENABLE
+ #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_ECC_SECP521R1      r_rsip_wrapper_p13_secp521r1
+ #define RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP521R1_PUBLIC        r_rsip_wrapper_p6f_secp521r1_pub
+ #define RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP521R1_PRIVATE       r_rsip_wrapper_p6f_secp521r1_priv
+
+ #define RSIP_PRV_FUNC_ECDSA_SIGN_SECP521R1                 r_rsip_wrapper_p11_secp521r1
+ #define RSIP_PRV_FUNC_ECDSA_VERIFY_SECP521R1               r_rsip_wrapper_p12_secp521r1
+#else
+ #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_ECC_SECP521R1      NULL
+ #define RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP521R1_PUBLIC        NULL
+ #define RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP521R1_PRIVATE       NULL
+
+ #define RSIP_PRV_FUNC_ECDSA_SIGN_SECP521R1                 NULL
+ #define RSIP_PRV_FUNC_ECDSA_VERIFY_SECP521R1               NULL
+#endif
+
 #if RSIP_CFG_RSA_2048_ENABLE
  #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_2048           r_rsip_wrapper_p2b_rsa2048
  #define RSIP_PRV_FUNC_KEY_WRAP_RSA_2048_PUBLIC             r_rsip_wrapper_p6f_rsa2048_pub
@@ -319,7 +334,7 @@
 #endif
 
 #if RSIP_CFG_RSA_3072_ENABLE
- #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_3072           NULL
+ #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_3072           r_rsip_wrapper_p3a_rsa3072
  #define RSIP_PRV_FUNC_KEY_WRAP_RSA_3072_PUBLIC             r_rsip_wrapper_p6f_rsa3072_pub
  #define RSIP_PRV_FUNC_KEY_WRAP_RSA_3072_PRIVATE            r_rsip_wrapper_p6f_rsa3072_priv
 
@@ -335,7 +350,7 @@
 #endif
 
 #if RSIP_CFG_RSA_4096_ENABLE
- #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_4096           NULL
+ #define RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_4096           r_rsip_wrapper_p3b_rsa4096
  #define RSIP_PRV_FUNC_KEY_WRAP_RSA_4096_PUBLIC             r_rsip_wrapper_p6f_rsa4096_pub
  #define RSIP_PRV_FUNC_KEY_WRAP_RSA_4096_PRIVATE            r_rsip_wrapper_p6f_rsa4096_priv
 
@@ -391,13 +406,15 @@ typedef enum e_rsip_hmac_cmd
 const bool g_sha_enabled[RSIP_HASH_TYPE_NUM] =
 {
     [RSIP_HASH_TYPE_SHA256] = RSIP_CFG_SHA256_ENABLE,
-    [RSIP_HASH_TYPE_SHA384] = RSIP_CFG_SHA384_ENABLE
+    [RSIP_HASH_TYPE_SHA384] = RSIP_CFG_SHA384_ENABLE,
+    [RSIP_HASH_TYPE_SHA512] = RSIP_CFG_SHA512_ENABLE
 };
 
 static const uint32_t gs_cmd_hash_type[] =
 {
     [RSIP_HASH_TYPE_SHA256] = RSIP_PRV_CMD_SHA_256,
     [RSIP_HASH_TYPE_SHA384] = RSIP_PRV_CMD_SHA_384,
+    [RSIP_HASH_TYPE_SHA512] = RSIP_PRV_CMD_SHA_512,
 };
 
 static const uint32_t gs_hmac_hash_type[] =
@@ -454,11 +471,14 @@ const rsip_func_t g_func =
     .p_key_pair_generate_ecc       =
     {
         [RSIP_KEY_ECC_SECP256R1] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_ECC_SECP256R1,
-        [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_ECC_SECP384R1
+        [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_ECC_SECP384R1,
+        [RSIP_KEY_ECC_SECP521R1] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_ECC_SECP521R1
     },
     .p_key_pair_generate_rsa       =
     {
-        [RSIP_KEY_RSA_2048] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_2048
+        [RSIP_KEY_RSA_2048] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_2048,
+        [RSIP_KEY_RSA_3072] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_3072,
+        [RSIP_KEY_RSA_4096] = RSIP_PRV_FUNC_KEY_PAIR_GENERATE_RSA_4096
     },
 
     .p_encrypted_key_wrap_aes      =
@@ -474,12 +494,14 @@ const rsip_func_t g_func =
     .p_encrypted_key_wrap_ecc_pub  =
     {
         [RSIP_KEY_ECC_SECP256R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP256R1_PUBLIC,
-        [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP384R1_PUBLIC
+        [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP384R1_PUBLIC,
+        [RSIP_KEY_ECC_SECP521R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP521R1_PUBLIC
     },
     .p_encrypted_key_wrap_ecc_priv =
     {
         [RSIP_KEY_ECC_SECP256R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP256R1_PRIVATE,
-        [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP384R1_PRIVATE
+        [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP384R1_PRIVATE,
+        [RSIP_KEY_ECC_SECP521R1] = RSIP_PRV_FUNC_KEY_WRAP_ECC_SECP521R1_PRIVATE
     },
     .p_encrypted_key_wrap_rsa_pub  =
     {
@@ -493,7 +515,17 @@ const rsip_func_t g_func =
         [RSIP_KEY_RSA_3072] = RSIP_PRV_FUNC_KEY_WRAP_RSA_3072_PRIVATE,
         [RSIP_KEY_RSA_4096] = RSIP_PRV_FUNC_KEY_WRAP_RSA_4096_PRIVATE
     },
-    .p_rsa_public                  =
+	.p_rfc3394_key_wrap            =
+    {
+        [RSIP_KEY_AES_128] = RSIP_PRV_FUNC_RFC3394_AES_128_KEY_WRAP,
+        [RSIP_KEY_AES_256] = RSIP_PRV_FUNC_RFC3394_AES_256_KEY_WRAP
+    },
+	.p_rfc3394_key_unwrap          =
+    {
+        [RSIP_KEY_AES_128] = RSIP_PRV_FUNC_RFC3394_AES_128_KEY_UNWRAP,
+        [RSIP_KEY_AES_256] = RSIP_PRV_FUNC_RFC3394_AES_256_KEY_UNWRAP
+    },
+	.p_rsa_public                  =
     {
         [RSIP_KEY_RSA_2048] = RSIP_PRV_FUNC_RSA_ENCRYPT_2048,
         [RSIP_KEY_RSA_3072] = RSIP_PRV_FUNC_RSA_ENCRYPT_3072,
@@ -650,15 +682,32 @@ const rsip_func_t g_func =
     {
         [RSIP_KEY_ECC_SECP256R1] = RSIP_PRV_FUNC_ECDSA_SIGN_SECP256R1,
         [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_ECDSA_SIGN_SECP384R1,
+        [RSIP_KEY_ECC_SECP521R1] = RSIP_PRV_FUNC_ECDSA_SIGN_SECP521R1,
     },
     .p_ecdsa_verify                =
     {
         [RSIP_KEY_ECC_SECP256R1] = RSIP_PRV_FUNC_ECDSA_VERIFY_SECP256R1,
         [RSIP_KEY_ECC_SECP384R1] = RSIP_PRV_FUNC_ECDSA_VERIFY_SECP384R1,
+        [RSIP_KEY_ECC_SECP521R1] = RSIP_PRV_FUNC_ECDSA_VERIFY_SECP521R1,
     },
     .p_encrypted_key_wrap_hmac     =
     {
         [RSIP_KEY_HMAC_SHA256] = RSIP_PRV_FUNC_KEY_WRAP_HMAC_SHA256
+    },
+    .p_func_otf                    =
+    {
+        [RSIP_OTF_CHANNEL_0] =
+        {
+            [RSIP_KEY_AES_128] = RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_128,
+            [RSIP_KEY_AES_192] = NULL,
+            [RSIP_KEY_AES_256] = RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_256
+        },
+        [RSIP_OTF_CHANNEL_1] =
+        {
+            [RSIP_KEY_AES_128] = NULL,
+            [RSIP_KEY_AES_192] = NULL,
+            [RSIP_KEY_AES_256] = NULL
+        }
     },
     .p_rng           = RSIP_PRV_FUNC_RANDOM_NUMBER_GENERATE,
     .p_ghash_compute = RSIP_PRV_FUNC_GHASH_COMPUTE

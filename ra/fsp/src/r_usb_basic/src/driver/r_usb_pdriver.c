@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -48,6 +34,9 @@
    #include "ux_host_class_storage.h"
   #endif                               /* defined(USB_CFG_HMSC_USE) */
  #endif                                /* defined(USB_CFG_OTG_USE) */
+ #if defined(USB_CFG_PCDC_USE)
+  #include "r_usb_pcdc_cfg.h"
+ #endif                                /* defined(USB_CFG_PCDC_USE) */
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
@@ -1648,14 +1637,14 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
 
   #if (BSP_CFG_RTOS == 1)
    #if (defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PPRN_USE))
-     UINT           status;
-     CHAR         * p_sem_name;
-     ULONG          cur_sem_count_value;
-     TX_THREAD    * p_suspend_thread;
-     ULONG          suspend_t_count;
-     TX_SEMAPHORE * p_next_sem;
-   #endif  /* (defined(USB_CFG_PCDC_USE) ||  defined(USB_CFG_PPRN_USE) */
-  #endif  /* #if (BSP_CFG_RTOS == 1) */
+    UINT           status;
+    CHAR         * p_sem_name;
+    ULONG          cur_sem_count_value;
+    TX_THREAD    * p_suspend_thread;
+    ULONG          suspend_t_count;
+    TX_SEMAPHORE * p_next_sem;
+   #endif                              /* (defined(USB_CFG_PCDC_USE) ||  defined(USB_CFG_PPRN_USE) */
+  #endif                               /* #if (BSP_CFG_RTOS == 1) */
 
     pipenum = ptr->keyword;
     if (USB_PIPE0 == pipenum)
@@ -1712,27 +1701,51 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
    #if (BSP_CFG_RTOS == 1)
     p_tran_data->cur_task_hdl              = tx_thread_identify();
     g_usb_peri_usbx_is_fifo_error[pipenum] = USB_NO;
-    #if (defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PPRN_USE))
-     status = tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipenum],
-    		                        &p_sem_name,
-                                    &cur_sem_count_value,
-                                    &p_suspend_thread,
-                                    &suspend_t_count,
-                                    &p_next_sem);
-     if (TX_SUCCESS == status)
-     {
-         /* Check IOCTL timeout value has been set to the transfer request
-          * and check if transfer request semaphore count value is got
-          * incremented, due to the previous transfer request timeout.
-          * If both conditions true, then clear the previous transfer request semaphore,
-          * before starting current transfer request. */
-         if ((TX_WAIT_FOREVER != ptr->timeout) && (cur_sem_count_value > 0))
-         {
-             /* Clear the previous transfer request semaphore,if timeout has occurred. */
-             tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], TX_NO_WAIT);
-         }
-     }
-    #endif  /* defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PPRN_USE) */
+    #if defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE)
+    if ((USB_CFG_PCDC_BULK_IN == pipenum) || (USB_CFG_PCDC_BULK_OUT == pipenum))
+    {
+        status = tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipenum],
+                                       &p_sem_name,
+                                       &cur_sem_count_value,
+                                       &p_suspend_thread,
+                                       &suspend_t_count,
+                                       &p_next_sem);
+        if (TX_SUCCESS == status)
+        {
+            /* Check IOCTL timeout value has been set to the transfer request
+             * and check if transfer request semaphore count value is got
+             * incremented, due to the previous transfer request timeout.
+             * If both conditions true, then clear the previous transfer request semaphore,
+             * before starting current transfer request. */
+            if ((TX_WAIT_FOREVER != ptr->timeout) && (cur_sem_count_value > 0))
+            {
+                /* Clear the previous transfer request semaphore,if timeout has occurred. */
+                tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], TX_NO_WAIT);
+            }
+        }
+    }
+
+    #elif (defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PPRN_USE))
+    status = tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipenum],
+                                   &p_sem_name,
+                                   &cur_sem_count_value,
+                                   &p_suspend_thread,
+                                   &suspend_t_count,
+                                   &p_next_sem);
+    if (TX_SUCCESS == status)
+    {
+        /* Check IOCTL timeout value has been set to the transfer request
+         * and check if transfer request semaphore count value is got
+         * incremented, due to the previous transfer request timeout.
+         * If both conditions true, then clear the previous transfer request semaphore,
+         * before starting current transfer request. */
+        if ((TX_WAIT_FOREVER != ptr->timeout) && (cur_sem_count_value > 0))
+        {
+            /* Clear the previous transfer request semaphore,if timeout has occurred. */
+            tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], TX_NO_WAIT);
+        }
+    }
+    #endif                             /* defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PPRN_USE) */
    #elif (BSP_CFG_RTOS == 2)           /* (BSP_CFG_RTOS == 1) */
     p_tran_data->cur_task_hdl = xTaskGetCurrentTaskHandle();
    #endif                              /* (BSP_CFG_RTOS == 1) */
@@ -1751,7 +1764,43 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
    #if (BSP_CFG_RTOS == 1)
     if (0 != pipenum)
     {
-    #if defined(USB_CFG_PPRN_USE)
+    #if defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE)
+        if ((USB_CFG_PCDC_BULK_IN == pipenum) || (USB_CFG_PCDC_BULK_OUT == pipenum))
+        {
+            UINT tx_err;
+
+            /* Wait for the transfer request semaphore to wake up */
+            tx_err = tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], p_tran_data->timeout);
+
+            /* Check the error status code, and if this transfer is not successful end this
+             * transfer and return error code to the caller function.*/
+            if (TX_SUCCESS != tx_err)
+            {
+                /* Set transfer request timeout status */
+                p_tran_data->is_timeout = USB_YES;
+
+                /* Once Time out occurs for this transfer request, terminate data transmission
+                 * or reception. */
+                usb_pstd_forced_termination(pipenum, (uint16_t) USB_DATA_STOP, p_tran_data);
+                USB_REL_BLK(1, p_tran_data);
+                err = USB_ERR_TMOUT;
+            }
+            else
+            {
+                /* Check for the FIFO error flag status */
+                if (USB_YES == g_usb_peri_usbx_is_fifo_error[pipenum])
+                {
+                    g_usb_peri_usbx_is_fifo_error[pipenum] = USB_NO;
+                    err = USB_ERR_FIFO_ACCESS;
+                }
+            }
+        }
+        else
+        {
+            tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], TX_WAIT_FOREVER);
+        }
+
+    #elif defined(USB_CFG_PPRN_USE)
         UINT tx_err;
         tx_err = tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], p_tran_data->timeout);
         if (TX_SUCCESS != tx_err)
@@ -1773,16 +1822,20 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
                 err = USB_ERR_FIFO_ACCESS;
             }
         }
+
     #elif defined(USB_CFG_PCDC_USE)
         UINT tx_err;
+
         /* Wait for the transfer request semaphore to wake up */
         tx_err = tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], p_tran_data->timeout);
+
         /* Check the error status code, and if this transfer is not successful end this
          * transfer and return error code to the caller function.*/
         if (TX_SUCCESS != tx_err)
         {
-        	/* Set transfer request timeout status */
+            /* Set transfer request timeout status */
             p_tran_data->is_timeout = USB_YES;
+
             /* Once Time out occurs for this transfer request, terminate data transmission
              * or reception. */
             usb_pstd_forced_termination(pipenum, (uint16_t) USB_DATA_STOP, p_tran_data);
@@ -1791,16 +1844,17 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
         }
         else
         {
-        	/* Check for the FIFO error flag status */
+            /* Check for the FIFO error flag status */
             if (USB_YES == g_usb_peri_usbx_is_fifo_error[pipenum])
             {
                 g_usb_peri_usbx_is_fifo_error[pipenum] = USB_NO;
                 err = USB_ERR_FIFO_ACCESS;
             }
         }
+
     #else
         tx_semaphore_get(&g_usb_peri_usbx_sem[pipenum], TX_WAIT_FOREVER);
-    #endif  /* defined(USB_CFG_PPRN_USE) */
+    #endif                             /* defined(USB_CFG_PPRN_USE) */
     }
    #endif                              /* #if (BSP_CFG_RTOS == 1) */
   #endif                               /* (BSP_CFG_RTOS == 0) */

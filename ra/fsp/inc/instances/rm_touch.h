@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup TOUCH
@@ -38,7 +24,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TOUCH_VERSION_SUPPORT_JUDGEMENT_MAJORITY    (1)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -76,13 +61,13 @@ typedef enum e_touch_tuning_scan
     TOUCH_TUNING_SCAN_CURRENT,
 } touch_tuning_scan_t;
 
-typedef struct st_touch_tuning_ico
+typedef struct st_ico
 {
     uint16_t pri_sen;
     uint16_t snd_sen;
 } touch_tuning_ico_t;
 
-typedef struct st_touch_tuning_ts_msk
+typedef struct
 {
     uint32_t mska;
     uint32_t mskb;
@@ -90,7 +75,7 @@ typedef struct st_touch_tuning_ts_msk
 #endif
 
 /** Information of button */
-typedef struct st_touch_button_info
+typedef struct
 {
     uint64_t   status;                 ///< Touch result bitmap.
     uint16_t * p_threshold;            ///< Pointer to Threshold value array. g_touch_button_threshold[] is set by Open API.
@@ -107,21 +92,21 @@ typedef struct st_touch_button_info
 } touch_button_info_t;
 
 /** Information of slider */
-typedef struct st_touch_slider_info
+typedef struct
 {
     uint16_t * p_position;             ///< Calculated Position data. g_touch_slider_position[] is set by Open API.
     uint16_t * p_threshold;            ///< Copy from config by Open API. g_touch_slider_threshold[] is set by Open API.
 } touch_slider_info_t;
 
 /** Information of wheel */
-typedef struct st_touch_wheel_info
+typedef struct
 {
     uint16_t * p_position;             ///< Calculated Position data. g_touch_wheel_position[] is set by Open API.
     uint16_t * p_threshold;            ///< Copy from config by Open API. g_touch_wheel_threshold[] is set by Open API.
 } touch_wheel_info_t;
 
 /** Information of pad */
-typedef struct st_touch_pad_info
+typedef struct
 {
     uint16_t * p_rx_coordinate;        ///< RX coordinate
     uint16_t * p_tx_coordinate;        ///< TX coordinate
@@ -148,17 +133,6 @@ typedef struct st_touch_instance_ctrl
     touch_cfg_t const     * p_touch_cfg;          ///< Pointer to initial configurations.
     ctsu_instance_t const * p_ctsu_instance;      ///< Pointer to CTSU instance.
 } touch_instance_ctrl_t;
-
-#if (CTSU_CFG_JUDGEMENT_MODE == 1)
-
-/** Information of 3freq judge */
-typedef struct st_touch_jmm_info
-{
-    uint8_t  id;
-    uint8_t  jmm_index;
-    uint16_t jmm_result[CTSU_CFG_NUM_SUMULTI];
-} touch_jmm_info_t;
-#endif
 
 /**********************************************************************************************************************
  * Exported global variables

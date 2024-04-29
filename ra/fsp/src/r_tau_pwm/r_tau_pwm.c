@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -57,8 +43,6 @@ static fsp_err_t r_tau_pwm_parameter_checking(tau_pwm_instance_ctrl_t * const p_
 
 #endif
 
-static uint32_t r_tau_pwm_clock_frequency_get(tau_pwm_instance_ctrl_t * const p_instance_ctrl);
-
 static void r_tau_pwm_disable_irq(IRQn_Type irq);
 
 static void r_tau_pwm_enable_irq(IRQn_Type const irq, uint32_t priority, void * p_context);
@@ -81,18 +65,19 @@ void tau_pwm_slave_tmi_isr(void);
 /* TAU_PWM implementation of timer interface  */
 const timer_api_t g_timer_on_tau_pwm =
 {
-    .open         = R_TAU_PWM_Open,
-    .stop         = R_TAU_PWM_Stop,
-    .start        = R_TAU_PWM_Start,
-    .reset        = R_TAU_PWM_Reset,
-    .enable       = R_TAU_PWM_Enable,
-    .disable      = R_TAU_PWM_Disable,
-    .periodSet    = R_TAU_PWM_PeriodSet,
-    .dutyCycleSet = R_TAU_PWM_DutyCycleSet,
-    .infoGet      = R_TAU_PWM_InfoGet,
-    .statusGet    = R_TAU_PWM_StatusGet,
-    .callbackSet  = R_TAU_PWM_CallbackSet,
-    .close        = R_TAU_PWM_Close,
+    .open            = R_TAU_PWM_Open,
+    .stop            = R_TAU_PWM_Stop,
+    .start           = R_TAU_PWM_Start,
+    .reset           = R_TAU_PWM_Reset,
+    .enable          = R_TAU_PWM_Enable,
+    .disable         = R_TAU_PWM_Disable,
+    .periodSet       = R_TAU_PWM_PeriodSet,
+    .compareMatchSet = R_TAU_PWM_CompareMatchSet,
+    .dutyCycleSet    = R_TAU_PWM_DutyCycleSet,
+    .infoGet         = R_TAU_PWM_InfoGet,
+    .statusGet       = R_TAU_PWM_StatusGet,
+    .callbackSet     = R_TAU_PWM_CallbackSet,
+    .close           = R_TAU_PWM_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -386,6 +371,24 @@ fsp_err_t R_TAU_PWM_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const perio
 }
 
 /*******************************************************************************************************************//**
+ * Placeholder for unsupported compareMatch function. Implements @ref timer_api_t::compareMatchSet.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      TAU PWM compare match is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_TAU_PWM_CompareMatchSet (timer_ctrl_t * const        p_ctrl,
+                                     uint32_t const              compare_match_value,
+                                     timer_compare_match_t const match_channel)
+{
+    /* This function isn't supported. It is defined only to implement a required function of timer_api_t.
+     * Mark the input parameter as unused since this function isn't supported. */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(compare_match_value);
+    FSP_PARAMETER_NOT_USED(match_channel);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Sets duty cycle on requested pin. Implements @ref timer_api_t::dutyCycleSet.
  *
  * Duty cycle is updated in the timer data register. The updated duty cycle is reflected after the next cycle end
@@ -447,11 +450,17 @@ fsp_err_t R_TAU_PWM_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const du
 fsp_err_t R_TAU_PWM_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_info)
 {
     tau_pwm_instance_ctrl_t * p_instance_ctrl = (tau_pwm_instance_ctrl_t *) p_ctrl;
+    uint8_t specific_divider;
+
 #if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_info);
     FSP_ERROR_RETURN(TAU_PWM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
+
+    timer_cfg_t const * p_cfg = p_instance_ctrl->p_cfg;
+
+    tau_pwm_extended_cfg_t * p_extend = (tau_pwm_extended_cfg_t *) p_cfg->p_extend;
 
     /* Get and store period */
     p_info->period_counts = R_TAU->TDR0[p_instance_ctrl->p_cfg->channel].TDR0n + 2U;
@@ -463,7 +472,23 @@ fsp_err_t R_TAU_PWM_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p
 #endif
 
     /* Get and store clock frequency */
-    p_info->clock_frequency = r_tau_pwm_clock_frequency_get(p_instance_ctrl);
+    switch (p_extend->operation_clock)
+    {
+        case TAU_PWM_OPERATION_CLOCK_CK01:
+        {
+            specific_divider = BSP_CFG_TAU_CK01;
+            break;
+        }
+
+        case TAU_PWM_OPERATION_CLOCK_CK00:
+        default:
+        {
+            specific_divider = BSP_CFG_TAU_CK00;
+            break;
+        }
+    }
+
+    p_info->clock_frequency = SystemCoreClock >> specific_divider;
 
     /* Get and store clock count direction as down. */
     p_info->count_direction = TIMER_DIRECTION_DOWN;
@@ -907,22 +932,6 @@ static void r_tau_pwm_enable_irq (IRQn_Type const irq, uint32_t priority, void *
     {
         R_BSP_IrqCfgEnable(irq, priority, p_context);
     }
-}
-
-/*******************************************************************************************************************//**
- * Calculates clock frequency of TAU_PWM counter.  Divides TAU_PWM clock by TAU_PWM clock divisor.
- *
- * @param[in]  p_instance_ctrl           Instance control block
- *
- * @return     Clock frequency of the TAU_PWM counter.
- **********************************************************************************************************************/
-static uint32_t r_tau_pwm_clock_frequency_get (tau_pwm_instance_ctrl_t * const p_instance_ctrl)
-{
-    /* Look up PCLK frequency and divide it by TAU_PWM PCLK divider. */
-    uint32_t pclk_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK);
-    uint32_t pclk_divisor = p_instance_ctrl->p_cfg->source_div;
-
-    return pclk_freq_hz >> pclk_divisor;
 }
 
 /*******************************************************************************************************************//**

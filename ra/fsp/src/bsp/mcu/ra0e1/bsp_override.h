@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup BSP_MCU_RA0E1
@@ -37,17 +23,21 @@
  **********************************************************************************************************************/
 
 /* Define overrides required for this MCU. */
-#define BSP_OVERRIDE_IOPORT_PERIPHERAL_T
-#define BSP_OVERRIDE_IOPORT_CFG_OPTIONS_T
-#define BSP_OVERRIDE_LPM_STANDBY_WAKE_SOURCE_T
-#define BSP_OVERRIDE_LPM_SNOOZE_CANCEL_T
+#define BSP_OVERRIDE_ADC_CHANNEL_T
+#define BSP_OVERRIDE_ADC_RESOLUTION_T
 #define BSP_OVERRIDE_CGC_DIVIDER_CFG_T
 #define BSP_OVERRIDE_CGC_SYS_CLOCK_DIV_T
-#define BSP_OVERRIDE_UART_DATA_BITS_T
+#define BSP_OVERRIDE_IOPORT_CFG_OPTIONS_T
+#define BSP_OVERRIDE_IOPORT_PERIPHERAL_T
+#define BSP_OVERRIDE_LPM_SNOOZE_CANCEL_T
+#define BSP_OVERRIDE_LPM_STANDBY_WAKE_SOURCE_T
 #define BSP_OVERRIDE_LVD_PERIPHERAL_T
-#define BSP_OVERRIDE_ADC_CHANNEL_T
+#define BSP_OVERRIDE_RTC_ALARM_TIME_T
+#define BSP_OVERRIDE_RTC_PERIODIC_IRQ_SELECT_T
 #define BSP_OVERRIDE_TIMER_EVENT_T
+#define BSP_OVERRIDE_TIMER_MODE_T
 #define BSP_OVERRIDE_TIMER_SOURCE_DIV_T
+#define BSP_OVERRIDE_UART_DATA_BITS_T
 #define BSP_OVERRIDE_UART_DATA_BITS_T
 
 /***********************************************************************************************************************
@@ -114,38 +104,35 @@ typedef enum e_ioport_cfg_options
 /** Wake from deep sleep or standby mode sources, does not apply to sleep or deep standby modes */
 typedef enum e_lpm_standby_wake_source
 {
-    LPM_STANDBY_WAKE_SOURCE_IWDT     = 0x00000001ULL,    ///< Independent watchdog interrupt
-    LPM_STANDBY_WAKE_SOURCE_LVD1     = 0x00000002ULL,    ///< Low Voltage Detection 1 interrupt
-    LPM_STANDBY_WAKE_SOURCE_IRQ0     = 0x00000004ULL,    ///< IRQ0
-    LPM_STANDBY_WAKE_SOURCE_IRQ1     = 0x00000008ULL,    ///< IRQ1
-    LPM_STANDBY_WAKE_SOURCE_IRQ2     = 0x00000010ULL,    ///< IRQ2
-    LPM_STANDBY_WAKE_SOURCE_IRQ3     = 0x00000020ULL,    ///< IRQ3
-    LPM_STANDBY_WAKE_SOURCE_IRQ4     = 0x00000040ULL,    ///< IRQ4
-    LPM_STANDBY_WAKE_SOURCE_IRQ5     = 0x00000080ULL,    ///< IRQ5
-    LPM_STANDBY_WAKE_SOURCE_DTC      = 0x00000400ULL,    ///< DTC Transfer Complete Interrupt
-    LPM_STANDBY_WAKE_SOURCE_SPI00RX  = 0x00040000ULL,    ///< SPI00 Transfer End or Buffer Empty Interrupt
-    LPM_STANDBY_WAKE_SOURCE_UART0ERR = 0x00100000ULL,    ///< UART0 Reception Communication Error Occurrence Interrupt
-    LPM_STANDBY_WAKE_SOURCE_IICA0    = 0x04000000ULL,    ///< I2CA 0 interrupt
-    LPM_STANDBY_WAKE_SOURCE_UART0RXE = 0x08000000ULL,    ///< UART0 Reception Transfer End Interrupt
-    LPM_STANDBY_WAKE_SOURCE_ADC      = 0x80000000ULL,    ///< A/D Conversion Interrupt
-    LPM_STANDBY_WAKE_SOURCE_RTC      = 0x100000000ULL,   ///< RTC interrupt
-    LPM_STANDBY_WAKE_SOURCE_ITL      = 0x200000000ULL,   ///< Interval signal of 32-bit interval timer Interrupt
-    LPM_STANDBY_WAKE_SOURCE_URE0     = 0x8000000000ULL,  ///< UARTA0 reception communication error Interrupt
-    LPM_STANDBY_WAKE_SOURCE_UT0      = 0x10000000000ULL, ///< UARTA0 transmission transfer end or buffer empty Interrupt
-    LPM_STANDBY_WAKE_SOURCE_UR0      = 0x20000000000ULL, ///< UARTA0 reception transfer end Interrupt
+    LPM_STANDBY_WAKE_SOURCE_IWDT       = 0x00000001ULL,    ///< Independent watchdog interrupt
+    LPM_STANDBY_WAKE_SOURCE_LVD1       = 0x00000002ULL,    ///< Low Voltage Detection 1 interrupt
+    LPM_STANDBY_WAKE_SOURCE_IRQ0       = 0x00000004ULL,    ///< IRQ0
+    LPM_STANDBY_WAKE_SOURCE_IRQ1       = 0x00000008ULL,    ///< IRQ1
+    LPM_STANDBY_WAKE_SOURCE_IRQ2       = 0x00000010ULL,    ///< IRQ2
+    LPM_STANDBY_WAKE_SOURCE_IRQ3       = 0x00000020ULL,    ///< IRQ3
+    LPM_STANDBY_WAKE_SOURCE_IRQ4       = 0x00000040ULL,    ///< IRQ4
+    LPM_STANDBY_WAKE_SOURCE_IRQ5       = 0x00000080ULL,    ///< IRQ5
+    LPM_STANDBY_WAKE_SOURCE_IICA0      = 0x04000000ULL,    ///< I2CA 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_RTC        = 0x100000000ULL,   ///< RTC interrupt
+    LPM_STANDBY_WAKE_SOURCE_ITL        = 0x200000000ULL,   ///< Interval signal of 32-bit interval timer Interrupt
+    LPM_STANDBY_WAKE_SOURCE_UARTA0ERRI = 0x8000000000ULL,  ///< UARTA0 reception communication error Interrupt
+    LPM_STANDBY_WAKE_SOURCE_UARTA0TXI  = 0x10000000000ULL, ///< UARTA0 transmission transfer end or buffer empty Interrupt
+    LPM_STANDBY_WAKE_SOURCE_UARTA0RXI  = 0x20000000000ULL, ///< UARTA0 reception transfer end Interrupt
 } lpm_standby_wake_source_t;
 
 typedef uint64_t lpm_standby_wake_source_bits_t;
 
-typedef enum e_lpm_snooze_cancel_source_bits
+typedef enum e_lpm_snooze_cancel_source
 {
-    LPM_SNOOZE_CANCEL_SOURCE_NONE             = 0x0U,  ///< No snooze cancel source
-    LPM_SNOOZE_CANCEL_SOURCE_ADC0_END         = 0x16U, ///< End of A/D conversion
-    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE     = 0x12U, ///< DTC transfer complete
-    LPM_SNOOZE_CANCEL_SOURCE_SAU0_SPI_TXRXI00 = 0x10U, ///< SAU0 SPI transfer end or buffer empty interrupt
-    LPM_SNOOZE_CANCEL_SOURCE_SAU0_UART_TXI0   = 0x10U, ///< SAU0 UART transmission transfer end or buffer empty interrupt
-    LPM_SNOOZE_CANCEL_SOURCE_SAU0_UART_RXI0   = 0x11U, ///< SAU0 UART reception transfer end interrupt
-} lpm_snooze_cancel_source_bits_t;
+    LPM_SNOOZE_CANCEL_SOURCE_NONE             = 0x00000000ULL, ///< No snooze cancel source
+    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE     = 0x00000400ULL, ///< DTC Transfer Complete Interrupt
+    LPM_SNOOZE_CANCEL_SOURCE_SAU0_SPI_TXRXI00 = 0x00040000ULL, ///< SPI00 Transfer End or Buffer Empty Interrupt
+    LPM_SNOOZE_CANCEL_SOURCE_SAU0_UART_ERR0   = 0x00100000ULL, ///< UART0 Reception Communication Error Occurrence Interrupt
+    LPM_SNOOZE_CANCEL_SOURCE_SAU0_UART_RXI0   = 0x08000000ULL, ///< UART0 Reception Transfer End Interrupt
+    LPM_SNOOZE_CANCEL_SOURCE_ADC0_END         = 0x80000000ULL, ///< A/D Conversion Interrupt
+} lpm_snooze_cancel_source_t;
+
+typedef uint64_t lpm_snooze_cancel_source_bits_t;
 
 typedef enum e_cgc_sys_clock_div
 {
@@ -216,6 +203,47 @@ typedef enum e_adc_channel
     ADC_CHANNEL_NEGATIVE_SIDE_VREF = -3   ///< Select negative reference voltage as target conversion
 } adc_channel_t;
 
+/** Alarm time setting structure */
+typedef struct st_rtc_alarm_time
+{
+    int time_minute;                   ///< Time structure
+    int time_hour;
+    union
+    {
+        struct
+        {
+            uint8_t sunday_match    : 1; ///< Enable the alarm on Sunday
+            uint8_t monday_match    : 1; ///< Enable the alarm on Monday
+            uint8_t tuesday_match   : 1; ///< Enable the alarm on Tuesday
+            uint8_t wednesday_match : 1; ///< Enable the alarm on Wednesday
+            uint8_t thursday_match  : 1; ///< Enable the alarm on Thursday
+            uint8_t friday_match    : 1; ///< Enable the alarm on Friday
+            uint8_t saturday_match  : 1; ///< Enable the alarm on Saturday
+        };
+        uint8_t weekday_match;
+    };
+} rtc_alarm_time_t;
+
+/** Periodic Interrupt select */
+typedef enum e_rtc_periodic_irq_select
+{
+    RTC_PERIODIC_IRQ_SELECT_NONE              = 0, ///< A periodic irq is not generated
+    RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND = 1, ///< A periodic irq is generated every 1/2 second
+    RTC_PERIODIC_IRQ_SELECT_1_SECOND          = 2, ///< A periodic irq is generated every 1 second
+    RTC_PERIODIC_IRQ_SELECT_1_MINUTE          = 3, ///< A periodic irq is generated every 1 minute
+    RTC_PERIODIC_IRQ_SELECT_1_HOUR            = 4, ///< A periodic irq is generated every 1 hour
+    RTC_PERIODIC_IRQ_SELECT_1_DAY             = 5, ///< A periodic irq is generated every 1 day
+    RTC_PERIODIC_IRQ_SELECT_1_MONTH           = 7, ///< A periodic irq is generated every 1 month
+} rtc_periodic_irq_select_t;
+
+/** ADC data resolution definitions */
+typedef enum e_adc_resolution
+{
+    ADC_RESOLUTION_10_BIT = 0,         ///< 10 bit resolution
+    ADC_RESOLUTION_8_BIT  = 1,         ///< 8 bit resolution
+    ADC_RESOLUTION_12_BIT = 2,         ///< 12 bit resolution
+} adc_resolution_t;
+
 /** Events that can trigger a callback function */
 typedef enum e_timer_event
 {
@@ -246,6 +274,18 @@ typedef enum e_timer_source_div
     TIMER_SOURCE_DIV_16384 = 14,       ///< Timer clock source divided by 16384
     TIMER_SOURCE_DIV_32768 = 15,       ///< Timer clock source divided by 32768
 } timer_source_div_t;
+
+/** Timer operational modes */
+typedef enum e_timer_mode
+{
+    TIMER_MODE_8_BIT_COUNTER  = 0U,    ///< 8-bit counter mode
+    TIMER_MODE_16_BIT_COUNTER = 1U,    ///< 16-bit counter mode
+    TIMER_MODE_32_BIT_COUNTER = 2U,    ///< 32-bit counter mode
+    TIMER_MODE_16_BIT_CAPTURE = 3U,    ///< 16-bit capture mode
+    TIMER_MODE_PERIODIC,               ///< Timer restarts after period elapses.
+    TIMER_MODE_ONE_SHOT,               ///< Timer stops after period elapses.
+    TIMER_MODE_PWM,                    ///< Timer generates saw-wave PWM output.
+} timer_mode_t;
 
 /***********************************************************************************************************************
  * Exported global variables

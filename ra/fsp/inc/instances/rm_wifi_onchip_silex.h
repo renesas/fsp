@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup WIFI_ONCHIP_SILEX WIFI_ONCHIP_SILEX
@@ -251,26 +237,7 @@ extern const char * g_wifi_onchip_silex_uart_cmd_baud;
 /**********************************************************************************************************************
  * Public Function Prototypes
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_silex_open(wifi_onchip_silex_cfg_t const * const p_cfg);
-fsp_err_t rm_wifi_onchip_silex_close();
-fsp_err_t rm_wifi_onchip_silex_connect(const char * p_ssid, WIFISecurity_t security, const char * p_passphrase);
-fsp_err_t rm_wifi_onchip_silex_mac_addr_get(uint8_t * p_macaddr);
-fsp_err_t rm_wifi_onchip_silex_scan(WIFIScanResult_t * p_results, uint32_t maxNetworks);
-fsp_err_t rm_wifi_onchip_silex_ping(uint8_t * p_ip_addr, uint32_t count, uint32_t interval_ms);
-fsp_err_t rm_wifi_onchip_silex_ip_addr_get(uint32_t * p_ip_addr);
-fsp_err_t rm_wifi_onchip_silex_network_info_get(uint32_t * p_ip_addr, uint32_t * p_subnet_mask, uint32_t * p_gateway);
-fsp_err_t rm_wifi_onchip_silex_avail_socket_get(uint32_t * p_socket_id);
-fsp_err_t rm_wifi_onchip_silex_socket_status_get(uint32_t socket_no, uint32_t * p_socket_status);
-fsp_err_t rm_wifi_onchip_silex_socket_create(uint32_t socket_no, uint32_t type, uint32_t ipversion);
-fsp_err_t rm_wifi_onchip_silex_tcp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port);
-fsp_err_t rm_wifi_onchip_silex_udp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port, uint32_t type);
-int32_t   rm_wifi_onchip_silex_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
-int32_t   rm_wifi_onchip_silex_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
-int32_t   rm_wifi_onchip_silex_tcp_shutdown(uint32_t socket_no, uint32_t shutdown_channels);
-fsp_err_t rm_wifi_onchip_silex_socket_disconnect(uint32_t socket_no);
-fsp_err_t rm_wifi_onchip_silex_disconnect();
-fsp_err_t rm_wifi_onchip_silex_dns_query(const char * p_textstring, uint8_t * p_ip_addr);
-fsp_err_t rm_wifi_onchip_silex_socket_connected(fsp_err_t * p_status);
+
 void      rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
 
 #if (BSP_CFG_RTOS == 1)
@@ -291,6 +258,31 @@ uint32_t  rm_wifi_onchip_silex_get_current_socket_index();
  * @addtogroup WIFI_ONCHIP_SILEX WIFI_ONCHIP_SILEX
  * @{
  **********************************************************************************************************************/
+
+/**********************************************************************************************************************
+ * Public Function Prototypes
+ **********************************************************************************************************************/
+ 
+fsp_err_t rm_wifi_onchip_silex_open(wifi_onchip_silex_cfg_t const * const p_cfg);
+fsp_err_t rm_wifi_onchip_silex_close();
+fsp_err_t rm_wifi_onchip_silex_connect(const char * p_ssid, WIFISecurity_t security, const char * p_passphrase);
+fsp_err_t rm_wifi_onchip_silex_mac_addr_get(uint8_t * p_macaddr);
+fsp_err_t rm_wifi_onchip_silex_scan(WIFIScanResult_t * p_results, uint32_t maxNetworks);
+fsp_err_t rm_wifi_onchip_silex_ping(uint8_t * p_ip_addr, uint32_t count, uint32_t interval_ms);
+fsp_err_t rm_wifi_onchip_silex_ip_addr_get(uint32_t * p_ip_addr);
+fsp_err_t rm_wifi_onchip_silex_network_info_get(uint32_t * p_ip_addr, uint32_t * p_subnet_mask, uint32_t * p_gateway);
+fsp_err_t rm_wifi_onchip_silex_avail_socket_get(uint32_t * p_socket_id);
+fsp_err_t rm_wifi_onchip_silex_socket_status_get(uint32_t socket_no, uint32_t * p_socket_status);
+fsp_err_t rm_wifi_onchip_silex_socket_create(uint32_t socket_no, uint32_t type, uint32_t ipversion);
+fsp_err_t rm_wifi_onchip_silex_tcp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port);
+fsp_err_t rm_wifi_onchip_silex_udp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port, uint32_t type);
+int32_t   rm_wifi_onchip_silex_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
+int32_t   rm_wifi_onchip_silex_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
+int32_t   rm_wifi_onchip_silex_tcp_shutdown(uint32_t socket_no, uint32_t shutdown_channels);
+fsp_err_t rm_wifi_onchip_silex_socket_disconnect(uint32_t socket_no);
+fsp_err_t rm_wifi_onchip_silex_disconnect();
+fsp_err_t rm_wifi_onchip_silex_dns_query(const char * p_textstring, uint8_t * p_ip_addr);
+fsp_err_t rm_wifi_onchip_silex_socket_connected(fsp_err_t * p_status);
 
 /*******************************************************************************************************************//**
  *  Get the current system time as the number of seconds since epoch 1970-01-01 00:00:00 UTC

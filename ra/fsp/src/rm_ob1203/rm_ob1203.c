@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -33,6 +19,9 @@
 /* Definitions of Timeout */
 #define RM_OB1203_TIMEOUT                      (100)
 #define RM_OB1203_10MS                         (10)
+
+/* Definitions of Retry max counts */
+#define RM_OB1203_RETRY_MAX_COUNTS             (5)
 
 /* Definitions of Register data */
 #define RM_OB1203_REG_DATA_PPG_PS_GAIN         (0x09)
@@ -812,31 +801,40 @@ fsp_err_t rm_ob1203_read (rm_ob1203_ctrl_t * const p_api_ctrl, rm_comms_write_re
 {
     fsp_err_t err = FSP_SUCCESS;
     rm_ob1203_instance_ctrl_t * p_ctrl = (rm_ob1203_instance_ctrl_t *) p_api_ctrl;
-    uint16_t counter = 0;
+    uint16_t counter      = 0;
+    uint16_t retry_counts = RM_OB1203_RETRY_MAX_COUNTS;
 
-    if (RM_OB1203_OPEN != p_ctrl->open)
+    do
     {
-        /* Clear flag */
-        p_ctrl->init_process_params.communication_finished = false;
-    }
-
-    /* WriteRead data */
-    err = p_ctrl->p_comms_i2c_instance->p_api->writeRead(p_ctrl->p_comms_i2c_instance->p_ctrl, write_read_params);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    if (RM_OB1203_OPEN != p_ctrl->open)
-    {
-        /* Wait callback */
-        while (false == p_ctrl->init_process_params.communication_finished)
+        if (RM_OB1203_OPEN != p_ctrl->open)
         {
-            rm_ob1203_delay_ms(p_ctrl, 1);
-            counter++;
-            FSP_ERROR_RETURN(RM_OB1203_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+            /* Clear flag */
+            p_ctrl->init_process_params.communication_finished = false;
+            counter = 0;
         }
 
-        /* Check callback event */
-        FSP_ERROR_RETURN(RM_OB1203_EVENT_SUCCESS == p_ctrl->init_process_params.event, FSP_ERR_ABORTED);
-    }
+        /* WriteRead data */
+        err = p_ctrl->p_comms_i2c_instance->p_api->writeRead(p_ctrl->p_comms_i2c_instance->p_ctrl, write_read_params);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        if (RM_OB1203_OPEN != p_ctrl->open)
+        {
+            /* Wait callback */
+            while (false == p_ctrl->init_process_params.communication_finished)
+            {
+                rm_ob1203_delay_ms(p_ctrl, 1);
+                counter++;
+                FSP_ERROR_RETURN(RM_OB1203_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+            }
+
+            /* Decrease retry counts */
+            retry_counts--;
+        }
+    } while ((RM_OB1203_OPEN != p_ctrl->open) && (RM_OB1203_EVENT_SUCCESS != p_ctrl->init_process_params.event) &&
+             (0 < retry_counts));
+
+    /* Check callback event */
+    FSP_ERROR_RETURN(RM_OB1203_EVENT_SUCCESS == p_ctrl->init_process_params.event, FSP_ERR_ABORTED);
 
     return FSP_SUCCESS;
 }
@@ -852,31 +850,40 @@ fsp_err_t rm_ob1203_write (rm_ob1203_ctrl_t * const p_api_ctrl, uint8_t * const 
 {
     fsp_err_t err = FSP_SUCCESS;
     rm_ob1203_instance_ctrl_t * p_ctrl = (rm_ob1203_instance_ctrl_t *) p_api_ctrl;
-    uint16_t counter = 0;
+    uint16_t counter      = 0;
+    uint16_t retry_counts = RM_OB1203_RETRY_MAX_COUNTS;
 
-    if (RM_OB1203_OPEN != p_ctrl->open)
+    do
     {
-        /* Clear flag */
-        p_ctrl->init_process_params.communication_finished = false;
-    }
-
-    /* Write data */
-    err = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, p_src, (uint32_t) bytes);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    if (RM_OB1203_OPEN != p_ctrl->open)
-    {
-        /* Wait callback */
-        while (false == p_ctrl->init_process_params.communication_finished)
+        if (RM_OB1203_OPEN != p_ctrl->open)
         {
-            rm_ob1203_delay_ms(p_ctrl, 1);
-            counter++;
-            FSP_ERROR_RETURN(RM_OB1203_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+            /* Clear flag */
+            p_ctrl->init_process_params.communication_finished = false;
+            counter = 0;
         }
 
-        /* Check callback event */
-        FSP_ERROR_RETURN(RM_OB1203_EVENT_SUCCESS == p_ctrl->init_process_params.event, FSP_ERR_ABORTED);
-    }
+        /* Write data */
+        err = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, p_src, (uint32_t) bytes);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        if (RM_OB1203_OPEN != p_ctrl->open)
+        {
+            /* Wait callback */
+            while (false == p_ctrl->init_process_params.communication_finished)
+            {
+                rm_ob1203_delay_ms(p_ctrl, 1);
+                counter++;
+                FSP_ERROR_RETURN(RM_OB1203_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+            }
+
+            /* Decrease retry counts */
+            retry_counts--;
+        }
+    } while ((RM_OB1203_OPEN != p_ctrl->open) && (RM_OB1203_EVENT_SUCCESS != p_ctrl->init_process_params.event) &&
+             (0 < retry_counts));
+
+    /* Check callback event */
+    FSP_ERROR_RETURN(RM_OB1203_EVENT_SUCCESS == p_ctrl->init_process_params.event, FSP_ERR_ABORTED);
 
     return FSP_SUCCESS;
 }

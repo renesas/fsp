@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -45,6 +31,7 @@ typedef void (BSP_CMSE_NONSECURE_CALL * ulpt_prv_ns_callback)(timer_callback_arg
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile ulpt_prv_ns_callback)(timer_callback_args_t * p_args);
 #endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -52,8 +39,8 @@ static fsp_err_t r_ulpt_common_preamble(ulpt_instance_ctrl_t * p_instance_ctrl);
 
 static void r_ulpt_hardware_cfg(ulpt_instance_ctrl_t * p_instance_ctrl, timer_cfg_t const * const p_cfg);
 
-static void r_ulpt_period_register_set(ulpt_instance_ctrl_t * p_instance_ctrl, uint32_t period_counts);
-static uint32_t r_ulpt_clock_frequency_get (R_ULPT0_Type * p_ulpt_regs);
+static void     r_ulpt_period_register_set(ulpt_instance_ctrl_t * p_instance_ctrl, uint32_t period_counts);
+static uint32_t r_ulpt_clock_frequency_get(R_ULPT0_Type * p_ulpt_regs);
 
 #if ULPT_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_ulpt_open_param_checking(ulpt_instance_ctrl_t * p_instance_ctrl, timer_cfg_t const * const p_cfg);
@@ -74,18 +61,19 @@ void ulpt_int_isr(void);
 /** ULPT implementation of General Timer Driver. */
 const timer_api_t g_timer_on_ulpt =
 {
-    .open         = R_ULPT_Open,
-    .stop         = R_ULPT_Stop,
-    .start        = R_ULPT_Start,
-    .reset        = R_ULPT_Reset,
-    .enable       = R_ULPT_Enable,
-    .disable      = R_ULPT_Disable,
-    .periodSet    = R_ULPT_PeriodSet,
-    .dutyCycleSet = R_ULPT_DutyCycleSet,
-    .infoGet      = R_ULPT_InfoGet,
-    .statusGet    = R_ULPT_StatusGet,
-    .callbackSet  = R_ULPT_CallbackSet,
-    .close        = R_ULPT_Close,
+    .open            = R_ULPT_Open,
+    .stop            = R_ULPT_Stop,
+    .start           = R_ULPT_Start,
+    .reset           = R_ULPT_Reset,
+    .enable          = R_ULPT_Enable,
+    .disable         = R_ULPT_Disable,
+    .periodSet       = R_ULPT_PeriodSet,
+    .dutyCycleSet    = R_ULPT_DutyCycleSet,
+    .compareMatchSet = R_ULPT_CompareMatchSet,
+    .infoGet         = R_ULPT_InfoGet,
+    .statusGet       = R_ULPT_StatusGet,
+    .callbackSet     = R_ULPT_CallbackSet,
+    .close           = R_ULPT_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -123,7 +111,8 @@ fsp_err_t R_ULPT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
-    uint32_t base_address =  (uint32_t) R_ULPT0_BASE + (p_cfg->channel * ((uint32_t)R_ULPT1_BASE - (uint32_t)R_ULPT0_BASE));
+    uint32_t base_address = (uint32_t) R_ULPT0_BASE +
+                            (p_cfg->channel * ((uint32_t) R_ULPT1_BASE - (uint32_t) R_ULPT0_BASE));
     p_instance_ctrl->p_reg = (R_ULPT0_Type *) base_address;
 
     p_instance_ctrl->p_cfg = p_cfg;
@@ -370,6 +359,24 @@ fsp_err_t R_ULPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_
 }
 
 /*******************************************************************************************************************//**
+ * Placeholder for unsupported compareMatch function. Implements @ref timer_api_t::compareMatchSet.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      ULPT compare match is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_ULPT_CompareMatchSet (timer_ctrl_t * const        p_ctrl,
+                                  uint32_t const              compare_match_value,
+                                  timer_compare_match_t const match_channel)
+{
+    /* This function isn't supported. It is defined only to implement a required function of timer_api_t.
+     * Mark the input parameter as unused since this function isn't supported. */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(compare_match_value);
+    FSP_PARAMETER_NOT_USED(match_channel);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Gets timer information and store it in provided pointer p_info. Implements @ref timer_api_t::infoGet.
  *
  * Example:
@@ -557,7 +564,8 @@ static fsp_err_t r_ulpt_open_param_checking (ulpt_instance_ctrl_t * p_instance_c
         FSP_ERROR_RETURN(p_cfg->cycle_end_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
 
-     ulpt_extended_cfg_t const * p_extend = (ulpt_extended_cfg_t const *) p_cfg->p_extend;
+    ulpt_extended_cfg_t const * p_extend = (ulpt_extended_cfg_t const *) p_cfg->p_extend;
+
     /* Validate mode specific settings. */
     if ((ULPT_CLOCK_LOCO == p_extend->count_source) || (ULPT_CLOCK_SUBCLOCK == p_extend->count_source))
     {
@@ -578,7 +586,8 @@ static fsp_err_t r_ulpt_open_param_checking (ulpt_instance_ctrl_t * p_instance_c
         /* No Divider allowed. */
         FSP_ASSERT(p_cfg->source_div <= TIMER_SOURCE_DIV_1);
     }
-    return (FSP_SUCCESS);
+
+    return FSP_SUCCESS;
 }
 
 #endif
@@ -629,11 +638,12 @@ static void r_ulpt_hardware_cfg (ulpt_instance_ctrl_t * p_instance_ctrl, timer_c
 
     /* Configure the count source(LOCO or SCK) and mode(event or Timer). */
     ulptmr1 |= p_extend->count_source & (R_ULPT0_ULPTMR1_TMOD1_Msk | R_ULPT0_ULPTMR1_TCK1_Msk);
-    
+
     if (TIMER_MODE_ONE_SHOT == p_cfg->mode)
     {
         ulptmr3 |= R_ULPT0_ULPTMR3_TCNTCTL_Msk;
     }
+
     if (p_extend->count_source != ULPT_CLOCK_ULPTEVI)
     {
         /* Timer mode */
@@ -642,8 +652,9 @@ static void r_ulpt_hardware_cfg (ulpt_instance_ctrl_t * p_instance_ctrl, timer_c
         /* The divider is only used for normal timer operation. */
         ulptmr2 |= p_cfg->source_div & R_ULPT0_ULPTMR2_CKS_Msk;
     }
+
 #if ULPT_CFG_INPUT_SUPPORT_ENABLE
-    else // (p_extend->count_source == ULPT_CLOCK_ULPTEVI)
+    else                               // (p_extend->count_source == ULPT_CLOCK_ULPTEVI)
     {
         /* Event counter mode */
         ulptmr1 |= R_ULPT0_ULPTMR1_TMOD1_Msk;
@@ -652,6 +663,7 @@ static void r_ulpt_hardware_cfg (ulpt_instance_ctrl_t * p_instance_ctrl, timer_c
         /*  For Falling we set it for rising edge and flip the polarity */
         ulptmr1 |= p_extend->event_pin & R_ULPT0_ULPTMR1_TEDGPL_Msk;
         ulptmr3 |= p_extend->event_pin & R_ULPT0_ULPTMR3_TEVPOL_Msk;
+
         /* Configure input filtering */
         ulptioc |= p_extend->ulptevi_filter & R_ULPT0_ULPTIOC_TIPF_Msk;
 
@@ -661,32 +673,31 @@ static void r_ulpt_hardware_cfg (ulpt_instance_ctrl_t * p_instance_ctrl, timer_c
         /* Set the active polarity for ULPTEE. This is only set for count enable function. */
         ulptisr |= p_extend->enable_function & R_ULPT0_ULPTISR_RCCPSEL2_Msk;
     }
-#endif    
-
-
+#endif
 
     /* ULPTEE can be used in either timer or event mode. */
     /* Configure ULPTEE pin function and edge polarity for start or restart functions. */
     ulptmr3 |= p_extend->enable_function & R_ULPT0_ULPTMR3_TEECTL_Msk;
     ulptmr3 |= p_extend->trigger_edge & R_ULPT0_ULPTMR3_TEEPOL_Msk;
 
-    
 #if ULPT_CFG_OUTPUT_SUPPORT_ENABLE
 
     /* Set output if requested. */
-    if ( p_extend->ulpto != ULPT_PULSE_PIN_CFG_DISABLED)
+    if (p_extend->ulpto != ULPT_PULSE_PIN_CFG_DISABLED)
     {
         ulptioc |= R_ULPT0_ULPTIOC_TOE_Msk;
-        /* Now set the polarity*/ 
+
+        /* Now set the polarity*/
         if (p_extend->ulpto == ULPT_PULSE_PIN_CFG_ENABLED_START_LEVEL_HIGH)
         {
-            ulptmr3 |=  R_ULPT0_ULPTMR3_TOPOL_Msk;
+            ulptmr3 |= R_ULPT0_ULPTMR3_TOPOL_Msk;
         }
         else
         {
-            ulptmr3 &=  ~R_ULPT0_ULPTMR3_TOPOL_Msk;
+            ulptmr3 &= ~R_ULPT0_ULPTMR3_TOPOL_Msk;
         }
     }
+
     /* set enable match, output, and polarity of both match outputs*/
     ulptcmsr = p_extend->ulptoab_settings & ULPT_PRV_ULPTCMSR_VALID_BITS;
 
@@ -695,6 +706,7 @@ static void r_ulpt_hardware_cfg (ulpt_instance_ctrl_t * p_instance_ctrl, timer_c
     {
         uint32_t inverted_duty_cycle = p_instance_ctrl->p_cfg->period_counts -
                                        p_instance_ctrl->p_cfg->duty_cycle_counts - 1;
+
         /*In this driver match A and match b have the same duty cycle*/
         uint32_t ulptcma = p_instance_ctrl->p_cfg->duty_cycle_counts;
         uint32_t ulptcmb = p_instance_ctrl->p_cfg->duty_cycle_counts;
@@ -704,26 +716,28 @@ static void r_ulpt_hardware_cfg (ulpt_instance_ctrl_t * p_instance_ctrl, timer_c
             {
                 ulptcma = inverted_duty_cycle;
             }
+
             p_instance_ctrl->p_reg->ULPTCMA = ulptcma;
         }
+
         if (ULPT_MATCH_PIN_CFG_DISABLED != p_extend->ulptoab_settings_b.ulptob)
         {
             if (ULPT_MATCH_PIN_CFG_START_LEVEL_HIGH == p_extend->ulptoab_settings_b.ulptob)
             {
                 ulptcmb = inverted_duty_cycle;
             }
-            p_instance_ctrl->p_reg->ULPTCMB = ulptcmb;
 
+            p_instance_ctrl->p_reg->ULPTCMB = ulptcmb;
         }
     }
 #endif
 
-    p_instance_ctrl->p_reg->ULPTMR1  = (uint8_t)ulptmr1;
-    p_instance_ctrl->p_reg->ULPTMR2  = (uint8_t)ulptmr2;
-    p_instance_ctrl->p_reg->ULPTMR3  = (uint8_t)ulptmr3;
-    p_instance_ctrl->p_reg->ULPTIOC  = (uint8_t)ulptioc;
-    p_instance_ctrl->p_reg->ULPTISR  = (uint8_t)ulptisr;
-    p_instance_ctrl->p_reg->ULPTCMSR = (uint8_t)ulptcmsr;
+    p_instance_ctrl->p_reg->ULPTMR1  = (uint8_t) ulptmr1;
+    p_instance_ctrl->p_reg->ULPTMR2  = (uint8_t) ulptmr2;
+    p_instance_ctrl->p_reg->ULPTMR3  = (uint8_t) ulptmr3;
+    p_instance_ctrl->p_reg->ULPTIOC  = (uint8_t) ulptioc;
+    p_instance_ctrl->p_reg->ULPTISR  = (uint8_t) ulptisr;
+    p_instance_ctrl->p_reg->ULPTCMSR = (uint8_t) ulptcmsr;
 }
 
 /*******************************************************************************************************************//**
@@ -766,7 +780,7 @@ static void r_ulpt_period_register_set (ulpt_instance_ctrl_t * p_instance_ctrl, 
 }
 
 /*******************************************************************************************************************//**
- * Obtains the clock frequency of ULPT for all clock sources 
+ * Obtains the clock frequency of ULPT for all clock sources
  *
  * @param[in]  p_ulpt_regs         Registers of ULPT channel used
  *
@@ -799,7 +813,7 @@ void ulpt_int_isr (void)
 {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
-    uint32_t statusMask;
+    uint32_t  statusMask;
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
     /* Clear pending IRQ to make sure it doesn't fire again after exiting */
@@ -843,9 +857,8 @@ void ulpt_int_isr (void)
         {
             p_args->event = TIMER_EVENT_CAPTURE_B;
         }
-        else 
+        else
         {
-
         }
 
         p_args->p_context = p_instance_ctrl->p_context;
@@ -884,7 +897,7 @@ void ulpt_int_isr (void)
     /* Clear flags in AGTCR. */
     /* In one shot mode we need to stop the timer*/
     statusMask = ULPT_PRV_ULPTCR_STATUS_FLAGS;
-    if (p_instance_ctrl->p_reg->ULPTMR3 &  R_ULPT0_ULPTMR3_TCNTCTL_Msk)
+    if (p_instance_ctrl->p_reg->ULPTMR3 & R_ULPT0_ULPTMR3_TCNTCTL_Msk)
     {
         statusMask |= R_ULPT0_ULPTCR_TSTART_Msk;
     }

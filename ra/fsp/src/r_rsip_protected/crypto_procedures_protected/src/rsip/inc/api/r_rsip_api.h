@@ -1,25 +1,11 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
- * @ingroup RENESAS_INTERFACES
+ * @ingroup RENESAS_SECURITY_INTERFACES
  * @defgroup RSIP_PROTECTED_API RSIP Interface
  * @brief Interface for Renesas Secure IP (RSIP) functions.
  *
@@ -311,6 +297,14 @@ typedef enum e_rsip_user_handle_state
     RSIP_USER_HANDLE_STATE_UPDATE      // Update
 } rsip_user_handle_state_t;
 
+/* OTF channel number. */
+typedef enum e_rsip_otf_channel
+{
+    RSIP_OTF_CHANNEL_0,                ///< Channel 0
+    RSIP_OTF_CHANNEL_1,                ///< Channel 1
+    RSIP_OTF_CHANNEL_NUM               // Number of OTF channel
+} rsip_otf_channel_t;
+
 /** Wrapped key structure for all supported algorithms. The struct length of each algorithm is defined by RSIP_BYTE_SIZE_WRAPPED_KEY macro. */
 typedef struct st_rsip_wrapped_key
 {
@@ -430,6 +424,51 @@ typedef struct st_rsip_api
                                    uint8_t const * const p_initial_vector, rsip_key_type_t const key_type,
                                    uint8_t const * const p_encrypted_key,
                                    rsip_wrapped_key_t * const p_wrapped_key);
+
+    /**
+     * This function provides Key Wrap algorithm compliant with RFC3394.
+     * Using p_wrapped_kek to wrap p_wrapped_target_key, and output the result to p_rfc3394_wrapped_target_key.
+     *
+     * @param[in,out] p_ctrl                       Pointer to control block.
+     * @param[in]     p_wrapped_kek                Pointer to wrapped key-encryption-key used to RFC3394-wrap the target key.
+     * @param[in]     p_wrapped_target_key         Pointer to wrapped target key to be RFC3394-wrapped.
+     * @param[out]    p_rfc3394_wrapped_target_key Pointer to destination of RFC3394-wrapped target key.
+     */
+    fsp_err_t (* rfc3394_KeyWrap)(rsip_ctrl_t * const              p_ctrl,
+                                  rsip_wrapped_key_t const * const p_wrapped_kek,
+                                  rsip_wrapped_key_t const * const p_wrapped_target_key,
+                                  uint8_t * const                  p_rfc3394_wrapped_target_key);
+
+    /**
+     * This function provides Key Unwrap algorithm compliant with RFC3394.
+     * Using p_wrapped_kek to unwrap p_rfc3394_wrapped_target_key, and output the result to p_wrapped_target_key.
+     *
+     * @param[in,out] p_ctrl                       Pointer to control block.
+     * @param[in]     p_wrapped_kek                Pointer to wrapped key-encryption-key used to RFC3394-unwrap the target key.
+     * @param[in]     key_type                     Key type of p_rfc3394_wrapped_target_key.
+     * @param[in]     p_rfc3394_wrapped_target_key Pointer to AES-wrapped target key to be RFC3394-unwrapped.
+     * @param[out]    p_wrapped_target_key         Pointer to destination of RFC3394-unwrapped target key.
+     */
+    fsp_err_t (* rfc3394_KeyUnwrap)(rsip_ctrl_t * const              p_ctrl,
+                                    rsip_wrapped_key_t const * const p_wrapped_kek,
+                                    rsip_key_type_t const            key_type,
+                                    uint8_t const * const            p_rfc3394_wrapped_target_key,
+                                    rsip_wrapped_key_t * const       p_wrapped_target_key);
+
+    /**
+     * This function provides the ability to construct structure data "rsip_wrapped_key_t" from injected key data.
+     * The value of injected key is not validated in this API. Refer "Key Size Table" for supported key types.
+     *
+     * @param[in]  key_type                  Key type of p_injected_key.
+     * @param[in]  p_injected_key            Pointer to key to be injected.
+     * @param[out] p_wrapped_key             Pointer to destination of wrapped key.
+     * @param[in]  wrapped_key_buffer_length Length of p_wrapped_key destination.
+     *                                       It must be equal to or greater than actual wrapped key.
+     */
+    fsp_err_t (* injectedKeyImport)(rsip_key_type_t const      key_type,
+                                    uint8_t const * const      p_injected_key,
+                                    rsip_wrapped_key_t * const p_wrapped_key,
+                                    uint32_t const             wrapped_key_buffer_length);
 
     /**
      * Exports public key parameters from a wrapped key.
@@ -902,6 +941,15 @@ typedef struct st_rsip_api
      * @param[in]     p_handle Pointer to HMAC control block.
      */
     fsp_err_t (* hmacResume)(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t const * const p_handle);
+
+   /** 
+    * Initialize on-the-fly decryption on RSIP.
+    * @param[in,out] p_ctrl        Pointer to control block.
+    * @param[in]     channel       Channel number.
+    * @param[in]     p_wrapped_key Pointer to wrapped AES key.
+    * @param[in]     p_seed        Pointer to seed.
+    */
+    fsp_err_t (* otfInit)(rsip_ctrl_t * const p_ctrl, rsip_otf_channel_t const channel, rsip_wrapped_key_t * const p_wrapped_key, uint8_t const * const p_seed);
 } rsip_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

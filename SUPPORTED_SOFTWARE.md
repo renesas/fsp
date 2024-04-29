@@ -3,7 +3,7 @@
 ### FSP Top Level Modules
   * AI
     * [Arm CMSIS5 NN Library Source](https://arm-software.github.io/CMSIS-NN/latest/index.html)
-    * [Data Collector (rm_rai_data_collector)](https://renesas.github.io/fsp/group___r_m___r_a_i__d_a_t_a___c_o_l_l_e_c_t_o_r.html)
+    * [Data Collector (rm_rai_data_collector)](https://renesas.github.io/fsp/group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r.html)
     * [Data Shipper (rm_rai_data_shipper)](https://renesas.github.io/fsp/group___r_m___r_a_i___d_a_t_a___s_h_i_p_p_e_r.html)
   * Analog
     * [ADC (r_adc)](https://renesas.github.io/fsp/group___a_d_c.html)
@@ -54,6 +54,8 @@
     * [I2C Slave (r_iic_slave)](https://renesas.github.io/fsp/group___i_i_c___s_l_a_v_e.html)
     * [I2S (r_ssi)](https://renesas.github.io/fsp/group___s_s_i.html)
     * [I3C (r_i3c)](https://renesas.github.io/fsp/group___i3_c.html)
+    * [IICA Master (r_iica_master)](https://renesas.github.io/fsp/group___i_i_c_a___m_a_s_t_e_r.html)
+    * [IICA Slave (r_iica_slave)](https://renesas.github.io/fsp/group___i_i_c_a___s_l_a_v_e.html)
     * [LIN (r_sci_b_lin)](https://renesas.github.io/fsp/group___s_c_i___b___l_i_n.html)
     * [SMCI (r_sci_smci)](https://renesas.github.io/fsp/group___s_c_i___s_m_c_i.html)
     * [SPI (r_sau_spi)](https://renesas.github.io/fsp/group___s_a_u___s_p_i.html)
@@ -72,6 +74,7 @@
     * [USB HMSC (r_usb_hmsc)](https://renesas.github.io/fsp/group___u_s_b___h_m_s_c.html)
     * [USB Host Vendor class (r_usb_hvnd)](https://renesas.github.io/fsp/group___u_s_b___h_v_n_d.html)
     * [USB PCDC (r_usb_pcdc)](https://renesas.github.io/fsp/group___u_s_b___p_c_d_c.html)
+    * [USB PCDC Communication Device (rm_comms_usb_pcdc)](https://renesas.github.io/fsp/group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html)
     * [USB PHID (r_usb_phid)](https://renesas.github.io/fsp/group___u_s_b___p_h_i_d.html)
     * [USB PMSC (r_usb_pmsc)](https://renesas.github.io/fsp/group___u_s_b___p_m_s_c.html)
     * [USB PPRN (r_usb_pprn)](https://renesas.github.io/fsp/group___u_s_b___p_p_r_n.html)
@@ -246,6 +249,7 @@
     * [HS300X Temperature/Humidity Sensor (rm_hs300x)](https://renesas.github.io/fsp/group___r_m___h_s300_x.html)
     * [HS400X Temperature/Humidity Sensor (rm_hs400x)](https://renesas.github.io/fsp/group___r_m___h_s400_x.html)
     * [OB1203 Light/Proximity/PPG Sensor (rm_ob1203)](https://renesas.github.io/fsp/group___r_m___o_b1203.html)
+    * [RRH46410 Gas Sensor Module (rm_rrh46410)](https://renesas.github.io/fsp/group___r_m___r_r_h46410.html)
     * [ZMOD4XXX Gas Sensor (rm_zmod4xxx)](https://renesas.github.io/fsp/group___r_m___z_m_o_d4_x_x_x.html)
   * Storage
     * [Azure RTOS FileX on Block Media](https://docs.microsoft.com/en-us/azure/rtos/filex/)
@@ -272,6 +276,7 @@
     * [Event Link Controller (r_elc)](https://renesas.github.io/fsp/group___e_l_c.html)
     * [I/O Port (r_ioport)](https://renesas.github.io/fsp/group___i_o_p_o_r_t.html)
   * Timers
+    * [32-bit Interval Timer (r_tml)](https://renesas.github.io/fsp/group___t_m_l.html)
     * [Port Output Enable for GPT (r_poeg)](https://renesas.github.io/fsp/group___p_o_e_g.html)
     * [Realtime Clock (r_rtc)](https://renesas.github.io/fsp/group___r_t_c.html)
     * [Realtime Clock (r_rtc_c)](https://renesas.github.io/fsp/group___r_t_c___c.html)
@@ -311,6 +316,7 @@
     * [USB Host Vendor class (r_usb_hvnd)](https://renesas.github.io/fsp/group___u_s_b___h_v_n_d.html)
     * [USB PCDC (r_usb_pcdc_class)](https://renesas.github.io/fsp/group___u_s_b___p_c_d_c.html)
     * [USB PCDC 2channel (r_usb_pcdc)](https://renesas.github.io/fsp/group___u_s_b___p_c_d_c.html)
+    * [USB PCDC Communication Device (rm_comms_usb_pcdc_class)](https://renesas.github.io/fsp/group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html)
     * [USB PHID (r_usb_phid_class)](https://renesas.github.io/fsp/group___u_s_b___p_h_i_d.html)
     * [USB PHID 2channel (r_usb_phid)](https://renesas.github.io/fsp/group___u_s_b___p_h_i_d.html)
     * [USB PMSC (r_usb_pmsc_class)](https://renesas.github.io/fsp/group___u_s_b___p_m_s_c.html)

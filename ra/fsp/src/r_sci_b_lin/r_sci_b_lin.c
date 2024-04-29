@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -28,36 +14,36 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define SCI_B_LIN_FRAME_ID_MASK                             (0x3FU)
+#define SCI_B_LIN_FRAME_ID_MASK                  (0x3FU)
 
 /* "LINB" in ASCII.  Used to determine if the control block is open. */
-#define SCI_B_LIN_OPEN                                      (0x4C494E42U)
+#define SCI_B_LIN_OPEN                           (0x4C494E42U)
 
 /* Max value of break field length register */
-#define SCI_B_LIN_BFLW_MAX                                  (0xFFFEU)
+#define SCI_B_LIN_BFLW_MAX                       (0xFFFEU)
 
 /* Range of LIN timer supported TCSS values */
-#define SCI_B_LIN_TCSS_MIN                                  (SCI_B_LIN_TIMER_DIV_4)
-#define SCI_B_LIN_TCSS_MAX                                  (SCI_B_LIN_TIMER_DIV_64)
+#define SCI_B_LIN_TCSS_MIN                       (SCI_B_LIN_TIMER_DIV_4)
+#define SCI_B_LIN_TCSS_MAX                       (SCI_B_LIN_TIMER_DIV_64)
 
 /* Max value of CKS for setting baud rate */
-#define SCI_B_LIN_CKS_MAX                                   (3U)
+#define SCI_B_LIN_CKS_MAX                        (3U)
 
-#define SCI_B_LIN_MIN_BAUD_DIVISOR_SHIFT                    (5)
+#define SCI_B_LIN_MIN_BAUD_DIVISOR_SHIFT         (5)
 
 /* Used to validate the checksum of received data */
-#define SCI_B_LIN_CHECKSUM_OK                               (0xff)
+#define SCI_B_LIN_CHECKSUM_OK                    (0xff)
 
 /* LIN Sync Word (Control Field 0) */
-#define SCI_B_LIN_SYNC                                      (0x55U)
+#define SCI_B_LIN_SYNC                           (0x55U)
 
 /* Start frame data length */
-#define SCI_B_LIN_START_FRAME_NUM_BYTES                     (2)
+#define SCI_B_LIN_START_FRAME_NUM_BYTES          (2)
 
 /* Macro to clear all Simple LIN related flags in CFCLR (Common Flag Clear Register). Flags are
  * listed in Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
  * R01UH0951EJ0130  */
-#define SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS                     (                           \
+#define SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS          (                                      \
         R_SCI_B0_CFCLR_RDRFC_Msk | R_SCI_B0_CFCLR_FERC_Msk | R_SCI_B0_CFCLR_DPERC_Msk | \
         R_SCI_B0_CFCLR_PERC_Msk | R_SCI_B0_CFCLR_MFFC_Msk | R_SCI_B0_CFCLR_ORERC_Msk |  \
         R_SCI_B0_CFCLR_DFERC_Msk | R_SCI_B0_CFCLR_DCMFC_Msk | R_SCI_B0_CFCLR_ERSC_Msk)
@@ -65,64 +51,61 @@
 /* Macro to clear all Simple LIN related flags in XFCLR (Simple LIN Flag Clear Register). Flags
  * are listed in Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
  * R01UH0951EJ0130 */
-#define SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS                     (                           \
+#define SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS          (                                      \
         R_SCI_B0_XFCLR_AEDC_Msk | R_SCI_B0_XFCLR_COFC_Msk | R_SCI_B0_XFCLR_PIBDC_Msk |  \
         R_SCI_B0_XFCLR_CF1MC_Msk | R_SCI_B0_XFCLR_CF0MC_Msk | R_SCI_B0_XFCLR_BFDC_Msk | \
         R_SCI_B0_XFCLR_BCDC_Msk | R_SCI_B0_XFCLR_BFOC_Msk)
 
 /* SCI CCR2 register masks */
-#define SCI_B_LIN_CCR2_RESETVALUE                           (0xFF00FF04U)
+#define SCI_B_LIN_CCR2_RESETVALUE                (0xFF00FF04U)
 
 /* SCI CCR2 value with all used bits zeroed and all unused bits set to their reset values (used for baud calculation result) */
-#define SCI_B_LIN_CCR2_BAUD_SETTING                         (SCI_B_LIN_CCR2_RESETVALUE &           \
-                                                             (uint32_t) ~(R_SCI_B0_CCR2_BRR_Msk |  \
-                                                                          R_SCI_B0_CCR2_ABCS_Msk | \
-                                                                          R_SCI_B0_CCR2_CKS_Msk))
+#define SCI_B_LIN_CCR2_BAUD_SETTING              (SCI_B_LIN_CCR2_RESETVALUE &           \
+                                                  (uint32_t) ~(R_SCI_B0_CCR2_BRR_Msk |  \
+                                                               R_SCI_B0_CCR2_ABCS_Msk | \
+                                                               R_SCI_B0_CCR2_CKS_Msk))
 
 /* SCI CCR3 register masks */
-#define SCI_B_LIN_CCR3_SIMPLE_LIN_MODE                      (6U << R_SCI_B0_CCR3_MOD_Pos)
-#define SCI_B_LIN_CCR3_8_BITS_DATA                          (2U << R_SCI_B0_CCR3_CHR_Pos)
-#define SCI_B_LIN_CCR3_LSB_FIRST                            (1U << R_SCI_B0_CCR3_LSBF_Pos)
-#define SCI_B_LIN_CCR3_START_BIT_EDGE_FALLING               (1U << R_SCI_B0_CCR3_RXDESEL_Pos)
-#define SCI_B_LIN_CCR3_CPOL                                 (1U << R_SCI_B0_CCR3_CPOL_Pos)
-#define SCI_B_LIN_CCR3_CPHA                                 (1U << R_SCI_B0_CCR3_CPHA_Pos)
-#define SCI_B_LIN_CCR3_MASK                                 (                                    \
+#define SCI_B_LIN_CCR3_SIMPLE_LIN_MODE           (6U << R_SCI_B0_CCR3_MOD_Pos)
+#define SCI_B_LIN_CCR3_8_BITS_DATA               (2U << R_SCI_B0_CCR3_CHR_Pos)
+#define SCI_B_LIN_CCR3_LSB_FIRST                 (1U << R_SCI_B0_CCR3_LSBF_Pos)
+#define SCI_B_LIN_CCR3_START_BIT_EDGE_FALLING    (1U << R_SCI_B0_CCR3_RXDESEL_Pos)
+#define SCI_B_LIN_CCR3_CPOL                      (1U << R_SCI_B0_CCR3_CPOL_Pos)
+#define SCI_B_LIN_CCR3_CPHA                      (1U << R_SCI_B0_CCR3_CPHA_Pos)
+#define SCI_B_LIN_CCR3_MASK                      (                                               \
         SCI_B_LIN_CCR3_SIMPLE_LIN_MODE | SCI_B_LIN_CCR3_8_BITS_DATA | SCI_B_LIN_CCR3_LSB_FIRST | \
         SCI_B_LIN_CCR3_START_BIT_EDGE_FALLING | SCI_B_LIN_CCR3_CPOL | SCI_B_LIN_CCR3_CPHA)
 
 /* SCI CCR1 register masks */
-#define SCI_B_LIN_CCR1_NOISE_FILTER_CLOCK                   (0U << R_SCI_B0_CCR1_NFCS_Pos)
+#define SCI_B_LIN_CCR1_NOISE_FILTER_CLOCK        (0U << R_SCI_B0_CCR1_NFCS_Pos)
 
 /* SCI XCR0 register masks */
-#define SCI_B_LIN_XCR0_MASK_MASTER                          (R_SCI_B0_XCR0_BFOIE_Msk)
-#define SCI_B_LIN_XCR0_MASK_SLAVE                           (R_SCI_B0_XCR0_BFE_Msk | R_SCI_B0_XCR0_CF0RE_Msk | \
-                                                             R_SCI_B0_XCR0_BFDIE_Msk | R_SCI_B0_XCR0_COFIE_Msk)
-#define SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE    ~(R_SCI_B0_XCR0_AEDIE_Msk | R_SCI_B0_XCR0_COFIE_Msk)
+#define SCI_B_LIN_XCR0_MASK_MASTER               (R_SCI_B0_XCR0_BFOIE_Msk)
+#define SCI_B_LIN_XCR0_MASK_SLAVE                (R_SCI_B0_XCR0_BFE_Msk | R_SCI_B0_XCR0_CF0RE_Msk | \
+                                                  R_SCI_B0_XCR0_BFDIE_Msk | R_SCI_B0_XCR0_COFIE_Msk)
 
 /* SCI XCR1 register masks */
-#define SCI_B_LIN_XCR1_MASK_MASTER                          (0U)
-#define SCI_B_LIN_XCR1_MASK_SLAVE                           (R_SCI_B0_XCR1_SDST_Msk)
+#define SCI_B_LIN_XCR1_MASK_MASTER               (0U)
+#define SCI_B_LIN_XCR1_MASK_SLAVE                (R_SCI_B0_XCR1_SDST_Msk)
 
 /* SCI XCR2 register masks */
-#define SCI_B_LIN_XCR2_CF0D                                 (SCI_B_LIN_SYNC << R_SCI_B0_XCR2_CF0D_Pos)
-#define SCI_B_LIN_XCR2_CF0CE                                (0xFFU << R_SCI_B0_XCR2_CF0CE_Pos) // check all bits of sync word during reception
-#define SCI_B_LIN_XCR2_MASK_MASTER                          (0U)
-#define SCI_B_LIN_XCR2_MASK_SLAVE                           (SCI_B_LIN_XCR2_CF0D | SCI_B_LIN_XCR2_CF0CE)
+#define SCI_B_LIN_XCR2_CF0D                      (SCI_B_LIN_SYNC << R_SCI_B0_XCR2_CF0D_Pos)
+#define SCI_B_LIN_XCR2_CF0CE                     (0xFFU << R_SCI_B0_XCR2_CF0CE_Pos) // check all bits of sync word during reception
+#define SCI_B_LIN_XCR2_MASK_MASTER               (0U)
+#define SCI_B_LIN_XCR2_MASK_SLAVE                (SCI_B_LIN_XCR2_CF0D | SCI_B_LIN_XCR2_CF0CE)
 
 /* SCI ERI mask helpers */
-#define SCI_B_LIN_ERI_CSR_EVENTS_MASK                       (LIN_EVENT_ERR_PARITY | LIN_EVENT_ERR_FRAMING | \
-                                                             LIN_EVENT_ERR_OVERRUN)
-#define SCI_B_LIN_ERI_XSR_EVENTS_MASK                       (LIN_EVENT_ERR_BUS_COLLISION_DETECTED | \
-                                                             LIN_EVENT_ERR_COUNTER_OVERFLOW)
-#define SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK               (R_SCI_B0_CFCLR_PERC_Msk | R_SCI_B0_CFCLR_FERC_Msk | \
-                                                             R_SCI_B0_CFCLR_ORERC_Msk | R_SCI_B0_CFCLR_RDRFC_Msk)
-#define SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK               (R_SCI_B0_XFCLR_BCDC_Msk | R_SCI_B0_XFCLR_COFC_Msk | \
-                                                             R_SCI_B0_XFCLR_BFDC_Msk)
-
-#define SCI_B_LIN_BIT_2_MASK                                (0x2U)
+#define SCI_B_LIN_ERI_CSR_EVENTS_MASK            (LIN_EVENT_ERR_PARITY | LIN_EVENT_ERR_FRAMING | \
+                                                  LIN_EVENT_ERR_OVERRUN)
+#define SCI_B_LIN_ERI_XSR_EVENTS_MASK            (LIN_EVENT_ERR_BUS_COLLISION_DETECTED | \
+                                                  LIN_EVENT_ERR_COUNTER_OVERFLOW)
+#define SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK    (R_SCI_B0_CFCLR_PERC_Msk | R_SCI_B0_CFCLR_FERC_Msk | \
+                                                  R_SCI_B0_CFCLR_ORERC_Msk | R_SCI_B0_CFCLR_RDRFC_Msk)
+#define SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK    (R_SCI_B0_XFCLR_BCDC_Msk | R_SCI_B0_XFCLR_COFC_Msk | \
+                                                  R_SCI_B0_XFCLR_BFDC_Msk | R_SCI_B0_XFCLR_AEDC_Msk)
 
 /* Number of consecutive measurements used to synchronize the bit rate */
-#define SCI_B_LIN_SYNC_EDGES                                (6)
+#define SCI_B_LIN_SYNC_EDGES                     (6)
 
 #define SCI_B_LIN_IRQS_ENABLE()     r_sci_b_lin_irqs_enable_disable(p_ctrl, r_sci_b_lin_irq_enable)
 #define SCI_B_LIN_IRQS_DISABLE()    r_sci_b_lin_irqs_enable_disable(p_ctrl, r_sci_b_lin_irq_disable)
@@ -219,6 +202,7 @@ static fsp_err_t r_sci_b_lin_timer_setting_calculate(sci_b_lin_baud_params_t con
 /* Auto Synchronization helper functions */
 static void r_sci_b_lin_aed_synchronize(sci_b_lin_instance_ctrl_t * const p_ctrl);
 static bool r_sci_b_lin_aed_latest_bit_has_error(sci_b_lin_instance_ctrl_t * const p_ctrl, uint16_t tcnt);
+static void r_sci_b_lin_aed_reset(sci_b_lin_instance_ctrl_t * const p_ctrl);
 
 #endif
 
@@ -284,10 +268,8 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
 
     /* Make sure this channel supports Simple LIN Mode (some MCUs do not support it on all SCI channels) */
     FSP_ERROR_RETURN(BSP_FEATURE_SCI_LIN_CHANNELS & (1U << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
-#endif
 
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
-#if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
 
     /* Check for required IRQs */
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
@@ -312,34 +294,32 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
     FSP_ERROR_RETURN(p_extend->baud_setting.timer_setting.tcss >= SCI_B_LIN_TCSS_MIN, FSP_ERR_INVALID_ARGUMENT);
 
     /* It is prohibited to set BCCS[1:0] = 1x when CCR2.ABCS = 1. Either bit 2 of BCSS must be 0, or ABCS must be 0, or both. */
-    FSP_ERROR_RETURN(((0 == ((uint32_t) p_extend->sci_b_settings_b.bus_conflict_clock & SCI_B_LIN_BIT_2_MASK)) ||
-                      (0U == (uint32_t) p_extend->baud_setting.baudrate_bits_b.abcs)),
+    FSP_ERROR_RETURN((SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_4 != p_extend->sci_b_settings_b.bus_conflict_clock) ||
+                     (0U == (uint32_t) p_extend->baud_setting.baudrate_bits_b.abcs),
                      FSP_ERR_INVALID_ARGUMENT);
 #endif
 
     /* Initialize control block */
     p_ctrl->p_reg =
         (R_SCI_B0_Type *) (R_SCI0_BASE + ((R_SCI1_BASE - R_SCI0_BASE) * p_cfg->channel));
-    p_ctrl->p_cfg              = p_cfg;
-    p_ctrl->p_callback         = p_cfg->p_callback;
-    p_ctrl->p_context          = p_cfg->p_context;
-    p_ctrl->p_callback_memory  = NULL;
-    p_ctrl->event              = LIN_EVENT_NONE;
-    p_ctrl->p_information      = NULL;
-    p_ctrl->tx_src_bytes       = 0;
-    p_ctrl->last_tx_byte       = 0;
-    p_ctrl->rx_bytes_expected  = 0;
-    p_ctrl->rx_bytes_received  = 0;
-    p_ctrl->rx_checksum        = 0;
-    p_ctrl->last_pid           = 0;
-    p_ctrl->validate_checksum  = 0;
-    p_ctrl->sync_bits_received = 0;
-    p_ctrl->sync_bits_sum      = 0;
+    p_ctrl->p_cfg             = p_cfg;
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
+    p_ctrl->p_information     = NULL;
+    p_ctrl->rx_bytes_expected = 0;
+    p_ctrl->rx_bytes_received = 0;
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+ #if (0 == SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE)
+    sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
+ #endif
 
     /* Calculate timer frequency */
     sci_b_lin_clock_source_t  clock_source  = (sci_b_lin_clock_source_t) p_extend->sci_b_settings_b.clock_source;
     sci_b_lin_timer_divider_t timer_divider = (sci_b_lin_timer_divider_t) p_extend->baud_setting.timer_setting.tcss;
     p_ctrl->timer_freq_hz = r_sci_b_lin_timer_freq_get(clock_source, timer_divider);
+#endif
 
     /* Configure, but do not enable the interrupts in the NVIC */
     r_sci_b_lin_irqs_cfg(p_ctrl);
@@ -579,6 +559,12 @@ fsp_err_t R_SCI_B_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
 
     /* Reset information buffer pointer */
     p_ctrl->p_information = NULL;
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_b_lin_aed_reset(p_ctrl);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -958,16 +944,14 @@ static fsp_err_t r_sci_b_lin_baud_setting_calculate (sci_b_lin_baud_params_t con
     int32_t  cks = -1;
     int32_t  abcs;
 
-    int32_t abcs_init = 1;
-    if ((uint32_t) p_baud_params->bus_conflict_clock & SCI_B_LIN_BIT_2_MASK)
-    {
-        /* It is prohibited to set BCCS[1:0] = 1x when CCR2.ABCS = 1. Skip trying ABCS = 1. Check outside of loop
-         * to avoid checking the conditional on every iteration of the inner loop. */
-        abcs_init = 0;
-    }
+    /* It is prohibited to set BCCS[1:0] = 1x when CCR2.ABCS = 1. Skip trying ABCS = 1 in this case. Initialize
+     * outside of loop to avoid checking this condition on every iteration of the inner loop. */
+    int32_t abcs_init = SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_4 != p_baud_params->bus_conflict_clock;
 
-    /* BRR is calculated so that the bit rate is the largest possible value less than or equal to the desired bitrate.
-     * with the smallest possible divisor. This produces the setting with the lowest error. */
+    /* BRR is calculated by testing whether each divisor (combination of ABCS, CKS, and N) produces a valid BRR setting.
+     * The divisors are checked in order, from smallest to largest. Since the smallest divisor always produces the lowest
+     * error, we can break out of the loop as soon as a valid BRR setting is found, since no other setting can have
+     * a smaller error. */
     for (uint32_t i = 0; i <= SCI_B_LIN_CKS_MAX; i++)
     {
         cks++;
@@ -1038,7 +1022,7 @@ static fsp_err_t r_sci_b_lin_timer_setting_calculate (sci_b_lin_baud_params_t co
  *
  * Implements the algorithm according to LIN Protocol Specification Rev. 2.2A pg.53.
  *
- * The PID field is 8 bit field: [p1 p0 id5 id4 id3 id2 id1 id0].
+ * The PID is an 8 bit field: [p1 p0 id5 id4 id3 id2 id1 id0].
  * P1 is bit 7 and is calculated as id1 XOR id3 XOR id4 XOR id5.
  * P0 is bit 6 and is calculated as id0 XOR id1 XOR ix2 XOR id4.
  *
@@ -1161,7 +1145,7 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Enable the SCI channel and reset the registers to their initial state. */
+    /* Enable the SCI channel */
     R_BSP_MODULE_START(FSP_IP_SCI, p_cfg->channel);
 
     /* Ensure transmission and reception are disabled during initialization. */
@@ -1189,6 +1173,12 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     xcr0 |= ((uint32_t) p_extend->baud_setting.timer_setting.tcss << R_SCI_B0_XCR0_TCSS_Pos);
     xcr0 |= ((uint32_t) p_extend->sci_b_settings_b.bus_conflict_clock << R_SCI_B0_XCR0_BCCS_Pos);
     xcr0 |= ((uint32_t) p_extend->sci_b_settings_b.bus_conflict_detection << R_SCI_B0_XCR0_BCDIE_Pos);
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Configure AED interrupt. */
+    xcr0 |= ((uint32_t) (p_extend->sci_b_settings_b.auto_synchronization) << R_SCI_B0_XCR0_AEDIE_Pos);
+#endif
 
     /* Configure ID filter settings */
     r_sci_b_lin_filter_settings_configure(&xcr0, &xcr1, &p_extend->filter_setting);
@@ -1529,6 +1519,12 @@ static lin_event_t r_sci_b_lin_eri_handler (sci_b_lin_instance_ctrl_t * const p_
     /* If we are outputting break field, stop */
     p_reg->XCR1_b.TCST = 0;
 
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_b_lin_aed_reset(p_ctrl);
+#endif
+
     /* Suspend transmission and transmit interrupts, and reception interrupts */
     p_reg->CCR0 = ccr0 &
                   (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk |
@@ -1538,12 +1534,6 @@ static lin_event_t r_sci_b_lin_eri_handler (sci_b_lin_instance_ctrl_t * const p_
     uint32_t    csr    = p_ctrl->p_reg->CSR;
     uint32_t    xsr    = p_ctrl->p_reg->XSR0;
     lin_event_t events = (lin_event_t) ((csr & SCI_B_LIN_ERI_CSR_EVENTS_MASK) | (xsr & SCI_B_LIN_ERI_XSR_EVENTS_MASK));
-
-#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
-
-    /* Disable auto synchronization until next break field */
-    p_reg->XCR0 &= (uint32_t) (SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE);
-#endif
 
     /* Clear error conditions and discard RDR data. */
     r_sci_b_lin_flags_clear(p_ctrl->p_reg, SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK,
@@ -1570,6 +1560,15 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     {
         /* Discard received data and clear the CF0 received flag to advance start frame reception state */
         r_sci_b_lin_flags_clear(p_reg, R_SCI_B0_CFCLR_RDRFC_Msk, R_SCI_B0_XFCLR_CF0MC_Msk);
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+        /* Disable bit rate measurement once CF0 is received. It will have been disabled already in the
+         * AED handler if bit rate measurement completed successfully. But it is possible for bit rate
+         * measurement to fail and the frame to still be received as long as the baud rates of sender
+         * and receiver are close enough. */
+        p_reg->XCR1_b.BMEN = 0;
+#endif
     }
     /* Check if control field 1 was received */
     else if (xsr0 & (R_SCI_B0_XSR0_CF1MF_Msk | R_SCI_B0_XSR0_PIBDF_Msk))
@@ -1634,6 +1633,12 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
             p_ctrl->rx_bytes_expected = 0;
             p_ctrl->p_information     = NULL;
             p_reg->CCR0_b.RIE         = 0;
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+            /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+            r_sci_b_lin_aed_reset(p_ctrl);
+#endif
         }
         /* Received a byte which is not the last byte */
         else
@@ -1654,13 +1659,19 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     }
     else
     {
-        /* Byte received out of sequence. */
+        /* Byte received out of sequence or frame is ignored due to filering (no CF1 match). */
 
         /* Discard the byte */
         p_reg->CFCLR = R_SCI_B0_CFCLR_RDRFC_Msk;
 
         /* Stop reception interrupts. */
         p_reg->CCR0_b.RIE = 0;
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+        /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+        r_sci_b_lin_aed_reset(p_ctrl);
+#endif
     }
 
     return event;
@@ -1720,36 +1731,49 @@ static void r_sci_b_lin_txi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_sci_b_lin_bfd_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 {
-    R_SCI_B0_Type * const p_reg                 = p_ctrl->p_reg;
-    uint32_t              ccr0                  = p_reg->CCR0;
-    uint32_t              xsr_events_clear_mask = SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK;
-
-    /* Enable reception interrupts to receive incoming data following the break field */
-    ccr0 |= R_SCI_B0_CCR0_RIE_Msk;
+    R_SCI_B0_Type * const p_reg = p_ctrl->p_reg;
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
-    uint32_t xcr0 = p_reg->XCR0;
-    sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-
-    /* Enable active edge detect interrupt when auto synchronization is enabled. Always enable counter overflow interrupt.*/
-    xcr0 |= ((uint32_t) (p_extend->sci_b_settings_b.auto_synchronization) << R_SCI_B0_XCR0_AEDIE_Pos) |
-            R_SCI_B0_XCR0_COFIE_Msk;
 
     /* Reset auto synchronization state */
     p_ctrl->sync_bits_received = 0;
     p_ctrl->sync_bits_sum      = 0;
-
-    /* Clear flags and apply register settings. Ensure to clear AEDC as we only use it for CF0 measurement,
-     * but it can be used to measure CF1 as well, so the flag may have been set during CF1 reception even
-     * though AEDIE interrupts were disabled. */
-    p_reg->XCR0            = xcr0;
-    xsr_events_clear_mask |= R_SCI_B0_XFCLR_AEDC_Msk;
 #endif
-    r_sci_b_lin_flags_clear(p_reg, SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK, xsr_events_clear_mask);
-    p_reg->CCR0 = ccr0;
+
+    /* Clear flags that may have occurred while reception interrupts were disabled */
+    r_sci_b_lin_flags_clear(p_reg, SCI_B_LIN_ERROR_CSR_EVENTS_CLEAR_MASK, SCI_B_LIN_ERROR_XSR_EVENTS_CLEAR_MASK);
+
+    /* Enable reception interrupts to receive incoming data following the break field */
+    p_reg->CCR0_b.RIE = 1;
 }
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * Resets bit rate measurement for the next frame by clearing SDST and BMEN, then resetting them at the same time.
+ * 2 writes to XCR1 is required.
+ *
+ * @param[in]  p_ctrl                    Pointer to driver control block
+ **********************************************************************************************************************/
+static void r_sci_b_lin_aed_reset (sci_b_lin_instance_ctrl_t * const p_ctrl)
+{
+    sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    if (p_extend->sci_b_settings_b.auto_synchronization)
+    {
+        R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
+
+        uint32_t xcr1            = p_reg->XCR1;
+        uint32_t xcr1_aed_stop   = xcr1 & (uint32_t) ~(R_SCI_B0_XCR1_SDST_Msk | R_SCI_B0_XCR1_BMEN_Msk);
+        uint32_t xcr1_aed_resume = xcr1 | (R_SCI_B0_XCR1_SDST_Msk | R_SCI_B0_XCR1_BMEN_Msk);
+
+        /* Stop bit rate measurement and start frame reception */
+        p_reg->XCR1 = xcr1_aed_stop;
+
+        /* Reset bit rate measurement for next frame */
+        p_reg->XCR1 = xcr1_aed_resume;
+    }
+}
 
 /*******************************************************************************************************************//**
  * Handles active edge detection when auto synchronization is enabled.
@@ -1784,13 +1808,12 @@ static void r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Get the bit duration (in LIN timer ticks) of the most recently received bit of
-     * control field 0. XSR0.AEDF is cleared automatically upon reading. */
+     * control field 0. XSR0.AEDF is cleared automatically upon reading. For the most
+     * accurate measurement, read this register as early as possible in the ISR. */
     uint16_t tcnt = p_reg->XSR1_b.TCNT;
 
     /* Check for bit errors  */
-    bool error = r_sci_b_lin_aed_latest_bit_has_error(p_ctrl, tcnt);
-
-    if (false == error)
+    if (!r_sci_b_lin_aed_latest_bit_has_error(p_ctrl, tcnt))
     {
         p_ctrl->sync_bits_received++;
         p_ctrl->sync_bits_sum += tcnt;
@@ -1800,15 +1823,24 @@ static void r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
             /* Perform synchronization. */
             r_sci_b_lin_aed_synchronize(p_ctrl);
 
-            /* Once all sync edges are received, disable edge detection and counter overflow
-             * interrupt until the next start frame */
-            p_reg->XCR0 &= (uint32_t) (SCI_B_LIN_XCR0_MASK_AUTO_SYNCHRONIZATION_DISABLE);
+            /* Once all sync edges are successfully received, disable bit rate measurement */
+            p_reg->XCR1_b.BMEN = 0;
         }
     }
     else
     {
-        /* Reset the sum. We may still get at least SCI_B_LIN_SYNC_EDGES without errors.
-         * Do not report an error (yet). If there is an error, it will be handled in RXI or ERI. */
+        /* Measurement error occurred, reset counters.
+         *
+         * Do not report an error (yet). The frame can stil be received, even if there was a
+         * measurement error. If there is a reception error, it will be caught and handled in
+         * the ERI handler.
+         *
+         * We do not set BMEN=0 here in case the measurement error is due to a new start frame
+         * started during the previous CF0 reception. The SCI supports detection of a new break
+         * field at any timing, including during reception of another start frame. Leaving BMEN
+         * enabled allows us to synchronize again with the new start frame in this scenario. In
+         * all other scenarios, BMEN will be set to 0 either in ERI (in case of error) or in RXI
+         * (when CF0 is received) */
         p_ctrl->sync_bits_received = 0;
         p_ctrl->sync_bits_sum      = 0;
     }
@@ -1948,6 +1980,12 @@ void sci_b_lin_tei_isr (void)
 
     /* Disable transmission and transmit interrupts */
     p_ctrl->p_reg->CCR0 &= (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk);
+
+#if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_b_lin_aed_reset(p_ctrl);
+#endif
 
     /* Call user callback */
     r_sci_b_lin_call_callback(p_ctrl, p_ctrl->event);

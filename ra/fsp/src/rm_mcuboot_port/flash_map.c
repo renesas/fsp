@@ -117,7 +117,11 @@ static const struct flash_area flash_map[] =
     },
     {
         .fa_id        = FLASH_AREA_3_ID,
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+        .fa_device_id = FLASH_DEVICE_QSPI,
+#else
         .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
+#endif
         .fa_off       = FLASH_AREA_3_OFFSET,
         .fa_size      = FLASH_AREA_3_SIZE,
     },
