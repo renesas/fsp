@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -465,9 +465,9 @@ AND</li>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Normal/Group A Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger type to be used for this unit.  </td></tr>
+<td class="tree_lvl_1_cell">Normal/Group A Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger type to be used for this unit. Triggers that specify ADC Unit must be selected for correct ADC unit to operate correctly.  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Group B Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger for Group B scanning in group scanning mode. This event is also used to trigger Group A in extended double-trigger mode. </td></tr>
+<td class="tree_lvl_1_cell">Group B Trigger</td><td>MCU Specific Options</td><td></td><td>Specifies the trigger for Group B scanning in group scanning mode. This event is also used to trigger Group A in extended double-trigger mode. Triggers that specify ADC Unit must be selected for correct ADC unit to operate correctly. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Group Priority (Valid only in Group Scan Mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -589,7 +589,7 @@ ADC Operational Modes</h2>
 <h3>Double-triggering</h3>
 <p>When double-triggering is enabled a single channel is selected to be scanned twice before an interrupt is thrown. The first scan result when using double-triggering is always saved to the selected channel's data register. The second result is saved to the data duplexing register (<a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091">ADC_CHANNEL_DUPLEX</a>).</p>
 <p>Double-triggering uses Group A; only one channel can be selected when enabled. No other scanning is possible on Group A while double-trigger mode is selected. In addition, any special ADC channels (such as temperature sensors or voltage references) are not valid double-trigger channels.</p>
-<p>When extended double-triggering is enabled both ADC input events are routed to Group A. The interrupt is still thrown after every two scans regardless of the triggering event(s). While the first and second scan are saved to the selected ADC data register and the ADC duplexing register as before, scans associated with event A and B are additionally copied into duplexing register A and B, respectively (<a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57">ADC_CHANNEL_DUPLEX_A</a> and <a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be">ADC_CHANNEL_DUPLEX_B</a>).</p>
+<p>When extended double-triggering is enabled, both ADC input (ELC) events are routed to Group A. The interrupt is still thrown after every two scans regardless of the triggering event(s). While the first and second scan are saved to the selected ADC data register and the ADC duplexing register as before, scans associated with event A and B are additionally copied into duplexing register A and B, respectively (<a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57">ADC_CHANNEL_DUPLEX_A</a> and <a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be">ADC_CHANNEL_DUPLEX_B</a>).</p>
 <h3>When Interrupts Are Not Enabled</h3>
 <p>If interrupts are not enabled, the R_ADC_StatusGet API can be used to poll the ADC to determine when the scan has completed. The read API function is used to access the converted ADC result. This applies to both normal scans and calibration scans for MCUs that support calibration.</p>
 <h2>Window Compare Function</h2>
@@ -643,6 +643,7 @@ When the internal reference voltage is selected as the high-potential reference 
 <li>Only Single Scan mode may be configured when match or mismatch ELC events are used.</li>
 <li>When one compare window is configured to check the temperature sensor or voltage reference the other window cannot be used.</li>
 <li>Both windows cannot reference the same channel.</li>
+<li>When using ADC in Snooze Mode, both Window A and Window B must be enabled.</li>
 </ul>
 </li>
 </ul>
@@ -694,6 +695,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga79014196d08d86b161b77892bf26b100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga802c536966b5905a58039e347c5dbbc5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga802c536966b5905a58039e347c5dbbc5">adc_double_trigger_t</a> </td></tr>
 <tr class="separator:ga802c536966b5905a58039e347c5dbbc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f00e1bea3e9ff315b1417943f6b70db"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga5f00e1bea3e9ff315b1417943f6b70db">adc_start_source_t</a> </td></tr>
+<tr class="separator:ga5f00e1bea3e9ff315b1417943f6b70db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structadc__sample__state__t" id="structadc__sample__state__t"></a>
@@ -825,11 +828,17 @@ clearing</td>
 <td class="fielddoc">
 Clear after read. </td></tr>
 <tr><td class="fieldtype">
-<a id="ae8c077fe7cbf5c28f605ed84f68dca9b"></a><a class="el" href="group___a_d_c___a_p_i.html#ga1ac380ffe2ebef256338616747d330e3">adc_trigger_t</a></td>
+<a id="ab0a3f9506951631a9edc27eb79908c8f"></a><a class="el" href="group___a_d_c.html#ga5f00e1bea3e9ff315b1417943f6b70db">adc_start_source_t</a></td>
+<td class="fieldname">
+trigger</td>
+<td class="fielddoc">
+Trigger source for ADC. </td></tr>
+<tr><td class="fieldtype">
+<a id="a11d0e48bc9b201b28564c89cfeb91305"></a><a class="el" href="group___a_d_c.html#ga5f00e1bea3e9ff315b1417943f6b70db">adc_start_source_t</a></td>
 <td class="fieldname">
 trigger_group_b</td>
 <td class="fielddoc">
-Group B trigger source; valid only for group mode. </td></tr>
+Trigger source for ADC group B; valid only for group mode. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad2be3785d3a8153d8ec71123583450b9"></a><a class="el" href="group___a_d_c.html#ga802c536966b5905a58039e347c5dbbc5">adc_double_trigger_t</a></td>
 <td class="fieldname">
@@ -1266,6 +1275,57 @@ Number of states to be used for sample and hold. Affects channels 0-2. </td></tr
 <tr><td class="fieldname"><a id="gga802c536966b5905a58039e347c5dbbc5a0c5f35117003eac5370c768e56f160a1"></a>ADC_DOUBLE_TRIGGER_ENABLED&#160;</td><td class="fielddoc"><p>Double-triggering enabled. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga802c536966b5905a58039e347c5dbbc5a67e6c1666364c908d8ceb504b4ccf15f"></a>ADC_DOUBLE_TRIGGER_ENABLED_EXTENDED&#160;</td><td class="fielddoc"><p>Double-triggering enabled on both ADC ELC events. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5f00e1bea3e9ff315b1417943f6b70db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f00e1bea3e9ff315b1417943f6b70db">&#9670;&nbsp;</a></span>adc_start_source_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c.html#ga5f00e1bea3e9ff315b1417943f6b70db">adc_start_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC Trigger synchronous start source Note: not all sources are available for all MCUs or channels. See User Manual for more information. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba110522843f71efe53ca8cad564ca2e5a"></a>ADC_START_SOURCE_DISABLED&#160;</td><td class="fielddoc"><p>ELC/GPT Start source disabled (For use with software start) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba50f0778d2dc4a68a8c297ba0203f4977"></a>ADC_START_SOURCE_ASYNC_EXTERNAL&#160;</td><td class="fielddoc"><p>External Trigger Input. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba84f85e62cc8461d39ece401caae6db44"></a>ADC_START_SOURCE_ELC_AD0&#160;</td><td class="fielddoc"><p>ELC_AD0 (Converter 0 and Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba057a498202ae56de24537dd997252304"></a>ADC_START_SOURCE_ELC_AD1&#160;</td><td class="fielddoc"><p>ELC_AD1 (Converter 0 and Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba52a0a6138592d3caf4959e4d61ee8fb0"></a>ADC_START_SOURCE_ELC_AD01&#160;</td><td class="fielddoc"><p>ELC_AD0 and ELC_AD1 (Converter 0) also ELC_AD0 and ELC_AD1 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba683a2e1cbb50b9ec991dc956190b1e6c"></a>ADC_START_SOURCE_GPT_A0_A4&#160;</td><td class="fielddoc"><p>GTADTRA0 (Converter 0) and GTADTRA4 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba2b1149a05c651d66e6fadffa82771f01"></a>ADC_START_SOURCE_GPT_B0_B4&#160;</td><td class="fielddoc"><p>GTADTRB0 (Converter 0) and GTADTRB4 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dbaf426a7d2893ae99affbef3c0dad9713a"></a>ADC_START_SOURCE_GPT_A1_A5&#160;</td><td class="fielddoc"><p>GTADTRA1 (Converter 0) and GTADTRB5 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dbac96370fec187078defc77a26780e393a"></a>ADC_START_SOURCE_GPT_B1_B5&#160;</td><td class="fielddoc"><p>GTADTRB1 (Converter 0) and GTADTRB5 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba23e85cb937597fdc98a54d56b537eb1d"></a>ADC_START_SOURCE_GPT_A2_A6&#160;</td><td class="fielddoc"><p>GTADTRA2 (Converter 0) and GTADTRA6 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba58f54ff4389b69bf401a66312fb4d6f3"></a>ADC_START_SOURCE_GPT_B2_B6&#160;</td><td class="fielddoc"><p>GTADTRB2 (Converter 0) and GTADTRB6 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba8ad745eb647be1d16c83a934c59a22e2"></a>ADC_START_SOURCE_GPT_A3_A7&#160;</td><td class="fielddoc"><p>GTADTRA3 (Converter 0) and GTADTRA7 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dbaa43992600e5e4227ca51df7095d70517"></a>ADC_START_SOURCE_GPT_B3_B7&#160;</td><td class="fielddoc"><p>GTADTRB3 (Converter 0) and GTADTRB7 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dbadd2746b928f6a215103637d482257942"></a>ADC_START_SOURCE_GPT_AB0_AB4&#160;</td><td class="fielddoc"><p>GTADTRA/B0 (Converter 0) and GTADTRA/B4 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dbad9dd8683c1b75ed70a67e8c86a70582a"></a>ADC_START_SOURCE_GPT_AB1_AB5&#160;</td><td class="fielddoc"><p>GTADTRA/B1 (Converter 0) and GTADTRA/B5 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dbae6fc2891fc5e0c87f1360f4c89ec6c6c"></a>ADC_START_SOURCE_GPT_AB2_AB6&#160;</td><td class="fielddoc"><p>GTADTRA/B2 (Converter 0) and GTADTRA/B6 (Converter 1) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f00e1bea3e9ff315b1417943f6b70dba532fbcf9cbdad19d620b17bb0e02d665"></a>ADC_START_SOURCE_GPT_AB3_AB7&#160;</td><td class="fielddoc"><p>GTADTRA/B3 (Converter 0) and GTADTRA/B7 (Converter 1) </p>
 </td></tr>
 </table>
 
@@ -1822,7 +1882,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

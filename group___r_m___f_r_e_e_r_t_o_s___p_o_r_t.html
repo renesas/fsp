@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -302,7 +302,7 @@ Disabled</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Cpu Clock Hz</td><td>Manual Entry</td><td>SystemCoreClock </td><td>Enter the frequency in Hz at which the internal clock that drives the peripheral used to generate the tick interrupt will be executing - this is normally the same clock that drives the internal CPU clock. This value is required in order to correctly configure timer peripherals. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Tick Rate Hz</td><td>Must be an integer and greater than 0</td><td>1000 </td><td>The frequency of the RTOS tick interrupt.<br />
+<td class="tree_lvl_1_cell">Tick Rate Hz</td><td>Value must be greater than 0</td><td>1000 </td><td>The frequency of the RTOS tick interrupt.<br />
 The tick interrupt is used to measure time. Therefore a higher tick frequency means time can be measured to a higher resolution. However, a high tick frequency also means that the RTOS kernel will use more CPU time so be less efficient. The RTOS demo applications all use a tick rate of 1000Hz. This is used to test the RTOS kernel and is higher than would normally be required.<br />
 <br />
 More than one task can share the same priority. The RTOS scheduler will share processor time between tasks of the same priority by switching between the tasks during each RTOS tick. A high tick rate frequency will therefore also have the effect of reducing the 'time slice' given to each task. </td></tr>
@@ -377,7 +377,7 @@ Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set to Enabled to include counting semaphore functionality in the build, or Disabled to omit counting semaphore functionality from the build. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Queue Registry Size</td><td>Must be an integer and greater than 0</td><td>10 </td><td>The queue registry has two purposes, both of which are associated with RTOS kernel aware debugging:<br />
+<td class="tree_lvl_1_cell">Queue Registry Size</td><td>Value must be positive integer greater than or equal to 0</td><td>10 </td><td>The queue registry has two purposes, both of which are associated with RTOS kernel aware debugging:<br />
 It allows a textual name to be associated with a queue for easy queue identification within a debugging GUI.<br />
 It contains the information required by a debugger to locate each registered queue and semaphore.<br />
 The queue registry has no purpose unless you are using a RTOS kernel aware debugger. Registry Size defines the maximum number of queues and semaphores that can be registered. Only those queues and semaphores that you want to view using a RTOS kernel aware debugger need be registered. See the API reference documentation for vQueueAddToRegistry() and vQueueUnregisterQueue() for more information. </td></tr>
@@ -415,7 +415,7 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>The FreeRTOS.h header file includes a set of #define macros that map the names of data types used in versions of FreeRTOS prior to version 8.0.0 to the names used in FreeRTOS version 8.0.0. The macros allow application code to update the version of FreeRTOS they are built against from a pre 8.0.0 version to a post 8.0.0 version without modification. Setting Enable Backward Compatibility to Disabled in FreeRTOSConfig.h excludes the macros from the build, and in so doing allowing validation that no pre version 8.0.0 names are being used. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Num Thread Local Storage Pointers</td><td>Must be an integer and greater than 0</td><td>5 </td><td>Sets the number of indexes in each task's thread local storage array. </td></tr>
+<td class="tree_lvl_1_cell">Num Thread Local Storage Pointers</td><td>Value must be positive integer greater than or equal to 0</td><td>5 </td><td>Sets the number of indexes in each task's thread local storage array. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Stack Depth Type</td><td>Manual Entry</td><td>uint32_t </td><td>Sets the type used to specify the stack depth in calls to xTaskCreate(), and various other places stack sizes are used (for example, when returning the stack high water mark).<br />
 Older versions of FreeRTOS specified stack sizes using variables of type UBaseType_t, but that was found to be too restrictive on 8-bit microcontrollers. Stack Depth Type removes that restriction by enabling application developers to specify the type to use. </td></tr>
@@ -645,7 +645,7 @@ If Support Dynamic Allocation is set to 0 then RTOS objects can only be created 
 <br />
 See the Static Vs Dynamic Memory Allocation page for more information. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Total Heap Size</td><td>Must be an integer and greater than 0</td><td>1024 </td><td>The total amount of RAM available in the FreeRTOS heap.<br />
+<td class="tree_lvl_1_cell">Total Heap Size</td><td>Value must be positive integer greater than or equal to 0</td><td>1024 </td><td>The total amount of RAM available in the FreeRTOS heap.<br />
 This value will only be used if Support Dynamic Allocation is Enabled and the application makes use of one of the sample memory allocation schemes provided in the FreeRTOS source code download. See the memory configuration section for further details. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Application Allocated Heap</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -669,11 +669,11 @@ Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Set to Enabled to include software timer functionality, or Disabled to omit software timer functionality. See the FreeRTOS software timers page for a full description. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Timer Task Priority</td><td>Must be an integer and greater than 0</td><td>3 </td><td>Sets the priority of the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
+<td class="tree_lvl_1_cell">Timer Task Priority</td><td>Value must be positive integer greater than or equal to 0</td><td>3 </td><td>Sets the priority of the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Timer Queue Length</td><td>Must be an integer and greater than 0</td><td>10 </td><td>Sets the length of the software timer command queue. See the FreeRTOS software timers page for a full description. </td></tr>
+<td class="tree_lvl_1_cell">Timer Queue Length</td><td>Value must be a non-negative integer</td><td>10 </td><td>Sets the length of the software timer command queue. See the FreeRTOS software timers page for a full description. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Timer Task Stack Depth</td><td>Must be an integer and greater than 0</td><td>128 </td><td>Sets the stack depth allocated to the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
+<td class="tree_lvl_1_cell">Timer Task Stack Depth</td><td>Value must be a non-negative integer</td><td>128 </td><td>Sets the stack depth allocated to the software timer service/daemon task. See the FreeRTOS software timers page for a full description. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Optional Functions  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -888,7 +888,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

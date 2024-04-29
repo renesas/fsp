@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -289,7 +289,7 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
-<td>CEC Message Max Data Size</td><td>Manual Entry</td><td>14 </td><td>Maximum Data Size for CEC Message Transmission/Reception. </td></tr>
+<td>CEC Message Max Data Size</td><td>CEC message max data size must be a positive integer</td><td>14 </td><td>Maximum Data Size for CEC Message Transmission/Reception. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; CEC (r_cec)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; CEC (r_cec). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -301,7 +301,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_cec0 </td><td>Module name </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Callback Function</td><td>Manual Entry</td><td>g_rm_cec0_callback </td><td>Callback function </td></tr>
+<td class="tree_lvl_1_cell">Callback Function</td><td>Callback Function must be a valid C symbol</td><td>g_rm_cec0_callback </td><td>Callback function </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Control Configuration  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -403,7 +403,7 @@ Enabled</li>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Data Sample Time</td><td>CEC reception data sampling time must be a positive integer.</td><td>49 </td><td>CEC reception data sampling time setting (CEC Clock Cycles). </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Data Bit Reference Width</td><td>CEC reception data sampling time must be a positive integer.</td><td>117 </td><td>CEC data bit reference width setting (CEC Clock Cycles). </td></tr>
+<td class="tree_lvl_2_cell">Data Bit Reference Width</td><td>CEC reception data bit reference width must be a positive integer.</td><td>117 </td><td>CEC data bit reference width setting (CEC Clock Cycles). </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Start Bit Low Min Time</td><td>CEC reception start bit minimum low width setting must be a positive integer.</td><td>171 </td><td>CEC reception start bit minimum low width setting (CEC Clock Cycles). Not used when Start Bit Error Detection and restart Rx on Error are not enabled. </td></tr>
 <tr class="tree_lvl_2_item">
@@ -736,7 +736,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

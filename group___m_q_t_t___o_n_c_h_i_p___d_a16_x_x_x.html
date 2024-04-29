@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -306,6 +306,84 @@ Disabled</li>
 <td>Size of MQTT RX buffer</td><td>Must be an integer greater than 0</td><td>512 </td><td>Size in bytes of the MQTT buffer used for receiving subscribed data. Must be an integer greater than 0. </td></tr>
 <tr class="tree_none">
 <td>Size of MQTT TX buffer</td><td>Must be an integer greater than 200 and less than 2064</td><td>512 </td><td>Size in bytes of the MQTT buffer used for sending commands and publishing data. Maximum publishing length is 2063 bytes </td></tr>
+</table>
+ <h2>Configurations for Networking &gt; MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; MQTT Client on DA16XXX (rm_mqtt_onchip_da16xxx).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Certificates  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">MQTT Certificates Header File</td><td>Must be a valid C symbol</td><td></td><td>Name of header file that will contain certificates (macros). User must create header file if this field is populated. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Root CA</td><td>Must be a valid C symbol</td><td>ROOT_CA </td><td>Links to user-defined macro of the same name for Root CA which user must define in application header. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Client Certificate</td><td>Must be a valid C symbol</td><td>CLIENT_CERT </td><td>Links to user-defined macro of the same name for client certificate which user must define in application header. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Private Key</td><td>Must be a valid C symbol</td><td>PRIVATE_KEY </td><td>Links to user-defined macro of the same name for private key which user must define in application header. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> ALPN  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ALPN 1</td><td>Manual Entry</td><td></td><td>Select Application Layer Protocol Negotiations (ALPNs) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ALPN 2</td><td>Manual Entry</td><td></td><td>Select Application Layer Protocol Negotiations (ALPNs) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ALPN 3</td><td>Manual Entry</td><td></td><td>Select Application Layer Protocol Negotiations (ALPNs) </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Must be a valid C symbol</td><td>mqtt0_callback </td><td>A user callback function. This callback function must be provided. It is called from the MQTT Receive function to process subscribed MQTT messages. </td></tr>
+<tr class="tree_none">
+<td>Use MQTT protocol v3.1.1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td></td></tr>
+<tr class="tree_none">
+<td>MQTT Receive Maximum Timeout (ms)</td><td>Timeout must be an integer greater than 0 and less than 65535</td><td>1000 </td><td>Timeout for the MQTT Receive function to check the buffer for incoming MQTT messages in milliseconds. </td></tr>
+<tr class="tree_none">
+<td>MQTT Transit Maximum Timeout (ms)</td><td>Timeout must be an integer greater than 0 and less than 65535</td><td>1000 </td><td>Timeout for publishing MQTT messages in milliseconds. </td></tr>
+<tr class="tree_none">
+<td>Clean Session</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td></td></tr>
+<tr class="tree_none">
+<td>Keep Alive (s)</td><td>Must be an integer greater than 0 and less than 65535</td><td>60 </td><td>MQTT ping period to check if connection is still active. </td></tr>
+<tr class="tree_none">
+<td>Client Identifier</td><td>Manual Entry</td><td></td><td></td></tr>
+<tr class="tree_none">
+<td>Host Name (or IP address)</td><td>Manual Entry</td><td></td><td></td></tr>
+<tr class="tree_none">
+<td>MQTT Port</td><td>Must be an integer greater than 0 and less than 65535</td><td>8883 </td><td></td></tr>
+<tr class="tree_none">
+<td>MQTT User Name</td><td>Must be a valid C symbol</td><td></td><td></td></tr>
+<tr class="tree_none">
+<td>MQTT Password</td><td>Must be a valid C symbol</td><td></td><td></td></tr>
+<tr class="tree_none">
+<td>Last Will Topic</td><td>Manual Entry</td><td></td><td>Topic for MQTT Last Will message. </td></tr>
+<tr class="tree_none">
+<td>Last Will Message</td><td>Manual Entry</td><td></td><td>Payload for MQTT Last Will message. </td></tr>
+<tr class="tree_none">
+<td>Server Name Indication (SNI)</td><td>Manual Entry</td><td></td><td></td></tr>
+<tr class="tree_none">
+<td>Last Will QoS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+0</li>
+<li>
+1</li>
+<li>
+2</li>
+</ul>
+</td><td>0 </td><td>Quality-of-Service for MQTT Last Will message. </td></tr>
+<tr class="tree_none">
+<td>TLS Cipher Suites</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Select TLS Cipher Suites </td></tr>
 </table>
 </p>
 <p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
@@ -589,10 +667,10 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#af5a54c2621aa546e54df5e96046d5346">p_host_name</a></td></tr>
 <tr class="memdesc:af5a54c2621aa546e54df5e96046d5346"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT endpoint host name. <br /></td></tr>
 <tr class="separator:af5a54c2621aa546e54df5e96046d5346"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52652aa1450ab2c8b70f4f8ea438b5ec"><td class="memItemLeft" align="right" valign="top"><a id="a52652aa1450ab2c8b70f4f8ea438b5ec"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a52652aa1450ab2c8b70f4f8ea438b5ec">mqtt_port</a></td></tr>
-<tr class="memdesc:a52652aa1450ab2c8b70f4f8ea438b5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT Port number. <br /></td></tr>
-<tr class="separator:a52652aa1450ab2c8b70f4f8ea438b5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab542ac4de613e5c564f52ca2a62d164b"><td class="memItemLeft" align="right" valign="top"><a id="ab542ac4de613e5c564f52ca2a62d164b"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ab542ac4de613e5c564f52ca2a62d164b">mqtt_port</a></td></tr>
+<tr class="memdesc:ab542ac4de613e5c564f52ca2a62d164b"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT Port number. <br /></td></tr>
+<tr class="separator:ab542ac4de613e5c564f52ca2a62d164b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e9278564f2b583f393f62e0fd4a7394"><td class="memItemLeft" align="right" valign="top"><a id="a1e9278564f2b583f393f62e0fd4a7394"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a1e9278564f2b583f393f62e0fd4a7394">p_mqtt_user_name</a></td></tr>
 <tr class="memdesc:a1e9278564f2b583f393f62e0fd4a7394"><td class="mdescLeft">&#160;</td><td class="mdescRight">MQTT user name. Set to NULL if not used. <br /></td></tr>
@@ -1127,7 +1205,7 @@ Pointer to p_cfg for MQTT. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

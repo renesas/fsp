@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -265,7 +265,7 @@ Overview</h1>
 <h2><a class="anchor" id="r-lpm-features"></a>
 Features</h2>
 <p>The LPM HAL module has the following key features:</p><ul>
-<li>Supports the follwowing low power modes:<ul>
+<li>Supports the following low power modes:<ul>
 <li>Deep Software Standby mode (On supported MCUs)</li>
 <li>Deep Sleep (On supported MCUs)</li>
 <li>Software Standby mode</li>
@@ -315,6 +315,12 @@ This module can be added to the Stacks tab via New Stack &gt; Power &gt; Low Pow
 <td class="tree_lvl_1_cell">Low Power Mode</td><td>MCU Specific Options</td><td></td><td>Power mode to be entered. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Output port state in standby and deep standby</td><td>MCU Specific Options</td><td></td><td>Select the state of output pins during standby. Applies to address output, data output, and other bus control output pins. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Supply of SOSC clock to peripheral function in standby</td><td>MCU Specific Options</td><td></td><td>If enabled, SOSC clock is provided to peripheral functions in Software Standby and Snooze modes. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Startup speed of the HOCO in Standby and Snooze modes</td><td>MCU Specific Options</td><td></td><td>If enabled, the HOCO enters high-speed startup mode, shortening standby release time, and snooze transition time. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Flash mode in sleep or snooze</td><td>MCU Specific Options</td><td></td><td>Select flash mode in sleep mode or in snooze mode. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Deep Sleep and Standby Options  </td></tr>
 <tr class="tree_lvl_2">
@@ -367,7 +373,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-lpm-usage_notes"></a>
 Usage Notes</h1>
 <h2>Sleep Mode</h2>
-<p>At power on, by default sleep is set as the low-power mode. Sleep mode is the most convenient low-power mode available, as it does not require any special configuration (other than configuring and enabling a suitable interrupt or event to wake the MCU from sleep) to return to normal program-execution mode. The states of the SRAM, the processor registers, and the hardware peripherals are all maintained in sleep mode, and the time needed to enter and wake from sleep is minimal. Any interrupt causes the MCU device to wake from sleep mode, including the Systick interrupt used by the RTOS scheduler.</p>
+<p>At power on, by default sleep is set as the low-power mode. Sleep mode is the most convenient low-power mode available, as it does not require any special configuration (other than configuring and enabling a suitable interrupt or event to wake the MCU from sleep) to return to normal program-execution mode. The states of the SRAM, the processor registers, and the hardware peripherals are all maintained in sleep mode, and the time needed to enter and wake from sleep is minimal. Any interrupt causes the MCU device to wake from sleep mode, including the SysTick interrupt used by the RTOS scheduler.</p>
 <h2>Deep Sleep Mode</h2>
 <p>Deep sleep mode is similar to sleep mode with the exception that DTC and DMAC are stopped, access to TCM memory is not available, and only a subset of interrupts are available for waking the CPU.</p>
 <h2>Software Standby Mode</h2>
@@ -376,7 +382,7 @@ Usage Notes</h1>
 <p>Snooze mode can be used with some MCU peripherals to execute basic tasks while keeping the MCU in a low-power state. Many core peripherals and all clocks can be selected to run during Snooze, allowing for more flexible low-power configuration than Software Standby mode. To enable Snooze, select "Software Standby mode with Snooze mode enabled" for the "Low Power Mode" configuration option. Snooze mode settings (including entry/exit sources) are available under "Standby Options".</p>
 <h2>Deep Software Standby Mode</h2>
 <p>The MCU always wakes from Deep Software Standby Mode by going through reset, either by the negation of the reset pin or by one of the wakeup sources configurable in the "Deep Standby Options" configuration group.</p>
-<p>The Reset Status Registers can be used to determine if the reset occured after coming out of deep sofware standby. For example, R_SYSTEM-&gt;RSTSR0_b.DPSRSTF is set to 1 after a deep software standby reset.</p>
+<p>The Reset Status Registers can be used to determine if the reset occurred after coming out of deep software standby. For example, R_SYSTEM-&gt;RSTSR0_b.DPSRSTF is set to 1 after a deep software standby reset.</p>
 <p>I/O Port Retention can be enabled to maintain I/O port configuration across a deep software standby reset. Retention can be cancelled through the <a class="el" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a> API.</p>
 <h2><a class="anchor" id="r-lpm-limitations"></a>
 Limitations</h2>
@@ -395,7 +401,7 @@ Examples</h1>
 <h2>LPM Sleep Example</h2>
 <p>This is a basic example of minimal use of the LPM in an application. The LPM instance is opened and the configured low-power mode is entered.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_sleep (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_sleep);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>LPM Deep Software Standby Example</h2>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_deep_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Check the Deep Software Standby Reset Flag. If it is set, then the MCU is exiting</span></div><div class="line"><span class="comment">     * Deep Software Standby mode. */</span></div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.DPSRSTF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the IOKEEP bit to allow I/O Port use.</span></div><div class="line"><span class="comment">         * Note that this function should be called before opening the LPM driver. */</span></div><div class="line">        err = <a class="code" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a>(&amp;g_lpm_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Add user code here. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reconfigure the module to set the IOKEEP bit before entering deep software standby. */</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Code after R_LPM_LowPowerModeEnter when using Deep Software Standby never be executed.</span></div><div class="line"><span class="comment">     * Deep software standby exits by resetting the MCU. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_deep_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"><span class="preprocessor">#if !BSP_MCU_GROUP_RA0E1</span></div><div class="line"></div><div class="line">    <span class="comment">/* Check the Deep Software Standby Reset Flag. If it is set, then the MCU is exiting</span></div><div class="line"><span class="comment">     * Deep Software Standby mode. */</span></div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.DPSRSTF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the IOKEEP bit to allow I/O Port use.</span></div><div class="line"><span class="comment">         * Note that this function should be called before opening the LPM driver. */</span></div><div class="line">        err = <a class="code" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a>(&amp;g_lpm_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Add user code here. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reconfigure the module to set the IOKEEP bit before entering deep software standby. */</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Code after R_LPM_LowPowerModeEnter when using Deep Software Standby never be executed.</span></div><div class="line"><span class="comment">     * Deep software standby exits by resetting the MCU. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlpm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m.html#structlpm__instance__ctrl__t">lpm_instance_ctrl_t</a></td></tr>
@@ -631,7 +637,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

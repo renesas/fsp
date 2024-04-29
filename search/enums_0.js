@@ -46,6 +46,7 @@ var searchData=
   ['adc_5fmode_5ft',['adc_mode_t',['../group___a_d_c___a_p_i.html#ga760a8dafdcddcfadfea0aa3e01159164',1,'r_adc_api.h']]],
   ['adc_5fresolution_5ft',['adc_resolution_t',['../group___a_d_c___a_p_i.html#gaf88bfcbfc4a19c82f8bb423218d13cda',1,'r_adc_api.h']]],
   ['adc_5fsample_5fstate_5freg_5ft',['adc_sample_state_reg_t',['../group___a_d_c.html#ga2817e17c728f9a2b041b54fd92244c3b',1,'r_adc.h']]],
+  ['adc_5fstart_5fsource_5ft',['adc_start_source_t',['../group___a_d_c.html#ga5f00e1bea3e9ff315b1417943f6b70db',1,'r_adc.h']]],
   ['adc_5fstate_5ft',['adc_state_t',['../group___a_d_c___a_p_i.html#ga2783ab2e29809bf0a50bc66c6fa8d3c6',1,'r_adc_api.h']]],
   ['adc_5ftrigger_5ft',['adc_trigger_t',['../group___a_d_c___a_p_i.html#ga1ac380ffe2ebef256338616747d330e3',1,'r_adc_api.h']]],
   ['adc_5fvref_5fcontrol_5ft',['adc_vref_control_t',['../group___a_d_c.html#ga03d10a44658a1383520ca2d9c3928eb9',1,'r_adc.h']]],

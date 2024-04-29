@@ -53,6 +53,7 @@ var group___t_a_u___p_w_m =
     [ "R_TAU_PWM_Enable", "group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893", null ],
     [ "R_TAU_PWM_Disable", "group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04", null ],
     [ "R_TAU_PWM_PeriodSet", "group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced", null ],
+    [ "R_TAU_PWM_CompareMatchSet", "group___t_a_u___p_w_m.html#gace09e3251c723769ec0045caed1b0ef9", null ],
     [ "R_TAU_PWM_DutyCycleSet", "group___t_a_u___p_w_m.html#gae96758005a9259bc596d4f951130438b", null ],
     [ "R_TAU_PWM_InfoGet", "group___t_a_u___p_w_m.html#ga4a6409ed7c3c3007baa7abd0a1bab0d2", null ],
     [ "R_TAU_PWM_StatusGet", "group___t_a_u___p_w_m.html#ga54b6a6c7e92c7f97c55dcda7cd3db5e7", null ],

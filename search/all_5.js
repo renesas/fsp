@@ -84,7 +84,7 @@ var searchData=
   ['delay_5fcompensation',['delay_compensation',['../group___c_a_n_f_d.html#a3b38e8d28731a86eb521db8a5c5ae85e',1,'canfd_extended_cfg_t']]],
   ['delay_5fms',['delay_ms',['../structzmod4xxx__dev__t.html#ad6ee7a7b462535fd5d1b32354fd0dd16',1,'zmod4xxx_dev_t::delay_ms()'],['../group___r_m___z_m_o_d4_x_x_x.html#a747d96b26c6228fd7505c18b11eb93cb',1,'rm_zmod4xxx_init_process_params_t::delay_ms()']]],
   ['delay_5freq_5finterval',['delay_req_interval',['../group___p_t_p___a_p_i.html#acf0e59bc01f625f69191c1ae51a248c6',1,'ptp_synfp_cfg_t']]],
-  ['delay_5ftime',['delay_time',['../group___s_a_u___i2_c.html#a45b2dea0a34a8b3b5119fca00d6fbc3a',1,'sau_i2c_instance_ctrl_t']]],
+  ['delay_5ftime',['delay_time',['../group___s_a_u___i2_c.html#a5e5cc50ee5c3be74603a68b17f16a44a',1,'sau_i2c_extended_cfg_t']]],
   ['deleteallmodelsubscription',['deleteAllModelSubscription',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ab9e4a508cf01b251f771843a249071ef',1,'rm_ble_mesh_access_api_t']]],
   ['deleteappkey',['deleteAppKey',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a36a34470f248c0ede68f63ed783d1aa1',1,'rm_ble_mesh_access_api_t']]],
   ['deletebondinformation',['deleteBondInformation',['../group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb',1,'ble_abs_api_t']]],

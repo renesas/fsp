@@ -65,6 +65,9 @@ var group___a_d_c___a_p_i =
       [ "ADC_MODE_CONTINUOUS_SCAN", "group___a_d_c___a_p_i.html#gga760a8dafdcddcfadfea0aa3e01159164adb8344d57ee438ee90c65b79ff4f3e12", null ]
     ] ],
     [ "adc_resolution_t", "group___a_d_c___a_p_i.html#gaf88bfcbfc4a19c82f8bb423218d13cda", [
+      [ "ADC_RESOLUTION_10_BIT", "group___a_d_c___a_p_i.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa24283bc621bcaa68a73c8eab142030b8", null ],
+      [ "ADC_RESOLUTION_8_BIT", "group___a_d_c___a_p_i.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa8ebd681650d751af22a7849be9ab8bc1", null ],
+      [ "ADC_RESOLUTION_12_BIT", "group___a_d_c___a_p_i.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaab35c4dcc6cda85146a9ffd339c5de1c4", null ],
       [ "ADC_RESOLUTION_12_BIT", "group___a_d_c___a_p_i.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaab35c4dcc6cda85146a9ffd339c5de1c4", null ],
       [ "ADC_RESOLUTION_10_BIT", "group___a_d_c___a_p_i.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa24283bc621bcaa68a73c8eab142030b8", null ],
       [ "ADC_RESOLUTION_8_BIT", "group___a_d_c___a_p_i.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa8ebd681650d751af22a7849be9ab8bc1", null ],

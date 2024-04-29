@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -358,11 +358,11 @@ Encryption Disabled</li>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Non-Secure RAM Region Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the 8192.</td><td>0x0 </td><td>Size of the Non-Secure RAM region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Image 2 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
+<td class="tree_lvl_2_cell">Image 2 Header Size (Bytes)</td><td>Manual Entry</td><td>0x200 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Bootloader Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the flash reserved for the bootloader. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x100 for Cortex-M23, 0x200 for Cortex-M4 and Cortex-M33). </td></tr>
+<td class="tree_lvl_1_cell">Image 1 Header Size (Bytes)</td><td>Manual Entry</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x200 for all RA MCUs). </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Image 1 Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the application image 1, including the header and trailer. For TrustZone projects, enter the combined size of the Secure and Non-Secure Callable regions if the Non-Secure image can be updated separately, or enter the size of the entire image slot if Secure, Non-Secure Callable, and Non-Secure regions are updated as a single image. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -390,7 +390,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-mcuboot-port-usage-notes"></a>
 Usage Notes</h1>
 <h2>Getting Started: Creating an MCUboot Project</h2>
-<p>Start by creating a new project in e&sup2; studio or RASC. If the MCU supports TrustZone, select a Flat project. The bootloader resides entirely in Secure memory, but it is considered a flat project because it does not provide any Non-Secure Callable functions. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
+<p>Start by creating a new project in e&sup2; studio or RASC. Select 'Flat (Non TrustZone) Project' template for non TrustZone based projects. For TrustZone based projects, select 'TrustZone Secure Project' template and set the clock circuit under the clocks tab to secure. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot &gt; Quick Setup &gt; Call Quick Setup. Add a call to mcuboot_quick_setup() in the application and make any desired updates.</p>
 <dl class="section note"><dt>Note</dt><dd>MCUboot will contain either the verification public key or its hash. During production it is necessary to permanently lock the flash region where MCUboot is programmed to prevent the keys or the code from being modified.</dd></dl>
 <h2>Getting Started: Signing Tool Prerequisite</h2>
@@ -537,7 +537,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

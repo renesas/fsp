@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -263,6 +263,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1b8a21776f618aaa1b8471592b4b5464"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga25f4904a0e4ce56c413364b7c21b76a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#ga25f4904a0e4ce56c413364b7c21b76a3">R_AGT_DutyCycleSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin)</td></tr>
 <tr class="separator:ga25f4904a0e4ce56c413364b7c21b76a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa613938e335f71d9f61e64fa59a2a96d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#gaa613938e335f71d9f61e64fa59a2a96d">R_AGT_CompareMatchSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const compare_match_value, <a class="el" href="group___t_i_m_e_r___a_p_i.html#gaf5f22f5e34fe6ea640fd6a1c7e864cd9">timer_compare_match_t</a> const match_channel)</td></tr>
+<tr class="separator:gaa613938e335f71d9f61e64fa59a2a96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga91174b9feb94088512b85d2f020d3fe2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#ga91174b9feb94088512b85d2f020d3fe2">R_AGT_InfoGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const p_info)</td></tr>
 <tr class="separator:ga91174b9feb94088512b85d2f020d3fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga11a30a7a093f91c09a340f7b301945fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd">R_AGT_StatusGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const p_status)</td></tr>
@@ -615,7 +617,7 @@ count_source</td>
 <td class="fielddoc">
 AGT channel clock source. Valid values are: AGT_CLOCK_PCLKB, AGT_CLOCK_LOCO, AGT_CLOCK_FSUB. </td></tr>
 <tr><td class="fieldtype">
-<a id="aaa80191a09da6df141d88a2c21e6028a"></a>union <a class="el" href="group___a_g_t.html#unionagt__extended__cfg__t_8____unnamed____">agt_extended_cfg_t</a></td>
+<a id="a24738f8f2e05e0d13ec38c41d0b7fd8a"></a>union <a class="el" href="group___a_g_t.html#unionagt__extended__cfg__t_8____unnamed____">agt_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1120,6 +1122,47 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 
 </div>
 </div>
+<a id="gaa613938e335f71d9f61e64fa59a2a96d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa613938e335f71d9f61e64fa59a2a96d">&#9670;&nbsp;</a></span>R_AGT_CompareMatchSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_AGT_CompareMatchSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>compare_match_value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#gaf5f22f5e34fe6ea640fd6a1c7e864cd9">timer_compare_match_t</a> const&#160;</td>
+          <td class="paramname"><em>match_channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Placeholder for unsupported compareMatch function. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a01da35856c7e395c56ab65c3fe033b56">timer_api_t::compareMatchSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>AGT compare match is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga91174b9feb94088512b85d2f020d3fe2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga91174b9feb94088512b85d2f020d3fe2">&#9670;&nbsp;</a></span>R_AGT_InfoGet()</h2>
 
@@ -1277,7 +1320,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

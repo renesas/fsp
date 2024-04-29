@@ -1,0 +1,1135 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Timer, 32-bit Interval Timer (r_tml)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.3.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___t_m_l.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Timer, 32-bit Interval Timer (r_tml)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_i_m_e_r_s___m_o_d_u_l_e_s.html">Timers</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga84210cc9399ffda5f90e68ec38bfdce7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga84210cc9399ffda5f90e68ec38bfdce7">R_TML_Open</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga84210cc9399ffda5f90e68ec38bfdce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b2338064ad897195eeec7fd51331bdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga9b2338064ad897195eeec7fd51331bdb">R_TML_Stop</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga9b2338064ad897195eeec7fd51331bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8d3ba4f3781ba7bcbff153ea9b7637f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#gae8d3ba4f3781ba7bcbff153ea9b7637f">R_TML_Start</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gae8d3ba4f3781ba7bcbff153ea9b7637f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga382a3369611dddbee629aeb90934ee33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga382a3369611dddbee629aeb90934ee33">R_TML_Reset</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga382a3369611dddbee629aeb90934ee33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f97c78a4652727ac0ccbd66c474abb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga0f97c78a4652727ac0ccbd66c474abb6">R_TML_Enable</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga0f97c78a4652727ac0ccbd66c474abb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8002f65fb21eb70d05ead72b9807d28a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga8002f65fb21eb70d05ead72b9807d28a">R_TML_Disable</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga8002f65fb21eb70d05ead72b9807d28a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcb4b420eb72126605d0cfdb4b4cd182"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#gabcb4b420eb72126605d0cfdb4b4cd182">R_TML_PeriodSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const period_counts)</td></tr>
+<tr class="separator:gabcb4b420eb72126605d0cfdb4b4cd182"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bdc040e97a05626f7384a196fd90c38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga9bdc040e97a05626f7384a196fd90c38">R_TML_DutyCycleSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin)</td></tr>
+<tr class="separator:ga9bdc040e97a05626f7384a196fd90c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8692c74464f18fbd9655fda165aca56c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga8692c74464f18fbd9655fda165aca56c">R_TML_CompareMatchSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, uint32_t const compare_match_value, <a class="el" href="group___t_i_m_e_r___a_p_i.html#gaf5f22f5e34fe6ea640fd6a1c7e864cd9">timer_compare_match_t</a> const match_channel)</td></tr>
+<tr class="separator:ga8692c74464f18fbd9655fda165aca56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3261ff80745d9c908e36a73051eca31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#gaa3261ff80745d9c908e36a73051eca31">R_TML_InfoGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const p_info)</td></tr>
+<tr class="separator:gaa3261ff80745d9c908e36a73051eca31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga149d8f610888e969da961c06d3682059"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga149d8f610888e969da961c06d3682059">R_TML_StatusGet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const p_status)</td></tr>
+<tr class="separator:ga149d8f610888e969da961c06d3682059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb41c3ab55f0f6e767ff1e808c5b31af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#gacb41c3ab55f0f6e767ff1e808c5b31af">R_TML_CallbackSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gacb41c3ab55f0f6e767ff1e808c5b31af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86e82d5763c011a5bff4b186faf83f4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga86e82d5763c011a5bff4b186faf83f4f">R_TML_Close</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga86e82d5763c011a5bff4b186faf83f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the TML peripherals on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
+<h1><a class="anchor" id="r-tml-overview"></a>
+Overview</h1>
+<p>The TML module can be used to count or count input events. TML operates with the HOCO, MOCO, MOSC, LOCO/SOSC clock or the event input from the ELC, which is asynchronous to CPU operation.</p>
+<h2><a class="anchor" id="r-tml-features"></a>
+Features</h2>
+<p>The TML module has the following features:</p>
+<ul>
+<li>Supports 8-bit counter mode: 4 independent channels (Channel 0,Channel 1,Channel 2 and Channel 3).</li>
+<li>Supports 16-bit counter mode: 2 independent channels (Channel 0 and Channel 2).<a class="anchor" id="um_tml_16_bit_mode"></a></li>
+<li>Supports 32-bit counter mode: 1 channel (channel 0).<a class="anchor" id="um_tml_32_bit_mode"></a></li>
+<li>Supports 16-bit capture mode: 1 channel (channel 0).</li>
+<li>Supports count source of HOCO, MOCO, MOSC, LOCO/SOSC clock or ELC events.</li>
+<li>Configurable period (counts per timer cycle).</li>
+<li>Supports runtime reconfiguration of period.</li>
+<li>Supports capture-start by external sources from ELC events.<a class="anchor" id="um_tml_start_external_trigger_source"></a></li>
+<li>APIs are provided to start, stop, and reset the counter.</li>
+<li>APIs are provided to get the current period, source clock frequency, and count direction.<a class="anchor" id="um_timer_count_direction"></a></li>
+<li>APIs are provided to get the current timer status.<a class="anchor" id="um_tml_status"></a> </li>
+</ul>
+<h2><a class="anchor" id="r-tml-selecting-a-timer"></a>
+Selecting a Timer</h2>
+<p>RA MCUs have different timer peripherals: the General PWM Timer (GPT), the 32-bit Interval Timer (TML), Timer Array Unit (TAU), and the Asynchronous General Purpose Timer (AGT). Some MCUs have multiple timer modules. When selecting between them, consider these factors:</p>
+<table class="doxtable">
+<tr>
+<th></th><th>GPT </th><th>TML </th><th>AGT </th><th>TAU  </th></tr>
+<tr>
+<td>Low Power Modes</td><td>The GPT can operate in sleep mode.</td><td>The TML can operate in all low power modes.</td><td>The AGT can operate in all low power modes.</td><td>The TAU can not operate in all low power modes. </td></tr>
+<tr>
+<td>Available Channels</td><td>The number of GPT channels is device specific. Currently supported MCUs have at least 7 GPT channels.</td><td>Currently supported MCUs have 4 TML channels.</td><td>Currently supported MCUs have 2 AGT channels.</td><td>Currently supported MCUs have 8 TAU channels. </td></tr>
+<tr>
+<td>Timer Resolution</td><td>Currently supported MCUs have at least one 32-bit GPT timer.</td><td>The TML timers are 32-bit/16-bit/8-bit timers.</td><td>The AGT timers are 16-bit timers.</td><td>The TAU timers are 16-bit/8-bit timers. </td></tr>
+<tr>
+<td>Clock Source</td><td>The GPT runs off PCLKD with a configurable divider up to 1024. It can also be configured to count ELC events or external pulses.</td><td>The TML runs off MOSC, LOCO/SOSC, HOCO, MOCO with a configurable divider up to 128 or ELC events.</td><td>The AGT runs off PCLKB, LOCO, or subclock.</td><td>The TAU runs off PCLK with a configurable divider up to 32768 </td></tr>
+</table>
+<h1><a class="anchor" id="r-tml-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_timer_multiple_channels"></a> <h2>Build Time Configurations for r_tml</h2>
+The following build time configurations are defined in fsp_cfg/r_tml_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>16-bit Capture Mode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Controls whether 16-bit capture mode support is included in the build. This setting applies globally to all r_tml_instances. If 16-bit capture mode is not used by any instance, disable this setting to reduce ROM usage. </td></tr>
+<tr class="tree_none">
+<td>Interrupt Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable support for interrupts. </td></tr>
+</table>
+ <h2>Configurations for Timers &gt; 32-bit Interval Timer (r_tml)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Timers &gt; 32-bit Interval Timer (r_tml).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+8-bit Counter Mode</li>
+<li>
+16-bit Counter Mode</li>
+<li>
+32-bit Counter Mode</li>
+<li>
+16-bit Capture Mode</li>
+</ul>
+</td><td>16-bit Counter Mode </td><td>Selection of Operating mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel Selection</td><td>Channel number must exist on this MCU</td><td>0 </td><td>Specify the hardware channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ELC event</td><td>MCU Specific Options</td><td></td><td>Select the elc event. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Counter Mode Settings  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period</td><td>Value must be positive integer</td><td>0x10000 </td><td>Specify the timer period in units selected below.<br />
+<br />
+Set the period to 0x100 (8-bit) or 0x10000 (16-bit) or 0x100000000 (32-bit) raw counts for a free running timer. Since the maxmimum divider is 128... the raw counts period can be set up to the (max count+1)*128. [0x8000 (8-bit) or 0x800000 (16-bit), or 0x8000000000 (32-bit)]. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Raw Counts</li>
+<li>
+Nanoseconds</li>
+<li>
+Microseconds</li>
+<li>
+Milliseconds</li>
+<li>
+Seconds</li>
+<li>
+Hertz</li>
+<li>
+Kilohertz</li>
+</ul>
+</td><td>Raw Counts </td><td>Unit of the period specified above. When the Counter Clock Source is the ELC, only Raw Counts can be selected here. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Capture Mode Settings  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Capture Mode Settings &gt; 16-Bit Counter Input Settings (when Capture source = Interrupt on compare match with ITLCMP01)  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Period</td><td>Value must be positive integer</td><td>0x10000 </td><td>Specify the timer period in units selected below.<br />
+<br />
+Set the period to 0x10000 raw counts in the maximum period of 16-bit capture. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Raw Counts</li>
+<li>
+Nanoseconds</li>
+<li>
+Microseconds</li>
+<li>
+Milliseconds</li>
+<li>
+Seconds</li>
+<li>
+Hertz</li>
+<li>
+Kilohertz</li>
+</ul>
+</td><td>Raw Counts </td><td>Unit of the period specified above. When the Capture Clock Source is the ELC, only Raw Counts can be selected here. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture Trigger</td><td>MCU Specific Options</td><td></td><td>Selection of capture trigger. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture Clock Divider</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+fITL0</li>
+<li>
+fITL0/2</li>
+<li>
+fITL0/4</li>
+<li>
+fITL0/8</li>
+<li>
+fITL0/16</li>
+<li>
+fITL0/32</li>
+<li>
+fITL0/64</li>
+<li>
+fITL0/128</li>
+</ul>
+</td><td>fITL0 </td><td>Selection of the FITL0 counter clock divider. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Counter Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Retained after the completion of capturing</li>
+<li>
+Cleared after the completion of capturing</li>
+</ul>
+</td><td>Retained after the completion of capturing </td><td>Selection of the 16-bit counter (ITL000 + ITL001) clearing after capturing. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupt  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback function</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided here. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the IRQn triggers </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-tml-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The TML operating clock is based on the HOCO, MOCO, MOSC, or LOCO/SOSC. The operating frequency will be based on the source chosen and the divider selected. You can set the clock frequencies using the <b>Clocks</b> tab of the RA Configuration editor or change the clock divider for the capture mode channel by <b>Capture Mode Settings-&gt;Capture Clock Divider</b>.</p>
+<dl class="section note"><dt>Note</dt><dd>The TML channels may be alternatively configured to use an event input from the ELC as a count clock in case no frequency/duration can be input, only "Raw Counts".</dd></dl>
+<h2><a class="anchor" id="r-tml-pin-configuration"></a>
+Pin Configuration</h2>
+<h1><a class="anchor" id="r-tml-usage_notes"></a>
+Usage Notes</h1>
+<h2>Maximum Period</h2>
+<p>In capture mode, the clock divider for the capture channel has to be selected in <b>Capture Mode Settings-&gt;Capture Clock Divider</b>. If ITLCMP01 is the capture trigger input, the clock divider for channels 2 + 3 is not available.</p>
+<p>When no capture mode is active, the RA Configuration editor will automatically calculate the period count value and source clock divider based on the selected period time, units and clock speed.</p>
+<p>When the selected period unit is "Raw counts", the maximum period setting is 0x8000000000/0x800000/0x8000 on a 32-bit/16-bit/8-bit timer. This will configure the timer with the maximum period and a count clock divisor of 128.</p>
+<dl class="section note"><dt>Note</dt><dd>When an event input from ELC is used as an operation clock, the automatic calculation of the period count value and source clock divider is not available.</dd></dl>
+<h2>Updating Period</h2>
+<p>The period is updated after calling <a class="el" href="group___t_m_l.html#gabcb4b420eb72126605d0cfdb4b4cd182">R_TML_PeriodSet()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>The period is only updated when the counter is stopped.</dd>
+<dd>
+When using the API to set the period counts, the maximum <a class="el" href="group___t_i_m_e_r___a_p_i.html#aa892b6997a1972de6a6ebd48e0fb9233" title="Period in raw timer counts. ">timer_cfg_t::period_counts</a> for 8-bit and 16-bit modes are 0x100 and 0x10000, respectively. To set the the maximum count for 32-bit mode, set the <a class="el" href="group___t_i_m_e_r___a_p_i.html#aa892b6997a1972de6a6ebd48e0fb9233" title="Period in raw timer counts. ">timer_cfg_t::period_counts</a> to 0 (as 0x10000000 is outside the 32-bit range).</dd>
+<dd>
+In the 16-bit capture mode, if the interrupt on compare match with ITLCMP01 is used as trigger source, the period counts of the 16-bit timer channels 2 + 3 can be changed at run-time.</dd></dl>
+<h2>Capture mode</h2>
+<p>When the 16-bit capture mode is to be used for channels 0 and 1, the counter value is stored in interval timer capture register 00 (ITLCAP00) in response to the selected capture trigger.</p>
+<dl class="section note"><dt>Note</dt><dd>When Channels 0 and 1 are in capture mode, Channels 2 and 3 can be used to trigger the capture when ITLCMP01 is the capture trigger. In this case the counter setup for Channels 2 and 3 are in <b>Capture Mode Settings-&gt;16-Bit Counter Input Settings</b>. If ITLCMP01 is not the capture trigger input, Channels 2 and 3 may be setup as an independent instance of 16-bit Counter channel.</dd>
+<dd>
+When a capture trigger is generated when the timer is not running, the previous counter value of the capture channel is still copied to the Interval Timer Capture Register (ITLCAP00).</dd>
+<dd>
+The <b>Common-&gt;16-bit Capture Mode Support</b> property in the module configuration must be enabled to use the capture operation.</dd></dl>
+<h2>Controlling TML with ELC Events</h2>
+<p>The TML timer can be configured to start count down or trigger capture when an ELC event occurs.</p>
+<dl class="section note"><dt>Note</dt><dd>The configurable ELC TML sources are shared by all TML channels.</dd>
+<dd>
+The event links for the ELC must be configured outside this module.</dd></dl>
+<h2>Triggering ELC Events with TML</h2>
+<p>The TML timer can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals.</p>
+<h1><a class="anchor" id="r-tml-examples"></a>
+Examples</h1>
+<h2>TML Basic Example</h2>
+<p>This is a basic example of minimal use of the TML in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> tml_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#ga84210cc9399ffda5f90e68ec38bfdce7">R_TML_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gae8d3ba4f3781ba7bcbff153ea9b7637f">R_TML_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TML Callback Example</h2>
+<p>This is an example of a timer callback.</p>
+<p><a class="anchor" id="um_timer_user_notification_of_events"></a> </p><div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when timer expires. */</span></div><div class="line"><span class="keywordtype">void</span> timer_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called periodically here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TML Counter Example</h2>
+<p><a class="anchor" id="um_tml_reset"></a><a class="anchor" id="um_tml_enable"></a><a class="anchor" id="um_tml_disable"></a><a class="anchor" id="um_tml_register_setting_mode"></a> This is an example of 8/16/32-bit Counter.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> tml_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#ga84210cc9399ffda5f90e68ec38bfdce7">R_TML_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gae8d3ba4f3781ba7bcbff153ea9b7637f">R_TML_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current state. Counter value is in status.state. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga149d8f610888e969da961c06d3682059">R_TML_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Enable the mask for the interrupt flag. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga8002f65fb21eb70d05ead72b9807d28a">R_TML_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Disable the mask to use the interrupt. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga0f97c78a4652727ac0ccbd66c474abb6">R_TML_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga9b2338064ad897195eeec7fd51331bdb">R_TML_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TML Capture Example</h2>
+<p><a class="anchor" id="um_tml_start_software_trigger"></a><a class="anchor" id="um_tml_start_sosc_trigger"></a><a class="anchor" id="um_tml_start_interrupt_trigger"></a><a class="anchor" id="um_tml_open_counter_and_capture"></a> This is an example of using the TML to capture the counter value of configured channel.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a capture occurs. */</span></div><div class="line">uint64_t g_captured_time     = 0U;</div><div class="line">uint32_t g_capture_overflows = 0U;</div><div class="line"><span class="keywordtype">void</span> timer_capture_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebac0832c9d95bf0e885b896a87e3d93368">TIMER_EVENT_CAPTURE_EDGE</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) Get the current period if not known. */</span></div><div class="line">        <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">        (void) <a class="code" href="group___t_m_l.html#gaa3261ff80745d9c908e36a73051eca31">R_TML_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">        uint32_t period = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div><div class="line"></div><div class="line">        g_captured_time     = (period * g_capture_overflows) + p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a8abd12cdf1a993cf8054be6ba9d96a6f">capture</a>;</div><div class="line">        g_capture_overflows = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* An overflow occurred during capture. This must be accounted for at the application layer. */</span></div><div class="line">        g_capture_overflows++;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> tml_capture_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#ga84210cc9399ffda5f90e68ec38bfdce7">R_TML_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* There are 4 ways to trigger the capture:</span></div><div class="line"><span class="comment">     *  - Use software trigger by set the ITLCC0.CAPR bit to 1 directly after call start</span></div><div class="line"><span class="comment">     *  - Use ELC event and wait for valid input</span></div><div class="line"><span class="comment">     *  - Use LOCO/SOSC clock and wait for valid edge</span></div><div class="line"><span class="comment">     *  - Use interrupt on compare match with ITLCPM01</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * This example uses the last option.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gae8d3ba4f3781ba7bcbff153ea9b7637f">R_TML_Start</a>(&amp;g_timer0_ctrl);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TML Period Update Example</h2>
+<p><a class="anchor" id="um_timer_period_set"></a><a class="anchor" id="um_timer_clock_frequency"></a> This an example of updating the period.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define TML_EXAMPLE_MSEC_PER_SEC           (1000)</span></div><div class="line"><span class="preprocessor">#define TML_EXAMPLE_DESIRED_PERIOD_MSEC    (20)</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to calculate a new period value at runtime. */</span></div><div class="line"><span class="keywordtype">void</span> tml_period_calculation_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#ga84210cc9399ffda5f90e68ec38bfdce7">R_TML_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the source clock frequency (in Hz) */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gaa3261ff80745d9c908e36a73051eca31">R_TML_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX. A cast to uint64_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) (((uint64_t) timer_freq_hz * TML_EXAMPLE_DESIRED_PERIOD_MSEC) / TML_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#gabcb4b420eb72126605d0cfdb4b4cd182">R_TML_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gae8d3ba4f3781ba7bcbff153ea9b7637f">R_TML_Start</a>(&amp;g_timer0_ctrl);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structtml__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#structtml__extended__cfg__t">tml_extended_cfg_t</a></td></tr>
+<tr class="separator:structtml__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtml__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#structtml__instance__ctrl__t">tml_instance_ctrl_t</a></td></tr>
+<tr class="separator:structtml__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga22eff268fd61dc006f8591e02c415c9c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga22eff268fd61dc006f8591e02c415c9c">tml_clock_t</a> </td></tr>
+<tr class="separator:ga22eff268fd61dc006f8591e02c415c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5db88e4fa3cffc69615ccc6c83fd4969"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga5db88e4fa3cffc69615ccc6c83fd4969">tml_capture_trigger_t</a> </td></tr>
+<tr class="separator:ga5db88e4fa3cffc69615ccc6c83fd4969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a1858f9551d3d17e2e01a9eaf4dcd68"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ga4a1858f9551d3d17e2e01a9eaf4dcd68">tml_counter_status_t</a> </td></tr>
+<tr class="separator:ga4a1858f9551d3d17e2e01a9eaf4dcd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structtml__extended__cfg__t" id="structtml__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtml__extended__cfg__t">&#9670;&nbsp;</a></span>tml_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tml_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>User configuration structure, used in open function </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a00ac30382bc1f45fcf25d2fa51606a14"></a><a class="el" href="group___t_m_l.html#ga5db88e4fa3cffc69615ccc6c83fd4969">tml_capture_trigger_t</a></td>
+<td class="fieldname">
+capture_trigger</td>
+<td class="fielddoc">
+Select the capture source for capture channel. </td></tr>
+<tr><td class="fieldtype">
+<a id="a91c92ba0c20f6cb7c32a1ce8b7751c72"></a><a class="el" href="group___t_m_l.html#ga4a1858f9551d3d17e2e01a9eaf4dcd68">tml_counter_status_t</a></td>
+<td class="fieldname">
+counter_status</td>
+<td class="fielddoc">
+Status of 16-bit counter (ITL000 + ITL001) after completion of capturing. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structtml__instance__ctrl__t" id="structtml__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtml__instance__ctrl__t">&#9670;&nbsp;</a></span>tml_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct tml_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>TML instance control block. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a8a75e79b81b5f27cf07f4811f3d8915c"><td class="memItemLeft" align="right" valign="top"><a id="a8a75e79b81b5f27cf07f4811f3d8915c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#a8a75e79b81b5f27cf07f4811f3d8915c">open</a></td></tr>
+<tr class="memdesc:a8a75e79b81b5f27cf07f4811f3d8915c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:a8a75e79b81b5f27cf07f4811f3d8915c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a998c4e91a8ef3eb35545c16fe6a2534b"><td class="memItemLeft" align="right" valign="top"><a id="a998c4e91a8ef3eb35545c16fe6a2534b"></a>
+const <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#a998c4e91a8ef3eb35545c16fe6a2534b">p_cfg</a></td></tr>
+<tr class="memdesc:a998c4e91a8ef3eb35545c16fe6a2534b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the configuration block. <br /></td></tr>
+<tr class="separator:a998c4e91a8ef3eb35545c16fe6a2534b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc7c39990e565f196633be8240d60225"><td class="memItemLeft" align="right" valign="top"><a id="abc7c39990e565f196633be8240d60225"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#abc7c39990e565f196633be8240d60225">channel_mask</a></td></tr>
+<tr class="memdesc:abc7c39990e565f196633be8240d60225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask value of channel used. <br /></td></tr>
+<tr class="separator:abc7c39990e565f196633be8240d60225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af801e77c5d1e75520623ea6ea11c0888"><td class="memItemLeft" align="right" valign="top"><a id="af801e77c5d1e75520623ea6ea11c0888"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#af801e77c5d1e75520623ea6ea11c0888">p_callback</a> )(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)</td></tr>
+<tr class="memdesc:af801e77c5d1e75520623ea6ea11c0888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called when a timer event occurs. <br /></td></tr>
+<tr class="separator:af801e77c5d1e75520623ea6ea11c0888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad41e0380a06c6dac7dc902b34d7c6242"><td class="memItemLeft" align="right" valign="top"><a id="ad41e0380a06c6dac7dc902b34d7c6242"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_l.html#ad41e0380a06c6dac7dc902b34d7c6242">p_context</a></td></tr>
+<tr class="memdesc:ad41e0380a06c6dac7dc902b34d7c6242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
+<tr class="separator:ad41e0380a06c6dac7dc902b34d7c6242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga22eff268fd61dc006f8591e02c415c9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22eff268fd61dc006f8591e02c415c9c">&#9670;&nbsp;</a></span>tml_clock_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_m_l.html#ga22eff268fd61dc006f8591e02c415c9c">tml_clock_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumeration for TML FITL0, FITL1 clock source </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga22eff268fd61dc006f8591e02c415c9ca8e49e644a44a64b74d0065b80f91e6d8"></a>TML_CLOCK_HOCO&#160;</td><td class="fielddoc"><p>HOCO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga22eff268fd61dc006f8591e02c415c9ca6582de8323daa591f73044ae2ca71012"></a>TML_CLOCK_MOCO&#160;</td><td class="fielddoc"><p>MOCO. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga22eff268fd61dc006f8591e02c415c9cabb34566bbea042b917c1dd9f8ed2b00e"></a>TML_CLOCK_MOSC&#160;</td><td class="fielddoc"><p>MOSC. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga22eff268fd61dc006f8591e02c415c9ca93c37354dd3ccce2d4b98a718aab9f60"></a>TML_CLOCK_LOCO_SOSC&#160;</td><td class="fielddoc"><p>SOSC. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga22eff268fd61dc006f8591e02c415c9ca4935034630effb696ca8a8cc1a8a767b"></a>TML_CLOCK_ELC_EVENT&#160;</td><td class="fielddoc"><p>Event input from the ELC. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5db88e4fa3cffc69615ccc6c83fd4969"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5db88e4fa3cffc69615ccc6c83fd4969">&#9670;&nbsp;</a></span>tml_capture_trigger_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_m_l.html#ga5db88e4fa3cffc69615ccc6c83fd4969">tml_capture_trigger_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumeration for TML FITL2 capture trigger source </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5db88e4fa3cffc69615ccc6c83fd4969a64397ddf4c94748873046882bca517f6"></a>TML_CAPTURE_TRIGGER_SOFTWARE&#160;</td><td class="fielddoc"><p>Software trigger. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5db88e4fa3cffc69615ccc6c83fd4969aa0a3c1b803c5995d4156a9428bb42ef6"></a>TML_CAPTURE_TRIGGER_ITLCMP01&#160;</td><td class="fielddoc"><p>Interrupt on compare match with ITLCMP01. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5db88e4fa3cffc69615ccc6c83fd4969a234e61292cd26c520cdd18199da3cb11"></a>TML_CAPTURE_TRIGGER_LOCO_SOSC&#160;</td><td class="fielddoc"><p>LOCO/SOSC (rising edge) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5db88e4fa3cffc69615ccc6c83fd4969a60b49b085b320d442ed29576575dfb0d"></a>TML_CAPTURE_TRIGGER_EVENT_ELC&#160;</td><td class="fielddoc"><p>Event input from ELC (rising edge) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga4a1858f9551d3d17e2e01a9eaf4dcd68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a1858f9551d3d17e2e01a9eaf4dcd68">&#9670;&nbsp;</a></span>tml_counter_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___t_m_l.html#ga4a1858f9551d3d17e2e01a9eaf4dcd68">tml_counter_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumeration for status of 16-bit counter (ITL000 + ITL001) after completion of capturing </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4a1858f9551d3d17e2e01a9eaf4dcd68a9a9dd27feb691343e1c495d1aceea280"></a>TML_COUNTER_STATUS_RETAINED_AFTER_CAPTURING&#160;</td><td class="fielddoc"><p>16-bit counter (ITL000 + ITL001) is retained after the completion of capturing </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4a1858f9551d3d17e2e01a9eaf4dcd68ac78f9f4036c5345d1b2c5e36cc7cb6d6"></a>TML_COUNTER_STATUS_CLEARED_AFTER_CAPTURING&#160;</td><td class="fielddoc"><p>16-bit counter (ITL000 + ITL001) is cleared after the completion of capturing </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga84210cc9399ffda5f90e68ec38bfdce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga84210cc9399ffda5f90e68ec38bfdce7">&#9670;&nbsp;</a></span>R_TML_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the timer module and applies configurations. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#af49a90087a53c8019d642a3f7abaa8ad">timer_api_t::open</a>.</p>
+<p>TML hardware does not support one-shot functionality natively. If one shot mode is desired, the user code should stop the timer after the timer expires the first time in an ISR after the requested period has elapsed.</p>
+<p>The TML implementation of the general timer can accept a <a class="el" href="group___t_m_l.html#structtml__extended__cfg__t">tml_extended_cfg_t</a> extension parameter.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#ga84210cc9399ffda5f90e68ec38bfdce7">R_TML_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful and timer has started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL or the source divider is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td><a class="el" href="group___t_i_m_e_r___a_p_i.html#a7d2f434f07723a53b504751e9e5ac540">timer_cfg_t::p_callback</a> is not NULL, but ISR is not enabled. ISR must be enabled to use one-shot mode or callback. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Selected channel is invalid </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>The mode requested in the p_cfg parameter is incorrect. It must be the same for all instances. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Channel is running </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9b2338064ad897195eeec7fd51331bdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9b2338064ad897195eeec7fd51331bdb">&#9670;&nbsp;</a></span>R_TML_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops the counter and disable the capture. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#aed0139dbf5102e39719ddbc51f16a21e">timer_api_t::stop</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga9b2338064ad897195eeec7fd51331bdb">R_TML_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Timer successfully stopped. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae8d3ba4f3781ba7bcbff153ea9b7637f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae8d3ba4f3781ba7bcbff153ea9b7637f">&#9670;&nbsp;</a></span>R_TML_Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts the counter and enable the capture. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#afcc7e85d01c3d7dc0c6e09954631f47f">timer_api_t::start</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gae8d3ba4f3781ba7bcbff153ea9b7637f">R_TML_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Timer successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga382a3369611dddbee629aeb90934ee33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga382a3369611dddbee629aeb90934ee33">&#9670;&nbsp;</a></span>R_TML_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resets the counter value to 0. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ab1c62157861ef1ea8393bb3cafd72102">timer_api_t::reset</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Counter value written successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0f97c78a4652727ac0ccbd66c474abb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f97c78a4652727ac0ccbd66c474abb6">&#9670;&nbsp;</a></span>R_TML_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Enable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable the interrupt generation from the selected channel <a class="el" href="group___t_i_m_e_r___a_p_i.html#a13cb48d1657a9eda3380c111ba33aa2a">timer_api_t::enable</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Disable the mask to use the interrupt. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga0f97c78a4652727ac0ccbd66c474abb6">R_TML_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>External events successfully enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8002f65fb21eb70d05ead72b9807d28a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8002f65fb21eb70d05ead72b9807d28a">&#9670;&nbsp;</a></span>R_TML_Disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Disable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disable the interrupt generation for this timer. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a8b69fad02aee5d83b941ed02fca18aca">timer_api_t::disable</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>The timer could be stop after <a class="el" href="group___t_m_l.html#ga8002f65fb21eb70d05ead72b9807d28a">R_TML_Disable()</a>.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Enable the mask for the interrupt flag. */</span></div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga8002f65fb21eb70d05ead72b9807d28a">R_TML_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>External events successfully disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabcb4b420eb72126605d0cfdb4b4cd182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabcb4b420eb72126605d0cfdb4b4cd182">&#9670;&nbsp;</a></span>R_TML_PeriodSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_PeriodSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>period_counts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets period value provided. Only set this value when all timers are stop. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ae9aad84a01ccd7ce0039ed491faeff19">timer_api_t::periodSet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Get the source clock frequency (in Hz) */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___t_m_l.html#gaa3261ff80745d9c908e36a73051eca31">R_TML_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t timer_freq_hz = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345">clock_frequency</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired period based on the current clock. Note that this calculation could overflow if the</span></div><div class="line"><span class="comment">     * desired period is larger than UINT32_MAX. A cast to uint64_t is used to prevent this. */</span></div><div class="line">    uint32_t period_counts =</div><div class="line">        (uint32_t) (((uint64_t) timer_freq_hz * TML_EXAMPLE_DESIRED_PERIOD_MSEC) / TML_EXAMPLE_MSEC_PER_SEC);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated period. */</span></div><div class="line">    err = <a class="code" href="group___t_m_l.html#gabcb4b420eb72126605d0cfdb4b4cd182">R_TML_PeriodSet</a>(&amp;g_timer0_ctrl, period_counts);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Period value written successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Channel is running </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9bdc040e97a05626f7384a196fd90c38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9bdc040e97a05626f7384a196fd90c38">&#9670;&nbsp;</a></span>R_TML_DutyCycleSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_DutyCycleSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>duty_cycle_counts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___t_i_m_e_r___a_p_i.html#a819ed0740ca426ace0d6b67e16c6ddfc">timer_api_t::dutyCycleSet</a> is not supported on the TML.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8692c74464f18fbd9655fda165aca56c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8692c74464f18fbd9655fda165aca56c">&#9670;&nbsp;</a></span>R_TML_CompareMatchSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_CompareMatchSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>compare_match_value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#gaf5f22f5e34fe6ea640fd6a1c7e864cd9">timer_compare_match_t</a> const&#160;</td>
+          <td class="paramname"><em>match_channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___t_i_m_e_r___a_p_i.html#a01da35856c7e395c56ab65c3fe033b56">timer_api_t::compareMatchSet</a> is not supported on the TML.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa3261ff80745d9c908e36a73051eca31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3261ff80745d9c908e36a73051eca31">&#9670;&nbsp;</a></span>R_TML_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get timer configuration information and store it in provided pointer p_info. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#aeaea79f26305c493566e4b45ae9e294c">timer_api_t::infoGet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* (Optional) Get the current period if not known. */</span></div><div class="line">        <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">        (void) <a class="code" href="group___t_m_l.html#gaa3261ff80745d9c908e36a73051eca31">R_TML_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">        uint32_t period = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Period, count direction, frequency, and ELC event written to caller's structure successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_info was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga149d8f610888e969da961c06d3682059"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga149d8f610888e969da961c06d3682059">&#9670;&nbsp;</a></span>R_TML_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get current timer status and store it in provided pointer p_status. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a11321e8dde7c33a4e6835a1bf64f7689">timer_api_t::statusGet</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Read the current state. Counter value is in status.state. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___t_m_l.html#ga149d8f610888e969da961c06d3682059">R_TML_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Current timer state and counter value set successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_status was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gacb41c3ab55f0f6e767ff1e808c5b31af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacb41c3ab55f0f6e767ff1e808c5b31af">&#9670;&nbsp;</a></span>R_TML_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#ad2569f06e8034790e7b363142d93a816">timer_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga86e82d5763c011a5bff4b186faf83f4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga86e82d5763c011a5bff4b186faf83f4f">&#9670;&nbsp;</a></span>R_TML_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TML_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops counter, disables output pins, and clears internal driver data. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a9e8b8140010a28082aedd758390fac97">timer_api_t::close</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Channel is running </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

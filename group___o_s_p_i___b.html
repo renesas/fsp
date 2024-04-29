@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -282,15 +282,15 @@ Overview</h1>
 <h2><a class="anchor" id="r-ospi-b-features"></a>
 Features</h2>
 <p>The OSPI_B driver has the following key features to support the <b>xSPI</b> device:</p><ul>
-<li>Perform data I/O Operation in both SPI and DOPI modes<a class="anchor" id="um_ospi_spi"></a><a class="anchor" id="um_ospi_opi"></a></li>
+<li>Perform data I/O Operation<a class="anchor" id="um_ospi_spi"></a><a class="anchor" id="um_ospi_opi"></a></li>
 <li>Direct memory-mapped access to the xSPI device memory up to 256 MB.</li>
 <li>Can be configured with xSPI devices on either of the 2 channels</li>
 <li>Programming the xSPI device using combination write (up to 64 bytes)<a class="anchor" id="um_ospi_page_program"></a></li>
 <li>Erasing the xSPI device<a class="anchor" id="um_ospi_erase"></a></li>
 <li>Sending device specific commands and reading back responses of up to 8 bytes<a class="anchor" id="um_ospi_direct_transfer"></a></li>
-<li>3 byte addressing for SPI<a class="anchor" id="um_ospi_3byte_address"></a></li>
-<li>4 byte addressing for SPI and DOPI<a class="anchor" id="um_ospi_4byte_address"></a></li>
-<li>Auto-calibration for DOPI mode<a class="anchor" id="um_ospi_autocalibration"></a></li>
+<li>3 byte addressing<a class="anchor" id="um_ospi_3byte_address"></a></li>
+<li>4 byte addressing<a class="anchor" id="um_ospi_4byte_address"></a></li>
+<li>Auto-calibration<a class="anchor" id="um_ospi_autocalibration"></a></li>
 <li>Decryption-on-the-fly</li>
 </ul>
 <p>Additional build-time features:</p><ul>
@@ -537,7 +537,7 @@ No Extension</li>
 <dl class="section note"><dt>Note</dt><dd>The user is expected to modify the command definitions based on the xSPI chip and SPI communication mode. The default mode is SPI mode and default erase commands are set for DOPI mode based on Infineon S28HS256.</dd></dl>
 <h2><a class="anchor" id="r-ospi-b-clock-configuration"></a>
 Clock Configuration</h2>
-<p>PCLKB is the Octal-SPI bus interface, and PCLKA is used to set OSPI registers.</p>
+<p>PCLKA is the Octal-SPI bus interface, and PCLKB is used to set OSPI registers.</p>
 <p>The signals to the xSPI target device are derived from OCTASPICLK. The OMSCLK signal is OCTASPICLK / 2. Data can be output at the OCTASPICLK rate if protocol mode is set to a Dual Data Rate mode (8D-8D-8D or 4S-4D-4D).</p>
 <p>The PCLKB, PCLKA, and OCTASPICLK frequencies can be set on the <b>Clocks</b> tab of the RA Configuration editor.</p>
 <h2><a class="anchor" id="r-ospi-b-pin-configuration"></a>
@@ -583,6 +583,7 @@ xSPI Commands</h2>
 DOTF Support</h3>
 <p>Decryption-On-The-Fly is configurable for OSPI Flash and is disabled from the build by default. Using the DOTF feature requires first creating the encrypted blob on the PC and then configuring the DOTF module with the appropriate parameters to allow decryption of the blob once it is programmed into OSPI. Use the Security Key Management Tool (<a href="https://www.renesas.com/us/en/software-tool/security-key-management-tool">https://www.renesas.com/us/en/software-tool/security-key-management-tool</a>) to create the encrypted blob. Example: To encrypt a 4096 byte area in a input srec file from 0x90000000 to 0x90000FFF using a 128 AES encryption key "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" and iv "00000000000000000000000000000000" use SKMT with the following arguments: skmt.exe /encdotf /keytype "AES-128" /enckey "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" /nonce "00000000000000000000000000000000" /startaddr "90000000" /endaddr "90000FFF" /prg "input.srec" /incplain /output "encrypted_output.srec"</p>
 <p>The values for key, iv and decryption area start and end addresses that were used to create the blob using SKMT must be set in the DOTF configuration in FSP.</p>
+<p>Make sure that the Key and IV passed into DOTF configuration are 4 byte aligned. This can be done using a compiler alignment attribute as shown below: uint8_t aes_key[] <b>attribute</b>((aligned(4))) = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f };</p>
 <h2><a class="anchor" id="r-ospi-b-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the OSPI_B driver: </p>
@@ -1574,7 +1575,7 @@ Dummy cycles to be inserted for status read commands. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

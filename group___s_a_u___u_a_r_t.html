@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -265,8 +265,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga50cfcb1b9f53fe905f821cfc2e123bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga875303c862e3b831b320fa5a178eb81c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga875303c862e3b831b320fa5a178eb81c">R_SAU_UART_ReadStop</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint32_t *remaining_bytes)</td></tr>
 <tr class="separator:ga875303c862e3b831b320fa5a178eb81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ea689deb534b17167fde0abc5ec2d59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga1ea689deb534b17167fde0abc5ec2d59">R_SAU_UART_BaudCalculate</a> (uint32_t baudrate, sau_uart_baudrate_setting_t *const p_baud_setting)</td></tr>
-<tr class="separator:ga1ea689deb534b17167fde0abc5ec2d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60aa4141c87bafd1f1b91fc48f02971f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#ga60aa4141c87bafd1f1b91fc48f02971f">R_SAU_UART_BaudCalculate</a> (<a class="el" href="group___s_a_u___u_a_r_t.html#structsau__uart__instance__ctrl__t">sau_uart_instance_ctrl_t</a> *const p_ctrl, uint32_t baudrate, sau_uart_baudrate_setting_t *const p_baud_setting)</td></tr>
+<tr class="separator:ga60aa4141c87bafd1f1b91fc48f02971f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>UART driver for the SAU peripheral on RA MCUs. This module implements the <a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a>. </p>
@@ -285,7 +285,7 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-sau-uart-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_sau_uart_read"></a><a class="anchor" id="um_sau_uart_write"></a><a class="anchor" id="um_sau_uart_data_bits"></a><a class="anchor" id="um_sau_uart_query_maximum_read_length"></a><a class="anchor" id="um_sau_uart_query_maximum_write_length"></a><a class="anchor" id="um_sau_uart_parity"></a><a class="anchor" id="um_sau_uart_multiple_channel_support"></a><a class="anchor" id="um_sau_uart_transfer_mode"></a><a class="anchor" id="um_sau_uart_abort"></a><a class="anchor" id="um_sau_uart_operation_clock"></a><a class="anchor" id="um_sau_uart_sequence"></a><a class="anchor" id="um_sau_uart_stop_bits"></a><a class="anchor" id="um_sau_uart_callback_set"></a> <h2>Build Time Configurations for r_sau_uart</h2>
+<p><a class="anchor" id="um_sau_uart_read"></a><a class="anchor" id="um_sau_uart_write"></a><a class="anchor" id="um_sau_uart_data_bits"></a><a class="anchor" id="um_sau_uart_query_maximum_read_length"></a><a class="anchor" id="um_sau_uart_query_maximum_write_length"></a><a class="anchor" id="um_sau_uart_parity"></a><a class="anchor" id="um_sau_uart_multiple_channel_support"></a><a class="anchor" id="um_sau_uart_abort"></a><a class="anchor" id="um_sau_uart_operation_clock"></a><a class="anchor" id="um_sau_uart_sequence"></a><a class="anchor" id="um_sau_uart_stop_bits"></a><a class="anchor" id="um_sau_uart_callback_set"></a> <h2>Build Time Configurations for r_sau_uart</h2>
 The following build time configurations are defined in fsp_cfg/r_sau_uart_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
@@ -316,6 +316,26 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable DTC support for the SAU_UART module. </td></tr>
+<tr class="tree_none">
+<td>Enable Single Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Channel 0</li>
+<li>
+Channel 1</li>
+<li>
+Channel 2</li>
+</ul>
+</td><td>Disable </td><td>Enable single channel to reduce code size if only channel 0, 1, or 2 is needed. </td></tr>
+<tr class="tree_none">
+<td>Enable Fixed Baudrate</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Disable baudrate calculation and setter functions to reduce code size. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; UART (r_sau_uart)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_sau_uart).<br />
@@ -371,7 +391,7 @@ MSB First</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
 <br />
-If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
+If the requested baud rate cannot be achieved, adjust the operation clock frequency until the baud rate is achievable. The calculated baud rate is printed in a comment in the generated sau_uart_baudrate_setting_t structure. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -381,17 +401,7 @@ CK0</li>
 <li>
 CK1</li>
 </ul>
-</td><td>CK0 </td><td>Select the operating clock. <br />
-<br />
-Note: when creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Transfer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Single transfer mode</li>
-<li>
-Continuous transfer mode</li>
-</ul>
-</td><td>Single transfer mode </td><td>Select the transfer mode. </td></tr>
+</td><td>CK0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Tx Signal Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -405,11 +415,11 @@ Inverted</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<td class="tree_lvl_1_cell">Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Receive End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<td class="tree_lvl_1_cell">Receive End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive end interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-sau-uart-clock-configuration"></a>
@@ -427,7 +437,7 @@ Usage Notes</h1>
 <h2><a class="anchor" id="r-sau-uart-limitations"></a>
 Limitations</h2>
 <ul>
-<li>When creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. Related SAU modules: SAU-SPI, SAU-IIC and SAU-UART.</li>
+<li>The operation clock divider (<code>BSP_CFG_SAU_CKm0/1_DIV</code>, where m=SAU unit number) cannot be changed at runtime.</li>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
 <li>If 9-bit data length is specified at R_SAU_UART_Open call, p_src in R_SAU_UART_Write must be aligned on a 16-bit boundary.</li>
 <li>When multiple channels on the same SAU unit need to be used, and one is configured as UART, then critical section property needs to be enabled.</li>
@@ -443,7 +453,7 @@ DTC Limitations</h2>
 Examples</h1>
 <h2>SAU UART Example</h2>
 <div class="fragment"><div class="line">uint8_t  g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_src[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_out_of_band_received[TRANSFER_LENGTH];</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line">uint32_t g_receive_complete  = 0;</div><div class="line">uint32_t g_out_of_band_index = 0;</div><div class="line"><span class="keywordtype">void</span> r_sau_uart_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga7dd00eddb4e0c68298a6b9229f217b99">R_SAU_UART_Open</a>(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga9c0a09a86897da8cc826c9e44b746d35">R_SAU_UART_Read</a>(&amp;g_uart0_ctrl, g_dest, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#gabd51dd62aee9b28e297374d74b377984">R_SAU_UART_Write</a>(&amp;g_uart0_ctrl, g_src, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_receive_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> example_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the UART event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Received a character */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Only put the next character in the receive buffer if there is space for it */</span></div><div class="line">            <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(g_out_of_band_received) &gt; g_out_of_band_index)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Write either the next one or two bytes depending on the receive data size */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db">UART_DATA_BITS_8</a> &gt;= g_uart0_cfg.data_bits)</div><div class="line">                {</div><div class="line">                    g_out_of_band_received[g_out_of_band_index++] = (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    uint16_t * p_dest = (uint16_t *) &amp;g_out_of_band_received[g_out_of_band_index];</div><div class="line">                    *p_dest              = (uint16_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                    g_out_of_band_index += 2;</div><div class="line">                }</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_receive_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Transmit complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da56867c1db03ea3ee2c704604ac94b767">UART_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_transfer_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>SAU UART Baud Set Example</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#define SAU_UART_BAUDRATE_19200              (19200)</span></div><div class="line"><span class="preprocessor">#define SAU_UART_BAUDRATE_ERROR_PERCENT_5    (5000)</span></div><div class="line"><span class="keywordtype">void</span> r_sau_uart_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    sau_uart_baudrate_setting_t baud_setting;</div><div class="line">    uint32_t baud_rate = SAU_UART_BAUDRATE_19200;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga1ea689deb534b17167fde0abc5ec2d59">R_SAU_UART_BaudCalculate</a>(baud_rate, &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define SAU_UART_BAUDRATE_19200              (19200)</span></div><div class="line"><span class="preprocessor">#define SAU_UART_BAUDRATE_ERROR_PERCENT_5    (5000)</span></div><div class="line"><span class="keywordtype">void</span> r_sau_uart_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    sau_uart_baudrate_setting_t baud_setting;</div><div class="line">    uint32_t baud_rate = SAU_UART_BAUDRATE_19200;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_a_u___u_a_r_t.html#ga60aa4141c87bafd1f1b91fc48f02971f">R_SAU_UART_BaudCalculate</a>(&amp;g_uart0_ctrl, baud_rate, &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structsau__uart__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#structsau__uart__extended__cfg__t">sau_uart_extended_cfg_t</a></td></tr>
@@ -477,12 +487,6 @@ Enumerations</h2></td></tr>
 <div class="textblock"><p>UART Configuration </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a3fa9d846113b45ab439a456e2872befa"></a><a class="el" href="group___s_a_u___u_a_r_t.html#ga744591125c42fee7abe363e198945c5e">sau_operation_clock_t</a></td>
-<td class="fieldname">
-operation_clock</td>
-<td class="fielddoc">
-Select operation clock. </td></tr>
 <tr><td class="fieldtype">
 <a id="acd094dded96a4cbc7afd7dde2d50cf69"></a><a class="el" href="group___s_a_u___u_a_r_t.html#ga1f51ebcde22f72b364dbf55f50573f7e">sau_uart_transfer_mode_t</a></td>
 <td class="fieldname">
@@ -553,26 +557,18 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a891b7d9838d51e863b4932108eba53bb">p_src</a></td></tr>
 <tr class="memdesc:a891b7d9838d51e863b4932108eba53bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source buffer pointer. <br /></td></tr>
 <tr class="separator:a891b7d9838d51e863b4932108eba53bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a950917335d9e41cb6978217d7b6dc47d"><td class="memItemLeft" align="right" valign="top"><a id="a950917335d9e41cb6978217d7b6dc47d"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a950917335d9e41cb6978217d7b6dc47d">p_dest</a></td></tr>
-<tr class="memdesc:a950917335d9e41cb6978217d7b6dc47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destination buffer pointer. <br /></td></tr>
-<tr class="separator:a950917335d9e41cb6978217d7b6dc47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafa46a049fea3d7182a4b3a8eabb8e90"><td class="memItemLeft" align="right" valign="top"><a id="aafa46a049fea3d7182a4b3a8eabb8e90"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#aafa46a049fea3d7182a4b3a8eabb8e90">tx_count</a></td></tr>
 <tr class="memdesc:aafa46a049fea3d7182a4b3a8eabb8e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of destination buffer pointer from transmit ISR. <br /></td></tr>
 <tr class="separator:aafa46a049fea3d7182a4b3a8eabb8e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a950917335d9e41cb6978217d7b6dc47d"><td class="memItemLeft" align="right" valign="top"><a id="a950917335d9e41cb6978217d7b6dc47d"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a950917335d9e41cb6978217d7b6dc47d">p_dest</a></td></tr>
+<tr class="memdesc:a950917335d9e41cb6978217d7b6dc47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destination buffer pointer. <br /></td></tr>
+<tr class="separator:a950917335d9e41cb6978217d7b6dc47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4054cf4fa0254512a3bb7ba14d441f82"><td class="memItemLeft" align="right" valign="top"><a id="a4054cf4fa0254512a3bb7ba14d441f82"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a4054cf4fa0254512a3bb7ba14d441f82">rx_count</a></td></tr>
 <tr class="memdesc:a4054cf4fa0254512a3bb7ba14d441f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of destination buffer pointer used for receiving data. <br /></td></tr>
 <tr class="separator:a4054cf4fa0254512a3bb7ba14d441f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d55fa54879a36c69fdce41104f72bd6"><td class="memItemLeft" align="right" valign="top"><a id="a9d55fa54879a36c69fdce41104f72bd6"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a9d55fa54879a36c69fdce41104f72bd6">tx_number</a></td></tr>
-<tr class="memdesc:a9d55fa54879a36c69fdce41104f72bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data sent. <br /></td></tr>
-<tr class="separator:a9d55fa54879a36c69fdce41104f72bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15e7e9ee784d1ccc917914ec5f305c6f"><td class="memItemLeft" align="right" valign="top"><a id="a15e7e9ee784d1ccc917914ec5f305c6f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html#a15e7e9ee784d1ccc917914ec5f305c6f">rx_number</a></td></tr>
-<tr class="memdesc:a15e7e9ee784d1ccc917914ec5f305c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data received. <br /></td></tr>
-<tr class="separator:a15e7e9ee784d1ccc917914ec5f305c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -868,6 +864,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer p_ctrl is NULL </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>p_api_ctrl is empty. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Fixed baud rate is enabled </td></tr>
   </table>
   </dd>
 </dl>
@@ -1044,8 +1041,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a id="ga1ea689deb534b17167fde0abc5ec2d59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1ea689deb534b17167fde0abc5ec2d59">&#9670;&nbsp;</a></span>R_SAU_UART_BaudCalculate()</h2>
+<a id="ga60aa4141c87bafd1f1b91fc48f02971f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga60aa4141c87bafd1f1b91fc48f02971f">&#9670;&nbsp;</a></span>R_SAU_UART_BaudCalculate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1053,6 +1050,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SAU_UART_BaudCalculate </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_a_u___u_a_r_t.html#structsau__uart__instance__ctrl__t">sau_uart_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>baudrate</em>, </td>
         </tr>
@@ -1069,9 +1072,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate related registers.</p>
+<p>Calculates baud rate register settings (SDR.STCLK) for the specified SAU unit.</p>
+<dl class="section note"><dt>Note</dt><dd>This function calculates the baud settings with both operation clocks CK0 and CK1, then selects the operation clock and register setting combination that would produce the lowest error. Call <a class="el" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a> to apply the updated register settings. </dd>
+<dd>
+Configure the operation clock frequencies such that all required baud rates can be achieved using at least one of the 2 operation clocks. If all required baud rates cannot be achieved with one clock, set one operation clock to a lower frequency for slow baud rates, and the second clock to a faster frequency for faster baud rates.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SAU UART control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate [bps]. For example, 19200, 57600, 115200, etc. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_baud_setting</td><td>Baud setting information stored here if successful</td></tr>
   </table>
@@ -1079,9 +1086,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is set successfully </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is successfully calculated </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Fixed baudrate is being used </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Baud rate is not in intput range max error, or requested max error in baud rate is larger than 15%. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Baud rate is not achievable with selected operation clock frequency </td></tr>
   </table>
   </dd>
 </dl>
@@ -1094,7 +1102,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

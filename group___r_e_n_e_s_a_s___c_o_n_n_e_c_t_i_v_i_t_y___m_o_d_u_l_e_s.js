@@ -7,11 +7,13 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "I2C Communication Device (rm_comms_i2c)", "group___r_m___c_o_m_m_s___i2_c.html", "group___r_m___c_o_m_m_s___i2_c" ],
     [ "I2C Master (r_iic_b_master)", "group___i_i_c___b___m_a_s_t_e_r.html", "group___i_i_c___b___m_a_s_t_e_r" ],
     [ "I2C Master (r_iic_master)", "group___i_i_c___m_a_s_t_e_r.html", "group___i_i_c___m_a_s_t_e_r" ],
+    [ "I2C Master (r_iica_master)", "group___i_i_c_a___m_a_s_t_e_r.html", "group___i_i_c_a___m_a_s_t_e_r" ],
     [ "I2C Master (r_sau_i2c)", "group___s_a_u___i2_c.html", "group___s_a_u___i2_c" ],
     [ "I2C Master (r_sci_b_i2c)", "group___s_c_i___b___i2_c.html", "group___s_c_i___b___i2_c" ],
     [ "I2C Master (r_sci_i2c)", "group___s_c_i___i2_c.html", "group___s_c_i___i2_c" ],
     [ "I2C Slave (r_iic_b_slave)", "group___i_i_c___b___s_l_a_v_e.html", "group___i_i_c___b___s_l_a_v_e" ],
     [ "I2C Slave (r_iic_slave)", "group___i_i_c___s_l_a_v_e.html", "group___i_i_c___s_l_a_v_e" ],
+    [ "I2C Slave (r_iica_slave)", "group___i_i_c_a___s_l_a_v_e.html", "group___i_i_c_a___s_l_a_v_e" ],
     [ "I2S (r_ssi)", "group___s_s_i.html", "group___s_s_i" ],
     [ "I3C (r_i3c)", "group___i3_c.html", "group___i3_c" ],
     [ "LIN (r_sci_b_lin)", "group___s_c_i___b___l_i_n.html", "group___s_c_i___b___l_i_n" ],
@@ -36,5 +38,6 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "USB PHID (r_usb_phid)", "group___u_s_b___p_h_i_d.html", null ],
     [ "USB PMSC (r_usb_pmsc)", "group___u_s_b___p_m_s_c.html", null ],
     [ "USB PPRN (r_usb_pprn)", "group___u_s_b___p_p_r_n.html", null ],
-    [ "USB Peripheral Vendor class (r_usb_pvnd)", "group___u_s_b___p_v_n_d.html", null ]
+    [ "USB Peripheral Vendor class (r_usb_pvnd)", "group___u_s_b___p_v_n_d.html", null ],
+    [ "USB_PCDC Communication Device (rm_comms_usb_pcdc)", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c" ]
 ];

@@ -116,6 +116,7 @@ var searchData=
   ['rsip_5fkey_5fsubtype_5ft',['rsip_key_subtype_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaef109dcf619aaccf8144f0953b4ea254',1,'r_rsip_api.h']]],
   ['rsip_5fkey_5ftype_5ft',['rsip_key_type_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533',1,'r_rsip_api.h']]],
   ['rsip_5fmgf_5ftype_5ft',['rsip_mgf_type_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52',1,'r_rsip_api.h']]],
+  ['rsip_5fotf_5fchannel_5ft',['rsip_otf_channel_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf',1,'r_rsip_api.h']]],
   ['rsip_5frsa_5fsalt_5flength_5ft',['rsip_rsa_salt_length_t',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga25b0d42a8c06f2010d6f6561e1bc3ad6',1,'r_rsip_api.h']]],
   ['rtc_5falarm_5fchannel_5ft',['rtc_alarm_channel_t',['../group___r_t_c___a_p_i.html#ga023e9e2043784cf17e3d3bf056ce14f1',1,'r_rtc_api.h']]],
   ['rtc_5fc_5fsubclock_5fdivision_5ft',['rtc_c_subclock_division_t',['../group___r_t_c___c.html#ga98c72c4acf3b8c04823b8d1a8bab1ce8',1,'r_rtc_c.h']]],
@@ -126,6 +127,7 @@ var searchData=
   ['rtc_5fevent_5ft',['rtc_event_t',['../group___r_t_c___a_p_i.html#gad2e192ed9a33b6c005c2c19ccbd6a21b',1,'r_rtc_api.h']]],
   ['rtc_5fperiodic_5firq_5fselect_5ft',['rtc_periodic_irq_select_t',['../group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01',1,'r_rtc_api.h']]],
   ['rtc_5fstatus_5ft',['rtc_status_t',['../group___r_t_c___a_p_i.html#gab1079685ed8a9d30f32062b3bfedd041',1,'r_rtc_api.h']]],
+  ['rtc_5ftime_5fcapture_5fmode_5ft',['rtc_time_capture_mode_t',['../group___r_t_c___a_p_i.html#ga1055e04d46ad556c31bfb4a62daf3cfd',1,'r_rtc_api.h']]],
   ['rtc_5ftime_5fcapture_5fnoise_5ffilter_5ft',['rtc_time_capture_noise_filter_t',['../group___r_t_c___a_p_i.html#gaeaa54438f4298dee64468529c104b6a7',1,'r_rtc_api.h']]],
   ['rtc_5ftime_5fcapture_5fsource_5ft',['rtc_time_capture_source_t',['../group___r_t_c___a_p_i.html#ga60a231559f89a160d0849ae222518eca',1,'r_rtc_api.h']]]
 ];

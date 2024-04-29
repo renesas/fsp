@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -273,6 +273,7 @@ Features</h2>
 <li>The RAI Data Shipper module supports up to 8 Data Collector instances.</li>
 <li>The RAI Data Shipper module supports the following interface:<ul>
 <li>RM_COMMS_UART with/without CRC-8</li>
+<li>RM_COMMS_USB_PCDC with/without CRC-8</li>
 </ul>
 </li>
 </ol>
@@ -320,6 +321,8 @@ Limitations</h2>
 <ol type="1">
 <li>2-way communication hasn't been supported yet - data is always sent from device to host.</li>
 <li>Users shall take care to avoid race condition in the case of multiple data collector instances.</li>
+<li>To use RM COMMS USB PCDC with Full Speed mode and DMA, frame buffer length needs to be multiple of 2 when 8-bit channel is used.</li>
+<li>To use RM COMMS USB PCDC with High Speed mode and DMA, frame buffer length needs to be multiple of 2 when 16-bit channel is used. If 8-bit channel is used, its frame buffer length needs to be a multiple of 4.</li>
 </ol>
 <h1><a class="anchor" id="rm-rai-data-shipper-examples"></a>
 Examples</h1>
@@ -502,7 +505,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

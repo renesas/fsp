@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -313,7 +313,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>Enable critical section guarding around peripheral configuration updates. This should be enabled if the R_SAU_I2C module is being used simultaneously with this module. </td></tr>
+</td><td>Disabled </td><td>Enable critical section guarding around peripheral configuration updates. This should be enabled if the R_SAU_I2C or R_SAU_UART module is being used simultaneously with this module. </td></tr>
 <tr class="tree_none">
 <td>Enable Single Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -340,66 +340,68 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr class="tree_none">
-<td>Name</td><td>Name must be a valid C symbol</td><td>g_spi0 </td><td>Module name. </td></tr>
-<tr class="tree_none">
-<td>Channel</td><td>MCU Specific Options</td><td></td><td>Select the SAU channel. </td></tr>
-<tr class="tree_none">
-<td>Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_spi0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>MCU Specific Options</td><td></td><td>Select the SAU channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Master</li>
 <li>
 Slave</li>
 </ul>
 </td><td>Master </td><td>Select the SPI operating mode. </td></tr>
-<tr class="tree_none">
-<td>Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 CK0</li>
 <li>
 CK1</li>
 </ul>
-</td><td>CK0 </td><td>Select the operating clock. <br />
-<br />
-Note: when creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. </td></tr>
-<tr class="tree_none">
-<td>Transfer Mode </td><td><ul style="margin-top:0;margin-bottom:0;">
+</td><td>CK0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transfer Mode </td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Single transfer mode</li>
 <li>
 Continuous transfer mode</li>
 </ul>
 </td><td>Single transfer mode </td><td>Select transfer mode in transfer end interrupt. But buffer empty interrupt (in continuous transfer mode) cannot be selected in Slave Reception. </td></tr>
-<tr class="tree_none">
-<td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 MSB First</li>
 <li>
 LSB First</li>
 </ul>
 </td><td>MSB First </td><td>Select of data transfer sequence. </td></tr>
-<tr class="tree_none">
-<td>Data Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-From the start</li>
+Data sampling on odd edge, data variation on even edge</li>
 <li>
-Half a clock cycle before</li>
+Data sampling on even edge, data variation on odd edge</li>
 </ul>
-</td><td>From the start </td><td>Select when data output shall start compared with the serial clock operation. </td></tr>
-<tr class="tree_none">
-<td>Clock Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+</td><td>Data sampling on odd edge, data variation on even edge </td><td>Select when data output shall start compared with the serial clock operation. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Non-reverse</li>
+High when idle</li>
 <li>
-Reverse</li>
+Low when idle</li>
 </ul>
-</td><td>Non-reverse </td><td>Select clock phase. </td></tr>
-<tr class="tree_none">
-<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>500000 </td><td>Enter the desired bitrate.If the requested bitrate cannot be achieved, the settings with the default value the requested bitrate is used. The theoretical bitrate is printed in a comment in the generated <a class="el" href="structsau__spi__extended__cfg__t.html">sau_spi_extended_cfg_t</a> structure. </td></tr>
-<tr class="tree_none">
-<td>Callback</td><td>Name must be a valid C symbol</td><td>sau_spi_callback </td><td>A user callback function that is called from the sau spi interrupts when a transfer is completed or an error has occurred. </td></tr>
-<tr class="tree_none">
-<td>Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
+</td><td>High when idle </td><td>Select clock phase. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bitrate</td><td>Value must be an integer greater than 0</td><td>500000 </td><td>Enter the desired bitrate.<br />
+<br />
+If the requested bitrate cannot be achieved, adjust the operation clock frequency until the bitrate is achievable. The calculated bitrate is printed in a comment in the generated <a class="el" href="structsau__spi__extended__cfg__t.html">sau_spi_extended_cfg_t</a> structure. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>sau_spi_callback </td><td>A user callback function that is called from the sau spi interrupts when a transfer is completed or an error has occurred. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
 </table>
 </li>
 </ul>
@@ -424,7 +426,7 @@ Enabling Single Channel By User With The SAU SPI</h2>
 <h2><a class="anchor" id="r-sau-spi-limitations"></a>
 Limitations</h2>
 <ul>
-<li>When creating multiple stacks related to the same unit in SAU, selecting the same CK may result in unexpected deviation in baud rate. Related SAU modules: SAU-SPI, SAU-IIC and SAU-UART.</li>
+<li>The operation clock divider (<code>BSP_CFG_SAU_CKm0/1_DIV</code>, where m=SAU unit number) cannot be changed at runtime.</li>
 <li>When multiple channels on the same SAU unit need to be used, and one is configured as I2C, then critical section property needs to be enabled.</li>
 </ul>
 <h2>Transfer Complete Event</h2>
@@ -951,23 +953,23 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Calculate the register settings required to achieve the desired bitrate.</p>
+<dl class="section note"><dt>Note</dt><dd>This function calculates the bitrate settings with both operation clocks CK0 and CK1, then selects the operation clock and register setting combination that would produce the lowest error.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bitrate</td><td>bitrate [bps]. For example, 250,000; 500,00; 16,000,000 (max), etc. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">sclk_div</td><td>Pointer to <a class="el" href="structsau__spi__div__setting__t.html">sau_spi_div_setting_t</a> used to configure baudrate settings. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">sau_unit</td><td>Sau unit. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">channel</td><td>Sau channel.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">sclk_div</td><td>Pointer to <a class="el" href="structsau__spi__div__setting__t.html">sau_spi_div_setting_t</a> used to configure baudrate settings. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">sau_unit</td><td>SAU unit. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">channel</td><td>SAU channel.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is set successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Baud rate is not achievable. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Bitrate is calculated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Bitrate is not achievable or not valid for the selected unit/channel. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The application must pause for 1 bit time after the BRR register is loaded before transmitting/receiving to allow time for the clock to settle. </dd></dl>
 
 </div>
 </div>
@@ -977,7 +979,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

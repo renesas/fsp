@@ -7,6 +7,9 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
     [ "R_RSIP_KeyGenerate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga2dc3a8de5422978d001750fa120df176", null ],
     [ "R_RSIP_KeyPairGenerate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gacbc429a31f21d4a409d40ef7c8704c96", null ],
     [ "R_RSIP_EncryptedKeyWrap", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gadaf179f32de394bfccd5c7c86d4a4873", null ],
+    [ "R_RSIP_RFC3394_KeyWrap", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga52d0d19ec65a616dfc97c880bc594720", null ],
+    [ "R_RSIP_RFC3394_KeyUnwrap", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga4cc0ba672bcefdc198b687b95941dbeb", null ],
+    [ "R_RSIP_InjectedKeyImport", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaecd1b85d92a82f754a286f708423b2cd", null ],
     [ "R_RSIP_PublicKeyExport", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga6f35d3199e43ee7f2f89ec17c80b9c44", null ],
     [ "R_RSIP_AES_Cipher_Init", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga6d1e1bf59e74091501ab2fb9966bd9bd", null ],
     [ "R_RSIP_AES_Cipher_Update", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga8890be1a775477f1b77ec2b7fb64d5fc", null ],
@@ -46,5 +49,6 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d =
     [ "R_RSIP_HMAC_SignFinish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga5aa0d78a4d2f6b29da5fa7f96ce09e3a", null ],
     [ "R_RSIP_HMAC_VerifyFinish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga19c282224fe07a16cebefab86f14ac6e", null ],
     [ "R_RSIP_HMAC_Suspend", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafaed3bf40a39f370ec3ad676de4891f5", null ],
-    [ "R_RSIP_HMAC_Resume", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafb97c276b5b7c30829f4f0e9c889334c", null ]
+    [ "R_RSIP_HMAC_Resume", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafb97c276b5b7c30829f4f0e9c889334c", null ],
+    [ "R_RSIP_OTF_Init", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gad2827fbed2474f3fe2a665c52cf7a266", null ]
 ];

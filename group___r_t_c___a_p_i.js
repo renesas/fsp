@@ -11,6 +11,7 @@ var group___r_t_c___a_p_i =
       [ "adjustment_value", "group___r_t_c___a_p_i.html#a3953fbf4c2ae68580302f22001c8f89e", null ]
     ] ],
     [ "rtc_alarm_time_t", "group___r_t_c___a_p_i.html#structrtc__alarm__time__t", [
+      [ "time_minute", "group___r_t_c___a_p_i.html#a987c2549f372915eb25cf4c8fb7556d9", null ],
       [ "time", "group___r_t_c___a_p_i.html#a07468cd075199669905fb25eecddcf9b", null ],
       [ "sec_match", "group___r_t_c___a_p_i.html#ab654c3b3c410b61980950ddf0581cd27", null ],
       [ "min_match", "group___r_t_c___a_p_i.html#a2116bd7b5fa4535556de190e370b548a", null ],
@@ -32,7 +33,8 @@ var group___r_t_c___a_p_i =
       [ "time", "group___r_t_c___a_p_i.html#ad7915eec1adda98a5740960381911c50", null ],
       [ "channel", "group___r_t_c___a_p_i.html#afe687352b349ef422a1bea06357df121", null ],
       [ "source", "group___r_t_c___a_p_i.html#ad79be9fceab2cd8a122e5d2254fc4c90", null ],
-      [ "noise_filter", "group___r_t_c___a_p_i.html#aab9203daea2e24a16626b2b40c98d3fa", null ]
+      [ "noise_filter", "group___r_t_c___a_p_i.html#aab9203daea2e24a16626b2b40c98d3fa", null ],
+      [ "mode", "group___r_t_c___a_p_i.html#a3f87f96a5361cf95695fb1815d73b42b", null ]
     ] ],
     [ "rtc_info_t", "group___r_t_c___a_p_i.html#structrtc__info__t", [
       [ "clock_source", "group___r_t_c___a_p_i.html#aba0edee87eb628db01fb1fa070a0c144", null ],
@@ -105,6 +107,13 @@ var group___r_t_c___a_p_i =
       [ "RTC_ERROR_ADJUSTMENT_PERIOD_20_SECOND", "group___r_t_c___a_p_i.html#ggaa9758f6f29579df6e9f5c64ff486c097aa25e82c25bba38523c95895d68fba586", null ]
     ] ],
     [ "rtc_periodic_irq_select_t", "group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01", [
+      [ "RTC_PERIODIC_IRQ_SELECT_NONE", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01af1be251affa2d29dd6069400d022d6c6", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a5d684a2ff7ceabe98acb755095705f4e", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_MINUTE", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ac34dc974fe29c14a5629fe164e6f0cd3", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_HOUR", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a9b69082088629007baba227606dabf7a", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_DAY", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a858efb3d6980d080ebdbd6d2d978f447", null ],
+      [ "RTC_PERIODIC_IRQ_SELECT_1_MONTH", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ada0ec080ff6e58e5bb1601cf6e5d198f", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_256_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a2f22d5de616b4249e26741a2d1af200d", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_128_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01ac5e572907bd22dee0bcc223b701be0c7", null ],
       [ "RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_64_SECOND", "group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a202eb83ad25aebbdd9c6cee8def4619b", null ],
@@ -124,7 +133,13 @@ var group___r_t_c___a_p_i =
       [ "RTC_TIME_CAPTURE_SOURCE_DISABLED", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaadab60261dd01089e692cf2773b2d600d", null ],
       [ "RTC_TIME_CAPTURE_SOURCE_PIN_RISING", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaafea97857443fe80f89e2b32533005cd5", null ],
       [ "RTC_TIME_CAPTURE_SOURCE_PIN_FALLING", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa74b616ab24c70b286d37f1f01030823a", null ],
-      [ "RTC_TIME_CAPTURE_SOURCE_PIN_BOTH", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa3644f3972808104dc47b065116f3792e", null ]
+      [ "RTC_TIME_CAPTURE_SOURCE_PIN_BOTH", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaa3644f3972808104dc47b065116f3792e", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_SOFTWARE", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaab80f4151122f5c5305921cd45ab0a779", null ],
+      [ "RTC_TIME_CAPTURE_SOURCE_ELC_EVENT", "group___r_t_c___a_p_i.html#gga60a231559f89a160d0849ae222518ecaaafff8e150784ffc05af8976ed5a226cc", null ]
+    ] ],
+    [ "rtc_time_capture_mode_t", "group___r_t_c___a_p_i.html#ga1055e04d46ad556c31bfb4a62daf3cfd", [
+      [ "RTC_TIME_CAPTURE_MODE_CONTINUOUS", "group___r_t_c___a_p_i.html#gga1055e04d46ad556c31bfb4a62daf3cfda74931ef77430d1ad3b84bc7d5d51f6ea", null ],
+      [ "RTC_TIME_CAPTURE_MODE_ONE_SHOT", "group___r_t_c___a_p_i.html#gga1055e04d46ad556c31bfb4a62daf3cfdad87199ee6c06279d6c78869cef6ca14c", null ]
     ] ],
     [ "rtc_time_capture_noise_filter_t", "group___r_t_c___a_p_i.html#gaeaa54438f4298dee64468529c104b6a7", [
       [ "RTC_TIME_CAPTURE_NOISE_FILTER_OFF", "group___r_t_c___a_p_i.html#ggaeaa54438f4298dee64468529c104b6a7a14d8d0855f067c6c2b41884bfa5db7a6", null ],

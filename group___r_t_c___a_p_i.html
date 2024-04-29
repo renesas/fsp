@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -296,6 +296,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gacbf0a3d09430a65ca1b3179819183f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga60a231559f89a160d0849ae222518eca"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#ga60a231559f89a160d0849ae222518eca">rtc_time_capture_source_t</a> </td></tr>
 <tr class="separator:ga60a231559f89a160d0849ae222518eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1055e04d46ad556c31bfb4a62daf3cfd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#ga1055e04d46ad556c31bfb4a62daf3cfd">rtc_time_capture_mode_t</a> </td></tr>
+<tr class="separator:ga1055e04d46ad556c31bfb4a62daf3cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeaa54438f4298dee64468529c104b6a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c___a_p_i.html#gaeaa54438f4298dee64468529c104b6a7">rtc_time_capture_noise_filter_t</a> </td></tr>
 <tr class="separator:gaeaa54438f4298dee64468529c104b6a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -386,6 +388,24 @@ Value of the prescaler for error adjustment. </td></tr>
 <div class="textblock"><p>Alarm time setting structure </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a987c2549f372915eb25cf4c8fb7556d9"></a>int</td>
+<td class="fieldname">
+time_minute</td>
+<td class="fielddoc">
+Time structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="abb4a4f9a0101a1620a3d0e3d5896f97e"></a>int</td>
+<td class="fieldname">
+time_hour</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a6b3b0baef077f10e4fcbe606e445988a"></a>union <a class="el" href="group___r_t_c___a_p_i.html#unionrtc__alarm__time__t_8____unnamed____">rtc_alarm_time_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a07468cd075199669905fb25eecddcf9b"></a><a class="el" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a></td>
 <td class="fieldname">
@@ -524,6 +544,12 @@ Trigger source. </td></tr>
 noise_filter</td>
 <td class="fielddoc">
 Noise filter. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3f87f96a5361cf95695fb1815d73b42b"></a><a class="el" href="group___r_t_c___a_p_i.html#ga1055e04d46ad556c31bfb4a62daf3cfd">rtc_time_capture_mode_t</a></td>
+<td class="fieldname">
+mode</td>
+<td class="fielddoc">
+Capture mode. </td></tr>
 </table>
 
 </div>
@@ -1181,13 +1207,27 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___r_t_c___a_p_i.html#gacbf0a3d09430a65ca1b3179819183f01">rtc_periodic_irq_select_t</a></td>
+          <td class="memname">enum rtc_periodic_irq_select_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Periodic Interrupt select </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01a2f22d5de616b4249e26741a2d1af200d"></a>RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_256_SECOND&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1/256 second. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01af1be251affa2d29dd6069400d022d6c6"></a>RTC_PERIODIC_IRQ_SELECT_NONE&#160;</td><td class="fielddoc"><p>A periodic irq is not generated. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01a5d684a2ff7ceabe98acb755095705f4e"></a>RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1/2 second. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d"></a>RTC_PERIODIC_IRQ_SELECT_1_SECOND&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1 second. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01ac34dc974fe29c14a5629fe164e6f0cd3"></a>RTC_PERIODIC_IRQ_SELECT_1_MINUTE&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1 minute. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01a9b69082088629007baba227606dabf7a"></a>RTC_PERIODIC_IRQ_SELECT_1_HOUR&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1 hour. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01a858efb3d6980d080ebdbd6d2d978f447"></a>RTC_PERIODIC_IRQ_SELECT_1_DAY&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1 day. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01ada0ec080ff6e58e5bb1601cf6e5d198f"></a>RTC_PERIODIC_IRQ_SELECT_1_MONTH&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1 month. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01a2f22d5de616b4249e26741a2d1af200d"></a>RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_256_SECOND&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1/256 second. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggacbf0a3d09430a65ca1b3179819183f01ac5e572907bd22dee0bcc223b701be0c7"></a>RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_128_SECOND&#160;</td><td class="fielddoc"><p>A periodic irq is generated every 1/128 second. </p>
 </td></tr>
@@ -1240,6 +1280,31 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga60a231559f89a160d0849ae222518ecaa3644f3972808104dc47b065116f3792e"></a>RTC_TIME_CAPTURE_SOURCE_PIN_BOTH&#160;</td><td class="fielddoc"><p>Both edges pin trigger. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga60a231559f89a160d0849ae222518ecaab80f4151122f5c5305921cd45ab0a779"></a>RTC_TIME_CAPTURE_SOURCE_SOFTWARE&#160;</td><td class="fielddoc"><p>Software trigger. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga60a231559f89a160d0849ae222518ecaaafff8e150784ffc05af8976ed5a226cc"></a>RTC_TIME_CAPTURE_SOURCE_ELC_EVENT&#160;</td><td class="fielddoc"><p>ELC event trigger. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1055e04d46ad556c31bfb4a62daf3cfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1055e04d46ad556c31bfb4a62daf3cfd">&#9670;&nbsp;</a></span>rtc_time_capture_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_t_c___a_p_i.html#ga1055e04d46ad556c31bfb4a62daf3cfd">rtc_time_capture_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time capture trigger mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1055e04d46ad556c31bfb4a62daf3cfda74931ef77430d1ad3b84bc7d5d51f6ea"></a>RTC_TIME_CAPTURE_MODE_CONTINUOUS&#160;</td><td class="fielddoc"><p>Continuous capturing to all capturing channels. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1055e04d46ad556c31bfb4a62daf3cfdad87199ee6c06279d6c78869cef6ca14c"></a>RTC_TIME_CAPTURE_MODE_ONE_SHOT&#160;</td><td class="fielddoc"><p>Single capture to a particular channel. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1277,7 +1342,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

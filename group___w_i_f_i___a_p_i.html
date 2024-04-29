@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -312,9 +312,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1839df151088ba2177a23dbc25fb7379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#ga1839df151088ba2177a23dbc25fb7379">WIFI_RegisterEvent</a> (<a class="el" href="group___w_i_f_i___a_p_i.html#ga5f378e26dcdbf1998f2611fb3fe8210e">WIFIEventType_t</a> xEventType, <a class="el" href="group___w_i_f_i___a_p_i.html#ga7937777172c300d1a306b5f91b0b7c74">WIFIEventHandler_t</a> xHandler)</td></tr>
 <tr class="memdesc:ga1839df151088ba2177a23dbc25fb7379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a Wi-Fi event Handler.  <a href="#ga1839df151088ba2177a23dbc25fb7379">More...</a><br /></td></tr>
 <tr class="separator:ga1839df151088ba2177a23dbc25fb7379"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab293985fcadf84ff9a560e90271e0e0e"><td class="memItemLeft" align="right" valign="top">BaseType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#gab293985fcadf84ff9a560e90271e0e0e">WIFI_IsConnected</a> (const <a class="el" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> *pxNetworkParams)</td></tr>
-<tr class="memdesc:gab293985fcadf84ff9a560e90271e0e0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the Wi-Fi is connected and the AP configuration matches the query.  <a href="#gab293985fcadf84ff9a560e90271e0e0e">More...</a><br /></td></tr>
-<tr class="separator:gab293985fcadf84ff9a560e90271e0e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1817135f0050b3eb955fb58ec0c722ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#ga1817135f0050b3eb955fb58ec0c722ef">WIFI_IsConnected</a> (const <a class="el" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> *pxNetworkParams)</td></tr>
+<tr class="memdesc:ga1817135f0050b3eb955fb58ec0c722ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the Wi-Fi is connected and the AP configuration matches the query.  <a href="#ga1817135f0050b3eb955fb58ec0c722ef">More...</a><br /></td></tr>
+<tr class="separator:ga1817135f0050b3eb955fb58ec0c722ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac98c79c0a6d5e6b482afcb1607695e92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#gac98c79c0a6d5e6b482afcb1607695e92">WIFI_StartScan</a> (<a class="el" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_scan_config__t">WIFIScanConfig_t</a> *pxScanConfig)</td></tr>
 <tr class="memdesc:gac98c79c0a6d5e6b482afcb1607695e92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a Wi-Fi scan.  <a href="#gac98c79c0a6d5e6b482afcb1607695e92">More...</a><br /></td></tr>
 <tr class="separator:gac98c79c0a6d5e6b482afcb1607695e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -493,7 +493,7 @@ Key length. </td></tr>
 <tr><td class="fieldtype">
 <a id="a53aff3a0a4fcaa6c4a34a110826ecf04"></a>char</td>
 <td class="fieldname">
-cPassphrase[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaf0d699d7ebe22448e4edcf92ecb9f378">wificonfigMAX_PASSPHRASE_LEN</a>]</td>
+cPassphrase[wificonfigMAX_PASSPHRASE_LEN]</td>
 <td class="fielddoc">
 WPA passphrase (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -523,7 +523,7 @@ Passphrase length (must be between 8 and 64 inclusive) </td></tr>
 <tr><td class="fieldtype">
 <a id="ac686b2ee9ec1fe9ce9091b2284f14b27"></a>uint8_t</td>
 <td class="fieldname">
-ucSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0">wificonfigMAX_SSID_LEN</a>]</td>
+ucSSID[wificonfigMAX_SSID_LEN]</td>
 <td class="fielddoc">
 SSID of the Wi-Fi network (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -539,7 +539,7 @@ xSecurity</td>
 <td class="fielddoc">
 Wi-Fi Security. </td></tr>
 <tr><td class="fieldtype">
-<a id="afbde8dd398ad2e1cfa599efe61757a23"></a>union <a class="el" href="group___w_i_f_i___a_p_i.html#union_w_i_f_i_network_params__t_8x_password">WIFINetworkParams_t</a></td>
+<a id="a3336a81fdb1055ce8424db3b68e691ac"></a>union <a class="el" href="group___w_i_f_i___a_p_i.html#union_w_i_f_i_network_params__t_8x_password">WIFINetworkParams_t</a></td>
 <td class="fieldname">
 xPassword</td>
 <td class="fielddoc">
@@ -577,7 +577,7 @@ Channel number. </td></tr>
 <tr><td class="fieldtype">
 <a id="a749503e5173d99b8faa566ab937b8a52"></a>uint8_t</td>
 <td class="fieldname">
-ucSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0">wificonfigMAX_SSID_LEN</a>]</td>
+ucSSID[wificonfigMAX_SSID_LEN]</td>
 <td class="fielddoc">
 SSID for targeted scan (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -613,7 +613,7 @@ Channel to scan (0 means all channels) </td></tr>
 <tr><td class="fieldtype">
 <a id="a6c756c1da2729fb2c4fe8234e4a24980"></a>uint8_t</td>
 <td class="fieldname">
-ucSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0">wificonfigMAX_SSID_LEN</a>]</td>
+ucSSID[wificonfigMAX_SSID_LEN]</td>
 <td class="fielddoc">
 SSID of the Wi-Fi network (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -625,7 +625,7 @@ SSID length. </td></tr>
 <tr><td class="fieldtype">
 <a id="acab54537624b2d10f9ebdad4677759a8"></a>uint8_t</td>
 <td class="fieldname">
-ucBSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a>]</td>
+ucBSSID[wificonfigMAX_BSSID_LEN]</td>
 <td class="fielddoc">
 BSSID of the Wi-Fi network (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -667,7 +667,7 @@ Channel of the Wi-Fi network. </td></tr>
 <tr><td class="fieldtype">
 <a id="a126cda9de2001d1a5e59f2e07da054fc"></a>uint8_t</td>
 <td class="fieldname">
-ucMAC[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a>]</td>
+ucMAC[wificonfigMAX_BSSID_LEN]</td>
 <td class="fielddoc">
 MAC address of Wi-Fi station. </td></tr>
 </table>
@@ -691,7 +691,7 @@ MAC address of Wi-Fi station. </td></tr>
 <tr><td class="fieldtype">
 <a id="a09b0ecf20606ec6ae805646eaaa44642"></a>uint8_t</td>
 <td class="fieldname">
-ucSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0">wificonfigMAX_SSID_LEN</a>]</td>
+ucSSID[wificonfigMAX_SSID_LEN]</td>
 <td class="fielddoc">
 SSID of the Wi-Fi network to join with a NULL termination. </td></tr>
 <tr><td class="fieldtype">
@@ -703,13 +703,13 @@ SSID length not including NULL termination. </td></tr>
 <tr><td class="fieldtype">
 <a id="ab104c3968ecd90b713423efffd678c0a"></a>uint8_t</td>
 <td class="fieldname">
-ucBSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a>]</td>
+ucBSSID[wificonfigMAX_BSSID_LEN]</td>
 <td class="fielddoc">
 BSSID of the Wi-Fi network. </td></tr>
 <tr><td class="fieldtype">
 <a id="ae31abc6f2560b873e0e4a34ad8bd4ae2"></a>char</td>
 <td class="fieldname">
-cPassword[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaf0d699d7ebe22448e4edcf92ecb9f378">wificonfigMAX_PASSPHRASE_LEN</a>]</td>
+cPassword[wificonfigMAX_PASSPHRASE_LEN]</td>
 <td class="fielddoc">
 Password needed to join the AP. </td></tr>
 <tr><td class="fieldtype">
@@ -824,7 +824,7 @@ Second DNS server IP address. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0413d059b503dc8628b59ab5c3c144d3"></a>uint8_t</td>
 <td class="fieldname">
-ucSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0">wificonfigMAX_SSID_LEN</a>]</td>
+ucSSID[wificonfigMAX_SSID_LEN]</td>
 <td class="fielddoc">
 SSID of the Wi-Fi network (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -836,7 +836,7 @@ SSID length. </td></tr>
 <tr><td class="fieldtype">
 <a id="a6b3e98ebd96222bea05649567e37522f"></a>uint8_t</td>
 <td class="fieldname">
-ucBSSID[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a>]</td>
+ucBSSID[wificonfigMAX_BSSID_LEN]</td>
 <td class="fielddoc">
 BSSID of the Wi-Fi network (binary array, not C-string) </td></tr>
 <tr><td class="fieldtype">
@@ -1013,7 +1013,7 @@ AP state: 0 = DOWN, 1 = UP. </td></tr>
 <tr><td class="fieldtype">
 <a id="a883d6a3d77c23ec669a7dbb222fa727a"></a>uint8_t</td>
 <td class="fieldname">
-ucMac[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a>]</td>
+ucMac[wificonfigMAX_BSSID_LEN]</td>
 <td class="fielddoc">
 MAC address of connected station. </td></tr>
 </table>
@@ -1037,7 +1037,7 @@ MAC address of connected station. </td></tr>
 <tr><td class="fieldtype">
 <a id="a4067117d75b9f8ef4654815d5fd05806"></a>uint8_t</td>
 <td class="fieldname">
-ucMac[<a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a>]</td>
+ucMac[wificonfigMAX_BSSID_LEN]</td>
 <td class="fielddoc">
 MAC address of disconnected station. </td></tr>
 <tr><td class="fieldtype">
@@ -2047,7 +2047,7 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example</b> </p><div class="fragment"><div class="line">uint8_t ucMacAddressVal[ <a class="code" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a> ];</div><div class="line"><a class="code" href="group___w_i_f_i___a_p_i.html#gaa1520e348462acd24433231d7846b733">WIFI_GetMAC</a>( &amp;ucMacAddressVal[0] );</div></div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd><a class="el" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> if the MAC address was successfully retrieved, failure code otherwise. The returned MAC address must be 6 consecutive bytes with no delimitters.</dd></dl>
+<p><b>Example</b> </p><div class="fragment"><div class="line">uint8_t ucMacAddressVal[ wificonfigMAX_BSSID_LEN ];</div><div class="line"><a class="code" href="group___w_i_f_i___a_p_i.html#gaa1520e348462acd24433231d7846b733">WIFI_GetMAC</a>( &amp;ucMacAddressVal[0] );</div></div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd><a class="el" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> if the MAC address was successfully retrieved, failure code otherwise. The returned MAC address must be 6 consecutive bytes with no delimitters.</dd></dl>
 <p>Retrieves the Wi-Fi interface's MAC address.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2055,7 +2055,7 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line">uint8_t ucMacAddressVal[ <a class="code" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a> ];</div><div class="line"><a class="code" href="group___w_i_f_i___a_p_i.html#gaa1520e348462acd24433231d7846b733">WIFI_GetMAC</a>( &amp;ucMacAddressVal[0] );</div></div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>eWiFiSuccess if the MAC address was successfully retrieved, failure code otherwise. The returned MAC address must be 6 consecutive bytes with no delimitters. </dd></dl>
+<div class="fragment"><div class="line">uint8_t ucMacAddressVal[ wificonfigMAX_BSSID_LEN ];</div><div class="line"><a class="code" href="group___w_i_f_i___a_p_i.html#gaa1520e348462acd24433231d7846b733">WIFI_GetMAC</a>( &amp;ucMacAddressVal[0] );</div></div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>eWiFiSuccess if the MAC address was successfully retrieved, failure code otherwise. The returned MAC address must be 6 consecutive bytes with no delimitters. </dd></dl>
 
 </div>
 </div>
@@ -2338,14 +2338,14 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 
 </div>
 </div>
-<a id="gab293985fcadf84ff9a560e90271e0e0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab293985fcadf84ff9a560e90271e0e0e">&#9670;&nbsp;</a></span>WIFI_IsConnected()</h2>
+<a id="ga1817135f0050b3eb955fb58ec0c722ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1817135f0050b3eb955fb58ec0c722ef">&#9670;&nbsp;</a></span>WIFI_IsConnected()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">BaseType_t WIFI_IsConnected </td>
+          <td class="memname"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> WIFI_IsConnected </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> *&#160;</td>
           <td class="paramname"><em>pxNetworkParams</em></td><td>)</td>
@@ -2741,7 +2741,7 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

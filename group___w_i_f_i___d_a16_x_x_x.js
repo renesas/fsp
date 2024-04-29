@@ -36,9 +36,6 @@ var group___w_i_f_i___d_a16_x_x_x =
       [ "curr_gateway", "group___w_i_f_i___d_a16_x_x_x.html#a7f1ec34824dcfab42e23b0d4a6889a45", null ],
       [ "sockets", "group___w_i_f_i___d_a16_x_x_x.html#a62fbf4ed4a87b90bfa259d49d4af4e51", null ]
     ] ],
-    [ "wificonfigMAX_SSID_LEN", "group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0", null ],
-    [ "wificonfigMAX_BSSID_LEN", "group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e", null ],
-    [ "wificonfigMAX_PASSPHRASE_LEN", "group___w_i_f_i___d_a16_x_x_x.html#gaf0d699d7ebe22448e4edcf92ecb9f378", null ],
     [ "wifi_da16xxx_sntp_enable_t", "group___w_i_f_i___d_a16_x_x_x.html#gabd80a46406868605459d1dcdee531e10", null ],
     [ "da16xxx_socket_status_t", "group___w_i_f_i___d_a16_x_x_x.html#ga34e060980f680dd540ea8df82e0f2059", null ],
     [ "da16xxx_socket_rw", "group___w_i_f_i___d_a16_x_x_x.html#ga0edb598a2cfd85804897594c1f0d0f6f", null ],

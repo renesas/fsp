@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -239,7 +239,6 @@ $(document).ready(function(){initNavTree('group___w_i_f_i___d_a16_x_x_x.html',''
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
@@ -258,11 +257,13 @@ Functions</h2></td></tr>
 <tr class="separator:ga1ce91750c24c5d6bba763b1a8e756dd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Wifi and Socket implementation using the da16xxx WiFi module on RA MCUs. </p>
+<p>Wifi and Socket implementation using the DA16XXX WiFi module on RA MCUs. </p>
 <h1><a class="anchor" id="r-wifi-da16xxx-overview"></a>
 Overview</h1>
-<p>This Middleware module supplies an implementation for the <a href="https://github.com/aws/amazon-freertos">FreeRTOS WiFi interface</a> using the DA16XXX module. The DA16XXX Wi-Fi module only supports FreeRTOS currently (Microsoft Azure support expected in future release).</p>
-<p>DA16XXX is a low power Wi-Fi networking SoC that delivers a dramatic breakthrough in battery life even for devices that are continuously connected to the Wi-Fi network. The module comes readily equipped with radio certification for Japan, North America and Europe. More information about this module can be found at the <a href="https://www.renesas.com/us/en/products/interface-connectivity/wireless-communications/wi-fi/low-power-wi-fi/da16xxx-ultra-low-power-wi-fi-soc-battery-powered-iot-devices">DA16XXX Web Site</a></p>
+<p>This Middleware module currently supplies an implementation for using the DA16XXX module in two different configurations.</p>
+<p>The first is for the <a href="https://github.com/aws/amazon-freertos">FreeRTOS WiFi interface</a>, where the network stack is located on the MCU using a socket interface, and the DA16XXX Wi-Fi module provides a connection to the internet. This configuration requires FreeRTOS to be used.</p>
+<p>The second configuration is for use with the DA16XXX on-chip MQTT and HTTP client modules, where the network stack is located on the DA16XXX module. In this configuration, this Middleware driver supports FreeRTOS as well as Baremetal (Microsoft Azure support expected in future release).</p>
+<p>DA16XXX is a low power Wi-Fi networking SoC that delivers a dramatic breakthrough in battery life even for devices that are continuously connected to the Wi-Fi network. The module comes readily equipped with radio certification for Japan, North America and Europe. More information about this module can be found at the <a href="https://www.renesas.com/us/en/products/interface-connectivity/wireless-communications/wi-fi/low-power-wi-fi#parametric_options">DA16XXX Web Site</a></p>
 <p>The DA16XXX module supports the following modules:</p>
 <ul>
 <li>DA16200</li>
@@ -335,7 +336,7 @@ Disabled</li>
 <td>SNTP Timezone UTC Offset in Hours</td><td>Refer to the RA Configuration tool for available options.</td><td>0 </td><td>Value in hours from 12 to -12 </td></tr>
 </table>
 </p>
-<p>Note: It is suggested that when using the da16xxx Module that DTC and FIFO are enabled in the UART configuration to facilitate a more reliable data transfer between module and MCU.</p>
+<p>Note: It is suggested that when using the DA16XXX module that DTC and FIFO are enabled in the UART configuration to facilitate a more reliable data transfer between module and MCU.</p>
 <p>Note: If you wish to use flow control then you must enable flow control in the RA Configuration editor. This can be found in the UART setting. It is advantageous to use flow control all the time since it allows the hardware to gate the flow of data across the serial bus. Without hardware flow control for faster data rate you will most likely see an overflow condition between MCU and the module device.</p>
 <p>Note: Higher baud rates are supported in the RA Configuration editor and should be changed in the first UART configuration. There is no need to change the second UART baud rate since it is only used as an AT command channel.</p>
 <p>Note: It is a good idea to also enable the FIFO in the UART configuration settings if you plan to use higher baud rates.</p>
@@ -377,21 +378,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:structda16xxx__socket__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structwifi__da16xxx__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#structwifi__da16xxx__instance__ctrl__t">wifi_da16xxx_instance_ctrl_t</a></td></tr>
 <tr class="separator:structwifi__da16xxx__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga34943d980c7b2ca80deb043a9d90d8c0"><td class="memItemLeft" align="right" valign="top"><a id="ga34943d980c7b2ca80deb043a9d90d8c0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga34943d980c7b2ca80deb043a9d90d8c0">wificonfigMAX_SSID_LEN</a></td></tr>
-<tr class="memdesc:ga34943d980c7b2ca80deb043a9d90d8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max SSID length. <br /></td></tr>
-<tr class="separator:ga34943d980c7b2ca80deb043a9d90d8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa73e71e08773aea647fd97673ebeb74e"><td class="memItemLeft" align="right" valign="top"><a id="gaa73e71e08773aea647fd97673ebeb74e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaa73e71e08773aea647fd97673ebeb74e">wificonfigMAX_BSSID_LEN</a></td></tr>
-<tr class="memdesc:gaa73e71e08773aea647fd97673ebeb74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max BSSID length. <br /></td></tr>
-<tr class="separator:gaa73e71e08773aea647fd97673ebeb74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0d699d7ebe22448e4edcf92ecb9f378"><td class="memItemLeft" align="right" valign="top"><a id="gaf0d699d7ebe22448e4edcf92ecb9f378"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gaf0d699d7ebe22448e4edcf92ecb9f378">wificonfigMAX_PASSPHRASE_LEN</a></td></tr>
-<tr class="memdesc:gaf0d699d7ebe22448e4edcf92ecb9f378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max passphrase length. <br /></td></tr>
-<tr class="separator:gaf0d699d7ebe22448e4edcf92ecb9f378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -900,7 +886,7 @@ Internal socket instances. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

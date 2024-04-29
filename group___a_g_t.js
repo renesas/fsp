@@ -64,6 +64,7 @@ var group___a_g_t =
     [ "R_AGT_Disable", "group___a_g_t.html#gae27f425278e24c45345242a78a10d649", null ],
     [ "R_AGT_PeriodSet", "group___a_g_t.html#ga1b8a21776f618aaa1b8471592b4b5464", null ],
     [ "R_AGT_DutyCycleSet", "group___a_g_t.html#ga25f4904a0e4ce56c413364b7c21b76a3", null ],
+    [ "R_AGT_CompareMatchSet", "group___a_g_t.html#gaa613938e335f71d9f61e64fa59a2a96d", null ],
     [ "R_AGT_InfoGet", "group___a_g_t.html#ga91174b9feb94088512b85d2f020d3fe2", null ],
     [ "R_AGT_StatusGet", "group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd", null ],
     [ "R_AGT_CallbackSet", "group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed", null ],

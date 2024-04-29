@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -295,6 +295,12 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga9a22437bbccfdcc6663e585db99eaf91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7e11877ba94d62e947260b6859334331"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331">lpm_ldo_standby_operation_t</a> </td></tr>
 <tr class="separator:ga7e11877ba94d62e947260b6859334331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9c68bf5319c184f550f5f8e3cb4436d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#gae9c68bf5319c184f550f5f8e3cb4436d">lpm_flash_mode_select_t</a> </td></tr>
+<tr class="separator:gae9c68bf5319c184f550f5f8e3cb4436d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6160b58f0dc787e3a115872ff8dc2df1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga6160b58f0dc787e3a115872ff8dc2df1">lpm_hoco_startup_speed_t</a> </td></tr>
+<tr class="separator:ga6160b58f0dc787e3a115872ff8dc2df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f9bae843d20ad915cc33b40915a5116"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga1f9bae843d20ad915cc33b40915a5116">lpm_standby_sosc_t</a> </td></tr>
+<tr class="separator:ga1f9bae843d20ad915cc33b40915a5116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structlpm__ram__retention__t" id="structlpm__ram__retention__t"></a>
@@ -866,27 +872,17 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa55fbf62812b228b8066492c3ae0a67ef"></a>LPM_STANDBY_WAKE_SOURCE_IRQ5&#160;</td><td class="fielddoc"><p>IRQ5. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faf08a4d3658bb74f6666462161bf804bc"></a>LPM_STANDBY_WAKE_SOURCE_DTC&#160;</td><td class="fielddoc"><p>DTC Transfer Complete Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0c946e558cc100a79eae42b110806501"></a>LPM_STANDBY_WAKE_SOURCE_SPI00RX&#160;</td><td class="fielddoc"><p>SPI00 Transfer End or Buffer Empty Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fae88e07dffc12e1677808b4f0a0829e52"></a>LPM_STANDBY_WAKE_SOURCE_UART0ERR&#160;</td><td class="fielddoc"><p>UART0 Reception Communication Error Occurrence Interrupt. </p>
-</td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fada98cb6cb0c9ee9df8680aa0c22ac1b2"></a>LPM_STANDBY_WAKE_SOURCE_IICA0&#160;</td><td class="fielddoc"><p>I2CA 0 interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faa3b392c3eef3c4ea8dfdb66d230f240e"></a>LPM_STANDBY_WAKE_SOURCE_UART0RXE&#160;</td><td class="fielddoc"><p>UART0 Reception Transfer End Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0faa559390ccec9fa4799903624f8599875"></a>LPM_STANDBY_WAKE_SOURCE_ADC&#160;</td><td class="fielddoc"><p>A/D Conversion Interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa8346a9de2b9a7bd2bc740f24e24010ce"></a>LPM_STANDBY_WAKE_SOURCE_RTC&#160;</td><td class="fielddoc"><p>RTC interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa5ada871d688cc73e4a45b9da711c07b6"></a>LPM_STANDBY_WAKE_SOURCE_ITL&#160;</td><td class="fielddoc"><p>Interval signal of 32-bit interval timer Interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fabb5ad499b96ad8c0fff14271db454037"></a>LPM_STANDBY_WAKE_SOURCE_URE0&#160;</td><td class="fielddoc"><p>UARTA0 reception communication error Interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa75af2d03fb9414d81041b4cf622a8086"></a>LPM_STANDBY_WAKE_SOURCE_UARTA0ERRI&#160;</td><td class="fielddoc"><p>UARTA0 reception communication error Interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa6e5b2be35df99227873019b7a3d58631"></a>LPM_STANDBY_WAKE_SOURCE_UT0&#160;</td><td class="fielddoc"><p>UARTA0 transmission transfer end or buffer empty Interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fac769bf9005bb981f1f42c4c735cfa5e2"></a>LPM_STANDBY_WAKE_SOURCE_UARTA0TXI&#160;</td><td class="fielddoc"><p>UARTA0 transmission transfer end or buffer empty Interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa5f835d43bd464cf537f24f53c8fa5077"></a>LPM_STANDBY_WAKE_SOURCE_UR0&#160;</td><td class="fielddoc"><p>UARTA0 reception transfer end Interrupt. </p>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa0c117d24328bb57e3bde468d9985cec5"></a>LPM_STANDBY_WAKE_SOURCE_UARTA0RXI&#160;</td><td class="fielddoc"><p>UARTA0 reception transfer end Interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa4aa9d1a8db03257d5e7d8d4fd43ebb9c"></a>LPM_STANDBY_WAKE_SOURCE_IRQ0&#160;</td><td class="fielddoc"><p>IRQ0. </p>
 </td></tr>
@@ -1272,13 +1268,76 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="gae9c68bf5319c184f550f5f8e3cb4436d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae9c68bf5319c184f550f5f8e3cb4436d">&#9670;&nbsp;</a></span>lpm_flash_mode_select_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_p_m___a_p_i.html#gae9c68bf5319c184f550f5f8e3cb4436d">lpm_flash_mode_select_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Flash operating mode select. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae9c68bf5319c184f550f5f8e3cb4436da04ed90cf439bfc3477ba7e3eefe978b8"></a>LPM_FLASH_MODE_SELECT_ACTIVE&#160;</td><td class="fielddoc"><p>Flash active. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae9c68bf5319c184f550f5f8e3cb4436daa178b52f5ec888fc8bab9d71a36f9f94"></a>LPM_FLASH_MODE_SELECT_STOP&#160;</td><td class="fielddoc"><p>Flash stop. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga6160b58f0dc787e3a115872ff8dc2df1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6160b58f0dc787e3a115872ff8dc2df1">&#9670;&nbsp;</a></span>lpm_hoco_startup_speed_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_p_m___a_p_i.html#ga6160b58f0dc787e3a115872ff8dc2df1">lpm_hoco_startup_speed_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starting the high-speed on-chip oscillator at the times of release from SSTBY mode and of transitions to SNOOZE mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6160b58f0dc787e3a115872ff8dc2df1aabcc2bee519965b767987885e6e1d7d2"></a>LPM_HOCO_STARTUP_SPEED_NORMAL_SPEED&#160;</td><td class="fielddoc"><p>Starting of the high-speed on-chip oscillator is at normal speed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6160b58f0dc787e3a115872ff8dc2df1a5f49cedca4804c2ab2b95dd9c483bb11"></a>LPM_HOCO_STARTUP_SPEED_HIGH_SPEED&#160;</td><td class="fielddoc"><p>Starting of the high-speed on-chip oscillator is at high speed. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1f9bae843d20ad915cc33b40915a5116"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f9bae843d20ad915cc33b40915a5116">&#9670;&nbsp;</a></span>lpm_standby_sosc_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_p_m___a_p_i.html#ga1f9bae843d20ad915cc33b40915a5116">lpm_standby_sosc_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SOSC setting in SSTBY mode or in SNOOZE mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1f9bae843d20ad915cc33b40915a5116a5a1e951319dfc03fb813caf6ac7613be"></a>LPM_STANDBY_SOSC_ENABLE&#160;</td><td class="fielddoc"><p>Enables supply of SOSC clock to peripheral functions. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1f9bae843d20ad915cc33b40915a5116ad9319fb83a6125db899d590dc04cfa43"></a>LPM_STANDBY_SOSC_DISABLE&#160;</td><td class="fielddoc"><p>Stops supply SOSC clock to peripheral functions other than the Realtime clock. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

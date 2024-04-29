@@ -15,8 +15,8 @@ var group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t =
       [ "socket_byteq_struct", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a0c5ba7d12fe8dec73fe64d32aa9151b8", null ],
       [ "tx_sem", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a255a93c5f2557eb1463d08aa634b7bdd", null ],
       [ "rx_sem", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#aaa44d0fc37670948b9d8f0f10550a8ca", null ],
-      [ "uart_instance_objects", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a326b99bfb4d6f8588c91ec756a3e989f", null ],
       [ "uart_tei_sem", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a8f8472494acf9444c530b49712875d17", null ],
+      [ "uart_instance_objects", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a326b99bfb4d6f8588c91ec756a3e989f", null ],
       [ "reset_pin", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a65a6e0478e9417dc8080b1826937f6df", null ],
       [ "p_callback", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#a86f440e2a20e53b15c59934630798479", null ],
       [ "p_context", "group___a_t___t_r_a_n_s_p_o_r_t___d_a16_x_x_x___u_a_r_t.html#ae037592a93ea850d9903e7913eb7f04c", null ]

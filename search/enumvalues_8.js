@@ -127,6 +127,7 @@ var searchData=
   ['i3c_5fevent_5finternal_5ferror',['I3C_EVENT_INTERNAL_ERROR',['../group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca2f461eca70d64741f14d4b92445608d3',1,'r_i3c_api.h']]],
   ['i3c_5fevent_5fread_5fbuffer_5ffull',['I3C_EVENT_READ_BUFFER_FULL',['../group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca401943802babdddf23fdc32573c220d2',1,'r_i3c_api.h']]],
   ['i3c_5fevent_5fread_5fcomplete',['I3C_EVENT_READ_COMPLETE',['../group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265cabfc8612eeb0cd4e93456d6844686c135',1,'r_i3c_api.h']]],
+  ['i3c_5fevent_5fsda_5fwrite_5fcomplete',['I3C_EVENT_SDA_WRITE_COMPLETE',['../group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265cac9e04050c1bc59eaa14ec9d40e0593c9',1,'r_i3c_api.h']]],
   ['i3c_5fevent_5ftimeout_5fdetected',['I3C_EVENT_TIMEOUT_DETECTED',['../group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca68834ad7d19b19947bafc01ce50a8e3f',1,'r_i3c_api.h']]],
   ['i3c_5fevent_5fwrite_5fcomplete',['I3C_EVENT_WRITE_COMPLETE',['../group___i3_c___a_p_i.html#ggaaeacda02a21254776fcbc47ab1ff265ca9379590b2f8f1411715ba425c6c15a4b',1,'r_i3c_api.h']]],
   ['i3c_5fibi_5ftype_5fhot_5fjoin',['I3C_IBI_TYPE_HOT_JOIN',['../group___i3_c___a_p_i.html#gga81ac58196d67e74a0a3702c3e760ede7ae53f3f0966395df095e951839052c6ca',1,'r_i3c_api.h']]],

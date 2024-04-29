@@ -19,6 +19,9 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "keyGenerate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#abebea901feb3eaf6abfc0cb61cd005e5", null ],
       [ "keyPairGenerate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#acbe3818171befc79dd3bcf0fd1ecc63a", null ],
       [ "encryptedKeyWrap", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a6394c580867b78018e084fabc30be9de", null ],
+      [ "rfc3394_KeyWrap", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a14265abb73c88660e0b465be7ade68d8", null ],
+      [ "rfc3394_KeyUnwrap", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a957063008c9f01e3fde7be18a2e5fc63", null ],
+      [ "injectedKeyImport", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aa910f1774c9801044f8030cd13d7bc6f", null ],
       [ "publicKeyExport", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a8bfbcfe67660650dcd63a0bab01d9a30", null ],
       [ "aesCipherInit", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aad24edf033b049963560e47f63537416", null ],
       [ "aesCipherUpdate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a13c1c5926cf64a47ae7ca920d2028163", null ],
@@ -58,7 +61,8 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "hmacSignFinish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a64c7c949eb1a0aeafb1b279854598ae0", null ],
       [ "hmacVerifyFinish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#af1277faa83003b764b187abb05cadc8b", null ],
       [ "hmacSuspend", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#af4f58de5f366f79fb57060821b7b8fa9", null ],
-      [ "hmacResume", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a206b031964651bc1a9805ba1a9e67c1b", null ]
+      [ "hmacResume", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a206b031964651bc1a9805ba1a9e67c1b", null ],
+      [ "otfInit", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aca7580207c2d26c03720e44532c428b0", null ]
     ] ],
     [ "rsip_instance_t", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__instance__t", [
       [ "p_ctrl", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a0772a2ddeb2ed02d4c36edd86326272f", null ],
@@ -244,5 +248,9 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "RSIP_RSA_SALT_LENGTH_AUTO", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga25b0d42a8c06f2010d6f6561e1bc3ad6af85df0509e6d214fa15a0aaccd9e9745", null ],
       [ "RSIP_RSA_SALT_LENGTH_HASH", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga25b0d42a8c06f2010d6f6561e1bc3ad6a1e6b9e390c9c1025fadc7e87424f87f2", null ],
       [ "RSIP_RSA_SALT_LENGTH_MAX", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga25b0d42a8c06f2010d6f6561e1bc3ad6a1d0231bd3583845e6a715b08240cb026", null ]
+    ] ],
+    [ "rsip_otf_channel_t", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf", [
+      [ "RSIP_OTF_CHANNEL_0", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga227a72148dc9ad001669802949923fcfaa571a76df8d5ab392c7355e7a824f175", null ],
+      [ "RSIP_OTF_CHANNEL_1", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga227a72148dc9ad001669802949923fcfa2475cc0e76c0acd6d3d032c7918927d2", null ]
     ] ]
 ];

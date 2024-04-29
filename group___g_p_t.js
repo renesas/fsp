@@ -36,6 +36,8 @@ var group___g_p_t =
       [ "capture_b_ipl", "group___g_p_t.html#aae4ebebdd346531add1c9ce3bee52106", null ],
       [ "capture_a_irq", "group___g_p_t.html#a630c77adb426ddddb5eac8b974fd7c85", null ],
       [ "capture_b_irq", "group___g_p_t.html#a22eb63abdf43064c9c83d81287c67c88", null ],
+      [ "compare_match_value", "group___g_p_t.html#a675417f6a403fed9258fe678ae934171", null ],
+      [ "compare_match_status", "group___g_p_t.html#a9220b2bd52f1ae03647b04e48610b8ff", null ],
       [ "p_pwm_cfg", "group___g_p_t.html#a55e5f85f57b77fd7ee5a1de7ff39da27", null ],
       [ "gtior_setting", "group___g_p_t.html#ad8b8b467339a151f016017d175df2f9c", null ]
     ] ],
@@ -187,6 +189,7 @@ var group___g_p_t =
     [ "R_GPT_Disable", "group___g_p_t.html#ga338dd3c38477ee40c90c13f3a4c9ecfd", null ],
     [ "R_GPT_PeriodSet", "group___g_p_t.html#gafedbfd8bc3f534d06969588ff10a351b", null ],
     [ "R_GPT_DutyCycleSet", "group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea", null ],
+    [ "R_GPT_CompareMatchSet", "group___g_p_t.html#ga834be7c118edc5297a74cf588a447106", null ],
     [ "R_GPT_InfoGet", "group___g_p_t.html#gaca62ac33de2c05918b0fc359aeaebd97", null ],
     [ "R_GPT_StatusGet", "group___g_p_t.html#gaa6234faf45320a83382d7ea1923a2c49", null ],
     [ "R_GPT_CounterSet", "group___g_p_t.html#ga4126139a9c63f1963ffdaea6cc697fe9", null ],

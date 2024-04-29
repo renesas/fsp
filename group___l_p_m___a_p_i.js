@@ -111,17 +111,12 @@ var group___l_p_m___a_p_i =
       [ "LPM_STANDBY_WAKE_SOURCE_IRQ3", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa38037d0ad12e84128f06eb75977a904a", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_IRQ4", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa0319f099a807f2f42f3597a41a0a7ec4", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_IRQ5", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa55fbf62812b228b8066492c3ae0a67ef", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_DTC", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0faf08a4d3658bb74f6666462161bf804bc", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_SPI00RX", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa0c946e558cc100a79eae42b110806501", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_UART0ERR", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fae88e07dffc12e1677808b4f0a0829e52", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_IICA0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fada98cb6cb0c9ee9df8680aa0c22ac1b2", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_UART0RXE", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0faa3b392c3eef3c4ea8dfdb66d230f240e", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_ADC", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0faa559390ccec9fa4799903624f8599875", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_RTC", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa8346a9de2b9a7bd2bc740f24e24010ce", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_ITL", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa5ada871d688cc73e4a45b9da711c07b6", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_URE0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fabb5ad499b96ad8c0fff14271db454037", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_UT0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa6e5b2be35df99227873019b7a3d58631", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_UR0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa5f835d43bd464cf537f24f53c8fa5077", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_UARTA0ERRI", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa75af2d03fb9414d81041b4cf622a8086", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_UARTA0TXI", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fac769bf9005bb981f1f42c4c735cfa5e2", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_UARTA0RXI", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa0c117d24328bb57e3bde468d9985cec5", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_IRQ0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa4aa9d1a8db03257d5e7d8d4fd43ebb9c", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_IRQ1", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa191dfaf3f4312f3e07dc90b89d2f2505", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_IRQ2", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa6f39700b121666a8cebc43a5675fc152", null ],
@@ -273,5 +268,17 @@ var group___l_p_m___a_p_i =
     [ "lpm_ldo_standby_operation_t", "group___l_p_m___a_p_i.html#ga7e11877ba94d62e947260b6859334331", [
       [ "LPM_LDO_STANDBY_OPERATION_DISABLED", "group___l_p_m___a_p_i.html#gga7e11877ba94d62e947260b6859334331a34bf28a81583b37bed300ff981070204", null ],
       [ "LPM_LDO_STANDBY_OPERATION_RETAINED", "group___l_p_m___a_p_i.html#gga7e11877ba94d62e947260b6859334331a7ad95282069d65e7cc5a4aa68593dd36", null ]
+    ] ],
+    [ "lpm_flash_mode_select_t", "group___l_p_m___a_p_i.html#gae9c68bf5319c184f550f5f8e3cb4436d", [
+      [ "LPM_FLASH_MODE_SELECT_ACTIVE", "group___l_p_m___a_p_i.html#ggae9c68bf5319c184f550f5f8e3cb4436da04ed90cf439bfc3477ba7e3eefe978b8", null ],
+      [ "LPM_FLASH_MODE_SELECT_STOP", "group___l_p_m___a_p_i.html#ggae9c68bf5319c184f550f5f8e3cb4436daa178b52f5ec888fc8bab9d71a36f9f94", null ]
+    ] ],
+    [ "lpm_hoco_startup_speed_t", "group___l_p_m___a_p_i.html#ga6160b58f0dc787e3a115872ff8dc2df1", [
+      [ "LPM_HOCO_STARTUP_SPEED_NORMAL_SPEED", "group___l_p_m___a_p_i.html#gga6160b58f0dc787e3a115872ff8dc2df1aabcc2bee519965b767987885e6e1d7d2", null ],
+      [ "LPM_HOCO_STARTUP_SPEED_HIGH_SPEED", "group___l_p_m___a_p_i.html#gga6160b58f0dc787e3a115872ff8dc2df1a5f49cedca4804c2ab2b95dd9c483bb11", null ]
+    ] ],
+    [ "lpm_standby_sosc_t", "group___l_p_m___a_p_i.html#ga1f9bae843d20ad915cc33b40915a5116", [
+      [ "LPM_STANDBY_SOSC_ENABLE", "group___l_p_m___a_p_i.html#gga1f9bae843d20ad915cc33b40915a5116a5a1e951319dfc03fb813caf6ac7613be", null ],
+      [ "LPM_STANDBY_SOSC_DISABLE", "group___l_p_m___a_p_i.html#gga1f9bae843d20ad915cc33b40915a5116ad9319fb83a6125db899d590dc04cfa43", null ]
     ] ]
 ];

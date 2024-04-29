@@ -59,6 +59,7 @@ var group___u_l_p_t =
     [ "R_ULPT_Disable", "group___u_l_p_t.html#gae81d1f8410a298cce2a58cae424c457e", null ],
     [ "R_ULPT_PeriodSet", "group___u_l_p_t.html#gab4f72c3a2718585c177ceee40086be1e", null ],
     [ "R_ULPT_DutyCycleSet", "group___u_l_p_t.html#ga06dee03ad4ea1c34e5c8a59e50b8b488", null ],
+    [ "R_ULPT_CompareMatchSet", "group___u_l_p_t.html#ga991965f2eb5945896a38ace9bba7efe8", null ],
     [ "R_ULPT_InfoGet", "group___u_l_p_t.html#gaed1557d7fff129b98fd9af8ad4a1ed90", null ],
     [ "R_ULPT_StatusGet", "group___u_l_p_t.html#ga57af3d98a41dc385ed4eddf4a5d8f80b", null ],
     [ "R_ULPT_CallbackSet", "group___u_l_p_t.html#gabd57fe29dfba2b9629677b65fc9560f7", null ],

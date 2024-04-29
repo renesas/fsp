@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -311,6 +311,11 @@ FSP driver pipe configuration behaviors for the PVND Class, when it is used with
 <li>In the Composite PCDC+PVND class, if there are 3 number of bulk transfers endpoints and one Interrupt transfer endpoint in descriptor file for PVND class and for this configuration FSP driver configures USB PIPE1, USB PIPE2 and USB PIPE3 for bulk data transfer and USB PIPE9 for Interrupt data transfer.</li>
 <li>Since hardware support total 5 number of Bulk transfer pipe configuration. So, in this scenario, for the PCDC class we have configurable USB PCDC Stack property to select available Pipes(USB PIPE 4 and USB PIPE 5 for Bulk and USB PIPE 6 for Interrupt transfer) from USB PCDC Stack configurator.</li>
 </ul>
+<h1><a class="anchor" id="r_usb_pvendor-limitations"></a>
+Limitaions</h1>
+<ul>
+<li>Please ignore the suspend or resume event occurs when attaching or detaching the USB cable.</li>
+</ul>
 <h1><a class="anchor" id="r-usb_pvendor-descriptor"></a>
 Descriptor</h1>
 <p>Template for Vendor class descriptor can be found in ra/fsp/src/r_usb_pvnd folder. Also, please be sure to use your vendor ID.</p>
@@ -327,7 +332,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

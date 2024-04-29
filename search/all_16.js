@@ -2,6 +2,7 @@ var searchData=
 [
   ['using_20registers_20directly',['Using Registers Directly',['../_i_o_d_e_f_i_n_e__o_v_e_r_v_i_e_w.html',1,'REF_MATERIALS']]],
   ['uart_20communication_20device_20_28rm_5fcomms_5fuart_29',['UART Communication Device (rm_comms_uart)',['../group___r_m___c_o_m_m_s___u_a_r_t.html',1,'']]],
+  ['usb_5fpcdc_20communication_20device_20_28rm_5fcomms_5fusb_5fpcdc_29',['USB_PCDC Communication Device (rm_comms_usb_pcdc)',['../group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html',1,'']]],
   ['uart_20_28r_5fsau_5fuart_29',['UART (r_sau_uart)',['../group___s_a_u___u_a_r_t.html',1,'']]],
   ['uart_20_28r_5fsci_5fb_5fuart_29',['UART (r_sci_b_uart)',['../group___s_c_i___b___u_a_r_t.html',1,'']]],
   ['uart_20_28r_5fsci_5fuart_29',['UART (r_sci_uart)',['../group___s_c_i___u_a_r_t.html',1,'']]],

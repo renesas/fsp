@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -311,7 +311,7 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-adc-d-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_adc_d_configure_conversion_data_resolution"></a><a class="anchor" id="um_adc_d_configure_one_shot_scan_mode"></a><a class="anchor" id="um_adc_d_configure_software_trigger"></a><a class="anchor" id="um_adc_d_configure_the_hardware_trigger"></a><a class="anchor" id="um_adc_d_configure_sequential_mode"></a><a class="anchor" id="um_adc_d_reference_voltage_control"></a><a class="anchor" id="um_adc_d_reading_conversion_data"></a> <h2>Build Time Configurations for r_adc_d</h2>
+<p><a class="anchor" id="um_adc_d_configure_conversion_data_resolution"></a><a class="anchor" id="um_adc_d_configure_one_shot_scan_mode"></a><a class="anchor" id="um_adc_d_configure_software_trigger"></a><a class="anchor" id="um_adc_d_configure_the_hardware_trigger"></a><a class="anchor" id="um_adc_d_configure_sequential_mode"></a><a class="anchor" id="um_adc_d_configure_conversion_clockdiv"></a><a class="anchor" id="um_adc_d_reference_voltage_control"></a><a class="anchor" id="um_adc_d_reading_conversion_data"></a> <h2>Build Time Configurations for r_adc_d</h2>
 The following build time configurations are defined in fsp_cfg/r_adc_d_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
@@ -334,6 +334,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable Internal Reference Voltage support for the ADC module. </td></tr>
+<tr class="tree_none">
+<td>Interrupt Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable Scan End Interrupt support for the ADC module. </td></tr>
 </table>
  <h2>Configurations for Analog &gt; ADC (r_adc_d)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Analog &gt; ADC (r_adc_d).<br />
@@ -446,8 +454,6 @@ The interrupt signal is output when the ADCRn register &lt; the ADLL register or
 <td class="tree_lvl_2_cell">Lower bound (ADLL) value</td><td>Must be a valid integer</td><td>0 </td><td>Specify the lower limit conversion value that corresponds to the condition to generate an interrupt request (INTAD). </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the ADC scan completes. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Callback Context</td><td>Name must be a valid C symbol.</td><td>NULL </td><td>Pointer to the context structure to be passed through the callback argument. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Scan End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select scan end interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -735,7 +741,7 @@ Setting lower limit conversion value. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga97c9e58c7a646465245305d94f6071b4a9612b5edd5d5de20896b5c591e203be3"></a>ADC_D_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>ADC_D clock division ICLK/2. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga97c9e58c7a646465245305d94f6071b4a4478f2581119dc008b4c4834e62cfc31"></a>ADC_D_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>ADC_D clock division ICLK. </p>
+<tr><td class="fieldname"><a id="gga97c9e58c7a646465245305d94f6071b4a4478f2581119dc008b4c4834e62cfc31"></a>ADC_D_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>ADC_D clock division ICLK/1. </p>
 </td></tr>
 </table>
 
@@ -1210,7 +1216,7 @@ Setting lower limit conversion value. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reads conversion results from a a select/scan channel or sensor register into a 32-bit result.</p>
+<p>Reads conversion results from a select/scan channel or sensor register into a 32-bit result.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data read into provided p_data. </td></tr>
@@ -1371,7 +1377,7 @@ Setting lower limit conversion value. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

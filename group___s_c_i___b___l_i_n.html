@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -541,7 +541,8 @@ Auto Synchronization</h2>
 <li>Auto synchronization is not the same as automatic baud rate detection. Auto synchronization is used for correcting small clock drift/difference in baud rate between nodes.</li>
 <li>Auto synchronization performs small automatic baud rate adjustments to synchronize with the master's clock by measuring the effective edges of the input signal from the RXDn pin during reception of the LIN sync byte.</li>
 <li>The sync byte is measured and the baud setting and break field detection threshold are re-adjusted for every LIN sync byte received.</li>
-<li>If reception of the sync byte fails, or the required register settings detected would not be possible in the hardware, the baud/timer settings are not updated, and auto synchronization will be re-attempted on the next received start frame.<a class="anchor" id="um_sci_b_lin_auto_synchronization_errors"></a> </li>
+<li>If reception of the sync byte fails, or the required register settings detected would not be possible in the hardware, the baud/timer settings are not updated, and auto synchronization will be re-attempted on the next received start frame.<a class="anchor" id="um_sci_b_lin_auto_synchronization_errors"></a></li>
+<li>If two or more start frames are received consecutively and ignored by software (no call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead</a>), <em>and</em> there is no information frame transmission by any node on the bus between the start frames, auto synchronization is performed only on the first start frame. Following the transmission of the next information frame (by any node), auto synchronization will be re-attempted on the next received start frame.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-b-lin-limitations"></a>
 Limitations</h2>
@@ -649,7 +650,7 @@ Break field length setting (break field length is (bflw + 1) * clock of the time
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a0836d3cc4831ce1d4eabe225bd9e5598"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
+<a id="a7ed113626c04110d160d2f7a59af77e8"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -787,7 +788,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a96994e7d9c8cf05f1740bb347ce01904"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
+<a id="acd5297cc1f4676d00ea0441323628ffb"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1460,7 +1461,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

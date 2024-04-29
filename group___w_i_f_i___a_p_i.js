@@ -223,7 +223,7 @@ var group___w_i_f_i___a_p_i =
     [ "WIFI_SetPMMode", "group___w_i_f_i___a_p_i.html#ga0a1845dc6d7a4be2ae113ce5d76f5305", null ],
     [ "WIFI_GetPMMode", "group___w_i_f_i___a_p_i.html#ga6c647b2606fab0bb3e5d5a4dcc18ba7c", null ],
     [ "WIFI_RegisterEvent", "group___w_i_f_i___a_p_i.html#ga1839df151088ba2177a23dbc25fb7379", null ],
-    [ "WIFI_IsConnected", "group___w_i_f_i___a_p_i.html#gab293985fcadf84ff9a560e90271e0e0e", null ],
+    [ "WIFI_IsConnected", "group___w_i_f_i___a_p_i.html#ga1817135f0050b3eb955fb58ec0c722ef", null ],
     [ "WIFI_StartScan", "group___w_i_f_i___a_p_i.html#gac98c79c0a6d5e6b482afcb1607695e92", null ],
     [ "WIFI_GetScanResults", "group___w_i_f_i___a_p_i.html#ga86bb4c673b91b41b110803002ee1d9ec", null ],
     [ "WIFI_StartConnectAP", "group___w_i_f_i___a_p_i.html#ga30746d9972cf8319a492f0a6ae304341", null ],

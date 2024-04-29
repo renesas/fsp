@@ -35,6 +35,7 @@ var group___t_i_m_e_r___a_p_i =
       [ "disable", "group___t_i_m_e_r___a_p_i.html#a8b69fad02aee5d83b941ed02fca18aca", null ],
       [ "periodSet", "group___t_i_m_e_r___a_p_i.html#ae9aad84a01ccd7ce0039ed491faeff19", null ],
       [ "dutyCycleSet", "group___t_i_m_e_r___a_p_i.html#a819ed0740ca426ace0d6b67e16c6ddfc", null ],
+      [ "compareMatchSet", "group___t_i_m_e_r___a_p_i.html#a01da35856c7e395c56ab65c3fe033b56", null ],
       [ "infoGet", "group___t_i_m_e_r___a_p_i.html#aeaea79f26305c493566e4b45ae9e294c", null ],
       [ "statusGet", "group___t_i_m_e_r___a_p_i.html#a11321e8dde7c33a4e6835a1bf64f7689", null ],
       [ "callbackSet", "group___t_i_m_e_r___a_p_i.html#ad2569f06e8034790e7b363142d93a816", null ],
@@ -69,11 +70,22 @@ var group___t_i_m_e_r___a_p_i =
       [ "TIMER_VARIANT_32_BIT", "group___t_i_m_e_r___a_p_i.html#ggaa3525eef2e1fa1bc8809b2d3aaf0de5da7dddd2791567467dc7bcf74ca2fc2cbb", null ],
       [ "TIMER_VARIANT_16_BIT", "group___t_i_m_e_r___a_p_i.html#ggaa3525eef2e1fa1bc8809b2d3aaf0de5dab2eba551f1a7140323af63a66a137b49", null ]
     ] ],
+    [ "timer_compare_match_t", "group___t_i_m_e_r___a_p_i.html#gaf5f22f5e34fe6ea640fd6a1c7e864cd9", [
+      [ "TIMER_COMPARE_MATCH_A", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9aaaad342d8de564fe934da6046de43b1b", null ],
+      [ "TIMER_COMPARE_MATCH_B", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9af47948172a5aa055bed74ad8c1cdc11d", null ]
+    ] ],
     [ "timer_state_t", "group___t_i_m_e_r___a_p_i.html#ga1360292eee5d5a5288646fd1eb37c83e", [
       [ "TIMER_STATE_STOPPED", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83ea92e859c83369128798902fd7a86a3320", null ],
       [ "TIMER_STATE_COUNTING", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83eaba4825c92c8291b64e827943330007b7", null ]
     ] ],
     [ "timer_mode_t", "group___t_i_m_e_r___a_p_i.html#ga6d4cd64aed5c0009ac26803efc9c13b2", [
+      [ "TIMER_MODE_8_BIT_COUNTER", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a6a17023ce2effac2b9556368d4d31c81", null ],
+      [ "TIMER_MODE_16_BIT_COUNTER", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a105d8039319a58734915ce592a59554a", null ],
+      [ "TIMER_MODE_32_BIT_COUNTER", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2afe77fb66bb26c1eefc06cfd0bd815a86", null ],
+      [ "TIMER_MODE_16_BIT_CAPTURE", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a68ebe3ccebafeee67b0d47537e1a4fcf", null ],
+      [ "TIMER_MODE_PERIODIC", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e", null ],
+      [ "TIMER_MODE_ONE_SHOT", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a", null ],
+      [ "TIMER_MODE_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac", null ],
       [ "TIMER_MODE_PERIODIC", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e", null ],
       [ "TIMER_MODE_ONE_SHOT", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a", null ],
       [ "TIMER_MODE_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac", null ],
@@ -113,6 +125,7 @@ var group___t_i_m_e_r___a_p_i =
       [ "TIMER_SOURCE_DIV_128", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada8828520a3958955a4e2835785787c801", null ],
       [ "TIMER_SOURCE_DIV_256", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada6680e947eb6455f9d0ee007645ea707d", null ],
       [ "TIMER_SOURCE_DIV_512", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada2bcc6bb5346907da7e45b74449588132", null ],
-      [ "TIMER_SOURCE_DIV_1024", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5adaee99148dc7c32f0764c7cb3b3e45ca30", null ]
+      [ "TIMER_SOURCE_DIV_1024", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5adaee99148dc7c32f0764c7cb3b3e45ca30", null ],
+      [ "TIMER_SOURCE_DIV_8192", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada7ab4ccede194937611a0d689c8ab0624", null ]
     ] ]
 ];

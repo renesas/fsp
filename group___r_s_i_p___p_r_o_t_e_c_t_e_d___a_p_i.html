@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.2.0</span>
+   &#160;<span id="projectnumber">Release v5.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('group___r_s_i_p___p_r_o_t_e_c_t_e_d___
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">RSIP Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
+<div class="title">RSIP Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_c_u_r_i_t_y___i_n_t_e_r_f_a_c_e_s.html">Security</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -296,6 +296,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaed858ab9713b13797a5e7e50589fbf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga25b0d42a8c06f2010d6f6561e1bc3ad6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga25b0d42a8c06f2010d6f6561e1bc3ad6">rsip_rsa_salt_length_t</a> </td></tr>
 <tr class="separator:ga25b0d42a8c06f2010d6f6561e1bc3ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga227a72148dc9ad001669802949923fcf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf">rsip_otf_channel_t</a> </td></tr>
+<tr class="separator:ga227a72148dc9ad001669802949923fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structrsip__wrapped__key__t" id="structrsip__wrapped__key__t"></a>
@@ -435,6 +437,12 @@ Hardware-dependent configuration. </td></tr>
 <tr class="separator:acbe3818171befc79dd3bcf0fd1ecc63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6394c580867b78018e084fabc30be9de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a6394c580867b78018e084fabc30be9de">encryptedKeyWrap</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__key__update__key__t">rsip_key_update_key_t</a> const *const p_key_update_key, uint8_t const *const p_initial_vector, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_encrypted_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a6394c580867b78018e084fabc30be9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14265abb73c88660e0b465be7ade68d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a14265abb73c88660e0b465be7ade68d8">rfc3394_KeyWrap</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_kek, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_target_key, uint8_t *const p_rfc3394_wrapped_target_key)</td></tr>
+<tr class="separator:a14265abb73c88660e0b465be7ade68d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a957063008c9f01e3fde7be18a2e5fc63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a957063008c9f01e3fde7be18a2e5fc63">rfc3394_KeyUnwrap</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_kek, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_rfc3394_wrapped_target_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_target_key)</td></tr>
+<tr class="separator:a957063008c9f01e3fde7be18a2e5fc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa910f1774c9801044f8030cd13d7bc6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aa910f1774c9801044f8030cd13d7bc6f">injectedKeyImport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_injected_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key, uint32_t const wrapped_key_buffer_length)</td></tr>
+<tr class="separator:aa910f1774c9801044f8030cd13d7bc6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bfbcfe67660650dcd63a0bab01d9a30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a8bfbcfe67660650dcd63a0bab01d9a30">publicKeyExport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t *const p_raw_public_key)</td></tr>
 <tr class="separator:a8bfbcfe67660650dcd63a0bab01d9a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad24edf033b049963560e47f63537416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aad24edf033b049963560e47f63537416">aesCipherInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga7c66b456dbaadee4c68a3afe29f52fc9">rsip_aes_cipher_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_initial_vector)</td></tr>
@@ -515,6 +523,8 @@ Hardware-dependent configuration. </td></tr>
 <tr class="separator:af4f58de5f366f79fb57060821b7b8fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a206b031964651bc1a9805ba1a9e67c1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a206b031964651bc1a9805ba1a9e67c1b">hmacResume</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a> const *const p_handle)</td></tr>
 <tr class="separator:a206b031964651bc1a9805ba1a9e67c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7580207c2d26c03720e44532c428b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aca7580207c2d26c03720e44532c428b0">otfInit</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf">rsip_otf_channel_t</a> const channel, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key, uint8_t const *const p_seed)</td></tr>
+<tr class="separator:aca7580207c2d26c03720e44532c428b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="aefa2a1387728e6d12e2d7220ba92f47b"></a>
@@ -649,6 +659,79 @@ Hardware-dependent configuration. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Inputs/Outputs key type. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_encrypted_key</td><td>Encrypted user key. The length depends on the key type. Refer "Key Size Table". </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a14265abb73c88660e0b465be7ade68d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14265abb73c88660e0b465be7ade68d8">&#9670;&nbsp;</a></span>rfc3394_KeyWrap</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rfc3394_KeyWrap) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_kek, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_target_key, uint8_t *const p_rfc3394_wrapped_target_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function provides Key Wrap algorithm compliant with RFC3394. Using p_wrapped_kek to wrap p_wrapped_target_key, and output the result to p_rfc3394_wrapped_target_key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_kek</td><td>Pointer to wrapped key-encryption-key used to RFC3394-wrap the target key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_target_key</td><td>Pointer to wrapped target key to be RFC3394-wrapped. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_rfc3394_wrapped_target_key</td><td>Pointer to destination of RFC3394-wrapped target key. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a957063008c9f01e3fde7be18a2e5fc63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a957063008c9f01e3fde7be18a2e5fc63">&#9670;&nbsp;</a></span>rfc3394_KeyUnwrap</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::rfc3394_KeyUnwrap) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_kek, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_rfc3394_wrapped_target_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_target_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function provides Key Unwrap algorithm compliant with RFC3394. Using p_wrapped_kek to unwrap p_rfc3394_wrapped_target_key, and output the result to p_wrapped_target_key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_kek</td><td>Pointer to wrapped key-encryption-key used to RFC3394-unwrap the target key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type of p_rfc3394_wrapped_target_key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rfc3394_wrapped_target_key</td><td>Pointer to AES-wrapped target key to be RFC3394-unwrapped. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_target_key</td><td>Pointer to destination of RFC3394-unwrapped target key. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa910f1774c9801044f8030cd13d7bc6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa910f1774c9801044f8030cd13d7bc6f">&#9670;&nbsp;</a></span>injectedKeyImport</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::injectedKeyImport) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_injected_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key, uint32_t const wrapped_key_buffer_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function provides the ability to construct structure data "rsip_wrapped_key_t" from injected key data. The value of injected key is not validated in this API. Refer "Key Size Table" for supported key types.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type of p_injected_key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_injected_key</td><td>Pointer to key to be injected. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>Pointer to destination of wrapped key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wrapped_key_buffer_length</td><td>Length of p_wrapped_key destination. It must be equal to or greater than actual wrapped key. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1625,6 +1708,29 @@ Hardware-dependent configuration. </td></tr>
 
 </div>
 </div>
+<a id="aca7580207c2d26c03720e44532c428b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca7580207c2d26c03720e44532c428b0">&#9670;&nbsp;</a></span>otfInit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::otfInit) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf">rsip_otf_channel_t</a> const channel, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key, uint8_t const *const p_seed)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize on-the-fly decryption on RSIP. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">channel</td><td>Channel number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped AES key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_seed</td><td>Pointer to seed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -2185,13 +2291,33 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga227a72148dc9ad001669802949923fcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga227a72148dc9ad001669802949923fcf">&#9670;&nbsp;</a></span>rsip_otf_channel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga227a72148dc9ad001669802949923fcf">rsip_otf_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga227a72148dc9ad001669802949923fcfaa571a76df8d5ab392c7355e7a824f175"></a>RSIP_OTF_CHANNEL_0&#160;</td><td class="fielddoc"><p>Channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga227a72148dc9ad001669802949923fcfa2475cc0e76c0acd6d3d032c7918927d2"></a>RSIP_OTF_CHANNEL_1&#160;</td><td class="fielddoc"><p>Channel 1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.2.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

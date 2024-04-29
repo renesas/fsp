@@ -60,6 +60,7 @@ var group___t_a_u =
     [ "R_TAU_Enable", "group___t_a_u.html#gad8ac6f320ddcf243f76ac3ac94739e0b", null ],
     [ "R_TAU_Disable", "group___t_a_u.html#gab94d332b4453d568bef27844a6f2ae6d", null ],
     [ "R_TAU_PeriodSet", "group___t_a_u.html#ga8316d48a51dbaebd34fd4bae7f83526f", null ],
+    [ "R_TAU_CompareMatchSet", "group___t_a_u.html#gadda2cec4b14a4e61a6d675d53a2edd71", null ],
     [ "R_TAU_DutyCycleSet", "group___t_a_u.html#gacd8050c7d20d5dd93a37eee6b42d9a0d", null ],
     [ "R_TAU_InfoGet", "group___t_a_u.html#ga0ad87af7e02d049c83279e356bc958f9", null ],
     [ "R_TAU_StatusGet", "group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78", null ],
