@@ -6,6 +6,9 @@ import sys
 # Determine root of bootloader project to find related files
 boot_project_root = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../../../..'))
 
+# Initialize an empty string for the message
+message_str = ""
+
 # Make sure python3 is used
 if not sys.version_info >= (3, 3):
     print("ERROR: The MCUboot signing script requires version Python version 3.3 or later. The python command can be modified in the MCUboot properties. Current Python version used is:\n" + sys.version)
