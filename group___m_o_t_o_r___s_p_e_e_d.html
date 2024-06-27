@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -327,19 +327,19 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor S
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_speed0 </td><td>Module name. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed control period (sec)</td><td>Must be a valid value</td><td>0.0005F </td><td>Period of speed control function. </td></tr>
+<td class="tree_lvl_1_cell">Speed control period (sec)</td><td>Must be a valid non-negative value</td><td>0.0005F </td><td>Period of speed control function. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Step of speed climbing (rpm)</td><td>Must be a valid value</td><td>0.5F </td><td>Step of speed change at start of open-loop. </td></tr>
+<td class="tree_lvl_1_cell">Step of speed climbing (rpm)</td><td>Must be a valid non-negative value</td><td>0.5F </td><td>Step of speed change at start of open-loop. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Maximum rotational speed (rpm)</td><td>Manual Entry</td><td>2650 </td><td>Maximum rotational speed (Limit speed). </td></tr>
+<td class="tree_lvl_1_cell">Maximum rotational speed (rpm)</td><td>Must be a valid non-negative value.</td><td>2650.0F </td><td>Maximum rotational speed (Limit speed). </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed LPF omega</td><td>Must be a valid value</td><td>10.0F </td><td>Design parameter for speed LPF. </td></tr>
+<td class="tree_lvl_1_cell">Speed LPF omega</td><td>Must be a valid non-negative value</td><td>10.0F </td><td>Design parameter for speed LPF. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Limit of q-axis current (A)</td><td>Must be a valid value</td><td>0.42F </td><td>Limit of q-axis current. </td></tr>
+<td class="tree_lvl_1_cell">Limit of q-axis current (A)</td><td>Must be a valid non-negative value</td><td>0.42F </td><td>Limit of q-axis current. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Step of speed feedback at open-loop</td><td>Must be a valid value</td><td>0.20F </td><td>Step of speed feedback at open-loop. </td></tr>
+<td class="tree_lvl_1_cell">Step of speed feedback at open-loop</td><td>Must be a valid non-negative value</td><td>0.20F </td><td>Step of speed feedback at open-loop. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Natural frequency</td><td>Must be a valid non-negative value.</td><td>100.0 </td><td>Natural frequency for disturbance speed observer. </td></tr>
+<td class="tree_lvl_1_cell">Natural frequency</td><td>Must be a valid non-negative value.</td><td>100.0F </td><td>Natural frequency for disturbance speed observer. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Open-loop damping</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -403,51 +403,51 @@ Hall</li>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Open-Loop  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Step of d-axis current climbing</td><td>Must be a valid value</td><td>0.3F </td><td>Step of d-axis current climbing </td></tr>
+<td class="tree_lvl_1_cell">Step of d-axis current climbing</td><td>Must be a valid non-negative value</td><td>0.3F </td><td>Step of d-axis current climbing </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Step of d-axis current descending</td><td>Must be a valid value</td><td>0.3F </td><td>Step of d-axis current descending </td></tr>
+<td class="tree_lvl_1_cell">Step of d-axis current descending</td><td>Must be a valid non-negative value</td><td>0.3F </td><td>Step of d-axis current descending </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Step of q-axis current descending ratio</td><td>Must be a valid value</td><td>1.0F </td><td>Step of q-axis current descending ratio </td></tr>
+<td class="tree_lvl_1_cell">Step of q-axis current descending ratio</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Step of q-axis current descending ratio </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Reference of d-axis current</td><td>Must be a valid value</td><td>0.3F </td><td>Reference of d-axis current </td></tr>
+<td class="tree_lvl_1_cell">Reference of d-axis current</td><td>Must be a valid non-negative value</td><td>0.3F </td><td>Reference of d-axis current </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Threshold of speed control descending</td><td>Manual Entry</td><td>600 </td><td>When rotational speed reaches this speed, d-axis current is controlled descending. </td></tr>
+<td class="tree_lvl_1_cell">Threshold of speed control descending</td><td>Must be a valid value</td><td>600.0F </td><td>When rotational speed reaches this speed, d-axis current is controlled descending. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Threshold of speed control climbing</td><td>Manual Entry</td><td>500 </td><td>Until rotational speed reaches this speed, d-axis current is controlled climbing. </td></tr>
+<td class="tree_lvl_1_cell">Threshold of speed control climbing</td><td>Must be a valid value</td><td>500.0F </td><td>Until rotational speed reaches this speed, d-axis current is controlled climbing. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Period between open-loop to BEMF (sec)</td><td>Must be a valid value</td><td>0.025F </td><td>Margin time between open-loop control changes to BEMF PI control. </td></tr>
+<td class="tree_lvl_1_cell">Period between open-loop to BEMF (sec)</td><td>Must be a valid non-negative value</td><td>0.025F </td><td>Margin time between open-loop control changes to BEMF PI control. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Phase error(degree) to decide sensor-less switch timing</td><td>Manual Entry</td><td>10 </td><td>Phase error(degree) to decide sensor-less switch timing. </td></tr>
+<td class="tree_lvl_1_cell">Phase error(degree) to decide sensor-less switch timing</td><td>Must be a valid value</td><td>10.0F </td><td>Phase error(degree) to decide sensor-less switch timing. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Design parameter  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed PI loop omega</td><td>Must be a valid value</td><td>5.0F </td><td>Speed PI loop omega </td></tr>
+<td class="tree_lvl_1_cell">Speed PI loop omega</td><td>Must be a valid non-negative value</td><td>5.0F </td><td>Speed PI loop omega </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed PI loop zeta</td><td>Must be a valid value</td><td>1.0F </td><td>Speed PI loop zeta </td></tr>
+<td class="tree_lvl_1_cell">Speed PI loop zeta</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Speed PI loop zeta </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Estimated d-axis HPF omega</td><td>Must be a valid value</td><td>2.5F </td><td>HPF cutoff frequency for ed (Hz) </td></tr>
+<td class="tree_lvl_1_cell">Estimated d-axis HPF omega</td><td>Must be a valid non-negative value</td><td>2.5F </td><td>HPF cutoff frequency for ed (Hz) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Open-loop damping zeta</td><td>Must be a valid value</td><td>1.0F </td><td>Damping ratio of open-loop damping control </td></tr>
+<td class="tree_lvl_1_cell">Open-loop damping zeta</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Damping ratio of open-loop damping control </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Cutoff frequency of phase error LPF</td><td>Must be a valid value</td><td>10.0F </td><td>Cutoff frequency of phase error LPF </td></tr>
+<td class="tree_lvl_1_cell">Cutoff frequency of phase error LPF</td><td>Must be a valid non-negative value</td><td>10.0F </td><td>Cutoff frequency of phase error LPF </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed observer omega</td><td>Must be a valid value</td><td>200.0F </td><td>Speed observer loop omega </td></tr>
+<td class="tree_lvl_1_cell">Speed observer omega</td><td>Must be a valid non-negative value</td><td>200.0F </td><td>Speed observer loop omega </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed observer zeta</td><td>Must be a valid value</td><td>1.0F </td><td>Speed observer loop zeta </td></tr>
+<td class="tree_lvl_1_cell">Speed observer zeta</td><td>Must be a valid non-negative value</td><td>1.0F </td><td>Speed observer loop zeta </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Pole pairs</td><td>Manual Entry</td><td>2 </td><td>Pole pairs </td></tr>
+<td class="tree_lvl_1_cell">Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid value</td><td>8.5F </td><td>Resistance </td></tr>
+<td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid non-negative value</td><td>8.5F </td><td>Resistance </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Inductance of d-axis (H)</td><td>Must be a valid value</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
+<td class="tree_lvl_1_cell">Inductance of d-axis (H)</td><td>Must be a valid non-negative value</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Inductance of q-axis (H)</td><td>Must be a valid value</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
+<td class="tree_lvl_1_cell">Inductance of q-axis (H)</td><td>Must be a valid non-negative value</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Permanent magnetic flux (Wb)</td><td>Must be a valid value</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
+<td class="tree_lvl_1_cell">Permanent magnetic flux (Wb)</td><td>Must be a valid non-negative value</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
-<td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Must be a valid value</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
+<td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Must be a valid non-negative value</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -994,7 +994,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -335,7 +335,7 @@ Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Disable </td><td>Disable baudrate calculation and setter functions to reduce code size. </td></tr>
+</td><td>Enable </td><td>Disable baudrate calculation and setter functions to reduce code size. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; UART (r_sau_uart)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_sau_uart).<br />
@@ -397,11 +397,11 @@ If the requested baud rate cannot be achieved, adjust the operation clock freque
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-CK0</li>
+CKm0</li>
 <li>
-CK1</li>
+CKm1</li>
 </ul>
-</td><td>CK0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
+</td><td>CKm0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Tx Signal Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -424,9 +424,13 @@ Inverted</li>
 </p>
 <h2><a class="anchor" id="r-sau-uart-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The SAU clock is based on the peripheral module clock which is the system clock (ICLK).</p>
+<p>The SAU clock uses the system clock (ICLK) as its clock source.</p>
+<p>A prescaler is applied to the ICLK in order to produce the operation clock frequency. The operation clock is used to generate the desired transfer period of the SAU module.</p>
+<p>SAU operation clocks are shared among all channels within a SAU unit. Check the Hardware User's Manual for your MCU for available units and channels. SAU operation clock dividers are configurable in the Clocks tab.</p>
+<p>The operation clock dividers are named SAU CKmn where m is the SAU unit, and n is the operation clock. For example, SAU CK01 applies to all SAU0 instances using CK1 as the operation clock (m=0, n=1).</p>
 <h2><a class="anchor" id="r-sau-uart-pin-configuration"></a>
 Pin Configuration</h2>
+<p>This module uses TXD and RXD to communicate to external devices.</p>
 <h1><a class="anchor" id="r-sau-uart-usage_notes"></a>
 Usage Notes</h1>
 <h2>9-bit data transfers</h2>
@@ -434,10 +438,37 @@ Usage Notes</h1>
 <li>p_src: the address for the send data buffer. p_src in R_SAU_UART_Write must be aligned on a 16-bit boundary. (the data order in buffer: the lower 8-bits of the first number, the highest 1-bit of the first number, the lower 8-bits of the second number, the highest 1-bit of the second number, etc)</li>
 <li>byte: the size of send data buffer.</li>
 </ul>
+<h2><a class="anchor" id="r-sau-uart-operation-clock-frequency-selection"></a>
+Selecting Operation Clock Frequency</h2>
+<p>The relationship between operation clock frequency and bitrate is: <code>bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</code> where:</p>
+<ul>
+<li><code>SDRmn.STCLK</code> is an integer in the range [2, 127] for SAU UART</li>
+<li><code>f_mck</code> is the operation clock (SAU CKmn) frequency</li>
+</ul>
+<p>By plugging in the minimum and maximum <code>SDRmn.STCLK</code> values, the range of bitrates for a given operation clock frequency can be obtained.</p>
+<p>Note that due to STCLK being set as discrete integers, the actual bitrate may not be exact. The actual bitrate and percent errors can be calculated by the formulas:</p>
+<div class="fragment"><div class="line">actual_bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</div><div class="line">percent_error = 100 * abs [(actual_bitrate - expected_bitrate)  / expected_bitrate]</div></div><!-- fragment --><p>Using the fastest possible operation clock for the desired bitrate will result in the lowest deviation from the requested baud rate. Set the CKmn operation clock divider in the Clocks tab to select the desired operation clock frequency.</p>
+<h3>Example of Selecting Operation Clock Frequency</h3>
+<p>Suppose an example application with a 32MHz ICLK requires:</p>
+<ul>
+<li>1 SAU0 UART0 instance running at 1000 bps</li>
+<li>1 SAU0 UART1 instance running at 115200 bps</li>
+</ul>
+<p>The following operation clocks could be used:</p>
+<div class="fragment"><div class="line"># Operation clock frequency of 250 kHz with 32 Mhz ICLK (32MHz/128=250 kHz)</div><div class="line">bitrate_min = 250e3 / [ 2 * (127 + 1) ] = ~976 bps</div><div class="line">bitrate_max = 250e3 / [ 2 * (2 + 1) ] = ~41,666 bps</div><div class="line"></div><div class="line"># Operation clock frequency of 16 MHz with 32 MHz ICLK (32MHz/2=16 MHz)</div><div class="line">bitrate_min = 16e6 / [ 2 * (127 + 1) ] = ~62,500 bps</div><div class="line">bitrate_max = 16e6 / [ 2 * (2 + 1) ] = ~2,666,666 bps</div></div><!-- fragment --><p>An operation clock of 250 kHz works for UART0 because 1000 is in the range [976, 41.6k]. An operation clock of 16 MHz works for UART1 because 115200 is in the range [62.5k, 2.6M].</p>
+<p>Applying the settings:</p>
+<ul>
+<li>Select CK0 for UART0 and CK1 for UART1 using the SAU UART "Extra &gt; Operation Clock" property</li>
+<li>Set CK00 Div to /128 for SAU0, CK0 (UART0) in the Clocks tab</li>
+<li>Set CK01 Div to /2 for for SAU0, CK1 (UART1) in the Clocks tab</li>
+</ul>
+<h2>Runtime Baud Rate Change</h2>
+<p>In order to change the baud rate at runtime, "Common &gt; Enable Fixed Baudrate" must be set to "Disabled" in the module properties.</p>
+<p>If changing the baud rate is required at runtime, use a unique operation clock for each SAU instance. This is required because <a class="el" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a> may change the operation clock divider. Since the operation clocks are shared between SAU channels on each SAU unit, changing a shared operation clock of one instance will cause an incorrect bitrate to be generated on the other instance(s).</p>
+<p>If the system clock frequency is changed at runtime, this setting should be disabled, as the baud rate settings will need to be updated after the system clock change.</p>
 <h2><a class="anchor" id="r-sau-uart-limitations"></a>
 Limitations</h2>
 <ul>
-<li>The operation clock divider (<code>BSP_CFG_SAU_CKm0/1_DIV</code>, where m=SAU unit number) cannot be changed at runtime.</li>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
 <li>If 9-bit data length is specified at R_SAU_UART_Open call, p_src in R_SAU_UART_Write must be aligned on a 16-bit boundary.</li>
 <li>When multiple channels on the same SAU unit need to be used, and one is configured as UART, then critical section property needs to be enabled.</li>
@@ -857,7 +888,9 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <p>Updates the baud rate using the clock selected in Open. p_baud_setting is a pointer to a sau_uart_baudrate_setting_t structure. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#a8b0f901bcc26bd6836fe620235585f98">uart_api_t::baudSet</a></p>
-<dl class="section warning"><dt>Warning</dt><dd>This terminates any in-progress transmission.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This terminates any in-progress transmission. </dd>
+<dd>
+This function may change the operation clock frequency. Select a unique operation clock for each SAU instance if using this function.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
@@ -1073,9 +1106,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <p>Calculates baud rate register settings (SDR.STCLK) for the specified SAU unit.</p>
-<dl class="section note"><dt>Note</dt><dd>This function calculates the baud settings with both operation clocks CK0 and CK1, then selects the operation clock and register setting combination that would produce the lowest error. Call <a class="el" href="group___s_a_u___u_a_r_t.html#gae47c940b0b65cad496c345db200fb216">R_SAU_UART_BaudSet</a> to apply the updated register settings. </dd>
-<dd>
-Configure the operation clock frequencies such that all required baud rates can be achieved using at least one of the 2 operation clocks. If all required baud rates cannot be achieved with one clock, set one operation clock to a lower frequency for slow baud rates, and the second clock to a faster frequency for faster baud rates.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the SAU UART control block. </td></tr>
@@ -1102,7 +1132,7 @@ Configure the operation clock frequencies such that all required baud rates can 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

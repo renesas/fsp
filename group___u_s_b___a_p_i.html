@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -678,6 +678,14 @@ Enumerations</h2></td></tr>
 <tr class="separator:gae829d35e41400a0bb30a3c0969152083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga565d5746bce505ef376bc2d3777d9302"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ga565d5746bce505ef376bc2d3777d9302">usb_compliancetest_status_t</a> </td></tr>
 <tr class="separator:ga565d5746bce505ef376bc2d3777d9302"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0c54c3c911dd9238e39549c9337fa4b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#gaa0c54c3c911dd9238e39549c9337fa4b">usb_typec_mode_t</a> </td></tr>
+<tr class="separator:gaa0c54c3c911dd9238e39549c9337fa4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77f5defa0e521a8142d8cbefe041720a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ga77f5defa0e521a8142d8cbefe041720a">usb_typec_plug_t</a> </td></tr>
+<tr class="separator:ga77f5defa0e521a8142d8cbefe041720a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1abccb216b62fc538787fb2feba93bd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#gae1abccb216b62fc538787fb2feba93bd">usb_typec_connection_status_t</a> </td></tr>
+<tr class="separator:gae1abccb216b62fc538787fb2feba93bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga354e0b84a8f986a76dabc295f68d5ecb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ga354e0b84a8f986a76dabc295f68d5ecb">usb_typec_vbus_status_t</a> </td></tr>
+<tr class="separator:ga354e0b84a8f986a76dabc295f68d5ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structusb__cfg__t" id="structusb__cfg__t"></a>
@@ -761,6 +769,12 @@ hsirq</td>
 <td class="fielddoc">
 USBIR dedicated interrupt number storage variable. </td></tr>
 <tr><td class="fieldtype">
+<a id="a0f32b557ed08ef46fcd11434492202f0"></a>IRQn_Type</td>
+<td class="fieldname">
+irq_typec</td>
+<td class="fielddoc">
+USB Type-C IR dedicated interrupt number storage variable. </td></tr>
+<tr><td class="fieldtype">
 <a id="a9377fde92482c219b69dd97211de03db"></a>IRQn_Type</td>
 <td class="fieldname">
 hsirq_d0</td>
@@ -802,6 +816,12 @@ Variable to store the interrupt priority of FS D1FIFO. </td></tr>
 hsipl</td>
 <td class="fielddoc">
 Variable to store the interrupt priority of USBIR. </td></tr>
+<tr><td class="fieldtype">
+<a id="a63b94886e27525895c2f726ac9a13a12"></a>uint8_t</td>
+<td class="fieldname">
+ipl_typec</td>
+<td class="fielddoc">
+Variable to store the interrupt priority of USB Type-C IR. </td></tr>
 <tr><td class="fieldtype">
 <a id="a9b764125bd9610aba9ad3aad78285476"></a>uint8_t</td>
 <td class="fieldname">
@@ -928,6 +948,8 @@ Pointer to extended configuration by instance of interface. </td></tr>
 <tr class="separator:a06bae2a093adbc8027c341fc98a438ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ed94626d37e3666575bdc92aa063fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aa2ed94626d37e3666575bdc92aa063fc">otgSRP</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:aa2ed94626d37e3666575bdc92aa063fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5e803d92c801159322824c9f882f2f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aa5e803d92c801159322824c9f882f2f1">typecInfoGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, usb_typec_info_t *p_info)</td></tr>
+<tr class="separator:aa5e803d92c801159322824c9f882f2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a71c50854a60a443915487767eac07b01"></a>
@@ -1665,6 +1687,28 @@ Pointer to extended configuration by instance of interface. </td></tr>
 
 </div>
 </div>
+<a id="aa5e803d92c801159322824c9f882f2f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5e803d92c801159322824c9f882f2f1">&#9670;&nbsp;</a></span>typecInfoGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::typecInfoGet) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, usb_typec_info_t *p_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get information on USB Type-C Connection.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_info</td><td>Pointer to usb_typec_info_t structure area. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -2013,13 +2057,107 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="gaa0c54c3c911dd9238e39549c9337fa4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa0c54c3c911dd9238e39549c9337fa4b">&#9670;&nbsp;</a></span>usb_typec_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_s_b___a_p_i.html#gaa0c54c3c911dd9238e39549c9337fa4b">usb_typec_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>USB TypeC operation_mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa0c54c3c911dd9238e39549c9337fa4baa9db4fef282988bf513cd3903ee396cc"></a>USB_TYPEC_MODE_SINK&#160;</td><td class="fielddoc"><p>Sink Only Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa0c54c3c911dd9238e39549c9337fa4ba4dca9677da99fdb506ec34a08389562d"></a>USB_TYPEC_MODE_USB20_ONLY_SINK&#160;</td><td class="fielddoc"><p>USB 2.0 Only Sink Mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga77f5defa0e521a8142d8cbefe041720a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga77f5defa0e521a8142d8cbefe041720a">&#9670;&nbsp;</a></span>usb_typec_plug_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_s_b___a_p_i.html#ga77f5defa0e521a8142d8cbefe041720a">usb_typec_plug_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>USB TypeC Connection of Plug Orientation </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga77f5defa0e521a8142d8cbefe041720aa944eb97792bd753bd832675226ded3c1"></a>USB_TYPEC_PLUG_CC1_CONNECTED&#160;</td><td class="fielddoc"><p>CC1 connected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga77f5defa0e521a8142d8cbefe041720aa15d1a251cc083cab5c3653bebfe8c019"></a>USB_TYPEC_PLUG_CC2_CONNECTED&#160;</td><td class="fielddoc"><p>CC2 connected. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae1abccb216b62fc538787fb2feba93bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae1abccb216b62fc538787fb2feba93bd">&#9670;&nbsp;</a></span>usb_typec_connection_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_s_b___a_p_i.html#gae1abccb216b62fc538787fb2feba93bd">usb_typec_connection_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>USB TypeC Status of Connection State Machine </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bda3299cfc42726c50f4e9b2cb8cc2367f7"></a>USB_TYPEC_CONNECTION_STATUS_DISABLED&#160;</td><td class="fielddoc"><p>Disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bda550273c40774cc6123b05bc124bd9413"></a>USB_TYPEC_CONNECTION_STATUS_UNATTACHED&#160;</td><td class="fielddoc"><p>Unattached.SNK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bdabbf5871667db15320885aed3bf7dc6a6"></a>USB_TYPEC_CONNECTION_STATUS_ATTACHED_WAIT&#160;</td><td class="fielddoc"><p>AttachedWait.SNK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bdacf8a3f978bb2e8f691427ac17015884e"></a>USB_TYPEC_CONNECTION_STATUS_ATTACHED&#160;</td><td class="fielddoc"><p>Attached.SNK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bda2a96706d6314e832f85762280acf4208"></a>USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_DEFAULT&#160;</td><td class="fielddoc"><p>Attached.SNK (PowerDefault.SNK) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bdaa43a4c20c5a71fe53627df89a2e104cb"></a>USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_15&#160;</td><td class="fielddoc"><p>Attached.SNK (Power1.5.SNK) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae1abccb216b62fc538787fb2feba93bdab387bc3ac497a9486d081717a0828d43"></a>USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_30&#160;</td><td class="fielddoc"><p>Attached.SNK (Power3.0.SNK) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga354e0b84a8f986a76dabc295f68d5ecb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga354e0b84a8f986a76dabc295f68d5ecb">&#9670;&nbsp;</a></span>usb_typec_vbus_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___u_s_b___a_p_i.html#ga354e0b84a8f986a76dabc295f68d5ecb">usb_typec_vbus_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>USB TypeC VBUS status </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga354e0b84a8f986a76dabc295f68d5ecbade2e2e6e9bd7efb80787527cc5ce8216"></a>USB_TYPEC_VBUS_STATUS_OFF&#160;</td><td class="fielddoc"><p>VBUS Off State. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga354e0b84a8f986a76dabc295f68d5ecba9e526e82d7dc1a0623ebe6c01b898006"></a>USB_TYPEC_VBUS_STATUS_ON&#160;</td><td class="fielddoc"><p>VBUS On State. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

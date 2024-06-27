@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -255,6 +255,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1c9452ef3472f032a47ad320c82e9d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1ce91750c24c5d6bba763b1a8e756dd2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#ga1ce91750c24c5d6bba763b1a8e756dd2">RM_WIFI_DA16XXX_LocalTimeGet</a> (uint8_t *p_local_time, uint32_t size_string)</td></tr>
 <tr class="separator:ga1ce91750c24c5d6bba763b1a8e756dd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfd85ebd3d28663f9bc6537671aa66ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___d_a16_x_x_x.html#gabfd85ebd3d28663f9bc6537671aa66ff">RM_WIFI_DA16XXX_GenericAtSendRcv</a> (char const *const at_string, char *const response_buffer, uint32_t length)</td></tr>
+<tr class="separator:gabfd85ebd3d28663f9bc6537671aa66ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Wifi and Socket implementation using the DA16XXX WiFi module on RA MCUs. </p>
@@ -307,6 +309,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enabled if using the DA16600 module </td></tr>
+<tr class="tree_none">
+<td>Check Minimum SDK Version</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable or disable comparing the current DA16XXX module's SDK version to the minimum required </td></tr>
 <tr class="tree_none">
 <td>Number of supported socket instances (not used with on-chip APIs)</td><td>1</td><td>1 </td><td>Enable number of socket instances </td></tr>
 <tr class="tree_none">
@@ -880,13 +890,66 @@ Internal socket instances. </td></tr>
 
 </div>
 </div>
+<a id="gabfd85ebd3d28663f9bc6537671aa66ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabfd85ebd3d28663f9bc6537671aa66ff">&#9670;&nbsp;</a></span>RM_WIFI_DA16XXX_GenericAtSendRcv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_WIFI_DA16XXX_GenericAtSendRcv </td>
+          <td>(</td>
+          <td class="paramtype">char const *const&#160;</td>
+          <td class="paramname"><em>at_string</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *const&#160;</td>
+          <td class="paramname"><em>response_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sends any AT command compatible with the DA16XXX module. Provide optional buffer to receive the response.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">at_string</td><td>Input AT command string from the user. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">response_buffer</td><td>Optional buffer for receiving the response. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Size of optional buffer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input was not a valid AT command.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Send a generic AT command to the DA16XXX and optionally receive a response </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['lifecycle_5ft',['lifecycle_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#gae2f29870ec39cac8e7a7a7025215470e',1,'r_sce_api.h']]],
   ['lin_5fchecksum_5ftype_5ft',['lin_checksum_type_t',['../group___l_i_n___a_p_i.html#ga420925530265c35f3b2219649d7aad5b',1,'r_lin_api.h']]],
   ['lin_5fevent_5ft',['lin_event_t',['../group___l_i_n___a_p_i.html#ga7348cb44dbe95ba7bcd29c82cfbf8a72',1,'r_lin_api.h']]],
   ['lin_5fmode_5ft',['lin_mode_t',['../group___l_i_n___a_p_i.html#ga82f45fff4983671b387f6e0b3ec9e12f',1,'r_lin_api.h']]],

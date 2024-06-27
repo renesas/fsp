@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -345,6 +345,10 @@ Fast-mode plus</li>
 <br />
 If the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated transfer rate and duty cycle are printed in a comment in the generated <a class="el" href="group___i_i_c___m_a_s_t_e_r.html#structiic__master__extended__cfg__t">iic_master_extended_cfg_t</a> structure. </td></tr>
 <tr class="tree_none">
+<td>Custom Rate (bps)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Set a custom bitrate (bps). Set to 0 to use the maximum bitrate for the selected mode.<br />
+<br />
+Standard-mode: up to 100000; Fast-mode: up to 400000; Fast-mode plus: up to 1000000 </td></tr>
+<tr class="tree_none">
 <td>Rise Time (ns)</td><td>Value must be a non-negative integer</td><td>120 </td><td>Set the rise time (tr) in nanoseconds. </td></tr>
 <tr class="tree_none">
 <td>Fall Time (ns)</td><td>Value must be a non-negative integer</td><td>120 </td><td>Set the fall time (tf) in nanoseconds. </td></tr>
@@ -399,7 +403,14 @@ Interrupt Configuration</h2>
 <h2><a class="anchor" id="r-iic_master-rate_calculation"></a>
 IIC Master Rate Calculation</h2>
 <ul>
-<li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
+<li><p class="startli">The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate.</p>
+<p class="startli">When the Custom Rate setting is set to 0 the bitrate is fixed to the maximum values shown below. Otherwise, the supplied value is used to generate bitrate settings.</p><ul>
+<li>Standard-mode (Sm) : up to 100 kbps</li>
+<li>Fast-mode (Fm) : up to 400 kbps</li>
+<li>Fast-mode Plus (Fm+) : up to 1 Mbps</li>
+</ul>
+</li>
+<li>The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
 <li>If a valid clock rate could not be calculated, an error is returned by the tool.</li>
 </ul>
 <h2><a class="anchor" id="r-iic_master-enabling-dtc"></a>
@@ -481,6 +492,18 @@ High-level period of SCL clock. </td></tr>
 brl_value</td>
 <td class="fielddoc">
 Low-level period of SCL clock. </td></tr>
+<tr><td class="fieldtype">
+<a id="afbddc19114e2deccda987b73c83ef99f"></a>uint8_t</td>
+<td class="fieldname">
+sddl_value</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ad5fb94b80a85f57d8026f24592c58670"></a>bool</td>
+<td class="fieldname">
+dlcs_value</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -532,6 +555,12 @@ Allows timeouts to occur when SCL is held low. </td></tr>
 clock_settings</td>
 <td class="fielddoc">
 I2C Clock settings. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab9f7892d6aeb523b7df64b46b74be2a8"></a>bool</td>
+<td class="fieldname">
+smbus_operation</td>
+<td class="fielddoc">
+SMBus operation on I2C bus. </td></tr>
 </table>
 
 </div>
@@ -918,7 +947,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

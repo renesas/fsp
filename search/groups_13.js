@@ -9,6 +9,7 @@ var searchData=
   ['storage',['Storage',['../group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html',1,'']]],
   ['system',['System',['../group___r_e_n_e_s_a_s___s_y_s_t_e_m___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['system',['System',['../group___r_e_n_e_s_a_s___s_y_s_t_e_m___m_o_d_u_l_e_s.html',1,'']]],
+  ['smbus_20communication_20device_20_28rm_5fcomms_5fsmbus_29',['SMBUS Communication Device (rm_comms_smbus)',['../group___r_m___c_o_m_m_s___s_m_b_u_s.html',1,'']]],
   ['segger_20emwin_20ra_20port_20_28rm_5femwin_5fport_29',['SEGGER emWin RA Port (rm_emwin_port)',['../group___r_m___e_m_w_i_n___p_o_r_t.html',1,'']]],
   ['secure_20key_20injection_20_28r_5frsip_5fkey_5finjection_29',['Secure Key Injection (r_rsip_key_injection)',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html',1,'']]],
   ['spi_20_28r_5fsau_5fspi_29',['SPI (r_sau_spi)',['../group___s_a_u___s_p_i.html',1,'']]],

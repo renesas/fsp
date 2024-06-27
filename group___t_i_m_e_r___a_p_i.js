@@ -72,7 +72,13 @@ var group___t_i_m_e_r___a_p_i =
     ] ],
     [ "timer_compare_match_t", "group___t_i_m_e_r___a_p_i.html#gaf5f22f5e34fe6ea640fd6a1c7e864cd9", [
       [ "TIMER_COMPARE_MATCH_A", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9aaaad342d8de564fe934da6046de43b1b", null ],
-      [ "TIMER_COMPARE_MATCH_B", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9af47948172a5aa055bed74ad8c1cdc11d", null ]
+      [ "TIMER_COMPARE_MATCH_B", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9af47948172a5aa055bed74ad8c1cdc11d", null ],
+      [ "TIMER_COMPARE_MATCH_C", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9a02dbd4bf976c9c94468ab16e225d0771", null ],
+      [ "TIMER_COMPARE_MATCH_D", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9acad66a928c0e2abdd09d6bfc8b0fc7a2", null ],
+      [ "TIMER_COMPARE_MATCH_E", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9a216c3a1e617bf0fb2a85b573915ab7d1", null ],
+      [ "TIMER_COMPARE_MATCH_F", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9a27a5f4110d793a6fdb27f3026400f4ce", null ],
+      [ "TIMER_COMPARE_MATCH_G", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9a2768f929cf63f14c2b0d88f717b58378", null ],
+      [ "TIMER_COMPARE_MATCH_H", "group___t_i_m_e_r___a_p_i.html#ggaf5f22f5e34fe6ea640fd6a1c7e864cd9abc8610b60c8de3ac1609f68d1f06a03c", null ]
     ] ],
     [ "timer_state_t", "group___t_i_m_e_r___a_p_i.html#ga1360292eee5d5a5288646fd1eb37c83e", [
       [ "TIMER_STATE_STOPPED", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83ea92e859c83369128798902fd7a86a3320", null ],

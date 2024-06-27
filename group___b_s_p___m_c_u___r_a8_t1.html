@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -249,6 +249,154 @@ The following build time configurations are defined in fsp_cfg/bsp/bsp_mcu_famil
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> SDRAM  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> SDRAM &gt; Timings  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tRAS (cycles)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 cycles</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+<li>
+5 cycles</li>
+<li>
+6 cycles</li>
+<li>
+7 cycles</li>
+</ul>
+</td><td>6 cycles </td><td>Row Active Interval </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tRCD (cycles)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 cycles</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+</ul>
+</td><td>3 cycles </td><td>Row Column Latency </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tRP (cycles)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 cycles</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+<li>
+5 cycles</li>
+<li>
+6 cycles</li>
+<li>
+7 cycles</li>
+<li>
+8 cycles</li>
+</ul>
+</td><td>3 cycles </td><td>Row Precharge Interval </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tWR (cycles)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 cycles</li>
+<li>
+2 cycles</li>
+</ul>
+</td><td>2 cycles </td><td>Write Recovery Interval </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tCL (cycles)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 cycles</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+</ul>
+</td><td>3 cycles </td><td>Column Latency </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tRFC (cycles)</td><td>tRFC must be between 2 and 4096 cycles</td><td>937 </td><td>Auto-Refresh Request Interval Setting </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">tREFW (cycles)</td><td>Refer to the RA Configuration tool for available options.</td><td>8 cycles </td><td>Auto-Refresh Cycle/Self-Refresh Clearing Cycle Count Setting. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> SDRAM &gt; Initialization  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Auto-Refresh Interval (ARFI)</td><td>Refer to the RA Configuration tool for available options.</td><td>10 cycles </td><td>Specifies the interval at which the auto-refresh commands are issued in the SDRAM initialization sequence. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Auto-Refresh Count (ARFC)</td><td>Refer to the RA Configuration tool for available options.</td><td>8 times </td><td>Specifies the number of times auto-refresh is to be performed in the SDRAM initialization sequence. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Precharge Cycle Count (PRC)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+<li>
+5 cycles</li>
+<li>
+6 cycles</li>
+<li>
+7 cycles</li>
+<li>
+8 cycles</li>
+<li>
+9 cycles</li>
+<li>
+10 cycles</li>
+</ul>
+</td><td>3 cycles </td><td>Specifies the number of precharged cycles in the SDRAM initialization sequence. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">SDRAM Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If enabled, SDRAM will be initialized and configured by the BSP with the provided settings. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Address Multiplex Shift</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+8-bit shift</li>
+<li>
+9-bit shift</li>
+<li>
+10-bit shift</li>
+<li>
+11-bit shift</li>
+</ul>
+</td><td>9-bit shift </td><td>Selects the size of the shift towards the lower half of the row address in row address/column address multiplexing. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Endian Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Little Endian</li>
+<li>
+Big Endian</li>
+</ul>
+</td><td>Little Endian </td><td>Specifies the endianness of the SDRAM address space. See HWM for full list of constraints when using Big Endian. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Continuous Access Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>If enabled, SDRAM continuous access mode will be enabled. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bus Width</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+8-bit</li>
+<li>
+16-bit</li>
+<li>
+32-bit</li>
+</ul>
+</td><td>16-bit </td><td>Specifies the data bus width for SDRAM. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Security  </td></tr>
 <tr class="tree_lvl_2">
@@ -888,7 +1036,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_m2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -903,7 +1051,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_m2.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -917,7 +1065,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

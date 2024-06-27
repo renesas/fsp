@@ -10,7 +10,8 @@ var group___i_i_c___b___m_a_s_t_e_r =
       [ "timeout_mode", "group___i_i_c___b___m_a_s_t_e_r.html#a34f30373bb7f1355e0512e7151d3707a", null ],
       [ "timeout_scl_low", "group___i_i_c___b___m_a_s_t_e_r.html#a2596240a49fc7efba244d25ae6bb5649", null ],
       [ "clock_settings", "group___i_i_c___b___m_a_s_t_e_r.html#a97e0c2abe329339e1fe85c0372caa420", null ],
-      [ "iic_clock_freq", "group___i_i_c___b___m_a_s_t_e_r.html#a23b163f7cea7968f025f3da67eaa4028", null ]
+      [ "iic_clock_freq", "group___i_i_c___b___m_a_s_t_e_r.html#a23b163f7cea7968f025f3da67eaa4028", null ],
+      [ "smbus_operation", "group___i_i_c___b___m_a_s_t_e_r.html#a67e9011be75d150f2ecf54d0fc21c145", null ]
     ] ],
     [ "iic_b_master_timeout_mode_t", "group___i_i_c___b___m_a_s_t_e_r.html#ga01cc731c1676f9328db2f65599e81815", [
       [ "IIC_B_MASTER_TIMEOUT_MODE_LONG", "group___i_i_c___b___m_a_s_t_e_r.html#gga01cc731c1676f9328db2f65599e81815a050d30f3032872165dd0bc9b1deb5793", null ],

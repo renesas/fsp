@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -244,11 +244,13 @@ $(document).ready(function(){initNavTree('group___b_l_e___a_b_s___g_t_l.html',''
 <h1><a class="anchor" id="rm_ble_abs_gtl-overview"></a>
 Overview</h1>
 <p>This module provides BLE GAP functionality that complies with the Bluetooth Core Specification version 5.0 specified by the Bluetooth SIG. This module is configured via the <a href="https://www.renesas.com/qe-ble">QE for BLE</a>. QE for BLE provides standard and custom services defined by the user.</p>
-<p>The module supports the Renesas Electronics DA14531 Bluetooth® Low Energy 5 Module. The rm_ble_abs_gtl driver interfaces with the DA14531 module over UART.</p>
+<p>The module supports the Renesas Electronics DA14531 and DA14535 Bluetooth® Low Energy 5 Modules. The rm_ble_abs_gtl driver interfaces with the DA14531/DA14535 module over UART.</p>
 <h2><a class="anchor" id="rm_ble_abs_gtl-features"></a>
 Features</h2>
-<p>The Bluetooth Low Energy (BLE) Abstraction module with GTL supports the following features:</p><ul>
+<p>The Bluetooth® Low Energy Abstraction module with GTL supports the following features:</p><ul>
 <li>Common functionality<ul>
+<li>Boot from host or DA14531/DA14535 flash.</li>
+<li>Use 1-wire (default) or 2-wire UART for booting.</li>
 <li>Open/Close the BLE protocol stack.</li>
 </ul>
 </li>
@@ -279,8 +281,8 @@ Features</h2>
 Configuration</h1>
 <h2><a class="anchor" id="rm_ble_abs_gtl-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Pins used by the BLE driver to control the DA14531 module:</p><ul>
-<li>Reset Pin : Active low reset line for DA14531 module</li>
+<p>Pins used by the BLE driver to control the DA14531/DA14535 module:</p><ul>
+<li>Reset Pin : Active low reset line for DA14531/DA14535 module.</li>
 <li><a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a> : RX/TX Pins</li>
 </ul>
 <h1><a class="anchor" id="rm_ble_abs_gtl-usage_notes"></a>
@@ -289,13 +291,13 @@ Usage Notes</h1>
 <p>The below guide walks users through building a fully working solution that allows booting from the host via 1-wire UART in order to run a BLE application from the RA MCU using the GTL interface.</p>
 <p><a href="https://lpccs-docs.renesas.com/DA1453x-FSP_BLE_Framework/UM-B-172/index.html">https://lpccs-docs.renesas.com/DA1453x-FSP_BLE_Framework/UM-B-172/index.html</a></p>
 <h2>Addresses</h2>
-<p>When using a public BD address the address pre-programmed into the DA14531 will be used and can't be overridden.</p>
+<p>When using a public BD address the address pre-programmed into the DA14531/DA14535 will be used and can't be overridden.</p>
 <p>A random address can be set by calling the R_BLE_VS_SetBdAddr function before the R_BLE_GAP_Init function is called.</p>
 <h2>Heap Requirements</h2>
 <p>Ensure the BSP heap size is set to at least 2K bytes.</p>
 <p>When using FreeRTOS ensure the heap 4 size is set to a minimum of 2K bytes.</p>
 <h2>Module Firmware Compatibility</h2>
-<p>This middleware module is compatible with GTL binary version 6.0.18 and later. You must ensure that the DA14531 Module (or PMOD) you are using contains this version (or later) firmware or that you use the boot from host feature and have the host MCU load the binary into the DA14531.</p>
+<p>This middleware module is compatible with GTL binary version 6.0.22 and later. You must ensure that the DA14531/DA14535 Module (or PMOD) you are using contains this version (or later) firmware or that you use the boot from host feature and have the host MCU load the binary into the DA14531/DA14535. Note that DA14531 and DA14535 are not firmware compatible even though the GTL API is the same.</p>
 <p>Instructions detailing how to upgrade the firmware in a DA14531 Module can be found here:</p>
 <p><a href="https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html">https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html</a></p>
 <p>The GTL binary file can be downloaded using the tool described in the above instructions, or by using the following link:</p>
@@ -305,7 +307,7 @@ Limitations</h2>
 <p>Developers should be aware of the following limitations when using the BLE_ABS:</p>
 <p>Following a power on reset, the R_BLE_VS_GetRand function always returns the same number. Subsequent calls to this function produce random numbers.</p>
 <p>Service and characteristic write callback functions, created when using the QE Tool are not supported</p>
-<p>The boot from host feature currently only supports 1-wire UART operation. This means that the UART RX and TX pins on the host RA MCU must be tied together using a 1K ohm resistor in order to boot the DA14531 - this resistor can remain in place after the boot operation has been completed.</p>
+<p>The boot from host feature currently supports 1-wire and 2-wire UART operation. If using a 1-wire boot from host the UART RX and TX pins on the host RA MCU must be tied together using a 1K ohm resistor in order to boot the DA14531/DA14535 - this resistor can remain in place after the boot operation has been completed. Boot from host using 2-wire UART is not supported when using a DA14531MOD module because not all the required pins are exposed. Boot from host using 2-wire UART is supported when a DA14535PMOD with SmartBoot (UM-B-171) is already flashed in DA14535. In this case the same pins used for GTL communication are also used for 2-wire boot.</p>
 <p>Currently supported rm_ble_abs_gtl interface functions:</p><ul>
 <li>RM_BLE_ABS_Open</li>
 <li>RM_BLE_ABS_Close</li>
@@ -387,7 +389,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

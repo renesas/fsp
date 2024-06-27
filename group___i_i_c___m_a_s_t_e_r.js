@@ -9,7 +9,8 @@ var group___i_i_c___m_a_s_t_e_r =
     [ "iic_master_extended_cfg_t", "group___i_i_c___m_a_s_t_e_r.html#structiic__master__extended__cfg__t", [
       [ "timeout_mode", "group___i_i_c___m_a_s_t_e_r.html#a25c3fc7a92165e8213ccf8308e1db1aa", null ],
       [ "timeout_scl_low", "group___i_i_c___m_a_s_t_e_r.html#af255cfc08c0e74ebe9e15f4dda240b53", null ],
-      [ "clock_settings", "group___i_i_c___m_a_s_t_e_r.html#a3e2c32c0a211b6485aff83502c3c41a2", null ]
+      [ "clock_settings", "group___i_i_c___m_a_s_t_e_r.html#a3e2c32c0a211b6485aff83502c3c41a2", null ],
+      [ "smbus_operation", "group___i_i_c___m_a_s_t_e_r.html#ab9f7892d6aeb523b7df64b46b74be2a8", null ]
     ] ],
     [ "iic_master_timeout_mode_t", "group___i_i_c___m_a_s_t_e_r.html#gaf8ecd43a76bfa058281bb8b6b3981d3f", [
       [ "IIC_MASTER_TIMEOUT_MODE_LONG", "group___i_i_c___m_a_s_t_e_r.html#ggaf8ecd43a76bfa058281bb8b6b3981d3facc441997b6e18766361457d26227b4bd", null ],

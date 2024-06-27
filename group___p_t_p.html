@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -571,6 +571,7 @@ Limitations</h2>
 <li>The driver will not detect announce message timeouts. This functionality must be handled by the application.</li>
 <li>When IP + UDP frame format is selected, the driver will not automatically join the multicast group. This must be done by the application.</li>
 <li>In order to call PTP API functions from ISRs, the MINT and IPLS interrupt priorities must be configured to be lower than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. This is to guarantee that PTP register accesses are atomic.</li>
+<li>When IEEE802.3 | LLC | SNAP | IP | UDP or IEEE802.3 | LLC | SNAP Frame Format is selected, the PTP peripheral sets the OUI field in the SNAP frame to the first 3 bytes of the <b>MAC address</b> configured in the <a class="el" href="group___e_t_h_e_r.html">Ethernet (r_ether)</a> module's configuration property. In order for the PID field of SNAP to be interpreted as EtherType, the OUI field should be set to '0'.</li>
 </ul>
 <h1><a class="anchor" id="r-ptp-examples"></a>
 Examples</h1>
@@ -1283,7 +1284,7 @@ Typically the clock ID is derived from the MAC address (E.g. {b1,b2,b3,0xFF,0xFE
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

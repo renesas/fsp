@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -463,7 +463,7 @@ PID, BCR, and DCR registers for the device (Slave mode only). </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Descriptor for completing CCC transfers. </p>
+<div class="textblock"><p>Descriptor for completing CCC/HDR transfers. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -471,7 +471,7 @@ PID, BCR, and DCR registers for the device (Slave mode only). </td></tr>
 <td class="fieldname">
 command_code</td>
 <td class="fielddoc">
-Common Command Code for the transfer. </td></tr>
+Common Command Code / HDR Command Code for the transfer. </td></tr>
 <tr><td class="fieldtype">
 <a id="a71fb8d5e49ee1c39fdc190b5c5fd7e1c"></a>uint8_t *</td>
 <td class="fieldname">
@@ -691,8 +691,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ae57d3fa9fa4a966a5c8cac38b0ea0660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39518a413d0c9056e41d4da97ce3884e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a39518a413d0c9056e41d4da97ce3884e">slaveStatusSet</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__device__status__t">i3c_device_status_t</a> device_status)</td></tr>
 <tr class="separator:a39518a413d0c9056e41d4da97ce3884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840484cae7a68cf6161ec707c33c0a5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a840484cae7a68cf6161ec707c33c0a5c">commandSend</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> *p_command_descriptor)</td></tr>
-<tr class="separator:a840484cae7a68cf6161ec707c33c0a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060147dc36cd71a01b58c30fddc11bf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a060147dc36cd71a01b58c30fddc11bf3">commandSend</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> const *const p_command_descriptor)</td></tr>
+<tr class="separator:a060147dc36cd71a01b58c30fddc11bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b27ccf4720531545b0c2e118032539b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#a0b27ccf4720531545b0c2e118032539b">write</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, uint8_t const *const p_data, uint32_t length, bool restart)</td></tr>
 <tr class="separator:a0b27ccf4720531545b0c2e118032539b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad013ffb59c95539c84fe217b90d897ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad">read</a> )(<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, uint8_t *const p_data, uint32_t length, bool restart)</td></tr>
@@ -866,18 +866,18 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a840484cae7a68cf6161ec707c33c0a5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a840484cae7a68cf6161ec707c33c0a5c">&#9670;&nbsp;</a></span>commandSend</h2>
+<a id="a060147dc36cd71a01b58c30fddc11bf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a060147dc36cd71a01b58c30fddc11bf3">&#9670;&nbsp;</a></span>commandSend</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i3c_api_t::commandSend) (<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> *p_command_descriptor)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i3c_api_t::commandSend) (<a class="el" href="group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579">i3c_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i3_c___a_p_i.html#structi3c__command__descriptor__t">i3c_command_descriptor_t</a> const *const p_command_descriptor)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Send a broadcast or directed command to slave devices on the bus.</p>
+<p>Send a read/write/broadcast CCC or HDR command.</p>
 <p>Note: This function is not used in slave mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1099,6 +1099,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a497ea998fd00601fece9bc4f537c5069"></a>I3C_CCC_BROADCAST_ENTTM&#160;</td><td class="fielddoc"><p>Enter Test Mode. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a75bf1168a7e4d338f0a2f196ca82259d"></a>I3C_CCC_BROADCAST_SETBUSCON&#160;</td><td class="fielddoc"><p>Set BUS Context. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a107651f3a480349d3a19f16deddf055c"></a>I3C_CCC_BROADCAST_ENDXFER&#160;</td><td class="fielddoc"><p>Data Transfer Ending Procedure Control. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a08c0920a5a317949946c27ecd501ec7d"></a>I3C_CCC_BROADCAST_ENTHDR0&#160;</td><td class="fielddoc"><p>Enter HDR Mode 0. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a56334065601b234cb7a51495a87dc79f"></a>I3C_CCC_BROADCAST_ENTHDR1&#160;</td><td class="fielddoc"><p>Enter HDR Mode 1. </p>
@@ -1119,6 +1123,14 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52af3d7fa76699eb260edb16b1365a83a80"></a>I3C_CCC_BROADCAST_SETAASA&#160;</td><td class="fielddoc"><p>Set All Addresses to Static Address. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a15fd25a517c3541d0e3d6c7e29793780"></a>I3C_CCC_BROADCAST_RSTACT&#160;</td><td class="fielddoc"><p>Slave Reset Action. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a7beb4fffe9b7003d019e640b1fb07731"></a>I3C_CCC_BROADCAST_DEFGRPA&#160;</td><td class="fielddoc"><p>Define List of Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a37842d71e362145be74f8f72741958f7"></a>I3C_CCC_BROADCAST_RSTGRPA&#160;</td><td class="fielddoc"><p>Reset Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52ae3a9e3041c5e9531c3eeaeaf082caa5b"></a>I3C_CCC_BROADCAST_MLANE&#160;</td><td class="fielddoc"><p>Multi-Lane Data Transfer Control. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52af979c7917ae589e3a9a2617f161f5a04"></a>I3C_CCC_DIRECT_ENEC&#160;</td><td class="fielddoc"><p>Enable Slave initiated events. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a66d0ccdd8df6e8ee6335d86b56b3fb2c"></a>I3C_CCC_DIRECT_DISEC&#160;</td><td class="fielddoc"><p>Disable Slave initiated events. </p>
@@ -1131,7 +1143,7 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a6f12cb17e3064ffd538da94b08c21b95"></a>I3C_CCC_DIRECT_ENTAS3&#160;</td><td class="fielddoc"><p>Enter Activity State 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a8db31c2c1ca8424755d3d59ce623fb08"></a>I3C_CCC_DIRECT_RSTDAA&#160;</td><td class="fielddoc"><p>Reset Dynamic Address Assignment. </p>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a8db31c2c1ca8424755d3d59ce623fb08"></a>I3C_CCC_DIRECT_RSTDAA&#160;</td><td class="fielddoc"><p>Reset Dynamic Address Assignment (DEPRECATED v1.0). </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a196c567a68ade8d03a9863b6fa472eca"></a>I3C_CCC_DIRECT_SETDASA&#160;</td><td class="fielddoc"><p>Set Dynamic Address from Static Address. </p>
 </td></tr>
@@ -1155,11 +1167,29 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a696a95c054c95406323e9cefa14b1b93"></a>I3C_CCC_DIRECT_GETACCMST&#160;</td><td class="fielddoc"><p>Get Accept Mastership. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52afe4763188af461e73020f68d5cc7b0c0"></a>I3C_CCC_DIRECT_ENDXFER&#160;</td><td class="fielddoc"><p>Data Transfer Ending Procedure Control. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a15f78a377b8def0c5a60dc346873512b"></a>I3C_CCC_DIRECT_SETBRGTGT&#160;</td><td class="fielddoc"><p>Set Bridge Targets. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a29237e5c8191b16f48c66cf5a484b812"></a>I3C_CCC_DIRECT_GETMXDS&#160;</td><td class="fielddoc"><p>Get Max Data Speed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a2b1dcace938e6cd3fa3a7d50fadb878f"></a>I3C_CCC_DIRECT_GETHDRCAP&#160;</td><td class="fielddoc"><p>Get HDR Capability. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a1b08f3d3bcdbb1337b6b3242da6db696"></a>I3C_CCC_DIRECT_SETROUTE&#160;</td><td class="fielddoc"><p>Set Route. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52aaeab2893c810f0115ca7ac3bafa37d1f"></a>I3C_CCC_DIRECT_D2DXFER&#160;</td><td class="fielddoc"><p>Device to Device(s) Tunneling Control. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52aa92f265992e1acc07c57946f1c8d10d2"></a>I3C_CCC_DIRECT_SETXTIME&#160;</td><td class="fielddoc"><p>Set Exchange Timing Information. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a66ec92cc7e4fd378938a6d623bd44b6b"></a>I3C_CCC_DIRECT_GETXTIME&#160;</td><td class="fielddoc"><p>Get Exchange Timing Information. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52ad4c3c777027f15d123f4dd239b51963d"></a>I3C_CCC_DIRECT_RSTACT&#160;</td><td class="fielddoc"><p>Reset Slave Action. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a75968f99702ac9451b3e691a550c6fd0"></a>I3C_CCC_DIRECT_SETGRPA&#160;</td><td class="fielddoc"><p>Set Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52a64ff09087cc3312ee7cb08e706a2c636"></a>I3C_CCC_DIRECT_RSTGRPA&#160;</td><td class="fielddoc"><p>Reset Group Address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae0fcac252ef200a5a24cdadfa123dc52ac23ff202ff034378777a8f4973e0e386"></a>I3C_CCC_DIRECT_MLANE&#160;</td><td class="fielddoc"><p>Multi-Lane Data Transfer Control. </p>
 </td></tr>
 </table>
 
@@ -1299,7 +1329,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

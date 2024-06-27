@@ -174,7 +174,6 @@ var searchData=
   ['alarm1_5firq',['alarm1_irq',['../group___r_t_c.html#ae7f72a6fbe27e9a3ef60c99022798c9b',1,'rtc_extended_cfg_t']]],
   ['alarm_5fipl',['alarm_ipl',['../group___r_t_c___a_p_i.html#a6a99d08314611e1fe129bef873c56ac2',1,'rtc_cfg_t']]],
   ['alarm_5firq',['alarm_irq',['../group___r_t_c___a_p_i.html#aabad6d91d22b402ad2cbee664bd5c502',1,'rtc_cfg_t']]],
-  ['alg',['alg',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a4753a54111002084939fc8cdcb2c3e0b',1,'rsip_wrapped_key_t']]],
   ['algorithm',['algorithm',['../group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a9751a0ac062a8fcfcf23045578986303',1,'rm_ble_mesh_provision_method_t']]],
   ['alignment',['alignment',['../group___a_d_c___a_p_i.html#aa36a14783685f411c4c0a7904a3de8eb',1,'adc_cfg_t']]],
   ['all_5freceived_5faad_5flength',['all_received_aad_length',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a64b72527e5d8e50e9a1fcd1037e4195c',1,'sce_gcm_handle_t']]],

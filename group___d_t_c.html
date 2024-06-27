@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -492,6 +492,7 @@ Supported</li>
 <li>The DTC stores transfer information in RAM and writes back to RAM after each transfer whereas the DMAC stores all transfer information in registers.</li>
 <li>When transfers are configured for more than one activation source, the DTC must fetch the transfer info from RAM on each interrupt. This can cause a higher latency between transfers.</li>
 <li>The DTC interrupts the CPU using the activation source's IRQ. Each DMAC channel has its own IRQ.</li>
+<li>The necessary alignment of the <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> structs depends on the underlying MCU. The <code>DTC_TRANSFER_INFO_ALIGNMENT</code> macro is supplied to align the structs as necessary.</li>
 </ul>
 <h3>Interrupts</h3>
 <p>The DTC and DMAC interrupts behave differently. The DTC uses the configured event IRQ as the interrupt source whereas each DMAC channel has its own IRQ.</p>
@@ -579,6 +580,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga19425a6e2cc8c0080c61ff61f6ad9e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7ab61b801ce7972fdfc9c6f00da2df51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_t_c.html#ga7ab61b801ce7972fdfc9c6f00da2df51">DTC_MAX_BLOCK_COUNT</a></td></tr>
 <tr class="separator:ga7ab61b801ce7972fdfc9c6f00da2df51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga178f306c1911683915cea5c85c8868da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_t_c.html#ga178f306c1911683915cea5c85c8868da">DTC_TRANSFER_INFO_ALIGNMENT</a></td></tr>
+<tr class="separator:ga178f306c1911683915cea5c85c8868da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structdtc__extended__cfg__t" id="structdtc__extended__cfg__t"></a>
@@ -679,6 +682,21 @@ activation_source</td>
       </table>
 </div><div class="memdoc">
 <p>Max configurable number of blocks to transfer in BLOCK MODE </p>
+
+</div>
+</div>
+<a id="ga178f306c1911683915cea5c85c8868da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga178f306c1911683915cea5c85c8868da">&#9670;&nbsp;</a></span>DTC_TRANSFER_INFO_ALIGNMENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DTC_TRANSFER_INFO_ALIGNMENT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Alignment required for <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> structures. </p>
 
 </div>
 </div>
@@ -1091,7 +1109,7 @@ activation_source</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

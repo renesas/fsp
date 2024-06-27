@@ -559,6 +559,7 @@ var searchData=
   ['fsp_5fip_5ftsn',['FSP_IP_TSN',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a0f54d93a78182f0bd5a17709a36dfba1',1,'fsp_features.h']]],
   ['fsp_5fip_5fuarta',['FSP_IP_UARTA',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a0d7a32ae0b25c4e91983bf72562828fc',1,'fsp_features.h']]],
   ['fsp_5fip_5fulpt',['FSP_IP_ULPT',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a8169028a5d7d258e07fba9ca55340ce1',1,'fsp_features.h']]],
+  ['fsp_5fip_5fusbcc',['FSP_IP_USBCC',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a74988fde6e23baa29ea1256ba6059a01',1,'fsp_features.h']]],
   ['fsp_5fip_5fusbfs',['FSP_IP_USBFS',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a9b344d6b79e20045fb8efa31bb2daafa',1,'fsp_features.h']]],
   ['fsp_5fip_5fusbhs',['FSP_IP_USBHS',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a40e3e5c071f08ce93fabf8adad8c548e',1,'fsp_features.h']]],
   ['fsp_5fip_5fwdt',['FSP_IP_WDT',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a9b738d0f557574bb4d659abc2dc0fbf8',1,'fsp_features.h']]],

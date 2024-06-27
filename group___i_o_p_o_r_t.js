@@ -286,7 +286,8 @@ var group___i_o_p_o_r_t =
       [ "IOPORT_PERIPHERAL_PGAOUT0", "group___i_o_p_o_r_t.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ac44530278e8f5cd9db7c0aab1f434c18", null ],
       [ "IOPORT_PERIPHERAL_PGAOUT1", "group___i_o_p_o_r_t.html#ggaebbb969fda93422aaf1878d6f4ff8fe8af931a6809462aee181fdb63ed0f7b405", null ],
       [ "IOPORT_PERIPHERAL_ULPT", "group___i_o_p_o_r_t.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ad768e3b8c746f0f7b851e8605f1d37e0", null ],
-      [ "IOPORT_PERIPHERAL_MIPI", "group___i_o_p_o_r_t.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a569ee3b30428745c75d109ece3cdd8b4", null ]
+      [ "IOPORT_PERIPHERAL_MIPI", "group___i_o_p_o_r_t.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a569ee3b30428745c75d109ece3cdd8b4", null ],
+      [ "IOPORT_PERIPHERAL_UARTA", "group___i_o_p_o_r_t.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ae723d257d704d80640230cdc66260aa7", null ]
     ] ],
     [ "ioport_cfg_options_t", "group___i_o_p_o_r_t.html#gac617eebcb7c2c1e45fa8e04fc473e574", [
       [ "IOPORT_CFG_PORT_DIRECTION_INPUT", "group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb", null ],

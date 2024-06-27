@@ -73,5 +73,7 @@ var group___a_d_c___d =
     [ "R_ADC_D_InfoGet", "group___a_d_c___d.html#ga3bd75c0fb2ab39e9e9e0dde1a56b0842", null ],
     [ "R_ADC_D_Close", "group___a_d_c___d.html#ga4771ec4946dc6129779073a0eb3c1538", null ],
     [ "R_ADC_D_Calibrate", "group___a_d_c___d.html#ga617a3754d1bed4882006a68ea8631738", null ],
-    [ "R_ADC_D_OffsetSet", "group___a_d_c___d.html#ga5b22e051ef50adc65a1f834b38959da7", null ]
+    [ "R_ADC_D_OffsetSet", "group___a_d_c___d.html#ga5b22e051ef50adc65a1f834b38959da7", null ],
+    [ "R_ADC_D_SnoozeModePrepare", "group___a_d_c___d.html#ga703c793c94c5c753cda165e2c04651e3", null ],
+    [ "R_ADC_D_SnoozeModeExit", "group___a_d_c___d.html#ga555cc0346624e178f52fc9f864435d2a", null ]
 ];

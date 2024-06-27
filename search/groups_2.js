@@ -7,6 +7,7 @@ var searchData=
   ['ble_20driver_20_28r_5fble_5fcompact_29',['BLE Driver (r_ble_compact)',['../group___b_l_e___c_o_m_p_a_c_t.html',1,'']]],
   ['ble_20driver_20_28r_5fble_5fextended_29',['BLE Driver (r_ble_extended)',['../group___b_l_e___e_x_t_e_n_d_e_d.html',1,'']]],
   ['bsp_20i_2fo_20access',['BSP I/O access',['../group___b_s_p___i_o.html',1,'']]],
+  ['bsp_5fsdram',['BSP_SDRAM',['../group___b_s_p___s_d_r_a_m.html',1,'']]],
   ['ble_20mesh_20network_20interfaces',['BLE Mesh Network Interfaces',['../group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['ble_20mesh_20network_20modules',['BLE Mesh Network Modules',['../group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html',1,'']]],
   ['bootloader',['Bootloader',['../group___r_e_n_e_s_a_s___b_o_o_t_l_o_a_d_e_r___m_o_d_u_l_e_s.html',1,'']]],

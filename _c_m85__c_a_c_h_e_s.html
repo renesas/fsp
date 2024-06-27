@@ -1,0 +1,810 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Cortex-M85 Caches</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.4.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('_c_m85__c_a_c_h_e_s.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">Cortex-M85 Caches </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd><b>This overview should be considered supplementary information only. Consult with the listed references (non-exhaustive) for detailed information on the CM85 caches, Renesas caches, and cache coherency. Cache coherency can be a difficult problem to understand and solve correctly.</b></dd></dl>
+<h1><a class="anchor" id="CM85_CACHES-overview"></a>
+Overview</h1>
+<p>When using any type of caches in a system, coherency must be considered. A cache may contain data that is different from the backing memory (e.g. SRAM, Flash, etc.), or contain data that is different from another cache, which would make the cache incoherent. Coherency can be maintained through hardware and/or software support. For Cortex-M devices like the RA8, coherency can only be achieved through manual software management, and no automatic hardware coherency support exists.</p>
+<p>In the default configuration for RA8 devices, FSP always enables the Code Flash Cache (FCACHE) and CM85 Instruction Cache (I-Cache) and handles the coherency of these caches where it is required. FSP does not handle FCACHE or I-Cache coherency outside of FSP. FSP optionally allows the CM85 Data Cache (D-Cache) to be enabled in the BSP configuration settings, where it is disabled by default. If the D-Cache is enabled, additional coherency concerns will arise. <b>FSP does not currently handle any D-Cache coherency. This is a work in-progress. Drivers that will require D-Cache coherency support do not presently support it.</b></p>
+<p>If D-Cache is enabled, the most common coherency concern is when data is shared between the CPU and another bus master. The D-Cache and backing memory for the shared location (usually SRAM) can become incoherent. To properly manage coherency in this situation, do one of the following:</p>
+<ul>
+<li><p class="startli">Place the shared data in a non-cacheable region defined by the MPU or hardware.</p>
+<p class="startli">Using a non-cacheable region means there will be no cache maintenance required and no coherency issues because the shared data will not be cached. A non-cacheable region can be defined in the MPU to contain the shared data. The non-cacheable region <b>MUST</b> be aligned to 32 bytes and be a length multiple of 32 bytes. This is required to meet MPU alignment and length requirements. FSP predefines the <code>.nocache</code> and <code>.nocache_sdram</code> uninitialized regions for this purpose, where data can be placed (see the <a href="#CM85_CACHES-references">BSP Usage Notes</a> reference material). FSP configures and enables the MPU with these predefined regions at startup, if they have a non-zero size. Any address outside these regions will use the cacheability attributes defined by the default system address map. As an alternative, DTCM is always hardcoded as non-cacheable by the hardware and could contain the shared data. Using the MPU should be preferred, since DTCM can only be accessed through S-AHB by other bus masters and the access may contend with CPU access to DTCM.</p>
+</li>
+<li><p class="startli">Place the shared data in a cache line aligned and padded cacheable region, and use the CMSIS cache maintenance functions.</p>
+<p class="startli">Using a cacheable region requires that the CMSIS cache maintenance functions be used to solve the coherency issues. The data <b>MUST</b> be aligned to 32 bytes and be a length multiple of 32 bytes. This is required to meet D-Cache line alignment and length requirements. <b>If data is not aligned and fit exactly to D-Cache lines, you will create rare and difficult bugs!</b> Use the CMSIS cache maintenance functions as required to manage the shared data coherency. When the D-Cache is enabled, FSP configures and enables the MPU at startup. Any address outside the predefined MPU regions will use the cacheability attributes defined by the default system address map. <b>Cacheable shared data cannot be pooled into a single aligned and padded region, like the non-cacheable region. Cacheable shared data must be aligned and padded to its own data cache lines.</b></p>
+</li>
+</ul>
+<p>Less common coherency concerns include:</p><ul>
+<li>FACI erasing and programming<ul>
+<li>FCACHE, I-Cache, and D-Cache can become incoherent if Code Flash or Data Flash changes</li>
+</ul>
+</li>
+<li>Writing instructions into RAM using the CPU or a bus master<ul>
+<li>D-Cache and I-Cache can become incoherent if code in RAM changes</li>
+</ul>
+</li>
+<li>MPU configuration changes<ul>
+<li>FCACHE, I-Cache, and D-Cache can become incoherent if the cacheability attributes of an address changes</li>
+</ul>
+</li>
+<li>SAU (Security Attribution Unit) configuration changes<ul>
+<li>FCACHE, I-Cache, and D-Cache can become incoherent if the security attributes of an address changes</li>
+</ul>
+</li>
+<li>Changing power modes<ul>
+<li>May be required to clean and invalidate caches before changing to a low power mode</li>
+</ul>
+</li>
+</ul>
+<p>These less common situations require careful consideration for cache maintenance. FSP handles some of these less common situations for FCACHE and I-Cache where it must, but it is not possible to cover all user behavior that may occur.</p>
+<p>Other special cache concerns that are not specifically coherency related include:</p><ul>
+<li>Reading and writing from CSC, SDRAM, and Standby SRAM which use write buffers<ul>
+<li>If a write or read is intended to force a write buffer to flush, or to force a bus access to occur, the D-Cache may stop that from occurring by processing the read or write if the address is cacheable</li>
+<li>Standby SRAM requires a different procedure than CSC or SDRAM to clear its write buffer</li>
+</ul>
+</li>
+<li>OSPI provides both a prefetch buffer for reading and a write buffer for writing on each of its channels<ul>
+<li>These buffers are optionally enabled individually, and may also be flushed individually</li>
+<li>Cache interactions with these buffers during normal operation and during their flush procedures must be considered</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="CM85_CACHES-cm85-cache-features"></a>
+CM85 Cache Features</h1>
+<p>The CM85 optionally implements an I-Cache and/or D-Cache, with several configurable properties. Renesas RA8 devices have an implementation as follows:</p><ul>
+<li>I-Cache and D-Cache are both implemented with 16 KiB size each</li>
+<li>ECC is optionally enabled for the I-Cache and D-Cache with OFS1.INITECCEN<ul>
+<li>The OFS1_SEL register selects whether the Secure or Non-secure OFS1.INITECCEN option bit is used</li>
+<li>The OFS1.INITECCEN option bit also enables ECC for the ITCM and DTCM</li>
+</ul>
+</li>
+<li>Automatic hardware cache invalidation is enabled at reset for I-Cache and D-Cache<ul>
+<li>This can be controlled with CACHEDBGCR.L1RSTDIS for debugging, but generally there is no use case</li>
+</ul>
+</li>
+<li>TrustZone is integrated, which means<ul>
+<li>CCR.xC is banked between Secure and Non-secure modes which means cache allocation can be controlled for each mode separately</li>
+<li>There are eight Secure and Non-Secure MPU regions each which govern memory access in their respective modes</li>
+<li>D-Cache maintenance from the Non-secure state is promoted to clean type maintenance, since both Secure and Non-secure data may be cached</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="CM85_CACHES-ra8-cache-background-information"></a>
+RA8 Cache Background Information</h1>
+<h2>CM85 Caches</h2>
+<p>The I-Cache and D-Cache are implemented inside of the CM85 by Arm. The CM85 has a Harvard design, where instruction fetches and data reads/writes are performed on separate interfaces. The I-Cache can only perform lookup and allocation for instruction fetches. The D-Cache can only perform lookup and allocation for data reads and writes.</p>
+<p>Whether lookup of an address occurs in a cache depends on:</p><ol type="1">
+<li>Cache lookups are enabled in the MSCR register.</li>
+<li>The Shareability (Non-shareable) (D-Cache Only), Inner Cacheability (Cacheable), and Memory Type (Normal) as defined by the System Address Map or the Arm MPU (S or NS).</li>
+<li>Any hardware cacheability caveats, where some addresses can never lookup in a cache, like ITCM and DTCM.</li>
+</ol>
+<p>Whether allocation of an address occurs in a cache depends on:</p><ol type="1">
+<li>Cache allocations are enabled in the CCR register (S or NS).</li>
+<li>Cache lookups are allowed for that address.</li>
+<li>Inner Cacheability (Read and/or Write Allocate) as defined by the System Address Map or the Arm MPU (S or NS).</li>
+</ol>
+<p>The MSCR register controls whether lookups may occur for a cache, while the CCR register (S or NS) controls whether allocation may occur for a cache.</p>
+<p>The system address map and Arm MPU (S or NS) define the memory type, shareability attributes, and cacheability attributes for an address. All three memory properties combine to define whether an address may lookup and allocate within one of the caches. The CM85 defines specific behaviors for some architecturally implementation defined or undefined behaviors regarding combinations of these three properties.</p>
+<p>Both caches accept Inner cacheability attributes from the system address map and the Arm MPU (S or NS). The support of cacheability attributes varies depending on the cache and its configuration.</p>
+<p>The I-Cache and D-Cache have different associativity, supported cache policies, supported memory attributes, and supported shareability attributes. Because of these variations, the behavior of I-Cache and D-Cache will be different even when accessing the same address.</p>
+<p>Even when the Arm MPU (S or NS) is disabled, the default system address map will provide the memory type, shareability attributes, and cacheability attributes for an address. If the Arm MPU (S or NS) is enabled with no regions defined, it may be configured to use the default system address map as a background region.</p>
+<p>Arm prescribes specific procedures for enabling and disabling the caches, and other cache maintenance operations that must be followed. There are I-Cache and D-Cache specific Arm architectural instructions that are used to perform these procedures. The Arm CMSIS library provides functions to perform these cache operations.</p>
+<h2>Renesas FCACHE</h2>
+<p>The FCACHE is implemented by Renesas and performs instruction prefetches, caches instruction fetches, and caches data reads from the CPU and other bus masters to <b>Code Flash</b> memory.</p>
+<p>Cache maintenance for FCACHE is conducted through its peripheral registers.</p>
+<p>In general, whether for the CM85 I-Cache or D-Cache, or Renesas FCACHE, cache maintenance is used to synchronize a given cache with the backing memory, and to synchronize caches with each other.</p>
+<h1><a class="anchor" id="CM85_CACHES-cache-maintenance"></a>
+Cache Maintenance</h1>
+<p>The correct maintenance sequence must be followed to avoid caches reading stale data from each other or from backing memory.</p>
+<p>Unlike the D-Cache, the I-Cache is a read-only interface which cannot be written with new instructions by the CPU. The only way for the CPU to see modified instructions while using I-Cache is through invalidation. Thus if instructions change, I-Cache maintenance is <b>always required</b> whether FCACHE maintenance is needed or not.</p>
+<p>The D-Cache is a read and write interface. The CPU will write modified data into the D-Cache (if cacheable, and other properties are met), so any read back from the D-Cache will have the latest data. Thus if data changes, it <em>may</em> be necessary to perform D-Cache maintenance and possibly FCACHE maintenance depending on whether the data is shared between the CPU and another bus master or if the data is changed by FACI.</p>
+<p>The word "shared" here does <b>not</b> mean "Shareability" as defined as an Arm memory attribute.</p>
+<p>I-Cache and D-Cache cache lines are aligned to 32 bytes and are 32 bytes in length each. <b>For D-Cache specifically, where a cache line may become dirty when write-back is used, cacheable shared data written by a bus master cannot be allowed to mix on a write-back cache line with data that is unrelated.</b> <b>For simplicity, follow the most conservative rule of aligning and padding cacheable shared data to meet D-Cache line requirements.</b></p>
+<p>CM85 has an erratum with write-back when D-Cache is enabled. FSP v5.3.0 has added the recommended workaround of using MSCR.FORCEWT to force all D-Cache access to write-through, even if an access specifies write-back. <b>Developers should write software as if write-back is being used for full compatability with data cache, which includes the above alignment and padding requirement.</b></p>
+<p>This guide describes common maintenance scenarios including write-back and write-through. <b>The write-through write policy does not obviate the need for using memory barriers on the CM85. The use of memory barriers is out-of-scope for this document.</b></p>
+<p>FSP handles some of these maintenance scenarios during startup and in the Flash HP driver.</p>
+<h1><a class="anchor" id="CM85_CACHES-typical-cache-maintenance-scenarios"></a>
+Typical Cache Maintenance Scenarios</h1>
+<dl class="section note"><dt>Note</dt><dd><b>Whether full or address-based cache maintenance can or should be used depends on the capabilities of the target cache (FCACHE has no address-based maintenance capability) and the particular application scenario.</b></dd></dl>
+<h2>I-Cache, FCACHE Enabled (Default Configuration)</h2>
+<h3>Instructions Change</h3>
+<ul>
+<li>Instructions Not Cacheable<ul>
+<li>No Maintenance Required (Not Cacheable)</li>
+</ul>
+</li>
+<li>Instructions Cacheable<ul>
+<li>FACI Code Flash Program or Erase<ol type="1">
+<li>Invalidate FCACHE</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>FACI Data Flash Program or Erase<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>In RAM or Other<ul>
+<li>Written by CPU<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>Written by Bus Master<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Data Change</h3>
+<ul>
+<li>Data Not Cacheable<ul>
+<li>No Maintenance Required (Not Cacheable)</li>
+</ul>
+</li>
+<li>Data Cacheable<ul>
+<li>FACI Code Flash Program or Erase<ol type="1">
+<li>Invalidate FCACHE</li>
+</ol>
+</li>
+<li>FACI Data Flash Program or Erase<ul>
+<li>No Maintenance Required (D-Cache Disabled)</li>
+</ul>
+</li>
+<li>In RAM or Other<ul>
+<li>No Maintenance Required (D-Cache Disabled)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Instructions and Data Change</h3>
+<ul>
+<li>Instructions and Data Not Cacheable<ul>
+<li>No Maintenance Required (Not Cacheable)</li>
+</ul>
+</li>
+<li>Instructions and Data Cacheable<ul>
+<li>FACI Code Flash Program or Erase<ol type="1">
+<li>Invalidate FCACHE</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>FACI Data Flash Program or Erase<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>In RAM or Other<ul>
+<li>Written by CPU<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>Written by Bus Master<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>D-Cache, I-Cache, FCACHE Enabled</h2>
+<h3>Data Change</h3>
+<ul>
+<li>Data Not Cacheable<ul>
+<li>No Maintenance Required (Not Cacheable)</li>
+</ul>
+</li>
+<li>Data Cacheable<ul>
+<li>FACI Code Flash Program or Erase<ol type="1">
+<li>Invalidate FCACHE</li>
+<li>Clean And Invalidate D-Cache</li>
+</ol>
+</li>
+<li>FACI Data Flash Program or Erase<ol type="1">
+<li>Clean and Invalidate D-Cache</li>
+</ol>
+</li>
+<li>In RAM or Other<ul>
+<li><b>Data Not Shared</b><ul>
+<li>No Maintenance Required (Not Shared)</li>
+</ul>
+</li>
+<li><b>Data Shared</b><ul>
+<li>Written by CPU<ul>
+<li><p class="startli">Write Back</p>
+<p class="startli"><b>Area must be aligned and padded to D-Cache line requirements.</b></p><ol type="1">
+<li>Clean D-Cache, After CPU Write</li>
+</ol>
+</li>
+<li>Write Through<ul>
+<li>No Maintenance Required (Write Through)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Written by Bus Master<ul>
+<li><p class="startli">Write Back</p>
+<p class="startli"><b>Area must be aligned and padded to D-Cache line requirements.</b></p><ul>
+<li>Buffer to be Written is Dirty (e.g. Stack or Heap Allocated Buffer May Be Dirty Already)<ol type="1">
+<li>Invalidate D-Cache, Before and After Bus Master Write</li>
+</ol>
+</li>
+<li>Buffer to be Written is Clean<ol type="1">
+<li>Invalidate D-Cache, After Bus Master Write</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Write Through<ol type="1">
+<li>Invalidate D-Cache, After Bus Master Write</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Instructions Change or Instructions and Data Change</h3>
+<ul>
+<li>Instructions Not Cacheable or Instructions and Data Not Cacheable<ul>
+<li>No Maintenance Required (Not Cacheable)</li>
+</ul>
+</li>
+<li>Instructions Cacheable or Instructions and Data Cacheable<ul>
+<li>FACI Code Flash Program or Erase<ol type="1">
+<li>Invalidate FCACHE</li>
+<li>Clean And Invalidate D-Cache</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>FACI Data Flash Program or Erase<ol type="1">
+<li>Clean And Invalidate D-Cache</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>In RAM or Other<ul>
+<li>Written by CPU<ul>
+<li><p class="startli">Write Back</p>
+<p class="startli"><b>Area must be aligned and padded to D-Cache line requirements if shared with a bus master.</b></p><ol type="1">
+<li>Clean D-Cache, After CPU Write</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>Write Through<ol type="1">
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Written by Bus Master<ul>
+<li><p class="startli">Write Back</p>
+<p class="startli"><b>Area must be aligned and padded to D-Cache line requirements as we assume it is shared with CPU here.</b></p><ul>
+<li>Buffer to be Written is Dirty (e.g. Stack or Heap Allocated Buffer May Be Dirty Already)<ol type="1">
+<li>Invalidate D-Cache, Before and After Bus Master Write</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+<li>Buffer to be Written is Clean<ol type="1">
+<li>Invalidate D-Cache, After Bus Master Write</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Write Through<ol type="1">
+<li>Invalidate D-Cache, After Bus Master Write</li>
+<li>Invalidate I-Cache</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="CM85_CACHES-cache-functions-and-macros"></a>
+Cache Functions and Macros</h1>
+<h2>Renesas BSP Configuration Macros</h2>
+<table class="doxtable">
+<tr>
+<th>Macro </th><th>Purpose </th><th>Notes  </th></tr>
+<tr>
+<td>BSP_CFG_DCACHE_ENABLED </td><td>Defaults to zero (disabled). If defined and non-zero, the FSP startup code in <code>system.c</code> will configure several predefined non-cacheable sections in the MPU if they are of non-zero size, enable the MPU, and enable the D-Cache. </td><td>This is normally configured in e2 Studio under the <code>BSP-&gt;Cache settings-&gt;Data cache</code> properties panel for the project. </td></tr>
+<tr>
+<td>BSP_CFG_ROM_REG_OFS1_INITECCEN </td><td>Defaults to zero (disabled). Sets the value of <code>OFS1.INITECCEN</code> for <code>BSP_CFG_ROM_REG_OFS1</code>, which controls whether ECC is enabled for caches and TCM. </td><td>This is normally configured in e2 Studio under the <code>BSP-&gt;OFS1 register settings-&gt;Tightly Coupled Memory (TCM)/Cache ECC</code> properties panel for the project. </td></tr>
+</table>
+<h2>CMSIS 6 I-Cache Functions</h2>
+<table class="doxtable">
+<tr>
+<th>Function </th><th>Purpose </th><th>Notes  </th></tr>
+<tr>
+<td>SCB_EnableICache </td><td>If I-Cache allocations are not already enabled, invalidate the entire I-Cache then enable I-Cache allocations with <code>CCR.IC</code>. </td><td>Will do nothing if I-Cache allocations are already enabled. FSP automatically enables the I-Cache at startup by directly setting <code>CCR.IC</code> instead of using this function. </td></tr>
+<tr>
+<td>SCB_DisableICache </td><td>Disable I-Cache allocations with <code>CCR.IC</code>, then invalidate the entire I-Cache. </td><td></td></tr>
+<tr>
+<td>SCB_InvalidateICache </td><td>Invalidate the entire I-Cache. </td><td>This is safe to use at any time, because cache lines in the I-Cache can never be dirty. Used after modifying instructions anywhere in memory (e.g. Flash, RAM). FSP calls this function after initializing the predefined RAM code section during startup, and when exiting Code Flash program or erase mode in the Flash HP driver. </td></tr>
+<tr>
+<td>SCB_InvalidateICache_by_Addr </td><td>Loop to invalidate the instructions in the I-Cache, starting at a particular address and extending for the specified length in bytes. </td><td>This is safe to use at any time, because cache lines in the I-Cache can never be dirty. Can be used to more efficiently invalidate instructions at specific addresses. Will invalidate in increments of cache lines (32 bytes). </td></tr>
+</table>
+<p>These functions can be safely interrupted and do not need to be guarded by critical sections. However, depending on the structure of the application logic, guarding the functions may be necessary. This must be analyzed for an individual scenario. See the <a href="#CM85_CACHES-references">CMSIS 6 API</a> reference material for further information.</p>
+<h2>CMSIS 6 D-Cache Functions</h2>
+<table class="doxtable">
+<tr>
+<th>Function </th><th>Purpose </th><th>Notes  </th></tr>
+<tr>
+<td>SCB_EnableDCache </td><td>If D-Cache allocations are not already enabled, loop to invalidate the entire D-Cache then enable D-Cache allocations with <code>CCR.DC</code>. </td><td>Will do nothing if D-Cache allocations are already enabled. FSP automatically calls this function at startup if BSP_CFG_DCACHE_ENABLED is defined and non-zero. </td></tr>
+<tr>
+<td>SCB_DisableDCache </td><td>Disable D-Cache allocations with <code>CCR.DC</code>, then loop to clean and invalidate the entire D-Cache. </td><td></td></tr>
+<tr>
+<td>SCB_InvalidateDCache </td><td>Loop to invalidate the entire D-Cache. </td><td>This function should generally <b>not</b> be used, since no use case typically exists to invalidate the entire D-Cache. </td></tr>
+<tr>
+<td>SCB_CleanDCache </td><td>Loop to clean the entire D-Cache. </td><td></td></tr>
+<tr>
+<td>SCB_CleanInvalidateDCache </td><td>Loop to clean and invalidate the entire D-Cache. </td><td></td></tr>
+<tr>
+<td>SCB_InvalidateDCache_by_Addr </td><td>Loop to invalidate the data in the D-Cache, starting at a particular address and extending for the specified length in bytes. </td><td>Will invalidate in increments of cache lines (32 bytes). </td></tr>
+<tr>
+<td>SCB_CleanDCache_by_Addr </td><td>Loop to clean the data in the D-Cache, starting at a particular address and extending for the specified length in bytes. </td><td>Will clean in increments of cache lines (32 bytes). </td></tr>
+<tr>
+<td>SCB_CleanInvalidateDCache_by_Addr </td><td>Loop to clean and invalidate the data in the D-Cache, starting at a particular address and extending for the specified length in bytes. </td><td>Will clean and invalidate in increments of cache lines (32 bytes). </td></tr>
+</table>
+<p>These functions can be safely interrupted and do not need to be guarded by critical sections. However, depending on the structure of the application logic, guarding the functions may be necessary. This must be analyzed for an individual scenario. See the <a href="#CM85_CACHES-references">CMSIS 6 API</a> reference material for further information.</p>
+<h1><a class="anchor" id="CM85_CACHES-cache-details"></a>
+Cache Details</h1>
+<h2>I-Cache Details</h2>
+<h3>FSP I-Cache and FCACHE Behavior</h3>
+<p>Because of the simplicity of the I-Cache and FCACHE relative to the D-Cache and the critical instruction execution performance enhancement that they provide, FSP always enables the I-Cache and the FCACHE. This is not configurable.</p>
+<p>FSP automatically enables the I-Cache at startup for CM85 by directly setting <code>CCR.IC</code>. This method is used instead of the CMSIS 6 function, so that the I-Cache, branch prediction, and the low-overhead branch (LOB) extension may simultaneously be enabled. The automatic hardware cache invalidation of the CM85 ensures that cache lookups, allocations, and cache maintenance are no-op until the invalidation is finished, so immediately enabling the I-Cache is safe to do.</p>
+<p>FSP invalidates the I-Cache using the CMSIS 6 functions:</p><ul>
+<li>After initialzing the predefined RAM code section during startup</li>
+<li>After initializing the SAU for a Secure TZ application</li>
+<li>When exiting Code Flash program or erase mode in the Flash HP driver</li>
+</ul>
+<p>The FCACHE is a Renesas cache, not an Arm cache, and it is controlled through its separate peripheral registers.</p>
+<h3>User Required I-Cache Maintenance</h3>
+<p>If instructions have changed outside of the control of FSP, it is user responsibility to perform I-Cache maintenance. This means instructions stored in <em>any</em> cacheable location, including internal flash, internal RAM, external flash, external RAM, etc. It is recommended to use the CMSIS 6 functions to perform I-Cache maintenance.</p>
+<p>Users must also consider the interactions that D-Cache has with instruction modifications. For example, if the modified instructions are written to a cacheable location while D-Cache is enabled (e.g. RAM), those data writes may be cached. The D-Cache will need to be cleaned to guarantee that all data writes have been written back to guarantee their visibility to the I-Cache. D-Cache maintenance will also be needed if instructions change in Code or Data Flash via FACI and are cacheable, since D-Cache will cache instructions as data.</p>
+<p>There is no hardware mechanism between the I-Cache and D-Cache in which they automatically share coherency, so coherency must be manually maintained by software as required.</p>
+<h2>D-Cache Details</h2>
+<h3>FSP D-Cache Behavior</h3>
+<p>The D-Cache is a cache with more complex interactions than the I-Cache. Thus, FSP leaves the D-Cache disabled by default on RA8 projects. It can be enabled in e2 Studio under the <code>BSP-&gt;Cache settings-&gt;Data cache</code> properties panel for the project.</p>
+<p>Presently, FSP does not support any D-Cache functionality except:</p><ul>
+<li>Configuring the Arm MPU (S and NS) with two predefined no-cache sections if they are non-zero size<ul>
+<li>One in SRAM</li>
+<li>One in SDRAM</li>
+</ul>
+</li>
+<li>Enabling the Arm MPU (S and NS) after configuration</li>
+<li>Enabling D-Cache allocations (S or NS) with the CMSIS function</li>
+</ul>
+<p><b>No FSP drivers are currently compatible with D-Cache enablement. This compatibility is a work in-progress.</b></p>
+<h3>User Required D-Cache Maintenance</h3>
+<p>Presently, D-Cache usage is fully in the realm of user responsibility. The user must perform all D-Cache maintenance as required, or must store data accordingly in the predefined non-cacheable regions or otherwise.</p>
+<h3>Affected Bus Masters</h3>
+<p>Coherency must be considered for these bus masters:</p><ul>
+<li>CEU</li>
+<li>DMAC</li>
+<li>DRW</li>
+<li>DTC</li>
+<li>EDMAC</li>
+<li>GLCDC</li>
+<li>MIPI</li>
+</ul>
+<h3>Other Interactions that are not Bus Masters</h3>
+<p>Coherency must be considered for interactions with:</p><ul>
+<li>FACI</li>
+<li>CSC</li>
+<li>SDRAM</li>
+<li>Standby SRAM</li>
+<li>OSPI</li>
+<li>Code in RAM (I-Cache and D-Cache are not automatically coherent)</li>
+</ul>
+<h3>FSP Predefined No-Cache Sections</h3>
+<p>The <code>.nocache</code> and <code>.nocache_sdram</code> sections are predefined for GCC, LLVM, and IAR compilers. These same sections exist for AC6 as <code>.bss.nocache</code> and <code>.bss.nocache_sdram</code> because of special naming restrictions with AC6 and uninitialized sections. These sections are <b>uninitialized</b> for all compilers, despite AC6 requiring a prefix of <code>.bss</code>.</p>
+<p>Anything placed within them will be non-cacheable. Instruction fetches and data reads or writes to these sections will never lookup or allocate in their respective caches.</p>
+<p>The FSP startup code configures these sections as non-cacheable using the MPU during startup, if the D-Cache is enabled via the BSP configuration. Otherwise, they are not configured by FSP in the MPU if the D-Cache is disabled. The predefined sections are aligned to 32 bytes and are padded to a minimum of 32 bytes in length. This meets both MPU region alignment and length requirements, and cache line alignment and length requirements. The MPU and cache line alignment and length requirements protect against inadvertent mixing of cacheable and non-cacheable data.</p>
+<h1><a class="anchor" id="CM85_CACHES-other-information"></a>
+Other Information</h1>
+<h2>Cache Maintenance when MPU Configuration Changes</h2>
+<p>If the Secure and/or Non-secure MPU configuration is changed, and the cacheability of an address changes, cache maintenance is required to synchronize the caches with the new memory attributes. If this is not done, a newly non-cacheable address may be left in the cache, and behavior when accessing the address is considered <b>undefined</b>.</p>
+<h2>Cache Maintenance when SAU Configuration Changes</h2>
+<p>If the SAU configuration is changed, and the security attributes of an address changes, cache maintenance is required to synchronize the caches with the new security attributes. If this is not done, cached data will be desynchronized with the new security attributes and may result in <b>undefined</b> behavior.</p>
+<h2>Cache Maintenance and TrustZone</h2>
+<dl class="section warning"><dt>Warning</dt><dd><b>If cacheable shared data is improperly structured by the Secure application and is not aligned and padded to match D-Cache line requirements, a clean and invalidate by set/way of the D-Cache by the Non-secure application, or an automatic D-Cache eviction by the Non-secure application, will cause data to be destroyed for the Secure application.</b> This consequence is additional to the bugs that the Secure application may trigger itself by improper data layout, D-Cache maintenance, and automatic D-Cache eviction.</dd></dl>
+<h2>The System Address Map and the MPU</h2>
+<p>The <a href="#CM85_CACHES-references">Armv8-M Architecture Reference Manual</a> specifies a default system address map that defines the memory regions of the architecture and their various properties.</p>
+<p>These properties include the memory type, shareability attributes, and cacheability attributes for the regions. When the MPU is disabled, this default system address map provides the system with default attributes for instruction fetches, data reads, and data writes to and from addresses. When the MPU is enabled, it can be used to override the default system address map entirely, or both may be used together by setting the MPU_CTRL.PRIVDEFENA bit. This bit allows instruction fetches or data reads and writes that do not correspond to a configured MPU region to hit the default system address map as a background region instead, so long as the access is Privileged. FSP does not support Unprivileged execution, so it always assumes Privileged execution state. Allowing the default system address map as a background region is the method that FSP uses to provide the predefined no-cache sections, by configuring the MPU for the no-cache sections while allowing all other memory accesses to rely on the default system address map. Configuring an MPU region involves specifying a 32 byte aligned start address and an inclusive ending address, and also specifying the various memory attributes of the region. The MPU region beginning address register will mask downward to align to a 32 byte boundary. i.e (address &amp; ~0x1F) The MPU region ending address register will OR upward with 0x1F for the inclusive ending boundary. i.e. (address | 0x1F) Thus, the minimum size of an MPU region is 32 bytes and the size may only increase in 32 byte increments.</p>
+<p>See the <a href="#CM85_CACHES-references">Armv8-M Memory Model and Memory Protection User Guide</a> in the references section for a high-level introduction, and the <a href="#CM85_CACHES-references">Armv8-M Architecture Reference Manual</a> for details.</p>
+<h2>Speculative Instruction Fetching and Data Reads</h2>
+<p>The CM85 may, with no deliberate software instruction, speculatively fetch instructions or read data from any memory location. Upon doing so, the instruction fetch or data read may enter the respective cache. The purpose of this speculative behavior is to predict the next instructions or data to be fetched, read, or written, which increases performance if the prediction is correct. <b>This may cause instructions or data to unexpectedly appear in cache, so speculation must be considered when solving for cache coherency.</b></p>
+<h2>Cache Eviction</h2>
+<p>At any time, the I-Cache or D-Cache may evict cache lines. For I-Cache, this means invalidation of the evicted line. For D-Cache, this means cleaning and invalidation of the evicted line, where cleaning occurs if the cache line is dirty. <b>D-Cache eviction of dirty lines may cause data to be unexpectedly written out to backing memory when write-back is used, and this must be considered when solving for cache coherency.</b> <b>For D-Cache aligned and padded buffers derived from areas like the stack or heap, one or more of the associated cache lines may already be dirty and require cleaning and/or invalidation before being used by a bus master.</b></p>
+<h2>Example of D-Cache Eviction and Speculative Read Dangers</h2>
+<p>The CM85 will provide a SRAM buffer to the DMAC, the DMAC will write to the buffer, and the CM85 will read from the written buffer. I-Cache, D-Cache, and FCACHE are enabled. SRAM exists in the same "SRAM" region defined by the default system address map in the <a href="#CM85_CACHES-references">Armv8-M Architecture Reference Manual</a>. SRAM is Normal memory, write-back, write-allocate, read-allocate, and non-shareable by the default system address map attributes.</p>
+<p>The correct way to solve coherency in this situation using the two recommended solution options is:</p><ol type="1">
+<li>The MPU is used to configure a non-cacheable region where the SRAM buffer is placed.<ul>
+<li>The MPU region is correctly aligned and padded to meet start and end address alignment requirements, and region attributes are correctly configured.</li>
+<li>No additional effort is required.</li>
+<li>FSP provides the predefined <code>.nocache</code> section that meets these requirements.</li>
+</ul>
+</li>
+<li>The SRAM buffer is left to its default attributes, making it cacheable.<ul>
+<li>Regardless of whether write-back or write-through is used, the buffer start must be aligned to a cache line and the buffer must be a length multiple of cache line size.<ul>
+<li>Unrelated data can never be mixed on cache lines if write-back is used. It is best to follow this strict guideline even when write-through is used.</li>
+</ul>
+</li>
+<li>The cache lines of the buffer may already be dirty, especially if the buffer is allocated in a stack or heap.</li>
+<li>If write-back is used, cache maintenance is conducted in order.<ul>
+<li>Invalidate buffer.</li>
+<li>CM85 provides buffer to DMAC and starts DMAC.</li>
+<li>DMAC writes to buffer.</li>
+<li>CM85 waits for DMAC to complete.</li>
+<li>Invalidate buffer.</li>
+<li>CM85 reads from buffer.</li>
+</ul>
+</li>
+<li>The first invalidation is to remove dirty lines, which may already exist from stack or heap allocation. The data does not need to be written back and can be discarded without a clean.<ul>
+<li>If this is not done, an eviction (effectively an automatic clean and invalidate by the hardware) will cause stale data to be written back to the buffer and destroy newly written DMAC data.</li>
+</ul>
+</li>
+<li>The second invalidation is to remove speculatively read cache lines, which may have been cached before the DMAC write completed.<ul>
+<li>If this is not done, the CM85 will read stale data from the buffer that has been prematurely cached.</li>
+</ul>
+</li>
+<li>Write-through may also use this sequence, although the first invalidate should be a no-op since no lines can be dirty and no stale data should be written back by an eviction.</li>
+<li>The CMSIS cache maintenance functions should be used to perform cache maintenance, since they include necessary memory barriers.</li>
+</ul>
+</li>
+</ol>
+<p>The second solution is shown in the <a href="#CM85_CACHES-typical-cache-maintenance-scenarios">D-Cache Enabled scenarios here</a> where write-back is used and a bus master performs writing.</p>
+<h2>Cache ECC with FSP</h2>
+<p>By default, FSP disables ECC for the caches and TCM with OFS1.INITECCEN. For best performance, it is recommended to keep ECC for cache and TCM disabled. If enabling is desired, please consult the reference material to understand the consequences of enabling ECC for cache and TCM, which are too numerous to describe here. The automatic hardware cache invalidation performed by the CM85 is compatible with ECC.</p>
+<h2>MPU Cacheability Attributes</h2>
+<ul>
+<li>Cacheable or Non-Cacheable</li>
+<li>Allocation Policies<ul>
+<li>Read Allocate</li>
+<li>Write Allocate</li>
+</ul>
+</li>
+<li>Write Policy<ul>
+<li>Write Back or Write Through</li>
+</ul>
+</li>
+<li>Transient or Non-Transient</li>
+</ul>
+<p>For D-Cache, Shareable or Non-Shareable also affects whether an address is Cacheable or Non-Cacheable. A Shareable address is forced to Non-Cacheable for D-Cache. I-Cache is not influenced by the Shareability properties and will always follow the MPU cacheability attributes. The Transient attribute is of limited utility and can mostly be ignored. Clean cache lines that are marked Transient are preferred for eviction before clean cache lines marked Non-Transient. Dirty cache lines whether marked Transient or Non-Transient are evicted with the same priority.</p>
+<p>See the <a href="#CM85_CACHES-references">CM85 Technical Reference Manual</a> reference material for further information.</p>
+<h2>Cache Behavior with CCR and MSCR</h2>
+<p>x = [I, D] </p><table class="doxtable">
+<tr>
+<th>CCR.xC (S or NS) </th><th>MSCR.xCACTIVE </th><th>Behavior  </th></tr>
+<tr>
+<td>1 </td><td>1 </td><td>Allocate, Lookup </td></tr>
+<tr>
+<td>0 </td><td>1 </td><td>No Allocate, Lookup (Reset Behavior) </td></tr>
+<tr>
+<td>X </td><td>0 </td><td>No Allocate, No Lookup </td></tr>
+</table>
+<p>This behavior is applicable to Cortex-M55 and Cortex-M85. If you have previous experience with a Cortex-M7 device, this cache behavior is different since MSCR.xCACTIVE bits were introduced for CM55 and CM85. No CM7 or CM55 core is offered by any current RA devices. The new addition of the MSCR.xCACTIVE bits allow for cache power control, and by allowing a third cache behavioral state of lookups without allocation, cleaning the D-Cache after disabling it becomes less error prone since dirty cache lines cannot be made stale before being cleaned, by writes occurring after D-Cache is disabled like on CM7. The MSCR.xCACTIVE bits have a reset value of 1, so the caches are powered by default and lookups are possible. Until the automatic hardware cache invalidation which begins after reset finishes, lookups and allocations do not occur even if CCR.xC is set, and cache maintenance operations are no-op. The MSCR.xCACTIVE bits should generally never be cleared to 0.</p>
+<h2>Cache Errata</h2>
+<p>Consult the latest Renesas Technical Updates (TU) and Arm Cortex-M85 Errata documents.</p>
+<p>These are example errata to demonstrate the possibility of issues with cache usage at the time of this writing. </p><div class="fragment"><div class="line">Cortex-M85 AT640 and Cortex-M85 with FPU AT641</div><div class="line">Software Developer Errata Notice</div><div class="line">Date of issue: April 16, 2024</div><div class="line">Document version: 14.0</div><div class="line">Document ID: SDEN-2236668</div><div class="line"></div><div class="line">2682779</div><div class="line">After deactivating the instruction cache, self-modified code might not be executed correctly</div><div class="line">Fault Type: Programmer Category C</div><div class="line">Fault Status: Present in r0p0, r0p1, r0p2. Fixed in r1p0</div><div class="line"></div><div class="line">3175626</div><div class="line">AXI hang due to dependency between read data channel and write response channel</div><div class="line">Fault Type: Programmer Category B</div><div class="line">Fault Status: Present in r0p0, r0p1, r0p2, r1p0. Fixed in r1p1</div><div class="line"></div><div class="line">3190818</div><div class="line">Under limited circumstances, LDM to normal non-cacheable AXI location cannot complete</div><div class="line">Fault Type: Programmer Category B</div><div class="line">Fault Status: Present in r0p0, r0p1, r0p2, and r1p0. Fixed in r1p1</div></div><!-- fragment --><p>Currently available RA8D1, RA8M1, and RA8T1 devices use the r0p2 variant of the core, so they are affected by these errata.</p>
+<p>Erratum 2682779 should not require a workaround, since I-Cache will never be powered off in most circumstances.</p>
+<p>FSP added workarounds for 3175626 and 3190818 in v5.3.0.</p>
+<h1><a class="anchor" id="CM85_CACHES-references"></a>
+References</h1>
+<dl class="section note"><dt>Note</dt><dd>Cross-reference documents from multiple sources and consult with colleagues and other support channels for maximum confidence.</dd></dl>
+<h2>Renesas</h2>
+<p>Generally, consult these categories of documents for the most recent and further information than this overview may provide.</p><ul>
+<li>RA Datasheets</li>
+<li>RA Hardware User Manuals (HWM, HWUM, UM)</li>
+<li>RA Application Notes (AN)</li>
+<li>RA Knowledge Base Articles (KB)</li>
+<li>RA Technical Updates (TU)</li>
+<li>RA Example Projects</li>
+</ul>
+<h3>RA8D1</h3>
+<ol type="1">
+<li><a href="https://www.renesas.com/us/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/ra8d1-480-mhz-arm-cortex-m85-based-graphics-microcontroller-helium-and-trustzone">RA8D1 Product Page</a></li>
+<li><a href="https://www.renesas.com/us/en/document/dst/ra8d1-group-datasheet">RA8D1 Datasheet</a></li>
+<li><a href="https://www.renesas.com/us/en/document/mah/ra8d1-group-users-manual-hardware">RA8D1 User's Manual: Hardware</a></li>
+</ol>
+<h3>RA8M1</h3>
+<ol type="1">
+<li><a href="https://www.renesas.com/us/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/ra8m1-480-mhz-arm-cortex-m85-based-microcontroller-helium-and-trustzone">RA8M1 Product Page</a></li>
+<li><a href="https://www.renesas.com/us/en/document/dst/ra8m1-group-datasheet">RA8M1 Datasheet</a></li>
+<li><a href="https://www.renesas.com/us/en/document/mah/ra8m1-group-users-manual-hardware">RA8M1 User's Manual: Hardware</a></li>
+</ol>
+<h3>RA8T1</h3>
+<ol type="1">
+<li><a href="https://www.renesas.com/us/en/products/microcontrollers-microprocessors/ra-cortex-m-mcus/ra8t1-480-mhz-arm-cortex-m85-based-motor-control-microcontroller-helium-and-trustzone">RA8T1 Product Page</a></li>
+<li><a href="https://www.renesas.com/us/en/document/dst/ra8t1-group-datasheet">RA8T1 Datasheet</a></li>
+<li><a href="https://www.renesas.com/us/en/document/mah/ra8t1-group-users-manual-hardware">RA8T1 User's Manual: Hardware</a></li>
+</ol>
+<h3>BSP Usage Notes</h3>
+<ol type="1">
+<li><a class="el" href="group___b_s_p___m_c_u.html#limited-dcache-support">Limited D-Cache Support</a></li>
+<li><a class="el" href="group___b_s_p___m_c_u.html#non-cacheable-buffer-placement-example">Non-Cacheable Buffer Placement Example</a></li>
+</ol>
+<h2>Arm</h2>
+<dl class="section note"><dt>Note</dt><dd><b>Arm links appended with "latest" may not actually resolve to the most recent document, because of issues with the Arm documentation website. Always check that the document you are accessing is truly the most recent version using the version drop-down list box.</b></dd></dl>
+<h3>Armv8-M and Armv8.1-M Architectures</h3>
+<ol type="1">
+<li><a href="https://developer.arm.com/documentation/ddi0553/latest">Armv8-M Architecture Reference Manual</a></li>
+<li><a href="https://developer.arm.com/documentation/107565/latest">Armv8-M Memory Model and Memory Protection User Guide</a></li>
+<li><a href="https://developer.arm.com/documentation/107706/latest">Armv8-M Exception Model User Guide</a></li>
+</ol>
+<h3>Cortex-M85</h3>
+<ol type="1">
+<li><a href="https://developer.arm.com/Processors/Cortex-M85">Cortex-M85 Product Page</a></li>
+<li><a href="https://developer.arm.com/documentation/101924/latest">Arm Cortex-M85 Processor Technical Reference Manual</a></li>
+<li><a href="https://developer.arm.com/documentation/101928/latest">Arm Cortex-M85 Processor Devices Generic User Guide</a></li>
+<li><a href="https://developer.arm.com/documentation/108872/latest">Cortex-M85 AT640 and Cortex-M85 with FPU AT641 Software Developer Errata Notice</a></li>
+<li><a href="https://developer.arm.com/documentation/107950/latest">Arm Cortex-M85 Processor Software Optimization Guide</a></li>
+</ol>
+<h3>CMSIS 6</h3>
+<ol type="1">
+<li><a href="https://github.com/ARM-software/CMSIS_6">CMSIS 6 GitHub Repository</a></li>
+<li><a href="https://arm-software.github.io/CMSIS_6/latest/General/index.html">CMSIS 6 Documentation</a></li>
+<li><a href="https://arm-software.github.io/CMSIS_6/latest/Core/group__mpu8__functions.html">CMSIS 6 MPU API for Armv8-M</a></li>
+<li><a href="https://arm-software.github.io/CMSIS_6/latest/Core/group__cache__functions__m7.html">CMSIS 6 Cache API</a> </li>
+</ol>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

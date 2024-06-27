@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -381,7 +381,9 @@ Even</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
 <br />
-If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
+If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure.<br />
+<br />
+For RA4 and RA6 MCUs, refer the datasheet to calculate baud rate considering the SEMR.ABCSE bit restriction. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Baud Rate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -537,6 +539,7 @@ Usage Notes</h1>
 Limitations</h2>
 <ul>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+<li>The <a class="el" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate()</a> API is used to obtain the baud rate register settings for a specific baudrate. On RA4 and RA6 MCU groups, there is a restriction on SEMR.ABSCE bit for certain channels (refer to 'SEMR : Serial Extended Mode' Register section of MCU User Manual). The API does not enforce this restriction and it may return invalid settings.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-uart-dtc"></a>
 DTC Limitations</h2>
@@ -1174,7 +1177,8 @@ RS-485 settings. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL or the UART is not configured to use the internal clock. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>A restricted channel is selected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1339,7 +1343,7 @@ RS-485 settings. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate related registers.</p>
+<p>Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate related registers. </p><dl class="section note"><dt>Note</dt><dd>For limitations of this API, refer to the 'Limitations' section of r_sci_uart module in FSP User Manual.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate [bps]. For example, 19200, 57600, 115200, etc. </td></tr>
@@ -1366,7 +1370,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

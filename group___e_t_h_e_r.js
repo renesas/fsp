@@ -3,7 +3,9 @@ var group___e_t_h_e_r =
     [ "ether_instance_descriptor_t", "group___e_t_h_e_r.html#structether__instance__descriptor__t", null ],
     [ "ether_extended_cfg_t", "group___e_t_h_e_r.html#structether__extended__cfg__t", [
       [ "p_rx_descriptors", "group___e_t_h_e_r.html#a725dc0e4200c7ef25fa912a89f005e2f", null ],
-      [ "p_tx_descriptors", "group___e_t_h_e_r.html#a7399388b97420788499bf3d154558d77", null ]
+      [ "p_tx_descriptors", "group___e_t_h_e_r.html#a7399388b97420788499bf3d154558d77", null ],
+      [ "eesr_event_filter", "group___e_t_h_e_r.html#a26d48ea334af9e9a35dbd28078381e04", null ],
+      [ "ecsr_event_filter", "group___e_t_h_e_r.html#a4acdd55a5294d86457b267a069067156", null ]
     ] ],
     [ "ether_instance_ctrl_t", "group___e_t_h_e_r.html#structether__instance__ctrl__t", [
       [ "open", "group___e_t_h_e_r.html#a5a47551251fa2ce32c2eb47789bfc1ec", null ],
@@ -33,6 +35,37 @@ var group___e_t_h_e_r =
     [ "ether_link_establish_status_t", "group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784", [
       [ "ETHER_LINK_ESTABLISH_STATUS_DOWN", "group___e_t_h_e_r.html#gga9a49b9f7718ca059e906c12de43c0784aa8c8ee515baf9098d043094378fdf0c5", null ],
       [ "ETHER_LINK_ESTABLISH_STATUS_UP", "group___e_t_h_e_r.html#gga9a49b9f7718ca059e906c12de43c0784a52c3f79c649e8bb24e98b66480b2870f", null ]
+    ] ],
+    [ "ether_eesr_event_mask_t", "group___e_t_h_e_r.html#ga10526c4424a99be131f6fe8063b1f88c", [
+      [ "ETHER_EESR_EVENT_MASK_CERF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca6dedc9137344d78ba04c3918f0c38b05", null ],
+      [ "ETHER_EESR_EVENT_MASK_PRE", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88cac682f55cbd2c60102438be4493a8ee94", null ],
+      [ "ETHER_EESR_EVENT_MASK_RTSF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca5a1d17f99e115e01f36389dd9f6b727c", null ],
+      [ "ETHER_EESR_EVENT_MASK_RTLF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88cae05bcf6f7ab5767d11b9c6a12cf63f9d", null ],
+      [ "ETHER_EESR_EVENT_MASK_RRF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca8077221102ac206e9961e6b3882a7e05", null ],
+      [ "ETHER_EESR_EVENT_MASK_RMAF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca777e66e41c3756bf206bd748df08b57c", null ],
+      [ "ETHER_EESR_EVENT_MASK_TRO", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca9947db0309071eedb71312f18a2e2b88", null ],
+      [ "ETHER_EESR_EVENT_MASK_CD", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca47eab7e02f724d87a8203fdd33d8e82b", null ],
+      [ "ETHER_EESR_EVENT_MASK_DLC", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca6a2c13abab84bef82b4cb3068d3ebf6c", null ],
+      [ "ETHER_EESR_EVENT_MASK_CND", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88cac0ee99a7a1ac273330881b6f966c86ac", null ],
+      [ "ETHER_EESR_EVENT_MASK_RFOF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca435efa6837e8286208c7673b5b4bf8be", null ],
+      [ "ETHER_EESR_EVENT_MASK_RDE", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca809179f062191b6bde7b2fde6f783023", null ],
+      [ "ETHER_EESR_EVENT_MASK_FR", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca9dd3ae945d4b01a727e56bd922bee627", null ],
+      [ "ETHER_EESR_EVENT_MASK_TFUF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca2d20ad4fbedf58342ad1e8f13ec5f9e2", null ],
+      [ "ETHER_EESR_EVENT_MASK_TDE", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca91850b2622b4d9f7fa6d62cc4f8cbe01", null ],
+      [ "ETHER_EESR_EVENT_MASK_TC", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88cad7e7169c9a6494e217c3ae261c825f8e", null ],
+      [ "ETHER_EESR_EVENT_MASK_ECI", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88cafaf64a46ed5295a9a9b32eb31025a4a9", null ],
+      [ "ETHER_EESR_EVENT_MASK_ADE", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca5fd164167876c2a555ad360b89a0b7ee", null ],
+      [ "ETHER_EESR_EVENT_MASK_RFCOF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88caffd64ea2eb15bca9c63aed1ecceeff92", null ],
+      [ "ETHER_EESR_EVENT_MASK_RABT", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca21de371a251bd7092ca3213abac119c7", null ],
+      [ "ETHER_EESR_EVENT_MASK_TABT", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca93adac84792a2cdd78f60660b285c5c5", null ],
+      [ "ETHER_EESR_EVENT_MASK_TWB", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca4ec092c699e71087c073d58cdb126a82", null ]
+    ] ],
+    [ "ether_ecsr_event_mask_t", "group___e_t_h_e_r.html#ga28016058f267497af00ef19a1874dddd", [
+      [ "ETHER_ECSR_EVENT_MASK_ICD", "group___e_t_h_e_r.html#gga28016058f267497af00ef19a1874ddddadd49e16406723de778f49529b3b04c44", null ],
+      [ "ETHER_ECSR_EVENT_MASK_MPD", "group___e_t_h_e_r.html#gga28016058f267497af00ef19a1874dddda9b654db2f61d4c5b52e1c5da7308b38d", null ],
+      [ "ETHER_ECSR_EVENT_MASK_LCHNG", "group___e_t_h_e_r.html#gga28016058f267497af00ef19a1874ddddabe55f56e8d7c658527bbbd8264b2ee45", null ],
+      [ "ETHER_ECSR_EVENT_MASK_PSRTO", "group___e_t_h_e_r.html#gga28016058f267497af00ef19a1874dddda755a672850269b211d68a5b7751181a7", null ],
+      [ "ETHER_ECSR_EVENT_MASK_BFR", "group___e_t_h_e_r.html#gga28016058f267497af00ef19a1874ddddaae243fc4b68404ff5eadfa97a5226552", null ]
     ] ],
     [ "R_ETHER_Open", "group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd", null ],
     [ "R_ETHER_Close", "group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158", null ],

@@ -44,5 +44,6 @@ var group___w_i_f_i___d_a16_x_x_x =
     [ "RM_WIFI_DA16XXX_SntpServerIpAddressSet", "group___w_i_f_i___d_a16_x_x_x.html#ga66668f7e6a4b7c43e3415ea544c71914", null ],
     [ "RM_WIFI_DA16XXX_SntpEnableSet", "group___w_i_f_i___d_a16_x_x_x.html#ga89e737e234323ad7364927c39be2ad34", null ],
     [ "RM_WIFI_DA16XXX_SntpTimeZoneSet", "group___w_i_f_i___d_a16_x_x_x.html#ga1c9452ef3472f032a47ad320c82e9d1f", null ],
-    [ "RM_WIFI_DA16XXX_LocalTimeGet", "group___w_i_f_i___d_a16_x_x_x.html#ga1ce91750c24c5d6bba763b1a8e756dd2", null ]
+    [ "RM_WIFI_DA16XXX_LocalTimeGet", "group___w_i_f_i___d_a16_x_x_x.html#ga1ce91750c24c5d6bba763b1a8e756dd2", null ],
+    [ "RM_WIFI_DA16XXX_GenericAtSendRcv", "group___w_i_f_i___d_a16_x_x_x.html#gabfd85ebd3d28663f9bc6537671aa66ff", null ]
 ];

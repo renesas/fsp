@@ -1,10 +1,10 @@
 var group___u_a_r_t_a =
 [
     [ "uarta_baud_setting_t", "group___u_a_r_t_a.html#structuarta__baud__setting__t", [
-      [ "brgca", "group___u_a_r_t_a.html#a0e5255750966a185d843cfaed5ff4c0d", null ]
+      [ "brgca", "group___u_a_r_t_a.html#a0e5255750966a185d843cfaed5ff4c0d", null ],
+      [ "delay_time", "group___u_a_r_t_a.html#a139ed7e1fefa04aef8af5250b48856ff", null ]
     ] ],
     [ "uarta_extended_cfg_t", "group___u_a_r_t_a.html#structuarta__extended__cfg__t", [
-      [ "rxi_mode", "group___u_a_r_t_a.html#a2d3a574b3f371c4b9b4393db99dd1d70", null ],
       [ "transfer_dir", "group___u_a_r_t_a.html#acb2838b0ee81214fdb0fbf987d0f4bfe", null ],
       [ "transfer_level", "group___u_a_r_t_a.html#ad9a55a2bc5c93d5541a884b268edc86d", null ],
       [ "p_baud_setting", "group___u_a_r_t_a.html#a88b8309638f1a246daf02b8c2bc4e07e", null ]
@@ -25,10 +25,6 @@ var group___u_a_r_t_a =
       [ "UARTA_CLOCK_DIV_32", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110ab35a2bb66613172b5523b17efdb464b9", null ],
       [ "UARTA_CLOCK_DIV_64", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110a5c20e86b766db45eaf03bc76cc8f1c34", null ],
       [ "UARTA_CLOCK_DIV_COUNT", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110a0c182ed3cce15a7c16d845d0579d4e20", null ]
-    ] ],
-    [ "uarta_rxi_mode_t", "group___u_a_r_t_a.html#ga258c1cb20a60654773daefece154b043", [
-      [ "UARTA_RXI_MODE_ERROR_TRIGGER_ERI", "group___u_a_r_t_a.html#gga258c1cb20a60654773daefece154b043ab3e6a09189fd0bcc531b6dad9453670b", null ],
-      [ "UARTA_RXI_MODE_ERROR_TRIGGER_RXI", "group___u_a_r_t_a.html#gga258c1cb20a60654773daefece154b043aef29cc7bd46b2f17b7304bc172ced0b7", null ]
     ] ],
     [ "uarta_dir_bit_t", "group___u_a_r_t_a.html#ga86e16699bc814301eab02a25c7fbf05f", [
       [ "UARTA_DIR_BIT_MSB_FIRST", "group___u_a_r_t_a.html#gga86e16699bc814301eab02a25c7fbf05fac69e0263b404720810fa7fae869d5469", null ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -283,6 +283,7 @@ Features</h2>
 <li>MSB/LSB first</li>
 </ul>
 </li>
+<li>DTC Support</li>
 <li>Callback Events<ul>
 <li>Transfer Complete</li>
 </ul>
@@ -290,7 +291,7 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r_sau_spi-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_sau_spi_transfer_mode"></a><a class="anchor" id="um_spi_api_bitrate"></a><a class="anchor" id="um_sau_spi_data_phase"></a><a class="anchor" id="um_sau_spi_clock_phase"></a><a class="anchor" id="um_spi_api_msb_lsb"></a> <a class="anchor" id="um_spi_api_transfer_count"></a> <a class="anchor" id="um_spi_api_tx_underrun_callback"></a><a class="anchor" id="um_spi_api_rx_overflow_callback"></a></p><ul>
+<p><a class="anchor" id="um_sau_spi_transfer_mode"></a><a class="anchor" id="um_spi_api_bitrate"></a><a class="anchor" id="um_spi_api_clk_polarity"></a><a class="anchor" id="um_spi_api_clock_phase"></a><a class="anchor" id="um_spi_api_msb_lsb"></a> <a class="anchor" id="um_spi_api_transfer_count"></a> <a class="anchor" id="um_spi_api_tx_underrun_callback"></a><a class="anchor" id="um_spi_api_rx_overflow_callback"></a></p><ul>
 <li>RX Overflow Error (The SAU shift register is copied to the data register before previous data was read) <h2>Build Time Configurations for r_sau_spi</h2>
 The following build time configurations are defined in fsp_cfg/r_sau_spi_cfg.h:<br />
 </p><table class="doxtable">
@@ -321,9 +322,11 @@ Disabled</li>
 <li>
 20</li>
 <li>
+11</li>
+<li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>Enable single channel to reduce code size if only channel 00 or 20 is to be configured for SAU SPI. </td></tr>
+</td><td>Disabled </td><td>Enable single channel to reduce code size if only one channel (00, 11, or 20) is to be configured for SAU SPI. </td></tr>
 <tr class="tree_none">
 <td>Transfer Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -334,105 +337,128 @@ Transmission</li>
 Transmission/Reception</li>
 </ul>
 </td><td>Transmission/Reception </td><td>Select transfer operation mode. </td></tr>
+<tr class="tree_none">
+<td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DTC support for the SAU SPI module. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; SPI (r_sau_spi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sau_spi).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_spi0 </td><td>Module name. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Channel</td><td>MCU Specific Options</td><td></td><td>Select the SAU channel. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_spi0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td>MCU Specific Options</td><td></td><td>Select the SAU channel. </td></tr>
+<tr class="tree_none">
+<td>Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Master</li>
 <li>
 Slave</li>
 </ul>
 </td><td>Master </td><td>Select the SPI operating mode. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_none">
+<td>Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 CK0</li>
 <li>
 CK1</li>
 </ul>
 </td><td>CK0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Transfer Mode </td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_none">
+<td>Transfer Mode </td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Single transfer mode</li>
 <li>
 Continuous transfer mode</li>
 </ul>
 </td><td>Single transfer mode </td><td>Select transfer mode in transfer end interrupt. But buffer empty interrupt (in continuous transfer mode) cannot be selected in Slave Reception. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_none">
+<td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 MSB First</li>
 <li>
 LSB First</li>
 </ul>
 </td><td>MSB First </td><td>Select of data transfer sequence. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Data Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_none">
+<td>Data Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Data sampling on odd edge, data variation on even edge</li>
 <li>
 Data sampling on even edge, data variation on odd edge</li>
 </ul>
 </td><td>Data sampling on odd edge, data variation on even edge </td><td>Select when data output shall start compared with the serial clock operation. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Clock Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_none">
+<td>Clock Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 High when idle</li>
 <li>
 Low when idle</li>
 </ul>
 </td><td>High when idle </td><td>Select clock phase. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Bitrate</td><td>Value must be an integer greater than 0</td><td>500000 </td><td>Enter the desired bitrate.<br />
+<tr class="tree_none">
+<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>500000 </td><td>Enter the desired bitrate.<br />
 <br />
 If the requested bitrate cannot be achieved, adjust the operation clock frequency until the bitrate is achievable. The calculated bitrate is printed in a comment in the generated <a class="el" href="structsau__spi__extended__cfg__t.html">sau_spi_extended_cfg_t</a> structure. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>sau_spi_callback </td><td>A user callback function that is called from the sau spi interrupts when a transfer is completed or an error has occurred. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
+<tr class="tree_none">
+<td>Callback</td><td>Name must be a valid C symbol</td><td>sau_spi_callback </td><td>A user callback function that is called from the sau spi interrupts when a transfer is completed or an error has occurred. </td></tr>
+<tr class="tree_none">
+<td>Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
 </table>
 </li>
 </ul>
 <h2><a class="anchor" id="r_sau_spi-clock-configuration"></a>
 Clock Configuration</h2>
-<p>SAU uses system clock (ICLK).</p>
+<p>The SAU clock uses the system clock (ICLK) as its clock source.</p>
+<p>A prescaler is applied to the ICLK in order to produce the operation clock frequency. The operation clock is used to generate the desired transfer period of the SAU module.</p>
+<p>SAU operation clocks are shared among all channels within a SAU unit. Check the Hardware User's Manual for your MCU for available units and channels. SAU operation clock dividers are configurable in the Clocks tab.</p>
+<p>The operation clock dividers are named SAU CKmn where m is the SAU unit, and n is the operation clock. For example, SAU CK01 applies to all SAU0 instances using CK1 as the operation clock (m=0, n=1).</p>
+<h2><a class="anchor" id="r_sau_spi-clock-phase-polarity-configuration"></a>
+Clock Phase/Polarity Configuration</h2>
+<p>The following table illustrates the settings of the Clock Phase/Polarity corresponding SCRmn register DCP[1:0] bits in the SAU SPI.</p>
+<table class="doxtable">
+<tr>
+<th>Clock Phase </th><th>Clock Polarity </th><th>DCP[1:0] Value  </th></tr>
+<tr>
+<td>Data sampling on odd edge, data variation on even edge </td><td>High when idle </td><td>0b00 </td></tr>
+<tr>
+<td>Data sampling on odd edge, data variation on even edge </td><td>Low when idle </td><td>0b01 </td></tr>
+<tr>
+<td>Data sampling on even edge, data variation on odd edge </td><td>High when idle </td><td>0b10 </td></tr>
+<tr>
+<td>Data sampling on even edge, data variation on odd edge </td><td>Low when idle </td><td>0b11 </td></tr>
+</table>
 <h2><a class="anchor" id="r_sau_spi-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses SCKmn, SOmn, and SImn pins to communicate with on board devices.</p>
 <dl class="section note"><dt>Note</dt><dd>At high bit rates, it might be necessary to configure the pins with IOPORT_CFG_DRIVE_HIGH.</dd></dl>
+<h2><a class="anchor" id="r-sau_spi-enabling-dtc"></a>
+Enabling DTC with the SAU SPI</h2>
+<ul>
+<li>DTC transfer is disabled by default. When DTC is enabled, error event will not be handled until transfer is completed.</li>
+<li>For further details on DTC please refer <a class="el" href="group___d_t_c.html">Transfer (r_dtc)</a></li>
+</ul>
 <h1><a class="anchor" id="r_sau_spi-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-sau_spi-enabling-single-channel-configuration"></a>
 Enabling Single Channel By User With The SAU SPI</h2>
 <ul>
-<li>Single Channel is configurable and disabled by default in the driver code. Enable single channel to reduce code size if only channel 00 or 20 is to be configured for SAU SPI<ul>
-<li>Channel 00 is supported by SAU0</li>
-<li>Channel 20 is supported by SAU1</li>
-</ul>
-</li>
-</ul>
-<h2><a class="anchor" id="r-sau-spi-limitations"></a>
-Limitations</h2>
-<ul>
-<li>The operation clock divider (<code>BSP_CFG_SAU_CKm0/1_DIV</code>, where m=SAU unit number) cannot be changed at runtime.</li>
-<li>When multiple channels on the same SAU unit need to be used, and one is configured as I2C, then critical section property needs to be enabled.</li>
+<li>The Common &gt; Single Channel property is used for reducing code size when only 1 SAU channel is to be configured for SAU SPI.</li>
+<li>Single Channel is configurable and disabled by default in the driver code.</li>
+<li>Note: Not all SAU channels are available on all pin layouts. Check the Hardware User Manual for your device to confirm available function assignment for each SAU channel.</li>
 </ul>
 <h2>Transfer Complete Event</h2>
 <p>The transfer complete event is triggered when all of the data has been transferred. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
 <h2>Performance</h2>
 <p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors.</p>
+<p>To improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC.</p>
 <h2>Slave Select Pin</h2>
 <ul>
 <li>In master mode the slave select pin must be driven in software.</li>
@@ -440,6 +466,26 @@ Limitations</h2>
 </ul>
 <h2>Single Channel Use Case</h2>
 <p>If only SAU channel 00 is to be used for I2C or SPI or UART, enable single channel can reduce the code size.</p>
+<h2><a class="anchor" id="r-sau-spi-operation-clock-frequency-selection"></a>
+Selecting Operation Clock Frequency</h2>
+<p>The relationship between operation clock frequency and bitrate is: <code>bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</code> where:</p>
+<ul>
+<li><code>SDRmn.STCLK</code> is an integer in the range [0, 127] for SAU SPI</li>
+<li><code>f_mck</code> is the operation clock (SAU CKmn) frequency</li>
+</ul>
+<p>By plugging in the minimum and maximum <code>SDRmn.STCLK</code> values, the range of bitrates for a given operation clock frequency can be obtained.</p>
+<p>Note that due to STCLK being set as discrete integers, the actual bitrate may not be exact. The actual bitrate and percent errors can be calculated by the formulas:</p>
+<div class="fragment"><div class="line">actual_bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</div><div class="line">percent_error = 100 * abs [(actual_bitrate - expected_bitrate)  / expected_bitrate]</div></div><!-- fragment --><p>Using the fastest possible operation clock for the desired bitrate will result in the lowest deviation from the requested bitrate. Set the CKmn operation clock divider in the Clocks tab to select the desired operation clock frequency.</p>
+<h2>Runtime bitrate calculation</h2>
+<p>The function <a class="el" href="group___s_a_u___s_p_i.html#ga3c76702b7ca8108142d0b641759e0c8f">R_SAU_SPI_CalculateBitrate</a> can be used at runtime to calculate alternate bitrate settings.</p>
+<p>This function computes settings with both operation clocks CK0 and CK1. If valid settings are possible with both clocks, it selects the settings and clock that would produce the lowest error.</p>
+<p>Set the divisors for CK0 and CK01 in the clocks tab such that all required bitrate settings for the application are possible. A large range of bitrates can be achieved by having one "slow" operation clock for low speed modes and one "fast" operation clock for high speed modes.</p>
+<h2><a class="anchor" id="r-sau-spi-limitations"></a>
+Limitations</h2>
+<ul>
+<li>When multiple channels on the same SAU unit need to be used, and one is configured as I2C, then critical section property needs to be enabled.</li>
+<li>Continuous transfer mode will be deprecated.</li>
+</ul>
 <h1><a class="anchor" id="r_sau_spi-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -634,7 +680,7 @@ Examples</h1>
     <tr><td class="paramdir"></td><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">p_dest</td><td>Pointer to the destination buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The number of bytes to transfer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).</td></tr>
   </table>
   </dd>
 </dl>
@@ -715,7 +761,7 @@ Examples</h1>
     <tr><td class="paramdir"></td><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">p_src</td><td>Pointer to the source buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The number of bytes to transfer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).</td></tr>
   </table>
   </dd>
 </dl>
@@ -805,7 +851,7 @@ Examples</h1>
     <tr><td class="paramdir"></td><td class="paramname">p_src</td><td>Pointer to the source buffer. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">p_dest</td><td>Pointer to the destination buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The number of bytes to transfer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bit_width</td><td>Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).</td></tr>
   </table>
   </dd>
 </dl>
@@ -979,7 +1025,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

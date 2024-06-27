@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -337,7 +337,7 @@ Pin Configuration</h2>
 <p>This module use SDA and SCL pins of I2C Master and SCI I2C.</p>
 <h1><a class="anchor" id="rm-hs300x-usage_notes"></a>
 Usage Notes</h1>
-<p><a href="https://www.renesas.com/jp/ja/document/dst/hs300x-datasheet">HS300x datasheet is here. </a> <br />
+<p><a href="https://www.renesas.com/document/dst/hs3xxx-datasheet">HS300x datasheet is here. </a> <br />
 If ADC data is valid and calculating humidity and temperature is finished, it is needed to start a measurement again. If ADC data is invalid, it is needed to read ADC data from HS300x again.</p>
 <p>If changing the sensor resolution and getting the sensor ID, RM_HS300X_ProgrammingModeEnter function must be called within 10ms after applying power to the sensor. Entering the programming mode takes 120us. Thresore, after calling RM_HS300X_ProgrammingModeEnter function, please wait 120us. After calling RM_HS300X_ResolutionChange function, 14ms must be waited because failure to comply with these times may result in data corruption and introduce errors in sensor measurements.</p>
 <p>If an RTOS is used, blocking and bus lock is available.</p><ul>
@@ -776,7 +776,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

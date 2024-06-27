@@ -8,6 +8,7 @@ var group___d_t_c =
     [ "DTC_MAX_REPEAT_TRANSFER_LENGTH", "group___d_t_c.html#ga4fd7d0141f9b7f10c39146c4b80242e7", null ],
     [ "DTC_MAX_BLOCK_TRANSFER_LENGTH", "group___d_t_c.html#ga19425a6e2cc8c0080c61ff61f6ad9e29", null ],
     [ "DTC_MAX_BLOCK_COUNT", "group___d_t_c.html#ga7ab61b801ce7972fdfc9c6f00da2df51", null ],
+    [ "DTC_TRANSFER_INFO_ALIGNMENT", "group___d_t_c.html#ga178f306c1911683915cea5c85c8868da", null ],
     [ "R_DTC_Open", "group___d_t_c.html#gad2bd9d74b22d0f3e109130385ac8904e", null ],
     [ "R_DTC_Reconfigure", "group___d_t_c.html#ga6aca711303eee5fbb414bb5134f7db7c", null ],
     [ "R_DTC_Reset", "group___d_t_c.html#ga4276dd89f346eb7a5e3ec8e4c8fe99fb", null ],

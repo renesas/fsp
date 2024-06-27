@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -327,6 +327,14 @@ Unused</li>
 Used</li>
 </ul>
 </td><td>Unused </td><td>Use LINKSTA signal for detect link status changes 0 = unused (use PHY-LSI status register) 1 = use (use LINKSTA signal) </td></tr>
+<tr class="tree_none">
+<td>Interrupt event backward compatibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Do not keep compatibility</li>
+<li>
+Keep compatibility</li>
+</ul>
+</td><td>Keep compatibility </td><td>Keep backword compatibility of interrupt events. 0 = Do not keep compatibility, use separate events for each cause of interrupt. 1 = Keep compatibility, use common events for all interrupts. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; Ethernet (r_ether)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Ethernet (r_ether). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -409,6 +417,22 @@ Disable</li>
 <td class="tree_lvl_1_cell">Padding offset</td><td>Must be less than 64 bytes.</td><td>0 </td><td>The offset into a receive buffer to insert padding bytes. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EESR event</td><td>Refer to the RA Configuration tool for available options.</td><td>module.driver.ether.eesr_event_mask.rfof,module.driver.ether.eesr_event_mask.rde,module.driver.ether.eesr_event_mask.fr,module.driver.ether.eesr_event_mask.tc,module.driver.ether.eesr_event_mask.tfuf,module.driver.ether.eesr_event_mask.tde </td><td>Select event list for each bit of EESR. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ECSR event</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+ICD</li>
+<li>
+MPD</li>
+<li>
+LCHNG</li>
+<li>
+PSRTO</li>
+<li>
+BFR</li>
+</ul>
+</td><td></td><td>Select event list for each bit of ECSR. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EDMAC interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -529,6 +553,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:gac38559e233d4678a9b24d2ee16aa9d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9a49b9f7718ca059e906c12de43c0784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784">ether_link_establish_status_t</a> </td></tr>
 <tr class="separator:ga9a49b9f7718ca059e906c12de43c0784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10526c4424a99be131f6fe8063b1f88c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga10526c4424a99be131f6fe8063b1f88c">ether_eesr_event_mask_t</a> </td></tr>
+<tr class="separator:ga10526c4424a99be131f6fe8063b1f88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28016058f267497af00ef19a1874dddd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga28016058f267497af00ef19a1874dddd">ether_ecsr_event_mask_t</a> </td></tr>
+<tr class="separator:ga28016058f267497af00ef19a1874dddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structether__instance__descriptor__t" id="structether__instance__descriptor__t"></a>
@@ -572,6 +600,18 @@ Receive descriptor buffer pool. </td></tr>
 p_tx_descriptors</td>
 <td class="fielddoc">
 Transmit descriptor buffer pool. </td></tr>
+<tr><td class="fieldtype">
+<a id="a26d48ea334af9e9a35dbd28078381e04"></a>uint32_t</td>
+<td class="fieldname">
+eesr_event_filter</td>
+<td class="fielddoc">
+Filter for EESR related event. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4acdd55a5294d86457b267a069067156"></a>uint8_t</td>
+<td class="fieldname">
+ecsr_event_filter</td>
+<td class="fielddoc">
+Filter for ECSR related event. </td></tr>
 </table>
 
 </div>
@@ -712,6 +752,94 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9a49b9f7718ca059e906c12de43c0784aa8c8ee515baf9098d043094378fdf0c5"></a>ETHER_LINK_ESTABLISH_STATUS_DOWN&#160;</td><td class="fielddoc"><p>Link establish status is down. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9a49b9f7718ca059e906c12de43c0784a52c3f79c649e8bb24e98b66480b2870f"></a>ETHER_LINK_ESTABLISH_STATUS_UP&#160;</td><td class="fielddoc"><p>Link establish status is up. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga10526c4424a99be131f6fe8063b1f88c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10526c4424a99be131f6fe8063b1f88c">&#9670;&nbsp;</a></span>ether_eesr_event_mask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___e_t_h_e_r.html#ga10526c4424a99be131f6fe8063b1f88c">ether_eesr_event_mask_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event mask for EESR register </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca6dedc9137344d78ba04c3918f0c38b05"></a>ETHER_EESR_EVENT_MASK_CERF&#160;</td><td class="fielddoc"><p>CERF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88cac682f55cbd2c60102438be4493a8ee94"></a>ETHER_EESR_EVENT_MASK_PRE&#160;</td><td class="fielddoc"><p>PRE event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca5a1d17f99e115e01f36389dd9f6b727c"></a>ETHER_EESR_EVENT_MASK_RTSF&#160;</td><td class="fielddoc"><p>RTSF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88cae05bcf6f7ab5767d11b9c6a12cf63f9d"></a>ETHER_EESR_EVENT_MASK_RTLF&#160;</td><td class="fielddoc"><p>RTLF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca8077221102ac206e9961e6b3882a7e05"></a>ETHER_EESR_EVENT_MASK_RRF&#160;</td><td class="fielddoc"><p>PRF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca777e66e41c3756bf206bd748df08b57c"></a>ETHER_EESR_EVENT_MASK_RMAF&#160;</td><td class="fielddoc"><p>RMAF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca9947db0309071eedb71312f18a2e2b88"></a>ETHER_EESR_EVENT_MASK_TRO&#160;</td><td class="fielddoc"><p>TRO event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca47eab7e02f724d87a8203fdd33d8e82b"></a>ETHER_EESR_EVENT_MASK_CD&#160;</td><td class="fielddoc"><p>CD event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca6a2c13abab84bef82b4cb3068d3ebf6c"></a>ETHER_EESR_EVENT_MASK_DLC&#160;</td><td class="fielddoc"><p>DLC event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88cac0ee99a7a1ac273330881b6f966c86ac"></a>ETHER_EESR_EVENT_MASK_CND&#160;</td><td class="fielddoc"><p>CND event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca435efa6837e8286208c7673b5b4bf8be"></a>ETHER_EESR_EVENT_MASK_RFOF&#160;</td><td class="fielddoc"><p>RFOF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca809179f062191b6bde7b2fde6f783023"></a>ETHER_EESR_EVENT_MASK_RDE&#160;</td><td class="fielddoc"><p>RDE event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca9dd3ae945d4b01a727e56bd922bee627"></a>ETHER_EESR_EVENT_MASK_FR&#160;</td><td class="fielddoc"><p>FR event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca2d20ad4fbedf58342ad1e8f13ec5f9e2"></a>ETHER_EESR_EVENT_MASK_TFUF&#160;</td><td class="fielddoc"><p>TFUF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca91850b2622b4d9f7fa6d62cc4f8cbe01"></a>ETHER_EESR_EVENT_MASK_TDE&#160;</td><td class="fielddoc"><p>TDE event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88cad7e7169c9a6494e217c3ae261c825f8e"></a>ETHER_EESR_EVENT_MASK_TC&#160;</td><td class="fielddoc"><p>TC event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88cafaf64a46ed5295a9a9b32eb31025a4a9"></a>ETHER_EESR_EVENT_MASK_ECI&#160;</td><td class="fielddoc"><p>ECI event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca5fd164167876c2a555ad360b89a0b7ee"></a>ETHER_EESR_EVENT_MASK_ADE&#160;</td><td class="fielddoc"><p>ADE event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88caffd64ea2eb15bca9c63aed1ecceeff92"></a>ETHER_EESR_EVENT_MASK_RFCOF&#160;</td><td class="fielddoc"><p>RFCOF event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca21de371a251bd7092ca3213abac119c7"></a>ETHER_EESR_EVENT_MASK_RABT&#160;</td><td class="fielddoc"><p>RABT event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca93adac84792a2cdd78f60660b285c5c5"></a>ETHER_EESR_EVENT_MASK_TABT&#160;</td><td class="fielddoc"><p>TABT event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10526c4424a99be131f6fe8063b1f88ca4ec092c699e71087c073d58cdb126a82"></a>ETHER_EESR_EVENT_MASK_TWB&#160;</td><td class="fielddoc"><p>TWB event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga28016058f267497af00ef19a1874dddd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga28016058f267497af00ef19a1874dddd">&#9670;&nbsp;</a></span>ether_ecsr_event_mask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___e_t_h_e_r.html#ga28016058f267497af00ef19a1874dddd">ether_ecsr_event_mask_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event mask for ECSR register </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga28016058f267497af00ef19a1874ddddadd49e16406723de778f49529b3b04c44"></a>ETHER_ECSR_EVENT_MASK_ICD&#160;</td><td class="fielddoc"><p>ICD event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga28016058f267497af00ef19a1874dddda9b654db2f61d4c5b52e1c5da7308b38d"></a>ETHER_ECSR_EVENT_MASK_MPD&#160;</td><td class="fielddoc"><p>MPD event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga28016058f267497af00ef19a1874ddddabe55f56e8d7c658527bbbd8264b2ee45"></a>ETHER_ECSR_EVENT_MASK_LCHNG&#160;</td><td class="fielddoc"><p>LCHNG event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga28016058f267497af00ef19a1874dddda755a672850269b211d68a5b7751181a7"></a>ETHER_ECSR_EVENT_MASK_PSRTO&#160;</td><td class="fielddoc"><p>PSRTO event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga28016058f267497af00ef19a1874ddddaae243fc4b68404ff5eadfa97a5226552"></a>ETHER_ECSR_EVENT_MASK_BFR&#160;</td><td class="fielddoc"><p>BFR event. </p>
 </td></tr>
 </table>
 
@@ -1118,7 +1246,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

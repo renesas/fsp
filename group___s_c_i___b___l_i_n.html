@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -1149,7 +1149,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
       </table>
 </div><div class="memdoc">
 <p>Begins non-blocking transmission of a LIN information frame.</p>
-<p>On successful information frame reception, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6">lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE</a>.</p>
+<p>On successful information frame transmission, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6">lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE</a>.</p>
 <p>Implements <a class="el" href="group___l_i_n___a_p_i.html#aa1103bd6a75fd2e6f005d3ad3e2dc4e1">lin_api_t::informationFrameWrite</a>.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN information frame */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a>(&amp;g_master_ctrl, &amp;write_params);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1461,7 +1461,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

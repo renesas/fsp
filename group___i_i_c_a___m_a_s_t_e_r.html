@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -330,9 +330,9 @@ Fast-mode plus</li>
 <br />
 If the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated transfer rate is printed in a comment in the generated <a class="el" href="group___i_i_c_a___m_a_s_t_e_r.html#structiica__master__extended__cfg__t">iica_master_extended_cfg_t</a> structure. </td></tr>
 <tr class="tree_none">
-<td>Signal Rising Times (us)</td><td>Value must be a non-negative integer.</td><td>0 </td><td>Set the SDA and SCL signal rising times in micro-seconds. </td></tr>
+<td>Signal Rising Time (us)</td><td>Must be a valid value</td><td>0 </td><td>Set the SDA and SCL signal rising time in micro-seconds. </td></tr>
 <tr class="tree_none">
-<td>Signal Falling Times (us)</td><td>Value must be a non-negative integer.</td><td>0 </td><td>Set the SDA and SCL signal falling times in micro-seconds. </td></tr>
+<td>Signal Falling Time (us)</td><td>Must be a valid value</td><td>0 </td><td>Set the SDA and SCL signal falling time in micro-seconds. </td></tr>
 <tr class="tree_none">
 <td>Duty Cycle (%)</td><td>Value must be an integer between 0 and 100</td><td>53 </td><td>Set SCL high duty cycle. </td></tr>
 <tr class="tree_none">
@@ -431,6 +431,7 @@ Limitations</h2>
 <li>Interrupt request is always generated on the falling edge of the 9th clock cycle.</li>
 <li>Master operation in multi-master system is not supported</li>
 <li>Please configure SDAA and SCLA pins in the IICA module. IICA pins must be set after IICA is enabled.</li>
+<li>Custom bitrate is not yet supported for IICA.</li>
 </ul>
 <h1><a class="anchor" id="r-iica_master-examples"></a>
 Examples</h1>
@@ -907,7 +908,7 @@ SCLAA pin setting. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

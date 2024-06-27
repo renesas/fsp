@@ -51,6 +51,8 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
     [ "i2c_master_event_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ga515f0c8b583f8851ce4d6474168769af", [
       [ "I2C_MASTER_EVENT_ABORTED", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga515f0c8b583f8851ce4d6474168769afa22226fd293eb8a7f80e4a80ca8699a4d", null ],
       [ "I2C_MASTER_EVENT_RX_COMPLETE", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga515f0c8b583f8851ce4d6474168769afa1b3d50a1a4fbf045307febd9eca1521a", null ],
-      [ "I2C_MASTER_EVENT_TX_COMPLETE", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga515f0c8b583f8851ce4d6474168769afa9273437457da4f6369e937d257c0211b", null ]
+      [ "I2C_MASTER_EVENT_TX_COMPLETE", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga515f0c8b583f8851ce4d6474168769afa9273437457da4f6369e937d257c0211b", null ],
+      [ "I2C_MASTER_EVENT_START", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga515f0c8b583f8851ce4d6474168769afab71cabec8399cca4d24b60cfda735a42", null ],
+      [ "I2C_MASTER_EVENT_BYTE_ACK", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga515f0c8b583f8851ce4d6474168769afac0fac7695efc6eab872cb17a88c3c93e", null ]
     ] ]
 ];

@@ -9,6 +9,7 @@ var searchData=
   ['storage',['Storage',['../group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html',1,'']]],
   ['system',['System',['../group___r_e_n_e_s_a_s___s_y_s_t_e_m___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
   ['system',['System',['../group___r_e_n_e_s_a_s___s_y_s_t_e_m___m_o_d_u_l_e_s.html',1,'']]],
+  ['smbus_20communication_20device_20_28rm_5fcomms_5fsmbus_29',['SMBUS Communication Device (rm_comms_smbus)',['../group___r_m___c_o_m_m_s___s_m_b_u_s.html',1,'']]],
   ['segger_20emwin_20ra_20port_20_28rm_5femwin_5fport_29',['SEGGER emWin RA Port (rm_emwin_port)',['../group___r_m___e_m_w_i_n___p_o_r_t.html',1,'']]],
   ['secure_20key_20injection_20_28r_5frsip_5fkey_5finjection_29',['Secure Key Injection (r_rsip_key_injection)',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html',1,'']]],
   ['s1_5fdirection',['s1_direction',['../group___m_o_t_o_r___r_e_t_u_r_n___o_r_i_g_i_n.html#a7bd17d2b41d94666ff002764fff2c076',1,'motor_return_origin_instance_ctrl_t']]],
@@ -686,6 +687,7 @@ var searchData=
   ['slow_5fscan_5finterval',['slow_scan_interval',['../group___b_l_e___a_b_s___a_p_i.html#a7628d2f985b5b7cba1573b641b045db9',1,'ble_abs_scan_phy_parameter_t']]],
   ['slow_5fscan_5fperiod',['slow_scan_period',['../group___b_l_e___a_b_s___a_p_i.html#a98d9e75c976d90dea9dece0123ed12d9',1,'ble_abs_scan_parameter_t']]],
   ['slow_5fscan_5fwindow',['slow_scan_window',['../group___b_l_e___a_b_s___a_p_i.html#a33a1c4fe7e79a568775beedd4f65dc57',1,'ble_abs_scan_phy_parameter_t']]],
+  ['smbus_5foperation',['smbus_operation',['../group___i_i_c___m_a_s_t_e_r.html#ab9f7892d6aeb523b7df64b46b74be2a8',1,'iic_master_extended_cfg_t::smbus_operation()'],['../group___i_i_c___b___m_a_s_t_e_r.html#a67e9011be75d150f2ecf54d0fc21c145',1,'iic_b_master_extended_cfg_t::smbus_operation()'],['../group___r_m___c_o_m_m_s___i2_c.html#a5bf558d2b4ffada3ff72ea4755882e8c',1,'rm_comms_i2c_instance_ctrl_t::smbus_operation()']]],
   ['smci_20interface',['SMCI Interface',['../group___s_m_c_i___a_p_i.html',1,'']]],
   ['smci_5fapi_5ft',['smci_api_t',['../group___s_m_c_i___a_p_i.html#structsmci__api__t',1,'']]],
   ['smci_5fbaud_5fsetting_5ft',['smci_baud_setting_t',['../group___s_c_i___s_m_c_i.html#structsmci__baud__setting__t',1,'']]],
@@ -1290,7 +1292,6 @@ var searchData=
   ['subnet_5fhandle',['subnet_handle',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a9ab54c7f82568af97180ba7ab9495034',1,'rm_ble_mesh_access_model_req_msg_context_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a4ff48c1ada0b6b8b0bc63917892da3f3',1,'rm_ble_mesh_access_pdu_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#aed42e5bec316bc04c85bc606ed41ee9a',1,'rm_ble_mesh_lower_trans_transmit_setting_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#a0ed395734efc0e222801505128adce3c',1,'rm_ble_mesh_lower_trans_callback_args_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a7db94c3a27ba001b6d564da278ffda44',1,'rm_ble_mesh_network_route_info_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a7960214bd760bc6455052f08be26056c',1,'rm_ble_mesh_network_callback_args_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a60aae1e20ab66cdaccab6c48cd34f58e',1,'rm_ble_mesh_upper_trans_access_layer_pdu_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#accf2a409d82efcff71df45be7854deea',1,'rm_ble_mesh_upper_trans_control_pdu_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#ad60c4e2f483ee5d94a64a763afe94e4c',1,'rm_ble_mesh_upper_trans_friendship_setting_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a7639ecbd58547b05bb9469aab69b564a',1,'rm_ble_mesh_upper_trans_friendship_info_t::subnet_handle()'],['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a9430c16ca2a85cf51ad260c343940ee3',1,'rm_ble_mesh_upper_trans_callback_args_t::subnet_handle()']]],
   ['subosc_5fstate',['subosc_state',['../group___c_g_c___a_p_i.html#a327c971f398f6d4552280319e37a3cf4',1,'cgc_clocks_cfg_t']]],
   ['subsecond',['subsecond',['../structrm__mesh__time__info__t.html#a38f294cbe93f494b113c73a70ca3ceab',1,'rm_mesh_time_info_t::subsecond()'],['../group___r_m___m_e_s_h___t_i_m_e___s_r_v.html#a88a9b27bc524ddec33c2ff414d3b02b1',1,'rm_mesh_time_srv_info_t::subsecond()']]],
-  ['subtype',['subtype',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ac2e1192f719af310f77dc9efb715aada',1,'rsip_wrapped_key_t']]],
   ['subversion',['subversion',['../group___g_a_p___a_p_i.html#aca545c0ce1a29d420796a8b62ae7c055',1,'st_ble_gap_dev_info_evt_t']]],
   ['sulfurodordatacalculate',['sulfurOdorDataCalculate',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af8d15ec491a454d5d120f21aa41e8f9f',1,'rm_zmod4xxx_api_t']]],
   ['sunday_5fmatch',['sunday_match',['../group___r_t_c___a_p_i.html#aa1d927bd50d7f665be747bf1912aecfe',1,'rtc_alarm_time_t']]],
@@ -1320,5 +1321,5 @@ var searchData=
   ['system_5fclock',['system_clock',['../group___c_g_c___a_p_i.html#a654bf74a6f5fa9b5b278f4bd1144658c',1,'cgc_clocks_cfg_t']]],
   ['systemclockget',['systemClockGet',['../group___c_g_c___a_p_i.html#aab4d84b9a18f5ff223fa9d5dbdf2104c',1,'cgc_api_t']]],
   ['systemclockset',['systemClockSet',['../group___c_g_c___a_p_i.html#ac55d09984ea2ed00e0b9f67b21ca9953',1,'cgc_api_t']]],
-  ['systeminit',['SystemInit',['../group___b_s_p___m_c_u.html#ga5af8ae341e953c147fde75746ff282d6',1,'system.c']]]
+  ['systeminit',['SystemInit',['../group___b_s_p___m_c_u.html#ga93f514700ccf00d08dbdcff7f1224eb2',1,'system.c']]]
 ];

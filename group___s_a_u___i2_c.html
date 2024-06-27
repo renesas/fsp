@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -392,11 +392,18 @@ If the requested rate cannot be achieved, adjust the operation clock frequency u
 <td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>sau_i2c_master_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Transfer end interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select transfer end interrupt priority. This is set for TEI interrupt. </td></tr>
+<tr class="tree_none">
+<td>Custom Rate (bps)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Set a custom bitrate (bps). Set to 0 to use the maximum bitrate for the selected mode.<br />
+<br />
+Standard-mode: up to 100000; Fast-mode: up to 400000; Fast-mode plus: up to 1000000 </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-sau_i2c-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The SAU clock is based on the peripheral module clock which is the system clock (ICLK).</p>
+<p>The SAU clock uses the system clock (ICLK) as its clock source.</p>
+<p>A prescaler is applied to the ICLK in order to produce the operation clock frequency. The operation clock is used to generate the desired transfer period of the SAU module.</p>
+<p>SAU operation clocks are shared among all channels within a SAU unit. Check the Hardware User's Manual for your MCU for available units and channels. SAU operation clock dividers are configurable in the Clocks tab.</p>
+<p>The operation clock dividers are named SAU CKmn where m is the SAU unit, and n is the operation clock. For example, SAU CK01 applies to all SAU0 instances using CK1 as the operation clock (m=0, n=1).</p>
 <h2><a class="anchor" id="r-sau_i2c-pin-configuration"></a>
 Pin Configuration</h2>
 <p>The SAU I2C peripheral module uses pins on the MCU to communicate to external devices. I/O pins must be selected and configured as required by the external device. An I2C channel would consist of two pins - SDA and SCL for data/address and clock respectively.</p>
@@ -424,9 +431,26 @@ Interrupt Configuration</h2>
 <h2><a class="anchor" id="r-sau_i2c-rate_calculation"></a>
 SAU I2C Master Rate Calculation</h2>
 <ul>
-<li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate and operating clock. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLK settings is calculated and used.</li>
+<li><p class="startli">The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate and operating clock.</p>
+<p class="startli">When the Custom Rate setting is set to 0 the bitrate is fixed to the maximum values shown below. Otherwise, the supplied value is used to generate bitrate settings.</p><ul>
+<li>Standard-mode (Sm) : up to 100 kbps</li>
+<li>Fast-mode (Fm) : up to 400 kbps</li>
+<li>Fast-mode Plus (Fm+) : up to 1 Mbps</li>
+</ul>
+</li>
+<li>The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLK settings is calculated and used.</li>
 <li>If a valid clock rate could not be calculated, an error is returned by the tool.</li>
 </ul>
+<h3><a class="anchor" id="r-sau-i2c-operation-clock-frequency-selection"></a>
+Selecting Operation Clock Frequency</h3>
+<p>The relationship between operation clock frequency and bitrate is: <code>bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</code> where:</p>
+<ul>
+<li><code>SDRmn.STCLK</code> is an integer in the range [1, 127] for SAU I2C</li>
+<li><code>f_mck</code> is the operation clock (SAU CKmn) frequency</li>
+</ul>
+<p>By plugging in the minimum and maximum <code>SDRmn.STCLK</code> values, the range of bitrates for a given operation clock frequency can be obtained.</p>
+<p>Note that due to STCLK being set as discrete integers, the actual bitrate may not be exact. The actual bitrate and percent errors can be calculated by the formulas:</p>
+<div class="fragment"><div class="line">actual_bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</div><div class="line">percent_error = 100 * abs [(actual_bitrate - expected_bitrate)  / expected_bitrate]</div></div><!-- fragment --><p>Using the fastest possible operation clock for the desired bitrate will result in the lowest deviation from the requested bitrate. Set the CKmn operation clock divider in the Clocks tab to select the desired operation clock frequency.</p>
 <h2><a class="anchor" id="r-sau_i2c-enabling-dtc"></a>
 Enabling DTC with the SAU I2C</h2>
 <ul>
@@ -1025,7 +1049,7 @@ The SAU unit corresponding to the selected channel. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

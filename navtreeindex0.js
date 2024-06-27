@@ -1,5 +1,15 @@
 var NAVTREEINDEX0 =
 {
+"_c_m85__c_a_c_h_e_s.html":[1,2],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-cache-details":[1,2,6],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-cache-functions-and-macros":[1,2,5],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-cache-maintenance":[1,2,3],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-cm85-cache-features":[1,2,1],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-other-information":[1,2,7],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-overview":[1,2,0],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-ra8-cache-background-information":[1,2,2],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-references":[1,2,8],
+"_c_m85__c_a_c_h_e_s.html#CM85_CACHES-typical-cache-maintenance-scenarios":[1,2,4],
 "_c_o_p_y_r_i_g_h_t.html":[4],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html":[1,1],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html#FREERTOS_MIGRATION-code-changes":[1,1,2],
@@ -239,15 +249,5 @@ var NAVTREEINDEX0 =
 "group___a_d_c.html#ab95bd65fa66c0d6eca6514523e1fe910":[5,1,0,0,2,8],
 "group___a_d_c.html#acfa5530e9234fa2fec1e228553d472fd":[5,1,0,0,1,0],
 "group___a_d_c.html#ad2be3785d3a8153d8ec71123583450b9":[5,1,0,0,2,4],
-"group___a_d_c.html#aedbb76489ecc68110ccf3ede6f02fce9":[5,1,0,0,0,1],
-"group___a_d_c.html#aef59542e008313144646bd057d840c8a":[5,1,0,0,3,4],
-"group___a_d_c.html#af1882c3161187dd3b952b87b2f818c7b":[5,1,0,0,1,6],
-"group___a_d_c.html#af4d38f88e8e629e1bec67a46f65e62dc":[5,1,0,0,2,9],
-"group___a_d_c.html#ga03d10a44658a1383520ca2d9c3928eb9":[5,1,0,0,8],
-"group___a_d_c.html#ga0d0c470ca46c2801d243c06f03916e67":[5,1,0,0,12],
-"group___a_d_c.html#ga1cc44d84e1dd1cad8fdafe1e91a3b6d0":[5,1,0,0,26],
-"group___a_d_c.html#ga2817e17c728f9a2b041b54fd92244c3b":[5,1,0,0,9],
-"group___a_d_c.html#ga499187b3067534e42a57239ead111797":[5,1,0,0,27],
-"group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2":[5,1,0,0,19],
-"group___a_d_c.html#ga5d55db8f35fe6d81d9ed2189e6915259":[5,1,0,0,10]
+"group___a_d_c.html#aedbb76489ecc68110ccf3ede6f02fce9":[5,1,0,0,0,1]
 };

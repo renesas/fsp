@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -288,7 +288,28 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Structure for CRC inputs </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aaed97c9ce40d9d7209348114b819bf02"></a>uint32_t</td>
+<td class="fieldname">
+num_bytes</td>
+<td class="fielddoc">
+Length of input buffer. It must be 4-byte aligned when a 32-bit CRC polynomial function is used. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae8fc2e64bb3b34a84f38f84d68bdad0d"></a>uint32_t</td>
+<td class="fieldname">
+crc_seed</td>
+<td class="fielddoc">
+CRC seed value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0b250255a080533eb07854cbfd9ca73b"></a>const void *</td>
+<td class="fieldname">
+p_input_buffer</td>
+<td class="fielddoc">
+Pointer to input buffer. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structcrc__cfg__t" id="structcrc__cfg__t"></a>
@@ -635,7 +656,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

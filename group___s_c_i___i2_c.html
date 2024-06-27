@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -352,6 +352,10 @@ Fast-mode</li>
 <br />
 If the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated transfer rate and SDA delay are printed in a comment in the generated <a class="el" href="group___s_c_i___i2_c.html#structsci__i2c__extended__cfg__t">sci_i2c_extended_cfg_t</a> structure. </td></tr>
 <tr class="tree_none">
+<td>Custom Rate (bps)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Set a custom bitrate (bps). Set to 0 to use the maximum bitrate for the selected mode.<br />
+<br />
+Standard-mode: up to 100000; Fast-mode: up to 400000 </td></tr>
+<tr class="tree_none">
 <td>SDA Output Delay (nano seconds)</td><td>Must be a valid non-negative integer with maximum configurable value of 300</td><td>300 </td><td>Specify the SDA output delay in nanoseconds. </td></tr>
 <tr class="tree_none">
 <td>Noise filter setting</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -448,7 +452,13 @@ Interrupt Configuration</h2>
 <h2><a class="anchor" id="r-sci_i2c-rate_calculation"></a>
 SCI I2C Master Rate Calculation</h2>
 <ul>
-<li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate and SDA Delay. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLK settings is calculated and used.</li>
+<li><p class="startli">The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate and SDA Delay.</p>
+<p class="startli">When the Custom Rate setting is set to 0 the bitrate is fixed to the maximum values shown below. Otherwise, the supplied value is used to generate bitrate settings.</p><ul>
+<li>Standard-mode (Sm) : up to 100 kbps</li>
+<li>Fast-mode (Fm) : up to 400 kbps</li>
+</ul>
+</li>
+<li>The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLK settings is calculated and used.</li>
 <li>If a valid clock rate could not be calculated, an error is returned by the tool.</li>
 </ul>
 <h2><a class="anchor" id="r-sci_i2c-enabling-dtc"></a>
@@ -918,7 +928,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

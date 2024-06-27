@@ -132,6 +132,8 @@ var searchData=
   ['rm_5fcomms_5fcfg_5ft',['rm_comms_cfg_t',['../group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__cfg__t',1,'']]],
   ['rm_5fcomms_5fi2c_5finstance_5fctrl_5ft',['rm_comms_i2c_instance_ctrl_t',['../group___r_m___c_o_m_m_s___i2_c.html#structrm__comms__i2c__instance__ctrl__t',1,'']]],
   ['rm_5fcomms_5finstance_5ft',['rm_comms_instance_t',['../group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t',1,'']]],
+  ['rm_5fcomms_5fsmbus_5fextended_5fcfg_5ft',['rm_comms_smbus_extended_cfg_t',['../group___r_m___c_o_m_m_s___s_m_b_u_s.html#structrm__comms__smbus__extended__cfg__t',1,'']]],
+  ['rm_5fcomms_5fsmbus_5finstance_5fctrl_5ft',['rm_comms_smbus_instance_ctrl_t',['../group___r_m___c_o_m_m_s___s_m_b_u_s.html#structrm__comms__smbus__instance__ctrl__t',1,'']]],
   ['rm_5fcomms_5fuart_5finstance_5fctrl_5ft',['rm_comms_uart_instance_ctrl_t',['../group___r_m___c_o_m_m_s___u_a_r_t.html#structrm__comms__uart__instance__ctrl__t',1,'']]],
   ['rm_5fcomms_5fusb_5fpcdc_5finstance_5fctrl_5ft',['rm_comms_usb_pcdc_instance_ctrl_t',['../group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#structrm__comms__usb__pcdc__instance__ctrl__t',1,'']]],
   ['rm_5fcomms_5fwrite_5fread_5fparams_5ft',['rm_comms_write_read_params_t',['../group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__write__read__params__t',1,'']]],

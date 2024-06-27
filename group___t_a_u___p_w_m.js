@@ -12,7 +12,7 @@ var group___t_a_u___p_w_m =
       [ "operation_clock", "group___t_a_u___p_w_m.html#a345acd9456489969d7cf208a42f0b68c", null ],
       [ "trigger_source", "group___t_a_u___p_w_m.html#a8c80b3a47f2c1c8c95486fa4da9d6cf9", null ],
       [ "detect_edge", "group___t_a_u___p_w_m.html#adb4f171bede0b3fdc54cf167141f61a5", null ],
-      [ "p_slave_channel_cfgs", "group___t_a_u___p_w_m.html#ac73af5cdebb550c5ba7d6a17f16dd577", null ]
+      [ "p_slave_channel_cfgs", "group___t_a_u___p_w_m.html#a721f6c77de08c322d495e1a3d0aed74c", null ]
     ] ],
     [ "tau_pwm_instance_ctrl_t", "group___t_a_u___p_w_m.html#structtau__pwm__instance__ctrl__t", null ],
     [ "tau_pwm_operation_clock_t", "group___t_a_u___p_w_m.html#ga0e31a1881e7d30d363f03cd15f69d57b", [
@@ -51,7 +51,6 @@ var group___t_a_u___p_w_m =
     [ "R_TAU_PWM_Start", "group___t_a_u___p_w_m.html#gafac44e86209065231ecc6f701954a94d", null ],
     [ "R_TAU_PWM_Reset", "group___t_a_u___p_w_m.html#ga30638708378f5c77250b8b293bc483e4", null ],
     [ "R_TAU_PWM_Enable", "group___t_a_u___p_w_m.html#gaa3921f3ee40b694e704df63724ac9893", null ],
-    [ "R_TAU_PWM_Disable", "group___t_a_u___p_w_m.html#ga2899559321da564ab8fdea77aa7b9c04", null ],
     [ "R_TAU_PWM_PeriodSet", "group___t_a_u___p_w_m.html#ga553f930f29aaa77921c50f7634835ced", null ],
     [ "R_TAU_PWM_CompareMatchSet", "group___t_a_u___p_w_m.html#gace09e3251c723769ec0045caed1b0ef9", null ],
     [ "R_TAU_PWM_DutyCycleSet", "group___t_a_u___p_w_m.html#gae96758005a9259bc596d4f951130438b", null ],

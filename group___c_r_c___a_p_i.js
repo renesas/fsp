@@ -1,6 +1,10 @@
 var group___c_r_c___a_p_i =
 [
-    [ "crc_input_t", "group___c_r_c___a_p_i.html#structcrc__input__t", null ],
+    [ "crc_input_t", "group___c_r_c___a_p_i.html#structcrc__input__t", [
+      [ "num_bytes", "group___c_r_c___a_p_i.html#aaed97c9ce40d9d7209348114b819bf02", null ],
+      [ "crc_seed", "group___c_r_c___a_p_i.html#ae8fc2e64bb3b34a84f38f84d68bdad0d", null ],
+      [ "p_input_buffer", "group___c_r_c___a_p_i.html#a0b250255a080533eb07854cbfd9ca73b", null ]
+    ] ],
     [ "crc_cfg_t", "group___c_r_c___a_p_i.html#structcrc__cfg__t", [
       [ "channel", "group___c_r_c___a_p_i.html#a93f724f6e008179d16750067ce740f91", null ],
       [ "polynomial", "group___c_r_c___a_p_i.html#a77a51a5aaddd34da23595f1b522cab3d", null ],

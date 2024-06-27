@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -263,11 +263,11 @@ The following build time configurations are defined in fsp_cfg/bsp/bsp_mcu_famil
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-IWDT is Disabled</li>
+IWDT is stopped after a reset</li>
 <li>
 IWDT is automatically activated after a reset (Autostart mode)</li>
 </ul>
-</td><td>IWDT is Disabled </td><td></td></tr>
+</td><td>IWDT is stopped after a reset </td><td></td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -600,6 +600,14 @@ Locked</li>
 </td><td>Unlocked (Ignore ID) </td><td>When set to 'Locked with All Erase support', the ID Code must be set in the debugger to read or write data to the MCU, but the All Erase command is still accepted regardless. When set to 'Locked', all erase/download/debug access is disabled unless the ID Code is provided. </td></tr>
 <tr class="tree_none">
 <td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF </td><td>Set the ID Code for locking debug access. This setting is only used when the ID Code Mode is not set to Unlocked. </td></tr>
+<tr class="tree_none">
+<td>Fill Flash Gap</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Do not fill gap</li>
+<li>
+Fill gap</li>
+</ul>
+</td><td>Do not fill gap </td><td>A section of code flash exists between the end of the vector table (near the start of flash) and the ROM registers (at address 0x400). Selecting 'Fill gap' will assume a compiler optimization for size and fill this area with a preselected set functions in order to reduce the amount of code flash used by FSP. If you would like to fill this area with your own code or data, select 'Do not fill gap' and manually place items in the section '.flash_gap'. </td></tr>
 </table>
 </p>
 <p>Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. </p>
@@ -611,14 +619,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga6b22d3faa4af6921cfca889b9f261b13"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#ga6b22d3faa4af6921cfca889b9f261b13">bsp_power_mode_t</a> </td></tr>
-<tr class="separator:ga6b22d3faa4af6921cfca889b9f261b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebe723200f2a7f181f08324128b9d7b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a> </td></tr>
 <tr class="separator:gaebe723200f2a7f181f08324128b9d7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1e962f78bb332dfe44840fd60e119a8b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#ga1e962f78bb332dfe44840fd60e119a8b">icu_event_t</a> </td></tr>
 <tr class="separator:ga1e962f78bb332dfe44840fd60e119a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5bf5e18ceb8cf51ac6dce985f9230a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> </td></tr>
 <tr class="separator:gaa5bf5e18ceb8cf51ac6dce985f9230a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b22d3faa4af6921cfca889b9f261b13"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#ga6b22d3faa4af6921cfca889b9f261b13">bsp_power_mode_t</a> </td></tr>
+<tr class="separator:ga6b22d3faa4af6921cfca889b9f261b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga6f3d583a26d5f1f1f94756903fb3a935"></a>
@@ -637,6 +645,51 @@ Enumerations</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaebe723200f2a7f181f08324128b9d7b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaebe723200f2a7f181f08324128b9d7b5">&#9670;&nbsp;</a></span>elc_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_m2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sources of event signals to be linked to other peripherals or the CPU </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
+
+</div>
+</div>
+<a id="ga1e962f78bb332dfe44840fd60e119a8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e962f78bb332dfe44840fd60e119a8b">&#9670;&nbsp;</a></span>icu_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_e3.html#ga1e962f78bb332dfe44840fd60e119a8b">icu_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Events to be used with the IELSR register to link interrupt events to the NVIC </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
+
+</div>
+</div>
+<a id="gaa5bf5e18ceb8cf51ac6dce985f9230a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5bf5e18ceb8cf51ac6dce985f9230a7">&#9670;&nbsp;</a></span>elc_peripheral_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a4_m2.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Possible peripherals to be linked to event signals </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
+
+</div>
+</div>
 <a id="ga6b22d3faa4af6921cfca889b9f261b13"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6b22d3faa4af6921cfca889b9f261b13">&#9670;&nbsp;</a></span>bsp_power_mode_t</h2>
 
@@ -661,51 +714,6 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="gga6b22d3faa4af6921cfca889b9f261b13a2bd63784123bea5438262f0c94c79313"></a>BSP_POWER_MODE_LDO&#160;</td><td class="fielddoc"><p>LDO mode. </p>
 </td></tr>
 </table>
-
-</div>
-</div>
-<a id="gaebe723200f2a7f181f08324128b9d7b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaebe723200f2a7f181f08324128b9d7b5">&#9670;&nbsp;</a></span>elc_event_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sources of event signals to be linked to other peripherals or the CPU </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
-
-</div>
-</div>
-<a id="ga1e962f78bb332dfe44840fd60e119a8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1e962f78bb332dfe44840fd60e119a8b">&#9670;&nbsp;</a></span>icu_event_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#ga1e962f78bb332dfe44840fd60e119a8b">icu_event_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Events to be used with the IELSR register to link interrupt events to the NVIC </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
-
-</div>
-</div>
-<a id="gaa5bf5e18ceb8cf51ac6dce985f9230a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa5bf5e18ceb8cf51ac6dce985f9230a7">&#9670;&nbsp;</a></span>elc_peripheral_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Possible peripherals to be linked to event signals </p><dl class="section note"><dt>Note</dt><dd>This list is device specific. </dd></dl>
 
 </div>
 </div>
@@ -746,7 +754,7 @@ If the supply voltage falls outside the range originally specified when starting
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

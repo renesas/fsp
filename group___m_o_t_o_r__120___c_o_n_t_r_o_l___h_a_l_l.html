@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -334,15 +334,15 @@ Complementary First 60 degree PWM</li>
 </ul>
 </td><td>First 60 degree PWM </td><td>Select conduction type </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Timeout counts (msec)</td><td>Must be a valid non-negative value.</td><td>200 </td><td>Counts to judge rotor unrotate </td></tr>
+<td class="tree_lvl_1_cell">Timeout counts (msec)</td><td>Must be a valid integer.</td><td>200 </td><td>Counts to judge rotor unrotate </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Maximum voltage (V)</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Maximum output voltage (V) </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Minimum voltage (V)</td><td>Must be a valid non-negative value.</td><td>3.0 </td><td>Minimum output voltage (V) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Speed PI decimation</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Speed PI control decimation count </td></tr>
+<td class="tree_lvl_1_cell">Speed PI decimation</td><td>Must be a valid integer.</td><td>0 </td><td>Speed PI control decimation count </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Freerun timer frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>Freerun timer frequency (MHz) </td></tr>
+<td class="tree_lvl_1_cell">Freerun timer frequency (MHz)</td><td>Must be a valid integer.</td><td>120 </td><td>Freerun timer frequency (MHz) </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Speed LPF</td><td>Must be a valid non-negative value.</td><td>1.0 </td><td>Speed LPF parameter </td></tr>
 <tr class="tree_lvl_1_item">
@@ -350,11 +350,11 @@ Complementary First 60 degree PWM</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Start reference voltage (V)</td><td>Must be a valid non-negative value.</td><td>5.8 </td><td>Reference voltage for boot mode (V) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Hall wait counts</td><td>Must be a valid non-negative value.</td><td>12 </td><td>Wait counts of hall interrupts to start speed calculation </td></tr>
+<td class="tree_lvl_1_cell">Hall wait counts</td><td>Must be a valid integer.</td><td>12 </td><td>Wait counts of hall interrupts to start speed calculation </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Stop judge time</td><td>Must be a valid non-negative value.</td><td>1000 </td><td>Stop judge time </td></tr>
+<td class="tree_lvl_1_cell">Stop judge time</td><td>Must be a valid integer.</td><td>1000 </td><td>Stop judge time </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Minimum limit speed (rpm)</td><td>Must be a valid non-negative value.</td><td>550 </td><td>Minimum limit speed (rpm) (mechanical angle) </td></tr>
+<td class="tree_lvl_1_cell">Minimum limit speed (rpm)</td><td>Must be a valid integer.</td><td>550 </td><td>Minimum limit speed (rpm) (mechanical angle) </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">PI control KP</td><td>Must be a valid non-negative value.</td><td>0.02 </td><td>PI control gain of proportional term </td></tr>
 <tr class="tree_lvl_1_item">
@@ -362,11 +362,11 @@ Complementary First 60 degree PWM</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">PI control limit</td><td>Must be a valid non-negative value.</td><td>24.0 </td><td>PI control limit of integral term </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Hall interrupt mask value</td><td>Must be a valid non-negative value.</td><td>15 </td><td>For limiting hall interrupt processing. Limited by the number of ADC interrupts </td></tr>
+<td class="tree_lvl_1_cell">Hall interrupt mask value</td><td>Must be a valid integer.</td><td>15 </td><td>For limiting hall interrupt processing. Limited by the number of ADC interrupts </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
+<td class="tree_lvl_1_cell">Pole pairs</td><td>Must be a valid integer.</td><td>2 </td><td>Pole pairs </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Resistance (ohm)</td><td>Must be a valid non-negative value.</td><td>6.447 </td><td>Resistance </td></tr>
 <tr class="tree_lvl_1_item">
@@ -1198,7 +1198,7 @@ For call timer callbackSet function. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

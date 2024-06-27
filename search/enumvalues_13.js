@@ -37,8 +37,6 @@ var searchData=
   ['uarta_5fclock_5fsource_5fsosc_5floco',['UARTA_CLOCK_SOURCE_SOSC_LOCO',['../group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613da9843c4b3f12d4be6d402f8b9944ecda7',1,'r_uarta.h']]],
   ['uarta_5fdir_5fbit_5flsb_5ffirst',['UARTA_DIR_BIT_LSB_FIRST',['../group___u_a_r_t_a.html#gga86e16699bc814301eab02a25c7fbf05fae1dc4537588badb596c92727294cddf1',1,'r_uarta.h']]],
   ['uarta_5fdir_5fbit_5fmsb_5ffirst',['UARTA_DIR_BIT_MSB_FIRST',['../group___u_a_r_t_a.html#gga86e16699bc814301eab02a25c7fbf05fac69e0263b404720810fa7fae869d5469',1,'r_uarta.h']]],
-  ['uarta_5frxi_5fmode_5ferror_5ftrigger_5feri',['UARTA_RXI_MODE_ERROR_TRIGGER_ERI',['../group___u_a_r_t_a.html#gga258c1cb20a60654773daefece154b043ab3e6a09189fd0bcc531b6dad9453670b',1,'r_uarta.h']]],
-  ['uarta_5frxi_5fmode_5ferror_5ftrigger_5frxi',['UARTA_RXI_MODE_ERROR_TRIGGER_RXI',['../group___u_a_r_t_a.html#gga258c1cb20a60654773daefece154b043aef29cc7bd46b2f17b7304bc172ced0b7',1,'r_uarta.h']]],
   ['ulpt_5fclock_5floco',['ULPT_CLOCK_LOCO',['../group___u_l_p_t.html#gga1fc0f4ee0861af8dada1b28cc3b3f33ba273d8ab2f3a47a59201f4a85d01ad682',1,'r_ulpt.h']]],
   ['ulpt_5fclock_5fsubclock',['ULPT_CLOCK_SUBCLOCK',['../group___u_l_p_t.html#gga1fc0f4ee0861af8dada1b28cc3b3f33ba1c9eecc7e09fae49b74209e78a6fe7c1',1,'r_ulpt.h']]],
   ['ulpt_5fclock_5fulptevi',['ULPT_CLOCK_ULPTEVI',['../group___u_l_p_t.html#gga1fc0f4ee0861af8dada1b28cc3b3f33bacb8e6a0b7441b50d8dd1468cf9143a59',1,'r_ulpt.h']]],
@@ -154,5 +152,18 @@ var searchData=
   ['usb_5ftransfer_5ftype_5fbulk',['USB_TRANSFER_TYPE_BULK',['../group___u_s_b___a_p_i.html#gga751140ad5635fcb0934d0ca466e795c0a2463a1944749f4335246954769ec8e36',1,'r_usb_basic_api.h']]],
   ['usb_5ftransfer_5ftype_5fint',['USB_TRANSFER_TYPE_INT',['../group___u_s_b___a_p_i.html#gga751140ad5635fcb0934d0ca466e795c0a62815f2ee13fd932e5ef710ad2879386',1,'r_usb_basic_api.h']]],
   ['usb_5ftransfer_5ftype_5fiso',['USB_TRANSFER_TYPE_ISO',['../group___u_s_b___a_p_i.html#gga751140ad5635fcb0934d0ca466e795c0ac46ca42ec476bf25a6a6e09d356b5cac',1,'r_usb_basic_api.h']]],
-  ['usb_5ftransfer_5fwrite',['USB_TRANSFER_WRITE',['../group___u_s_b___a_p_i.html#gga0c47f1426b999f2cd8aea9adca06fbdea12335dd3f72e5d86a7693e790e48f401',1,'r_usb_basic_api.h']]]
+  ['usb_5ftransfer_5fwrite',['USB_TRANSFER_WRITE',['../group___u_s_b___a_p_i.html#gga0c47f1426b999f2cd8aea9adca06fbdea12335dd3f72e5d86a7693e790e48f401',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5fattached',['USB_TYPEC_CONNECTION_STATUS_ATTACHED',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdacf8a3f978bb2e8f691427ac17015884e',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5fattached_5fpower_5f15',['USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_15',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdaa43a4c20c5a71fe53627df89a2e104cb',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5fattached_5fpower_5f30',['USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_30',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdab387bc3ac497a9486d081717a0828d43',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5fattached_5fpower_5fdefault',['USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_DEFAULT',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda2a96706d6314e832f85762280acf4208',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5fattached_5fwait',['USB_TYPEC_CONNECTION_STATUS_ATTACHED_WAIT',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdabbf5871667db15320885aed3bf7dc6a6',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5fdisabled',['USB_TYPEC_CONNECTION_STATUS_DISABLED',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda3299cfc42726c50f4e9b2cb8cc2367f7',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fconnection_5fstatus_5funattached',['USB_TYPEC_CONNECTION_STATUS_UNATTACHED',['../group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda550273c40774cc6123b05bc124bd9413',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fmode_5fsink',['USB_TYPEC_MODE_SINK',['../group___u_s_b___a_p_i.html#ggaa0c54c3c911dd9238e39549c9337fa4baa9db4fef282988bf513cd3903ee396cc',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fmode_5fusb20_5fonly_5fsink',['USB_TYPEC_MODE_USB20_ONLY_SINK',['../group___u_s_b___a_p_i.html#ggaa0c54c3c911dd9238e39549c9337fa4ba4dca9677da99fdb506ec34a08389562d',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fplug_5fcc1_5fconnected',['USB_TYPEC_PLUG_CC1_CONNECTED',['../group___u_s_b___a_p_i.html#gga77f5defa0e521a8142d8cbefe041720aa944eb97792bd753bd832675226ded3c1',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fplug_5fcc2_5fconnected',['USB_TYPEC_PLUG_CC2_CONNECTED',['../group___u_s_b___a_p_i.html#gga77f5defa0e521a8142d8cbefe041720aa15d1a251cc083cab5c3653bebfe8c019',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fvbus_5fstatus_5foff',['USB_TYPEC_VBUS_STATUS_OFF',['../group___u_s_b___a_p_i.html#gga354e0b84a8f986a76dabc295f68d5ecbade2e2e6e9bd7efb80787527cc5ce8216',1,'r_usb_basic_api.h']]],
+  ['usb_5ftypec_5fvbus_5fstatus_5fon',['USB_TYPEC_VBUS_STATUS_ON',['../group___u_s_b___a_p_i.html#gga354e0b84a8f986a76dabc295f68d5ecba9e526e82d7dc1a0623ebe6c01b898006',1,'r_usb_basic_api.h']]]
 ];

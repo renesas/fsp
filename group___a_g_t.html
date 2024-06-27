@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.3.0</span>
+   &#160;<span id="projectnumber">Release v5.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -275,12 +275,13 @@ Functions</h2></td></tr>
 <tr class="separator:gabe0a42cc31ae911c5ac6fe78eeb21c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the AGT peripheral on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
+<p>Driver for the AGT and AGTW peripheral on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
 <h1><a class="anchor" id="r-agt-overview"></a>
 Overview</h1>
 <h2><a class="anchor" id="r-agt-features"></a>
 Features</h2>
 <p>The AGT module has the following features:</p><ul>
+<li>Supports 16- and 32-bit timers via the AGT and AGTW peripherals, respectively.</li>
 <li>Supports periodic mode, one-shot mode, and PWM mode.</li>
 <li>Signal can be output to a pin.<a class="anchor" id="um_timer_output_disable"></a></li>
 <li>Configurable period (counts per timer cycle).</li>
@@ -304,9 +305,9 @@ Selecting a Timer</h2>
 <tr>
 <td>Low Power Modes</td><td>The GPT can operate in sleep mode.</td><td>The AGT can operate in all low power modes (when count source is LOCO or subclock). </td></tr>
 <tr>
-<td>Available Channels</td><td>The number of GPT channels is device specific. All currently supported MCUs have at least 7 GPT channels.</td><td>All MCUs have 2 AGT channels. </td></tr>
+<td>Available Channels</td><td>The number of GPT channels is device specific. All currently supported MCUs have at least 7 GPT channels.</td><td>All MCUs have at least 2 AGT channels. </td></tr>
 <tr>
-<td>Timer Resolution</td><td>All MCUs have at least one 32-bit GPT timer.</td><td>The AGT timers are 16-bit timers. </td></tr>
+<td>Timer Resolution</td><td>All MCUs have at least one 32-bit GPT timer.</td><td>The AGT timers can be 16-bit or 32-bit timers. </td></tr>
 <tr>
 <td>Clock Source</td><td>The GPT runs off PCLKD with a configurable divider up to 1024. It can also be configured to count ELC events or external pulses.</td><td>The AGT runs off PCLKB, LOCO, or subclock with a configurable divider up to 8 for PCLKB or up to 128 for LOCO or subclock. </td></tr>
 </table>
@@ -481,6 +482,7 @@ Trigger Edge Both</li>
 <td class="tree_lvl_1_cell">Underflow Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Timer interrupt priority. </td></tr>
 </table>
 </p>
+<p>When using the AGT module on devices with both AGT and AGTW peripherals, the channel numbers used with the AGT driver are combined between both peripherals; AGTW channels are listed first followed by AGT. For example, on the RA2A2 there are 2 AGTW channels and 8 AGT channels. These correspond to channels 0-1 for AGTW0-AGTW1 and 2-9 for AGT0-AGT7.</p>
 <h2><a class="anchor" id="r-agt-clock-configuration"></a>
 Clock Configuration</h2>
 <p>The AGT clock is based on the PCLKB, LOCO, or Subclock frequency. You can set the clock frequency using the <b>Clocks</b> tab of the RA Configuration editor or by using the CGC Interface at run-time.</p>
@@ -503,7 +505,9 @@ Timer Period</h2>
 <tr>
 <td>All other sources </td><td>0x10000 </td><td>0x100000000 </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>Though the AGT is a 16-bit timer, because the period interrupt occurs when the counter underflows, setting the period register to 0 results in an effective period of 1 count. For this reason all user-provided raw count values reflect the actual number of period counts (not the raw register values).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The period interrupt occurs when the counter underflows, setting the period register to 0 results in an effective period of 1 count. For this reason all user-provided raw count values reflect the actual number of period counts (not the raw register values). </dd>
+<dd>
+When using a 32-bit channel (AGTW), a special period count value of 0 is used to obtain an actual period register value of 0xFFFFFFFF.</dd></dl>
 <h1><a class="anchor" id="r-agt-usage_notes"></a>
 Usage Notes</h1>
 <h2>Starting and Stopping the AGT</h2>
@@ -1320,7 +1324,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.3.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

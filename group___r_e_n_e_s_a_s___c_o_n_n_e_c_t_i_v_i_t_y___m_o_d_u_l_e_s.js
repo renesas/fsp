@@ -17,6 +17,7 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "I2S (r_ssi)", "group___s_s_i.html", "group___s_s_i" ],
     [ "I3C (r_i3c)", "group___i3_c.html", "group___i3_c" ],
     [ "LIN (r_sci_b_lin)", "group___s_c_i___b___l_i_n.html", "group___s_c_i___b___l_i_n" ],
+    [ "SMBUS Communication Device (rm_comms_smbus)", "group___r_m___c_o_m_m_s___s_m_b_u_s.html", "group___r_m___c_o_m_m_s___s_m_b_u_s" ],
     [ "SMCI (r_sci_smci)", "group___s_c_i___s_m_c_i.html", "group___s_c_i___s_m_c_i" ],
     [ "SPI (r_sau_spi)", "group___s_a_u___s_p_i.html", "group___s_a_u___s_p_i" ],
     [ "SPI (r_sci_b_spi)", "group___s_c_i___b___s_p_i.html", "group___s_c_i___b___s_p_i" ],
