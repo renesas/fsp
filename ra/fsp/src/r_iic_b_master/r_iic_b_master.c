@@ -773,12 +773,20 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
                                         (uint32_t) (((iic_b_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
                                                     timeout_scl_low << R_I3C0_TMOCTL_TOLCTL_Pos));
 
-    /* 1. Enable FM+ slope circuit if fast mode plus is enabled.
+    /* 1. Disable FM+ slope circuit
      * 2. Set Master Arbitration-Lost Detection Enable
      * 3. Set NACK Transmission Arbitration-Lost Detection Enable
+     * 4. Enable SMBus mode if requested
      */
-    p_ctrl->p_reg->BFCTL = (((uint32_t) ((I2C_MASTER_RATE_FASTPLUS == p_ctrl->p_cfg->rate) << R_I3C0_BFCTL_FMPE_Pos)) |
-                            R_I3C0_BFCTL_NALE_Msk | R_I3C0_BFCTL_MALE_Msk | R_I3C0_BFCTL_SCSYNE_Msk);
+    p_ctrl->p_reg->BFCTL =
+        (((uint32_t) (((iic_b_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->smbus_operation <<
+                      R_I3C0_BFCTL_SMBS_Pos)) |
+         ((uint32_t) ((I2C_MASTER_RATE_FASTPLUS == p_ctrl->p_cfg->rate) << R_I3C0_BFCTL_FMPE_Pos)) |
+         R_I3C0_BFCTL_NALE_Msk | R_I3C0_BFCTL_MALE_Msk | R_I3C0_BFCTL_SCSYNE_Msk);
+
+    /* If SMBus is used, update OUTCTL to use SDA delay function */
+    p_ctrl->p_reg->OUTCTL = (((uint32_t) (p_extend->clock_settings.sdod_value << R_I3C0_OUTCTL_SDOD_Pos)) |
+                             ((uint32_t) (p_extend->clock_settings.sdodcs_value << R_I3C0_OUTCTL_SDODCS_Pos)));
 
     /* Enable status for Timeout Detection, Arbitration Loss, NACK Detection, Transmit End
      * Disable status for Wake-up Condition Detection (Feature not supported by driver),
@@ -970,6 +978,11 @@ static void iic_b_master_rxi_master (iic_b_master_instance_ctrl_t * p_ctrl)
         }
 #endif
 
+        if (((iic_b_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+        {
+            iic_b_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+        }
+
         /* Do a dummy read to clock the data into the NTDTBP0. */
         dummy_read = p_ctrl->p_reg->NTDTBP0;
         FSP_PARAMETER_NOT_USED(dummy_read);
@@ -990,6 +1003,11 @@ static void iic_b_master_rxi_master (iic_b_master_instance_ctrl_t * p_ctrl)
     /* NTDTBP0 contains valid received data */
     else if (0U < p_ctrl->remain)
     {
+        if (((iic_b_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+        {
+            iic_b_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+        }
+
         iic_b_master_rxi_read_data(p_ctrl);
     }
     else
@@ -1014,6 +1032,19 @@ static void iic_b_master_txi_master (iic_b_master_instance_ctrl_t * p_ctrl)
     }
     else if (!p_ctrl->read)
     {
+        /* If previous event is an error event and this TXI is triggered by ERI, do not invoke SMBus callback. Because
+         * the internal function which used to issue callback will clear the error flag in the control block and cause
+         * incorrect behavior at ERI event after this TXI.
+         *
+         * Number of loaded byte must larger or equal to 1 because it helps to ensure that SMBus callback only be invoked
+         * after slave addess already transmitted (omit first 2 TDRE raise event).
+         */
+        if ((((iic_b_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation) &&
+            ((!p_ctrl->err) && (0U < p_ctrl->loaded)))
+        {
+            iic_b_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+        }
+
 #if IIC_B_MASTER_CFG_DTC_ENABLE
 
         /* If this is the interrupt that got fired after DTC transfer,
@@ -1075,6 +1106,11 @@ static void iic_b_master_txi_master (iic_b_master_instance_ctrl_t * p_ctrl)
 static void iic_b_master_tei_master (iic_b_master_instance_ctrl_t * p_ctrl)
 {
     uint32_t timeout_count = IIC_B_MASTER_PERIPHERAL_REG_MAX_WAIT;
+
+    if (((iic_b_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+    {
+        iic_b_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+    }
 
     /* This is a 10 bit address read, issue a restart prior to the last address byte transmission  */
     if ((p_ctrl->read) && (p_ctrl->addr_remain == 1U) && (false == p_ctrl->address_restarted))
@@ -1249,6 +1285,13 @@ static void iic_b_master_err_master (iic_b_master_instance_ctrl_t * p_ctrl)
         /* Restart has been detected (after first 2 address bytes of 10-bit slave address format are sent).
          * This is a request to read, send 3rd byte of 10-bit slave address. */
         p_ctrl->p_reg->NTSTE = (uint32_t) IIC_B_MASTER_PRV_NTSTE_INIT_MASK;
+    }
+    else if (errs_events & (uint8_t) R_I3C0_BST_STCNDDF_Msk)
+    {
+        if (((iic_b_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+        {
+            iic_b_master_notify(p_ctrl, I2C_MASTER_EVENT_START);
+        }
     }
     else
     {

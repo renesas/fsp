@@ -12,7 +12,12 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BSP_GRP_IRQ_TOTAL_ITEMS    (16U)
+
+#if (BSP_FEATURE_ICU_NMIER_MAX_INDEX > 15U)
+ #define BSP_PRV_NMIER_T    uint32_t
+#else
+ #define BSP_PRV_NMIER_T    uint16_t
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -27,7 +32,7 @@
  **********************************************************************************************************************/
 
 /** This array holds callback functions. */
-bsp_grp_irq_cb_t g_bsp_group_irq_sources[BSP_GRP_IRQ_TOTAL_ITEMS] BSP_SECTION_EARLY_INIT;
+bsp_grp_irq_cb_t g_bsp_group_irq_sources[BSP_FEATURE_ICU_NMIER_MAX_INDEX + 1] BSP_SECTION_EARLY_INIT;
 
 void        NMI_Handler(void);
 static void bsp_group_irq_call(bsp_grp_irq_t irq);
@@ -89,11 +94,11 @@ BSP_SECTION_FLASH_GAP fsp_err_t R_BSP_GroupIrqWrite (bsp_grp_irq_t irq, void (* 
 BSP_SECTION_FLASH_GAP void NMI_Handler (void)
 {
     /* NMISR is masked by NMIER to prevent iterating over NMI status flags that are not enabled. */
-    uint16_t nmier = R_ICU->NMIER;
-    uint16_t nmisr = R_ICU->NMISR & nmier;
+    BSP_PRV_NMIER_T nmier = R_ICU->NMIER;
+    BSP_PRV_NMIER_T nmisr = R_ICU->NMISR & nmier;
 
     /* Loop over all NMI status flags */
-    for (bsp_grp_irq_t irq = BSP_GRP_IRQ_IWDT_ERROR; irq <= (bsp_grp_irq_t) (BSP_GRP_IRQ_TOTAL_ITEMS - 1); irq++)
+    for (bsp_grp_irq_t irq = BSP_GRP_IRQ_IWDT_ERROR; irq <= (bsp_grp_irq_t) (BSP_FEATURE_ICU_NMIER_MAX_INDEX); irq++)
     {
         /* If the current irq status register is set call the irq callback. */
         if (0U != (nmisr & (1U << irq)))

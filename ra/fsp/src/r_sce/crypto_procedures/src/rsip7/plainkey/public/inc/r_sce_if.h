@@ -692,6 +692,22 @@ typedef struct sce_ecc521_public_key_index
     } plain_value;
 } sce_ecc521_public_key_index_t;
 
+/* ECC ED-25519 public key index data structure */
+typedef struct sce_ecc25519_public_key_index
+{
+    uint32_t type;
+    struct
+    {
+        uint32_t key_management_info1[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE];
+        uint8_t  key_q[HW_SCE_ECC_ED25519_PUBLIC_KEY_BYTE_SIZE];
+        uint32_t key_management_info2[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE];
+    } value;
+    struct
+    {
+        uint8_t key[HW_SCE_ECC_ED25519_PUBLIC_KEY_BYTE_SIZE];
+    } plain_value;
+} sce_ecc25519_public_key_index_t;
+
 /* ECC P-192/224/256 private key index data structure */
 typedef struct sce_ecc_private_key_index
 {

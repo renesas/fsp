@@ -41,6 +41,7 @@ FSP_HEADER
 #define I3C_EVENT_STATUS_OVERFLOW             (0x6)  ///< A Receive FIFO overflow or Transmit FIFO underflow occurred.
 #define I3C_EVENT_STATUS_ABORTED_TO_MASTER    (0x7)  ///< In slave mode, the write transfer was ended via the 'T' bit.
 #define I3C_EVENT_STATUS_ABORTED              (0x8)  ///< In master mode, the transfer was aborted.
+#define I3C_EVENT_STATUS_NOT_SUPPORTED        (0xA)  ///< Operation is not supported.
 #define I3C_EVENT_STATUS_IBI_NACK_DISABLED    (0x20) ///< An IBI was NACK'd and the a DISEC command was sent.
 
 /***********************************************************************************************************************
@@ -50,13 +51,14 @@ FSP_HEADER
 /** Bitrate settings that can be selected at run-time using @ref i3c_api_t::deviceSelect. */
 typedef enum e_i3c_bitrate_setting
 {
-    I3C_BITRATE_MODE_I2C_STDBR         = 0U, ///< Use the period settings defined in STDBRH/L.
-    I3C_BITRATE_MODE_I2C_EXTBR         = 1U, ///< Use the period settings defined in EXTBRH/L.
-    I3C_BITRATE_MODE_I3C_SDR0_STDBR    = 0U, ///< Use the period settings defined in STDBRH/L (I3C Devices only).
-    I3C_BITRATE_MODE_I3C_SDR1_EXTBR    = 1U, ///< Use the period settings defined in EXTBRH/L (I3C Devices only).
-    I3C_BITRATE_MODE_I3C_SDR2_STDBR_X2 = 2U, ///< Use the period settings defined in STDBRH/L x 2 (I3C Devices only).
-    I3C_BITRATE_MODE_I3C_SDR3_EXTBR_X2 = 3U, ///< Use the period settings defined in EXTBRH/L x 2 (I3C Devices only).
-    I3C_BITRATE_MODE_I3C_SDR4_EXTBR_X4 = 4U, ///< Use the period settings defined in EXTBRH/L x 4 (I3C Devices only).
+    I3C_BITRATE_MODE_I2C_STDBR         = 0U, ///< Use standard period setting for subsequent I2C transfers.
+    I3C_BITRATE_MODE_I2C_EXTBR         = 1U, ///< Use extended period setting for subsequent I2C transfers.
+    I3C_BITRATE_MODE_I3C_SDR0_STDBR    = 0U, ///< Use standard period setting for subsequent I3C SDR transfers.
+    I3C_BITRATE_MODE_I3C_SDR1_EXTBR    = 1U, ///< Use extended period setting for subsequent I3C SDR transfers.
+    I3C_BITRATE_MODE_I3C_SDR2_STDBR_X2 = 2U, ///< Use standard period setting x 2 for subsequent I3C SDR transfers.
+    I3C_BITRATE_MODE_I3C_SDR3_EXTBR_X2 = 3U, ///< Use extended period setting x 2 for subsequent I3C SDR transfers.
+    I3C_BITRATE_MODE_I3C_SDR4_EXTBR_X4 = 4U, ///< Use extended period setting x 4 for subsequent I3C SDR transfers.
+    I3C_BITRATE_MODE_I3C_HDR_DDR_STDBR = 6U, ///< Use standard period setting for subsequent I3C HDR-DDR transfers.
 } i3c_bitrate_mode_t;
 
 /** Supported activity states for ENTASn Command (See ENTASn in the MIPI I3C Specification v1.0). */
@@ -151,6 +153,10 @@ typedef struct s_slave_command_response_info
 
     /** Oscillator inaccuracy in 0.5% increments of 0% up to 25.5% (See GETXTIME in the MIPI I3C Specification v1.1). */
     uint8_t oscillator_inaccuracy;
+
+    bool hdr_ddr_support;              ///< HDR-DDR mode is supported.
+    bool hdr_tsp_support;              ///< HDR-TSP mode is supported.
+    bool hdr_tsl_support;              ///< HDR-TSL mode is supported.
 } i3c_slave_command_response_info_t;
 
 /* Buffer descriptor for keeping track of a read transfer. */
@@ -257,7 +263,7 @@ fsp_err_t R_I3C_DynamicAddressAssignmentStart(i3c_ctrl_t * const            p_ap
                                               i3c_address_assignment_mode_t address_assignment_mode,
                                               uint32_t                      starting_device_index,
                                               uint32_t                      device_count);
-fsp_err_t R_I3C_CommandSend(i3c_ctrl_t * const p_api_ctrl, i3c_command_descriptor_t * p_command_descriptor);
+fsp_err_t R_I3C_CommandSend(i3c_ctrl_t * const p_api_ctrl, i3c_command_descriptor_t const * const p_command_descriptor);
 fsp_err_t R_I3C_Write(i3c_ctrl_t * const p_api_ctrl, uint8_t const * const p_data, uint32_t length, bool restart);
 fsp_err_t R_I3C_Read(i3c_ctrl_t * const p_api_ctrl, uint8_t * const p_data, uint32_t length, bool restart);
 fsp_err_t R_I3C_IbiWrite(i3c_ctrl_t * const    p_api_ctrl,

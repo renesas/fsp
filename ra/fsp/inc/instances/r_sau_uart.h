@@ -61,6 +61,7 @@ typedef struct
 {
     sau_operation_clock_t operation_clock; ///< Select operation clock
     uint8_t               stclk;           ///< Transfer clock setting by dividing the operation clock
+    uint8_t               prs;             ///< Operation clock divider register setting
 } sau_uart_baudrate_setting_t;
 
 /** UART Configuration */

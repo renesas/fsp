@@ -190,19 +190,6 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** Data lifecycle */
-typedef enum
-{
-    SCE_CM = 1,
-    SCE_SSD,
-    SCE_NSECSD,
-    SCE_DPL,
-    SCE_LCK_DBG,
-    SCE_LCK_BOOT,
-    SCE_RMA_REQ,
-    SCE_RMA_ACK,
-} lifecycle_t;
-
 /** Byte data structure */
 typedef struct sce_byte_data
 {
@@ -479,7 +466,7 @@ typedef void sce_ctrl_t;
 /** User configuration structure, used in open function */
 typedef struct st_sce_cfg
 {
-    lifecycle_t lifecycle;             ///< Data lifecycle
+    /* No structure members */
 } sce_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */

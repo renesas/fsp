@@ -111,14 +111,14 @@ static fsp_err_t r_adc_scan_cfg_check(adc_instance_ctrl_t * const     p_instance
 
 static void r_adc_scan_cfg(adc_instance_ctrl_t * const     p_instance_ctrl,
                            adc_channel_cfg_t const * const p_channel_cfg);
-static void    r_adc_sensor_sample_state_calculation(uint32_t * const p_sample_states);
-void           adc_scan_end_b_isr(void);
-void           adc_scan_end_isr(void);
-void           adc_window_compare_isr(void);
-static void    r_adc_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
-static void    r_adc_irq_disable(IRQn_Type irq);
-static int32_t r_adc_lowest_channel_get(uint32_t adc_mask);
-static void    r_adc_scan_end_common_isr(adc_event_t event);
+static void     r_adc_sensor_sample_state_calculation(uint32_t * const p_sample_states);
+void            adc_scan_end_b_isr(void);
+void            adc_scan_end_isr(void);
+void            adc_window_compare_isr(void);
+static void     r_adc_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
+static void     r_adc_irq_disable(IRQn_Type irq);
+static uint32_t r_adc_lowest_channel_get(uint32_t adc_mask);
+static void     r_adc_scan_end_common_isr(adc_event_t event);
 
 #if ADC_CFG_PARAM_CHECKING_ENABLE
 
@@ -593,11 +593,11 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
         uint32_t adc_mask_in_order = adc_mask & ~(uint32_t) ADC_MASK_SENSORS;
         adc_mask_in_order <<= 3U;
         adc_mask_in_order  |= adc_mask >> ADC_MASK_FIRST_SENSOR_BIT;
-        int32_t lowest_channel = r_adc_lowest_channel_get(adc_mask_in_order);
+        uint32_t lowest_channel = r_adc_lowest_channel_get(adc_mask_in_order);
         p_adc_info->p_address = &p_instance_ctrl->p_reg->ADDR[lowest_channel - 3];
 
         /* Determine the highest channel that is configured. */
-        int32_t highest_channel = 31 - __CLZ(adc_mask_in_order);
+        uint32_t highest_channel = 31 - __CLZ(adc_mask_in_order);
 
         /* Determine the size of data that must be read to read all the channels between and including the
          * highest and lowest channels.*/
@@ -1557,7 +1557,7 @@ static void r_adc_irq_disable (IRQn_Type irq)
  *
  * @retval  adc_mask_count  index value of lowest channel
  **********************************************************************************************************************/
-static int32_t r_adc_lowest_channel_get (uint32_t adc_mask)
+static uint32_t r_adc_lowest_channel_get (uint32_t adc_mask)
 {
     /* Initialize the mask result */
     uint32_t adc_mask_result = 0U;
@@ -1569,7 +1569,7 @@ static int32_t r_adc_lowest_channel_get (uint32_t adc_mask)
         adc_mask_result = (uint32_t) (adc_mask & (1U << adc_mask_count));
     }
 
-    return adc_mask_count;
+    return (uint32_t) adc_mask_count;
 }
 
 /*******************************************************************************************************************//**

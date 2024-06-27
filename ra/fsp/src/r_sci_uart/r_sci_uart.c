@@ -734,7 +734,8 @@ fsp_err_t R_SCI_UART_CallbackSet (uart_ctrl_t * const          p_api_ctrl,
  * @retval  FSP_SUCCESS                  Baud rate was successfully changed.
  * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL or the UART is not configured to use the
  *                                       internal clock.
- * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_UNSUPPORTED          A restricted channel is selected.
  **********************************************************************************************************************/
 fsp_err_t R_SCI_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const p_baud_setting)
 {
@@ -743,7 +744,8 @@ fsp_err_t R_SCI_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const
 #if (SCI_UART_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl);
     FSP_ERROR_RETURN(SCI_UART_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-
+    /* Verify that the selected channel is not among the restricted channels when ABCSE is 1. Refer "Limitations" section of r_sci_uart module in FSP User Manual */
+    FSP_ERROR_RETURN(!((BSP_FEATURE_SCI_UART_ABCSE_RESTRICTED_CHANNELS & (1 << p_ctrl->p_cfg->channel)) && (((baud_setting_t*)p_baud_setting)->semr_baudrate_bits_b.abcse)),FSP_ERR_UNSUPPORTED);
     /* Verify that the On-Chip baud rate generator is currently selected. */
     FSP_ASSERT((p_ctrl->p_reg->SCR_b.CKE & 0x2) == 0U);
 #endif
@@ -950,6 +952,7 @@ fsp_err_t R_SCI_UART_ReadStop (uart_ctrl_t * const p_api_ctrl, uint32_t * remain
 /*******************************************************************************************************************//**
  * Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate
  * related registers.
+ * @note For limitations of this API, refer to the 'Limitations' section of r_sci_uart module in FSP User Manual.
  *
  * @param[in]  baudrate                  Baud rate [bps]. For example, 19200, 57600, 115200, etc.
  * @param[in]  bitrate_modulation        Enable bitrate modulation

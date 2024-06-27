@@ -113,6 +113,8 @@ fsp_err_t R_USB_DriverActivate(usb_ctrl_t * const p_api_ctrl);
 
 fsp_err_t R_USB_CallbackMemorySet(usb_ctrl_t * const p_api_ctrl, usb_callback_args_t * p_callback_memory);
 
+fsp_err_t R_USB_TypeCInfoGet(usb_ctrl_t * const p_api_ctrl, usb_typec_info_t * p_info);
+
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 

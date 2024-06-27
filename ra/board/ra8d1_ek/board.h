@@ -23,9 +23,9 @@
 
 /* BSP Board Specific Includes. */
 #include "board_init.h"
-#include "board_sdram.h"
 #include "board_leds.h"
 #include "board_ethernet_phy.h"
+#include "../../src/bsp/mcu/all/board_sdram.h"
 
 /***********************************************************************************************************************
  * Macro definitions

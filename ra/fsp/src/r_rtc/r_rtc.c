@@ -223,6 +223,12 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     }
 #endif
 
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Enable the RTC Register Read/Write clock if it was disabled in startup. */
+    bsp_prv_rtc_register_clock_set(true);
+#endif
+
     p_instance_ctrl->carry_isr_triggered = false;
 
 #if RTC_CFG_OPEN_SET_CLOCK_SOURCE
@@ -293,6 +299,12 @@ fsp_err_t R_RTC_Close (rtc_ctrl_t * const p_ctrl)
         R_BSP_IrqDisable(p_instance_ctrl->p_cfg->carry_irq);
         R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->carry_irq, NULL);
     }
+
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Disable the RTC Register Read/Write clock. */
+    bsp_prv_rtc_register_clock_set(false);
+#endif
 
     p_instance_ctrl->open = 0U;
 
@@ -1613,6 +1625,12 @@ void rtc_alarm_periodic_isr (void)
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     rtc_instance_ctrl_t * p_ctrl = (rtc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Enable the RTC Register Read/Write clock if it was disabled prior to entering LPM. */
+    bsp_prv_rtc_register_clock_set(true);
+#endif
+
     /* Call the callback routine if one is available */
     if (NULL != p_ctrl->p_callback)
     {
@@ -1658,6 +1676,12 @@ void rtc_carry_isr (void)
 
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     rtc_instance_ctrl_t * p_ctrl = (rtc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Enable the RTC Register Read/Write clock if it was disabled prior to entering LPM. */
+    bsp_prv_rtc_register_clock_set(true);
+#endif
 
     p_ctrl->carry_isr_triggered = true;
 

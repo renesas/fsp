@@ -540,6 +540,22 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(const uint32_t InData_Curv
     return (HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType, InData_KeyIndex, InData_PubKey, OutData_R));
 }
 
+fsp_err_t HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
+                                                      const uint32_t InData_Cmd[],
+                                                      const uint32_t InData_KeyIndex[],
+                                                      const uint32_t InData_PubKey[],
+                                                      const uint32_t InData_DomainParam[],
+                                                      uint32_t OutData_R[])
+{
+    FSP_PARAMETER_NOT_USED(InData_CurveType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
+    FSP_PARAMETER_NOT_USED(InData_PubKey);
+    FSP_PARAMETER_NOT_USED(InData_DomainParam);
+    FSP_PARAMETER_NOT_USED(OutData_R);
+	return FSP_ERR_UNSUPPORTED;
+}
+
 fsp_err_t HW_SCE_EcdsaSignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
                                                   const uint32_t InData_Cmd[],
                                                   const uint32_t InData_KeyIndex[],

@@ -141,10 +141,8 @@ fsp_err_t RM_COMMS_USB_PCDC_Open (rm_comms_ctrl_t * const p_api_ctrl, rm_comms_c
     FSP_ERROR_RETURN(FSP_SUCCESS == err || FSP_ERR_ALREADY_OPEN == err, err);
 
     /* Set callback function for Timer driver */
-    err = p_timer_api->callbackSet(p_extend->p_gpt->p_ctrl,
-                                   rm_comms_usb_pcdc_timer_handler,
-                                   p_usb_instance->p_api,
-                                   NULL);
+    err =
+        p_timer_api->callbackSet(p_extend->p_gpt->p_ctrl, rm_comms_usb_pcdc_timer_handler, p_usb_instance->p_api, NULL);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
@@ -155,6 +153,7 @@ fsp_err_t RM_COMMS_USB_PCDC_Open (rm_comms_ctrl_t * const p_api_ctrl, rm_comms_c
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS == 2
+
     /* Set callback function for USB driver */
     err = p_usb_api->callback(rm_comms_usb_pcdc_callback_handler);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -552,7 +551,7 @@ void rm_comms_usb_pcdc_callback_handler (usb_callback_args_t * p_args)
  **********************************************************************************************************************/
 void rm_comms_usb_pcdc_timer_handler (timer_callback_args_t * p_args)
 {
-    usb_api_t const * p_usb_api = (usb_api_t const *) (p_args->p_context);
+    usb_api_t const   * p_usb_api = (usb_api_t const *) (p_args->p_context);
     usb_instance_ctrl_t ctrl;
 
     p_usb_api->eventGet(&ctrl, &ctrl.event);
@@ -561,4 +560,5 @@ void rm_comms_usb_pcdc_timer_handler (timer_callback_args_t * p_args)
         rm_comms_usb_pcdc_callback_handler(&ctrl);
     }
 }
+
 #endif

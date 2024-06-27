@@ -19,10 +19,13 @@
  * Refer to Table 1.3 Numbers of Clock Cycles Required for Processing in the CCM Mode
  * Waiting time for 91 Clock Cycles Required for Processing in the CCM Mode with PCLKB 32MHz
  * Note: waiting for 91 clock cycles is still not enough for encryption of AES-CCM 256 bits key length.
- * Must be to 120 clock cycles.
+ * Must be to 146 clock cycles.
  * */
-#define HW_SCE_AES_CCM_WAITING_CYCLES    (120U)
-#define HW_SCE_FREQUENCY_IN_HZ           (1000000U)
+
+#define HW_SCE_AES_CCM_WAITING_CYCLES                  (146U)
+#define HW_SCE_FREQUENCY_IN_HZ                         (1000000U)
+#define HW_SCE_AES2_MAX_WAIT_USECONDS                  (0xFFFFFFFF) // Set the maximum value for uint32_t
+#define HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS    10           // Set a 10 microsecond status check interval
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -65,8 +68,8 @@ extern void hw_aes_ccm_decrypt_init(uint32_t indata_cmd);
  * Private global variables and functions
  ***********************************************************************************************************************/
 
-static uint8_t InputData_DataA[SIZE_AES_GCM_IN_DATA_AAD_LEN_BYTES]     = {0};
-static uint8_t InputData_IV_GCM[SIZE_AES_GCM_IN_DATA_IV_GCM_LEN_BYTES] = {0};
+static uint8_t __attribute__((aligned(32))) InputData_DataA[SIZE_AES_GCM_IN_DATA_AAD_LEN_BYTES]     = {0};
+static uint8_t __attribute__((aligned(32))) InputData_IV_GCM[SIZE_AES_GCM_IN_DATA_IV_GCM_LEN_BYTES] = {0};
 static uint8_t InputData_IV_GCM_LEN_BYTES = 0;
 
 uint32_t change_endian_long (uint32_t a)
@@ -175,11 +178,12 @@ static void hw_aes_get_ciphertext (uint8_t * output)
     *(ptr + 7) = R_AES_B->AESODAT0.AESODATL;
 }
 
-void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
+fsp_err_t hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
 {
     uint8_t * ptr;
     uint8_t * ptr_out;
-    uint32_t  block_ctr = 0;
+    uint32_t  block_ctr           = 0;
+    uint32_t  wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
 
     ptr       = input;
     ptr_out   = output;
@@ -189,9 +193,15 @@ void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
         hw_aes_set_plaintext(ptr);
         R_AES_B->AESDCNTL |= R_AES_AESDCNTL_CALCULATE_START;
 
-        while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+        while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
         {
-            ;
+            R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+            wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+        }
+
+        if (0 == wait_count_useconds)
+        {
+            return FSP_ERR_TIMEOUT;
         }
 
         if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -205,6 +215,8 @@ void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
         ptr_out += 16;
         block_ctr++;
     } while (block_ctr < block);
+
+    return FSP_SUCCESS;
 }
 
 /***********************************************************************************************************************
@@ -220,18 +232,23 @@ void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
 void hw_aes_ccm_mode_start (uint8_t * input, uint8_t * output, uint32_t block)
 {
     uint32_t block_ctr;
-    uint32_t system_clock_freq_mhz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB) / HW_SCE_FREQUENCY_IN_HZ;
+    uint32_t pclkb_mhz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB) / HW_SCE_FREQUENCY_IN_HZ;
+    uint32_t iclk_mhz  = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / HW_SCE_FREQUENCY_IN_HZ;
+    uint8_t  ratio     = 0U;
 
-    /* Round up the frequency to a whole number */
-    uint32_t delay_us = (HW_SCE_AES_CCM_WAITING_CYCLES + system_clock_freq_mhz - 1) / system_clock_freq_mhz;
+    while (iclk_mhz > pclkb_mhz)
+    {
+        iclk_mhz = iclk_mhz >> 1U;
+        ratio++;
+    }
 
-    for (block_ctr = 0; block_ctr < block; block_ctr++)
+    for (block_ctr = 0U; block_ctr < block; block_ctr++)
     {
         if (NULL != input)
         {
             hw_aes_set_plaintext(input);
             R_AES_B->AESDCNTL |= R_AES_AESDCNTL_CALCULATE_START;
-            R_BSP_SoftwareDelay(delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+            bsp_prv_software_delay_loop(BSP_DELAY_LOOPS_CALCULATE(HW_SCE_AES_CCM_WAITING_CYCLES << ratio));
         }
 
         if (NULL != output)
@@ -329,9 +346,17 @@ void HW_SCE_Aes192EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
 
 fsp_err_t HW_SCE_Aes192EncryptDecryptFinalSub (void)
 {
-    while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+    uint32_t wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
+
+    while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
     {
-        ;
+        R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+        wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+    }
+
+    if (0 == wait_count_useconds)
+    {
+        return FSP_ERR_TIMEOUT;
     }
 
     if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -409,9 +434,17 @@ void HW_SCE_Aes128EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
 
 fsp_err_t HW_SCE_Aes128EncryptDecryptFinalSub (void)
 {
-    while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+    uint32_t wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
+
+    while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
     {
-        ;
+        R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+        wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+    }
+
+    if (0 == wait_count_useconds)
+    {
+        return FSP_ERR_TIMEOUT;
     }
 
     if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -489,9 +522,17 @@ void HW_SCE_Aes256EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
 
 fsp_err_t HW_SCE_Aes256EncryptDecryptFinalSub (void)
 {
-    while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+    uint32_t wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
+
+    while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
     {
-        ;
+        R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+        wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+    }
+
+    if (0 == wait_count_useconds)
+    {
+        return FSP_ERR_TIMEOUT;
     }
 
     if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)

@@ -94,6 +94,9 @@ typedef struct st_rm_comms_i2c_bus_extended_cfg
     uint32_t          bus_timeout;                          ///< Possible in ticks.
     rm_comms_ctrl_t * p_current_ctrl;                       ///< Current device using the bus (by switching the address)
     void const      * p_driver_instance;                    ///< Pointer to I2C HAL interface to be used in the framework
+
+    void const * p_elc;                                     ///< Pointer to ELC instance.
+    void const * p_timer;                                   ///< Pointer to GPT instance.
 } rm_comms_i2c_bus_extended_cfg_t;
 
 /** Communications middleware control structure. */
@@ -105,6 +108,9 @@ typedef struct st_rm_comms_i2c_instance_ctrl
     uint32_t  open;                          ///< Open flag.
     uint32_t  transfer_data_bytes;           ///< Size of transfer data.
     uint8_t * p_transfer_data;               ///< Pointer to transfer data buffer.
+
+    /* Specific control variable for SMBus */
+    bool smbus_operation;                    ///< SMBus operation on I2C bus
 
     /* Pointer to callback and optional working memory */
     void (* p_callback)(rm_comms_callback_args_t * p_args);

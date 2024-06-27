@@ -52,11 +52,10 @@ extern const uint32_t sce_oem_key_size[SCE_OEM_CMD_NUM];
 fsp_err_t R_SCE_SelfCheck1Private(void);
 fsp_err_t R_SCE_SelfCheck2Private(void);
 fsp_err_t R_SCE_SelfCheck3Private(void);
-fsp_err_t R_SCE_LoadHukPrivate(lifecycle_t lifecycle);
+fsp_err_t R_SCE_LoadHukPrivate(void);
 fsp_err_t R_SCE_FwIntegrityCheckPrivate(void);
 
-fsp_err_t R_SCE_UpdateOemKeyIndexPrivate(lifecycle_t   lifecycle,
-                                         sce_oem_cmd_t key_type,
+fsp_err_t R_SCE_UpdateOemKeyIndexPrivate(sce_oem_cmd_t key_type,
                                          uint8_t     * iv,
                                          uint8_t     * encrypted_oem_key,
                                          uint32_t    * key_index);

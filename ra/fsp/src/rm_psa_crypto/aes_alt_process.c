@@ -175,6 +175,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
             break;
         }
 
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
         case SIZE_AES_192BIT_KEYLEN_BITS:
         {
    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
@@ -239,6 +240,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
 
             break;
         }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
 
         default:
 
@@ -441,6 +443,7 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
         err = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
 
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
     else if (ctx->nr == 12)
     {
@@ -463,6 +466,8 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
 
         err = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
+
     else
     {
         return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
@@ -503,6 +508,8 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
 
         HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
+
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
     else if (ctx->nr == 12)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
@@ -533,6 +540,8 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
 
         HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
+
     else
     {
         return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
@@ -692,6 +701,7 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
         err = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
 
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
     else if (ctx->nr == 12)
     {
@@ -714,6 +724,8 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
 
         err = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
+
     else
     {
         ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
@@ -753,6 +765,8 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
 
         HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
+
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
     else if (ctx->nr == 12)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
@@ -783,6 +797,8 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
 
         HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
+
     else
     {
         ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
@@ -934,6 +950,8 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
 
         HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
+
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
     else if (ctx->nr == 12)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
@@ -964,6 +982,8 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
 
         HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], (length / 4U));
     }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
+
     else
     {
         ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
@@ -986,6 +1006,7 @@ int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
     {
         ret = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
     else if (12 == key_rounds)
     {
         ret = HW_SCE_Aes192EncryptDecryptFinalSub();
@@ -994,6 +1015,7 @@ int mbedtls_internal_aes_crypt_ctr_finish (mbedtls_aes_context * ctx)
     {
         ret = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
+#endif /* !MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH */
     else
     {
         return -1;

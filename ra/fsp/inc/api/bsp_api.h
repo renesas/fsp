@@ -65,6 +65,10 @@
  #include "../../src/bsp/mcu/all/bsp_delay.h"
  #include "../../src/bsp/mcu/all/bsp_mcu_api.h"
 
+ #if __has_include("../../src/bsp/mcu/all/internal/bsp_internal.h")
+  #include "../../src/bsp/mcu/all/internal/bsp_internal.h"
+ #endif
+
 #endif
 
 /** Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */

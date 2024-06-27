@@ -16,8 +16,7 @@
  #include "r_flash_lp.h"
 #endif
 
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
- #include "r_qspi.h"
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
  #include "r_spi_flash_api.h"
 #endif
 
@@ -47,10 +46,8 @@
 extern void * const              gp_mcuboot_flash_ctrl;
 extern flash_cfg_t const * const gp_mcuboot_flash_cfg;
 
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-
-extern qspi_instance_ctrl_t * const  gp_mcuboot_qspi_ctrl;
-extern spi_flash_cfg_t const * const gp_mcuboot_qspi_cfg;
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+extern spi_flash_instance_t const * const gp_mcuboot_xspi_instance;
 #endif
 
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
@@ -69,11 +66,11 @@ static rm_mcuboot_port_flush_buffer_t g_internal_flash_flush_buffer =
     .g_current_block = UINT32_MAX,
 };
 
- #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-  #define RM_MCUBOOT_PORT_QSPI_FLUSH_BUFFER_SIZE_WORDS    (256U)
-uint32_t g_rm_mcuboot_port_qspi_write_ram[RM_MCUBOOT_PORT_QSPI_FLUSH_BUFFER_SIZE_WORDS];
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+  #define RM_MCUBOOT_PORT_XSPI_FLUSH_BUFFER_SIZE_WORDS    (256U)
+uint32_t g_rm_mcuboot_port_xspi_write_ram[RM_MCUBOOT_PORT_XSPI_FLUSH_BUFFER_SIZE_WORDS];
 
-static rm_mcuboot_port_flush_buffer_t g_qspi_flush_buffer =
+static rm_mcuboot_port_flush_buffer_t g_xspi_flush_buffer =
 {
     .g_current_block = UINT32_MAX,
 };
@@ -82,8 +79,8 @@ static rm_mcuboot_port_flush_buffer_t g_qspi_flush_buffer =
 static rm_mcuboot_port_flush_buffer_t * gp_flush_buffer_lookup[2] =
 {
     &g_internal_flash_flush_buffer,
- #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-    &g_qspi_flush_buffer
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+    &g_xspi_flush_buffer
  #endif
 };
 #endif
@@ -100,8 +97,8 @@ static const struct flash_area flash_map[] =
     },
     {
         .fa_id = FLASH_AREA_2_ID,
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-        .fa_device_id = FLASH_DEVICE_QSPI,
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+        .fa_device_id = FLASH_DEVICE_EXTERNAL_FLASH,
 #else
         .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
 #endif
@@ -117,8 +114,8 @@ static const struct flash_area flash_map[] =
     },
     {
         .fa_id        = FLASH_AREA_3_ID,
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-        .fa_device_id = FLASH_DEVICE_QSPI,
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+        .fa_device_id = FLASH_DEVICE_EXTERNAL_FLASH,
 #else
         .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
 #endif
@@ -144,11 +141,11 @@ static const struct flash_area * prv_lookup_flash_area(int id);
 static const uint32_t flash_map_entry_num = sizeof(flash_map) / sizeof(struct flash_area);
 
 static bool g_internal_flash_driver_open = false;
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
 static bool g_external_flash_driver_open = false;
 #endif
 
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
 
 /*< Waits till QSPI write or erase is completed. */
 static fsp_err_t get_flash_status (void)
@@ -160,7 +157,7 @@ static fsp_err_t get_flash_status (void)
     do
     {
         /* Get status from QSPI flash device */
-        err = R_QSPI_StatusGet(gp_mcuboot_qspi_ctrl, &status);
+        err = gp_mcuboot_xspi_instance->p_api->statusGet(gp_mcuboot_xspi_instance->p_ctrl, &status);
         if (FSP_SUCCESS != err)
         {
             return err;
@@ -200,9 +197,9 @@ int flash_area_open (uint8_t id, const struct flash_area ** area)
         g_internal_flash_driver_open = true;
     }
 
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
  #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
-    g_qspi_flush_buffer.p_flush_buffer = g_rm_mcuboot_port_qspi_write_ram;
+    g_xspi_flush_buffer.p_flush_buffer = g_rm_mcuboot_port_xspi_write_ram;
  #endif
 
     /* The QSPI driver is expected to have been opened by the user and set up for DirectWrite mode. */
@@ -275,18 +272,18 @@ int flash_on_chip_flush (const struct flash_area * area)
         }
         else
         {
- #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-            BOOT_LOG_DBG("write flush qspi buffer, addr=%#x, len=%#x",
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+            BOOT_LOG_DBG("write flush xspi buffer, addr=%#x, len=%#x",
                          (unsigned int) p_area_flush_buffer->g_current_block,
-                         (unsigned int) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes);
+                         (unsigned int) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes);
             err = (int) get_flash_status();
             if (0 == err)
             {
                 err =
-                    (int) R_QSPI_Write(gp_mcuboot_qspi_ctrl,
+                    (int) gp_mcuboot_xspi_instance->p_api->write(gp_mcuboot_xspi_instance->p_ctrl,
                                        (uint8_t *) p_area_flush_buffer->p_flush_buffer,
                                        (uint8_t *) p_area_flush_buffer->g_current_block,
-                                       (uint32_t) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes);
+                                       (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes);
             }
  #endif
         }
@@ -321,9 +318,9 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
     }
     else
     {
- #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-        p_write_buffer   = g_rm_mcuboot_port_qspi_write_ram;
-        write_align_size = (uint32_t) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes;
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+        p_write_buffer   = g_rm_mcuboot_port_xspi_write_ram;
+        write_align_size = (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
  #endif
     }
 
@@ -375,8 +372,8 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
         }
         else
         {
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-            uint32_t page_size      = (uint32_t) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes;
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+            uint32_t page_size      = (uint32_t)  gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
             uint32_t pages_to_write = len / page_size;
             uint32_t pages_written  = 0;
             while (pages_to_write != 0)
@@ -385,7 +382,7 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
                 if (0 == err)
                 {
                     err =
-                        (int) R_QSPI_Write(gp_mcuboot_qspi_ctrl,
+                        (int) gp_mcuboot_xspi_instance->p_api->write(gp_mcuboot_xspi_instance->p_ctrl,
                                            (uint8_t *) ((uint32_t) src + (pages_written * page_size)),
                                            (uint8_t *) (write_addr + (pages_written * page_size)), page_size);
                     pages_to_write--;
@@ -451,13 +448,13 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
     else
     {
         err = FSP_ERR_UNSUPPORTED;
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
         if (!(len % BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE))
         {
             err = get_flash_status();
             if (FSP_SUCCESS == err)
             {
-                err = R_QSPI_Erase(gp_mcuboot_qspi_ctrl, (uint8_t *) erase_address, len);
+                err = gp_mcuboot_xspi_instance->p_api->erase(gp_mcuboot_xspi_instance->p_ctrl, (uint8_t *) erase_address, len);
             }
         }
 #endif
@@ -476,8 +473,8 @@ uint32_t flash_area_align (const struct flash_area * area)
     }
     else
     {
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-        write_alignment = (uint32_t) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes;
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+        write_alignment = (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
 #endif
     }
 
@@ -529,9 +526,9 @@ int flash_area_get_sectors (int fa_id, uint32_t * count, struct flash_sector * s
         *count = total_count;
         retval = 0;
     }
-    else if (fa->fa_device_id == FLASH_DEVICE_QSPI)
+    else if (fa->fa_device_id == FLASH_DEVICE_EXTERNAL_FLASH)
     {
- #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
         uint32_t total_count = 0;
         for (size_t off = 0; off < fa->fa_size; off += sector_size)
         {
@@ -647,7 +644,7 @@ int flash_on_chip_cleanup (void)
         g_internal_flash_driver_open = false;
     }
 
-#ifdef  RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
     if (g_external_flash_driver_open)
     {
  #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
@@ -663,7 +660,7 @@ int flash_on_chip_cleanup (void)
         fsp_err_t err = get_flash_status();
         if (FSP_SUCCESS == err)
         {
-            err = R_QSPI_Close(gp_mcuboot_flash_ctrl);
+            err = gp_mcuboot_xspi_instance->p_api->close(gp_mcuboot_flash_ctrl);
             if (FSP_SUCCESS != err)
             {
                 return -1;

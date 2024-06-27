@@ -25,6 +25,11 @@
 #define WIFI_DA16XXX_RETURN_TEXT_OK             "OK"
 #define WIFI_DA16XXX_RETURN_CONN_TEXT           "+WFJAP:1"
 
+#define WIFI_DA16XXX_MIN_SDK_VER_MAJOR          (3)
+#define WIFI_DA16XXX_MIN_SDK_VER_MINOR          (2)
+#define WIFI_DA16XXX_MIN_SDK_VER_REVISION       (6)
+#define WIFI_DA16XXX_MIN_SDK_VER_ENGI           (0)
+
 /* Predefined timeout values */
 #define WIFI_DA16XXX_TIMEOUT_1MS                (1)
 #define WIFI_DA16XXX_TIMEOUT_3MS                (3)
@@ -48,6 +53,8 @@
 
 /* Minimum string size for getting local time string */
 #define WIFI_DA16XXX_LOCAL_TIME_STR_SIZE        (25)
+
+#define WIFI_DA16XXX_IPV4_MAX_LENGTH            (15)
 
 #define HOURS_IN_SECONDS                        (3600)
 #if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
@@ -128,6 +135,11 @@ static bool rm_wifi_da16xxx_handle_incoming_socket_data(da16xxx_socket_t * pSock
 
 #endif
 
+#if (WIFI_DA16XXX_CFG_CHECK_SDK_VERSION)
+static fsp_err_t rm_wifi_da16xxx_check_sdk_version(void);
+
+#endif
+
 #if (1 == WIFI_DA16XXX_CFG_SNTP_ENABLE)
 static fsp_err_t rm_wifi_da16xxx_sntp_service_init(wifi_da16xxx_instance_ctrl_t * const p_instance_ctrl);
 
@@ -176,6 +188,11 @@ fsp_err_t rm_wifi_da16xxx_open (wifi_da16xxx_cfg_t const * const p_cfg)
 
     err = p_transport_instance->p_api->open(p_transport_instance->p_ctrl, p_transport_instance->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+#if (WIFI_DA16XXX_CFG_CHECK_SDK_VERSION)
+    err = rm_wifi_da16xxx_check_sdk_version();
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
 
     /* Set AP mode */
     atcmd.p_at_cmd_string      = (uint8_t *) "AT+WFMODE=0\r";
@@ -1668,23 +1685,30 @@ static fsp_err_t rm_wifi_da16xxx_sntp_service_init (wifi_da16xxx_instance_ctrl_t
 {
     fsp_err_t err = FSP_ERR_INTERNAL;
     uint8_t   ip_address_sntp_server[4] = {0, 0, 0, 0};
-    int32_t   err_scan;
+    int       err_scan = 0;
+    char    * token;
+    char      sntp_ip[WIFI_DA16XXX_IPV4_MAX_LENGTH + 1];
+
+    /* Check if the input IP address length exceeds the expected length */
+    FSP_ERROR_RETURN(strlen(
+                         (char *) p_instance_ctrl->p_wifi_da16xxx_cfg->sntp_server_ip) < WIFI_DA16XXX_IPV4_MAX_LENGTH,
+                     FSP_ERR_INVALID_ARGUMENT);
 
     /* Set the SNTP server IP address */
-    err_scan =
+    strncpy(sntp_ip, (char *) p_instance_ctrl->p_wifi_da16xxx_cfg->sntp_server_ip, WIFI_DA16XXX_IPV4_MAX_LENGTH + 1);
+    token = strtok(sntp_ip, ".");
 
-        // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-        sscanf((const char *) p_instance_ctrl->p_wifi_da16xxx_cfg->sntp_server_ip,
-               "%u.%u.%u.%u,",
-               (unsigned int *) &ip_address_sntp_server[0],
-               (unsigned int *) &ip_address_sntp_server[1],
-               (unsigned int *) &ip_address_sntp_server[2],
-               (unsigned int *) &ip_address_sntp_server[3]);
-    if (4 == err_scan)
+    while ((token != NULL) && (err_scan < 4))
     {
-        /* Configure the SNTP Server Address */
-        err = RM_WIFI_DA16XXX_SntpServerIpAddressSet((uint8_t *) ip_address_sntp_server);
+        ip_address_sntp_server[err_scan++] = (uint8_t) strtol(token, NULL, 10);
+        token = strtok(NULL, ".");
     }
+
+    /* Check if the input IP address length did not contain 4 segments */
+    FSP_ERROR_RETURN(4 == err_scan, FSP_ERR_INVALID_ARGUMENT);
+
+    /* Configure the SNTP Server Address */
+    err = RM_WIFI_DA16XXX_SntpServerIpAddressSet((uint8_t *) ip_address_sntp_server);
 
     if (FSP_SUCCESS == err)
     {
@@ -1959,6 +1983,76 @@ fsp_err_t RM_WIFI_DA16XXX_LocalTimeGet (uint8_t * p_local_time, uint32_t size_st
 }
 
 /*******************************************************************************************************************//**
+ *  Sends any AT command compatible with the DA16XXX module. Provide optional buffer to receive the response.
+ *
+ * @param[in]  at_string            Input AT command string from the user.
+ * @param[in]  response_buffer      Optional buffer for receiving the response.
+ * @param[in]  length               Size of optional buffer.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_ARGUMENT Input was not a valid AT command.
+ **********************************************************************************************************************/
+fsp_err_t RM_WIFI_DA16XXX_GenericAtSendRcv (char const * const at_string, char * const response_buffer, uint32_t length)
+{
+    uint32_t  mutex_flag;
+    fsp_err_t ret;
+    wifi_da16xxx_instance_ctrl_t          * p_instance_ctrl      = &g_rm_wifi_da16xxx_instance;
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_instance_ctrl->p_wifi_da16xxx_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
+#if (WIFI_DA16XXX_CFG_PARAM_CHECKING_ENABLED == 1)
+    FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(NULL != at_string, FSP_ERR_INVALID_ARGUMENT);
+#else
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+
+    /* Check if the user input string is a valid AT command e.g. ATE, AT+SDKVER */
+    FSP_ERROR_RETURN((0 == strncmp(at_string, "?", 1)) ||
+                     (0 == strncmp(at_string, "help", 4)) ||
+                     (0 == strncmp(at_string, "AT", 2)),
+                     FSP_ERR_INVALID_ARGUMENT);
+
+    /* Take mutexes */
+    mutex_flag = (WIFI_DA16XXX_MUTEX_TX | WIFI_DA16XXX_MUTEX_RX);
+    FSP_ERROR_RETURN(FSP_SUCCESS == p_transport_instance->p_api->takeMutex(p_transport_instance->p_ctrl, mutex_flag),
+                     FSP_ERR_WIFI_FAILED);
+
+    snprintf((char *) p_instance_ctrl->cmd_tx_buff, sizeof(p_instance_ctrl->cmd_tx_buff), "%s\r", at_string);
+
+    atcmd.p_at_cmd_string      = (uint8_t *) p_instance_ctrl->cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.response_buffer_size = sizeof(p_instance_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = WIFI_DA16XXX_TIMEOUT_500MS;
+    atcmd.p_expect_code        = WIFI_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = p_instance_ctrl->curr_socket;
+
+    if (response_buffer != NULL)
+    {
+        memset(response_buffer, 0, length);
+
+        atcmd.p_response_buffer = (uint8_t *) response_buffer;
+    }
+    else
+    {
+        memset((char *) p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
+
+        atcmd.p_response_buffer = p_instance_ctrl->cmd_rx_buff;
+    }
+
+    ret = p_transport_instance->p_api->atCommandSend(p_transport_instance->p_ctrl, &atcmd);
+
+    p_transport_instance->p_api->giveMutex(p_transport_instance->p_ctrl, mutex_flag);
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_INIT_FAILED);
+
+    return ret;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup WIFI_DA16XXX)
  **********************************************************************************************************************/
 
@@ -1995,6 +2089,78 @@ bool rm_wifi_da16xxx_callback (at_transport_da16xxx_callback_args_t * p_args)
 
     return ret;
 }
+
+#if (WIFI_DA16XXX_CFG_CHECK_SDK_VERSION)
+
+/*******************************************************************************************************************//**
+ *  Checks the minimum SDK version of the DA16XXX module is valid
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_INVALID_DATA     Function did not return a valid SDK version.
+ **********************************************************************************************************************/
+static fsp_err_t rm_wifi_da16xxx_check_sdk_version (void)
+{
+    fsp_err_t ret = FSP_SUCCESS;
+
+    wifi_da16xxx_instance_ctrl_t          * p_instance_ctrl      = &g_rm_wifi_da16xxx_instance;
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_instance_ctrl->p_wifi_da16xxx_cfg->p_transport_instance;
+    at_transport_da16xxx_data_t atcmd;
+
+    /* Get SDK version */
+    atcmd.p_at_cmd_string      = (uint8_t *) "AT+SDKVER\r";
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = p_instance_ctrl->cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(p_instance_ctrl->cmd_rx_buff);
+    atcmd.timeout_ms           = WIFI_DA16XXX_TIMEOUT_500MS;
+    atcmd.p_expect_code        = WIFI_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = p_instance_ctrl->curr_socket;
+    ret = p_transport_instance->p_api->atCommandSend(p_transport_instance->p_ctrl, &atcmd);
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_INIT_FAILED);
+
+    char * ptr = (char *) p_instance_ctrl->cmd_rx_buff;
+
+    /* Check that version data exists */
+    FSP_ERROR_RETURN(0 == strncmp(ptr, "\r\n+SDKVER:", 10), FSP_ERR_INVALID_DATA);
+
+    /* Advance pointer to the version number */
+    ptr = ptr + strlen("\r\n+SDKVER:");
+
+    int version[4] = {0};
+
+    /* Extracting major, minor, revision, and engineering numbers from the current version string */
+    ptr = strtok(ptr, ".");
+
+    for (int i = 0; i < 3; i++)
+    {
+        FSP_ERROR_RETURN((ptr != NULL), FSP_ERR_INVALID_DATA);
+
+        version[i] = strtol(ptr, NULL, 10);
+
+        ptr = strtok(NULL, ".");
+    }
+
+    /* Extracting major, minor, revision, and engineering numbers from the minimum version string */
+
+    /* Checking if each part of the version string is greater than or equal to the minimum version */
+    FSP_ERROR_RETURN(((version[0] > WIFI_DA16XXX_MIN_SDK_VER_MAJOR) ||
+                      ((version[0] == WIFI_DA16XXX_MIN_SDK_VER_MAJOR) &&
+                       (version[1] > WIFI_DA16XXX_MIN_SDK_VER_MINOR)) ||
+                      ((version[0] == WIFI_DA16XXX_MIN_SDK_VER_MAJOR) &&
+                       (version[1] == WIFI_DA16XXX_MIN_SDK_VER_MINOR) &&
+                       (version[2] > WIFI_DA16XXX_MIN_SDK_VER_REVISION)) ||
+                      ((version[0] == WIFI_DA16XXX_MIN_SDK_VER_MAJOR) &&
+                       (version[1] == WIFI_DA16XXX_MIN_SDK_VER_MINOR) &&
+                       (version[2] == WIFI_DA16XXX_MIN_SDK_VER_REVISION) &&
+                       (version[3] >= WIFI_DA16XXX_MIN_SDK_VER_ENGI))),
+                     FSP_ERR_INVALID_DATA);
+
+    return ret;
+}
+
+#endif
 
 #if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
 

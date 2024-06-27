@@ -477,7 +477,6 @@ static fsp_err_t rm_http_da16xxx_read_header (http_onchip_da16xxx_instance_ctrl_
 
     /* Advance pointer and track start of header data length */
     ptr = ptr + strlen("+NWHTCDATA:");
-    char * start_ptr = ptr;
 
     /* Parse data length for response header */
     header_size = strtol(ptr, NULL, 10);
@@ -492,7 +491,7 @@ static fsp_err_t rm_http_da16xxx_read_header (http_onchip_da16xxx_instance_ctrl_
 
     FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
 
-    /* Check for length of data (especially if 1460 bytes exactly) */
+    /* Check for length of data */
     ptr = strstr(ptr, "Content-Length: ");
 
     FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
@@ -500,7 +499,7 @@ static fsp_err_t rm_http_da16xxx_read_header (http_onchip_da16xxx_instance_ctrl_
     /* Advance pointer and track start of header data length */
     ptr = ptr + strlen("Content-Length: ");
 
-    /* Parse data length for payload */
+    /* Parse data length for payload size (expected length) */
     content_length = strtol(ptr, NULL, 10);
 
     FSP_ERROR_RETURN(0 != content_length, FSP_ERR_INVALID_DATA);
@@ -509,11 +508,6 @@ static fsp_err_t rm_http_da16xxx_read_header (http_onchip_da16xxx_instance_ctrl_
     ptr = strstr(ptr, "\r\n+NWHTCDATA:");
 
     FSP_ERROR_RETURN(NULL != ptr, FSP_ERR_INVALID_DATA);
-
-    char * check_ptr = (char *) (ptr - start_ptr);
-
-    /* Compare expected length with current length */
-    FSP_ERROR_RETURN(0 == *check_ptr, FSP_ERR_INVALID_DATA);
 
     /* Loop around to check the data size matches the expected content length */
     do

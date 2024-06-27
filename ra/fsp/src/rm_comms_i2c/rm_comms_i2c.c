@@ -108,8 +108,9 @@ fsp_err_t RM_COMMS_I2C_Open (rm_comms_ctrl_t * const p_api_ctrl, rm_comms_cfg_t 
     p_ctrl->p_lower_level_cfg = (void *) p_cfg->p_lower_level_cfg;
 
     /* Set callback and context */
-    p_ctrl->p_callback = p_cfg->p_callback;
-    p_ctrl->p_context  = p_cfg->p_context;
+    p_ctrl->p_callback      = p_cfg->p_callback;
+    p_ctrl->p_context       = p_cfg->p_context;
+    p_ctrl->smbus_operation = false;
 
     /* Set open flag */
     p_ctrl->open = RM_COMMS_I2C_OPEN;

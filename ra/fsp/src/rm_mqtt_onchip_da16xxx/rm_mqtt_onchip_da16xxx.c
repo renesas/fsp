@@ -391,7 +391,7 @@ fsp_err_t RM_MQTT_DA16XXX_Publish (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl
     atcmd.at_cmd_string_length = 0;
     atcmd.p_response_buffer    = p_ctrl->cmd_rx_buff;
     atcmd.response_buffer_size = sizeof(p_ctrl->cmd_rx_buff);
-    atcmd.timeout_ms           = MQTT_ONCHIP_DA16XXX_TIMEOUT_1SEC;
+    atcmd.timeout_ms           = p_ctrl->p_cfg->tx_timeout;
     atcmd.p_expect_code        = MQTT_ONCHIP_DA16XXX_RETURN_TEXT_OK;
     atcmd.comm_ch_id           = 0;
 
@@ -415,6 +415,7 @@ fsp_err_t RM_MQTT_DA16XXX_Publish (mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl
                  p_pub_info->p_payload,
                  p_pub_info->p_topic_name);
 
+        /* Only takes TX mutex if expected code is NULL, which enables simultaneous publish/subscribe */
         atcmd.p_expect_code = NULL;
         FSP_ERROR_RETURN(FSP_SUCCESS ==
                          p_transport_instance->p_api->atCommandSendThreadSafe(p_transport_instance->p_ctrl, &atcmd),

@@ -86,7 +86,7 @@ typedef enum e_elc_event_ra6t2
     ELC_EVENT_AGT1_COMPARE_A                = (0x044), // Compare match A
     ELC_EVENT_AGT1_COMPARE_B                = (0x045), // Compare match B
     ELC_EVENT_IWDT_UNDERFLOW                = (0x052), // IWDT underflow
-    ELC_EVENT_WDT_UNDERFLOW                 = (0x053), // WDT0 underflow
+    ELC_EVENT_WDT_UNDERFLOW                 = (0x053), // WDT underflow
     ELC_EVENT_CAN_RXF                       = (0x059), // Global recieve FIFO interrupt
     ELC_EVENT_CAN_GLERR                     = (0x05A), // Global error
     ELC_EVENT_CAN_DMAREQ0                   = (0x05B), // RX fifo DMA request 0

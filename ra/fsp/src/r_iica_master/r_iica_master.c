@@ -253,7 +253,7 @@ fsp_err_t R_IICA_MASTER_SlaveAddressSet (i2c_master_ctrl_t * const    p_api_ctrl
     FSP_ERROR_RETURN(IICA_MASTER_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Fail if there is already a transfer in progress */
-    FSP_ERROR_RETURN(((0 == p_ctrl->loaded) && (0 == p_ctrl->total) && (false == p_ctrl->restart)), FSP_ERR_IN_USE);
+    FSP_ERROR_RETURN(((p_ctrl->loaded == p_ctrl->total) && (false == p_ctrl->restart)), FSP_ERR_IN_USE);
  #if !IICA_MASTER_CFG_ADDR_MODE_10_BIT_ENABLE
     FSP_ERROR_RETURN(p_ctrl->addr_mode != I2C_MASTER_ADDR_MODE_10BIT, FSP_ERR_INVALID_MODE);
  #endif

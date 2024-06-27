@@ -24,6 +24,22 @@
  #define ICU_FLTEN_OFFSET      (7)
 #endif
 
+/* If the mask is larger than 0xFFFF, then it requires 32-bit values instead of 16-bit */
+#if BSP_FEATURE_ICU_IRQ_CHANNELS_MASK > 0xFFFFU
+
+/* When mask is over 16-bit, there are actually two registers - R_ICU->IRQCRa and R_ICU->IRQCRb. Between them in memory
+ * is R_ICU->NMICR and means there is a 4 byte offset between the end of IRQCRa and beginning of IRQCRb. To save some
+ * instructions, this arithmetic determines if the 4 byte offset should be added to the indexing of IRQCRa to write to
+ * channels 16-31 */
+ #define ICU_IRQCR_CH(c)    ((c) + (uint8_t) (((c) >> 4) << 2))
+ #define ICU_IRQCR_REG             (R_ICU->IRQCRa)
+ #define ICU_IRQCR_REG_BITFIELD    (R_ICU->IRQCRa_b)
+#else
+ #define ICU_IRQCR_CH(c)    (c)
+ #define ICU_IRQCR_REG             (R_ICU->IRQCR)
+ #define ICU_IRQCR_REG_BITFIELD    (R_ICU->IRQCR_b)
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -102,7 +118,8 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
                      FSP_ERR_UNSUPPORTED);
  #endif
 
-    FSP_ERROR_RETURN(0 != ((1U << p_cfg->channel) & BSP_FEATURE_ICU_IRQ_CHANNELS_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(0 != ((1ULL << p_cfg->channel) & BSP_FEATURE_ICU_IRQ_CHANNELS_MASK),
+                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     /* Callback must be used with a valid interrupt priority otherwise it will never be called. */
     if (p_cfg->p_callback)
@@ -132,10 +149,12 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     p_ctrl->p_context  = p_cfg->p_context;
     p_ctrl->channel    = p_cfg->channel;
 
+    uint8_t channel = ICU_IRQCR_CH(p_ctrl->channel);
+
 #if BSP_FEATURE_ICU_HAS_FILTER
 
     /* Disable digital filter */
-    R_ICU->IRQCR[p_ctrl->channel] = 0U;
+    ICU_IRQCR_REG[channel] = 0U;
 
     /* Set the digital filter divider. */
     uint8_t irqcr = (uint8_t) (p_cfg->clock_source_div << ICU_FCLKSEL_OFFSET);
@@ -150,7 +169,7 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 #endif
 
     /* Write IRQCR */
-    R_ICU->IRQCR[p_ctrl->channel] = irqcr;
+    ICU_IRQCR_REG[channel] = irqcr;
 
 #if BSP_FEATURE_ICU_HAS_IELSR
 
@@ -319,7 +338,11 @@ void r_icu_isr (void)
 
 #if BSP_FEATURE_ICU_HAS_IELSR
     bool level_irq = false;
-    if (EXTERNAL_IRQ_TRIG_LEVEL_LOW == R_ICU->IRQCR_b[p_ctrl->channel].IRQMD)
+
+    uint8_t channel = ICU_IRQCR_CH(p_ctrl->channel);
+    uint8_t mode    = ICU_IRQCR_REG_BITFIELD[channel].IRQMD;
+
+    if (EXTERNAL_IRQ_TRIG_LEVEL_LOW == mode)
     {
         level_irq = true;
     }

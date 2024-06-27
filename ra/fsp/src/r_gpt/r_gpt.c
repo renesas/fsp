@@ -17,12 +17,19 @@
 /* "GPT" in ASCII, used to determine if channel is open. */
 #define GPT_OPEN                                         (0x00475054ULL)
 
+#define GPT_PRV_GPTE_OR_GPTEH_SUPPORTED                  (BSP_FEATURE_GPT_GPTEH_SUPPORTED | \
+                                                          BSP_FEATURE_GPT_GPTE_SUPPORTED)
 #define GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK               (BSP_FEATURE_GPT_GPTEH_CHANNEL_MASK | \
                                                           BSP_FEATURE_GPT_GPTE_CHANNEL_MASK)
+#define GPT_PRV_ADC_DIRECT_START_SUPPORTED               (BSP_FEATURE_GPT_AD_DIRECT_START_SUPPORTED)
+#define GPT_PRV_ADC_DIRECT_START_CHANNEL_MASK            (BSP_FEATURE_GPT_AD_DIRECT_START_CHANNEL_MASK)
+#define GPT_PRV_ADC_ELC_START_SUPPORTED                  (GPT_PRV_GPTE_OR_GPTEH_SUPPORTED && \
+                                                          !GPT_PRV_ADC_DIRECT_START_SUPPORTED)      // ELC-start is 'default' and exists if direct-start is not present
+#define GPT_PRV_ADC_ELC_START_CHANNEL_MASK               (GPT_PRV_ADC_DIRECT_START_SUPPORTED ? \
+                                                          0x0 : GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK) // No ELC-start present if direct start is supported.
 
-#define GPT_PRV_ADC_TRIGGER_CHANNEL_MASK                 (GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK | \
-                                                          BSP_FEATURE_GPT_AD_DIRECT_START_CHANNEL_MASK)
-
+#define GPT_PRV_ODC_SUPPORTED                            (BSP_FEATURE_GPT_GPTEH_SUPPORTED)
+#define GPT_PRV_ODC_CHANNEL_MASK                         (BSP_FEATURE_GPT_GPTEH_CHANNEL_MASK)
 #define GPT_PRV_GTWP_RESET_VALUE                         (0xA500U)
 #define GPT_PRV_GTWP_WRITE_PROTECT                       (0xA501U)
 
@@ -219,8 +226,7 @@ fsp_err_t R_GPT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     p_instance_ctrl->channel_mask = 1U << p_cfg->channel;
 
 #if GPT_CFG_PARAM_CHECKING_ENABLE
-    FSP_ERROR_RETURN((p_instance_ctrl->channel_mask & BSP_FEATURE_GPT_VALID_CHANNEL_MASK),
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN((p_instance_ctrl->channel_mask & BSP_PERIPHERAL_GPT_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     if ((p_cfg->p_callback) || (TIMER_MODE_ONE_SHOT == p_cfg->mode))
     {
         FSP_ERROR_RETURN(p_cfg->cycle_end_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
@@ -856,14 +862,13 @@ fsp_err_t R_GPT_PwmOutputDelaySet (timer_ctrl_t * const           p_ctrl,
                                    gpt_pwm_output_delay_setting_t delay_setting,
                                    uint32_t const                 pin)
 {
-#if 0U != BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK && GPT_CFG_OUTPUT_SUPPORT_ENABLE
+#if 0U != GPT_PRV_ODC_SUPPORTED && GPT_CFG_OUTPUT_SUPPORT_ENABLE
     gpt_instance_ctrl_t * p_instance_ctrl = (gpt_instance_ctrl_t *) p_ctrl;
 
  #if GPT_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(0U != (BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask),
-                     FSP_ERR_INVALID_CHANNEL);
+    FSP_ERROR_RETURN(0U != (GPT_PRV_ODC_CHANNEL_MASK & p_instance_ctrl->channel_mask), FSP_ERR_INVALID_CHANNEL);
     FSP_ERROR_RETURN(0U != (R_GPT_ODC->GTDLYCR1 & R_GPT_ODC_GTDLYCR1_DLLEN_Msk), FSP_ERR_NOT_INITIALIZED);
 
     if (TIMER_MODE_PWM == p_instance_ctrl->p_cfg->mode)
@@ -936,6 +941,10 @@ fsp_err_t R_GPT_PwmOutputDelaySet (timer_ctrl_t * const           p_ctrl,
             (uint32_t) ((uint32_t) &R_GPT_ODC->GTDLYF[0].A - (uint32_t) &R_GPT_ODC->GTDLYR[0].A) * edge;
         uint16_t * p_gtdlyfnx =
             (uint16_t *) ((uint32_t) &R_GPT_ODC->GTDLYR[0].A + channel_offset + pin_offset + edge_offset);
+
+ #if BSP_FEATURE_GPT_ODC_128_RESOLUTION_SUPPORTED
+        delay_setting *= 4;            // Delay count is out of 32, per the API. Convert provided 32-count resolution into 128-count register setting.
+ #endif
 
         /* Unprotect the delay setting register. */
         uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
@@ -1091,14 +1100,14 @@ fsp_err_t R_GPT_Close (timer_ctrl_t * const p_ctrl)
  * @retval FSP_ERR_INVALID_STATE       The source clock frequnecy is out of the required range for the PDG.
  * @retval FSP_ERR_UNSUPPORTED         This feature is not supported.
  **********************************************************************************************************************/
-fsp_err_t R_GPT_PwmOutputDelayInitialize (void)
+fsp_err_t R_GPT_PwmOutputDelayInitialize ()
 {
-#if 0U != BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK && GPT_CFG_OUTPUT_SUPPORT_ENABLE
- #if BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0 || GPT_CFG_PARAM_CHECKING_ENABLE
-  #if BSP_FEATURE_BSP_HAS_GPT_CLOCK && GPT_CFG_GPTCLK_BYPASS == 0
+#if (BSP_FEATURE_GPT_GPTEH_SUPPORTED && GPT_CFG_OUTPUT_SUPPORT_ENABLE)
+ #if ((BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0) || GPT_CFG_PARAM_CHECKING_ENABLE)
+  #if (BSP_PERIPHERAL_GPT_GTCLK_PRESENT && (GPT_CFG_GPTCLK_BYPASS == 0))
 
     /* Calculate the GPTCK Divider. */
-    uint32_t divider = R_SYSTEM->GPTCKDIVCR;
+    uint8_t divider = R_SYSTEM->GPTCKDIVCR;
 
     if (0U == divider)
     {
@@ -1126,20 +1135,17 @@ fsp_err_t R_GPT_PwmOutputDelayInitialize (void)
     uint32_t gtdlycr1 = R_GPT_ODC_GTDLYCR1_DLYRST_Msk;
 
  #if BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0
-    if (BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN >= gpt_frequency)
-    {
-        gtdlycr1 |= R_GPT_ODC_GTDLYCR1_FRANGE_Msk;
-    }
+    gtdlycr1 |= BSP_FEATURE_GPT_ODC_FRANGE_SET_BIT(gpt_frequency);
  #endif
 
- #if BSP_FEATURE_BSP_HAS_GPT_CLOCK && GPT_CFG_GPTCLK_BYPASS
+ #if BSP_PERIPHERAL_GPT_GTCLK_PRESENT && GPT_CFG_GPTCLK_BYPASS
 
     /* Bypass the GPTCLK. GPT instances will use PCLKD as the GPT Core clock. */
     R_GPT_GTCLK->GTCLKCR = 1U;
  #endif
 
     /* Cancel the module-stop state for the PDG. */
-    R_BSP_MODULE_START(FSP_IP_GPT, 0);
+    R_BSP_MODULE_START(FSP_IP_GPT_PDG, 0);
 
  #if GPT_CFG_WRITE_PROTECT_ENABLE
 
@@ -1258,7 +1264,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     /* Save pointer to extended configuration structure. */
     gpt_extended_cfg_t * p_extend = (gpt_extended_cfg_t *) p_cfg->p_extend;
 
-#if BSP_FEATURE_BSP_HAS_GPT_CLOCK && GPT_CFG_GPTCLK_BYPASS
+#if BSP_PERIPHERAL_GPT_GTCLK_PRESENT && GPT_CFG_GPTCLK_BYPASS
 
     /* Bypass the GPTCLK. GPT instances will use PCLKD as the GPT Core clock. */
     R_GPT_GTCLK->GTCLKCR = 1U;
@@ -1268,8 +1274,8 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
      * register, PCLK divisor register, and counter register. */
     R_BSP_MODULE_START(FSP_IP_GPT, p_cfg->channel);
 
-#if GPT_CFG_OUTPUT_SUPPORT_ENABLE && BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK
-    if (0U != (BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask))
+#if (GPT_CFG_OUTPUT_SUPPORT_ENABLE && BSP_FEATURE_GPT_GPTEH_SUPPORTED)
+    if (0U != (BSP_FEATURE_GPT_GPTEH_CHANNEL_MASK & p_instance_ctrl->channel_mask))
     {
         /* Enter a critical section in order to ensure that multiple GPT channels don't access the common
          * register simultaneously. */
@@ -1409,7 +1415,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
 
     r_gpt_init_compare_match_channel(p_instance_ctrl);
 
-#if GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK
+#if GPT_PRV_GPTE_OR_GPTEH_SUPPORTED
     if ((1U << p_cfg->channel) & GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK)
     {
         /* This register is available on GPTE and GPTEH only. It must be cleared before setting. When modifying the
@@ -1418,41 +1424,54 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
         p_instance_ctrl->p_reg->GTITC = 0U;
     }
 #endif
-    uint32_t gtintad = 0;
-    uint32_t gtdtcr  = 0;
+
 #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
     gpt_extended_pwm_cfg_t const * p_pwm_cfg = p_extend->p_pwm_cfg;
     if (NULL != p_pwm_cfg)
     {
-        gtintad |= ((uint32_t) p_pwm_cfg->output_disable << R_GPT0_GTINTAD_GRPDTE_Pos) |
-                   ((uint32_t) p_pwm_cfg->poeg_link << R_GPT0_GTINTAD_GRP_Pos);
-        p_instance_ctrl->p_reg->GTDVU = p_pwm_cfg->dead_time_count_up;
+        uint32_t gtintad = ((uint32_t) p_pwm_cfg->output_disable << R_GPT0_GTINTAD_GRPDTE_Pos) |
+                           ((uint32_t) p_pwm_cfg->poeg_link << R_GPT0_GTINTAD_GRP_Pos);
 
-        /* Set GTDTCR.TDE only if one of the dead time values is non-zero. */
-        gtdtcr |= ((p_pwm_cfg->dead_time_count_up > 0) || (p_pwm_cfg->dead_time_count_down > 0));
-
- #if GPT_PRV_ADC_TRIGGER_CHANNEL_MASK
-        if ((1 << p_cfg->channel) & GPT_PRV_ADC_TRIGGER_CHANNEL_MASK)
+        /* Configure PWM Dead-time.
+         * GTDVU is available on most timers, while GTDVD is only available on a subset of timers (GPTE/GPTEH) */
+ #if BSP_FEATURE_GPT_GTDVU_SUPPORTED
+        if ((1U << p_cfg->channel) & (BSP_FEATURE_GPT_GTDVU_CHANNEL_MASK | GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK))
         {
-  #if GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK
+            /* Enable Dead-time nagative-phase waveform
+             * Set GTDTCR.TDE only if one of the dead time values is non-zero. */
+            p_instance_ctrl->p_reg->GTDTCR =
+                ((p_pwm_cfg->dead_time_count_up > 0) || (p_pwm_cfg->dead_time_count_down > 0));
 
-            /* These registers are only available on MCUs with GPTE, GPTEH, or GPT with A/D Converter Start. */
+            /* Dead time value register GTDVU */
+            p_instance_ctrl->p_reg->GTDVU = p_pwm_cfg->dead_time_count_up;
+        }
+ #endif
+
+ #if (GPT_PRV_ADC_DIRECT_START_SUPPORTED || GPT_PRV_ADC_ELC_START_SUPPORTED)
+        if ((1U << p_cfg->channel) & (GPT_PRV_ADC_DIRECT_START_CHANNEL_MASK |
+                                      GPT_PRV_ADC_ELC_START_CHANNEL_MASK))
+        {
+  #if (GPT_PRV_GPTE_OR_GPTEH_SUPPORTED)
+
+            /* Dead time value register GTDVD */
+            p_instance_ctrl->p_reg->GTDVD = p_pwm_cfg->dead_time_count_down;
+
+            /* GTITC is always present for GPTE and GPTEH timers */
             p_instance_ctrl->p_reg->GTITC = ((uint32_t) p_pwm_cfg->interrupt_skip_source << R_GPT0_GTITC_IVTC_Pos) |
                                             ((uint32_t) p_pwm_cfg->interrupt_skip_count << R_GPT0_GTITC_IVTT_Pos) |
                                             ((uint32_t) p_pwm_cfg->interrupt_skip_adc << R_GPT0_GTITC_ADTAL_Pos);
-            p_instance_ctrl->p_reg->GTDVD = p_pwm_cfg->dead_time_count_down;
   #endif
 
-            /* Set A/D Conversion Start Request counts */
+            /* Configure AD Compare match behavior */
+            gtintad |= ((uint32_t) p_pwm_cfg->adc_trigger << R_GPT0_GTINTAD_ADTRAUEN_Pos);
             p_instance_ctrl->p_reg->GTADTRA = p_pwm_cfg->adc_a_compare_match;
             p_instance_ctrl->p_reg->GTADTRB = p_pwm_cfg->adc_b_compare_match;
-
-            gtintad |= ((uint32_t) p_pwm_cfg->adc_trigger << R_GPT0_GTINTAD_ADTRAUEN_Pos);
         }
  #endif
+
         p_instance_ctrl->p_reg->GTINTAD = gtintad;
 
-        /* Check if custom GTIOR settings are provided. */
+        /* Check if custom GTIOR (Input/Output) settings are provided. */
         if (0 == p_extend->gtior_setting.gtior)
         {
             /* If custom GTIOR settings are not provided, set gtioca_disable_settings and gtiocb_disable_settings. */
@@ -1460,13 +1479,16 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
             gtior |= (uint32_t) (p_pwm_cfg->gtiocb_disable_setting << R_GPT0_GTIOR_OBDF_Pos);
         }
     }
+    else
 #endif
 
-    /* GTADTR* registers are unused if GTINTAD is cleared. */
-    p_instance_ctrl->p_reg->GTINTAD = gtintad;
-    p_instance_ctrl->p_reg->GTDTCR  = gtdtcr;
+    {
+        /* GTADTR* registers are unused if GTINTAD is cleared. */
+        p_instance_ctrl->p_reg->GTINTAD = 0U;
 
-    /* GTDVU, GTDVD, GTDBU, GTDBD, and GTSOTR are not used if GTDTCR is cleared. */
+        /* GTDVU, GTDVD, GTDBU, GTDBD, and GTSOTR are not used if GTDTCR is cleared. */
+        p_instance_ctrl->p_reg->GTDTCR = 0U;
+    }
 
     /* Check if custom GTIOR settings are provided. */
     if (0 == p_extend->gtior_setting.gtior)
@@ -1501,9 +1523,6 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     }
 #endif
 
-    /* Reset counter to 0. */
-    p_instance_ctrl->p_reg->GTCLR = p_instance_ctrl->channel_mask;
-
     /* Set the I/O control register. */
     p_instance_ctrl->p_reg->GTIOR = gtior;
 
@@ -1512,6 +1531,9 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
      * and Duty Setting Register (GTUDDTYC)" in the RA6M3 manual R01UH0886EJ0100. */
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc | 3U;
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc | 1U;
+
+    /* Reset counter to 0. */
+    p_instance_ctrl->p_reg->GTCLR = p_instance_ctrl->channel_mask;
 
     r_gpt_write_protect_enable(p_instance_ctrl, GPT_PRV_GTWP_WRITE_PROTECT);
 
@@ -1577,7 +1599,7 @@ static void r_gpt_enable_irq (IRQn_Type const irq, uint32_t priority, void * p_c
 #if GPT_CFG_OUTPUT_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
- * Calculates duty cycle register values.  GTPBR must be set before entering this function.
+ * Calculates duty cycle register values.  GTPR must be set before entering this function.
  *
  * @param[in]  p_instance_ctrl         Instance control structure
  * @param[in]  duty_cycle_counts       Duty cycle to set

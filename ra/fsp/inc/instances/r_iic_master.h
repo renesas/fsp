@@ -46,6 +46,8 @@ typedef struct iic_master_clock_settings
     uint8_t cks_value;                 ///< Internal Reference Clock Select
     uint8_t brh_value;                 ///< High-level period of SCL clock
     uint8_t brl_value;                 ///< Low-level period of SCL clock
+    uint8_t sddl_value;                // < SDA Output Delay Counter
+    bool    dlcs_value;                // < SDA Output Delay Clock Source
 } iic_master_clock_settings_t;
 
 /** I2C control structure. DO NOT INITIALIZE. */
@@ -93,6 +95,7 @@ typedef struct st_iic_master_extended_cfg
     iic_master_timeout_mode_t    timeout_mode;    ///< Timeout Detection Time Select: Long Mode = 0 and Short Mode = 1.
     iic_master_timeout_scl_low_t timeout_scl_low; ///< Allows timeouts to occur when SCL is held low.
     iic_master_clock_settings_t  clock_settings;  ///< I2C Clock settings
+    bool smbus_operation;                         ///< SMBus operation on I2C bus
 } iic_master_extended_cfg_t;
 
 /**********************************************************************************************************************

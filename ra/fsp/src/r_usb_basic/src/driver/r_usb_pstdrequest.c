@@ -1679,6 +1679,7 @@ static void usb_peri_class_request_usbx (usb_setup_t * p_req)
                                FSP_SETUP_VALUE) = p_req->request_value;
                 *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
                                FSP_SETUP_LENGTH) = p_req->request_length;
+                transfer_request->ux_slave_transfer_request_actual_length = p_req->request_length - g_usb_pstd_data_cnt[USB_PIPE0];
   #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
                 *(transfer_request->ux_slave_transfer_request_setup +
                   FSP_SETUP_REQUEST_TYPE) = (uint8_t) (p_req->request_type & VALUE_FFH);
@@ -1915,8 +1916,12 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
     /* Is a request receive target Interface? */
     if (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP))
     {
+  #if (BSP_CFG_RTOS == 1)
         if ((USB_MASS_STORAGE_RESET == (req->request_type & USB_BREQUEST)) ||
             (USB_PCDC_SET_CONTROL_LINE_STATE == (req->request_type & USB_BREQUEST)))
+  #else
+        if (USB_MASS_STORAGE_RESET == (req->request_type & USB_BREQUEST))
+  #endif                                /* (BSP_CFG_RTOS == 1) */
         {
   #if (BSP_CFG_RTOS == 1)
             usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
@@ -1942,7 +1947,12 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
         usb_pstd_set_stall_pipe0(p_utr); /* Req Error */
     }
 
+  #if (BSP_CFG_RTOS == 1)
+    if ((USB_MASS_STORAGE_RESET != (req->request_type & USB_BREQUEST)) &&
+        (USB_PCDC_SET_CONTROL_LINE_STATE != (req->request_type & USB_BREQUEST)))
+  #else
     if (USB_MASS_STORAGE_RESET != (req->request_type & USB_BREQUEST))
+  #endif                                /* (BSP_CFG_RTOS == 1) */
     {
         usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
     }

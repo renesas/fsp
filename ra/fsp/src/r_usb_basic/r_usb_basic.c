@@ -283,6 +283,7 @@ const usb_api_t g_usb_on_usb =
     .setupGet             = R_USB_SetupGet,
     .otgCallbackSet       = R_USB_OtgCallbackSet,
     .otgSRP               = R_USB_OtgSRP,
+    .typecInfoGet         = R_USB_TypeCInfoGet,
 };
 
 /***********************************************************************************************************************
@@ -409,6 +410,9 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_cfg)
+
+    /* Check if the module number is valid */
+    FSP_ERROR_RETURN(!((USB_IP0 != p_cfg->module_number) && (USB_IP1 != p_cfg->module_number)), FSP_ERR_USB_PARAMETER)
 #endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if defined(USB_CFG_OTG_USE)
@@ -436,16 +440,14 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if USB_CFG_PARAM_CHECKING_ENABLE
 
     /* Argument Checking */
-    FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
-
     FSP_ERROR_RETURN(!(((USB_SPEED_HS != p_cfg->usb_speed) && (USB_SPEED_FS != p_cfg->usb_speed)) &&
                        (USB_SPEED_LS != p_cfg->usb_speed) &&
                        (USB_MODE_HOST != p_cfg->usb_mode)),
                      FSP_ERR_USB_PARAMETER)
 
- #if defined(BSP_MCU_GROUP_RA2A1)
+ #if (USB_NUM_USBIP == 1)
     FSP_ERROR_RETURN(USB_IP1 != p_ctrl->module_number, FSP_ERR_USB_PARAMETER)
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif                                /* USB_NUM_USBIP == 1 */
 
     switch ((usb_class_internal_t) p_ctrl->type)
     {
@@ -486,10 +488,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         case USB_CLASS_INTERNAL_HPRN:
         case USB_CLASS_INTERNAL_HUVC:
         {
- #if defined(BSP_MCU_GROUP_RA2A1)
+ #if defined(USB_NOT_SUPPORT_HOST)
 
-            return FSP_ERR_ASSERTION;
- #else                                 /* defined(BSP_MCU_GROUP_RA2A1) */
+            return FSP_ERR_USB_PARAMETER;
+ #else                                 /* defined(USB_NOT_SUPPORT_HOST) */
             FSP_ERROR_RETURN(USB_MODE_HOST == p_cfg->usb_mode, FSP_ERR_USB_PARAMETER)
   #if defined(USB_HIGH_SPEED_MODULE)
             FSP_ERROR_RETURN(!((USB_SPEED_HS == p_cfg->usb_speed) && (USB_IP1 != p_ctrl->module_number)),
@@ -497,7 +499,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
   #else                                /* defined (USB_HIGH_SPEED_MODULE) */
             FSP_ERROR_RETURN(USB_SPEED_HS != p_cfg->usb_speed, FSP_ERR_USB_PARAMETER)
   #endif /* defined (USB_HIGH_SPEED_MODULE) */
- #endif /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif /* defined(USB_NOT_SUPPORT_HOST) */
             break;
         }
 
@@ -631,6 +633,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if defined(USB_CFG_OTG_USE)
     g_p_usb_otg_cfg = (usb_cfg_t *) p_cfg;
 #endif /* defined (USB_CFG_OTG_USE) */
+
+#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+    hw_usb_typec_module_init();
+#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 
     if (USB_MODE_HOST == p_cfg->usb_mode)
     {
@@ -859,10 +865,16 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
             g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << p_ctrl->type);      /* Set USB Open device class */
+ /* Check if both HCDC class and HMSC class are enabled */
+ #if (defined(USB_CFG_HCDC_USE) && defined(USB_CFG_HMSC_USE))
+            /* Set USB Open device class for HCDC Class and HCDCC Class */
+            g_usb_open_class[p_ctrl->module_number] |= ((1 << USB_CLASS_INTERNAL_HCDC) | (1 << USB_CLASS_INTERNAL_HCDCC));
+ #else
             if (USB_CLASS_INTERNAL_HCDC == (usb_class_internal_t) p_ctrl->type)
             {
                 g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_HCDCC); /* Set USB Open device class */
             }
+ #endif                                /* defined(USB_CFG_HCDC_USE) && defined(USB_CFG_HMSC_USE) */
 
  #if defined(USB_CFG_OTG_USE)
             g_is_A_device[p_ctrl->module_number]      = USB_YES;
@@ -1425,6 +1437,10 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
  #if defined(USB_CFG_PMSC_USE)
     g_usb_pmsc_usbip = USB_VALUE_FFH;
  #endif                                /* defined(USB_CFG_PMSC_USE) */
+
+ #if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+    hw_usb_typec_module_uninit();
+ #endif /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 
     return ret_code;
 #endif                                 /* defined(USB_CFG_OTG_USE) */
@@ -3796,6 +3812,59 @@ fsp_err_t R_USB_OtgSRP (usb_ctrl_t * const p_api_ctrl)
 
     return FSP_ERR_USB_FAILED;
 #endif  /* (BSP_CFG_RTOS == 1) */
+}
+
+/**************************************************************************//**
+ * @brief USB Type-C connect Information get.
+ *
+ * @retval FSP_SUCCESS              Successful completion.
+ * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
+ ******************************************************************************/
+fsp_err_t R_USB_TypeCInfoGet (usb_ctrl_t * const p_api_ctrl, usb_typec_info_t * p_info)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+
+    /* Set Connection State Mode */
+    if (USB_TYPEC_MEC_MODE == (R_USBCC->MEC & USB_TYPEC_MEC_MODE))
+    {
+        p_info->operation_mode = USB_TYPEC_MODE_USB20_ONLY_SINK; /* USB 2.0 Only Sink Mode */
+    }
+    else
+    {
+        p_info->operation_mode = USB_TYPEC_MODE_SINK;            /* Sink Only Mode */
+    }
+
+    /* Set Connection of Plug Orientation */
+    if (USB_TYPEC_TCS_PLUG == (g_usb_typec_reg_tcs & USB_TYPEC_TCS_PLUG))
+    {
+        p_info->plug = USB_TYPEC_PLUG_CC2_CONNECTED; /* CC2 connected */
+    }
+    else
+    {
+        p_info->plug = USB_TYPEC_PLUG_CC1_CONNECTED; /* CC1 connected */
+    }
+
+    /* Set Status of VBUS */
+    if (USB_TYPEC_TCS_VBUSS == (g_usb_typec_reg_tcs & USB_TYPEC_TCS_VBUSS))
+    {
+        p_info->vbus_status = USB_TYPEC_VBUS_STATUS_ON;  /* VBUS On State */
+    }
+    else
+    {
+        p_info->vbus_status = USB_TYPEC_VBUS_STATUS_OFF; /* VBUS Off State */
+    }
+
+    /* Set Status of Connection State Machine */
+    p_info->connection_status = (g_usb_typec_reg_tcs & USB_TYPEC_TCS_CNS_MASK) >> 4;
+
+    return FSP_SUCCESS;
+#else                                  /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
+    FSP_PARAMETER_NOT_USED(p_info);
+
+    return FSP_ERR_USB_FAILED;
+#endif /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 }
 
 /*******************************************************************************************************************//**

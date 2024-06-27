@@ -123,7 +123,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     if (PSA_KEY_TYPE_IS_RSA_KEY_PAIR_WRAPPED(slot->attr.type))
     {
         mbedtls_rsa_context * rsa;
-        int      ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;;
+        int      ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
         int      exponent;
         uint32_t export_der_size_bytes = 0;
 
@@ -214,7 +214,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         psa_ecc_family_t     curve     = PSA_KEY_TYPE_ECC_GET_FAMILY(slot->attr.type);
         uint32_t             ecc_bytes = 0;
         mbedtls_ecp_group_id grp_id    =
-            mbedtls_ecc_group_of_psa(curve, bits, 0);
+            mbedtls_ecc_group_of_psa(curve, bits, 1);
         const mbedtls_ecp_curve_info * curve_info =
             mbedtls_ecp_curve_info_from_grp_id(grp_id);
         mbedtls_ecp_keypair * ecp;

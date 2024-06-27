@@ -95,6 +95,7 @@
 #define SAU_UART_SCR_DEFAULT_VALUE           (0x0004U)
 #define SAU_UART_STCLK_MAX                   (127)
 #define SAU_UART_STCLK_MIN                   (2)
+#define SAU_UART_PRS_DIVIDER_MAX             (0xFU)
 
 #if (SAU_UART_CFG_PARAM_CHECKING_ENABLE)
 
@@ -344,8 +345,20 @@ static void r_sau_uart_config_set (sau_uart_instance_ctrl_t * const p_ctrl, uart
 #endif
     sau_uart_extended_cfg_t * p_extend_cfg = (sau_uart_extended_cfg_t *) p_cfg->p_extend;
 
+#if (0 == SAU_UART_CFG_FIXED_BAUDRATE_ENABLE)
+    sau_uart_baudrate_setting_t * p_sau_baud_setting = p_extend_cfg->p_baudrate;
+
+    /* Configure the operation clock divisor based on extended configuration settings */
+    uint32_t sps_prs_offset = p_sau_baud_setting->operation_clock * R_SAU0_SPS_PRS1_Pos;
+    uint32_t sps_prs_mask   = R_SAU0_SPS_PRS0_Msk << sps_prs_offset;
+    SAU_REG->SPS =
+        (uint16_t) ((SAU_REG->SPS & (~sps_prs_mask)) |
+                    ((uint32_t) p_sau_baud_setting->prs << sps_prs_offset));
+#else
+
     /* Configure the operation clock divisor based on BSP settings */
     SAU_REG->SPS = SAU_SPS_REG_INIT;
+#endif
 
 #if (SAU_UART_CFG_TX_ENABLE)
 
@@ -594,6 +607,8 @@ fsp_err_t R_SAU_UART_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * cons
  * Implements @ref uart_api_t::baudSet
  *
  * @warning This terminates any in-progress transmission.
+ * @warning This function may change the operation clock frequency. Select a unique operation clock for each SAU
+ * instance if using this function.
  *
  * @retval  FSP_SUCCESS                  Baud rate was successfully changed.
  * @retval  FSP_ERR_ASSERTION            Pointer p_ctrl is NULL
@@ -635,17 +650,12 @@ fsp_err_t R_SAU_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const
     SAU_REG->ST = reg_ss;
     FSP_HARDWARE_REGISTER_WAIT((SAU_REG->SE & reg_ss), 0U);
 
- #if (SAU_UART_CFG_TX_ENABLE)
-
-    /* Update TX operation clock setting. */
-    SAU_REG->SMR_b[SAU_TX_INDEX].CKS = p_sau_baud_setting->operation_clock & (R_SAU0_SMR_CKS_Msk >> R_SAU0_SMR_CKS_Pos);
- #endif
-
- #if (SAU_UART_CFG_RX_ENABLE)
-
-    /* Update RX operation clock setting. */
-    SAU_REG->SMR_b[SAU_RX_INDEX].CKS = p_sau_baud_setting->operation_clock & (R_SAU0_SMR_CKS_Msk >> R_SAU0_SMR_CKS_Pos);
- #endif
+    /* Configure the operation clock divisor */
+    uint32_t sps_prs_offset = p_sau_baud_setting->operation_clock * R_SAU0_SPS_PRS1_Pos;
+    uint32_t sps_prs_mask   = R_SAU0_SPS_PRS0_Msk << sps_prs_offset;
+    SAU_REG->SPS =
+        (uint16_t) ((SAU_REG->SPS & (~sps_prs_mask)) |
+                    ((uint32_t) p_sau_baud_setting->prs << sps_prs_offset));
 
     /* Set SDR register value and re-enable. */
     reg_ss = 0U;
@@ -866,13 +876,6 @@ fsp_err_t R_SAU_UART_ReadStop (uart_ctrl_t * const p_api_ctrl, uint32_t * remain
 /*******************************************************************************************************************//**
  * Calculates baud rate register settings (SDR.STCLK) for the specified SAU unit.
  *
- * @note This function calculates the baud settings with both operation clocks CK0 and CK1, then selects the operation
- * clock and register setting combination that would produce the lowest error. Call @ref R_SAU_UART_BaudSet to apply
- * the updated register settings.
- * @note Configure the operation clock frequencies such that all required baud rates can be achieved using at least one
- * of the 2 operation clocks. If all required baud rates cannot be achieved with one clock, set one operation clock to
- * a lower frequency for slow baud rates, and the second clock to a faster frequency for faster baud rates.
- *
  * @param[in]  p_ctrl                    Pointer to the SAU UART control block.
  * @param[in]  baudrate                  Baud rate [bps]. For example, 19200, 57600, 115200, etc.
  * @param[out] p_baud_setting            Baud setting information stored here if successful
@@ -904,41 +907,33 @@ fsp_err_t R_SAU_UART_BaudCalculate (sau_uart_instance_ctrl_t * const    p_ctrl,
     FSP_PARAMETER_NOT_USED(p_ctrl);
  #endif
 
-    uint32_t       best_delta_error = UINT32_MAX;
-    uint32_t       peripheral_clock = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK);
-    const uint32_t sps              = SAU_SPS_REG_INIT;
+    uint32_t peripheral_clock = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK);
 
-    /* Calculate settings twice, once for CK0 and once for CK1, selecting the result with the lowest error */
-    for (uint8_t prs_shift = 0; prs_shift <= R_SAU0_SPS_PRS1_Pos; prs_shift += R_SAU0_SPS_PRS1_Pos)
+    /* Calculate the optimal value of STCLK for the given CKn clock. The divisor with the lowest error
+     * is always the smallest divisor that produces valid STCLK settings. Since we search the divisors
+     * low to high, the first divisor is the optimal divisor. */
+    for (uint8_t prs = 0; prs <= SAU_UART_PRS_DIVIDER_MAX; prs++)
     {
-        uint8_t prs = (sps >> prs_shift) & R_SAU0_SPS_PRS0_Msk;
-
         /* To get the stclk divider calculate the divisor to apply to ICLK. There's a built in div/2. */
         const uint32_t divisor = baudrate << (prs + 1);
 
         /* Calculate stclk register value: STCLK = (f_mck / (2*bitrate)) - 1 */
         const uint32_t stclk = (peripheral_clock + (divisor >> 1)) / divisor - 1;
 
-        /* Get the actual baudrate given the current settings.
-         * peripheral_clock / 2^prs / (2 * (stclk + 1)) */
-        const uint32_t actual_baudrate = (peripheral_clock >> (prs + 1)) / (stclk + 1);
-        uint32_t       delta_error     = baudrate >
-                                         actual_baudrate ? baudrate - actual_baudrate : actual_baudrate - baudrate;
-
-        /* Keep settings which are valid and provide the lowest error. */
-        if ((SAU_UART_STCLK_MIN <= stclk) && (stclk <= SAU_UART_STCLK_MAX) &&
-            (delta_error < best_delta_error))
+        if ((SAU_UART_STCLK_MIN <= stclk) && (stclk <= SAU_UART_STCLK_MAX))
         {
-            best_delta_error                = delta_error;
+            /* Save the settings that provide the lowest error. */
+            p_baud_setting->prs             = prs;
             p_baud_setting->stclk           = (uint8_t) stclk;
-            p_baud_setting->operation_clock = (sau_operation_clock_t) (prs_shift == R_SAU0_SPS_PRS1_Pos);
+            p_baud_setting->operation_clock =
+                ((sau_uart_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->p_baudrate->operation_clock;
+
+            return FSP_SUCCESS;
         }
     }
 
-    /* Return an error if no valid STCLK setting was found with either operation clock */
-    FSP_ERROR_RETURN(best_delta_error != UINT32_MAX, FSP_ERR_INVALID_ARGUMENT);
-
-    return FSP_SUCCESS;
+    /* Return an error if no valid STCLK setting was found */
+    return FSP_ERR_INVALID_ARGUMENT;
 #endif
 }
 

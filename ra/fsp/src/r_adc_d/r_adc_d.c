@@ -605,6 +605,90 @@ fsp_err_t R_ADC_D_OffsetSet (adc_ctrl_t * const p_ctrl, adc_channel_t const reg_
 }
 
 /*******************************************************************************************************************//**
+ * Prepare ADC_D to enter snooze mode via a hardware trigger.
+ * This function must be called immediately before entering software standby mode in order to allow the configured
+ * hardware trigger to transition the MCU from software standby mode to snooze mode and perform an ADC conversion.
+ *
+ * Supported modes for requesting snooze mode via hardware trigger:
+ * - channel_mode = ADC_D_CHANNEL_MODE_SELECT, conversion_operation = ADC_D_CONVERSION_MODE_ONESHOT
+ * - channel_mode = ADC_D_CHANNEL_MODE_SCAN,   conversion_operation = ADC_D_CONVERSION_MODE_ONESHOT
+ *
+ * @param[in] p_ctrl              Pointer to the ADC control block
+ *
+ * @retval FSP_SUCCESS            ADC is configured to request Snooze mode.
+ * @retval FSP_ERR_ASSERTION      An input argument is invalid.
+ * @retval FSP_ERR_NOT_OPEN       ADC_D is not open.
+ * @retval FSP_ERR_INVALID_MODE   ADC is in an invalid mode for requesting Snooze mode.
+ **********************************************************************************************************************/
+fsp_err_t R_ADC_D_SnoozeModePrepare (adc_ctrl_t * const p_ctrl)
+{
+#if ADC_D_CFG_SNOOZE_SUPPORT_ENABLE
+ #if ADC_D_CFG_PARAM_CHECKING_ENABLE
+    adc_d_instance_ctrl_t * p_instance_ctrl = (adc_d_instance_ctrl_t *) p_ctrl;
+
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(ADC_D_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
+
+    /* Verify that the ADC instance is in the correct mode for requesting snooze mode via hardware trigger. */
+    adc_d_extended_cfg_t const * p_extend = (adc_d_extended_cfg_t const *) p_instance_ctrl->p_cfg->p_extend;
+    FSP_ERROR_RETURN(ADC_D_TRIGGER_SOURCE_SOFTWARE != p_extend->trigger_source, FSP_ERR_INVALID_MODE);
+    FSP_ERROR_RETURN(ADC_D_CONVERSION_MODE_ONESHOT == p_extend->conversion_operation, FSP_ERR_INVALID_MODE);
+    FSP_ERROR_RETURN(ADC_D_TRIGGER_MODE_WAIT == p_extend->operation_trigger, FSP_ERR_INVALID_MODE);
+
+    /* The peripheral clock source must be set to HOCO or MOCO. */
+    FSP_ERROR_RETURN(0 == R_SYSTEM->ICLKSCR_b.CKST, FSP_ERR_INVALID_MODE);
+    FSP_ERROR_RETURN(0 == R_SYSTEM->FMAINSCR_b.CKST, FSP_ERR_INVALID_MODE);
+ #else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+ #endif
+
+    /* Set AWC prior to entering software standby mode.
+     * See section 25.7.2 A/D "Conversion by Inputting a Hardware Trigger" in the RA0E1 user manual R01UH1040EJ0100. */
+    R_ADC_D->ADM2_b.AWC = 1;
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * After exiting snooze mode, if the ADC_D module was in snooze mode, then this function must be called in order to
+ * restore ADC operation to normal mode.
+ *
+ * @param[in] p_ctrl              Pointer to the ADC control block
+ *
+ * @retval FSP_SUCCESS            ADC is configured to request Snooze mode.
+ * @retval FSP_ERR_INVALID_MODE   ADC is in an invalid mode for requesting Snooze mode.
+ **********************************************************************************************************************/
+fsp_err_t R_ADC_D_SnoozeModeExit (adc_ctrl_t * const p_ctrl)
+{
+#if ADC_D_CFG_SNOOZE_SUPPORT_ENABLE
+ #if ADC_D_CFG_PARAM_CHECKING_ENABLE
+    adc_d_instance_ctrl_t * p_instance_ctrl = (adc_d_instance_ctrl_t *) p_ctrl;
+
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(ADC_D_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(1 == R_ADC_D->ADM2_b.AWC, FSP_ERR_INVALID_MODE);
+ #else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+ #endif
+
+    /* Clear AWC after exiting software standby mode.
+     * See section 25.7.2 A/D "Conversion by Inputting a Hardware Trigger" in the RA0E1 user manual R01UH1040EJ0100. */
+    R_ADC_D->ADM2_b.AWC = 0;
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup ADC_D)
  **********************************************************************************************************************/
 
@@ -794,7 +878,7 @@ static void r_adc_d_open_sub (adc_d_instance_ctrl_t * const p_ctrl)
     R_ADC_D->ADM2 = adcadm2;
 
     /* Setting reference voltage source
-     * See Table 25.15 "Register settings for ADREFP[1:0] rewrite" in RA0E1 User's Manual (R01UH1040EJ0100) */
+     * See Table 25.11 "Register settings for ADREFP[1:0] rewrite" in RA0E1 User's Manual (R01UH1040EJ0100) */
     if (ADC_D_POSITIVE_VREF_IVREF == p_extend->positive_vref)
     {
         /* Discharge */

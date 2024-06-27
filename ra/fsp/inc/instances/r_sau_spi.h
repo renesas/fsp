@@ -44,7 +44,7 @@ typedef enum e_sau_spi_operation_clock
 typedef enum e_sau_spi_transfer_mode
 {
     SAU_SPI_TRANSFER_MODE_SINGLE     = 0, ///< Single transfer mode
-    SAU_SPI_TRANSFER_MODE_CONTINUOUS = 1, ///< Continuous transfer mode
+    SAU_SPI_TRANSFER_MODE_CONTINUOUS = 1, ///< Continuous transfer mode will be deprecated.
 } sau_spi_transfer_mode_t;
 
 /** Data phase */
@@ -90,6 +90,7 @@ typedef struct st_sau_spi_instance_ctrl
     uint32_t          rx_count;
     uint32_t          count;
     bool              transfer_in_progress;
+    bool              activation_on_tei;
 
     /* Pointer to callback and optional working memory. */
     void (* p_callback)(spi_callback_args_t *);

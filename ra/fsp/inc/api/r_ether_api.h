@@ -96,7 +96,13 @@ typedef enum e_ether_event
     ETHER_EVENT_WAKEON_LAN,            ///< Magic packet detection event
     ETHER_EVENT_LINK_ON,               ///< Link up detection event
     ETHER_EVENT_LINK_OFF,              ///< Link down detection event
-    ETHER_EVENT_INTERRUPT,             ///< Interrupt event
+    ETHER_EVENT_INTERRUPT,             ///< DEPRECATED Interrupt event
+    ETHER_EVENT_RX_COMPLETE,           ///< Receive complete event.
+    ETHER_EVENT_RX_MESSAGE_LOST,       ///< Receive FIFO overflow or Receive descriptor is full.
+    ETHER_EVENT_TX_COMPLETE,           ///< Transmit complete event.
+    ETHER_EVENT_TX_BUFFER_EMPTY,       ///< Transmit descriptor or FIFO is empty.
+    ETHER_EVENT_TX_ABORTED,            ///< Transmit abort event.
+    ETHER_EVENT_ERR_GLOBAL,            ///< Global error has occurred.
 } ether_event_t;
 #endif
 

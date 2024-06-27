@@ -154,7 +154,7 @@
 uint32_t  change_endian_long(uint32_t data);
 void      hw_aes_set_key(uint8_t * key, uint32_t KeyLen);
 void      hw_aes_set_iv(uint8_t * initialize_vetor);
-void      hw_aes_start(uint8_t * input, uint8_t * output, uint32_t block);
+fsp_err_t hw_aes_start(uint8_t * input, uint8_t * output, uint32_t block);
 void      hw_aes_ccm_mode_start(uint8_t * input, uint8_t * output, uint32_t block);
 fsp_err_t hw_gcm_calculation(uint8_t * input,
                              uint8_t * output,

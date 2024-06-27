@@ -49,9 +49,9 @@ extern "C" {
  #define USB1_D0FIFO32       (USB_M1->D0FIFO)
  #define USB1_D1FIFO32       (USB_M1->D1FIFO)
 
- #if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA4M1))
+ #if defined(USB_LDO_REGULATOR_MODULE)
   #define USB_LDO_REGULATOR_MODULE
- #endif                                /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
+ #endif                                /* USB_LDO_REGULATOR_MODULE */
 
 /****************/
 /*  INITIARIZE  */
@@ -375,19 +375,21 @@ void hw_usb_write_pipetrn(usb_utr_t * ptr, uint16_t pipeno, uint16_t data);
 /************/
 /* BCCTRL   */
 /************/
-void     hw_usb_set_bcctrl(usb_utr_t * ptr, uint16_t data);
-void     hw_usb_clear_bcctrl(usb_utr_t * ptr, uint16_t data);
-uint16_t hw_usb_read_bcctrl(usb_utr_t * ptr);
-void     hw_usb_set_vdmsrce(usb_utr_t * ptr);
-void     hw_usb_clear_vdmsrce(usb_utr_t * ptr);
-void     hw_usb_set_idpsinke(usb_utr_t * ptr);
-void     hw_usb_set_suspendm(uint8_t usb_ip);
-void     hw_usb_clear_suspm(uint8_t usb_ip);
-void     hw_usb_clear_idpsinke(usb_utr_t * ptr);
-void     hw_usb_set_vdcen(void);
-void     hw_usb_clear_vdcen(void);
-void     hw_usb_set_uckselc(void);
-void     hw_usb_clear_uckselc(void);
+void      hw_usb_set_bcctrl(usb_utr_t * ptr, uint16_t data);
+void      hw_usb_clear_bcctrl(usb_utr_t * ptr, uint16_t data);
+uint16_t  hw_usb_read_bcctrl(usb_utr_t * ptr);
+void      hw_usb_set_vdmsrce(usb_utr_t * ptr);
+void      hw_usb_clear_vdmsrce(usb_utr_t * ptr);
+void      hw_usb_set_idpsinke(usb_utr_t * ptr);
+void      hw_usb_set_suspendm(uint8_t usb_ip);
+void      hw_usb_clear_suspm(uint8_t usb_ip);
+void      hw_usb_clear_idpsinke(usb_utr_t * ptr);
+void      hw_usb_set_vdcen(void);
+void      hw_usb_clear_vdcen(void);
+void      hw_usb_set_uckselc(void);
+void      hw_usb_clear_uckselc(void);
+fsp_err_t hw_usb_typec_module_init(void);
+void      hw_usb_typec_module_uninit(void);
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_dcpmode(usb_utr_t * ptr);

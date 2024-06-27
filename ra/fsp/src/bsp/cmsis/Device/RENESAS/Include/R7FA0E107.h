@@ -466,24 +466,41 @@ typedef struct
             uint8_t                : 2;
         } STAT_b;
     };
-    __IM uint8_t RESERVED[7];
+    __IM uint8_t  RESERVED;
+    __IM uint16_t RESERVED1;
+    __IM uint32_t RESERVED2;
 
     union
     {
-        __IOM uint8_t CLR;              /*!< (@ 0x00000008) Bus Error Clear Register                                   */
-
-        struct
+        union
         {
-            __IOM uint8_t SLERRCLR : 1; /*!< [0..0] Slave Bus Error Clear.                                             */
-            __IOM uint8_t STERRCLR : 1; /*!< [1..1] Slave TrustZone filter Error Status.                               */
-            uint8_t                : 1;
-            __IOM uint8_t MMERRCLR : 1; /*!< [3..3] Master MPU Error Clear.                                            */
-            __IOM uint8_t ILERRCLR : 1; /*!< [4..4] Illegal Address Access Error Clear.                                */
-            __IOM uint8_t MSERRCLR : 1; /*!< [5..5] Master Security Attribution Unit Error Clear.                      */
-            uint8_t                : 2;
-        } CLR_b;
+            __IOM uint32_t IRQEN;      /*!< (@ 0x00000008) BUS Error IRQ Enable                                       */
+
+            struct
+            {
+                __IOM uint32_t EN : 1; /*!< [0..0] Bus interrupt request permission setting to ICU when
+                                        *   a bus error occurs                                                        */
+                uint32_t : 31;
+            } IRQEN_b;
+        };
+
+        union
+        {
+            __IOM uint8_t CLR;              /*!< (@ 0x00000008) Bus Error Clear Register                                   */
+
+            struct
+            {
+                __IOM uint8_t SLERRCLR : 1; /*!< [0..0] Slave Bus Error Clear.                                             */
+                __IOM uint8_t STERRCLR : 1; /*!< [1..1] Slave TrustZone filter Error Status.                               */
+                uint8_t                : 1;
+                __IOM uint8_t MMERRCLR : 1; /*!< [3..3] Master MPU Error Clear.                                            */
+                __IOM uint8_t ILERRCLR : 1; /*!< [4..4] Illegal Address Access Error Clear.                                */
+                __IOM uint8_t MSERRCLR : 1; /*!< [5..5] Master Security Attribution Unit Error Clear.                      */
+                uint8_t                : 2;
+            } CLR_b;
+        };
     };
-    __IM uint8_t RESERVED1[7];
+    __IM uint32_t RESERVED3;
 } R_BUS_BUSERRb_Type;                  /*!< Size = 16 (0x10)                                                          */
 
 /**
@@ -700,27 +717,13 @@ typedef struct
 
     union
     {
-        union
+        __IOM uint32_t PIBI;           /*!< (@ 0x00000070) Bus Slave Arbitration Control Register                     */
+
+        struct
         {
-            __IOM uint32_t PIBI;         /*!< (@ 0x00000070) Bus Slave Arbitration Control Register                     */
-
-            struct
-            {
-                __IOM uint32_t ARBS : 1; /*!< [0..0] Arbitration Select for slave.                                      */
-                uint32_t            : 31;
-            } PIBI_b;
-        };
-
-        union
-        {
-            __IOM uint32_t CPU1TCMBI;    /*!< (@ 0x00000070) Bus Slave Arbitration Control Register                     */
-
-            struct
-            {
-                __IOM uint32_t ARBS : 1; /*!< [0..0] Arbitration Select for slave.                                      */
-                uint32_t            : 31;
-            } CPU1TCMBI_b;
-        };
+            __IOM uint32_t ARBS : 1;   /*!< [0..0] Arbitration Select for slave.                                      */
+            uint32_t            : 31;
+        } PIBI_b;
     };
     __IM uint32_t RESERVED12;
 
@@ -1293,9 +1296,22 @@ typedef struct                          /*!< (@ 0x40003000) R_BUS Structure     
             uint32_t                : 15;
         } BUSDIVBYP_b;
     };
-    __IM uint32_t            RESERVED7[319];
+    __IM uint32_t RESERVED7[63];
+
+    union
+    {
+        __IOM uint16_t BUSTHRPUT;      /*!< (@ 0x00001400) Graphic Bus Throughput Control Register                    */
+
+        struct
+        {
+            __IOM uint16_t DIS : 1;    /*!< [0..0] Bandwidth Control Function                                         */
+            uint16_t           : 15;
+        } BUSTHRPUT_b;
+    };
+    __IM uint16_t            RESERVED8;
+    __IM uint32_t            RESERVED9[255];
     __IOM R_BUS_BUSERRa_Type BUSERRa[12]; /*!< (@ 0x00001800) Bus Error Registers                                        */
-    __IM uint32_t            RESERVED8[16];
+    __IM uint32_t            RESERVED10[16];
 
     union
     {
@@ -1303,16 +1319,16 @@ typedef struct                          /*!< (@ 0x40003000) R_BUS Structure     
         __IOM R_BUS_BMSAERR_Type BMSAERR[9]; /*!< (@ 0x00001900) Bus Master Security Attribution Unit Error Address
                                               *                  and Read/Write Status registers.                           */
     };
-    __IM uint32_t RESERVED9[28];
+    __IM uint32_t RESERVED11[28];
 
     union
     {
         __IOM R_BUS_BUSERRb_Type    BUSERRb[12]; /*!< (@ 0x00001A00) Bus Error Registers                                        */
         __IOM R_BUS_DMACDTCERR_Type DMACDTCERR;  /*!< (@ 0x00001A00) DMAC/DTC Error Registers                                   */
     };
-    __IM uint32_t           RESERVED10[16];
+    __IM uint32_t           RESERVED12[16];
     __IOM R_BUS_MBWERR_Type MBWERR;              /*!< (@ 0x00001B00) Master Bufferable Write Error Registers                    */
-    __IM uint32_t           RESERVED11[5];
+    __IM uint32_t           RESERVED13[5];
     __IOM R_BUS_MBWERR_Type SBWERR;              /*!< (@ 0x00001B20) Slave Bufferable Write Error Registers                     */
 } R_BUS_Type;                                    /*!< Size = 6956 (0x1b2c)                                                      */
 
@@ -1515,11 +1531,22 @@ typedef struct                         /*!< (@ 0x40005400) R_DTC Structure      
 
         struct
         {
-            __IOM uint32_t DTCVBR : 32; /*!< [31..0] DTC Vector Base Address.Note: A value cannot be set
-                                         *   in the lower-order 10 bits. These bits are fixed to 0.                    */
+            __IOM uint32_t DTCVBR : 32; /*!< [31..0] DTC Vector Base Address.                                          */
         } DTCVBR_b;
     };
-    __IM uint32_t RESERVED2;
+
+    union
+    {
+        __IOM uint8_t DTCADMOD;        /*!< (@ 0x00000008) DTC Address Mode Register                                  */
+
+        struct
+        {
+            __IOM uint8_t SHORT : 1;   /*!< [0..0] Short-Address Mode Set                                             */
+            uint8_t             : 7;
+        } DTCADMOD_b;
+    };
+    __IM uint8_t  RESERVED2;
+    __IM uint16_t RESERVED3;
 
     union
     {
@@ -1531,7 +1558,7 @@ typedef struct                         /*!< (@ 0x40005400) R_DTC Structure      
             uint8_t             : 7;
         } DTCST_b;
     };
-    __IM uint8_t RESERVED3;
+    __IM uint8_t RESERVED4;
 
     union
     {
@@ -1554,15 +1581,34 @@ typedef struct                         /*!< (@ 0x40005400) R_DTC Structure      
 
         struct
         {
-            uint8_t            : 4;
-            __IOM uint8_t RRSS : 1;    /*!< [4..4] DTC Transfer Information Read Skip Enable for Secure               */
-            uint8_t            : 3;
+            uint8_t           : 4;
+            __IOM uint8_t RRS : 1;     /*!< [4..4] DTC Transfer Information Read Skip Enable.                         */
+            uint8_t           : 3;
         } DTCCR_SEC_b;
     };
-    __IM uint8_t   RESERVED4;
-    __IM uint16_t  RESERVED5;
-    __IOM uint32_t DTCVBR_SEC;         /*!< (@ 0x00000014) DTC Vector Base Register for secure Region                 */
-    __IM uint32_t  RESERVED6[2];
+    __IM uint8_t  RESERVED5;
+    __IM uint16_t RESERVED6;
+
+    union
+    {
+        __IOM uint32_t DTCVBR_SEC;      /*!< (@ 0x00000014) DTC Vector Base Register for secure Region                 */
+
+        struct
+        {
+            __IOM uint32_t DTCVBR : 32; /*!< [31..0] DTC Vector Base Address.                                          */
+        } DTCVBR_SEC_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DTCDISP;          /*!< (@ 0x00000018) DTC Address Displacement Register                          */
+
+        struct
+        {
+            __IOM uint32_t DTCDISP : 32; /*!< [31..0] DTC Address Displacement                                          */
+        } DTCDISP_b;
+    };
+    __IM uint32_t RESERVED7;
 
     union
     {
@@ -1577,7 +1623,44 @@ typedef struct                         /*!< (@ 0x40005400) R_DTC Structure      
             uint32_t              : 15;
         } DTEVR_b;
     };
-} R_DTC_Type;                          /*!< Size = 36 (0x24)                                                          */
+
+    union
+    {
+        __IOM uint32_t DTCIBR;         /*!< (@ 0x00000024) DTC Index Table Base Register                              */
+
+        struct
+        {
+            uint32_t              : 10;
+            __IOM uint32_t DTCIBR : 22; /*!< [31..10] DTC Index Table Base Address                                     */
+        } DTCIBR_b;
+    };
+
+    union
+    {
+        __IOM uint8_t DTCOR;           /*!< (@ 0x00000028) DTC Operation Register                                     */
+
+        struct
+        {
+            __IOM uint8_t SQTFRL : 1;  /*!< [0..0] Sequence Transfer Stop                                             */
+            uint8_t              : 7;
+        } DTCOR_b;
+    };
+    __IM uint8_t  RESERVED8;
+    __IM uint16_t RESERVED9;
+
+    union
+    {
+        __IOM uint16_t DTCSQE;         /*!< (@ 0x0000002C) DTC Sequence Transfer Enable Register                      */
+
+        struct
+        {
+            __IOM uint16_t VECN   : 8; /*!< [7..0] DTC Sequence Transfer Vector Number Specified                      */
+            uint16_t              : 7;
+            __IOM uint16_t ESPSEL : 1; /*!< [15..15] DTC Sequence Transfer Enable                                     */
+        } DTCSQE_b;
+    };
+    __IM uint16_t RESERVED10;
+} R_DTC_Type;                          /*!< Size = 48 (0x30)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                           R_ELC                                           ================ */
@@ -4696,7 +4779,7 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_PORT2_BASE      0x400A0040UL
  #define R_PORT3_BASE      0x400A0060UL
  #define R_PORT4_BASE      0x400A0080UL
- #define R_PORT9_BASE      0x400A0100UL
+ #define R_PORT9_BASE      0x400A0120UL
  #define R_PORGA_BASE      0x400A1000UL
  #define R_PFS_BASE        0x400A0200UL
  #define R_PMISC_BASE      0x400A0340UL
@@ -4958,6 +5041,9 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_BUS_BUSERRb_CLR_STERRCLR_Msk      (0x2UL)  /*!< STERRCLR (Bitfield-Mask: 0x01)                        */
  #define R_BUS_BUSERRb_CLR_SLERRCLR_Pos      (0UL)    /*!< SLERRCLR (Bit 0)                                      */
  #define R_BUS_BUSERRb_CLR_SLERRCLR_Msk      (0x1UL)  /*!< SLERRCLR (Bitfield-Mask: 0x01)                        */
+/* =========================================================  IRQEN  ========================================================= */
+ #define R_BUS_BUSERRb_IRQEN_EN_Pos          (0UL)    /*!< EN (Bit 0)                                            */
+ #define R_BUS_BUSERRb_IRQEN_EN_Msk          (0x1UL)  /*!< EN (Bitfield-Mask: 0x01)                              */
 
 /* =========================================================================================================================== */
 /* ================                                        DMACDTCERR                                         ================ */
@@ -5022,9 +5108,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
 /* =======================================================  CPU0SAHBI  ======================================================= */
  #define R_BUS_BUSSABT0_CPU0SAHBI_ARBS_Pos    (0UL)   /*!< ARBS (Bit 0)                                          */
  #define R_BUS_BUSSABT0_CPU0SAHBI_ARBS_Msk    (0x1UL) /*!< ARBS (Bitfield-Mask: 0x01)                            */
-/* =======================================================  CPU1TCMBI  ======================================================= */
- #define R_BUS_BUSSABT0_CPU1TCMBI_ARBS_Pos    (0UL)   /*!< ARBS (Bit 0)                                          */
- #define R_BUS_BUSSABT0_CPU1TCMBI_ARBS_Msk    (0x1UL) /*!< ARBS (Bitfield-Mask: 0x01)                            */
 
 /* =========================================================================================================================== */
 /* ================                                         BUSSABT1                                          ================ */
@@ -5244,6 +5327,9 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_BUS_BUSDIVBYP_GDSSBPE_Msk     (0x8UL)     /*!< GDSSBPE (Bitfield-Mask: 0x01)                         */
  #define R_BUS_BUSDIVBYP_EDMABPE_Pos     (0UL)       /*!< EDMABPE (Bit 0)                                       */
  #define R_BUS_BUSDIVBYP_EDMABPE_Msk     (0x1UL)     /*!< EDMABPE (Bitfield-Mask: 0x01)                         */
+/* =======================================================  BUSTHRPUT  ======================================================= */
+ #define R_BUS_BUSTHRPUT_DIS_Pos         (0UL)       /*!< DIS (Bit 0)                                           */
+ #define R_BUS_BUSTHRPUT_DIS_Msk         (0x1UL)     /*!< DIS (Bitfield-Mask: 0x01)                             */
 
 /* =========================================================================================================================== */
 /* ================                                           R_CRC                                           ================ */
@@ -5319,30 +5405,49 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
 /* =========================================================================================================================== */
 
 /* =========================================================  DTCCR  ========================================================= */
- #define R_DTC_DTCCR_RRS_Pos         (4UL)          /*!< RRS (Bit 4)                                           */
- #define R_DTC_DTCCR_RRS_Msk         (0x10UL)       /*!< RRS (Bitfield-Mask: 0x01)                             */
+ #define R_DTC_DTCCR_RRS_Pos            (4UL)          /*!< RRS (Bit 4)                                           */
+ #define R_DTC_DTCCR_RRS_Msk            (0x10UL)       /*!< RRS (Bitfield-Mask: 0x01)                             */
 /* ========================================================  DTCVBR  ========================================================= */
- #define R_DTC_DTCVBR_DTCVBR_Pos     (0UL)          /*!< DTCVBR (Bit 0)                                        */
- #define R_DTC_DTCVBR_DTCVBR_Msk     (0xffffffffUL) /*!< DTCVBR (Bitfield-Mask: 0xffffffff)                    */
+ #define R_DTC_DTCVBR_DTCVBR_Pos        (0UL)          /*!< DTCVBR (Bit 0)                                        */
+ #define R_DTC_DTCVBR_DTCVBR_Msk        (0xffffffffUL) /*!< DTCVBR (Bitfield-Mask: 0xffffffff)                    */
+/* =======================================================  DTCADMOD  ======================================================== */
+ #define R_DTC_DTCADMOD_SHORT_Pos       (0UL)          /*!< SHORT (Bit 0)                                         */
+ #define R_DTC_DTCADMOD_SHORT_Msk       (0x1UL)        /*!< SHORT (Bitfield-Mask: 0x01)                           */
 /* =========================================================  DTCST  ========================================================= */
- #define R_DTC_DTCST_DTCST_Pos       (0UL)          /*!< DTCST (Bit 0)                                         */
- #define R_DTC_DTCST_DTCST_Msk       (0x1UL)        /*!< DTCST (Bitfield-Mask: 0x01)                           */
+ #define R_DTC_DTCST_DTCST_Pos          (0UL)          /*!< DTCST (Bit 0)                                         */
+ #define R_DTC_DTCST_DTCST_Msk          (0x1UL)        /*!< DTCST (Bitfield-Mask: 0x01)                           */
 /* ========================================================  DTCSTS  ========================================================= */
- #define R_DTC_DTCSTS_ACT_Pos        (15UL)         /*!< ACT (Bit 15)                                          */
- #define R_DTC_DTCSTS_ACT_Msk        (0x8000UL)     /*!< ACT (Bitfield-Mask: 0x01)                             */
- #define R_DTC_DTCSTS_VECN_Pos       (0UL)          /*!< VECN (Bit 0)                                          */
- #define R_DTC_DTCSTS_VECN_Msk       (0xffUL)       /*!< VECN (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTCSTS_VECN_Pos          (0UL)          /*!< VECN (Bit 0)                                          */
+ #define R_DTC_DTCSTS_VECN_Msk          (0xffUL)       /*!< VECN (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTCSTS_ACT_Pos           (15UL)         /*!< ACT (Bit 15)                                          */
+ #define R_DTC_DTCSTS_ACT_Msk           (0x8000UL)     /*!< ACT (Bitfield-Mask: 0x01)                             */
 /* =======================================================  DTCCR_SEC  ======================================================= */
- #define R_DTC_DTCCR_SEC_RRSS_Pos    (4UL)          /*!< RRSS (Bit 4)                                          */
- #define R_DTC_DTCCR_SEC_RRSS_Msk    (0x10UL)       /*!< RRSS (Bitfield-Mask: 0x01)                            */
+ #define R_DTC_DTCCR_SEC_RRS_Pos        (4UL)          /*!< RRS (Bit 4)                                           */
+ #define R_DTC_DTCCR_SEC_RRS_Msk        (0x10UL)       /*!< RRS (Bitfield-Mask: 0x01)                             */
 /* ======================================================  DTCVBR_SEC  ======================================================= */
+ #define R_DTC_DTCVBR_SEC_DTCVBR_Pos    (0UL)          /*!< DTCVBR (Bit 0)                                        */
+ #define R_DTC_DTCVBR_SEC_DTCVBR_Msk    (0xffffffffUL) /*!< DTCVBR (Bitfield-Mask: 0xffffffff)                    */
+/* ========================================================  DTCDISP  ======================================================== */
+ #define R_DTC_DTCDISP_DTCDISP_Pos      (0UL)          /*!< DTCDISP (Bit 0)                                       */
+ #define R_DTC_DTCDISP_DTCDISP_Msk      (0xffffffffUL) /*!< DTCDISP (Bitfield-Mask: 0xffffffff)                   */
 /* =========================================================  DTEVR  ========================================================= */
- #define R_DTC_DTEVR_DTEV_Pos        (0UL)          /*!< DTEV (Bit 0)                                          */
- #define R_DTC_DTEVR_DTEV_Msk        (0xffUL)       /*!< DTEV (Bitfield-Mask: 0xff)                            */
- #define R_DTC_DTEVR_DTEVSAM_Pos     (8UL)          /*!< DTEVSAM (Bit 8)                                       */
- #define R_DTC_DTEVR_DTEVSAM_Msk     (0x100UL)      /*!< DTEVSAM (Bitfield-Mask: 0x01)                         */
- #define R_DTC_DTEVR_DTESTA_Pos      (16UL)         /*!< DTESTA (Bit 16)                                       */
- #define R_DTC_DTEVR_DTESTA_Msk      (0x10000UL)    /*!< DTESTA (Bitfield-Mask: 0x01)                          */
+ #define R_DTC_DTEVR_DTEV_Pos           (0UL)          /*!< DTEV (Bit 0)                                          */
+ #define R_DTC_DTEVR_DTEV_Msk           (0xffUL)       /*!< DTEV (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTEVR_DTEVSAM_Pos        (8UL)          /*!< DTEVSAM (Bit 8)                                       */
+ #define R_DTC_DTEVR_DTEVSAM_Msk        (0x100UL)      /*!< DTEVSAM (Bitfield-Mask: 0x01)                         */
+ #define R_DTC_DTEVR_DTESTA_Pos         (16UL)         /*!< DTESTA (Bit 16)                                       */
+ #define R_DTC_DTEVR_DTESTA_Msk         (0x10000UL)    /*!< DTESTA (Bitfield-Mask: 0x01)                          */
+/* ========================================================  DTCIBR  ========================================================= */
+ #define R_DTC_DTCIBR_DTCIBR_Pos        (10UL)         /*!< DTCIBR (Bit 10)                                       */
+ #define R_DTC_DTCIBR_DTCIBR_Msk        (0xfffffc00UL) /*!< DTCIBR (Bitfield-Mask: 0x3fffff)                      */
+/* =========================================================  DTCOR  ========================================================= */
+ #define R_DTC_DTCOR_SQTFRL_Pos         (0UL)          /*!< SQTFRL (Bit 0)                                        */
+ #define R_DTC_DTCOR_SQTFRL_Msk         (0x1UL)        /*!< SQTFRL (Bitfield-Mask: 0x01)                          */
+/* ========================================================  DTCSQE  ========================================================= */
+ #define R_DTC_DTCSQE_VECN_Pos          (0UL)          /*!< VECN (Bit 0)                                          */
+ #define R_DTC_DTCSQE_VECN_Msk          (0xffUL)       /*!< VECN (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTCSQE_ESPSEL_Pos        (15UL)         /*!< ESPSEL (Bit 15)                                       */
+ #define R_DTC_DTCSQE_ESPSEL_Msk        (0x8000UL)     /*!< ESPSEL (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
 /* ================                                           R_ELC                                           ================ */

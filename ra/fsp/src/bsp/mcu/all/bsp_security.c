@@ -35,6 +35,13 @@
  #define BSP_PRV_SAU_NS_REGION_3_BASE_ADDRESS     (0x50000000U)
  #define BSP_PRV_SAU_NS_REGION_3_LIMIT_ADDRESS    (0xDFFFFFFFU)
 
+/* Protect DMAST from nonsecure write access. */
+ #if (1U == BSP_CFG_CPU_CORE)
+  #define DMACX_REGISTER_SHIFT                    (16)
+ #else
+  #define DMACX_REGISTER_SHIFT                    (0)
+ #endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -59,6 +66,7 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
 
  #if   defined(__IAR_SYSTEMS_ICC__) && BSP_TZ_SECURE_BUILD
 
+extern const uint32_t FLASH_NS_IMAGE_START;
   #pragma section=".tz_flash_ns_start"
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = (uint32_t *) __section_begin(".tz_flash_ns_start");
   #pragma section="Veneer$$CMSE"
@@ -489,7 +497,7 @@ void R_BSP_SecurityInit (void)
   #if BSP_FEATURE_BSP_HAS_TZFSAR
 
     /* Set TrustZone filter to Secure. */
-    R_TZF->TZFSAR = ~R_TZF_TZFSAR_TZFSA0_Msk;
+    R_CPSCU->TZFSAR = ~R_CPSCU_TZFSAR_TZFSA0_Msk;
   #endif
 
     /* Set TrustZone filter exception response. */
@@ -506,51 +514,54 @@ void R_BSP_SecurityInit (void)
 
     /* Initialize Type 2 SARs. */
   #ifdef BSP_TZ_CFG_CSAR
-    R_CPSCU->CSAR = BSP_TZ_CFG_CSAR;           /* Cache Security Attribution. */
+    R_CPSCU->CSAR = BSP_TZ_CFG_CSAR;                                      /* Cache Security Attribution. */
   #endif
-    R_SYSTEM->RSTSAR = BSP_TZ_CFG_RSTSAR;      /* RSTSRn Security Attribution. */
-    R_SYSTEM->LVDSAR = BSP_TZ_CFG_LVDSAR;      /* LVD Security Attribution. */
-    R_SYSTEM->CGFSAR = BSP_TZ_CFG_CGFSAR;      /* CGC Security Attribution. */
-    R_SYSTEM->LPMSAR = BSP_TZ_CFG_LPMSAR;      /* LPM Security Attribution. */
-    R_SYSTEM->DPFSAR = BSP_TZ_CFG_DPFSAR;      /* Deep Standby Interrupt Factor Security Attribution. */
+    R_SYSTEM->RSTSAR = BSP_TZ_CFG_RSTSAR;                                 /* RSTSRn Security Attribution. */
+    R_SYSTEM->LVDSAR = BSP_TZ_CFG_LVDSAR;                                 /* LVD Security Attribution. */
+    R_SYSTEM->CGFSAR = BSP_TZ_CFG_CGFSAR;                                 /* CGC Security Attribution. */
+    R_SYSTEM->LPMSAR = BSP_TZ_CFG_LPMSAR;                                 /* LPM Security Attribution. */
+    R_SYSTEM->DPFSAR = BSP_TZ_CFG_DPFSAR;                                 /* Deep Standby Interrupt Factor Security Attribution. */
   #ifdef BSP_TZ_CFG_RSCSAR
-    R_SYSTEM->RSCSAR = BSP_TZ_CFG_RSCSAR;      /* RAM Standby Control Security Attribution. */
+    R_SYSTEM->RSCSAR = BSP_TZ_CFG_RSCSAR;                                 /* RAM Standby Control Security Attribution. */
   #endif
   #ifdef BSP_TZ_CFG_PGCSAR
-    R_SYSTEM->PGCSAR = BSP_TZ_CFG_PGCSAR;      /* Power Gating Control Security Attribution. */
+    R_SYSTEM->PGCSAR = BSP_TZ_CFG_PGCSAR;                                 /* Power Gating Control Security Attribution. */
   #endif
   #ifdef BSP_TZ_CFG_BBFSAR
-    R_SYSTEM->BBFSAR = BSP_TZ_CFG_BBFSAR;      /* Battery Backup Security Attribution. */
+    R_SYSTEM->BBFSAR = BSP_TZ_CFG_BBFSAR;                                 /* Battery Backup Security Attribution. */
   #endif
-    R_CPSCU->ICUSARA = BSP_TZ_CFG_ICUSARA;     /* External IRQ Security Attribution. */
-    R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;     /* NMI Security Attribution. */
+    R_CPSCU->ICUSARA = BSP_TZ_CFG_ICUSARA;                                /* External IRQ Security Attribution. */
+    R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;                                /* NMI Security Attribution. */
   #ifdef BSP_TZ_CFG_ICUSARC
-    R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;     /* DMAC Channel Security Attribution. */
+    R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;                                /* DMAC Channel Security Attribution. */
   #endif
   #ifdef BSP_TZ_CFG_DMACCHSAR
-    R_CPSCU->DMACCHSAR = BSP_TZ_CFG_DMACCHSAR; /* DMAC Channel Security Attribution. */
+    R_CPSCU->DMACCHSAR |= (BSP_TZ_CFG_DMACCHSAR << DMACX_REGISTER_SHIFT); /* DMAC Channel Security Attribution. */
   #endif
   #ifdef BSP_TZ_CFG_ICUSARD
-    R_CPSCU->ICUSARD = BSP_TZ_CFG_ICUSARD;     /* SELSR0 Security Attribution. */
+    R_CPSCU->ICUSARD = BSP_TZ_CFG_ICUSARD;                                /* SELSR0 Security Attribution. */
   #endif
-    R_CPSCU->ICUSARE = BSP_TZ_CFG_ICUSARE;     /* WUPEN0 Security Attribution. */
+    R_CPSCU->ICUSARE = BSP_TZ_CFG_ICUSARE;                                /* WUPEN0 Security Attribution. */
   #ifdef BSP_TZ_CFG_ICUSARF
-    R_CPSCU->ICUSARF = BSP_TZ_CFG_ICUSARF;     /* WUPEN1 Security Attribution. */
+    R_CPSCU->ICUSARF = BSP_TZ_CFG_ICUSARF;                                /* WUPEN1 Security Attribution. */
   #endif
   #ifdef BSP_TZ_CFG_TEVTRCR
-    R_CPSCU->TEVTRCR = BSP_TZ_CFG_TEVTRCR;     /* Trusted Event Route Enable. */
+    R_CPSCU->TEVTRCR = BSP_TZ_CFG_TEVTRCR;                                /* Trusted Event Route Enable. */
   #endif
   #ifdef BSP_TZ_CFG_ELCSARA
-    R_ELC->ELCSARA = BSP_TZ_CFG_ELCSARA;       /* ELCR, ELSEGR0, ELSEGR1 Security Attribution. */
+    R_ELC->ELCSARA = BSP_TZ_CFG_ELCSARA;                                  /* ELCR, ELSEGR0, ELSEGR1 Security Attribution. */
   #endif
-    R_FCACHE->FSAR   = BSP_TZ_CFG_FSAR;        /* FLWT and FCKMHZ Security Attribution. */
-    R_CPSCU->SRAMSAR = BSP_TZ_CFG_SRAMSAR;     /* SRAM Security Attribution. */
+    R_FCACHE->FSAR   = BSP_TZ_CFG_FSAR;                                   /* FLWT and FCKMHZ Security Attribution. */
+    R_CPSCU->SRAMSAR = BSP_TZ_CFG_SRAMSAR;                                /* SRAM Security Attribution. */
   #ifdef BSP_TZ_CFG_STBRAMSAR
-    R_CPSCU->STBRAMSAR = BSP_TZ_CFG_STBRAMSAR; /* Standby RAM Security Attribution. */
+    R_CPSCU->STBRAMSAR = BSP_TZ_CFG_STBRAMSAR;                            /* Standby RAM Security Attribution. */
   #endif
-    R_CPSCU->MMPUSARA = BSP_TZ_CFG_MMPUSARA;   /* Security Attribution for the DMAC Bus Master MPU. */
-    R_CPSCU->BUSSARA  = BSP_TZ_CFG_BUSSARA;    /* Security Attribution Register A for the BUS Control Registers. */
-    R_CPSCU->BUSSARB  = BSP_TZ_CFG_BUSSARB;    /* Security Attribution Register B for the BUS Control Registers. */
+    R_CPSCU->MMPUSARA = BSP_TZ_CFG_MMPUSARA;                              /* Security Attribution for the DMAC Bus Master MPU. */
+    R_CPSCU->BUSSARA  = BSP_TZ_CFG_BUSSARA;                               /* Security Attribution Register A for the BUS Control Registers. */
+    R_CPSCU->BUSSARB  = BSP_TZ_CFG_BUSSARB;                               /* Security Attribution Register B for the BUS Control Registers. */
+  #ifdef BSP_TZ_CFG_BUSSARC
+    R_CPSCU->BUSSARC = BSP_TZ_CFG_BUSSARC;                                /* Security Attribution Register C for the BUS Control Registers. */
+  #endif
 
   #if (defined(BSP_TZ_CFG_ICUSARC) && (BSP_TZ_CFG_ICUSARC != UINT32_MAX)) || \
     (defined(BSP_TZ_CFG_DMACCHSAR) &&                                        \
@@ -565,7 +576,7 @@ void R_BSP_SecurityInit (void)
 
     /* If any DMAC channels are required by secure program, disable nonsecure write access to DMAST
      * in order to prevent the nonsecure program from disabling all DMAC channels. */
-    R_CPSCU->DMACSAR = ~1U;            /* Protect DMAST from nonsecure write access. */
+    R_CPSCU->DMACSAR &= ~(1U << DMACX_REGISTER_SHIFT); /* Protect DMAST from nonsecure write access. */
    #endif
 
     /* Ensure that DMAST is set so that the nonsecure program can use DMA. */

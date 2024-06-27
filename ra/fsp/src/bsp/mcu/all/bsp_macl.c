@@ -16,6 +16,13 @@
  * Macro definitions
  **********************************************************************************************************************/
 
+  #ifndef INDEX_MASK
+
+/* This used to be defined in CMSIS DSP. But they have added an undef of the macro in utils.h and therefore it is no longer
+ * in scope for the uses of this file.  */
+   #define INDEX_MASK    0x0000003F
+  #endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/

@@ -12,7 +12,7 @@
 | rm_motor_speed<br>(pre-compiled libraries)            | Renesas Electronics Corporation    | [Renesas Software License Agreement](https://www.renesas.com/us/en/document/oth/disclaimer002)|
 | rm_zmod4xxx<br>(pre-compiled libraries)               | Renesas Electronics Corporation    | [Renesas Software License Agreement](https://www.renesas.com/us/en/document/oth/disclaimer002)|
 |<tr> <td colspan="3"><strong>Third-Party components included in the packs<strong></td></tr>                                                                                               |
-| [CMSIS](https://github.com/ARM-software/CMSIS_5)      | ARM Limited                        | Apache-2.0 License                                                                          |
+| [CMSIS](https://github.com/ARM-software/CMSIS_6)      | ARM Limited                        | Apache-2.0 License                                                                          |
 | [CMSIS Pack](https://github.com/Open-CMSIS-Pack)      | ARM Limited                        | Apache-2.0 License                                                                          |
 | [CMSIS DSP](https://github.com/ARM-software/CMSIS-DSP)| ARM Limited                        | Apache-2.0 License                                                                          |
 | [CMSISNN](https://github.com/ARM-software/CMSIS-NN)   | ARM Limited                        | Apache-2.0 License                                                                          |

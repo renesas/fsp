@@ -21,7 +21,7 @@
 /*
  *  The NIST SP 800-90 DRBGs are described in the following publication.
  *
- *  http://csrc.nist.gov/publications/nistpubs/800-90/SP800-90revised_March2007.pdf
+ *  https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-90r.pdf
  */
 
 #include "common.h"
@@ -78,6 +78,10 @@ void mbedtls_ctr_drbg_init(mbedtls_ctr_drbg_context *ctx)
 #endif
 }
 
+/*
+ *  This function resets CTR_DRBG context to the state immediately
+ *  after initial call of mbedtls_ctr_drbg_init().
+ */
 void mbedtls_ctr_drbg_free(mbedtls_ctr_drbg_context *ctx)
 {
     if (ctx == NULL) {

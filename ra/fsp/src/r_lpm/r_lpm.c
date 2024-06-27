@@ -241,7 +241,7 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     }
  #endif
 #endif
-#if BSP_FEATURE_LPM_SNOOZE_REQUEST_DTCST_DTCST == 1
+#if BSP_FEATURE_LPM_STANDBY_MODE_CLEAR_DTCST == 1
     uint8_t saved_dtcst = 0;
 #endif
 
@@ -262,24 +262,17 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     }
  #endif
 #endif
-#if BSP_FEATURE_LPM_HAS_SNOOZE
-    if (LPM_MODE_STANDBY_SNOOZE == p_ctrl->p_cfg->low_power_mode)
+
+#if BSP_FEATURE_LPM_STANDBY_MODE_CLEAR_DTCST == 1
+    if (((LPM_MODE_STANDBY == p_ctrl->p_cfg->low_power_mode) ||
+         ((LPM_MODE_STANDBY_SNOOZE == p_ctrl->p_cfg->low_power_mode) && !p_ctrl->p_cfg->dtc_state_in_snooze)) &&
+        (0 == R_MSTP->MSTPCRA_b.MSTPA22))
     {
-        /* Configure Snooze registers */
- #if BSP_FEATURE_LPM_SNOOZE_REQUEST_DTCST_DTCST == 1
-        if (!p_ctrl->p_cfg->dtc_state_in_snooze)
-        {
-  #if LPM_CFG_PARAM_CHECKING_ENABLE
-            FSP_ERROR_RETURN(0 == R_MSTP->MSTPCRA_b.MSTPA22, FSP_ERR_INVALID_MODE);
-  #endif
+        /* Store the previous state of DTCST. */
+        saved_dtcst = R_DTC->DTCST;
 
-            /* Store the previous state of DTCST. */
-            saved_dtcst = R_DTC->DTCST;
-
-            /* If snooze mode does not use DTC, DTC should be stopped before entering snooze mode. */
-            R_DTC->DTCST = 0U;
-        }
- #endif
+        /* If DTC is not used for requesting snooze mode, it should be stopped before entering standby or snooze mode. */
+        R_DTC->DTCST = 0U;
     }
 #endif
     fsp_err_t err = r_lpm_low_power_enter(p_ctrl);
@@ -298,16 +291,13 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     }
  #endif
 #endif
-#if BSP_FEATURE_LPM_HAS_SNOOZE
-    if (LPM_MODE_STANDBY_SNOOZE == p_ctrl->p_cfg->low_power_mode)
+#if BSP_FEATURE_LPM_STANDBY_MODE_CLEAR_DTCST == 1
+    if (((LPM_MODE_STANDBY == p_ctrl->p_cfg->low_power_mode) ||
+         ((LPM_MODE_STANDBY_SNOOZE == p_ctrl->p_cfg->low_power_mode) && !p_ctrl->p_cfg->dtc_state_in_snooze)) &&
+        (0 == R_MSTP->MSTPCRA_b.MSTPA22))
     {
- #if BSP_FEATURE_LPM_SNOOZE_REQUEST_DTCST_DTCST == 1
-        if (!p_ctrl->p_cfg->dtc_state_in_snooze)
-        {
-            /* If DTC was stopped prior to entering snooze mode, then start it again. */
-            R_DTC->DTCST = saved_dtcst;
-        }
- #endif
+        /* If DTC was stopped prior to entering standby or snooze mode, then start it again. */
+        R_DTC->DTCST = saved_dtcst;
     }
 #endif
 
@@ -408,7 +398,7 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
         if (LPM_MODE_STANDBY_SNOOZE == p_cfg->low_power_mode)
         {
  #if BSP_FEATURE_LPM_HAS_SNOOZE
-  #if BSP_FEATURE_LPM_SNZREQCR_MASK
+  #if BSP_FEATURE_LPM_SNZREQCR_MASK > 0
             FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->snooze_request_source & (~BSP_FEATURE_LPM_SNZREQCR_MASK)),
                              FSP_ERR_INVALID_ARGUMENT);
   #endif
@@ -449,7 +439,7 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
         FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->standby_wake_sources & ~BSP_FEATURE_ICU_WUPEN_MASK),
                          FSP_ERR_INVALID_MODE);
  #endif
- #if BSP_FEATURE_ICU_SBYEDCR_MASK
+ #if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
         FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->standby_wake_sources & ~BSP_FEATURE_ICU_SBYEDCR_MASK),
                          FSP_ERR_INVALID_MODE);
  #endif
@@ -1003,6 +993,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     }
 #endif
 
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Disable RTC Register Read/Write Clock to reduce power consumption. */
+    bool rtc_register_clock_state = bsp_prv_rtc_register_clock_set(false);
+#endif
+
 #if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
     bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
 #endif
@@ -1015,6 +1011,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 
 #if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
     bsp_prv_clock_prepare_post_sleep(clock_slowed);
+#endif
+
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Enable the RTC Register Read/Write clock if it was disabled prior to entering LPM. */
+    bsp_prv_rtc_register_clock_set(rtc_register_clock_state);
 #endif
 
 #if BSP_FEATURE_LPM_HAS_DEEP_SLEEP

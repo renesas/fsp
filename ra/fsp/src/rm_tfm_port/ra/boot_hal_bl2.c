@@ -31,9 +31,9 @@ REGION_DECLARE(Image$$, ER_DATA, $$Base)[];
 REGION_DECLARE(Image$$, ARM_LIB_HEAP, $$ZI$$Limit)[];
 REGION_DECLARE(Image$$, ARM_LIB_STACK, $$ZI$$Base);
 
-__attribute__((naked)) void boot_clear_bl2_ram_area(void)
+__attribute__((naked)) void boot_clear_bl2_ram_area (void)
 {
-    __ASM volatile(
+    __ASM volatile (
         "mov     r0, #0                              \n"
         "subs    %1, %1, %0                          \n"
         "Loop:                                       \n"
@@ -44,9 +44,9 @@ __attribute__((naked)) void boot_clear_bl2_ram_area(void)
         "bx      lr                                  \n"
         :
         : "r" (REGION_NAME(Image$$, ER_DATA, $$Base)),
-          "r" (REGION_NAME(Image$$, ARM_LIB_HEAP, $$ZI$$Limit))
+        "r" (REGION_NAME(Image$$, ARM_LIB_HEAP, $$ZI$$Limit))
         : "r0", "memory"
-    );
+        );
 }
 
 /*
@@ -90,7 +90,7 @@ static void flash_FAW_Set (uint32_t start_addr, uint32_t end_addr)
 /* bootloader platform-specific HW intialization */
 int32_t boot_platform_init (void)
 {
-    int32_t      result;
+    int32_t result;
 
     result = FLASH_DEV_NAME.Initialize(NULL);
     if (ARM_DRIVER_OK != result)
@@ -120,18 +120,18 @@ int32_t boot_platform_init (void)
     return result;
 }
 
-__WEAK int32_t boot_platform_post_init(void)
+__WEAK int32_t boot_platform_post_init (void)
 {
 #ifdef CRYPTO_HW_ACCELERATOR
     int32_t result;
 
     result = crypto_hw_accelerator_init();
-    if (result) {
+    if (result)
+    {
         return 1;
     }
-
-    (void)fih_delay_init();
-#endif /* CRYPTO_HW_ACCELERATOR */
+    (void) fih_delay_init();
+#endif                                 /* CRYPTO_HW_ACCELERATOR */
 
     return 0;
 }
@@ -148,35 +148,50 @@ void boot_platform_quit (struct boot_arm_vector_table * vt)
 
 #ifdef CRYPTO_HW_ACCELERATOR
     result = crypto_hw_accelerator_finish();
-    if (result) {
-        while (1){}
+    if (result)
+    {
+        while (1)
+        {
+        }
     }
-#endif /* CRYPTO_HW_ACCELERATOR */
+#endif                                 /* CRYPTO_HW_ACCELERATOR */
 
 #ifdef FLASH_DEV_NAME
     result = FLASH_DEV_NAME.Uninitialize();
-    if (result != ARM_DRIVER_OK) {
-        while(1) {}
+    if (result != ARM_DRIVER_OK)
+    {
+        while (1)
+        {
+        }
     }
-#endif /* FLASH_DEV_NAME */
+#endif                                 /* FLASH_DEV_NAME */
 #ifdef FLASH_DEV_NAME_2
     result = FLASH_DEV_NAME_2.Uninitialize();
-    if (result != ARM_DRIVER_OK) {
-        while(1) {}
+    if (result != ARM_DRIVER_OK)
+    {
+        while (1)
+        {
+        }
     }
-#endif /* FLASH_DEV_NAME_2 */
+#endif                                 /* FLASH_DEV_NAME_2 */
 #ifdef FLASH_DEV_NAME_3
     result = FLASH_DEV_NAME_3.Uninitialize();
-    if (result != ARM_DRIVER_OK) {
-        while(1) {}
+    if (result != ARM_DRIVER_OK)
+    {
+        while (1)
+        {
+        }
     }
-#endif /* FLASH_DEV_NAME_3 */
+#endif                                 /* FLASH_DEV_NAME_3 */
 #ifdef FLASH_DEV_NAME_SCRATCH
     result = FLASH_DEV_NAME_SCRATCH.Uninitialize();
-    if (result != ARM_DRIVER_OK) {
-        while(1) {}
+    if (result != ARM_DRIVER_OK)
+    {
+        while (1)
+        {
+        }
     }
-#endif /* FLASH_DEV_NAME_SCRATCH */
+#endif                                 /* FLASH_DEV_NAME_SCRATCH */
 
     vt_cpy = vt;
 #if BSP_FEATURE_BSP_HAS_SP_MON
@@ -184,7 +199,7 @@ void boot_platform_quit (struct boot_arm_vector_table * vt)
     /* Disable MSP monitoring  */
     R_MPU_SPMON->SP[0].CTL = 0;
 #endif
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__)
+#if defined(RENESAS_CORTEX_M23) || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
 
     /* Restore the Main Stack Pointer Limit register's reset value
      * before passing execution to runtime firmware to make the
@@ -199,12 +214,12 @@ void boot_platform_quit (struct boot_arm_vector_table * vt)
     boot_jump_to_next_image(vt_cpy->reset);
 }
 
-__WEAK int boot_platform_pre_load(uint32_t image_id)
+__WEAK int boot_platform_pre_load (uint32_t image_id)
 {
     return 0;
 }
 
-__WEAK int boot_platform_post_load(uint32_t image_id)
+__WEAK int boot_platform_post_load (uint32_t image_id)
 {
     return 0;
 }

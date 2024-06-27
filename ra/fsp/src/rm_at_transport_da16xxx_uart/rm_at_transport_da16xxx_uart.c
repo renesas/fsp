@@ -27,6 +27,13 @@ typedef sci_b_baud_setting_t       rm_at_transport_da16xxx_baud_setting_t;
  #define RM_AT_TRANSPORT_DA16XXX_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_B_UART_FLOW_CONTROL_HARDWARE_CTSRTS
 static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
                                                struct st_sci_b_baud_setting_t * const) = &R_SCI_B_UART_BaudCalculate;
+#elif (R_SAU0_BASE)
+ #include "r_sau_uart.h"
+typedef sau_uart_instance_ctrl_t    rm_at_transport_da16xxx_uart_instance_ctrl_t;
+typedef sau_uart_extended_cfg_t     at_transport_da16xxx_uart_extended_cfg_t;
+typedef sau_uart_baudrate_setting_t rm_at_transport_da16xxx_baud_setting_t;
+static fsp_err_t (* p_sau_uart_baud_calculate)(sau_uart_instance_ctrl_t * const, uint32_t,
+                                               sau_uart_baudrate_setting_t * const) = &R_SAU_UART_BaudCalculate;
 #else
  #include "r_sci_uart.h"
 typedef sci_uart_instance_ctrl_t rm_at_transport_da16xxx_uart_instance_ctrl_t;
@@ -131,6 +138,9 @@ static rm_at_transport_da16xxx_baud_setting_t g_baud_setting =
     .baudrate_bits_b.bgdm  = 0,
     .baudrate_bits_b.brr   = 0,
     .baudrate_bits_b.mddr  = 0,
+#elif (R_SAU0_BASE)
+    .prs   = 0,
+    .stclk = 0,
 #else
     .semr_baudrate_bits_b.brme  = 0,
     .semr_baudrate_bits_b.abcse = 0,
@@ -456,24 +466,47 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
     rm_at_transport_da16xxx_reset(p_instance_ctrl);
 
     p_instance_ctrl->open = AT_TRANSPORT_DA16XXX_UART_OPEN;
+
+    uart0_cfg.p_extend   = (void *) &uart0_cfg_extended;
+    uart0_cfg.p_callback = rm_at_transport_da16xxx_uart_callback;
+    uart0_cfg.p_context  = p_instance_ctrl;
+
+    /* Open UART */
+    p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
+    err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
+
     for (index = 0; index < UART_BAUD_MAX_CNT; index++)
     {
         curr_uart_baud = uart_baud_rates[index];
-
-        (*p_sci_uart_baud_calculate)(curr_uart_baud, AT_TRANSPORT_DA16XXX_DEFAULT_MODULATION,
-                                     AT_TRANSPORT_DA16XXX_DEFAULT_ERROR, &g_baud_setting);
+#ifndef R_SAU0_BASE
+        (* p_sci_uart_baud_calculate)(curr_uart_baud, AT_TRANSPORT_DA16XXX_DEFAULT_MODULATION,
+                                      AT_TRANSPORT_DA16XXX_DEFAULT_ERROR, &g_baud_setting);
 
         uart0_cfg_extended.p_baud_setting   = &g_baud_setting;
         uart0_cfg_extended.flow_control     = RM_AT_TRANSPORT_DA16XXX_SCI_UART_FLOW_CONTROL_RTS;
         uart0_cfg_extended.flow_control_pin = (bsp_io_port_pin_t) AT_TRANSPORT_DA16XXX_BSP_PIN_PORT_INVALID;
+#else
+ #if (0 == SAU_UART_CFG_FIXED_BAUDRATE_ENABLE)
+        (*p_sau_uart_baud_calculate)((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl, curr_uart_baud,
+                                     &g_baud_setting);
 
-        uart0_cfg.p_extend   = (void *) &uart0_cfg_extended;
-        uart0_cfg.p_callback = rm_at_transport_da16xxx_uart_callback;
-        uart0_cfg.p_context  = p_instance_ctrl;
+        uart0_cfg_extended.p_baudrate = &g_baud_setting;
+ #else
+        FSP_PARAMETER_NOT_USED(g_baud_setting);
+        FSP_PARAMETER_NOT_USED(p_sau_uart_baud_calculate);
+ #endif
+#endif
+        uart0_cfg.p_extend = (void *) &uart0_cfg_extended;
 
-        /* Open UART */
-        p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
-        err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
+        if (index > 0)
+        {
+            uart0_cfg.p_callback = rm_at_transport_da16xxx_uart_callback;
+            uart0_cfg.p_context  = p_instance_ctrl;
+
+            /* Open UART */
+            p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
+            err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
+        }
 
         if (FSP_SUCCESS != err)
         {
@@ -710,7 +743,14 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSendThreadSafe (at_transport_da1
     FSP_ERROR_RETURN(AT_TRANSPORT_DA16XXX_UART_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    mutex_flag = (AT_TRANSPORT_DA16XXX_MUTEX_TX | AT_TRANSPORT_DA16XXX_MUTEX_RX);
+    if (p_at_cmd->p_expect_code == NULL)
+    {
+        mutex_flag = AT_TRANSPORT_DA16XXX_MUTEX_TX;
+    }
+    else
+    {
+        mutex_flag = (AT_TRANSPORT_DA16XXX_MUTEX_TX | AT_TRANSPORT_DA16XXX_MUTEX_RX);
+    }
 
     FSP_ERROR_RETURN(FSP_SUCCESS == rm_at_transport_da16xxx_uart_takeMutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
@@ -719,6 +759,10 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSendThreadSafe (at_transport_da1
     err = rm_at_transport_da16xxx_uart_atCommandSend(p_instance_ctrl, p_at_cmd);
 
     rm_at_transport_da16xxx_uart_giveMutex(p_instance_ctrl, mutex_flag);
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+    vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_1MS));
+#endif
 
     /* Check response for 'OK' */
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
@@ -804,6 +848,10 @@ size_t rm_at_transport_da16xxx_uart_bufferRecv (at_transport_da16xxx_ctrl_t * co
     }
 
     rm_at_transport_da16xxx_uart_giveMutex(p_instance_ctrl, mutex_flag);
+
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+    vTaskDelay(pdMS_TO_TICKS(AT_TRANSPORT_DA16XXX_TIMEOUT_1MS));
+#endif
 
     return xReceivedBytes;
 }

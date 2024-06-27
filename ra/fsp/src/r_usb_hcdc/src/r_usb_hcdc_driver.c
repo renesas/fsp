@@ -886,6 +886,8 @@ uint16_t usb_hcdc_get_string_info (usb_utr_t * mess, uint16_t addr, uint16_t str
 
         /* Condition compilation by the difference of useful function */
  #if defined(USB_DEBUG_ON)
+        uint8_t  p_data[USB_VALUE_32 + 2];
+        uint16_t j;
         for (j = (uint16_t) 0; j < g_usb_hstd_class_data[mess->ip][0]; j++)
         {
             p_data[j] = g_usb_hstd_class_data[mess->ip][j * (uint16_t) 2 + (uint16_t) 2];

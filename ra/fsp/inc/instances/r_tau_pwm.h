@@ -26,7 +26,16 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-#define TAU_PWM_PRV_MAX_NUM_CHANNELS    (7U)
+/* Even though there are 8 channels, there always has to be one slave.. (slave > master)
+ * so valid master channels numbers are 0-6, and valid slave numbers are 1-7 */
+#define TAU_PWM_MAX_CHANNEL_NUM            (7U)
+
+#if TAU_PWM_CFG_MULTI_SLAVE_ENABLE
+ #define TAU_PWM_MAX_NUM_SLAVE_CHANNELS    (TAU_PWM_MAX_CHANNEL_NUM)
+#else
+ #define TAU_PWM_MAX_NUM_SLAVE_CHANNELS    (1)
+#endif
+#define TAU_PWM_SLAVE_CHANNEL_UNUSED       (0) /* 0 is an invalid slave channel since master channel < slave channel*/
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -98,13 +107,13 @@ typedef struct st_tau_pwm_channel_cfg
 /** Extended configuration structure for TAU_PWM */
 typedef struct st_tau_pwm_extended_cfg
 {
-    tau_pwm_operation_clock_t operation_clock;                                        ///< Setting of operation clock for master and slave channels
+    tau_pwm_operation_clock_t operation_clock;                                          ///< Setting of operation clock for master and slave channels
 
     /* Input settings. */
-    tau_pwm_source_t      trigger_source;                                             ///< Trigger source for master channel
-    tau_pwm_detect_edge_t detect_edge;                                                ///< Trigger edge to start pulse period measurement
+    tau_pwm_source_t      trigger_source;                                               ///< Trigger source for master channel
+    tau_pwm_detect_edge_t detect_edge;                                                  ///< Trigger edge to start pulse period measurement
 
-    tau_pwm_channel_cfg_t const * p_slave_channel_cfgs[TAU_PWM_PRV_MAX_NUM_CHANNELS]; ///< Configuration for each slave channel, at least 1 slave channel is required
+    tau_pwm_channel_cfg_t const * p_slave_channel_cfgs[TAU_PWM_MAX_NUM_SLAVE_CHANNELS]; ///< Configuration for each slave channel, at least 1 slave channel is required
 } tau_pwm_extended_cfg_t;
 
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
@@ -137,8 +146,9 @@ fsp_err_t R_TAU_PWM_Open(timer_ctrl_t * const p_ctrl, timer_cfg_t const * const 
 fsp_err_t R_TAU_PWM_Stop(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_TAU_PWM_Start(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_TAU_PWM_Reset(timer_ctrl_t * const p_ctrl);
+
 fsp_err_t R_TAU_PWM_Enable(timer_ctrl_t * const p_ctrl);
-fsp_err_t R_TAU_PWM_Disable(timer_ctrl_t * const p_ctrl);
+
 fsp_err_t R_TAU_PWM_PeriodSet(timer_ctrl_t * const p_ctrl, uint32_t const period_counts);
 fsp_err_t R_TAU_PWM_CompareMatchSet(timer_ctrl_t * const        p_ctrl,
                                     uint32_t const              compare_match_value,

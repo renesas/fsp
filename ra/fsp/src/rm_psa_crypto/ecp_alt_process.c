@@ -112,7 +112,23 @@ fsp_err_t HW_SCE_ECC_521WrappedScalarMultiplication (const uint32_t * InData_Cur
                                                        Domain_Param,
                                                        OutData_R);
 }
+
 #endif
+
+fsp_err_t HW_SCE_ECC_ED25519WrappedScalarMultiplication (const uint32_t * InData_CurveType,
+                                                     const uint32_t * InData_Cmd,
+                                                     const uint32_t * InData_KeyIndex,
+                                                     const uint32_t * InData_P,
+                                                     const uint32_t * Domain_Param,
+                                                     uint32_t       * OutData_R)
+{
+    return HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor(InData_CurveType,
+                                                       InData_Cmd,
+                                                       InData_KeyIndex,
+                                                       InData_P,
+                                                       Domain_Param,
+                                                       OutData_R);
+}
 
 static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_lookup[][2] =
 {
@@ -149,6 +165,22 @@ static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_looku
    #endif
 };
 
+static const hw_sce_ecc_scalarmultiplication_t g_ecp_edscalar_multiplication_lookup[][2] =
+{
+    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_25519_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
+      HW_SCE_ECC_ED25519WrappedScalarMultiplication,
+     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1U))][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
+      HW_SCE_ECC_ED25519WrappedScalarMultiplication,
+    #endif
+    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_25519_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
+      HW_SCE_ECC_ED25519WrappedScalarMultiplication,
+     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1U))][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
+      HW_SCE_ECC_ED25519WrappedScalarMultiplication,
+    #endif
+};
+
 /*
  * Generate a private key
  */
@@ -161,6 +193,7 @@ extern int ecp_load_curve_attributes_sce(const mbedtls_ecp_group * grp,
                                          uint32_t               ** pp_domain_param);
 
 uint32_t ecp_load_key_size(bool wrapped_mode_ctx, const mbedtls_ecp_group * grp);
+uint32_t ed_ecp_load_key_size(bool wrapped_mode_ctx, const mbedtls_ecp_group * grp);
 
 uint32_t ecp_load_key_size (bool wrapped_mode_ctx, const mbedtls_ecp_group * grp)
 {
@@ -220,9 +253,52 @@ uint32_t ecp_load_key_size (bool wrapped_mode_ctx, const mbedtls_ecp_group * grp
   }
   else
 #endif
+#if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+  if ((ECC_25519_PRIVATE_KEY_LENGTH_BITS == grp->pbits) || ((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1) == grp->pbits))
+  {
+      if (wrapped_mode_ctx == true)
+      {
+          /* Store size of wrapped private key */
+           key_size_words =
+               R_SCE_BYTES_TO_WORDS(HW_SCE_ECC_WRAPPED_KEY_ADJUST(R_SCE_WORDS_TO_BYTES(
+                                                                      ECC_25519_PRIVATE_KEY_LENGTH_WORDS)));
+           ;
+      }
+      else
+      {
+          key_size_words = curve_bytes / 4;
+      }
+  }
+  else
+#endif
     {
         key_size_words = 0;
     }
+
+    return key_size_words;             // NOLINT(readability-misleading-indentation)
+}
+
+uint32_t ed_ecp_load_key_size (bool wrapped_mode_ctx, const mbedtls_ecp_group * grp)
+{
+    uint32_t key_size_words = 0;
+#if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+    size_t   curve_bytes    = PSA_BITS_TO_BYTES(grp->pbits);
+    if (wrapped_mode_ctx == true)
+    {
+        /* Store size of wrapped private key */
+         key_size_words =
+             R_SCE_BYTES_TO_WORDS(HW_SCE_ECC_WRAPPED_KEY_ADJUST(R_SCE_WORDS_TO_BYTES(
+                                                                    ECC_25519_PRIVATE_KEY_LENGTH_WORDS)));
+         ;
+    }
+    else
+    {
+        key_size_words = curve_bytes / 4;
+    }
+#else
+    (void) wrapped_mode_ctx;
+    (void) grp;
+#endif
 
     return key_size_words;             // NOLINT(readability-misleading-indentation)
 }
@@ -263,7 +339,8 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
 
   #if defined(MBEDTLS_CHECK_PARAMS)
 #if BSP_FEATURE_CRYPTO_HAS_RSIP7
-    if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_521_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
+    if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits) &&
+    (ECC_521_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_25519_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
 #else
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
 #endif
@@ -272,7 +349,14 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
   #endif
 
-    private_key_size_words = ecp_load_key_size((bool) grp->vendor_ctx, grp);
+    if(MBEDTLS_ECP_DP_CURVE25519 == grp->id)
+    {
+        private_key_size_words = ed_ecp_load_key_size((bool) grp->vendor_ctx, grp);
+    }
+    else
+    {
+        private_key_size_words = ecp_load_key_size((bool) grp->vendor_ctx, grp);
+    }
     if (0 == private_key_size_words)
     {
         return MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
@@ -303,7 +387,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     ret = ecp_load_curve_attributes_sce(grp, &curve_type, &cmd, NULL, &p_domain_param);
     if (ret == 0)
     {
-        if (ECC_256_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
+        if ((ECC_256_PRIVATE_KEY_LENGTH_BITS == grp->pbits) && (MBEDTLS_ECP_DP_CURVE25519 != grp->id))
         {
             uint32_t dummy[sizeof(sce_ecc_public_key_index_t)] = {0};
             if (FSP_SUCCESS !=
@@ -348,6 +432,24 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
               	HW_SCE_GenerateEccP521RandomKeyIndexSub(p_domain_param,
                                                         (uint32_t *) &public_key.value,
                                                         (uint32_t *) wrapped_key))
+            {
+                ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+            }
+            else
+            {
+                memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
+            }
+        }
+  #endif
+  #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+//        else if (ECC_25519_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
+        else if (MBEDTLS_ECP_DP_CURVE25519 == grp->id)
+        {
+            sce_ecc25519_public_key_index_t public_key = {0};
+            if (FSP_SUCCESS !=
+                HW_SCE_GenerateEccEd25519RandomKeyIndexSub(&indata_key_type, p_domain_param,
+                                                           (uint32_t *) &public_key.value, (uint32_t *) wrapped_key,
+                                                           NULL))
             {
                 ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
             }
@@ -423,8 +525,16 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
         return MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
     }
 
+    if(MBEDTLS_ECP_DP_CURVE25519 == grp->id)
+    {
+    p_hw_sce_ecc_scalarmultiplication =
+        g_ecp_edscalar_multiplication_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
+    }
+    else
+    {
     p_hw_sce_ecc_scalarmultiplication =
         g_ecp_scalar_multiplication_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
+    }
     if (NULL == p_hw_sce_ecc_scalarmultiplication)
     {
         return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;

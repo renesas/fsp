@@ -896,8 +896,9 @@ static void r_sau_i2c_hw_stop (sau_i2c_instance_ctrl_t * const p_ctrl)
     p_reg->SOE &= (uint16_t) ~(1 << SAU_I2C_PRV_CHANNEL);
 
     /* Clear SDA and set SCL */
-    p_reg->SO = (p_reg->SO & (uint16_t) ~(SAU_I2C_SO_SDA_HIGH << SAU_I2C_PRV_CHANNEL)) |
-                (uint16_t) (SAU_I2C_SO_SCL_HIGH << SAU_I2C_PRV_CHANNEL);
+    p_reg->SO &= (uint16_t) ~(SAU_I2C_SO_SDA_HIGH << SAU_I2C_PRV_CHANNEL);
+
+    p_reg->SO |= (uint16_t) (SAU_I2C_SO_SCL_HIGH << SAU_I2C_PRV_CHANNEL);
 
     SAU_I2C_CRITICAL_SECTION_EXIT();
 

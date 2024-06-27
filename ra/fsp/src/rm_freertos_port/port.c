@@ -126,7 +126,7 @@
 #define RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS      (0xA500U)
 
 /* Determine which stack monitor to use. */
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM33, CM85
+#if defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
  #define RM_FREERTOS_PORT_PSPLIM_PRESENT               (1)
  #define RM_FREERTOS_PORT_SPMON_PRESENT                (0)
 #else
@@ -171,7 +171,7 @@
 #endif
 
 /* CM23 does not support the IT instruction. */
-#if defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM4, CM33, or CM85
+#if defined(RENESAS_CORTEX_M4) || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
  #define RM_FREERTOS_PORT_ISA_IT_SUPPORTED             (1)
 #else
  #define RM_FREERTOS_PORT_ISA_IT_SUPPORTED             (0)
@@ -1551,7 +1551,7 @@ void vPortValidateInterruptPriority (void)
         configASSERT(ulCurrentPriority >= (configMAX_SYSCALL_INTERRUPT_PRIORITY) >> (8 - __NVIC_PRIO_BITS));
     }
 
- #ifndef __ARM_ARCH_8M_BASE__
+ #ifndef RENESAS_CORTEX_M23
 
     /* Priority grouping:  The interrupt controller (NVIC) allows the bits
      * that define each interrupt's priority to be split between bits that

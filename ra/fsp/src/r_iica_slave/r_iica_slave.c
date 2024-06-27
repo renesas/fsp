@@ -412,7 +412,8 @@ static void r_iica_txrxi_slave (iica_slave_instance_ctrl_t * p_ctrl)
             if (0U == p_ctrl->communication_dir)
             {
 #if IICA_SLAVE_CFG_ADDR_MODE_GENERAL_CALL_ENABLE
-                r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_GENERAL_CALL);
+                i2c_slave_event_t i2c_event = R_IICA->IICA0 ? I2C_SLAVE_EVENT_RX_REQUEST : I2C_SLAVE_EVENT_GENERAL_CALL;
+                r_iica_slave_call_callback(p_ctrl, i2c_event);
 #else
                 r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_RX_REQUEST);
 #endif

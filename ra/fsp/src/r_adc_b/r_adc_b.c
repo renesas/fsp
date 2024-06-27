@@ -769,7 +769,7 @@ fsp_err_t R_ADC_B_Read32 (adc_ctrl_t * p_ctrl, adc_channel_t const channel_id, u
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_FifoRead (adc_ctrl_t * p_ctrl, adc_group_mask_t const group_mask, adc_b_fifo_read_t * const p_data)
 {
-    uint8_t group_id = __CLZ(__RBIT(group_mask));
+    uint8_t group_id = (uint8_t) __CLZ(__RBIT(group_mask));
 #if ADC_B_CFG_PARAM_CHECKING_ENABLE
     adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -787,11 +787,12 @@ fsp_err_t R_ADC_B_FifoRead (adc_ctrl_t * p_ctrl, adc_group_mask_t const group_ma
     uint32_t   remaining_count = *p_fifo_status & (R_ADC_B0_ADFIFOSR0_FIFOST0_Msk | R_ADC_B0_ADFIFOSR0_FIFOST1_Msk);
 
     remaining_count >>= ((group_id % 2) ? R_ADC_B0_ADFIFOSR0_FIFOST1_Pos : R_ADC_B0_ADFIFOSR0_FIFOST0_Pos);
-    uint8_t count = (uint8_t) (ADC_B_FIFO_STAGE_COUNT - remaining_count);
+    uint8_t count = (ADC_B_FIFO_STAGE_COUNT - (uint8_t) remaining_count);
     p_data->count = count;
+    volatile adc_b_fifo_data_t * p_data_dest = &p_data->fifo_data[0];
     for (uint8_t i = 0; i < count; i++)
     {
-        p_data->fifo_data[i] = *(adc_b_fifo_data_t *) p_fifo_data;
+        p_data_dest[i] = *(adc_b_fifo_data_t *) p_fifo_data;
     }
 
     fsp_err_t err = (count ? FSP_SUCCESS : FSP_ERR_UNDERFLOW);
@@ -1623,7 +1624,7 @@ void adc_b_adi5678_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
-    uint8_t          group_id   = __CLZ(__RBIT(ADC_B_GROUP_MASK_5678 & R_ADC_B->ADSCANENDSR));
+    uint8_t          group_id   = (uint8_t) __CLZ(__RBIT(ADC_B_GROUP_MASK_5678 & R_ADC_B->ADSCANENDSR));
     adc_group_mask_t group_mask =
         (adc_group_mask_t) ((group_id > 31) ? ADC_GROUP_MASK_NONE : (1U << group_id));
 

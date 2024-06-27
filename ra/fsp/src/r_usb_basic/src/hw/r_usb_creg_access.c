@@ -3804,7 +3804,7 @@ void hw_usb_clear_idpsinke (usb_utr_t * ptr)
     {
   #if defined(USB_HIGH_SPEED_MODULE)
         ptr->ipp1->BCCTRL = (uint16_t) (ptr->ipp1->BCCTRL & (~USB_IDPSINKE));
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* vdefined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -3926,6 +3926,73 @@ void hw_usb_clear_uckselc (void)
  ******************************************************************************/
 
 #endif                                 /* defined(USB_SUPPORT_HOCO_MODULE) */
+
+#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+
+/******************************************************************************
+ * Function Name   : hw_usb_typec_module_init
+ * Description     : Initialization of USB TypeC module
+ * Arguments       : none
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_BUSY      USB is in use.
+ ******************************************************************************/
+fsp_err_t hw_usb_typec_module_init (void)
+{
+ #if defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(0 != R_MSTP->MSTPCRB_b.MSTPB14, FSP_ERR_USB_BUSY)
+
+    /* Enable module start for TypeC module */
+    R_BSP_MODULE_START(FSP_IP_USBCC, 0);
+
+    /* Type-C Reset Processing */
+    R_USBCC->TCC |= USB_TYPEC_TCC_RESET;
+    while (0 != (R_USBCC->TCC & USB_TYPEC_TCC_RESET))
+    {
+        ;
+    }
+
+    /* CC1 and CC2 pin setting */
+
+    /* CCC-PHY not Power Down  */
+    R_USBCC->CCC = (R_USBCC->CCC & (~USB_TYPEC_CCC_PDOWN));
+
+    /* Change to Unattached_SNK */
+    R_USBCC->MEC |= USB_TYPEC_MEC_GUS;
+ #endif                                /* defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE) */
+
+    return FSP_SUCCESS;
+}
+
+/******************************************************************************
+ * End of function hw_usb_typec_module_init
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : hw_usb_typec_module_uninit
+ * Description     : Uninitialization of USB TypeC module
+ * Arguments       : none
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_typec_module_uninit (void)
+{
+ #if defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+
+    /* Change to Unattached_SNK */
+    R_USBCC->MEC |= USB_TYPEC_MEC_GD;
+
+    /* CCC-PHY Power Down  */
+    R_USBCC->CCC |= USB_TYPEC_CCC_PDOWN;
+
+    /* Disable module start for TypeC module */
+    R_BSP_MODULE_STOP(FSP_IP_USBCC, 0);
+ #endif                                /* defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE) */
+}
+
+/******************************************************************************
+ * End of function hw_usb_typec_module_uninit
+ ******************************************************************************/
+
+#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 
 /******************************************************************************
  * End of file

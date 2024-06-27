@@ -136,6 +136,8 @@ typedef enum e_rtc_periodic_irq_select
 } rtc_periodic_irq_select_t;
 #endif
 
+#ifndef BSP_OVERRIDE_RTC_TIME_CAPTURE_SOURCE_T
+
 /** Time capture trigger source */
 typedef enum e_rtc_time_capture_source
 {
@@ -146,6 +148,7 @@ typedef enum e_rtc_time_capture_source
     RTC_TIME_CAPTURE_SOURCE_SOFTWARE    = 4, ///< Software trigger
     RTC_TIME_CAPTURE_SOURCE_ELC_EVENT   = 5, ///< ELC event trigger
 } rtc_time_capture_source_t;
+#endif
 
 /** Time capture trigger mode */
 typedef enum e_rtc_time_capture_mode

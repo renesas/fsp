@@ -23,8 +23,8 @@
 #define SIZE_AES_256BIT_KEYLEN_BYTES                     ((SIZE_AES_256BIT_KEYLEN_BITS) / 8)
 #define SIZE_AES_256BIT_KEYLEN_WORDS                     ((SIZE_AES_256BIT_KEYLEN_BITS) / 32)
 
-#define SIZE_AES_BLOCK_BITS                              (128)
-#define SIZE_AES_BLOCK_BYTES                             (128 / 8)
+#define SIZE_AES_BLOCK_BITS                              (128U)
+#define SIZE_AES_BLOCK_BYTES                             ((SIZE_AES_BLOCK_BITS) / 8)
 #define SIZE_AES_BLOCK_WORDS                             ((SIZE_AES_BLOCK_BITS) / 32)
 
 #define SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION               (0x00000000U)

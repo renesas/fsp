@@ -17,6 +17,11 @@
 #define BSP_IRQ_UINT32_MAX       (0xFFFFFFFFU)
 #define BSP_PRV_BITS_PER_WORD    (32)
 
+#if BSP_ALT_BUILD
+ #define BSP_EVENT_NUM_TO_INTSELR(x)         (x >> 5)        // Convert event number to INTSELR register number
+ #define BSP_EVENT_NUM_TO_INTSELR_MASK(x)    (1 << (x % 32)) // Convert event number to INTSELR bit mask
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -253,6 +258,16 @@ BSP_SECTION_FLASH_GAP void bsp_irq_cfg (void)
         if (0U != g_interrupt_event_link_select[i])
         {
             R_ICU->IELSR[i] = (uint32_t) g_interrupt_event_link_select[i];
+
+ #if BSP_ALT_BUILD
+
+            /* Set INTSELR for selected events. */
+            uint32_t intselr_num = BSP_EVENT_NUM_TO_INTSELR((uint32_t) g_interrupt_event_link_select[i]);
+            uint32_t intselr     = R_ICU->INTSELR[intselr_num];
+
+            intselr |= BSP_EVENT_NUM_TO_INTSELR_MASK((uint32_t) g_interrupt_event_link_select[i]);
+            R_ICU->INTSELR[intselr_num] = intselr;
+ #endif
         }
     }
 #endif

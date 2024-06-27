@@ -2028,7 +2028,7 @@ static fsp_err_t flash_hp_pe_mode_exit (void)
 #endif
     }
 
-#if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+#ifdef R_CACHE
     else if (FLASH_HP_FENTRYR_DF_PE_MODE == pe_mode)
     {
         /* Flush the C-CACHE. */
@@ -2704,7 +2704,7 @@ static fsp_err_t flash_hp_enter_pe_cf_mode (flash_hp_instance_ctrl_t * const p_c
     /* While the Flash API is in use we will disable the flash cache. */
  #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
     R_BSP_FlashCacheDisable();
- #elif BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+ #elif defined(R_CACHE)
 
     /* Disable the C-Cache. */
     R_CACHE->CCACTL = 0U;

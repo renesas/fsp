@@ -169,6 +169,9 @@ fsp_err_t R_ADC_D_CallbackSet(adc_ctrl_t * const          p_api_ctrl,
                               void const * const          p_context,
                               adc_callback_args_t * const p_callback_memory);
 
+fsp_err_t R_ADC_D_SnoozeModePrepare(adc_ctrl_t * const p_ctrl);
+fsp_err_t R_ADC_D_SnoozeModeExit(adc_ctrl_t * const p_ctrl);
+
 /*******************************************************************************************************************//**
  * @} (end defgroup ADC_D)
  **********************************************************************************************************************/

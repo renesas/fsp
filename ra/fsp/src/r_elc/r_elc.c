@@ -84,7 +84,7 @@ const elc_api_t g_elc_on_elc =
 fsp_err_t R_ELC_Open (elc_ctrl_t * const p_ctrl, elc_cfg_t const * const p_cfg)
 {
     uint32_t i;
-    uint32_t i_shift = 1;
+    uint64_t i_shift = 1;
 
     elc_instance_ctrl_t * p_instance_ctrl = (elc_instance_ctrl_t *) p_ctrl;
 
@@ -223,7 +223,6 @@ fsp_err_t R_ELC_LinkSet (elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral,
     /* Configure security attribution for ELSRn */
     /* Devices that only have ELCSARB */
  #if BSP_FEATURE_ELC_VERSION == 2
-
     R_ELC->ELCSARB &= (uint32_t)  ~(1 << peripheral);
 
     /* Devices that have ELCSARB and ELCSARC */
@@ -240,7 +239,6 @@ fsp_err_t R_ELC_LinkSet (elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral,
 
     /* Restore write protection to SAR registers */
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
-
 #endif
 
     /* Set the event link register for the corresponding peripheral to the given signal */

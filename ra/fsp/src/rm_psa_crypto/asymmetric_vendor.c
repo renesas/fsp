@@ -34,7 +34,8 @@ int ecp_gen_key_vendor (mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key)
     key->grp.vendor_ctx = (bool *) true;
 
     ret = mbedtls_ecp_gen_privkey(&key->grp, &key->d, NULL, NULL);
-    if (!ret)
+
+     if (!ret)
     {
         ret = mbedtls_ecp_mul(&key->grp, &key->Q, &key->d, &key->grp.G, NULL, NULL);
     }

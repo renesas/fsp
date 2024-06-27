@@ -11,7 +11,6 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "tfm_api.h"
 #include "tfm_platform_api.h"
 
 #ifdef __cplusplus

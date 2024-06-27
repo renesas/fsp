@@ -54,13 +54,6 @@ typedef enum e_uarta_clock_div
     UARTA_CLOCK_DIV_COUNT,             ///< Total number of clock divider options.
 } uarta_clock_div_t;
 
-/** Receive interrupt mode select */
-typedef enum e_uarta_rxi_mode
-{
-    UARTA_RXI_MODE_ERROR_TRIGGER_ERI = 0U, ///< The receive error interrupt is generated when a reception error occurs.
-    UARTA_RXI_MODE_ERROR_TRIGGER_RXI = 1U, ///< The receive interrupt is generated when a reception error occurs.
-} uarta_rxi_mode_t;
-
 /** Transmission/reception order configuration. */
 typedef enum e_uarta_dir_bit
 {
@@ -89,13 +82,13 @@ typedef struct st_uarta_baud_setting
             uint8_t        : 2;
         } uta0ck_clock_b;
     };
-    uint8_t brgca;                     ///< Baud rate generator control setting
+    uint8_t  brgca;                    ///< Baud rate generator control setting
+    uint16_t delay_time;               ///< Delay time (us) required to enable TX at open
 } uarta_baud_setting_t;
 
 /** UART on UARTA device Configuration */
 typedef struct st_uarta_extended_cfg
 {
-    uarta_rxi_mode_t       rxi_mode;       ///< Receive interrupt mode select
     uarta_dir_bit_t        transfer_dir;   ///< Transmission/reception order configuration
     uarta_alv_bit_t        transfer_level; ///< Transmission/reception level configuration
     uarta_baud_setting_t * p_baud_setting; ///< Register settings for a desired baud rate.

@@ -749,7 +749,7 @@ int mbedtls_rsa_public (mbedtls_rsa_context * ctx, const unsigned char * input, 
     if (ctx->N.n != (ctx->len / (sizeof(mbedtls_mpi_uint))))
     {
         /* There should be only 1 extra value (00) at the beginning; otherwise the key is in an unexpected format */
-        if ((ctx->N.n - 1) != (ctx->len / (sizeof(mbedtls_mpi_uint))))
+        if ((ctx->N.n - 1) != (int)(ctx->len / (sizeof(mbedtls_mpi_uint))))
         {
             return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
         }
@@ -815,7 +815,7 @@ int mbedtls_rsa_private (mbedtls_rsa_context * ctx,
     if (ctx->N.n != (ctx->len / (sizeof(mbedtls_mpi_uint))))
     {
         /* There should be only 1 extra value (00) at the beginning; otherwise the key is in an unexpected format */
-        if ((ctx->N.n - 1) != (ctx->len / (sizeof(mbedtls_mpi_uint))))
+        if ((ctx->N.n - 1) != (int)(ctx->len / (sizeof(mbedtls_mpi_uint))))
         {
             return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
         }

@@ -362,6 +362,7 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t *InData_CurveType,
         const uint32_t *InData_KeyIndex, const uint32_t *InData_PubKey, uint32_t *OutData_R);
 fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
         const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
+fsp_err_t HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_PubKey[], const uint32_t InData_DomainParam[], uint32_t OutData_R[]);
 fsp_err_t HW_SCE_TdesEcbEncryptInitPrivate(sce_tdes_key_index_t *key_index);
 fsp_err_t HW_SCE_TdesEcbEncryptUpdatePrivate(uint32_t *InData_Text, uint32_t *OutData_Text, uint32_t MAX_CNT);
 fsp_err_t HW_SCE_TdesEcbEncryptFinalPrivate(void);

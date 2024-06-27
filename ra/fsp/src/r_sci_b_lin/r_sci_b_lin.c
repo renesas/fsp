@@ -379,7 +379,7 @@ fsp_err_t R_SCI_B_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t co
 /*******************************************************************************************************************//**
  * Begins non-blocking transmission of a LIN information frame.
  *
- * On successful information frame reception, the callback is called with event
+ * On successful information frame transmission, the callback is called with event
  * @ref lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE.
  *
  * Implements @ref lin_api_t::informationFrameWrite.
@@ -1988,7 +1988,10 @@ void sci_b_lin_tei_isr (void)
 #endif
 
     /* Call user callback */
-    r_sci_b_lin_call_callback(p_ctrl, p_ctrl->event);
+    if (p_ctrl->event)
+    {
+        r_sci_b_lin_call_callback(p_ctrl, p_ctrl->event);
+    }
 
     /* Clear pending IRQ to make sure it doesn't fire again after exiting */
     R_BSP_IrqStatusClear(irq);
@@ -2024,6 +2027,7 @@ void sci_b_lin_eri_isr (void)
     p_ctrl->rx_bytes_received = 0;
     p_ctrl->tx_src_bytes      = 0;
     p_ctrl->p_information     = NULL;
+    p_ctrl->event             = LIN_EVENT_NONE;
 
     /* Clear pending IRQ to make sure it doesn't fire again after exiting */
     R_BSP_IrqStatusClear(irq);

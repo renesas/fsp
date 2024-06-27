@@ -208,6 +208,12 @@ fsp_err_t RM_WIFI_DA16XXX_SntpServerIpAddressSet(uint8_t * p_server_ip_addr);
 fsp_err_t RM_WIFI_DA16XXX_SntpEnableSet(wifi_da16xxx_sntp_enable_t enable);
 
 /**********************************************************************************************************************************//**
+ *  Send a generic AT command to the DA16XXX and optionally receive a response
+ *
+ *************************************************************************************************************************************/
+fsp_err_t RM_WIFI_DA16XXX_GenericAtSendRcv(char const * const at_string, char * const response_buffer, uint32_t length);
+
+/**********************************************************************************************************************************//**
  *  Update the SNTP Timezone
  *
  *************************************************************************************************************************************/

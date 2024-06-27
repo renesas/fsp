@@ -30,21 +30,21 @@
  #include "tx_secure_interface.h"
 #endif
 
-#ifdef __ARM_ARCH_7EM__                // CM4
+#if defined(RENESAS_CORTEX_M4)
  #define TX_PORT_ISA_CBZ_SUPPORTED
  #define TX_PORT_ISA_STMDB_LDMIA_SUPPORTED
  #define TX_PORT_ISA_THUMB2_SUB_ADD_SUPPORTED
  #define TX_PORT_ISA_IT_SUPPORTED
 #endif
 
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM33, CM85
+#if defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
  #define TX_PORT_ISA_CBZ_SUPPORTED
  #define TX_PORT_ISA_STMDB_LDMIA_SUPPORTED
  #define TX_PORT_ISA_THUMB2_SUB_ADD_SUPPORTED
  #define TX_PORT_ISA_IT_SUPPORTED
 #endif
 
-#ifdef __ARM_ARCH_8M_BASE__            // CM23
+#if defined(RENESAS_CORTEX_M23)
  #define TX_PORT_ISA_CBZ_SUPPORTED
 #endif
 

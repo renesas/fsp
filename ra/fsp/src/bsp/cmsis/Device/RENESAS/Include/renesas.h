@@ -25,18 +25,7 @@
 extern "C" {
  #endif
 
-/* Workaround for LLVM. __ARM_ARCH_8_1M_MAIN__ is defined for CM85 parts. But CMSIS_5 does not support this */
- #if defined(__llvm__) && !defined(__CLANG_TIDY__) && defined(__ARM_ARCH_8_1M_MAIN__)
-  #undef __ARM_ARCH_8_1M_MAIN__
-  #define __ARM_ARCH_8M_MAIN__    1
- #endif
  #include "cmsis_compiler.h"
-
-/* Workaround for compilers that are not defining __ARM_ARCH_8_1M_MAIN__ for CM85 parts. Search CM85_WORKAROUND for related code changes */
- #if BSP_CFG_MCU_PART_SERIES == 8
-  #undef __ARM_ARCH_8M_MAIN__
-  #define __ARM_ARCH_8_1M_MAIN__    1
- #endif
 
 /** @addtogroup Configuration_of_CMSIS
  * @{
@@ -115,15 +104,36 @@ extern "C" {
   #endif
  #endif
 
- #if   __ARM_ARCH_7EM__
+/*
+ * ARM has advised to no longer use the __ARM_ARCH_8_1M_MAIN__ type macro and to instead use the __ARM_ARCH and __ARM_ARCH_ISA_THUMB
+ * macros for differentiating architectures. However, with all of our toolchains, neither paradigm is being correctly produced for Cortex-M85
+ * and thus we still need a workaround. Below is a summary of the current macros produced by each toolchain for CM85:
+ *
+ * | Toolchain | __ARM_ARCH |     _ARM_ARCH_xx__     |
+ * |-----------|------------|------------------------|
+ * |   GCC     |      8     | __ARM_ARCH_8M_MAIN__   |
+ * |   LLVM    |      8     | __ARM_ARCH_8_1M_MAIN__ |
+ * |   AC6     |      8     | __ARM_ARCH_8_1M_MAIN__ |
+ * |   IAR     |     801    | __ARM_ARCH_8M_MAIN__   |
+ *
+ * The expected output for CM85 should be __ARM_ARCH == 801, __ARM_ARCH_ISA_THUMB == 2, and __ARM_ARCH_8_1M_MAIN__
+ *
+ * IAR is currently the only toolchain producing the correct __ARM_ARCH value.
+ *
+ *- See https://github.com/ARM-software/CMSIS_6/issues/159
+ */
+ #if BSP_CFG_MCU_PART_SERIES == 8 && !defined(__ICCARM__) && BSP_CFG_CPU_CORE != 1
+  #undef __ARM_ARCH
+  #define __ARM_ARCH    801
+ #endif
+
+ #if   (__ARM_ARCH == 7) && (__ARM_ARCH_ISA_THUMB == 2)
   #define RENESAS_CORTEX_M4
- #elif __ARM_ARCH_6M__
-  #define RENESAS_CORTEX_M0PLUS
- #elif __ARM_ARCH_8M_BASE__
+ #elif (__ARM_ARCH == 8) && (__ARM_ARCH_ISA_THUMB == 1)
   #define RENESAS_CORTEX_M23
- #elif __ARM_ARCH_8M_MAIN__
+ #elif (__ARM_ARCH == 8) && (__ARM_ARCH_ISA_THUMB == 2)
   #define RENESAS_CORTEX_M33
- #elif __ARM_ARCH_8_1M_MAIN__
+ #elif (__ARM_ARCH == 801) && (__ARM_ARCH_ISA_THUMB == 2)
   #define RENESAS_CORTEX_M85
  #else
   #warning Unsupported Architecture

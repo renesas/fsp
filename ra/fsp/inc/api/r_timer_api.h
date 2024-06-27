@@ -73,6 +73,12 @@ typedef enum e_timer_compare_match
 {
     TIMER_COMPARE_MATCH_A = 0U,        ///< Compare match A value
     TIMER_COMPARE_MATCH_B = 1U,        ///< Compare match B value
+    TIMER_COMPARE_MATCH_C = 2U,        ///< Compare match C value
+    TIMER_COMPARE_MATCH_D = 3U,        ///< Compare match D value
+    TIMER_COMPARE_MATCH_E = 4U,        ///< Compare match E value
+    TIMER_COMPARE_MATCH_F = 5U,        ///< Compare match F value
+    TIMER_COMPARE_MATCH_G = 6U,        ///< Compare match G value
+    TIMER_COMPARE_MATCH_H = 7U,        ///< Compare match H value
 } timer_compare_match_t;
 
 /** Callback function parameter data */

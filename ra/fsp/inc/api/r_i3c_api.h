@@ -40,28 +40,34 @@ FSP_HEADER
 typedef enum e_i3c_common_command_code
 {
     /* Broadcast Common Command Codes */
-    I3C_CCC_BROADCAST_ENEC     = (0x00), ///< Enable Slave initiated events.
-    I3C_CCC_BROADCAST_DISEC    = (0x01), ///< Disable Slave initiated events.
-    I3C_CCC_BROADCAST_ENTAS0   = (0x02), ///< Enter Activity State 0.
-    I3C_CCC_BROADCAST_ENTAS1   = (0x03), ///< Enter Activity State 1.
-    I3C_CCC_BROADCAST_ENTAS2   = (0x04), ///< Enter Activity State 2.
-    I3C_CCC_BROADCAST_ENTAS3   = (0x05), ///< Enter Activity State 3.
-    I3C_CCC_BROADCAST_RSTDAA   = (0x06), ///< Reset Dynamic Address Assignment.
-    I3C_CCC_BROADCAST_ENTDAA   = (0x07), ///< Enter Dynamic Address Assignment.
-    I3C_CCC_BROADCAST_DEFSVLS  = (0x08), ///< Define List of Slaves.
-    I3C_CCC_BROADCAST_SETMWL   = (0x09), ///< Set Max Write Length.
-    I3C_CCC_BROADCAST_SETMRL   = (0x0A), ///< Set Max Read Length.
-    I3C_CCC_BROADCAST_ENTTM    = (0x0B), ///< Enter Test Mode.
-    I3C_CCC_BROADCAST_ENTHDR0  = (0x20), ///< Enter HDR Mode 0.
-    I3C_CCC_BROADCAST_ENTHDR1  = (0x21), ///< Enter HDR Mode 1.
-    I3C_CCC_BROADCAST_ENTHDR2  = (0x22), ///< Enter HDR Mode 2.
-    I3C_CCC_BROADCAST_ENTHDR3  = (0x23), ///< Enter HDR Mode 3.
-    I3C_CCC_BROADCAST_ENTHDR4  = (0x24), ///< Enter HDR Mode 4 (Reserved for future definition).
-    I3C_CCC_BROADCAST_ENTHDR5  = (0x25), ///< Enter HDR Mode 5 (Reserved for future definition).
-    I3C_CCC_BROADCAST_ENTHDR6  = (0x26), ///< Enter HDR Mode 6 (Reserved for future definition).
-    I3C_CCC_BROADCAST_ENTHDR7  = (0x27), ///< Enter HDR Mode 7 (Reserved for future definition).
-    I3C_CCC_BROADCAST_SETXTIME = (0x28), ///< Set Exchange Timing Info.
-    I3C_CCC_BROADCAST_SETAASA  = (0x29), ///< Set All Addresses to Static Address.
+    I3C_CCC_BROADCAST_ENEC      = (0x00), ///< Enable Slave initiated events.
+    I3C_CCC_BROADCAST_DISEC     = (0x01), ///< Disable Slave initiated events.
+    I3C_CCC_BROADCAST_ENTAS0    = (0x02), ///< Enter Activity State 0.
+    I3C_CCC_BROADCAST_ENTAS1    = (0x03), ///< Enter Activity State 1.
+    I3C_CCC_BROADCAST_ENTAS2    = (0x04), ///< Enter Activity State 2.
+    I3C_CCC_BROADCAST_ENTAS3    = (0x05), ///< Enter Activity State 3.
+    I3C_CCC_BROADCAST_RSTDAA    = (0x06), ///< Reset Dynamic Address Assignment.
+    I3C_CCC_BROADCAST_ENTDAA    = (0x07), ///< Enter Dynamic Address Assignment.
+    I3C_CCC_BROADCAST_DEFSVLS   = (0x08), ///< Define List of Slaves.
+    I3C_CCC_BROADCAST_SETMWL    = (0x09), ///< Set Max Write Length.
+    I3C_CCC_BROADCAST_SETMRL    = (0x0A), ///< Set Max Read Length.
+    I3C_CCC_BROADCAST_ENTTM     = (0x0B), ///< Enter Test Mode.
+    I3C_CCC_BROADCAST_SETBUSCON = (0x0C), ///< Set BUS Context.
+    I3C_CCC_BROADCAST_ENDXFER   = (0x12), ///< Data Transfer Ending Procedure Control.
+    I3C_CCC_BROADCAST_ENTHDR0   = (0x20), ///< Enter HDR Mode 0.
+    I3C_CCC_BROADCAST_ENTHDR1   = (0x21), ///< Enter HDR Mode 1.
+    I3C_CCC_BROADCAST_ENTHDR2   = (0x22), ///< Enter HDR Mode 2.
+    I3C_CCC_BROADCAST_ENTHDR3   = (0x23), ///< Enter HDR Mode 3.
+    I3C_CCC_BROADCAST_ENTHDR4   = (0x24), ///< Enter HDR Mode 4 (Reserved for future definition).
+    I3C_CCC_BROADCAST_ENTHDR5   = (0x25), ///< Enter HDR Mode 5 (Reserved for future definition).
+    I3C_CCC_BROADCAST_ENTHDR6   = (0x26), ///< Enter HDR Mode 6 (Reserved for future definition).
+    I3C_CCC_BROADCAST_ENTHDR7   = (0x27), ///< Enter HDR Mode 7 (Reserved for future definition).
+    I3C_CCC_BROADCAST_SETXTIME  = (0x28), ///< Set Exchange Timing Info.
+    I3C_CCC_BROADCAST_SETAASA   = (0x29), ///< Set All Addresses to Static Address.
+    I3C_CCC_BROADCAST_RSTACT    = (0x2A), ///< Slave Reset Action.
+    I3C_CCC_BROADCAST_DEFGRPA   = (0x2B), ///< Define List of Group Address.
+    I3C_CCC_BROADCAST_RSTGRPA   = (0x2C), ///< Reset Group Address.
+    I3C_CCC_BROADCAST_MLANE     = (0x2D), ///< Multi-Lane Data Transfer Control.
 
     /* Direct Common Command Codes */
     I3C_CCC_DIRECT_ENEC      = (0x80),   ///< Enable Slave initiated events.
@@ -70,7 +76,7 @@ typedef enum e_i3c_common_command_code
     I3C_CCC_DIRECT_ENTAS1    = (0x83),   ///< Enter Activity State 1.
     I3C_CCC_DIRECT_ENTAS2    = (0x84),   ///< Enter Activity State 2.
     I3C_CCC_DIRECT_ENTAS3    = (0x85),   ///< Enter Activity State 3.
-    I3C_CCC_DIRECT_RSTDAA    = (0x86),   ///< Reset Dynamic Address Assignment.
+    I3C_CCC_DIRECT_RSTDAA    = (0x86),   ///< Reset Dynamic Address Assignment (DEPRECATED v1.0).
     I3C_CCC_DIRECT_SETDASA   = (0x87),   ///< Set Dynamic Address from Static Address.
     I3C_CCC_DIRECT_SETNEWDA  = (0x88),   ///< Set New Dynamic Address.
     I3C_CCC_DIRECT_SETMWL    = (0x89),   ///< Set Max Write Length.
@@ -82,9 +88,18 @@ typedef enum e_i3c_common_command_code
     I3C_CCC_DIRECT_GETDCR    = (0x8F),   ///< Get Device Characteristic Register.
     I3C_CCC_DIRECT_GETSTATUS = (0x90),   ///< Get Device Status.
     I3C_CCC_DIRECT_GETACCMST = (0x91),   ///< Get Accept Mastership.
+    I3C_CCC_DIRECT_ENDXFER   = (0x92),   ///< Data Transfer Ending Procedure Control.
+    I3C_CCC_DIRECT_SETBRGTGT = (0x93),   ///< Set Bridge Targets.
     I3C_CCC_DIRECT_GETMXDS   = (0x94),   ///< Get Max Data Speed.
+    I3C_CCC_DIRECT_GETHDRCAP = (0x95),   ///< Get HDR Capability.
+    I3C_CCC_DIRECT_SETROUTE  = (0x96),   ///< Set Route.
+    I3C_CCC_DIRECT_D2DXFER   = (0x97),   ///< Device to Device(s) Tunneling Control.
     I3C_CCC_DIRECT_SETXTIME  = (0x98),   ///< Set Exchange Timing Information.
     I3C_CCC_DIRECT_GETXTIME  = (0x99),   ///< Get Exchange Timing Information.
+    I3C_CCC_DIRECT_RSTACT    = (0x9A),   ///< Reset Slave Action.
+    I3C_CCC_DIRECT_SETGRPA   = (0x9B),   ///< Set Group Address.
+    I3C_CCC_DIRECT_RSTGRPA   = (0x9C),   ///< Reset Group Address.
+    I3C_CCC_DIRECT_MLANE     = (0x9D),   ///< Multi-Lane Data Transfer Control.
 } i3c_common_command_code_t;
 
 /** I3C Events that result in a callback. */
@@ -218,7 +233,13 @@ typedef struct s_i3c_slave_info
              * - 1: Is a Bridge Device.
              */
             uint8_t bridge_identifier : 1;
-            uint8_t                   : 1; /* Reserved */
+
+            /**
+             * HDR Capable:
+             * - 0: Not Capable.
+             * - 1: Capable.
+             */
+            uint8_t hdr_capable : 1;
 
             /**
              * Device Role:
@@ -270,10 +291,10 @@ typedef struct s_i3c_slave_device_cfg
     i3c_slave_info_t slave_info;       ///< PID, BCR, and DCR registers for the device (Slave mode only).
 } i3c_device_cfg_t;
 
-/** Descriptor for completing CCC transfers. */
+/** Descriptor for completing CCC/HDR transfers. */
 typedef struct s_i3c_command_descriptor
 {
-    uint8_t   command_code;            ///< Common Command Code for the transfer.
+    uint8_t   command_code;            ///< Common Command Code / HDR Command Code for the transfer.
     uint8_t * p_buffer;                ///< Buffer for reading or writing data.
     uint32_t  length;                  ///< Length of the data portion of the command.
     bool      restart;                 ///< If true, issue a repeated-start after the transfer is completed.
@@ -396,7 +417,7 @@ typedef struct st_i3c_api
     fsp_err_t (* slaveStatusSet)(i3c_ctrl_t * const p_ctrl, i3c_device_status_t device_status);
 
     /**
-     * Send a broadcast or directed command to slave devices on the bus.
+     * Send a read/write/broadcast CCC or HDR command.
      *
      * Note: This function is not used in slave mode.
      *
@@ -404,7 +425,7 @@ typedef struct st_i3c_api
      * @param[in]   p_ctrl               Control block set in @ref i3c_api_t::open call for this instance.
      * @param[in]   p_command_descriptor A descriptor for executing the command.
      */
-    fsp_err_t (* commandSend)(i3c_ctrl_t * const p_ctrl, i3c_command_descriptor_t * p_command_descriptor);
+    fsp_err_t (* commandSend)(i3c_ctrl_t * const p_ctrl, i3c_command_descriptor_t const * const p_command_descriptor);
 
     /**
      * In master mode: Start a write transfer. When the transfer is completed send a stop condition or a repeated-start.

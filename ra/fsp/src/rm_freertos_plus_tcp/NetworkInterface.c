@@ -235,7 +235,7 @@ void vEtherISRCallback (ether_callback_args_t * p_args) {
 
     /* If EDMAC FR (Frame Receive Event) or FDE (Receive Descriptor Empty Event)
      * interrupt occurs, wake up xRxHanderTask. */
-    if (p_args->status_eesr & ETHER_EDMAC_INTERRUPT_FACTOR_RECEPTION)
+    if (p_args->event & ETHER_EVENT_RX_COMPLETE || p_args->event & ETHER_EVENT_RX_MESSAGE_LOST)
     {
         if (xRxHanderTaskHandle != NULL)
         {

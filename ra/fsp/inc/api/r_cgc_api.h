@@ -88,14 +88,15 @@ typedef enum e_cgc_pll_div
 /** PLL clock output divisor. */
 typedef enum e_cgc_pll_out_div
 {
-    CGC_PLL_OUT_DIV_2  = 2,            ///< PLL output clock divided by 2
-    CGC_PLL_OUT_DIV_3  = 3,            ///< PLL output clock divided by 3
-    CGC_PLL_OUT_DIV_4  = 4,            ///< PLL output clock divided by 4
-    CGC_PLL_OUT_DIV_5  = 5,            ///< PLL output clock divided by 5
-    CGC_PLL_OUT_DIV_6  = 6,            ///< PLL output clock divided by 6
-    CGC_PLL_OUT_DIV_8  = 8,            ///< PLL output clock divided by 8
-    CGC_PLL_OUT_DIV_9  = 9,            ///< PLL output clock divided by 9
-    CGC_PLL_OUT_DIV_16 = 16,           ///< PLL output clock divided by 16
+    CGC_PLL_OUT_DIV_2   = 2,           ///< PLL output clock divided by 2
+    CGC_PLL_OUT_DIV_3   = 3,           ///< PLL output clock divided by 3
+    CGC_PLL_OUT_DIV_4   = 4,           ///< PLL output clock divided by 4
+    CGC_PLL_OUT_DIV_5   = 5,           ///< PLL output clock divided by 5
+    CGC_PLL_OUT_DIV_6   = 6,           ///< PLL output clock divided by 6
+    CGC_PLL_OUT_DIV_8   = 8,           ///< PLL output clock divided by 8
+    CGC_PLL_OUT_DIV_9   = 9,           ///< PLL output clock divided by 9
+    CGC_PLL_OUT_DIV_1_5 = 10,          ///< PLL output clock divided by 1.5
+    CGC_PLL_OUT_DIV_16  = 16,          ///< PLL output clock divided by 16
 } cgc_pll_out_div_t;
 
 #ifndef BSP_OVERRIDE_CGC_SYS_CLOCK_DIV_T

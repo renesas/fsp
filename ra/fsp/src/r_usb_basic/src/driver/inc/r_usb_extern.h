@@ -188,6 +188,9 @@ extern volatile uint8_t g_usb_otg_hnp_counter;
 extern TX_TIMER         g_usb_otg_hnp_timer;
 #endif                                 /* defined(USB_CFG_OTG_USE) */
 
+/* USB Type-C */
+extern uint32_t g_usb_typec_reg_tcs;
+
 /*****************************************************************************
  * Public Functions
  ******************************************************************************/

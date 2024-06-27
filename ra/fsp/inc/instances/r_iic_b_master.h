@@ -46,6 +46,8 @@ typedef struct iic_b_master_clock_settings
     uint8_t cks_value;                 ///< Internal Reference Clock Select
     uint8_t brh_value;                 ///< High-level period of SCL clock
     uint8_t brl_value;                 ///< Low-level period of SCL clock
+    uint8_t sdod_value;                // < SDA Output Delay Counter
+    bool    sdodcs_value;              // < SDA Output Delay Clock Source
 } iic_b_master_clock_settings_t;
 
 /** I2C control structure. DO NOT INITIALIZE. */
@@ -79,6 +81,9 @@ typedef struct st_iic_b_master_instance_ctrl
     volatile bool activation_on_txi;    // Tracks whether the transfer is activated on TXI interrupt
     volatile bool address_restarted;    // Tracks whether the restart condition is send on 10 bit read
 
+    uint8_t sdod_value;                 // SDOD value when using SMBus
+    bool    sdodcs_value;               // SDODCS value when using SMBus
+
     /* Pointer to callback and optional working memory */
     void (* p_callback)(i2c_master_callback_args_t *);
     i2c_master_callback_args_t * p_callback_memory;
@@ -94,6 +99,7 @@ typedef struct st_iic_b_master_extended_cfg
     iic_b_master_timeout_scl_low_t timeout_scl_low; ///< Allows timeouts to occur when SCL is held low.
     iic_b_master_clock_settings_t  clock_settings;  ///< I2C Clock settings
     uint32_t iic_clock_freq;                        ///< I2C Clock frequency in Hz
+    bool     smbus_operation;                       ///< SMBus operation on I2C bus
 } iic_b_master_extended_cfg_t;
 
 /**********************************************************************************************************************

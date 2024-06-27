@@ -47,8 +47,8 @@ extern "C" {
  #define __ICACHE_PRESENT          1       /*!< Instruction Cache present                                                 */
  #define __DCACHE_PRESENT          1       /*!< Data Cache present                                                        */
  #define __SAUREGION_PRESENT       1       /*!< SAU region present                                                        */
- #define __PMU_PRESENT             0       /*!< PMU present                                                               */
- #define __PMU_NUM_EVENTCNT        0       /*!< PMU Event Counters                                                        */
+ #define __PMU_PRESENT             1       /*!< PMU present                                                               */
+ #define __PMU_NUM_EVENTCNT        8       /*!< PMU Event Counters                                                        */
 
 /** @} */ /* End of group Configuration_of_CMSIS */
 
@@ -472,24 +472,41 @@ typedef struct
             uint8_t                : 2;
         } STAT_b;
     };
-    __IM uint8_t RESERVED[7];
+    __IM uint8_t  RESERVED;
+    __IM uint16_t RESERVED1;
+    __IM uint32_t RESERVED2;
 
     union
     {
-        __IOM uint8_t CLR;              /*!< (@ 0x00000008) Bus Error Clear Register                                   */
-
-        struct
+        union
         {
-            __IOM uint8_t SLERRCLR : 1; /*!< [0..0] Slave Bus Error Clear.                                             */
-            __IOM uint8_t STERRCLR : 1; /*!< [1..1] Slave TrustZone filter Error Status.                               */
-            uint8_t                : 1;
-            __IOM uint8_t MMERRCLR : 1; /*!< [3..3] Master MPU Error Clear.                                            */
-            __IOM uint8_t ILERRCLR : 1; /*!< [4..4] Illegal Address Access Error Clear.                                */
-            __IOM uint8_t MSERRCLR : 1; /*!< [5..5] Master Security Attribution Unit Error Clear.                      */
-            uint8_t                : 2;
-        } CLR_b;
+            __IOM uint32_t IRQEN;      /*!< (@ 0x00000008) BUS Error IRQ Enable                                       */
+
+            struct
+            {
+                __IOM uint32_t EN : 1; /*!< [0..0] Bus interrupt request permission setting to ICU when
+                                        *   a bus error occurs                                                        */
+                uint32_t : 31;
+            } IRQEN_b;
+        };
+
+        union
+        {
+            __IOM uint8_t CLR;              /*!< (@ 0x00000008) Bus Error Clear Register                                   */
+
+            struct
+            {
+                __IOM uint8_t SLERRCLR : 1; /*!< [0..0] Slave Bus Error Clear.                                             */
+                __IOM uint8_t STERRCLR : 1; /*!< [1..1] Slave TrustZone filter Error Status.                               */
+                uint8_t                : 1;
+                __IOM uint8_t MMERRCLR : 1; /*!< [3..3] Master MPU Error Clear.                                            */
+                __IOM uint8_t ILERRCLR : 1; /*!< [4..4] Illegal Address Access Error Clear.                                */
+                __IOM uint8_t MSERRCLR : 1; /*!< [5..5] Master Security Attribution Unit Error Clear.                      */
+                uint8_t                : 2;
+            } CLR_b;
+        };
     };
-    __IM uint8_t RESERVED1[7];
+    __IM uint32_t RESERVED3;
 } R_BUS_BUSERRb_Type;                  /*!< Size = 16 (0x10)                                                          */
 
 /**
@@ -706,27 +723,13 @@ typedef struct
 
     union
     {
-        union
+        __IOM uint32_t PIBI;           /*!< (@ 0x00000070) Bus Slave Arbitration Control Register                     */
+
+        struct
         {
-            __IOM uint32_t PIBI;         /*!< (@ 0x00000070) Bus Slave Arbitration Control Register                     */
-
-            struct
-            {
-                __IOM uint32_t ARBS : 1; /*!< [0..0] Arbitration Select for slave.                                      */
-                uint32_t            : 31;
-            } PIBI_b;
-        };
-
-        union
-        {
-            __IOM uint32_t CPU1TCMBI;    /*!< (@ 0x00000070) Bus Slave Arbitration Control Register                     */
-
-            struct
-            {
-                __IOM uint32_t ARBS : 1; /*!< [0..0] Arbitration Select for slave.                                      */
-                uint32_t            : 31;
-            } CPU1TCMBI_b;
-        };
+            __IOM uint32_t ARBS : 1;   /*!< [0..0] Arbitration Select for slave.                                      */
+            uint32_t            : 31;
+        } PIBI_b;
     };
     __IM uint32_t RESERVED12;
 
@@ -1361,7 +1364,7 @@ typedef struct
         struct
         {
             __IOM uint32_t CFID  : 29; /*!< [28..0] Common FIFO Buffer ID Field                                       */
-            uint32_t             : 1;
+            __IOM uint32_t THLEN : 1;  /*!< [29..29] THL Entry enable                                                 */
             __IOM uint32_t CFRTR : 1;  /*!< [30..30] Common FIFO Buffer RTR Frame                                     */
             __IOM uint32_t CFIDE : 1;  /*!< [31..31] Common FIFO Buffer IDE Bit                                       */
         } ID_b;
@@ -1418,7 +1421,7 @@ typedef struct
         struct
         {
             __IOM uint32_t TMID  : 29; /*!< [28..0] TX Message Buffer ID Field                                        */
-            uint32_t             : 1;
+            __IOM uint32_t THLEN : 1;  /*!< [29..29] Tx History List Entry                                            */
             __IOM uint32_t TMRTR : 1;  /*!< [30..30] TX Message Buffer RTR Frame                                      */
             __IOM uint32_t TMIDE : 1;  /*!< [31..31] TX Message Buffer IDE Bit                                        */
         } ID_b;
@@ -1643,7 +1646,7 @@ typedef struct
 } R_MPU_MMPU_GROUP_REGION_Type;        /*!< Size = 16 (0x10)                                                          */
 
 /**
- * @brief R_MPU_MMPU_GROUP [GROUP] ([DMAC0..NPU] MMPU Registers)
+ * @brief R_MPU_MMPU_GROUP [GROUP] ([DMAC0..CEU] MMPU Registers)
  */
 typedef struct
 {
@@ -4028,32 +4031,42 @@ typedef struct                         /*!< (@ 0x40204000) R_PSCU Structure     
 
     union
     {
-        __IOM uint32_t PSARB;          /*!< (@ 0x00000004) Peripheral Security Attribution Register B                 */
+        __IOM uint32_t PSARB;           /*!< (@ 0x00000004) Peripheral Security Attribution Register B                 */
 
         struct
         {
-            uint32_t               : 4;
-            __IOM uint32_t PSARB4  : 1; /*!< [4..4] I3C Bus Interface 2 Security Attribution                           */
-            uint32_t               : 3;
-            __IOM uint32_t PSARB8  : 1; /*!< [8..8] I2C Bus Interface 1 Security Attribution                           */
-            __IOM uint32_t PSARB9  : 1; /*!< [9..9] I2C Bus Interface 0 Security Attribution                           */
-            uint32_t               : 1;
-            __IOM uint32_t PSARB11 : 1; /*!< [11..11] Universal Serial Bus 2.0 FS Interface 0 Security Attribution     */
-            __IOM uint32_t PSARB12 : 1; /*!< [12..12] Universal Serial Bus 2.0 HS Interface 0 Security Attribution     */
-            uint32_t               : 2;
-            __IOM uint32_t PSARB15 : 1; /*!< [15..15] ETHER0/EDMAC0 Controller Security Attribution                    */
-            __IOM uint32_t PSARB16 : 1; /*!< [16..16] Octa Memory Controller Security Attribution                      */
-            uint32_t               : 1;
-            __IOM uint32_t PSARB18 : 1; /*!< [18..18] Serial Peripheral Interface 1 Security Attribution               */
-            __IOM uint32_t PSARB19 : 1; /*!< [19..19] Serial Peripheral Interface 0 Security Attribution               */
-            uint32_t               : 2;
-            __IOM uint32_t PSARB22 : 1; /*!< [22..22] Serial Communication Interface 9 Security Attribution            */
-            uint32_t               : 4;
-            __IOM uint32_t PSARB27 : 1; /*!< [27..27] Serial Communication Interface 4 Security Attribution            */
-            __IOM uint32_t PSARB28 : 1; /*!< [28..28] Serial Communication Interface 3 Security Attribution            */
-            __IOM uint32_t PSARB29 : 1; /*!< [29..29] Serial Communication Interface 2 Security Attribution            */
-            __IOM uint32_t PSARB30 : 1; /*!< [30..30] Serial Communication Interface 1 Security Attribution            */
-            __IOM uint32_t PSARB31 : 1; /*!< [31..31] Serial Communication Interface 0 Security Attribution            */
+            __IOM uint32_t PSARB0  : 1; /*!< [0..0] Peripheral security attribution bit 0                              */
+            __IOM uint32_t PSARB1  : 1; /*!< [1..1] Peripheral security attribution bit 1                              */
+            __IOM uint32_t PSARB2  : 1; /*!< [2..2] Peripheral security attribution bit 2                              */
+            __IOM uint32_t PSARB3  : 1; /*!< [3..3] Peripheral security attribution bit 3                              */
+            __IOM uint32_t PSARB4  : 1; /*!< [4..4] Peripheral security attribution bit 4                              */
+            __IOM uint32_t PSARB5  : 1; /*!< [5..5] Peripheral security attribution bit 5                              */
+            __IOM uint32_t PSARB6  : 1; /*!< [6..6] Peripheral security attribution bit 6                              */
+            __IOM uint32_t PSARB7  : 1; /*!< [7..7] Peripheral security attribution bit 7                              */
+            __IOM uint32_t PSARB8  : 1; /*!< [8..8] Peripheral security attribution bit 8                              */
+            __IOM uint32_t PSARB9  : 1; /*!< [9..9] Peripheral security attribution bit 9                              */
+            __IOM uint32_t PSARB10 : 1; /*!< [10..10] Peripheral security attribution bit 10                           */
+            __IOM uint32_t PSARB11 : 1; /*!< [11..11] Peripheral security attribution bit 11                           */
+            __IOM uint32_t PSARB12 : 1; /*!< [12..12] Peripheral security attribution bit 12                           */
+            __IOM uint32_t PSARB13 : 1; /*!< [13..13] Peripheral security attribution bit 13                           */
+            __IOM uint32_t PSARB14 : 1; /*!< [14..14] Peripheral security attribution bit 14                           */
+            __IOM uint32_t PSARB15 : 1; /*!< [15..15] Peripheral security attribution bit 15                           */
+            __IOM uint32_t PSARB16 : 1; /*!< [16..16] Peripheral security attribution bit 16                           */
+            __IOM uint32_t PSARB17 : 1; /*!< [17..17] Peripheral security attribution bit 17                           */
+            __IOM uint32_t PSARB18 : 1; /*!< [18..18] Peripheral security attribution bit 18                           */
+            __IOM uint32_t PSARB19 : 1; /*!< [19..19] Peripheral security attribution bit 19                           */
+            __IOM uint32_t PSARB20 : 1; /*!< [20..20] Peripheral security attribution bit 20                           */
+            __IOM uint32_t PSARB21 : 1; /*!< [21..21] Peripheral security attribution bit 21                           */
+            __IOM uint32_t PSARB22 : 1; /*!< [22..22] Peripheral security attribution bit 22                           */
+            __IOM uint32_t PSARB23 : 1; /*!< [23..23] Peripheral security attribution bit 23                           */
+            __IOM uint32_t PSARB24 : 1; /*!< [24..24] Peripheral security attribution bit 24                           */
+            __IOM uint32_t PSARB25 : 1; /*!< [25..25] Peripheral security attribution bit 25                           */
+            __IOM uint32_t PSARB26 : 1; /*!< [26..26] Peripheral security attribution bit 26                           */
+            __IOM uint32_t PSARB27 : 1; /*!< [27..27] Peripheral security attribution bit 27                           */
+            __IOM uint32_t PSARB28 : 1; /*!< [28..28] Peripheral security attribution bit 28                           */
+            __IOM uint32_t PSARB29 : 1; /*!< [29..29] Peripheral security attribution bit 29                           */
+            __IOM uint32_t PSARB30 : 1; /*!< [30..30] Peripheral security attribution bit 30                           */
+            __IOM uint32_t PSARB31 : 1; /*!< [31..31] Peripheral security attribution bit 31                           */
         } PSARB_b;
     };
 
@@ -4063,86 +4076,120 @@ typedef struct                         /*!< (@ 0x40204000) R_PSCU Structure     
 
         struct
         {
-            __IOM uint32_t PSARC0 : 1;  /*!< [0..0] Clock Frequency Accuracy Measurement Circuit Security
-                                         *   Attribution                                                               */
-            __IOM uint32_t PSARC1 : 1;  /*!< [1..1] Cyclic Redundancy Check Calculator Security Attribution            */
-            uint32_t              : 5;
-            __IOM uint32_t PSARC7 : 1;  /*!< [7..7] Serial Sound Interface Enhanced (channel 1) Security
-                                         *   Attribution                                                               */
-            __IOM uint32_t PSARC8 : 1;  /*!< [8..8] Serial Sound Interface Enhanced (channel 0) Security
-                                         *   Attribution                                                               */
-            uint32_t               : 2;
-            __IOM uint32_t PSARC11 : 1; /*!< [11..11] Secure Digital Host IF 1 Security Attribution                    */
-            __IOM uint32_t PSARC12 : 1; /*!< [12..12] Secure Digital Host IF 0 Security Attribution                    */
-            __IOM uint32_t PSARC13 : 1; /*!< [13..13] Data Operation Circuit Security Attribution                      */
-            uint32_t               : 1;
-            __IOM uint32_t PSARC15 : 1; /*!< [15..15] Graph-ic(GLCDC,MIPI,DRW,JPEG) Security Attribution               */
-            __IOM uint32_t PSARC16 : 1; /*!< [16..16] CEU Security Attribution                                         */
-            uint32_t               : 9;
-            __IOM uint32_t PSARC26 : 1; /*!< [26..26] Controller Area Network with Flexible Data-Rate 1 Security
-                                         *   Attribution                                                               */
-            __IOM uint32_t PSARC27 : 1; /*!< [27..27] Controller Area Network with Flexible Data-Rate 0 Security
-                                         *   Attribution                                                               */
-            uint32_t               : 3;
-            __IOM uint32_t PSARC31 : 1; /*!< [31..31] SHIP Security Attribution                                        */
+            __IOM uint32_t PSARC0  : 1; /*!< [0..0] Peripheral security attribution bit 0                              */
+            __IOM uint32_t PSARC1  : 1; /*!< [1..1] Peripheral security attribution bit 1                              */
+            __IOM uint32_t PSARC2  : 1; /*!< [2..2] Peripheral security attribution bit 2                              */
+            __IOM uint32_t PSARC3  : 1; /*!< [3..3] Peripheral security attribution bit 3                              */
+            __IOM uint32_t PSARC4  : 1; /*!< [4..4] Peripheral security attribution bit 4                              */
+            __IOM uint32_t PSARC5  : 1; /*!< [5..5] Peripheral security attribution bit 5                              */
+            __IOM uint32_t PSARC6  : 1; /*!< [6..6] Peripheral security attribution bit 6                              */
+            __IOM uint32_t PSARC7  : 1; /*!< [7..7] Peripheral security attribution bit 7                              */
+            __IOM uint32_t PSARC8  : 1; /*!< [8..8] Peripheral security attribution bit 8                              */
+            __IOM uint32_t PSARC9  : 1; /*!< [9..9] Peripheral security attribution bit 9                              */
+            __IOM uint32_t PSARC10 : 1; /*!< [10..10] Peripheral security attribution bit 10                           */
+            __IOM uint32_t PSARC11 : 1; /*!< [11..11] Peripheral security attribution bit 11                           */
+            __IOM uint32_t PSARC12 : 1; /*!< [12..12] Peripheral security attribution bit 12                           */
+            __IOM uint32_t PSARC13 : 1; /*!< [13..13] Peripheral security attribution bit 13                           */
+            __IOM uint32_t PSARC14 : 1; /*!< [14..14] Peripheral security attribution bit 14                           */
+            __IOM uint32_t PSARC15 : 1; /*!< [15..15] Peripheral security attribution bit 15                           */
+            __IOM uint32_t PSARC16 : 1; /*!< [16..16] Peripheral security attribution bit 16                           */
+            __IOM uint32_t PSARC17 : 1; /*!< [17..17] Peripheral security attribution bit 17                           */
+            __IOM uint32_t PSARC18 : 1; /*!< [18..18] Peripheral security attribution bit 18                           */
+            __IOM uint32_t PSARC19 : 1; /*!< [19..19] Peripheral security attribution bit 19                           */
+            __IOM uint32_t PSARC20 : 1; /*!< [20..20] Peripheral security attribution bit 20                           */
+            __IOM uint32_t PSARC21 : 1; /*!< [21..21] Peripheral security attribution bit 21                           */
+            __IOM uint32_t PSARC22 : 1; /*!< [22..22] Peripheral security attribution bit 22                           */
+            __IOM uint32_t PSARC23 : 1; /*!< [23..23] Peripheral security attribution bit 23                           */
+            __IOM uint32_t PSARC24 : 1; /*!< [24..24] Peripheral security attribution bit 24                           */
+            __IOM uint32_t PSARC25 : 1; /*!< [25..25] Peripheral security attribution bit 25                           */
+            __IOM uint32_t PSARC26 : 1; /*!< [26..26] Peripheral security attribution bit 26                           */
+            __IOM uint32_t PSARC27 : 1; /*!< [27..27] Peripheral security attribution bit 27                           */
+            __IOM uint32_t PSARC28 : 1; /*!< [28..28] Peripheral security attribution bit 28                           */
+            __IOM uint32_t PSARC29 : 1; /*!< [29..29] Peripheral security attribution bit 29                           */
+            __IOM uint32_t PSARC30 : 1; /*!< [30..30] Peripheral security attribution bit 30                           */
+            __IOM uint32_t PSARC31 : 1; /*!< [31..31] Peripheral security attribution bit 31                           */
         } PSARC_b;
     };
 
     union
     {
-        __IOM uint32_t PSARD;          /*!< (@ 0x0000000C) Peripheral Security Attribution Register D                 */
+        __IOM uint32_t PSARD;           /*!< (@ 0x0000000C) Peripheral Security Attribution Register D                 */
 
         struct
         {
-            uint32_t               : 4;
-            __IOM uint32_t PSARD4  : 1; /*!< [4..4] Asynchronous General Purpose Timer 1 Security Attribution          */
-            __IOM uint32_t PSARD5  : 1; /*!< [5..5] Asynchronous General Purpose Timer 0 Security Attribution          */
-            uint32_t               : 5;
-            __IOM uint32_t PSARD11 : 1; /*!< [11..11] Port Output Enable for GPT Group 3 Security Attribution          */
-            __IOM uint32_t PSARD12 : 1; /*!< [12..12] Port Output Enable for GPT Group 2 Security Attribution          */
-            __IOM uint32_t PSARD13 : 1; /*!< [13..13] Port Output Enable for GPT Group 1 Security Attribution          */
-            __IOM uint32_t PSARD14 : 1; /*!< [14..14] Port Output Enable for GPT Group 0 Security Attribution          */
-            __IOM uint32_t PSARD15 : 1; /*!< [15..15] 12-Bit A/D 1 Converter Security Attribution                      */
-            __IOM uint32_t PSARD16 : 1; /*!< [16..16] 12-Bit A/D 0 Converter Security Attribution                      */
-            uint32_t               : 3;
-            __IOM uint32_t PSARD20 : 1; /*!< [20..20] 12-Bit D/A Converter Security Attribution                        */
-            uint32_t               : 1;
-            __IOM uint32_t PSARD22 : 1; /*!< [22..22] Temperature Sensor Security Attribution                          */
-            uint32_t               : 4;
-            __IOM uint32_t PSARD27 : 1; /*!< [27..27] High speed analog Comparator 1 Security Attribution              */
-            __IOM uint32_t PSARD28 : 1; /*!< [28..28] High speed analog Comparator 0 Security Attribution              */
-            uint32_t               : 3;
+            __IOM uint32_t PSARD0  : 1; /*!< [0..0] Peripheral security attribution bit 0                              */
+            __IOM uint32_t PSARD1  : 1; /*!< [1..1] Peripheral security attribution bit 1                              */
+            __IOM uint32_t PSARD2  : 1; /*!< [2..2] Peripheral security attribution bit 2                              */
+            __IOM uint32_t PSARD3  : 1; /*!< [3..3] Peripheral security attribution bit 3                              */
+            __IOM uint32_t PSARD4  : 1; /*!< [4..4] Peripheral security attribution bit 4                              */
+            __IOM uint32_t PSARD5  : 1; /*!< [5..5] Peripheral security attribution bit 5                              */
+            __IOM uint32_t PSARD6  : 1; /*!< [6..6] Peripheral security attribution bit 6                              */
+            __IOM uint32_t PSARD7  : 1; /*!< [7..7] Peripheral security attribution bit 7                              */
+            __IOM uint32_t PSARD8  : 1; /*!< [8..8] Peripheral security attribution bit 8                              */
+            __IOM uint32_t PSARD9  : 1; /*!< [9..9] Peripheral security attribution bit 9                              */
+            __IOM uint32_t PSARD10 : 1; /*!< [10..10] Peripheral security attribution bit 10                           */
+            __IOM uint32_t PSARD11 : 1; /*!< [11..11] Peripheral security attribution bit 11                           */
+            __IOM uint32_t PSARD12 : 1; /*!< [12..12] Peripheral security attribution bit 12                           */
+            __IOM uint32_t PSARD13 : 1; /*!< [13..13] Peripheral security attribution bit 13                           */
+            __IOM uint32_t PSARD14 : 1; /*!< [14..14] Peripheral security attribution bit 14                           */
+            __IOM uint32_t PSARD15 : 1; /*!< [15..15] Peripheral security attribution bit 15                           */
+            __IOM uint32_t PSARD16 : 1; /*!< [16..16] Peripheral security attribution bit 16                           */
+            __IOM uint32_t PSARD17 : 1; /*!< [17..17] Peripheral security attribution bit 17                           */
+            __IOM uint32_t PSARD18 : 1; /*!< [18..18] Peripheral security attribution bit 18                           */
+            __IOM uint32_t PSARD19 : 1; /*!< [19..19] Peripheral security attribution bit 19                           */
+            __IOM uint32_t PSARD20 : 1; /*!< [20..20] Peripheral security attribution bit 20                           */
+            __IOM uint32_t PSARD21 : 1; /*!< [21..21] Peripheral security attribution bit 21                           */
+            __IOM uint32_t PSARD22 : 1; /*!< [22..22] Peripheral security attribution bit 22                           */
+            __IOM uint32_t PSARD23 : 1; /*!< [23..23] Peripheral security attribution bit 23                           */
+            __IOM uint32_t PSARD24 : 1; /*!< [24..24] Peripheral security attribution bit 24                           */
+            __IOM uint32_t PSARD25 : 1; /*!< [25..25] Peripheral security attribution bit 25                           */
+            __IOM uint32_t PSARD26 : 1; /*!< [26..26] Peripheral security attribution bit 26                           */
+            __IOM uint32_t PSARD27 : 1; /*!< [27..27] Peripheral security attribution bit 27                           */
+            __IOM uint32_t PSARD28 : 1; /*!< [28..28] Peripheral security attribution bit 28                           */
+            __IOM uint32_t PSARD29 : 1; /*!< [29..29] Peripheral security attribution bit 29                           */
+            __IOM uint32_t PSARD30 : 1; /*!< [30..30] Peripheral security attribution bit 30                           */
+            __IOM uint32_t PSARD31 : 1; /*!< [31..31] Peripheral security attribution bit 31                           */
         } PSARD_b;
     };
 
     union
     {
-        __IOM uint32_t PSARE;          /*!< (@ 0x00000010) Peripheral Security Attribution Register E                 */
+        __IOM uint32_t PSARE;           /*!< (@ 0x00000010) Peripheral Security Attribution Register E                 */
 
         struct
         {
-            uint32_t               : 1;
-            __IOM uint32_t PSARE1  : 1; /*!< [1..1] WDT0 Security Attribution                                          */
-            __IOM uint32_t PSARE2  : 1; /*!< [2..2] Independent Watchdog Timer Security Attribution                    */
-            __IOM uint32_t PSARE3  : 1; /*!< [3..3] Real Time Clock Security Attribution                               */
-            uint32_t               : 4;
-            __IOM uint32_t PSARE8  : 1; /*!< [8..8] ULPT1 Security Attribution                                         */
-            __IOM uint32_t PSARE9  : 1; /*!< [9..9] ULPT0 Security Attribution                                         */
-            uint32_t               : 8;
-            __IOM uint32_t PSARE18 : 1; /*!< [18..18] General PWM Timer channel13 Security Attribution                 */
-            __IOM uint32_t PSARE19 : 1; /*!< [19..19] General PWM Timer channel12 Security Attribution                 */
-            __IOM uint32_t PSARE20 : 1; /*!< [20..20] General PWM Timer channel11 Security Attribution                 */
-            __IOM uint32_t PSARE21 : 1; /*!< [21..21] General PWM Timer channel10 Security Attribution                 */
-            __IOM uint32_t PSARE22 : 1; /*!< [22..22] General PWM Timer channel9 Security Attribution                  */
-            __IOM uint32_t PSARE23 : 1; /*!< [23..23] General PWM Timer channel8 Security Attribution                  */
-            __IOM uint32_t PSARE24 : 1; /*!< [24..24] General PWM Timer channel7 Security Attribution                  */
-            __IOM uint32_t PSARE25 : 1; /*!< [25..25] General PWM Timer channel6 Security Attribution                  */
-            __IOM uint32_t PSARE26 : 1; /*!< [26..26] General PWM Timer channel5 Security Attribution                  */
-            __IOM uint32_t PSARE27 : 1; /*!< [27..27] General PWM Timer channel4 Security Attribution                  */
-            __IOM uint32_t PSARE28 : 1; /*!< [28..28] General PWM Timer channel3 Security Attribution                  */
-            __IOM uint32_t PSARE29 : 1; /*!< [29..29] General PWM Timer channel2 Security Attribution                  */
-            __IOM uint32_t PSARE30 : 1; /*!< [30..30] General PWM Timer channel1 Security Attribution                  */
-            __IOM uint32_t PSARE31 : 1; /*!< [31..31] General PWM Timer channel0 Security Attribution                  */
+            __IOM uint32_t PSARE0  : 1; /*!< [0..0] Peripheral security attribution bit 0                              */
+            __IOM uint32_t PSARE1  : 1; /*!< [1..1] Peripheral security attribution bit 1                              */
+            __IOM uint32_t PSARE2  : 1; /*!< [2..2] Peripheral security attribution bit 2                              */
+            __IOM uint32_t PSARE3  : 1; /*!< [3..3] Peripheral security attribution bit 3                              */
+            __IOM uint32_t PSARE4  : 1; /*!< [4..4] Peripheral security attribution bit 4                              */
+            __IOM uint32_t PSARE5  : 1; /*!< [5..5] Peripheral security attribution bit 5                              */
+            __IOM uint32_t PSARE6  : 1; /*!< [6..6] Peripheral security attribution bit 6                              */
+            __IOM uint32_t PSARE7  : 1; /*!< [7..7] Peripheral security attribution bit 7                              */
+            __IOM uint32_t PSARE8  : 1; /*!< [8..8] Peripheral security attribution bit 8                              */
+            __IOM uint32_t PSARE9  : 1; /*!< [9..9] Peripheral security attribution bit 9                              */
+            __IOM uint32_t PSARE10 : 1; /*!< [10..10] Peripheral security attribution bit 10                           */
+            __IOM uint32_t PSARE11 : 1; /*!< [11..11] Peripheral security attribution bit 11                           */
+            __IOM uint32_t PSARE12 : 1; /*!< [12..12] Peripheral security attribution bit 12                           */
+            __IOM uint32_t PSARE13 : 1; /*!< [13..13] Peripheral security attribution bit 13                           */
+            __IOM uint32_t PSARE14 : 1; /*!< [14..14] Peripheral security attribution bit 14                           */
+            __IOM uint32_t PSARE15 : 1; /*!< [15..15] Peripheral security attribution bit 15                           */
+            __IOM uint32_t PSARE16 : 1; /*!< [16..16] Peripheral security attribution bit 16                           */
+            __IOM uint32_t PSARE17 : 1; /*!< [17..17] Peripheral security attribution bit 17                           */
+            __IOM uint32_t PSARE18 : 1; /*!< [18..18] Peripheral security attribution bit 18                           */
+            __IOM uint32_t PSARE19 : 1; /*!< [19..19] Peripheral security attribution bit 19                           */
+            __IOM uint32_t PSARE20 : 1; /*!< [20..20] Peripheral security attribution bit 20                           */
+            __IOM uint32_t PSARE21 : 1; /*!< [21..21] Peripheral security attribution bit 21                           */
+            __IOM uint32_t PSARE22 : 1; /*!< [22..22] Peripheral security attribution bit 22                           */
+            __IOM uint32_t PSARE23 : 1; /*!< [23..23] Peripheral security attribution bit 23                           */
+            __IOM uint32_t PSARE24 : 1; /*!< [24..24] Peripheral security attribution bit 24                           */
+            __IOM uint32_t PSARE25 : 1; /*!< [25..25] Peripheral security attribution bit 25                           */
+            __IOM uint32_t PSARE26 : 1; /*!< [26..26] Peripheral security attribution bit 26                           */
+            __IOM uint32_t PSARE27 : 1; /*!< [27..27] Peripheral security attribution bit 27                           */
+            __IOM uint32_t PSARE28 : 1; /*!< [28..28] Peripheral security attribution bit 28                           */
+            __IOM uint32_t PSARE29 : 1; /*!< [29..29] Peripheral security attribution bit 29                           */
+            __IOM uint32_t PSARE30 : 1; /*!< [30..30] Peripheral security attribution bit 30                           */
+            __IOM uint32_t PSARE31 : 1; /*!< [31..31] Peripheral security attribution bit 31                           */
         } PSARE_b;
     };
 
@@ -4152,50 +4199,80 @@ typedef struct                         /*!< (@ 0x40204000) R_PSCU Structure     
 
         struct
         {
-            __IOM uint32_t MSSAR0  : 1; /*!< [0..0] SRAM0 Clock Stop Security Attribution                              */
-            __IOM uint32_t MSSAR1  : 1; /*!< [1..1] SRAM1 Clock Stop Security Attribution                              */
-            uint32_t               : 9;
-            __IOM uint32_t MSSAR11 : 1; /*!< [11..11] CTCM0 Security Attribution                                       */
-            uint32_t               : 1;
-            __IOM uint32_t MSSAR13 : 1; /*!< [13..13] STCM0 Security Attribution                                       */
-            uint32_t               : 1;
-            __IOM uint32_t MSSAR15 : 1; /*!< [15..15] Standby RAM Clock Stop Security Attribution                      */
-            uint32_t               : 6;
-            __IOM uint32_t MSSAR22 : 1; /*!< [22..22] DMAC0/DTC0 Clock Stop Security Attribution                       */
-            uint32_t               : 8;
-            __IOM uint32_t MSSAR31 : 1; /*!< [31..31] ELC clock stop Security Attribution                              */
+            __IOM uint32_t MSSAR0  : 1; /*!< [0..0] Module stop security attribution bit 0                             */
+            __IOM uint32_t MSSAR1  : 1; /*!< [1..1] Module stop security attribution bit 1                             */
+            __IOM uint32_t MSSAR2  : 1; /*!< [2..2] Module stop security attribution bit 2                             */
+            __IOM uint32_t MSSAR3  : 1; /*!< [3..3] Module stop security attribution bit 3                             */
+            __IOM uint32_t MSSAR4  : 1; /*!< [4..4] Module stop security attribution bit 4                             */
+            __IOM uint32_t MSSAR5  : 1; /*!< [5..5] Module stop security attribution bit 5                             */
+            __IOM uint32_t MSSAR6  : 1; /*!< [6..6] Module stop security attribution bit 6                             */
+            __IOM uint32_t MSSAR7  : 1; /*!< [7..7] Module stop security attribution bit 7                             */
+            __IOM uint32_t MSSAR8  : 1; /*!< [8..8] Module stop security attribution bit 8                             */
+            __IOM uint32_t MSSAR9  : 1; /*!< [9..9] Module stop security attribution bit 9                             */
+            __IOM uint32_t MSSAR10 : 1; /*!< [10..10] Module stop security attribution bit 10                          */
+            __IOM uint32_t MSSAR11 : 1; /*!< [11..11] Module stop security attribution bit 11                          */
+            __IOM uint32_t MSSAR12 : 1; /*!< [12..12] Module stop security attribution bit 12                          */
+            __IOM uint32_t MSSAR13 : 1; /*!< [13..13] Module stop security attribution bit 13                          */
+            __IOM uint32_t MSSAR14 : 1; /*!< [14..14] Module stop security attribution bit 14                          */
+            __IOM uint32_t MSSAR15 : 1; /*!< [15..15] Module stop security attribution bit 15                          */
+            __IOM uint32_t MSSAR16 : 1; /*!< [16..16] Module stop security attribution bit 16                          */
+            __IOM uint32_t MSSAR17 : 1; /*!< [17..17] Module stop security attribution bit 17                          */
+            __IOM uint32_t MSSAR18 : 1; /*!< [18..18] Module stop security attribution bit 18                          */
+            __IOM uint32_t MSSAR19 : 1; /*!< [19..19] Module stop security attribution bit 19                          */
+            __IOM uint32_t MSSAR20 : 1; /*!< [20..20] Module stop security attribution bit 20                          */
+            __IOM uint32_t MSSAR21 : 1; /*!< [21..21] Module stop security attribution bit 21                          */
+            __IOM uint32_t MSSAR22 : 1; /*!< [22..22] Module stop security attribution bit 22                          */
+            __IOM uint32_t MSSAR23 : 1; /*!< [23..23] Module stop security attribution bit 23                          */
+            __IOM uint32_t MSSAR24 : 1; /*!< [24..24] Module stop security attribution bit 24                          */
+            __IOM uint32_t MSSAR25 : 1; /*!< [25..25] Module stop security attribution bit 25                          */
+            __IOM uint32_t MSSAR26 : 1; /*!< [26..26] Module stop security attribution bit 26                          */
+            __IOM uint32_t MSSAR27 : 1; /*!< [27..27] Module stop security attribution bit 27                          */
+            __IOM uint32_t MSSAR28 : 1; /*!< [28..28] Module stop security attribution bit 28                          */
+            __IOM uint32_t MSSAR29 : 1; /*!< [29..29] Module stop security attribution bit 29                          */
+            __IOM uint32_t MSSAR30 : 1; /*!< [30..30] Module stop security attribution bit 30                          */
+            __IOM uint32_t MSSAR31 : 1; /*!< [31..31] Module stop security attribution bit 31                          */
         } MSSAR_b;
     };
     __IM uint32_t RESERVED1;
 
     union
     {
-        __IOM uint32_t PPARB;          /*!< (@ 0x0000001C) Peripheral Privilege Attribution Register B                */
+        __IOM uint32_t PPARB;           /*!< (@ 0x0000001C) Peripheral Privilege Attribution Register B                */
 
         struct
         {
-            uint32_t               : 4;
-            __IOM uint32_t PPARB4  : 1; /*!< [4..4] I3C Bus Interface 2 Privilege Attribution                          */
-            uint32_t               : 3;
-            __IOM uint32_t PPARB8  : 1; /*!< [8..8] I2C Bus Interface 1 Privilege Attribution                          */
-            __IOM uint32_t PPARB9  : 1; /*!< [9..9] I2C Bus Interface 0 Privilege Attribution                          */
-            uint32_t               : 1;
-            __IOM uint32_t PPARB11 : 1; /*!< [11..11] Universal Serial Bus 2.0 FS Interface 0 Privilege Attribution    */
-            __IOM uint32_t PPARB12 : 1; /*!< [12..12] Universal Serial Bus 2.0 HS Interface 0 Privilege Attribution    */
-            uint32_t               : 2;
-            __IOM uint32_t PPARB15 : 1; /*!< [15..15] ETHER0/EDMAC0 Controller Privilege Attribution                   */
-            __IOM uint32_t PPARB16 : 1; /*!< [16..16] Octa Memory Controller Privilege Attribution                     */
-            uint32_t               : 1;
-            __IOM uint32_t PPARB18 : 1; /*!< [18..18] Serial Peripheral Interface 1 Privilege Attribution              */
-            __IOM uint32_t PPARB19 : 1; /*!< [19..19] Serial Peripheral Interface 0 Privilege Attribution              */
-            uint32_t               : 2;
-            __IOM uint32_t PPARB22 : 1; /*!< [22..22] Serial Communication Interface 9 Privilege Attribution           */
-            uint32_t               : 4;
-            __IOM uint32_t PPARB27 : 1; /*!< [27..27] Serial Communication Interface 4 Privilege Attribution           */
-            __IOM uint32_t PPARB28 : 1; /*!< [28..28] Serial Communication Interface 3 Privilege Attribution           */
-            __IOM uint32_t PPARB29 : 1; /*!< [29..29] Serial Communication Interface 2 Privilege Attribution           */
-            __IOM uint32_t PPARB30 : 1; /*!< [30..30] Serial Communication Interface 1 Privilege Attribution           */
-            __IOM uint32_t PPARB31 : 1; /*!< [31..31] Serial Communication Interface 0 Privilege Attribution           */
+            __IOM uint32_t PPARB0  : 1; /*!< [0..0] Peripheral privilege attribution bit 0                             */
+            __IOM uint32_t PPARB1  : 1; /*!< [1..1] Peripheral privilege attribution bit 1                             */
+            __IOM uint32_t PPARB2  : 1; /*!< [2..2] Peripheral privilege attribution bit 2                             */
+            __IOM uint32_t PPARB3  : 1; /*!< [3..3] Peripheral privilege attribution bit 3                             */
+            __IOM uint32_t PPARB4  : 1; /*!< [4..4] Peripheral privilege attribution bit 4                             */
+            __IOM uint32_t PPARB5  : 1; /*!< [5..5] Peripheral privilege attribution bit 5                             */
+            __IOM uint32_t PPARB6  : 1; /*!< [6..6] Peripheral privilege attribution bit 6                             */
+            __IOM uint32_t PPARB7  : 1; /*!< [7..7] Peripheral privilege attribution bit 7                             */
+            __IOM uint32_t PPARB8  : 1; /*!< [8..8] Peripheral privilege attribution bit 8                             */
+            __IOM uint32_t PPARB9  : 1; /*!< [9..9] Peripheral privilege attribution bit 9                             */
+            __IOM uint32_t PPARB10 : 1; /*!< [10..10] Peripheral privilege attribution bit 10                          */
+            __IOM uint32_t PPARB11 : 1; /*!< [11..11] Peripheral privilege attribution bit 11                          */
+            __IOM uint32_t PPARB12 : 1; /*!< [12..12] Peripheral privilege attribution bit 12                          */
+            __IOM uint32_t PPARB13 : 1; /*!< [13..13] Peripheral privilege attribution bit 13                          */
+            __IOM uint32_t PPARB14 : 1; /*!< [14..14] Peripheral privilege attribution bit 14                          */
+            __IOM uint32_t PPARB15 : 1; /*!< [15..15] Peripheral privilege attribution bit 15                          */
+            __IOM uint32_t PPARB16 : 1; /*!< [16..16] Peripheral privilege attribution bit 16                          */
+            __IOM uint32_t PPARB17 : 1; /*!< [17..17] Peripheral privilege attribution bit 17                          */
+            __IOM uint32_t PPARB18 : 1; /*!< [18..18] Peripheral privilege attribution bit 18                          */
+            __IOM uint32_t PPARB19 : 1; /*!< [19..19] Peripheral privilege attribution bit 19                          */
+            __IOM uint32_t PPARB20 : 1; /*!< [20..20] Peripheral privilege attribution bit 20                          */
+            __IOM uint32_t PPARB21 : 1; /*!< [21..21] Peripheral privilege attribution bit 21                          */
+            __IOM uint32_t PPARB22 : 1; /*!< [22..22] Peripheral privilege attribution bit 22                          */
+            __IOM uint32_t PPARB23 : 1; /*!< [23..23] Peripheral privilege attribution bit 23                          */
+            __IOM uint32_t PPARB24 : 1; /*!< [24..24] Peripheral privilege attribution bit 24                          */
+            __IOM uint32_t PPARB25 : 1; /*!< [25..25] Peripheral privilege attribution bit 25                          */
+            __IOM uint32_t PPARB26 : 1; /*!< [26..26] Peripheral privilege attribution bit 26                          */
+            __IOM uint32_t PPARB27 : 1; /*!< [27..27] Peripheral privilege attribution bit 27                          */
+            __IOM uint32_t PPARB28 : 1; /*!< [28..28] Peripheral privilege attribution bit 28                          */
+            __IOM uint32_t PPARB29 : 1; /*!< [29..29] Peripheral privilege attribution bit 29                          */
+            __IOM uint32_t PPARB30 : 1; /*!< [30..30] Peripheral privilege attribution bit 30                          */
+            __IOM uint32_t PPARB31 : 1; /*!< [31..31] Peripheral privilege attribution bit 31                          */
         } PPARB_b;
     };
 
@@ -4205,104 +4282,167 @@ typedef struct                         /*!< (@ 0x40204000) R_PSCU Structure     
 
         struct
         {
-            __IOM uint32_t PPARC0 : 1;  /*!< [0..0] Clock Frequency Accuracy Measurement Circuit Privilege
-                                         *   Attribution                                                               */
-            __IOM uint32_t PPARC1 : 1;  /*!< [1..1] Cyclic Redundancy Check Calculator Privilege Attribution           */
-            uint32_t              : 5;
-            __IOM uint32_t PPARC7 : 1;  /*!< [7..7] Serial Sound Interface Enhanced (channel 1) Privilege
-                                         *   Attribution                                                               */
-            __IOM uint32_t PPARC8 : 1;  /*!< [8..8] Serial Sound Interface Enhanced (channel 0) Privilege
-                                         *   Attribution                                                               */
-            uint32_t               : 2;
-            __IOM uint32_t PPARC11 : 1; /*!< [11..11] Privilege Digital Host IF 1 Privilege Attribution                */
-            __IOM uint32_t PPARC12 : 1; /*!< [12..12] Privilege Digital Host IF 0 Privilege Attribution                */
-            __IOM uint32_t PPARC13 : 1; /*!< [13..13] Data Operation Circuit Privilege Attribution                     */
-            uint32_t               : 1;
-            __IOM uint32_t PPARC15 : 1; /*!< [15..15] Graph-ic(GLCDC,MIPI,DRW,JPEG) Privilege Attribution              */
-            __IOM uint32_t PPARC16 : 1; /*!< [16..16] CEU Privilege Attribution                                        */
-            uint32_t               : 9;
-            __IOM uint32_t PPARC26 : 1; /*!< [26..26] Controller Area Network with Flexible Data-Rate 1 Privilege
-                                         *   Attribution                                                               */
-            __IOM uint32_t PPARC27 : 1; /*!< [27..27] Controller Area Network with Flexible Data-Rate 0 Privilege
-                                         *   Attribution                                                               */
-            uint32_t               : 3;
-            __IOM uint32_t PPARC31 : 1; /*!< [31..31] SHIP Privilege Attribution                                       */
+            __IOM uint32_t PPARC0  : 1; /*!< [0..0] Peripheral privilege attribution bit 0                             */
+            __IOM uint32_t PPARC1  : 1; /*!< [1..1] Peripheral privilege attribution bit 1                             */
+            __IOM uint32_t PPARC2  : 1; /*!< [2..2] Peripheral privilege attribution bit 2                             */
+            __IOM uint32_t PPARC3  : 1; /*!< [3..3] Peripheral privilege attribution bit 3                             */
+            __IOM uint32_t PPARC4  : 1; /*!< [4..4] Peripheral privilege attribution bit 4                             */
+            __IOM uint32_t PPARC5  : 1; /*!< [5..5] Peripheral privilege attribution bit 5                             */
+            __IOM uint32_t PPARC6  : 1; /*!< [6..6] Peripheral privilege attribution bit 6                             */
+            __IOM uint32_t PPARC7  : 1; /*!< [7..7] Peripheral privilege attribution bit 7                             */
+            __IOM uint32_t PPARC8  : 1; /*!< [8..8] Peripheral privilege attribution bit 8                             */
+            __IOM uint32_t PPARC9  : 1; /*!< [9..9] Peripheral privilege attribution bit 9                             */
+            __IOM uint32_t PPARC10 : 1; /*!< [10..10] Peripheral privilege attribution bit 10                          */
+            __IOM uint32_t PPARC11 : 1; /*!< [11..11] Peripheral privilege attribution bit 11                          */
+            __IOM uint32_t PPARC12 : 1; /*!< [12..12] Peripheral privilege attribution bit 12                          */
+            __IOM uint32_t PPARC13 : 1; /*!< [13..13] Peripheral privilege attribution bit 13                          */
+            __IOM uint32_t PPARC14 : 1; /*!< [14..14] Peripheral privilege attribution bit 14                          */
+            __IOM uint32_t PPARC15 : 1; /*!< [15..15] Peripheral privilege attribution bit 15                          */
+            __IOM uint32_t PPARC16 : 1; /*!< [16..16] Peripheral privilege attribution bit 16                          */
+            __IOM uint32_t PPARC17 : 1; /*!< [17..17] Peripheral privilege attribution bit 17                          */
+            __IOM uint32_t PPARC18 : 1; /*!< [18..18] Peripheral privilege attribution bit 18                          */
+            __IOM uint32_t PPARC19 : 1; /*!< [19..19] Peripheral privilege attribution bit 19                          */
+            __IOM uint32_t PPARC20 : 1; /*!< [20..20] Peripheral privilege attribution bit 20                          */
+            __IOM uint32_t PPARC21 : 1; /*!< [21..21] Peripheral privilege attribution bit 21                          */
+            __IOM uint32_t PPARC22 : 1; /*!< [22..22] Peripheral privilege attribution bit 22                          */
+            __IOM uint32_t PPARC23 : 1; /*!< [23..23] Peripheral privilege attribution bit 23                          */
+            __IOM uint32_t PPARC24 : 1; /*!< [24..24] Peripheral privilege attribution bit 24                          */
+            __IOM uint32_t PPARC25 : 1; /*!< [25..25] Peripheral privilege attribution bit 25                          */
+            __IOM uint32_t PPARC26 : 1; /*!< [26..26] Peripheral privilege attribution bit 26                          */
+            __IOM uint32_t PPARC27 : 1; /*!< [27..27] Peripheral privilege attribution bit 27                          */
+            __IOM uint32_t PPARC28 : 1; /*!< [28..28] Peripheral privilege attribution bit 28                          */
+            __IOM uint32_t PPARC29 : 1; /*!< [29..29] Peripheral privilege attribution bit 29                          */
+            __IOM uint32_t PPARC30 : 1; /*!< [30..30] Peripheral privilege attribution bit 30                          */
+            __IOM uint32_t PPARC31 : 1; /*!< [31..31] Peripheral privilege attribution bit 31                          */
         } PPARC_b;
     };
 
     union
     {
-        __IOM uint32_t PPARD;          /*!< (@ 0x00000024) Peripheral Privilege Attribution Register D                */
+        __IOM uint32_t PPARD;           /*!< (@ 0x00000024) Peripheral Privilege Attribution Register D                */
 
         struct
         {
-            uint32_t               : 4;
-            __IOM uint32_t PPARD4  : 1; /*!< [4..4] Asynchronous General Purpose Timer 1 Privilege Attribution         */
-            __IOM uint32_t PPARD5  : 1; /*!< [5..5] Asynchronous General Purpose Timer 0 Privilege Attribution         */
-            uint32_t               : 5;
-            __IOM uint32_t PPARD11 : 1; /*!< [11..11] Port Output Enable for GPT Group 3 Privilege Attribution         */
-            __IOM uint32_t PPARD12 : 1; /*!< [12..12] Port Output Enable for GPT Group 2 Privilege Attribution         */
-            __IOM uint32_t PPARD13 : 1; /*!< [13..13] Port Output Enable for GPT Group 1 Privilege Attribution         */
-            __IOM uint32_t PPARD14 : 1; /*!< [14..14] Port Output Enable for GPT Group 0 Privilege Attribution         */
-            __IOM uint32_t PPARD15 : 1; /*!< [15..15] 12-Bit A/D 1 Converter Privilege Attribution                     */
-            __IOM uint32_t PPARD16 : 1; /*!< [16..16] 12-Bit A/D 0 Converter Privilege Attribution                     */
-            uint32_t               : 3;
-            __IOM uint32_t PPARD20 : 1; /*!< [20..20] 12-Bit D/A Converter Privilege Attribution                       */
-            uint32_t               : 1;
-            __IOM uint32_t PPARD22 : 1; /*!< [22..22] Temperature Sensor Privilege Attribution                         */
-            uint32_t               : 4;
-            __IOM uint32_t PPARD27 : 1; /*!< [27..27] High speed analog Comparator 1 Privilege Attribution             */
-            __IOM uint32_t PPARD28 : 1; /*!< [28..28] High speed analog Comparator 0 Privilege Attribution             */
-            uint32_t               : 3;
+            __IOM uint32_t PPARD0  : 1; /*!< [0..0] Peripheral privilege attribution bit 0                             */
+            __IOM uint32_t PPARD1  : 1; /*!< [1..1] Peripheral privilege attribution bit 1                             */
+            __IOM uint32_t PPARD2  : 1; /*!< [2..2] Peripheral privilege attribution bit 2                             */
+            __IOM uint32_t PPARD3  : 1; /*!< [3..3] Peripheral privilege attribution bit 3                             */
+            __IOM uint32_t PPARD4  : 1; /*!< [4..4] Peripheral privilege attribution bit 4                             */
+            __IOM uint32_t PPARD5  : 1; /*!< [5..5] Peripheral privilege attribution bit 5                             */
+            __IOM uint32_t PPARD6  : 1; /*!< [6..6] Peripheral privilege attribution bit 6                             */
+            __IOM uint32_t PPARD7  : 1; /*!< [7..7] Peripheral privilege attribution bit 7                             */
+            __IOM uint32_t PPARD8  : 1; /*!< [8..8] Peripheral privilege attribution bit 8                             */
+            __IOM uint32_t PPARD9  : 1; /*!< [9..9] Peripheral privilege attribution bit 9                             */
+            __IOM uint32_t PPARD10 : 1; /*!< [10..10] Peripheral privilege attribution bit 10                          */
+            __IOM uint32_t PPARD11 : 1; /*!< [11..11] Peripheral privilege attribution bit 11                          */
+            __IOM uint32_t PPARD12 : 1; /*!< [12..12] Peripheral privilege attribution bit 12                          */
+            __IOM uint32_t PPARD13 : 1; /*!< [13..13] Peripheral privilege attribution bit 13                          */
+            __IOM uint32_t PPARD14 : 1; /*!< [14..14] Peripheral privilege attribution bit 14                          */
+            __IOM uint32_t PPARD15 : 1; /*!< [15..15] Peripheral privilege attribution bit 15                          */
+            __IOM uint32_t PPARD16 : 1; /*!< [16..16] Peripheral privilege attribution bit 16                          */
+            __IOM uint32_t PPARD17 : 1; /*!< [17..17] Peripheral privilege attribution bit 17                          */
+            __IOM uint32_t PPARD18 : 1; /*!< [18..18] Peripheral privilege attribution bit 18                          */
+            __IOM uint32_t PPARD19 : 1; /*!< [19..19] Peripheral privilege attribution bit 19                          */
+            __IOM uint32_t PPARD20 : 1; /*!< [20..20] Peripheral privilege attribution bit 20                          */
+            __IOM uint32_t PPARD21 : 1; /*!< [21..21] Peripheral privilege attribution bit 21                          */
+            __IOM uint32_t PPARD22 : 1; /*!< [22..22] Peripheral privilege attribution bit 22                          */
+            __IOM uint32_t PPARD23 : 1; /*!< [23..23] Peripheral privilege attribution bit 23                          */
+            __IOM uint32_t PPARD24 : 1; /*!< [24..24] Peripheral privilege attribution bit 24                          */
+            __IOM uint32_t PPARD25 : 1; /*!< [25..25] Peripheral privilege attribution bit 25                          */
+            __IOM uint32_t PPARD26 : 1; /*!< [26..26] Peripheral privilege attribution bit 26                          */
+            __IOM uint32_t PPARD27 : 1; /*!< [27..27] Peripheral privilege attribution bit 27                          */
+            __IOM uint32_t PPARD28 : 1; /*!< [28..28] Peripheral privilege attribution bit 28                          */
+            __IOM uint32_t PPARD29 : 1; /*!< [29..29] Peripheral privilege attribution bit 29                          */
+            __IOM uint32_t PPARD30 : 1; /*!< [30..30] Peripheral privilege attribution bit 30                          */
+            __IOM uint32_t PPARD31 : 1; /*!< [31..31] Peripheral privilege attribution bit 31                          */
         } PPARD_b;
     };
 
     union
     {
-        __IOM uint32_t PPARE;          /*!< (@ 0x00000028) Peripheral Privilege Attribution Register E                */
+        __IOM uint32_t PPARE;           /*!< (@ 0x00000028) Peripheral Privilege Attribution Register E                */
 
         struct
         {
-            uint32_t               : 1;
-            __IOM uint32_t PPARE1  : 1; /*!< [1..1] Watchdog Timer0 Privilege Attribution                              */
-            __IOM uint32_t PPARE2  : 1; /*!< [2..2] Independent Watchdog Timer Privilege Attribution                   */
-            __IOM uint32_t PPARE3  : 1; /*!< [3..3] Real Time Clock Privilege Attribution                              */
-            uint32_t               : 4;
-            __IOM uint32_t PPARE8  : 1; /*!< [8..8] ULPT1 Privilege Attribution                                        */
-            __IOM uint32_t PPARE9  : 1; /*!< [9..9] ULPT0 Privilege Attribution                                        */
-            uint32_t               : 8;
-            __IOM uint32_t PPARE18 : 1; /*!< [18..18] General PWM Timer channel13 Privilege Attribution                */
-            __IOM uint32_t PPARE19 : 1; /*!< [19..19] General PWM Timer channel12 Privilege Attribution                */
-            __IOM uint32_t PPARE20 : 1; /*!< [20..20] General PWM Timer channel11 Privilege Attribution                */
-            __IOM uint32_t PPARE21 : 1; /*!< [21..21] General PWM Timer channel10 Privilege Attribution                */
-            __IOM uint32_t PPARE22 : 1; /*!< [22..22] General PWM Timer channel9 Privilege Attribution                 */
-            __IOM uint32_t PPARE23 : 1; /*!< [23..23] General PWM Timer channel8 Privilege Attribution                 */
-            __IOM uint32_t PPARE24 : 1; /*!< [24..24] General PWM Timer channel7 Privilege Attribution                 */
-            __IOM uint32_t PPARE25 : 1; /*!< [25..25] General PWM Timer channel6 Privilege Attribution                 */
-            __IOM uint32_t PPARE26 : 1; /*!< [26..26] General PWM Timer channel5 Privilege Attribution                 */
-            __IOM uint32_t PPARE27 : 1; /*!< [27..27] General PWM Timer channel4 Privilege Attribution                 */
-            __IOM uint32_t PPARE28 : 1; /*!< [28..28] General PWM Timer channel3 Privilege Attribution                 */
-            __IOM uint32_t PPARE29 : 1; /*!< [29..29] General PWM Timer channel2 Privilege Attribution                 */
-            __IOM uint32_t PPARE30 : 1; /*!< [30..30] General PWM Timer channel1 Privilege Attribution                 */
-            __IOM uint32_t PPARE31 : 1; /*!< [31..31] General PWM Timer channel0 Privilege Attribution                 */
+            __IOM uint32_t PPARE0  : 1; /*!< [0..0] Peripheral privilege attribution bit 0                             */
+            __IOM uint32_t PPARE1  : 1; /*!< [1..1] Peripheral privilege attribution bit 1                             */
+            __IOM uint32_t PPARE2  : 1; /*!< [2..2] Peripheral privilege attribution bit 2                             */
+            __IOM uint32_t PPARE3  : 1; /*!< [3..3] Peripheral privilege attribution bit 3                             */
+            __IOM uint32_t PPARE4  : 1; /*!< [4..4] Peripheral privilege attribution bit 4                             */
+            __IOM uint32_t PPARE5  : 1; /*!< [5..5] Peripheral privilege attribution bit 5                             */
+            __IOM uint32_t PPARE6  : 1; /*!< [6..6] Peripheral privilege attribution bit 6                             */
+            __IOM uint32_t PPARE7  : 1; /*!< [7..7] Peripheral privilege attribution bit 7                             */
+            __IOM uint32_t PPARE8  : 1; /*!< [8..8] Peripheral privilege attribution bit 8                             */
+            __IOM uint32_t PPARE9  : 1; /*!< [9..9] Peripheral privilege attribution bit 9                             */
+            __IOM uint32_t PPARE10 : 1; /*!< [10..10] Peripheral privilege attribution bit 10                          */
+            __IOM uint32_t PPARE11 : 1; /*!< [11..11] Peripheral privilege attribution bit 11                          */
+            __IOM uint32_t PPARE12 : 1; /*!< [12..12] Peripheral privilege attribution bit 12                          */
+            __IOM uint32_t PPARE13 : 1; /*!< [13..13] Peripheral privilege attribution bit 13                          */
+            __IOM uint32_t PPARE14 : 1; /*!< [14..14] Peripheral privilege attribution bit 14                          */
+            __IOM uint32_t PPARE15 : 1; /*!< [15..15] Peripheral privilege attribution bit 15                          */
+            __IOM uint32_t PPARE16 : 1; /*!< [16..16] Peripheral privilege attribution bit 16                          */
+            __IOM uint32_t PPARE17 : 1; /*!< [17..17] Peripheral privilege attribution bit 17                          */
+            __IOM uint32_t PPARE18 : 1; /*!< [18..18] Peripheral privilege attribution bit 18                          */
+            __IOM uint32_t PPARE19 : 1; /*!< [19..19] Peripheral privilege attribution bit 19                          */
+            __IOM uint32_t PPARE20 : 1; /*!< [20..20] Peripheral privilege attribution bit 20                          */
+            __IOM uint32_t PPARE21 : 1; /*!< [21..21] Peripheral privilege attribution bit 21                          */
+            __IOM uint32_t PPARE22 : 1; /*!< [22..22] Peripheral privilege attribution bit 22                          */
+            __IOM uint32_t PPARE23 : 1; /*!< [23..23] Peripheral privilege attribution bit 23                          */
+            __IOM uint32_t PPARE24 : 1; /*!< [24..24] Peripheral privilege attribution bit 24                          */
+            __IOM uint32_t PPARE25 : 1; /*!< [25..25] Peripheral privilege attribution bit 25                          */
+            __IOM uint32_t PPARE26 : 1; /*!< [26..26] Peripheral privilege attribution bit 26                          */
+            __IOM uint32_t PPARE27 : 1; /*!< [27..27] Peripheral privilege attribution bit 27                          */
+            __IOM uint32_t PPARE28 : 1; /*!< [28..28] Peripheral privilege attribution bit 28                          */
+            __IOM uint32_t PPARE29 : 1; /*!< [29..29] Peripheral privilege attribution bit 29                          */
+            __IOM uint32_t PPARE30 : 1; /*!< [30..30] Peripheral privilege attribution bit 30                          */
+            __IOM uint32_t PPARE31 : 1; /*!< [31..31] Peripheral privilege attribution bit 31                          */
         } PPARE_b;
     };
 
     union
     {
-        __IOM uint32_t MSPAR;          /*!< (@ 0x0000002C) Module Stop Privilege Attribution Register                 */
+        __IOM uint32_t MSPAR;           /*!< (@ 0x0000002C) Module Stop Privilege Attribution Register                 */
 
         struct
         {
-            uint32_t               : 31;
-            __IOM uint32_t MSPAR31 : 1; /*!< [31..31] ELC clock stop Privilege Attribution                             */
+            __IOM uint32_t MSPAR0  : 1; /*!< [0..0] Peripheral privilege attribution bit 0                             */
+            __IOM uint32_t MSPAR1  : 1; /*!< [1..1] Peripheral privilege attribution bit 1                             */
+            __IOM uint32_t MSPAR2  : 1; /*!< [2..2] Peripheral privilege attribution bit 2                             */
+            __IOM uint32_t MSPAR3  : 1; /*!< [3..3] Peripheral privilege attribution bit 3                             */
+            __IOM uint32_t MSPAR4  : 1; /*!< [4..4] Peripheral privilege attribution bit 4                             */
+            __IOM uint32_t MSPAR5  : 1; /*!< [5..5] Peripheral privilege attribution bit 5                             */
+            __IOM uint32_t MSPAR6  : 1; /*!< [6..6] Peripheral privilege attribution bit 6                             */
+            __IOM uint32_t MSPAR7  : 1; /*!< [7..7] Peripheral privilege attribution bit 7                             */
+            __IOM uint32_t MSPAR8  : 1; /*!< [8..8] Peripheral privilege attribution bit 8                             */
+            __IOM uint32_t MSPAR9  : 1; /*!< [9..9] Peripheral privilege attribution bit 9                             */
+            __IOM uint32_t MSPAR10 : 1; /*!< [10..10] Peripheral privilege attribution bit 10                          */
+            __IOM uint32_t MSPAR11 : 1; /*!< [11..11] Peripheral privilege attribution bit 11                          */
+            __IOM uint32_t MSPAR12 : 1; /*!< [12..12] Peripheral privilege attribution bit 12                          */
+            __IOM uint32_t MSPAR13 : 1; /*!< [13..13] Peripheral privilege attribution bit 13                          */
+            __IOM uint32_t MSPAR14 : 1; /*!< [14..14] Peripheral privilege attribution bit 14                          */
+            __IOM uint32_t MSPAR15 : 1; /*!< [15..15] Peripheral privilege attribution bit 15                          */
+            __IOM uint32_t MSPAR16 : 1; /*!< [16..16] Peripheral privilege attribution bit 16                          */
+            __IOM uint32_t MSPAR17 : 1; /*!< [17..17] Peripheral privilege attribution bit 17                          */
+            __IOM uint32_t MSPAR18 : 1; /*!< [18..18] Peripheral privilege attribution bit 18                          */
+            __IOM uint32_t MSPAR19 : 1; /*!< [19..19] Peripheral privilege attribution bit 19                          */
+            __IOM uint32_t MSPAR20 : 1; /*!< [20..20] Peripheral privilege attribution bit 20                          */
+            __IOM uint32_t MSPAR21 : 1; /*!< [21..21] Peripheral privilege attribution bit 21                          */
+            __IOM uint32_t MSPAR22 : 1; /*!< [22..22] Peripheral privilege attribution bit 22                          */
+            __IOM uint32_t MSPAR23 : 1; /*!< [23..23] Peripheral privilege attribution bit 23                          */
+            __IOM uint32_t MSPAR24 : 1; /*!< [24..24] Peripheral privilege attribution bit 24                          */
+            __IOM uint32_t MSPAR25 : 1; /*!< [25..25] Peripheral privilege attribution bit 25                          */
+            __IOM uint32_t MSPAR26 : 1; /*!< [26..26] Peripheral privilege attribution bit 26                          */
+            __IOM uint32_t MSPAR27 : 1; /*!< [27..27] Peripheral privilege attribution bit 27                          */
+            __IOM uint32_t MSPAR28 : 1; /*!< [28..28] Peripheral privilege attribution bit 28                          */
+            __IOM uint32_t MSPAR29 : 1; /*!< [29..29] Peripheral privilege attribution bit 29                          */
+            __IOM uint32_t MSPAR30 : 1; /*!< [30..30] Peripheral privilege attribution bit 30                          */
+            __IOM uint32_t MSPAR31 : 1; /*!< [31..31] Peripheral privilege attribution bit 31                          */
         } MSPAR_b;
     };
 
     union
     {
-        __IM uint32_t CFSAMONA;        /*!< (@ 0x00000030) Code Flash Security Attribution Monitor Register
-                                        *                  A                                                          */
+        __IM uint32_t CFSAMONA;        /*!< (@ 0x00000030) Code Flash Security Attribution Monitor Register           */
 
         struct
         {
@@ -4423,9 +4563,22 @@ typedef struct                          /*!< (@ 0x40003000) R_BUS Structure     
             uint32_t                : 15;
         } BUSDIVBYP_b;
     };
-    __IM uint32_t            RESERVED7[319];
+    __IM uint32_t RESERVED7[63];
+
+    union
+    {
+        __IOM uint16_t BUSTHRPUT;      /*!< (@ 0x00001400) Graphic Bus Throughput Control Register                    */
+
+        struct
+        {
+            __IOM uint16_t DIS : 1;    /*!< [0..0] Bandwidth Control Function                                         */
+            uint16_t           : 15;
+        } BUSTHRPUT_b;
+    };
+    __IM uint16_t            RESERVED8;
+    __IM uint32_t            RESERVED9[255];
     __IOM R_BUS_BUSERRa_Type BUSERRa[12]; /*!< (@ 0x00001800) Bus Error Registers                                        */
-    __IM uint32_t            RESERVED8[16];
+    __IM uint32_t            RESERVED10[16];
 
     union
     {
@@ -4433,16 +4586,16 @@ typedef struct                          /*!< (@ 0x40003000) R_BUS Structure     
         __IOM R_BUS_BMSAERR_Type BMSAERR[9]; /*!< (@ 0x00001900) Bus Master Security Attribution Unit Error Address
                                               *                  and Read/Write Status registers.                           */
     };
-    __IM uint32_t RESERVED9[28];
+    __IM uint32_t RESERVED11[28];
 
     union
     {
         __IOM R_BUS_BUSERRb_Type    BUSERRb[12]; /*!< (@ 0x00001A00) Bus Error Registers                                        */
         __IOM R_BUS_DMACDTCERR_Type DMACDTCERR;  /*!< (@ 0x00001A00) DMAC/DTC Error Registers                                   */
     };
-    __IM uint32_t           RESERVED10[16];
+    __IM uint32_t           RESERVED12[16];
     __IOM R_BUS_MBWERR_Type MBWERR;              /*!< (@ 0x00001B00) Master Bufferable Write Error Registers                    */
-    __IM uint32_t           RESERVED11[5];
+    __IM uint32_t           RESERVED13[5];
     __IOM R_BUS_MBWERR_Type SBWERR;              /*!< (@ 0x00001B20) Slave Bufferable Write Error Registers                     */
 } R_BUS_Type;                                    /*!< Size = 6956 (0x1b2c)                                                      */
 
@@ -5524,7 +5677,23 @@ typedef struct                         /*!< (@ 0x4000A800) R_DMA Structure      
     };
     __IM uint8_t  RESERVED;
     __IM uint16_t RESERVED1;
-    __IM uint32_t RESERVED2[15];
+    __IM uint32_t RESERVED2[3];
+
+    union
+    {
+        __IOM uint8_t DMCTL;           /*!< (@ 0x00000010) DMAC Control Register                                      */
+
+        struct
+        {
+            __IOM uint8_t PR   : 1;    /*!< [0..0] Priority Control Select                                            */
+            uint8_t            : 3;
+            __IOM uint8_t ERCH : 1;    /*!< [4..4] Clear Channel Select                                               */
+            uint8_t            : 3;
+        } DMCTL_b;
+    };
+    __IM uint8_t  RESERVED3;
+    __IM uint16_t RESERVED4;
+    __IM uint32_t RESERVED5[11];
 
     union
     {
@@ -5540,7 +5709,7 @@ typedef struct                         /*!< (@ 0x4000A800) R_DMA Structure      
             uint32_t               : 15;
         } DMECHR_b;
     };
-    __IM uint32_t RESERVED3[15];
+    __IM uint32_t RESERVED6[15];
 
     union
     {
@@ -5838,11 +6007,22 @@ typedef struct                         /*!< (@ 0x4000AC00) R_DTC Structure      
 
         struct
         {
-            __IOM uint32_t DTCVBR : 32; /*!< [31..0] DTC Vector Base Address.Note: A value cannot be set
-                                         *   in the lower-order 10 bits. These bits are fixed to 0.                    */
+            __IOM uint32_t DTCVBR : 32; /*!< [31..0] DTC Vector Base Address.                                          */
         } DTCVBR_b;
     };
-    __IM uint32_t RESERVED2;
+
+    union
+    {
+        __IOM uint8_t DTCADMOD;        /*!< (@ 0x00000008) DTC Address Mode Register                                  */
+
+        struct
+        {
+            __IOM uint8_t SHORT : 1;   /*!< [0..0] Short-Address Mode Set                                             */
+            uint8_t             : 7;
+        } DTCADMOD_b;
+    };
+    __IM uint8_t  RESERVED2;
+    __IM uint16_t RESERVED3;
 
     union
     {
@@ -5854,7 +6034,7 @@ typedef struct                         /*!< (@ 0x4000AC00) R_DTC Structure      
             uint8_t             : 7;
         } DTCST_b;
     };
-    __IM uint8_t RESERVED3;
+    __IM uint8_t RESERVED4;
 
     union
     {
@@ -5877,15 +6057,34 @@ typedef struct                         /*!< (@ 0x4000AC00) R_DTC Structure      
 
         struct
         {
-            uint8_t            : 4;
-            __IOM uint8_t RRSS : 1;    /*!< [4..4] DTC Transfer Information Read Skip Enable for Secure               */
-            uint8_t            : 3;
+            uint8_t           : 4;
+            __IOM uint8_t RRS : 1;     /*!< [4..4] DTC Transfer Information Read Skip Enable.                         */
+            uint8_t           : 3;
         } DTCCR_SEC_b;
     };
-    __IM uint8_t   RESERVED4;
-    __IM uint16_t  RESERVED5;
-    __IOM uint32_t DTCVBR_SEC;         /*!< (@ 0x00000014) DTC Vector Base Register for secure Region                 */
-    __IM uint32_t  RESERVED6[2];
+    __IM uint8_t  RESERVED5;
+    __IM uint16_t RESERVED6;
+
+    union
+    {
+        __IOM uint32_t DTCVBR_SEC;      /*!< (@ 0x00000014) DTC Vector Base Register for secure Region                 */
+
+        struct
+        {
+            __IOM uint32_t DTCVBR : 32; /*!< [31..0] DTC Vector Base Address.                                          */
+        } DTCVBR_SEC_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DTCDISP;          /*!< (@ 0x00000018) DTC Address Displacement Register                          */
+
+        struct
+        {
+            __IOM uint32_t DTCDISP : 32; /*!< [31..0] DTC Address Displacement                                          */
+        } DTCDISP_b;
+    };
+    __IM uint32_t RESERVED7;
 
     union
     {
@@ -5900,7 +6099,44 @@ typedef struct                         /*!< (@ 0x4000AC00) R_DTC Structure      
             uint32_t              : 15;
         } DTEVR_b;
     };
-} R_DTC_Type;                          /*!< Size = 36 (0x24)                                                          */
+
+    union
+    {
+        __IOM uint32_t DTCIBR;         /*!< (@ 0x00000024) DTC Index Table Base Register                              */
+
+        struct
+        {
+            uint32_t              : 10;
+            __IOM uint32_t DTCIBR : 22; /*!< [31..10] DTC Index Table Base Address                                     */
+        } DTCIBR_b;
+    };
+
+    union
+    {
+        __IOM uint8_t DTCOR;           /*!< (@ 0x00000028) DTC Operation Register                                     */
+
+        struct
+        {
+            __IOM uint8_t SQTFRL : 1;  /*!< [0..0] Sequence Transfer Stop                                             */
+            uint8_t              : 7;
+        } DTCOR_b;
+    };
+    __IM uint8_t  RESERVED8;
+    __IM uint16_t RESERVED9;
+
+    union
+    {
+        __IOM uint16_t DTCSQE;         /*!< (@ 0x0000002C) DTC Sequence Transfer Enable Register                      */
+
+        struct
+        {
+            __IOM uint16_t VECN   : 8; /*!< [7..0] DTC Sequence Transfer Vector Number Specified                      */
+            uint16_t              : 7;
+            __IOM uint16_t ESPSEL : 1; /*!< [15..15] DTC Sequence Transfer Enable                                     */
+        } DTCSQE_b;
+    };
+    __IM uint16_t RESERVED10;
+} R_DTC_Type;                          /*!< Size = 48 (0x30)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                           R_ELC                                           ================ */
@@ -8561,47 +8797,43 @@ typedef struct                         /*!< (@ 0x40323F00) R_GPT_OPS Structure  
  * @brief Port Output Enable for GPT (R_GPT_POEG0)
  */
 
-typedef struct                          /*!< (@ 0x40212000) R_GPT_POEG0 Structure                                      */
+typedef struct                         /*!< (@ 0x40212000) R_GPT_POEG0 Structure                                      */
 {
     union
     {
-        __IOM uint32_t POEGG;           /*!< (@ 0x00000000) POEG Group Setting Register                                */
+        __IOM uint32_t POEGG;          /*!< (@ 0x00000000) POEG Group Setting Register                                */
 
         struct
         {
-            __IOM uint32_t PIDF  : 1;   /*!< [0..0] Port Input Detection Flag                                          */
-            __IOM uint32_t IOCF  : 1;   /*!< [1..1] Real Time Overcurrent Detection Flag                               */
-            __IOM uint32_t OSTPF : 1;   /*!< [2..2] Oscillation Stop Detection Flag                                    */
-            __IOM uint32_t SSF   : 1;   /*!< [3..3] Software Stop Flag                                                 */
-            __IOM uint32_t PIDE  : 1;   /*!< [4..4] Port Input Detection Enable. Note: Can be modified only
-                                         *   once after a reset.                                                       */
-            __IOM uint32_t IOCE : 1;    /*!< [5..5] Enable for GPT Output-Disable Request. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            __IOM uint32_t OSTPE : 1;   /*!< [6..6] Oscillation Stop Detection Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
+            __IOM uint32_t PIDF  : 1;  /*!< [0..0] Port Input Detection Flag                                          */
+            __IOM uint32_t IOCF  : 1;  /*!< [1..1] Real Time Overcurrent Detection Flag                               */
+            __IOM uint32_t OSTPF : 1;  /*!< [2..2] Oscillation Stop Detection Flag                                    */
+            __IOM uint32_t SSF   : 1;  /*!< [3..3] Software Stop Flag                                                 */
+            __IOM uint32_t PIDE  : 1;  /*!< [4..4] Port Input Detection Enable. Note: Can be modified only
+                                        *   once after a reset.                                                       */
+            __IOM uint32_t IOCE : 1;   /*!< [5..5] Enable for GPT Output-Disable Request. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            __IOM uint32_t OSTPE : 1;  /*!< [6..6] Oscillation Stop Detection Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
             uint32_t             : 1;
-            __IOM uint32_t CDRE0 : 1;   /*!< [8..8] Comparator Disable Request Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            __IOM uint32_t CDRE1 : 1;   /*!< [9..9] Comparator Disable Request Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            __IOM uint32_t CDRE2 : 1;   /*!< [10..10] Comparator Disable Request Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            __IOM uint32_t CDRE3 : 1;   /*!< [11..11] Comparator Disable Request Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            __IOM uint32_t CDRE4 : 1;   /*!< [12..12] Comparator Disable Request Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            __IOM uint32_t CDRE5 : 1;   /*!< [13..13] Comparator Disable Request Enable. Note: Can be modified
-                                         *   only once after a reset.                                                  */
-            uint32_t               : 2;
-            __IM uint32_t ST       : 1; /*!< [16..16] GTETRG Input Status Flag                                         */
-            uint32_t               : 7;
-            __IOM uint32_t DERR0ST : 1; /*!< [24..24] DSMIF0 Error Detection Flag                                      */
-            __IOM uint32_t DERR1ST : 1; /*!< [25..25] DSMIF1 Error Detection Flag                                      */
-            __IOM uint32_t DERR0E  : 1; /*!< [26..26] DSMIF0 Error Detection Enable                                    */
-            __IOM uint32_t DERR1E  : 1; /*!< [27..27] DSMIF1 Error Detection Enable                                    */
-            __IOM uint32_t INV     : 1; /*!< [28..28] GTETRG Input Reverse                                             */
-            __IOM uint32_t NFEN    : 1; /*!< [29..29] Noise Filter Enable                                              */
-            __IOM uint32_t NFCS    : 2; /*!< [31..30] Noise Filter Clock Select                                        */
+            __IOM uint32_t CDRE0 : 1;  /*!< [8..8] Comparator Disable Request Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            __IOM uint32_t CDRE1 : 1;  /*!< [9..9] Comparator Disable Request Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            __IOM uint32_t CDRE2 : 1;  /*!< [10..10] Comparator Disable Request Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            __IOM uint32_t CDRE3 : 1;  /*!< [11..11] Comparator Disable Request Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            __IOM uint32_t CDRE4 : 1;  /*!< [12..12] Comparator Disable Request Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            __IOM uint32_t CDRE5 : 1;  /*!< [13..13] Comparator Disable Request Enable. Note: Can be modified
+                                        *   only once after a reset.                                                  */
+            uint32_t            : 2;
+            __IM uint32_t ST    : 1;   /*!< [16..16] GTETRG Input Status Flag                                         */
+            uint32_t            : 11;
+            __IOM uint32_t INV  : 1;   /*!< [28..28] GTETRG Input Reverse                                             */
+            __IOM uint32_t NFEN : 1;   /*!< [29..29] Noise Filter Enable                                              */
+            __IOM uint32_t NFCS : 2;   /*!< [31..30] Noise Filter Clock Select                                        */
         } POEGG_b;
     };
     __IM uint32_t RESERVED[15];
@@ -9732,7 +9964,9 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t ALF     : 1; /*!< [16..16] Arbitration Lost Flag                                            */
             uint32_t               : 3;
             __IOM uint32_t TODF    : 1; /*!< [20..20] Timeout Detection Flag                                           */
-            uint32_t               : 11;
+            uint32_t               : 3;
+            __IOM uint32_t WUCNDDF : 1; /*!< [24..24] Wake-Up Condition Detection Flag                                 */
+            uint32_t               : 7;
         } BST_b;
     };
 
@@ -9753,7 +9987,9 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t ALE     : 1; /*!< [16..16] Arbitration Lost Enable                                          */
             uint32_t               : 3;
             __IOM uint32_t TODE    : 1; /*!< [20..20] Timeout Detection Enable                                         */
-            uint32_t               : 11;
+            uint32_t               : 3;
+            __IOM uint32_t WUCNDDE : 1; /*!< [24..24] Wake-up Condition Detection Enable                               */
+            uint32_t               : 7;
         } BSTE_b;
     };
 
@@ -9774,28 +10010,32 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t ALIE     : 1; /*!< [16..16] Arbitration Lost Interrupt Enable                                */
             uint32_t                : 3;
             __IOM uint32_t TODIE    : 1; /*!< [20..20] Timeout Detection Interrupt Enable                               */
-            uint32_t                : 11;
+            uint32_t                : 3;
+            __IOM uint32_t WUCNDDIE : 1; /*!< [24..24] Wake-Up Condition Detection Interrupt Enable                     */
+            uint32_t                : 7;
         } BIE_b;
     };
 
     union
     {
-        __IOM uint32_t BSTFC;           /*!< (@ 0x000001DC) Bus Status Force Register                                  */
+        __IOM uint32_t BSTFC;            /*!< (@ 0x000001DC) Bus Status Force Register                                  */
 
         struct
         {
-            __OM uint32_t STCNDDFC : 1; /*!< [0..0] START condition Detection Force                                    */
-            __OM uint32_t SPCNDDFC : 1; /*!< [1..1] STOP condition Detection Force                                     */
-            __OM uint32_t HDREXDFC : 1; /*!< [2..2] HDR Exit Pattern Detection Force                                   */
-            uint32_t               : 1;
-            __OM uint32_t NACKDFC  : 1; /*!< [4..4] NACK Detection Force                                               */
-            uint32_t               : 3;
-            __OM uint32_t TENDFC   : 1; /*!< [8..8] Transmit End Force                                                 */
-            uint32_t               : 7;
-            __OM uint32_t ALFC     : 1; /*!< [16..16] Arbitration Lost Force                                           */
-            uint32_t               : 3;
-            __OM uint32_t TODFC    : 1; /*!< [20..20] Timeout Detection Force                                          */
-            uint32_t               : 11;
+            __OM uint32_t STCNDDFC  : 1; /*!< [0..0] START condition Detection Force                                    */
+            __OM uint32_t SPCNDDFC  : 1; /*!< [1..1] STOP condition Detection Force                                     */
+            __OM uint32_t HDREXDFC  : 1; /*!< [2..2] HDR Exit Pattern Detection Force                                   */
+            uint32_t                : 1;
+            __OM uint32_t NACKDFC   : 1; /*!< [4..4] NACK Detection Force                                               */
+            uint32_t                : 3;
+            __OM uint32_t TENDFC    : 1; /*!< [8..8] Transmit End Force                                                 */
+            uint32_t                : 7;
+            __OM uint32_t ALFC      : 1; /*!< [16..16] Arbitration Lost Force                                           */
+            uint32_t                : 3;
+            __OM uint32_t TODFC     : 1; /*!< [20..20] Timeout Detection Force                                          */
+            uint32_t                : 3;
+            __IOM uint32_t WUCNDDFC : 1; /*!< [24..24] Wake-Up Condition Detection Force                                */
+            uint32_t                : 7;
         } BSTFC_b;
     };
 
@@ -10078,7 +10318,8 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t RBCR1  : 1; /*!< [9..9] IBI Request Capable                                                */
             __IOM uint32_t RBCR2  : 1; /*!< [10..10] IBI Payload                                                      */
             __IOM uint32_t RBCR3  : 1; /*!< [11..11] Offline Capable                                                  */
-            uint32_t              : 2;
+            __IOM uint32_t RBCR4  : 1; /*!< [12..12] Bridge Identifier                                                */
+            __IOM uint32_t RBCR5  : 1; /*!< [13..13] SDR Only / SDR and HDR Capable                                   */
             __IOM uint32_t RBCR76 : 2; /*!< [15..14] Device Role                                                      */
             uint32_t              : 16;
         } MSDCT0_b;
@@ -10095,7 +10336,8 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t RBCR1  : 1; /*!< [9..9] IBI Request Capable                                                */
             __IOM uint32_t RBCR2  : 1; /*!< [10..10] IBI Payload                                                      */
             __IOM uint32_t RBCR3  : 1; /*!< [11..11] Offline Capable                                                  */
-            uint32_t              : 2;
+            __IOM uint32_t RBCR4  : 1; /*!< [12..12] Bridge Identifier                                                */
+            __IOM uint32_t RBCR5  : 1; /*!< [13..13] SDR Only / SDR and HDR Capable                                   */
             __IOM uint32_t RBCR76 : 2; /*!< [15..14] Device Role                                                      */
             uint32_t              : 16;
         } MSDCT1_b;
@@ -10112,7 +10354,8 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t RBCR1  : 1; /*!< [9..9] IBI Request Capable                                                */
             __IOM uint32_t RBCR2  : 1; /*!< [10..10] IBI Payload                                                      */
             __IOM uint32_t RBCR3  : 1; /*!< [11..11] Offline Capable                                                  */
-            uint32_t              : 2;
+            __IOM uint32_t RBCR4  : 1; /*!< [12..12] Bridge Identifier                                                */
+            __IOM uint32_t RBCR5  : 1; /*!< [13..13] SDR Only / SDR and HDR Capable                                   */
             __IOM uint32_t RBCR76 : 2; /*!< [15..14] Device Role                                                      */
             uint32_t              : 16;
         } MSDCT2_b;
@@ -10129,7 +10372,8 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t RBCR1  : 1; /*!< [9..9] IBI Request Capable                                                */
             __IOM uint32_t RBCR2  : 1; /*!< [10..10] IBI Payload                                                      */
             __IOM uint32_t RBCR3  : 1; /*!< [11..11] Offline Capable                                                  */
-            uint32_t              : 2;
+            __IOM uint32_t RBCR4  : 1; /*!< [12..12] Bridge Identifier                                                */
+            __IOM uint32_t RBCR5  : 1; /*!< [13..13] SDR Only / SDR and HDR Capable                                   */
             __IOM uint32_t RBCR76 : 2; /*!< [15..14] Device Role                                                      */
             uint32_t              : 16;
         } MSDCT3_b;
@@ -10147,7 +10391,8 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             __IOM uint32_t TBCR1  : 1; /*!< [9..9] IBI Request Capable                                                */
             __IOM uint32_t TBCR2  : 1; /*!< [10..10] IBI Payload                                                      */
             __IOM uint32_t TBCR3  : 1; /*!< [11..11] Offline Capable                                                  */
-            uint32_t              : 2;
+            __IOM uint32_t TBCR4  : 1; /*!< [12..12] Bridge Identifier                                                */
+            __IOM uint32_t TBCR5  : 1; /*!< [13..13] SDR Only / SDR and HDR Capable                                   */
             __IOM uint32_t TBCR76 : 2; /*!< [15..14] Device Role                                                      */
             uint32_t              : 16;
         } SVDCT_b;
@@ -10297,7 +10542,20 @@ typedef struct                         /*!< (@ 0x4035F000) R_I3C0 Structure     
             uint32_t            : 8;
         } CETSM_b;
     };
-    __IM uint32_t RESERVED28[2];
+    __IM uint32_t RESERVED28;
+
+    union
+    {
+        __IOM uint32_t CGHDRCAP;       /*!< (@ 0x0000037C) CCC Get HDR Capability Register                            */
+
+        struct
+        {
+            __IOM uint32_t DDREN : 1;  /*!< [0..0] HDR-DDR Operation Enable                                           */
+            __IOM uint32_t TSPEN : 1;  /*!< [1..1] HDR-TSP Operation Enable                                           */
+            __IOM uint32_t TSLEN : 1;  /*!< [2..2] HDR-TSL Operation Enable                                           */
+            uint32_t             : 29;
+        } CGHDRCAP_b;
+    };
 
     union
     {
@@ -10423,9 +10681,7 @@ typedef struct                         /*!< (@ 0x40000000) R_MPU_MMPU Structure 
     __IOM R_MPU_MMPU_GROUP_Type DRW;      /*!< (@ 0x00000900) DRW MMPU Registers                                         */
     __IOM R_MPU_MMPU_GROUP_Type MIPI_DSI; /*!< (@ 0x00000B00) MIPI_DSI MMPU Registers                                    */
     __IOM R_MPU_MMPU_GROUP_Type CEU;      /*!< (@ 0x00000D00) CEU MMPU Registers                                         */
-    __IOM R_MPU_MMPU_GROUP_Type MIPI_CSI; /*!< (@ 0x00000F00) MIPI_CSI MMPU Registers                                    */
-    __IOM R_MPU_MMPU_GROUP_Type NPU;      /*!< (@ 0x00001100) NPU MMPU Registers                                         */
-} R_MPU_MMPU_Type;                        /*!< Size = 4864 (0x1300)                                                      */
+} R_MPU_MMPU_Type;                        /*!< Size = 3840 (0xf00)                                                       */
 
 /* =========================================================================================================================== */
 /* ================                                        R_MPU_SPMON                                        ================ */
@@ -11094,7 +11350,8 @@ typedef struct                         /*!< (@ 0x40400D00) R_PMISC Structure    
         {
             uint8_t                : 4;
             __IOM uint8_t PHYMODE0 : 1; /*!< [4..4] Ethernet Mode Setting ch0                                          */
-            uint8_t                : 3;
+            __IOM uint8_t PHYMODE1 : 1; /*!< [5..5] Ethernet Mode Setting ch1                                          */
+            uint8_t                : 2;
         } PFENET_b;
     };
     __IM uint8_t  RESERVED;
@@ -11146,14 +11403,16 @@ typedef struct                         /*!< (@ 0x40202000) R_RTC Structure      
 
         struct
         {
-            __IM uint8_t F64HZ : 1;    /*!< [0..0] 64Hz                                                               */
-            __IM uint8_t F32HZ : 1;    /*!< [1..1] 32Hz                                                               */
-            __IM uint8_t F16HZ : 1;    /*!< [2..2] 16Hz                                                               */
-            __IM uint8_t F8HZ  : 1;    /*!< [3..3] 8Hz                                                                */
-            __IM uint8_t F4HZ  : 1;    /*!< [4..4] 4Hz                                                                */
-            __IM uint8_t F2HZ  : 1;    /*!< [5..5] 2Hz                                                                */
-            __IM uint8_t F1HZ  : 1;    /*!< [6..6] 1Hz                                                                */
-            uint8_t            : 1;
+            __IM uint8_t F64HZ  : 1;   /*!< [0..0] 64Hz Flag                                                          */
+            __IM uint8_t F32HZ  : 1;   /*!< [1..1] 32Hz Flag                                                          */
+            __IM uint8_t F16HZ  : 1;   /*!< [2..2] 16Hz Flag                                                          */
+            __IM uint8_t F8HZ   : 1;   /*!< [3..3] 8Hz Flag                                                           */
+            __IM uint8_t F4HZ   : 1;   /*!< [4..4] 4Hz Flag                                                           */
+            __IM uint8_t F2HZ   : 1;   /*!< [5..5] 2Hz Flag                                                           */
+            __IM uint8_t F1HZ   : 1;   /*!< [6..6] 1Hz Flag                                                           */
+            __IM uint8_t R64OVF : 1;   /*!< [7..7] This bit indicates the overflow of F1HZ only when using
+                                        *   time error adjustment function inlow-consumption clock
+                                        *   mode.                                                                     */
         } R64CNT_b;
     };
     __IM uint8_t RESERVED;
@@ -13650,8 +13909,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
 
         struct
         {
-            __IOM uint8_t CPUCK  : 4;  /*!< [3..0] CPU Clock (CPUCLK) Select                                          */
-            __IOM uint8_t CPUCK1 : 4;  /*!< [7..4] CPU1 Clock (CPUCLK1) Select                                        */
+            __IOM uint8_t CPUCK : 4;   /*!< [3..0] CPU Clock (CPUCLK) Select                                          */
+            uint8_t             : 4;
         } SCKDIVCR2_b;
     };
     __IM uint8_t RESERVED6;
@@ -14316,10 +14575,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             __IOM uint32_t WDT1RF : 1; /*!< [17..17] Watchdog Timer1 Reset Detect Flag. NOTE: Writable only
                                         *   to clear the flag. Confirm the value is 1 and then write
                                         *   0.                                                                        */
-            uint32_t              : 2;
-            __IOM uint32_t CLU1RF : 1; /*!< [20..20] CPU1 Lockup Reset Detect Flag. NOTE: Writable only
-                                        *   to clear the flag. Confirm the value is 1 and then write
-                                        *   0.                                                                        */
+            uint32_t             : 3;
             __IOM uint32_t LM1RF : 1;  /*!< [21..21] Local memory 1 error Reset Detect Flag. NOTE: Writable
                                         *   only to clear the flag. Confirm the value is 1 and then
                                         *   write 0.                                                                  */
@@ -15252,13 +15508,10 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
 
         struct
         {
-            uint8_t                 : 1;
-            __IOM uint8_t WDT1MASK  : 1; /*!< [1..1] CPU1 Watchdog timer Reset Mask                                     */
-            uint8_t                 : 2;
-            __IOM uint8_t CLUP1MASK : 1; /*!< [4..4] CPU1 Lockup Reset Mask                                             */
-            __IOM uint8_t LM1MASK   : 1; /*!< [5..5] Local memory 1 error Reset Mask                                    */
-            uint8_t                 : 1;
-            __IOM uint8_t NWMASK    : 1; /*!< [7..7] Network Reset Mask                                                 */
+            uint8_t               : 5;
+            __IOM uint8_t LM1MASK : 1; /*!< [5..5] Local memory 1 error Reset Mask                                    */
+            uint8_t               : 1;
+            __IOM uint8_t NWMASK  : 1; /*!< [7..7] Network Reset Mask                                                 */
         } SYRSTMSK1_b;
     };
     __IM uint8_t  RESERVED129;
@@ -18143,21 +18396,22 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
 
         struct
         {
-            uint32_t                   : 16;
-            __IOM uint32_t SAIWDTWUP   : 1; /*!< [16..16] Security Attributes of registers for WUPEN0.b 16                 */
-            uint32_t                   : 1;
-            __IOM uint32_t SALVD1WUP   : 1; /*!< [18..18] Security Attributes of registers for WUPEN0.b 18                 */
-            __IOM uint32_t SALVD2WUP   : 1; /*!< [19..19] Security Attributes of registers for WUPEN0.b 19                 */
-            __IOM uint32_t SAVBATTWUP  : 1; /*!< [20..20] Security Attributes of registers for WUPEN0.b 20                 */
-            uint32_t                   : 3;
-            __IOM uint32_t SARTCALMWUP : 1; /*!< [24..24] Security Attributes of registers for WUPEN0.b 24                 */
-            __IOM uint32_t SARTCPRDWUP : 1; /*!< [25..25] Security Attributes of registers for WUPEN0.b 25                 */
-            uint32_t                   : 1;
-            __IOM uint32_t SAUSBFS0WUP : 1; /*!< [27..27] Security Attributes of registers for WUPEN0.b 27                 */
-            __IOM uint32_t SAAGT1UDWUP : 1; /*!< [28..28] Security Attributes of registers for WUPEN0.b 28                 */
-            __IOM uint32_t SAAGT1CAWUP : 1; /*!< [29..29] Security Attributes of registers for WUPEN0.b 29                 */
-            __IOM uint32_t SAAGT1CBWUP : 1; /*!< [30..30] Security Attributes of registers for WUPEN0.b 30                 */
-            __IOM uint32_t SAIIC0WUP   : 1; /*!< [31..31] Security Attributes of registers for WUPEN0.b 31                 */
+            uint32_t                    : 16;
+            __IOM uint32_t SAIWDTWUP    : 1; /*!< [16..16] Security Attributes of registers for WUPEN0.b 16                 */
+            uint32_t                    : 1;
+            __IOM uint32_t SALVD1WUP    : 1; /*!< [18..18] Security Attributes of registers for WUPEN0.b 18                 */
+            __IOM uint32_t SALVD2WUP    : 1; /*!< [19..19] Security Attributes of registers for WUPEN0.b 19                 */
+            __IOM uint32_t SAVBATTWUP   : 1; /*!< [20..20] Security Attributes of registers for WUPEN0.b 20                 */
+            uint32_t                    : 2;
+            __IOM uint32_t SAACMPLP0WUP : 1; /*!< [23..23] Security attributes of registers for WUPEN0.b 23                 */
+            __IOM uint32_t SARTCALMWUP  : 1; /*!< [24..24] Security Attributes of registers for WUPEN0.b 24                 */
+            __IOM uint32_t SARTCPRDWUP  : 1; /*!< [25..25] Security Attributes of registers for WUPEN0.b 25                 */
+            uint32_t                    : 1;
+            __IOM uint32_t SAUSBFS0WUP  : 1; /*!< [27..27] Security Attributes of registers for WUPEN0.b 27                 */
+            __IOM uint32_t SAAGT1UDWUP  : 1; /*!< [28..28] Security Attributes of registers for WUPEN0.b 28                 */
+            __IOM uint32_t SAAGT1CAWUP  : 1; /*!< [29..29] Security Attributes of registers for WUPEN0.b 29                 */
+            __IOM uint32_t SAAGT1CBWUP  : 1; /*!< [30..30] Security Attributes of registers for WUPEN0.b 30                 */
+            __IOM uint32_t SAIIC0WUP    : 1; /*!< [31..31] Security Attributes of registers for WUPEN0.b 31                 */
         } ICUSARE_b;
     };
 
@@ -18171,7 +18425,8 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             __IOM uint32_t SAAGT3CAWUP  : 1; /*!< [1..1] Security Attributes of registers for WUPEN1.b 1                    */
             __IOM uint32_t SAAGT3CBWUP  : 1; /*!< [2..2] Security Attributes of registers for WUPEN1.b 2                    */
             __IOM uint32_t SACOMPHS0WUP : 1; /*!< [3..3] Security attributes of registers for WUPEN1.b 3                    */
-            uint32_t                    : 4;
+            uint32_t                    : 3;
+            __IOM uint32_t SASOSCWUP    : 1; /*!< [7..7] Security attributes of registers for WUPEN1.b 7                    */
             __IOM uint32_t SAULP0UWUP   : 1; /*!< [8..8] Security attributes of registers for WUPEN1.b 8                    */
             __IOM uint32_t SAULP0AWUP   : 1; /*!< [9..9] Security attributes of registers for WUPEN1.b 9                    */
             __IOM uint32_t SAULP0BWUP   : 1; /*!< [10..10] Security Attributes of registers for WUPEN1.b 10                 */
@@ -18182,7 +18437,21 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             uint32_t                    : 17;
         } ICUSARF_b;
     };
-    __IM uint32_t RESERVED3[6];
+
+    union
+    {
+        __IOM uint32_t ICUSARM;              /*!< (@ 0x00000058) ICU Security Attribution Register M                        */
+
+        struct
+        {
+            __IOM uint32_t SAINTUR0WUP  : 1; /*!< [0..0] Security attributes of registers for WUPEN2.b 0                    */
+            __IOM uint32_t SAINTURE0WUP : 1; /*!< [1..1] Security attributes of registers for WUPEN2.b 1                    */
+            __IOM uint32_t SAINTUR1WUP  : 1; /*!< [2..2] Security attributes of registers for WUPEN2.b 2                    */
+            __IOM uint32_t SAINTURE1WUP : 1; /*!< [3..3] Security attributes of registers for WUPEN2.b 3                    */
+            uint32_t                    : 28;
+        } ICUSARM_b;
+    };
+    __IM uint32_t RESERVED3[5];
 
     union
     {
@@ -18236,7 +18505,30 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             uint32_t              : 31;
         } BUSSARB_b;
     };
-    __IM uint32_t RESERVED5[10];
+    __IM uint32_t RESERVED5[2];
+
+    union
+    {
+        __IOM uint32_t BUSSARC;        /*!< (@ 0x00000110) Bus Security Attribution Register C                        */
+
+        struct
+        {
+            __IOM uint32_t BUSSC0 : 1; /*!< [0..0] Bus Security Attribution C0                                        */
+            uint32_t              : 31;
+        } BUSSARC_b;
+    };
+
+    union
+    {
+        __IOM uint32_t BUSPARC;        /*!< (@ 0x00000114) Bus Privileged Attribution Register C                      */
+
+        struct
+        {
+            __IOM uint32_t BUSPA0 : 1; /*!< [0..0] External bus controller privilege attribution                      */
+            uint32_t              : 31;
+        } BUSPARC_b;
+    };
+    __IM uint32_t RESERVED6[6];
 
     union
     {
@@ -18261,7 +18553,33 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             uint32_t                : 31;
         } MMPUSARB_b;
     };
-    __IM uint32_t RESERVED6[26];
+    __IM uint32_t RESERVED7[18];
+
+    union
+    {
+        union
+        {
+            __IOM uint32_t TZFSAR;         /*!< (@ 0x00000180) TrustZone Filter Security Attribution Register             */
+
+            struct
+            {
+                __IOM uint32_t TZFSA0 : 1; /*!< [0..0] Security attributes of registers for TrustZone Filter              */
+                uint32_t              : 31;
+            } TZFSAR_b;
+        };
+
+        union
+        {
+            __IOM uint32_t DEBUGSAR;       /*!< (@ 0x00000180) Debug Security Attribution Register                        */
+
+            struct
+            {
+                __IOM uint32_t DBGSA0 : 1; /*!< [0..0] Debug Resources Security Attribution 0                             */
+                uint32_t              : 31;
+            } DEBUGSAR_b;
+        };
+    };
+    __IM uint32_t RESERVED8[7];
 
     union
     {
@@ -18274,7 +18592,7 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             uint32_t : 24;
         } DMACCHSAR_b;
     };
-    __IM uint32_t RESERVED7[3];
+    __IM uint32_t RESERVED9[3];
 
     union
     {
@@ -18286,7 +18604,7 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             uint32_t               : 31;
         } CPUDSAR_b;
     };
-    __IM uint32_t RESERVED8[147];
+    __IM uint32_t RESERVED10[147];
 
     union
     {
@@ -18315,7 +18633,7 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
             uint32_t : 11;
         } SRAMSABAR1_b;
     };
-    __IM uint32_t RESERVED9[126];
+    __IM uint32_t RESERVED11[126];
 
     union
     {
@@ -20192,6 +20510,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_AGTX9_BASE            (0x40221900UL + BASE_NS_OFFSET)
  #define R_FLAD_BASE             (0x4011C000UL + BASE_NS_OFFSET)
  #define R_OFS_DATAFLASH_BASE    (0x27030000UL + BASE_NS_OFFSET)
+ #define R_SCI_B5_BASE           (0x40358500UL + BASE_NS_OFFSET)
+ #define R_SCI_B6_BASE           (0x40358600UL + BASE_NS_OFFSET)
+ #define R_SCI_B7_BASE           (0x40358700UL + BASE_NS_OFFSET)
+ #define R_SCI_B8_BASE           (0x40358800UL + BASE_NS_OFFSET)
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
 
@@ -20334,6 +20656,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_AGT9             ((R_AGTX0_Type *) R_AGTX9_BASE)
  #define R_FLAD             ((R_FLAD_Type *) R_FLAD_BASE)
  #define R_OFS_DATAFLASH    ((R_OFS_DATAFLASH_Type *) R_OFS_DATAFLASH_BASE)
+ #define R_SCI_B5           ((R_SCI_B0_Type *) R_SCI_B5_BASE)
+ #define R_SCI_B6           ((R_SCI_B0_Type *) R_SCI_B6_BASE)
+ #define R_SCI_B7           ((R_SCI_B0_Type *) R_SCI_B7_BASE)
+ #define R_SCI_B8           ((R_SCI_B0_Type *) R_SCI_B8_BASE)
 
 /** @} */ /* End of group Device_Peripheral_declaration */
 
@@ -20541,6 +20867,9 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_BUS_BUSERRb_CLR_STERRCLR_Msk      (0x2UL)  /*!< STERRCLR (Bitfield-Mask: 0x01)                        */
  #define R_BUS_BUSERRb_CLR_SLERRCLR_Pos      (0UL)    /*!< SLERRCLR (Bit 0)                                      */
  #define R_BUS_BUSERRb_CLR_SLERRCLR_Msk      (0x1UL)  /*!< SLERRCLR (Bitfield-Mask: 0x01)                        */
+/* =========================================================  IRQEN  ========================================================= */
+ #define R_BUS_BUSERRb_IRQEN_EN_Pos          (0UL)    /*!< EN (Bit 0)                                            */
+ #define R_BUS_BUSERRb_IRQEN_EN_Msk          (0x1UL)  /*!< EN (Bitfield-Mask: 0x01)                              */
 
 /* =========================================================================================================================== */
 /* ================                                        DMACDTCERR                                         ================ */
@@ -20605,9 +20934,6 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =======================================================  CPU0SAHBI  ======================================================= */
  #define R_BUS_BUSSABT0_CPU0SAHBI_ARBS_Pos    (0UL)   /*!< ARBS (Bit 0)                                          */
  #define R_BUS_BUSSABT0_CPU0SAHBI_ARBS_Msk    (0x1UL) /*!< ARBS (Bitfield-Mask: 0x01)                            */
-/* =======================================================  CPU1TCMBI  ======================================================= */
- #define R_BUS_BUSSABT0_CPU1TCMBI_ARBS_Pos    (0UL)   /*!< ARBS (Bit 0)                                          */
- #define R_BUS_BUSSABT0_CPU1TCMBI_ARBS_Msk    (0x1UL) /*!< ARBS (Bitfield-Mask: 0x01)                            */
 
 /* =========================================================================================================================== */
 /* ================                                         BUSSABT1                                          ================ */
@@ -20952,6 +21278,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* ==========================================================  ID  =========================================================== */
  #define R_CANFD_CFDCF_ID_CFID_Pos        (0UL)          /*!< CFID (Bit 0)                                          */
  #define R_CANFD_CFDCF_ID_CFID_Msk        (0x1fffffffUL) /*!< CFID (Bitfield-Mask: 0x1fffffff)                      */
+ #define R_CANFD_CFDCF_ID_THLEN_Pos       (29UL)         /*!< THLEN (Bit 29)                                        */
+ #define R_CANFD_CFDCF_ID_THLEN_Msk       (0x20000000UL) /*!< THLEN (Bitfield-Mask: 0x01)                           */
  #define R_CANFD_CFDCF_ID_CFRTR_Pos       (30UL)         /*!< CFRTR (Bit 30)                                        */
  #define R_CANFD_CFDCF_ID_CFRTR_Msk       (0x40000000UL) /*!< CFRTR (Bitfield-Mask: 0x01)                           */
  #define R_CANFD_CFDCF_ID_CFIDE_Pos       (31UL)         /*!< CFIDE (Bit 31)                                        */
@@ -20983,6 +21311,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* ==========================================================  ID  =========================================================== */
  #define R_CANFD_CFDTM_ID_TMID_Pos        (0UL)          /*!< TMID (Bit 0)                                          */
  #define R_CANFD_CFDTM_ID_TMID_Msk        (0x1fffffffUL) /*!< TMID (Bitfield-Mask: 0x1fffffff)                      */
+ #define R_CANFD_CFDTM_ID_THLEN_Pos       (29UL)         /*!< THLEN (Bit 29)                                        */
+ #define R_CANFD_CFDTM_ID_THLEN_Msk       (0x20000000UL) /*!< THLEN (Bitfield-Mask: 0x01)                           */
  #define R_CANFD_CFDTM_ID_TMRTR_Pos       (30UL)         /*!< TMRTR (Bit 30)                                        */
  #define R_CANFD_CFDTM_ID_TMRTR_Msk       (0x40000000UL) /*!< TMRTR (Bitfield-Mask: 0x01)                           */
  #define R_CANFD_CFDTM_ID_TMIDE_Pos       (31UL)         /*!< TMIDE (Bit 31)                                        */
@@ -22041,272 +22371,44 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =========================================================================================================================== */
 
 /* =========================================================  PSARB  ========================================================= */
- #define R_PSCU_PSARB_PSARB4_Pos     (4UL)          /*!< PSARB4 (Bit 4)                                        */
- #define R_PSCU_PSARB_PSARB4_Msk     (0x10UL)       /*!< PSARB4 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARB_PSARB8_Pos     (8UL)          /*!< PSARB8 (Bit 8)                                        */
- #define R_PSCU_PSARB_PSARB8_Msk     (0x100UL)      /*!< PSARB8 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARB_PSARB9_Pos     (9UL)          /*!< PSARB9 (Bit 9)                                        */
- #define R_PSCU_PSARB_PSARB9_Msk     (0x200UL)      /*!< PSARB9 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARB_PSARB11_Pos    (11UL)         /*!< PSARB11 (Bit 11)                                      */
- #define R_PSCU_PSARB_PSARB11_Msk    (0x800UL)      /*!< PSARB11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB12_Pos    (12UL)         /*!< PSARB12 (Bit 12)                                      */
- #define R_PSCU_PSARB_PSARB12_Msk    (0x1000UL)     /*!< PSARB12 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB15_Pos    (15UL)         /*!< PSARB15 (Bit 15)                                      */
- #define R_PSCU_PSARB_PSARB15_Msk    (0x8000UL)     /*!< PSARB15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB16_Pos    (16UL)         /*!< PSARB16 (Bit 16)                                      */
- #define R_PSCU_PSARB_PSARB16_Msk    (0x10000UL)    /*!< PSARB16 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB18_Pos    (18UL)         /*!< PSARB18 (Bit 18)                                      */
- #define R_PSCU_PSARB_PSARB18_Msk    (0x40000UL)    /*!< PSARB18 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB19_Pos    (19UL)         /*!< PSARB19 (Bit 19)                                      */
- #define R_PSCU_PSARB_PSARB19_Msk    (0x80000UL)    /*!< PSARB19 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB22_Pos    (22UL)         /*!< PSARB22 (Bit 22)                                      */
- #define R_PSCU_PSARB_PSARB22_Msk    (0x400000UL)   /*!< PSARB22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB27_Pos    (27UL)         /*!< PSARB27 (Bit 27)                                      */
- #define R_PSCU_PSARB_PSARB27_Msk    (0x8000000UL)  /*!< PSARB27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB28_Pos    (28UL)         /*!< PSARB28 (Bit 28)                                      */
- #define R_PSCU_PSARB_PSARB28_Msk    (0x10000000UL) /*!< PSARB28 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB29_Pos    (29UL)         /*!< PSARB29 (Bit 29)                                      */
- #define R_PSCU_PSARB_PSARB29_Msk    (0x20000000UL) /*!< PSARB29 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB30_Pos    (30UL)         /*!< PSARB30 (Bit 30)                                      */
- #define R_PSCU_PSARB_PSARB30_Msk    (0x40000000UL) /*!< PSARB30 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARB_PSARB31_Pos    (31UL)         /*!< PSARB31 (Bit 31)                                      */
- #define R_PSCU_PSARB_PSARB31_Msk    (0x80000000UL) /*!< PSARB31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PSARB_PSARB_Pos      (0UL)        /*!< PSARB (Bit 0)                                         */
+ #define R_PSCU_PSARB_PSARB_Msk      (0x1UL)      /*!< PSARB (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PSARC  ========================================================= */
- #define R_PSCU_PSARC_PSARC0_Pos     (0UL)          /*!< PSARC0 (Bit 0)                                        */
- #define R_PSCU_PSARC_PSARC0_Msk     (0x1UL)        /*!< PSARC0 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARC_PSARC1_Pos     (1UL)          /*!< PSARC1 (Bit 1)                                        */
- #define R_PSCU_PSARC_PSARC1_Msk     (0x2UL)        /*!< PSARC1 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARC_PSARC7_Pos     (7UL)          /*!< PSARC7 (Bit 7)                                        */
- #define R_PSCU_PSARC_PSARC7_Msk     (0x80UL)       /*!< PSARC7 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARC_PSARC8_Pos     (8UL)          /*!< PSARC8 (Bit 8)                                        */
- #define R_PSCU_PSARC_PSARC8_Msk     (0x100UL)      /*!< PSARC8 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARC_PSARC11_Pos    (11UL)         /*!< PSARC11 (Bit 11)                                      */
- #define R_PSCU_PSARC_PSARC11_Msk    (0x800UL)      /*!< PSARC11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC12_Pos    (12UL)         /*!< PSARC12 (Bit 12)                                      */
- #define R_PSCU_PSARC_PSARC12_Msk    (0x1000UL)     /*!< PSARC12 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC13_Pos    (13UL)         /*!< PSARC13 (Bit 13)                                      */
- #define R_PSCU_PSARC_PSARC13_Msk    (0x2000UL)     /*!< PSARC13 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC15_Pos    (15UL)         /*!< PSARC15 (Bit 15)                                      */
- #define R_PSCU_PSARC_PSARC15_Msk    (0x8000UL)     /*!< PSARC15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC16_Pos    (16UL)         /*!< PSARC16 (Bit 16)                                      */
- #define R_PSCU_PSARC_PSARC16_Msk    (0x10000UL)    /*!< PSARC16 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC26_Pos    (26UL)         /*!< PSARC26 (Bit 26)                                      */
- #define R_PSCU_PSARC_PSARC26_Msk    (0x4000000UL)  /*!< PSARC26 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC27_Pos    (27UL)         /*!< PSARC27 (Bit 27)                                      */
- #define R_PSCU_PSARC_PSARC27_Msk    (0x8000000UL)  /*!< PSARC27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC31_Pos    (31UL)         /*!< PSARC31 (Bit 31)                                      */
- #define R_PSCU_PSARC_PSARC31_Msk    (0x80000000UL) /*!< PSARC31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PSARC_PSARC_Pos      (0UL)        /*!< PSARC (Bit 0)                                         */
+ #define R_PSCU_PSARC_PSARC_Msk      (0x1UL)      /*!< PSARC (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PSARD  ========================================================= */
- #define R_PSCU_PSARD_PSARD4_Pos     (4UL)          /*!< PSARD4 (Bit 4)                                        */
- #define R_PSCU_PSARD_PSARD4_Msk     (0x10UL)       /*!< PSARD4 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARD_PSARD5_Pos     (5UL)          /*!< PSARD5 (Bit 5)                                        */
- #define R_PSCU_PSARD_PSARD5_Msk     (0x20UL)       /*!< PSARD5 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARD_PSARD11_Pos    (11UL)         /*!< PSARD11 (Bit 11)                                      */
- #define R_PSCU_PSARD_PSARD11_Msk    (0x800UL)      /*!< PSARD11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD12_Pos    (12UL)         /*!< PSARD12 (Bit 12)                                      */
- #define R_PSCU_PSARD_PSARD12_Msk    (0x1000UL)     /*!< PSARD12 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD13_Pos    (13UL)         /*!< PSARD13 (Bit 13)                                      */
- #define R_PSCU_PSARD_PSARD13_Msk    (0x2000UL)     /*!< PSARD13 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD14_Pos    (14UL)         /*!< PSARD14 (Bit 14)                                      */
- #define R_PSCU_PSARD_PSARD14_Msk    (0x4000UL)     /*!< PSARD14 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD15_Pos    (15UL)         /*!< PSARD15 (Bit 15)                                      */
- #define R_PSCU_PSARD_PSARD15_Msk    (0x8000UL)     /*!< PSARD15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD16_Pos    (16UL)         /*!< PSARD16 (Bit 16)                                      */
- #define R_PSCU_PSARD_PSARD16_Msk    (0x10000UL)    /*!< PSARD16 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD20_Pos    (20UL)         /*!< PSARD20 (Bit 20)                                      */
- #define R_PSCU_PSARD_PSARD20_Msk    (0x100000UL)   /*!< PSARD20 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD22_Pos    (22UL)         /*!< PSARD22 (Bit 22)                                      */
- #define R_PSCU_PSARD_PSARD22_Msk    (0x400000UL)   /*!< PSARD22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD27_Pos    (27UL)         /*!< PSARD27 (Bit 27)                                      */
- #define R_PSCU_PSARD_PSARD27_Msk    (0x8000000UL)  /*!< PSARD27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARD_PSARD28_Pos    (28UL)         /*!< PSARD28 (Bit 28)                                      */
- #define R_PSCU_PSARD_PSARD28_Msk    (0x10000000UL) /*!< PSARD28 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PSARD_PSARD_Pos      (0UL)        /*!< PSARD (Bit 0)                                         */
+ #define R_PSCU_PSARD_PSARD_Msk      (0x1UL)      /*!< PSARD (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PSARE  ========================================================= */
- #define R_PSCU_PSARE_PSARE1_Pos     (1UL)          /*!< PSARE1 (Bit 1)                                        */
- #define R_PSCU_PSARE_PSARE1_Msk     (0x2UL)        /*!< PSARE1 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARE_PSARE2_Pos     (2UL)          /*!< PSARE2 (Bit 2)                                        */
- #define R_PSCU_PSARE_PSARE2_Msk     (0x4UL)        /*!< PSARE2 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARE_PSARE3_Pos     (3UL)          /*!< PSARE3 (Bit 3)                                        */
- #define R_PSCU_PSARE_PSARE3_Msk     (0x8UL)        /*!< PSARE3 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARE_PSARE8_Pos     (8UL)          /*!< PSARE8 (Bit 8)                                        */
- #define R_PSCU_PSARE_PSARE8_Msk     (0x100UL)      /*!< PSARE8 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARE_PSARE9_Pos     (9UL)          /*!< PSARE9 (Bit 9)                                        */
- #define R_PSCU_PSARE_PSARE9_Msk     (0x200UL)      /*!< PSARE9 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PSARE_PSARE18_Pos    (18UL)         /*!< PSARE18 (Bit 18)                                      */
- #define R_PSCU_PSARE_PSARE18_Msk    (0x40000UL)    /*!< PSARE18 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE19_Pos    (19UL)         /*!< PSARE19 (Bit 19)                                      */
- #define R_PSCU_PSARE_PSARE19_Msk    (0x80000UL)    /*!< PSARE19 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE20_Pos    (20UL)         /*!< PSARE20 (Bit 20)                                      */
- #define R_PSCU_PSARE_PSARE20_Msk    (0x100000UL)   /*!< PSARE20 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE21_Pos    (21UL)         /*!< PSARE21 (Bit 21)                                      */
- #define R_PSCU_PSARE_PSARE21_Msk    (0x200000UL)   /*!< PSARE21 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE22_Pos    (22UL)         /*!< PSARE22 (Bit 22)                                      */
- #define R_PSCU_PSARE_PSARE22_Msk    (0x400000UL)   /*!< PSARE22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE23_Pos    (23UL)         /*!< PSARE23 (Bit 23)                                      */
- #define R_PSCU_PSARE_PSARE23_Msk    (0x800000UL)   /*!< PSARE23 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE24_Pos    (24UL)         /*!< PSARE24 (Bit 24)                                      */
- #define R_PSCU_PSARE_PSARE24_Msk    (0x1000000UL)  /*!< PSARE24 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE25_Pos    (25UL)         /*!< PSARE25 (Bit 25)                                      */
- #define R_PSCU_PSARE_PSARE25_Msk    (0x2000000UL)  /*!< PSARE25 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE26_Pos    (26UL)         /*!< PSARE26 (Bit 26)                                      */
- #define R_PSCU_PSARE_PSARE26_Msk    (0x4000000UL)  /*!< PSARE26 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE27_Pos    (27UL)         /*!< PSARE27 (Bit 27)                                      */
- #define R_PSCU_PSARE_PSARE27_Msk    (0x8000000UL)  /*!< PSARE27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE28_Pos    (28UL)         /*!< PSARE28 (Bit 28)                                      */
- #define R_PSCU_PSARE_PSARE28_Msk    (0x10000000UL) /*!< PSARE28 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE29_Pos    (29UL)         /*!< PSARE29 (Bit 29)                                      */
- #define R_PSCU_PSARE_PSARE29_Msk    (0x20000000UL) /*!< PSARE29 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE30_Pos    (30UL)         /*!< PSARE30 (Bit 30)                                      */
- #define R_PSCU_PSARE_PSARE30_Msk    (0x40000000UL) /*!< PSARE30 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARE_PSARE31_Pos    (31UL)         /*!< PSARE31 (Bit 31)                                      */
- #define R_PSCU_PSARE_PSARE31_Msk    (0x80000000UL) /*!< PSARE31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PSARE_PSARE_Pos      (0UL)        /*!< PSARE (Bit 0)                                         */
+ #define R_PSCU_PSARE_PSARE_Msk      (0x1UL)      /*!< PSARE (Bitfield-Mask: 0x01)                           */
 /* =========================================================  MSSAR  ========================================================= */
- #define R_PSCU_MSSAR_MSSAR0_Pos     (0UL)          /*!< MSSAR0 (Bit 0)                                        */
- #define R_PSCU_MSSAR_MSSAR0_Msk     (0x1UL)        /*!< MSSAR0 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_MSSAR_MSSAR1_Pos     (1UL)          /*!< MSSAR1 (Bit 1)                                        */
- #define R_PSCU_MSSAR_MSSAR1_Msk     (0x2UL)        /*!< MSSAR1 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_MSSAR_MSSAR11_Pos    (11UL)         /*!< MSSAR11 (Bit 11)                                      */
- #define R_PSCU_MSSAR_MSSAR11_Msk    (0x800UL)      /*!< MSSAR11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_MSSAR_MSSAR13_Pos    (13UL)         /*!< MSSAR13 (Bit 13)                                      */
- #define R_PSCU_MSSAR_MSSAR13_Msk    (0x2000UL)     /*!< MSSAR13 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_MSSAR_MSSAR15_Pos    (15UL)         /*!< MSSAR15 (Bit 15)                                      */
- #define R_PSCU_MSSAR_MSSAR15_Msk    (0x8000UL)     /*!< MSSAR15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_MSSAR_MSSAR22_Pos    (22UL)         /*!< MSSAR22 (Bit 22)                                      */
- #define R_PSCU_MSSAR_MSSAR22_Msk    (0x400000UL)   /*!< MSSAR22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_MSSAR_MSSAR31_Pos    (31UL)         /*!< MSSAR31 (Bit 31)                                      */
- #define R_PSCU_MSSAR_MSSAR31_Msk    (0x80000000UL) /*!< MSSAR31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_MSSAR_MSSAR_Pos      (0UL)        /*!< MSSAR (Bit 0)                                         */
+ #define R_PSCU_MSSAR_MSSAR_Msk      (0x1UL)      /*!< MSSAR (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PPARB  ========================================================= */
- #define R_PSCU_PPARB_PPARB4_Pos     (4UL)          /*!< PPARB4 (Bit 4)                                        */
- #define R_PSCU_PPARB_PPARB4_Msk     (0x10UL)       /*!< PPARB4 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARB_PPARB8_Pos     (8UL)          /*!< PPARB8 (Bit 8)                                        */
- #define R_PSCU_PPARB_PPARB8_Msk     (0x100UL)      /*!< PPARB8 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARB_PPARB9_Pos     (9UL)          /*!< PPARB9 (Bit 9)                                        */
- #define R_PSCU_PPARB_PPARB9_Msk     (0x200UL)      /*!< PPARB9 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARB_PPARB11_Pos    (11UL)         /*!< PPARB11 (Bit 11)                                      */
- #define R_PSCU_PPARB_PPARB11_Msk    (0x800UL)      /*!< PPARB11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB12_Pos    (12UL)         /*!< PPARB12 (Bit 12)                                      */
- #define R_PSCU_PPARB_PPARB12_Msk    (0x1000UL)     /*!< PPARB12 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB15_Pos    (15UL)         /*!< PPARB15 (Bit 15)                                      */
- #define R_PSCU_PPARB_PPARB15_Msk    (0x8000UL)     /*!< PPARB15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB16_Pos    (16UL)         /*!< PPARB16 (Bit 16)                                      */
- #define R_PSCU_PPARB_PPARB16_Msk    (0x10000UL)    /*!< PPARB16 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB18_Pos    (18UL)         /*!< PPARB18 (Bit 18)                                      */
- #define R_PSCU_PPARB_PPARB18_Msk    (0x40000UL)    /*!< PPARB18 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB19_Pos    (19UL)         /*!< PPARB19 (Bit 19)                                      */
- #define R_PSCU_PPARB_PPARB19_Msk    (0x80000UL)    /*!< PPARB19 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB22_Pos    (22UL)         /*!< PPARB22 (Bit 22)                                      */
- #define R_PSCU_PPARB_PPARB22_Msk    (0x400000UL)   /*!< PPARB22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB27_Pos    (27UL)         /*!< PPARB27 (Bit 27)                                      */
- #define R_PSCU_PPARB_PPARB27_Msk    (0x8000000UL)  /*!< PPARB27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB28_Pos    (28UL)         /*!< PPARB28 (Bit 28)                                      */
- #define R_PSCU_PPARB_PPARB28_Msk    (0x10000000UL) /*!< PPARB28 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB29_Pos    (29UL)         /*!< PPARB29 (Bit 29)                                      */
- #define R_PSCU_PPARB_PPARB29_Msk    (0x20000000UL) /*!< PPARB29 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB30_Pos    (30UL)         /*!< PPARB30 (Bit 30)                                      */
- #define R_PSCU_PPARB_PPARB30_Msk    (0x40000000UL) /*!< PPARB30 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARB_PPARB31_Pos    (31UL)         /*!< PPARB31 (Bit 31)                                      */
- #define R_PSCU_PPARB_PPARB31_Msk    (0x80000000UL) /*!< PPARB31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PPARB_PPARB_Pos      (0UL)        /*!< PPARB (Bit 0)                                         */
+ #define R_PSCU_PPARB_PPARB_Msk      (0x1UL)      /*!< PPARB (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PPARC  ========================================================= */
- #define R_PSCU_PPARC_PPARC0_Pos     (0UL)          /*!< PPARC0 (Bit 0)                                        */
- #define R_PSCU_PPARC_PPARC0_Msk     (0x1UL)        /*!< PPARC0 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARC_PPARC1_Pos     (1UL)          /*!< PPARC1 (Bit 1)                                        */
- #define R_PSCU_PPARC_PPARC1_Msk     (0x2UL)        /*!< PPARC1 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARC_PPARC7_Pos     (7UL)          /*!< PPARC7 (Bit 7)                                        */
- #define R_PSCU_PPARC_PPARC7_Msk     (0x80UL)       /*!< PPARC7 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARC_PPARC8_Pos     (8UL)          /*!< PPARC8 (Bit 8)                                        */
- #define R_PSCU_PPARC_PPARC8_Msk     (0x100UL)      /*!< PPARC8 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARC_PPARC11_Pos    (11UL)         /*!< PPARC11 (Bit 11)                                      */
- #define R_PSCU_PPARC_PPARC11_Msk    (0x800UL)      /*!< PPARC11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC12_Pos    (12UL)         /*!< PPARC12 (Bit 12)                                      */
- #define R_PSCU_PPARC_PPARC12_Msk    (0x1000UL)     /*!< PPARC12 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC13_Pos    (13UL)         /*!< PPARC13 (Bit 13)                                      */
- #define R_PSCU_PPARC_PPARC13_Msk    (0x2000UL)     /*!< PPARC13 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC15_Pos    (15UL)         /*!< PPARC15 (Bit 15)                                      */
- #define R_PSCU_PPARC_PPARC15_Msk    (0x8000UL)     /*!< PPARC15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC16_Pos    (16UL)         /*!< PPARC16 (Bit 16)                                      */
- #define R_PSCU_PPARC_PPARC16_Msk    (0x10000UL)    /*!< PPARC16 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC26_Pos    (26UL)         /*!< PPARC26 (Bit 26)                                      */
- #define R_PSCU_PPARC_PPARC26_Msk    (0x4000000UL)  /*!< PPARC26 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC27_Pos    (27UL)         /*!< PPARC27 (Bit 27)                                      */
- #define R_PSCU_PPARC_PPARC27_Msk    (0x8000000UL)  /*!< PPARC27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARC_PPARC31_Pos    (31UL)         /*!< PPARC31 (Bit 31)                                      */
- #define R_PSCU_PPARC_PPARC31_Msk    (0x80000000UL) /*!< PPARC31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PPARC_PPARC_Pos      (0UL)        /*!< PPARC (Bit 0)                                         */
+ #define R_PSCU_PPARC_PPARC_Msk      (0x1UL)      /*!< PPARC (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PPARD  ========================================================= */
- #define R_PSCU_PPARD_PPARD4_Pos     (4UL)          /*!< PPARD4 (Bit 4)                                        */
- #define R_PSCU_PPARD_PPARD4_Msk     (0x10UL)       /*!< PPARD4 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARD_PPARD5_Pos     (5UL)          /*!< PPARD5 (Bit 5)                                        */
- #define R_PSCU_PPARD_PPARD5_Msk     (0x20UL)       /*!< PPARD5 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARD_PPARD11_Pos    (11UL)         /*!< PPARD11 (Bit 11)                                      */
- #define R_PSCU_PPARD_PPARD11_Msk    (0x800UL)      /*!< PPARD11 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD12_Pos    (12UL)         /*!< PPARD12 (Bit 12)                                      */
- #define R_PSCU_PPARD_PPARD12_Msk    (0x1000UL)     /*!< PPARD12 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD13_Pos    (13UL)         /*!< PPARD13 (Bit 13)                                      */
- #define R_PSCU_PPARD_PPARD13_Msk    (0x2000UL)     /*!< PPARD13 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD14_Pos    (14UL)         /*!< PPARD14 (Bit 14)                                      */
- #define R_PSCU_PPARD_PPARD14_Msk    (0x4000UL)     /*!< PPARD14 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD15_Pos    (15UL)         /*!< PPARD15 (Bit 15)                                      */
- #define R_PSCU_PPARD_PPARD15_Msk    (0x8000UL)     /*!< PPARD15 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD16_Pos    (16UL)         /*!< PPARD16 (Bit 16)                                      */
- #define R_PSCU_PPARD_PPARD16_Msk    (0x10000UL)    /*!< PPARD16 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD20_Pos    (20UL)         /*!< PPARD20 (Bit 20)                                      */
- #define R_PSCU_PPARD_PPARD20_Msk    (0x100000UL)   /*!< PPARD20 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD22_Pos    (22UL)         /*!< PPARD22 (Bit 22)                                      */
- #define R_PSCU_PPARD_PPARD22_Msk    (0x400000UL)   /*!< PPARD22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD27_Pos    (27UL)         /*!< PPARD27 (Bit 27)                                      */
- #define R_PSCU_PPARD_PPARD27_Msk    (0x8000000UL)  /*!< PPARD27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARD_PPARD28_Pos    (28UL)         /*!< PPARD28 (Bit 28)                                      */
- #define R_PSCU_PPARD_PPARD28_Msk    (0x10000000UL) /*!< PPARD28 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PPARD_PPARD_Pos      (0UL)        /*!< PPARD (Bit 0)                                         */
+ #define R_PSCU_PPARD_PPARD_Msk      (0x1UL)      /*!< PPARD (Bitfield-Mask: 0x01)                           */
 /* =========================================================  PPARE  ========================================================= */
- #define R_PSCU_PPARE_PPARE1_Pos     (1UL)          /*!< PPARE1 (Bit 1)                                        */
- #define R_PSCU_PPARE_PPARE1_Msk     (0x2UL)        /*!< PPARE1 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARE_PPARE2_Pos     (2UL)          /*!< PPARE2 (Bit 2)                                        */
- #define R_PSCU_PPARE_PPARE2_Msk     (0x4UL)        /*!< PPARE2 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARE_PPARE3_Pos     (3UL)          /*!< PPARE3 (Bit 3)                                        */
- #define R_PSCU_PPARE_PPARE3_Msk     (0x8UL)        /*!< PPARE3 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARE_PPARE8_Pos     (8UL)          /*!< PPARE8 (Bit 8)                                        */
- #define R_PSCU_PPARE_PPARE8_Msk     (0x100UL)      /*!< PPARE8 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARE_PPARE9_Pos     (9UL)          /*!< PPARE9 (Bit 9)                                        */
- #define R_PSCU_PPARE_PPARE9_Msk     (0x200UL)      /*!< PPARE9 (Bitfield-Mask: 0x01)                          */
- #define R_PSCU_PPARE_PPARE18_Pos    (18UL)         /*!< PPARE18 (Bit 18)                                      */
- #define R_PSCU_PPARE_PPARE18_Msk    (0x40000UL)    /*!< PPARE18 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE19_Pos    (19UL)         /*!< PPARE19 (Bit 19)                                      */
- #define R_PSCU_PPARE_PPARE19_Msk    (0x80000UL)    /*!< PPARE19 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE20_Pos    (20UL)         /*!< PPARE20 (Bit 20)                                      */
- #define R_PSCU_PPARE_PPARE20_Msk    (0x100000UL)   /*!< PPARE20 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE21_Pos    (21UL)         /*!< PPARE21 (Bit 21)                                      */
- #define R_PSCU_PPARE_PPARE21_Msk    (0x200000UL)   /*!< PPARE21 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE22_Pos    (22UL)         /*!< PPARE22 (Bit 22)                                      */
- #define R_PSCU_PPARE_PPARE22_Msk    (0x400000UL)   /*!< PPARE22 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE23_Pos    (23UL)         /*!< PPARE23 (Bit 23)                                      */
- #define R_PSCU_PPARE_PPARE23_Msk    (0x800000UL)   /*!< PPARE23 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE24_Pos    (24UL)         /*!< PPARE24 (Bit 24)                                      */
- #define R_PSCU_PPARE_PPARE24_Msk    (0x1000000UL)  /*!< PPARE24 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE25_Pos    (25UL)         /*!< PPARE25 (Bit 25)                                      */
- #define R_PSCU_PPARE_PPARE25_Msk    (0x2000000UL)  /*!< PPARE25 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE26_Pos    (26UL)         /*!< PPARE26 (Bit 26)                                      */
- #define R_PSCU_PPARE_PPARE26_Msk    (0x4000000UL)  /*!< PPARE26 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE27_Pos    (27UL)         /*!< PPARE27 (Bit 27)                                      */
- #define R_PSCU_PPARE_PPARE27_Msk    (0x8000000UL)  /*!< PPARE27 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE28_Pos    (28UL)         /*!< PPARE28 (Bit 28)                                      */
- #define R_PSCU_PPARE_PPARE28_Msk    (0x10000000UL) /*!< PPARE28 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE29_Pos    (29UL)         /*!< PPARE29 (Bit 29)                                      */
- #define R_PSCU_PPARE_PPARE29_Msk    (0x20000000UL) /*!< PPARE29 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE30_Pos    (30UL)         /*!< PPARE30 (Bit 30)                                      */
- #define R_PSCU_PPARE_PPARE30_Msk    (0x40000000UL) /*!< PPARE30 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PPARE_PPARE31_Pos    (31UL)         /*!< PPARE31 (Bit 31)                                      */
- #define R_PSCU_PPARE_PPARE31_Msk    (0x80000000UL) /*!< PPARE31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PPARE_PPARE_Pos      (0UL)        /*!< PPARE (Bit 0)                                         */
+ #define R_PSCU_PPARE_PPARE_Msk      (0x1UL)      /*!< PPARE (Bitfield-Mask: 0x01)                           */
 /* =========================================================  MSPAR  ========================================================= */
- #define R_PSCU_MSPAR_MSPAR31_Pos    (31UL)         /*!< MSPAR31 (Bit 31)                                      */
- #define R_PSCU_MSPAR_MSPAR31_Msk    (0x80000000UL) /*!< MSPAR31 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_MSPAR_MSPAR_Pos      (0UL)        /*!< MSPAR (Bit 0)                                         */
+ #define R_PSCU_MSPAR_MSPAR_Msk      (0x1UL)      /*!< MSPAR (Bitfield-Mask: 0x01)                           */
 /* =======================================================  CFSAMONA  ======================================================== */
- #define R_PSCU_CFSAMONA_CFS2_Pos    (15UL)         /*!< CFS2 (Bit 15)                                         */
- #define R_PSCU_CFSAMONA_CFS2_Msk    (0xff8000UL)   /*!< CFS2 (Bitfield-Mask: 0x1ff)                           */
+ #define R_PSCU_CFSAMONA_CFS2_Pos    (15UL)       /*!< CFS2 (Bit 15)                                         */
+ #define R_PSCU_CFSAMONA_CFS2_Msk    (0xff8000UL) /*!< CFS2 (Bitfield-Mask: 0x1ff)                           */
 /* ========================================================  DFSAMON  ======================================================== */
- #define R_PSCU_DFSAMON_DFS_Pos      (10UL)         /*!< DFS (Bit 10)                                          */
- #define R_PSCU_DFSAMON_DFS_Msk      (0xfc00UL)     /*!< DFS (Bitfield-Mask: 0x3f)                             */
+ #define R_PSCU_DFSAMON_DFS_Pos      (10UL)       /*!< DFS (Bit 10)                                          */
+ #define R_PSCU_DFSAMON_DFS_Msk      (0xfc00UL)   /*!< DFS (Bitfield-Mask: 0x3f)                             */
 /* ========================================================  DLMMON  ========================================================= */
- #define R_PSCU_DLMMON_DLMMON_Pos    (0UL)          /*!< DLMMON (Bit 0)                                        */
- #define R_PSCU_DLMMON_DLMMON_Msk    (0xfUL)        /*!< DLMMON (Bitfield-Mask: 0x0f)                          */
+ #define R_PSCU_DLMMON_DLMMON_Pos    (0UL)        /*!< DLMMON (Bit 0)                                        */
+ #define R_PSCU_DLMMON_DLMMON_Msk    (0xfUL)      /*!< DLMMON (Bitfield-Mask: 0x0f)                          */
 
 /* =========================================================================================================================== */
 /* ================                                           R_BUS                                           ================ */
@@ -22327,6 +22429,9 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_BUS_BUSDIVBYP_GDSSBPE_Msk     (0x8UL)     /*!< GDSSBPE (Bitfield-Mask: 0x01)                         */
  #define R_BUS_BUSDIVBYP_EDMABPE_Pos     (0UL)       /*!< EDMABPE (Bit 0)                                       */
  #define R_BUS_BUSDIVBYP_EDMABPE_Msk     (0x1UL)     /*!< EDMABPE (Bitfield-Mask: 0x01)                         */
+/* =======================================================  BUSTHRPUT  ======================================================= */
+ #define R_BUS_BUSTHRPUT_DIS_Pos         (0UL)       /*!< DIS (Bit 0)                                           */
+ #define R_BUS_BUSTHRPUT_DIS_Msk         (0x1UL)     /*!< DIS (Bitfield-Mask: 0x01)                             */
 
 /* =========================================================================================================================== */
 /* ================                                           R_CAC                                           ================ */
@@ -22808,6 +22913,11 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_DMA_DELSR_IR_Msk           (0x10000UL) /*!< IR (Bitfield-Mask: 0x01)                              */
  #define R_DMA_DELSR_DELS_Pos         (0UL)       /*!< DELS (Bit 0)                                          */
  #define R_DMA_DELSR_DELS_Msk         (0x1ffUL)   /*!< DELS (Bitfield-Mask: 0x1ff)                           */
+/* =========================================================  DMCTL  ========================================================= */
+ #define R_DMA_DMCTL_PR_Pos           (0UL)       /*!< PR (Bit 0)                                            */
+ #define R_DMA_DMCTL_PR_Msk           (0x1UL)     /*!< PR (Bitfield-Mask: 0x01)                              */
+ #define R_DMA_DMCTL_ERCH_Pos         (4UL)       /*!< ERCH (Bit 4)                                          */
+ #define R_DMA_DMCTL_ERCH_Msk         (0x10UL)    /*!< ERCH (Bitfield-Mask: 0x01)                            */
 
 /* =========================================================================================================================== */
 /* ================                                          R_DMAC0                                          ================ */
@@ -22923,30 +23033,49 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =========================================================================================================================== */
 
 /* =========================================================  DTCCR  ========================================================= */
- #define R_DTC_DTCCR_RRS_Pos         (4UL)          /*!< RRS (Bit 4)                                           */
- #define R_DTC_DTCCR_RRS_Msk         (0x10UL)       /*!< RRS (Bitfield-Mask: 0x01)                             */
+ #define R_DTC_DTCCR_RRS_Pos            (4UL)          /*!< RRS (Bit 4)                                           */
+ #define R_DTC_DTCCR_RRS_Msk            (0x10UL)       /*!< RRS (Bitfield-Mask: 0x01)                             */
 /* ========================================================  DTCVBR  ========================================================= */
- #define R_DTC_DTCVBR_DTCVBR_Pos     (0UL)          /*!< DTCVBR (Bit 0)                                        */
- #define R_DTC_DTCVBR_DTCVBR_Msk     (0xffffffffUL) /*!< DTCVBR (Bitfield-Mask: 0xffffffff)                    */
+ #define R_DTC_DTCVBR_DTCVBR_Pos        (0UL)          /*!< DTCVBR (Bit 0)                                        */
+ #define R_DTC_DTCVBR_DTCVBR_Msk        (0xffffffffUL) /*!< DTCVBR (Bitfield-Mask: 0xffffffff)                    */
+/* =======================================================  DTCADMOD  ======================================================== */
+ #define R_DTC_DTCADMOD_SHORT_Pos       (0UL)          /*!< SHORT (Bit 0)                                         */
+ #define R_DTC_DTCADMOD_SHORT_Msk       (0x1UL)        /*!< SHORT (Bitfield-Mask: 0x01)                           */
 /* =========================================================  DTCST  ========================================================= */
- #define R_DTC_DTCST_DTCST_Pos       (0UL)          /*!< DTCST (Bit 0)                                         */
- #define R_DTC_DTCST_DTCST_Msk       (0x1UL)        /*!< DTCST (Bitfield-Mask: 0x01)                           */
+ #define R_DTC_DTCST_DTCST_Pos          (0UL)          /*!< DTCST (Bit 0)                                         */
+ #define R_DTC_DTCST_DTCST_Msk          (0x1UL)        /*!< DTCST (Bitfield-Mask: 0x01)                           */
 /* ========================================================  DTCSTS  ========================================================= */
- #define R_DTC_DTCSTS_ACT_Pos        (15UL)         /*!< ACT (Bit 15)                                          */
- #define R_DTC_DTCSTS_ACT_Msk        (0x8000UL)     /*!< ACT (Bitfield-Mask: 0x01)                             */
- #define R_DTC_DTCSTS_VECN_Pos       (0UL)          /*!< VECN (Bit 0)                                          */
- #define R_DTC_DTCSTS_VECN_Msk       (0xffUL)       /*!< VECN (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTCSTS_VECN_Pos          (0UL)          /*!< VECN (Bit 0)                                          */
+ #define R_DTC_DTCSTS_VECN_Msk          (0xffUL)       /*!< VECN (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTCSTS_ACT_Pos           (15UL)         /*!< ACT (Bit 15)                                          */
+ #define R_DTC_DTCSTS_ACT_Msk           (0x8000UL)     /*!< ACT (Bitfield-Mask: 0x01)                             */
 /* =======================================================  DTCCR_SEC  ======================================================= */
- #define R_DTC_DTCCR_SEC_RRSS_Pos    (4UL)          /*!< RRSS (Bit 4)                                          */
- #define R_DTC_DTCCR_SEC_RRSS_Msk    (0x10UL)       /*!< RRSS (Bitfield-Mask: 0x01)                            */
+ #define R_DTC_DTCCR_SEC_RRS_Pos        (4UL)          /*!< RRS (Bit 4)                                           */
+ #define R_DTC_DTCCR_SEC_RRS_Msk        (0x10UL)       /*!< RRS (Bitfield-Mask: 0x01)                             */
 /* ======================================================  DTCVBR_SEC  ======================================================= */
+ #define R_DTC_DTCVBR_SEC_DTCVBR_Pos    (0UL)          /*!< DTCVBR (Bit 0)                                        */
+ #define R_DTC_DTCVBR_SEC_DTCVBR_Msk    (0xffffffffUL) /*!< DTCVBR (Bitfield-Mask: 0xffffffff)                    */
+/* ========================================================  DTCDISP  ======================================================== */
+ #define R_DTC_DTCDISP_DTCDISP_Pos      (0UL)          /*!< DTCDISP (Bit 0)                                       */
+ #define R_DTC_DTCDISP_DTCDISP_Msk      (0xffffffffUL) /*!< DTCDISP (Bitfield-Mask: 0xffffffff)                   */
 /* =========================================================  DTEVR  ========================================================= */
- #define R_DTC_DTEVR_DTEV_Pos        (0UL)          /*!< DTEV (Bit 0)                                          */
- #define R_DTC_DTEVR_DTEV_Msk        (0xffUL)       /*!< DTEV (Bitfield-Mask: 0xff)                            */
- #define R_DTC_DTEVR_DTEVSAM_Pos     (8UL)          /*!< DTEVSAM (Bit 8)                                       */
- #define R_DTC_DTEVR_DTEVSAM_Msk     (0x100UL)      /*!< DTEVSAM (Bitfield-Mask: 0x01)                         */
- #define R_DTC_DTEVR_DTESTA_Pos      (16UL)         /*!< DTESTA (Bit 16)                                       */
- #define R_DTC_DTEVR_DTESTA_Msk      (0x10000UL)    /*!< DTESTA (Bitfield-Mask: 0x01)                          */
+ #define R_DTC_DTEVR_DTEV_Pos           (0UL)          /*!< DTEV (Bit 0)                                          */
+ #define R_DTC_DTEVR_DTEV_Msk           (0xffUL)       /*!< DTEV (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTEVR_DTEVSAM_Pos        (8UL)          /*!< DTEVSAM (Bit 8)                                       */
+ #define R_DTC_DTEVR_DTEVSAM_Msk        (0x100UL)      /*!< DTEVSAM (Bitfield-Mask: 0x01)                         */
+ #define R_DTC_DTEVR_DTESTA_Pos         (16UL)         /*!< DTESTA (Bit 16)                                       */
+ #define R_DTC_DTEVR_DTESTA_Msk         (0x10000UL)    /*!< DTESTA (Bitfield-Mask: 0x01)                          */
+/* ========================================================  DTCIBR  ========================================================= */
+ #define R_DTC_DTCIBR_DTCIBR_Pos        (10UL)         /*!< DTCIBR (Bit 10)                                       */
+ #define R_DTC_DTCIBR_DTCIBR_Msk        (0xfffffc00UL) /*!< DTCIBR (Bitfield-Mask: 0x3fffff)                      */
+/* =========================================================  DTCOR  ========================================================= */
+ #define R_DTC_DTCOR_SQTFRL_Pos         (0UL)          /*!< SQTFRL (Bit 0)                                        */
+ #define R_DTC_DTCOR_SQTFRL_Msk         (0x1UL)        /*!< SQTFRL (Bitfield-Mask: 0x01)                          */
+/* ========================================================  DTCSQE  ========================================================= */
+ #define R_DTC_DTCSQE_VECN_Pos          (0UL)          /*!< VECN (Bit 0)                                          */
+ #define R_DTC_DTCSQE_VECN_Msk          (0xffUL)       /*!< VECN (Bitfield-Mask: 0xff)                            */
+ #define R_DTC_DTCSQE_ESPSEL_Pos        (15UL)         /*!< ESPSEL (Bit 15)                                       */
+ #define R_DTC_DTCSQE_ESPSEL_Msk        (0x8000UL)     /*!< ESPSEL (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
 /* ================                                           R_ELC                                           ================ */
@@ -24130,10 +24259,6 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_GPT_POEG0_POEGG_NFEN_Msk       (0x20000000UL) /*!< NFEN (Bitfield-Mask: 0x01)                            */
  #define R_GPT_POEG0_POEGG_INV_Pos        (28UL)         /*!< INV (Bit 28)                                          */
  #define R_GPT_POEG0_POEGG_INV_Msk        (0x10000000UL) /*!< INV (Bitfield-Mask: 0x01)                             */
- #define R_GPT_POEG0_POEGG_DERRE_Pos      (26UL)         /*!< DERRE (Bit 26)                                        */
- #define R_GPT_POEG0_POEGG_DERRE_Msk      (0x4000000UL)  /*!< DERRE (Bitfield-Mask: 0x01)                           */
- #define R_GPT_POEG0_POEGG_DERRST_Pos     (24UL)         /*!< DERRST (Bit 24)                                       */
- #define R_GPT_POEG0_POEGG_DERRST_Msk     (0x1000000UL)  /*!< DERRST (Bitfield-Mask: 0x01)                          */
  #define R_GPT_POEG0_POEGG_ST_Pos         (16UL)         /*!< ST (Bit 16)                                           */
  #define R_GPT_POEG0_POEGG_ST_Msk         (0x10000UL)    /*!< ST (Bitfield-Mask: 0x01)                              */
  #define R_GPT_POEG0_POEGG_CDRE_Pos       (8UL)          /*!< CDRE (Bit 8)                                          */
@@ -24784,6 +24909,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_BST_ALF_Msk             (0x10000UL)    /*!< ALF (Bitfield-Mask: 0x01)                             */
  #define R_I3C0_BST_TODF_Pos            (20UL)         /*!< TODF (Bit 20)                                         */
  #define R_I3C0_BST_TODF_Msk            (0x100000UL)   /*!< TODF (Bitfield-Mask: 0x01)                            */
+ #define R_I3C0_BST_WUCNDDF_Pos         (24UL)         /*!< WUCNDDF (Bit 24)                                      */
+ #define R_I3C0_BST_WUCNDDF_Msk         (0x1000000UL)  /*!< WUCNDDF (Bitfield-Mask: 0x01)                         */
 /* =========================================================  BSTE  ========================================================== */
  #define R_I3C0_BSTE_STCNDDE_Pos        (0UL)          /*!< STCNDDE (Bit 0)                                       */
  #define R_I3C0_BSTE_STCNDDE_Msk        (0x1UL)        /*!< STCNDDE (Bitfield-Mask: 0x01)                         */
@@ -24799,6 +24926,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_BSTE_ALE_Msk            (0x10000UL)    /*!< ALE (Bitfield-Mask: 0x01)                             */
  #define R_I3C0_BSTE_TODE_Pos           (20UL)         /*!< TODE (Bit 20)                                         */
  #define R_I3C0_BSTE_TODE_Msk           (0x100000UL)   /*!< TODE (Bitfield-Mask: 0x01)                            */
+ #define R_I3C0_BSTE_WUCNDDE_Pos        (24UL)         /*!< WUCNDDE (Bit 24)                                      */
+ #define R_I3C0_BSTE_WUCNDDE_Msk        (0x1000000UL)  /*!< WUCNDDE (Bitfield-Mask: 0x01)                         */
 /* ==========================================================  BIE  ========================================================== */
  #define R_I3C0_BIE_STCNDDIE_Pos        (0UL)          /*!< STCNDDIE (Bit 0)                                      */
  #define R_I3C0_BIE_STCNDDIE_Msk        (0x1UL)        /*!< STCNDDIE (Bitfield-Mask: 0x01)                        */
@@ -24814,6 +24943,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_BIE_ALIE_Msk            (0x10000UL)    /*!< ALIE (Bitfield-Mask: 0x01)                            */
  #define R_I3C0_BIE_TODIE_Pos           (20UL)         /*!< TODIE (Bit 20)                                        */
  #define R_I3C0_BIE_TODIE_Msk           (0x100000UL)   /*!< TODIE (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_BIE_WUCNDDIE_Pos        (24UL)         /*!< WUCNDDIE (Bit 24)                                     */
+ #define R_I3C0_BIE_WUCNDDIE_Msk        (0x1000000UL)  /*!< WUCNDDIE (Bitfield-Mask: 0x01)                        */
 /* =========================================================  BSTFC  ========================================================= */
  #define R_I3C0_BSTFC_STCNDDFC_Pos      (0UL)          /*!< STCNDDFC (Bit 0)                                      */
  #define R_I3C0_BSTFC_STCNDDFC_Msk      (0x1UL)        /*!< STCNDDFC (Bitfield-Mask: 0x01)                        */
@@ -24829,6 +24960,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_BSTFC_ALFC_Msk          (0x10000UL)    /*!< ALFC (Bitfield-Mask: 0x01)                            */
  #define R_I3C0_BSTFC_TODFC_Pos         (20UL)         /*!< TODFC (Bit 20)                                        */
  #define R_I3C0_BSTFC_TODFC_Msk         (0x100000UL)   /*!< TODFC (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_BSTFC_WUCNDDFC_Pos      (24UL)         /*!< WUCNDDFC (Bit 24)                                     */
+ #define R_I3C0_BSTFC_WUCNDDFC_Msk      (0x1000000UL)  /*!< WUCNDDFC (Bitfield-Mask: 0x01)                        */
 /* =========================================================  NTST  ========================================================== */
  #define R_I3C0_NTST_TDBEF0_Pos         (0UL)          /*!< TDBEF0 (Bit 0)                                        */
  #define R_I3C0_NTST_TDBEF0_Msk         (0x1UL)        /*!< TDBEF0 (Bitfield-Mask: 0x01)                          */
@@ -25031,6 +25164,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_MSDCT0_RBCR2_Msk        (0x400UL)      /*!< RBCR2 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT0_RBCR3_Pos        (11UL)         /*!< RBCR3 (Bit 11)                                        */
  #define R_I3C0_MSDCT0_RBCR3_Msk        (0x800UL)      /*!< RBCR3 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT0_RBCR4_Pos        (12UL)         /*!< RBCR4 (Bit 12)                                        */
+ #define R_I3C0_MSDCT0_RBCR4_Msk        (0x1000UL)     /*!< RBCR4 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT0_RBCR5_Pos        (13UL)         /*!< RBCR5 (Bit 13)                                        */
+ #define R_I3C0_MSDCT0_RBCR5_Msk        (0x2000UL)     /*!< RBCR5 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT0_RBCR76_Pos       (14UL)         /*!< RBCR76 (Bit 14)                                       */
  #define R_I3C0_MSDCT0_RBCR76_Msk       (0xc000UL)     /*!< RBCR76 (Bitfield-Mask: 0x03)                          */
 /* ========================================================  MSDCT1  ========================================================= */
@@ -25042,6 +25179,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_MSDCT1_RBCR2_Msk        (0x400UL)      /*!< RBCR2 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT1_RBCR3_Pos        (11UL)         /*!< RBCR3 (Bit 11)                                        */
  #define R_I3C0_MSDCT1_RBCR3_Msk        (0x800UL)      /*!< RBCR3 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT1_RBCR4_Pos        (12UL)         /*!< RBCR4 (Bit 12)                                        */
+ #define R_I3C0_MSDCT1_RBCR4_Msk        (0x1000UL)     /*!< RBCR4 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT1_RBCR5_Pos        (13UL)         /*!< RBCR5 (Bit 13)                                        */
+ #define R_I3C0_MSDCT1_RBCR5_Msk        (0x2000UL)     /*!< RBCR5 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT1_RBCR76_Pos       (14UL)         /*!< RBCR76 (Bit 14)                                       */
  #define R_I3C0_MSDCT1_RBCR76_Msk       (0xc000UL)     /*!< RBCR76 (Bitfield-Mask: 0x03)                          */
 /* ========================================================  MSDCT2  ========================================================= */
@@ -25053,6 +25194,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_MSDCT2_RBCR2_Msk        (0x400UL)      /*!< RBCR2 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT2_RBCR3_Pos        (11UL)         /*!< RBCR3 (Bit 11)                                        */
  #define R_I3C0_MSDCT2_RBCR3_Msk        (0x800UL)      /*!< RBCR3 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT2_RBCR4_Pos        (12UL)         /*!< RBCR4 (Bit 12)                                        */
+ #define R_I3C0_MSDCT2_RBCR4_Msk        (0x1000UL)     /*!< RBCR4 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT2_RBCR5_Pos        (13UL)         /*!< RBCR5 (Bit 13)                                        */
+ #define R_I3C0_MSDCT2_RBCR5_Msk        (0x2000UL)     /*!< RBCR5 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT2_RBCR76_Pos       (14UL)         /*!< RBCR76 (Bit 14)                                       */
  #define R_I3C0_MSDCT2_RBCR76_Msk       (0xc000UL)     /*!< RBCR76 (Bitfield-Mask: 0x03)                          */
 /* ========================================================  MSDCT3  ========================================================= */
@@ -25064,6 +25209,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_MSDCT3_RBCR2_Msk        (0x400UL)      /*!< RBCR2 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT3_RBCR3_Pos        (11UL)         /*!< RBCR3 (Bit 11)                                        */
  #define R_I3C0_MSDCT3_RBCR3_Msk        (0x800UL)      /*!< RBCR3 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT3_RBCR4_Pos        (12UL)         /*!< RBCR4 (Bit 12)                                        */
+ #define R_I3C0_MSDCT3_RBCR4_Msk        (0x1000UL)     /*!< RBCR4 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_MSDCT3_RBCR5_Pos        (13UL)         /*!< RBCR5 (Bit 13)                                        */
+ #define R_I3C0_MSDCT3_RBCR5_Msk        (0x2000UL)     /*!< RBCR5 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_MSDCT3_RBCR76_Pos       (14UL)         /*!< RBCR76 (Bit 14)                                       */
  #define R_I3C0_MSDCT3_RBCR76_Msk       (0xc000UL)     /*!< RBCR76 (Bitfield-Mask: 0x03)                          */
 /* =========================================================  SVDCT  ========================================================= */
@@ -25077,6 +25226,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_SVDCT_TBCR2_Msk         (0x400UL)      /*!< TBCR2 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_SVDCT_TBCR3_Pos         (11UL)         /*!< TBCR3 (Bit 11)                                        */
  #define R_I3C0_SVDCT_TBCR3_Msk         (0x800UL)      /*!< TBCR3 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_SVDCT_TBCR4_Pos         (12UL)         /*!< TBCR4 (Bit 12)                                        */
+ #define R_I3C0_SVDCT_TBCR4_Msk         (0x1000UL)     /*!< TBCR4 (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_SVDCT_TBCR5_Pos         (13UL)         /*!< TBCR5 (Bit 13)                                        */
+ #define R_I3C0_SVDCT_TBCR5_Msk         (0x2000UL)     /*!< TBCR5 (Bitfield-Mask: 0x01)                           */
  #define R_I3C0_SVDCT_TBCR76_Pos        (14UL)         /*!< TBCR76 (Bit 14)                                       */
  #define R_I3C0_SVDCT_TBCR76_Msk        (0xc000UL)     /*!< TBCR76 (Bitfield-Mask: 0x03)                          */
 /* =======================================================  SDCTPIDL  ======================================================== */
@@ -25138,6 +25291,13 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_I3C0_CETSM_FREQ_Msk          (0xff00UL)     /*!< FREQ (Bitfield-Mask: 0xff)                            */
  #define R_I3C0_CETSM_INAC_Pos          (16UL)         /*!< INAC (Bit 16)                                         */
  #define R_I3C0_CETSM_INAC_Msk          (0xff0000UL)   /*!< INAC (Bitfield-Mask: 0xff)                            */
+/* =======================================================  CGHDRCAP  ======================================================== */
+ #define R_I3C0_CGHDRCAP_DDREN_Pos      (0UL)          /*!< DDREN (Bit 0)                                         */
+ #define R_I3C0_CGHDRCAP_DDREN_Msk      (0x1UL)        /*!< DDREN (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_CGHDRCAP_TSPEN_Pos      (1UL)          /*!< TSPEN (Bit 1)                                         */
+ #define R_I3C0_CGHDRCAP_TSPEN_Msk      (0x2UL)        /*!< TSPEN (Bitfield-Mask: 0x01)                           */
+ #define R_I3C0_CGHDRCAP_TSLEN_Pos      (2UL)          /*!< TSLEN (Bit 2)                                         */
+ #define R_I3C0_CGHDRCAP_TSLEN_Msk      (0x4UL)        /*!< TSLEN (Bitfield-Mask: 0x01)                           */
 /* ========================================================  BITCNT  ========================================================= */
  #define R_I3C0_BITCNT_BCNT_Pos         (0UL)          /*!< BCNT (Bit 0)                                          */
  #define R_I3C0_BITCNT_BCNT_Msk         (0x1fUL)       /*!< BCNT (Bitfield-Mask: 0x1f)                            */
@@ -25228,10 +25388,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =========================================================================================================================== */
 
 /* ========================================================  PCNTR1  ========================================================= */
- #define R_PORT0_PCNTR1_PODR_Pos    (16UL)         /*!< PODR (Bit 16)                                         */
- #define R_PORT0_PCNTR1_PODR_Msk    (0xffff0000UL) /*!< PODR (Bitfield-Mask: 0xffff)                          */
  #define R_PORT0_PCNTR1_PDR_Pos     (0UL)          /*!< PDR (Bit 0)                                           */
  #define R_PORT0_PCNTR1_PDR_Msk     (0xffffUL)     /*!< PDR (Bitfield-Mask: 0xffff)                           */
+ #define R_PORT0_PCNTR1_PODR_Pos    (16UL)         /*!< PODR (Bit 16)                                         */
+ #define R_PORT0_PCNTR1_PODR_Msk    (0xffff0000UL) /*!< PODR (Bitfield-Mask: 0xffff)                          */
 /* ==========================================================  PDR  ========================================================== */
  #define R_PORT0_PDR_PDR_Pos        (0UL)          /*!< PDR (Bit 0)                                           */
  #define R_PORT0_PDR_PDR_Msk        (0x1UL)        /*!< PDR (Bitfield-Mask: 0x01)                             */
@@ -25239,10 +25399,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_PORT0_PODR_PODR_Pos      (0UL)          /*!< PODR (Bit 0)                                          */
  #define R_PORT0_PODR_PODR_Msk      (0x1UL)        /*!< PODR (Bitfield-Mask: 0x01)                            */
 /* ========================================================  PCNTR2  ========================================================= */
- #define R_PORT0_PCNTR2_EIDR_Pos    (16UL)         /*!< EIDR (Bit 16)                                         */
- #define R_PORT0_PCNTR2_EIDR_Msk    (0xffff0000UL) /*!< EIDR (Bitfield-Mask: 0xffff)                          */
  #define R_PORT0_PCNTR2_PIDR_Pos    (0UL)          /*!< PIDR (Bit 0)                                          */
  #define R_PORT0_PCNTR2_PIDR_Msk    (0xffffUL)     /*!< PIDR (Bitfield-Mask: 0xffff)                          */
+ #define R_PORT0_PCNTR2_EIDR_Pos    (16UL)         /*!< EIDR (Bit 16)                                         */
+ #define R_PORT0_PCNTR2_EIDR_Msk    (0xffff0000UL) /*!< EIDR (Bitfield-Mask: 0xffff)                          */
 /* =========================================================  PIDR  ========================================================== */
  #define R_PORT0_PIDR_PIDR_Pos      (0UL)          /*!< PIDR (Bit 0)                                          */
  #define R_PORT0_PIDR_PIDR_Msk      (0x1UL)        /*!< PIDR (Bitfield-Mask: 0x01)                            */
@@ -25250,10 +25410,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_PORT0_EIDR_EIDR_Pos      (0UL)          /*!< EIDR (Bit 0)                                          */
  #define R_PORT0_EIDR_EIDR_Msk      (0x1UL)        /*!< EIDR (Bitfield-Mask: 0x01)                            */
 /* ========================================================  PCNTR3  ========================================================= */
- #define R_PORT0_PCNTR3_PORR_Pos    (16UL)         /*!< PORR (Bit 16)                                         */
- #define R_PORT0_PCNTR3_PORR_Msk    (0xffff0000UL) /*!< PORR (Bitfield-Mask: 0xffff)                          */
  #define R_PORT0_PCNTR3_POSR_Pos    (0UL)          /*!< POSR (Bit 0)                                          */
  #define R_PORT0_PCNTR3_POSR_Msk    (0xffffUL)     /*!< POSR (Bitfield-Mask: 0xffff)                          */
+ #define R_PORT0_PCNTR3_PORR_Pos    (16UL)         /*!< PORR (Bit 16)                                         */
+ #define R_PORT0_PCNTR3_PORR_Msk    (0xffff0000UL) /*!< PORR (Bitfield-Mask: 0xffff)                          */
 /* =========================================================  POSR  ========================================================== */
  #define R_PORT0_POSR_POSR_Pos      (0UL)          /*!< POSR (Bit 0)                                          */
  #define R_PORT0_POSR_POSR_Msk      (0x1UL)        /*!< POSR (Bitfield-Mask: 0x01)                            */
@@ -25261,10 +25421,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_PORT0_PORR_PORR_Pos      (0UL)          /*!< PORR (Bit 0)                                          */
  #define R_PORT0_PORR_PORR_Msk      (0x1UL)        /*!< PORR (Bitfield-Mask: 0x01)                            */
 /* ========================================================  PCNTR4  ========================================================= */
- #define R_PORT0_PCNTR4_EORR_Pos    (16UL)         /*!< EORR (Bit 16)                                         */
- #define R_PORT0_PCNTR4_EORR_Msk    (0xffff0000UL) /*!< EORR (Bitfield-Mask: 0xffff)                          */
  #define R_PORT0_PCNTR4_EOSR_Pos    (0UL)          /*!< EOSR (Bit 0)                                          */
  #define R_PORT0_PCNTR4_EOSR_Msk    (0xffffUL)     /*!< EOSR (Bitfield-Mask: 0xffff)                          */
+ #define R_PORT0_PCNTR4_EORR_Pos    (16UL)         /*!< EORR (Bit 16)                                         */
+ #define R_PORT0_PCNTR4_EORR_Msk    (0xffff0000UL) /*!< EORR (Bitfield-Mask: 0xffff)                          */
 /* =========================================================  EOSR  ========================================================== */
  #define R_PORT0_EOSR_EOSR_Pos      (0UL)          /*!< EOSR (Bit 0)                                          */
  #define R_PORT0_EOSR_EOSR_Msk      (0x1UL)        /*!< EOSR (Bitfield-Mask: 0x01)                            */
@@ -25283,6 +25443,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* ========================================================  PFENET  ========================================================= */
  #define R_PMISC_PFENET_PHYMODE0_Pos    (4UL)    /*!< PHYMODE0 (Bit 4)                                      */
  #define R_PMISC_PFENET_PHYMODE0_Msk    (0x10UL) /*!< PHYMODE0 (Bitfield-Mask: 0x01)                        */
+ #define R_PMISC_PFENET_PHYMODE1_Pos    (5UL)    /*!< PHYMODE1 (Bit 5)                                      */
+ #define R_PMISC_PFENET_PHYMODE1_Msk    (0x20UL) /*!< PHYMODE1 (Bitfield-Mask: 0x01)                        */
 /* =========================================================  PWPR  ========================================================== */
  #define R_PMISC_PWPR_PFSWE_Pos         (6UL)    /*!< PFSWE (Bit 6)                                         */
  #define R_PMISC_PWPR_PFSWE_Msk         (0x40UL) /*!< PFSWE (Bitfield-Mask: 0x01)                           */
@@ -25299,20 +25461,10 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =========================================================================================================================== */
 
 /* ========================================================  R64CNT  ========================================================= */
- #define R_RTC_R64CNT_F1HZ_Pos        (6UL)      /*!< F1HZ (Bit 6)                                          */
- #define R_RTC_R64CNT_F1HZ_Msk        (0x40UL)   /*!< F1HZ (Bitfield-Mask: 0x01)                            */
- #define R_RTC_R64CNT_F2HZ_Pos        (5UL)      /*!< F2HZ (Bit 5)                                          */
- #define R_RTC_R64CNT_F2HZ_Msk        (0x20UL)   /*!< F2HZ (Bitfield-Mask: 0x01)                            */
- #define R_RTC_R64CNT_F4HZ_Pos        (4UL)      /*!< F4HZ (Bit 4)                                          */
- #define R_RTC_R64CNT_F4HZ_Msk        (0x10UL)   /*!< F4HZ (Bitfield-Mask: 0x01)                            */
- #define R_RTC_R64CNT_F8HZ_Pos        (3UL)      /*!< F8HZ (Bit 3)                                          */
- #define R_RTC_R64CNT_F8HZ_Msk        (0x8UL)    /*!< F8HZ (Bitfield-Mask: 0x01)                            */
- #define R_RTC_R64CNT_F16HZ_Pos       (2UL)      /*!< F16HZ (Bit 2)                                         */
- #define R_RTC_R64CNT_F16HZ_Msk       (0x4UL)    /*!< F16HZ (Bitfield-Mask: 0x01)                           */
- #define R_RTC_R64CNT_F32HZ_Pos       (1UL)      /*!< F32HZ (Bit 1)                                         */
- #define R_RTC_R64CNT_F32HZ_Msk       (0x2UL)    /*!< F32HZ (Bitfield-Mask: 0x01)                           */
- #define R_RTC_R64CNT_F64HZ_Pos       (0UL)      /*!< F64HZ (Bit 0)                                         */
- #define R_RTC_R64CNT_F64HZ_Msk       (0x1UL)    /*!< F64HZ (Bitfield-Mask: 0x01)                           */
+ #define R_RTC_R64CNT_R64OVF_Pos      (7UL)      /*!< R64OVF (Bit 7)                                        */
+ #define R_RTC_R64CNT_R64OVF_Msk      (0x80UL)   /*!< R64OVF (Bitfield-Mask: 0x01)                          */
+ #define R_RTC_R64CNT_FHZ_Pos         (0UL)      /*!< FHZ (Bit 0)                                           */
+ #define R_RTC_R64CNT_FHZ_Msk         (0x1UL)    /*!< FHZ (Bitfield-Mask: 0x01)                             */
 /* =========================================================  BCNT0  ========================================================= */
  #define R_RTC_BCNT0_BCNT0_Pos        (0UL)      /*!< BCNT0 (Bit 0)                                         */
  #define R_RTC_BCNT0_BCNT0_Msk        (0xffUL)   /*!< BCNT0 (Bitfield-Mask: 0xff)                           */
@@ -26530,8 +26682,6 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* =======================================================  SCKDIVCR2  ======================================================= */
  #define R_SYSTEM_SCKDIVCR2_CPUCK_Pos            (0UL)          /*!< CPUCK (Bit 0)                                         */
  #define R_SYSTEM_SCKDIVCR2_CPUCK_Msk            (0xfUL)        /*!< CPUCK (Bitfield-Mask: 0x0f)                           */
- #define R_SYSTEM_SCKDIVCR2_CPUCK1_Pos           (4UL)          /*!< CPUCK1 (Bit 4)                                        */
- #define R_SYSTEM_SCKDIVCR2_CPUCK1_Msk           (0xf0UL)       /*!< CPUCK1 (Bitfield-Mask: 0x0f)                          */
 /* ========================================================  SCKSCR  ========================================================= */
  #define R_SYSTEM_SCKSCR_CKSEL_Pos               (0UL)          /*!< CKSEL (Bit 0)                                         */
  #define R_SYSTEM_SCKSCR_CKSEL_Msk               (0x7UL)        /*!< CKSEL (Bitfield-Mask: 0x07)                           */
@@ -26776,8 +26926,6 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_SYSTEM_RSTSR1_CMRF_Msk                (0x4000UL)     /*!< CMRF (Bitfield-Mask: 0x01)                            */
  #define R_SYSTEM_RSTSR1_WDT1RF_Pos              (17UL)         /*!< WDT1RF (Bit 17)                                       */
  #define R_SYSTEM_RSTSR1_WDT1RF_Msk              (0x20000UL)    /*!< WDT1RF (Bitfield-Mask: 0x01)                          */
- #define R_SYSTEM_RSTSR1_CLU1RF_Pos              (20UL)         /*!< CLU1RF (Bit 20)                                       */
- #define R_SYSTEM_RSTSR1_CLU1RF_Msk              (0x100000UL)   /*!< CLU1RF (Bitfield-Mask: 0x01)                          */
  #define R_SYSTEM_RSTSR1_LM1RF_Pos               (21UL)         /*!< LM1RF (Bit 21)                                        */
  #define R_SYSTEM_RSTSR1_LM1RF_Msk               (0x200000UL)   /*!< LM1RF (Bitfield-Mask: 0x01)                           */
  #define R_SYSTEM_RSTSR1_NWRF_Pos                (22UL)         /*!< NWRF (Bit 22)                                         */
@@ -27292,10 +27440,6 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_SYSTEM_SYRSTMSK0_BUSMASK_Pos          (7UL)          /*!< BUSMASK (Bit 7)                                       */
  #define R_SYSTEM_SYRSTMSK0_BUSMASK_Msk          (0x80UL)       /*!< BUSMASK (Bitfield-Mask: 0x01)                         */
 /* =======================================================  SYRSTMSK1  ======================================================= */
- #define R_SYSTEM_SYRSTMSK1_WDT1MASK_Pos         (1UL)          /*!< WDT1MASK (Bit 1)                                      */
- #define R_SYSTEM_SYRSTMSK1_WDT1MASK_Msk         (0x2UL)        /*!< WDT1MASK (Bitfield-Mask: 0x01)                        */
- #define R_SYSTEM_SYRSTMSK1_CLUP1MASK_Pos        (4UL)          /*!< CLUP1MASK (Bit 4)                                     */
- #define R_SYSTEM_SYRSTMSK1_CLUP1MASK_Msk        (0x10UL)       /*!< CLUP1MASK (Bitfield-Mask: 0x01)                       */
  #define R_SYSTEM_SYRSTMSK1_LM1MASK_Pos          (5UL)          /*!< LM1MASK (Bit 5)                                       */
  #define R_SYSTEM_SYRSTMSK1_LM1MASK_Msk          (0x20UL)       /*!< LM1MASK (Bitfield-Mask: 0x01)                         */
  #define R_SYSTEM_SYRSTMSK1_NWMASK_Pos           (7UL)          /*!< NWMASK (Bit 7)                                        */
@@ -28458,6 +28602,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_CPSCU_ICUSARE_SALVD2WUP_Msk       (0x80000UL)    /*!< SALVD2WUP (Bitfield-Mask: 0x01)                       */
  #define R_CPSCU_ICUSARE_SAVBATTWUP_Pos      (20UL)         /*!< SAVBATTWUP (Bit 20)                                   */
  #define R_CPSCU_ICUSARE_SAVBATTWUP_Msk      (0x100000UL)   /*!< SAVBATTWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARE_SAACMPLP0WUP_Pos    (23UL)         /*!< SAACMPLP0WUP (Bit 23)                                 */
+ #define R_CPSCU_ICUSARE_SAACMPLP0WUP_Msk    (0x800000UL)   /*!< SAACMPLP0WUP (Bitfield-Mask: 0x01)                    */
  #define R_CPSCU_ICUSARE_SARTCALMWUP_Pos     (24UL)         /*!< SARTCALMWUP (Bit 24)                                  */
  #define R_CPSCU_ICUSARE_SARTCALMWUP_Msk     (0x1000000UL)  /*!< SARTCALMWUP (Bitfield-Mask: 0x01)                     */
  #define R_CPSCU_ICUSARE_SARTCPRDWUP_Pos     (25UL)         /*!< SARTCPRDWUP (Bit 25)                                  */
@@ -28481,6 +28627,8 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
  #define R_CPSCU_ICUSARF_SAAGT3CBWUP_Msk     (0x4UL)        /*!< SAAGT3CBWUP (Bitfield-Mask: 0x01)                     */
  #define R_CPSCU_ICUSARF_SACOMPHS0WUP_Pos    (3UL)          /*!< SACOMPHS0WUP (Bit 3)                                  */
  #define R_CPSCU_ICUSARF_SACOMPHS0WUP_Msk    (0x8UL)        /*!< SACOMPHS0WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARF_SASOSCWUP_Pos       (7UL)          /*!< SASOSCWUP (Bit 7)                                     */
+ #define R_CPSCU_ICUSARF_SASOSCWUP_Msk       (0x80UL)       /*!< SASOSCWUP (Bitfield-Mask: 0x01)                       */
  #define R_CPSCU_ICUSARF_SAULP0UWUP_Pos      (8UL)          /*!< SAULP0UWUP (Bit 8)                                    */
  #define R_CPSCU_ICUSARF_SAULP0UWUP_Msk      (0x100UL)      /*!< SAULP0UWUP (Bitfield-Mask: 0x01)                      */
  #define R_CPSCU_ICUSARF_SAULP0AWUP_Pos      (9UL)          /*!< SAULP0AWUP (Bit 9)                                    */
@@ -28504,18 +28652,39 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
 /* ========================================================  ICUSARI  ======================================================== */
  #define R_CPSCU_ICUSARI_SAIELSRn_Pos        (0UL)          /*!< SAIELSRn (Bit 0)                                      */
  #define R_CPSCU_ICUSARI_SAIELSRn_Msk        (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
+/* ========================================================  ICUSARM  ======================================================== */
+ #define R_CPSCU_ICUSARM_SAINTUR0WUP_Pos     (0UL)          /*!< SAINTUR0WUP (Bit 0)                                   */
+ #define R_CPSCU_ICUSARM_SAINTUR0WUP_Msk     (0x1UL)        /*!< SAINTUR0WUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARM_SAINTURE0WUP_Pos    (1UL)          /*!< SAINTURE0WUP (Bit 1)                                  */
+ #define R_CPSCU_ICUSARM_SAINTURE0WUP_Msk    (0x2UL)        /*!< SAINTURE0WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARM_SAINTUR1WUP_Pos     (2UL)          /*!< SAINTUR1WUP (Bit 2)                                   */
+ #define R_CPSCU_ICUSARM_SAINTUR1WUP_Msk     (0x4UL)        /*!< SAINTUR1WUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARM_SAINTURE1WUP_Pos    (3UL)          /*!< SAINTURE1WUP (Bit 3)                                  */
+ #define R_CPSCU_ICUSARM_SAINTURE1WUP_Msk    (0x8UL)        /*!< SAINTURE1WUP (Bitfield-Mask: 0x01)                    */
 /* ========================================================  BUSSARA  ======================================================== */
  #define R_CPSCU_BUSSARA_BUSSA0_Pos          (0UL)          /*!< BUSSA0 (Bit 0)                                        */
  #define R_CPSCU_BUSSARA_BUSSA0_Msk          (0x1UL)        /*!< BUSSA0 (Bitfield-Mask: 0x01)                          */
 /* ========================================================  BUSSARB  ======================================================== */
  #define R_CPSCU_BUSSARB_BUSSB0_Pos          (0UL)          /*!< BUSSB0 (Bit 0)                                        */
  #define R_CPSCU_BUSSARB_BUSSB0_Msk          (0x1UL)        /*!< BUSSB0 (Bitfield-Mask: 0x01)                          */
+/* ========================================================  BUSSARC  ======================================================== */
+ #define R_CPSCU_BUSSARC_BUSSC0_Pos          (0UL)          /*!< BUSSC0 (Bit 0)                                        */
+ #define R_CPSCU_BUSSARC_BUSSC0_Msk          (0x1UL)        /*!< BUSSC0 (Bitfield-Mask: 0x01)                          */
+/* ========================================================  BUSPARC  ======================================================== */
+ #define R_CPSCU_BUSPARC_BUSPA0_Pos          (0UL)          /*!< BUSPA0 (Bit 0)                                        */
+ #define R_CPSCU_BUSPARC_BUSPA0_Msk          (0x1UL)        /*!< BUSPA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  MMPUSARA  ======================================================== */
  #define R_CPSCU_MMPUSARA_MMPUAnSA_Pos       (0UL)          /*!< MMPUAnSA (Bit 0)                                      */
  #define R_CPSCU_MMPUSARA_MMPUAnSA_Msk       (0xffUL)       /*!< MMPUAnSA (Bitfield-Mask: 0xff)                        */
 /* =======================================================  MMPUSARB  ======================================================== */
  #define R_CPSCU_MMPUSARB_MMPUB0SA_Pos       (0UL)          /*!< MMPUB0SA (Bit 0)                                      */
  #define R_CPSCU_MMPUSARB_MMPUB0SA_Msk       (0x1UL)        /*!< MMPUB0SA (Bitfield-Mask: 0x01)                        */
+/* ========================================================  TZFSAR  ========================================================= */
+ #define R_CPSCU_TZFSAR_TZFSA0_Pos           (0UL)          /*!< TZFSA0 (Bit 0)                                        */
+ #define R_CPSCU_TZFSAR_TZFSA0_Msk           (0x1UL)        /*!< TZFSA0 (Bitfield-Mask: 0x01)                          */
+/* =======================================================  DEBUGSAR  ======================================================== */
+ #define R_CPSCU_DEBUGSAR_DBGSA0_Pos         (0UL)          /*!< DBGSA0 (Bit 0)                                        */
+ #define R_CPSCU_DEBUGSAR_DBGSA0_Msk         (0x1UL)        /*!< DBGSA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  DMACCHSAR  ======================================================= */
  #define R_CPSCU_DMACCHSAR_DMACCHSARn_Pos    (0UL)          /*!< DMACCHSARn (Bit 0)                                    */
  #define R_CPSCU_DMACCHSAR_DMACCHSARn_Msk    (0xffUL)       /*!< DMACCHSARn (Bitfield-Mask: 0xff)                      */

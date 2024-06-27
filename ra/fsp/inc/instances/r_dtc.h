@@ -38,6 +38,9 @@ FSP_HEADER
 /** Max configurable number of blocks to transfer in BLOCK MODE */
 #define DTC_MAX_BLOCK_COUNT               (0x10000)
 
+/** Alignment required for transfer_info_t structures. */
+#define DTC_TRANSFER_INFO_ALIGNMENT       BSP_ALIGN_VARIABLE(BSP_FEATURE_DTC_TRANSFER_INFO_ALIGNMENT)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/

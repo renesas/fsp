@@ -71,7 +71,7 @@ typedef enum e_elc_event_ra4m1
     ELC_EVENT_AGT1_COMPARE_A                = (0x022), // Compare match A
     ELC_EVENT_AGT1_COMPARE_B                = (0x023), // Compare match B
     ELC_EVENT_IWDT_UNDERFLOW                = (0x024), // IWDT underflow
-    ELC_EVENT_WDT_UNDERFLOW                 = (0x025), // WDT0 underflow
+    ELC_EVENT_WDT_UNDERFLOW                 = (0x025), // WDT underflow
     ELC_EVENT_RTC_ALARM                     = (0x026), // Alarm interrupt
     ELC_EVENT_RTC_PERIOD                    = (0x027), // Periodic interrupt
     ELC_EVENT_RTC_CARRY                     = (0x028), // Carry interrupt

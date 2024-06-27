@@ -58,7 +58,7 @@ typedef enum e_elc_event_ra2e2
     ELC_EVENT_AGT1_COMPARE_A                = (0x015), // Compare match A
     ELC_EVENT_AGT1_COMPARE_B                = (0x016), // Compare match B
     ELC_EVENT_IWDT_UNDERFLOW                = (0x017), // IWDT underflow
-    ELC_EVENT_WDT_UNDERFLOW                 = (0x018), // WDT0 underflow
+    ELC_EVENT_WDT_UNDERFLOW                 = (0x018), // WDT underflow
     ELC_EVENT_ADC0_SCAN_END                 = (0x01C), // End of A/D scanning operation
     ELC_EVENT_ADC0_SCAN_END_B               = (0x01D), // A/D scan end interrupt for group B
     ELC_EVENT_ADC0_WINDOW_A                 = (0x01E), // Window A Compare match interrupt

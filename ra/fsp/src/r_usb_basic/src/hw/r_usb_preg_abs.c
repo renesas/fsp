@@ -490,10 +490,10 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
     uint16_t hs_flag = 0;
  #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
- #if defined(BSP_MCU_GROUP_RA2A1)
+ #if defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU)
 
     /* The value of "write_p" is odd */
-    if (USB_ODD == (write_p && USB_ODD))
+    if (USB_ODD == ((uint32_t) write_p & USB_ODD))
     {
         /* 8bit access */
         /* write_p == odd */
@@ -510,7 +510,7 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
 
         return write_p;
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif                                /* defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU) */
 
     if ((USB_CFG_IP0 == p_utr->ip) || (0 == hs_flag))
     {
@@ -616,10 +616,10 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
     uint16_t hs_flag = 0;
  #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
- #if defined(BSP_MCU_GROUP_RA2A1)
+ #if defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU)
 
     /* The value of "read_p" is odd */
-    if (USB_ODD == (read_p && USB_ODD))
+    if (USB_ODD == ((uint32_t) read_p & USB_ODD))
     {
         /* 8bit access */
         /* read_p == odd */
@@ -636,7 +636,7 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
 
         return read_p;
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif                                /* defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU) */
 
     if ((USB_CFG_IP0 == p_utr->ip) || (0 == hs_flag))
     {

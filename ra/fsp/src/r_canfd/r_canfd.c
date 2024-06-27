@@ -883,8 +883,11 @@ fsp_err_t R_CANFD_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_i
     p_info->rx_fifo_status       = (~p_ctrl->p_reg->CFDFESTS) &
                                    (R_CANFD_CFDFESTS_RFXEMP_Msk | R_CANFD_CFDFESTS_CFXEMP_Msk);
 
-    /* Clear error flags */
-    p_ctrl->p_reg->CFDC[interlaced_channel].ERFL &= ~((uint32_t) UINT16_MAX);
+    /* Clear error flags if the error IRQ is not enabled. */
+    if (p_ctrl->p_cfg->error_irq < 0)
+    {
+        p_ctrl->p_reg->CFDC[interlaced_channel].ERFL = 0;
+    }
 
     return FSP_SUCCESS;
 }

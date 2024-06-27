@@ -79,6 +79,24 @@ static const hw_sce_ecc_generatesign_t g_ecdsa_generate_sign_lookup[][2] =
   #endif
 };
 
+static const hw_sce_ecc_generatesign_t g_ed_ecdsa_generate_sign_lookup[][2] =
+{
+  #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_25519_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
+        HW_SCE_ECC_255GenerateSign,
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1))][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
+        HW_SCE_ECC_255GenerateSign,
+   #endif
+   #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_25519_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
+        HW_SCE_ECC_255HrkGenerateSign,
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1))][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
+        HW_SCE_ECC_255HrkGenerateSign,
+   #endif
+  #endif
+};
+
 static const hw_sce_ecc_verifysign_t g_ecdsa_verify_sign_lookup[] =
 {
   #if defined(MBEDTLS_ECP_DP_SECP256R1_ENABLED) || defined(MBEDTLS_ECP_DP_SECP256K1_ENABLED) || \
@@ -350,6 +368,12 @@ int ecp_can_do_sce (mbedtls_ecp_group_id gid)
           return 1;
       }
   #endif
+  #ifdef MBEDTLS_ECP_DP_CURVE25519_ENABLED
+      case MBEDTLS_ECP_DP_CURVE25519:
+      {
+          return 1;
+      }
+  #endif
   #endif
         default:
 
@@ -392,6 +416,15 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             *p_cmd           = 0x0;
             priv_key_command = SCE_OEM_CMD_ECC_P521_PRIVATE;
             *pp_domain_param = (uint32_t *) &DomainParam_NIST_P521[0];
+            break;
+        }
+
+        case MBEDTLS_ECP_DP_CURVE25519:
+        {
+            *p_curve_type    = SCE_ECC_CURVE_TYPE_NIST;
+            *p_cmd           = 0x0;
+            priv_key_command = SCE_OEM_CMD_ED25519_PRIVATE;
+            *pp_domain_param = (uint32_t *) &DomainParam_NIST_Ed25519[0];
             break;
         }
 #endif
@@ -474,8 +507,17 @@ int mbedtls_ecdsa_sign (mbedtls_ecp_group * grp,
         return MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
     }
 
+    if (MBEDTLS_ECP_DP_CURVE25519 == grp->id)
+    {
+    p_hw_sce_ecc_generatesign =
+        g_ed_ecdsa_generate_sign_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
+    }
+    else
+    {
     p_hw_sce_ecc_generatesign =
         g_ecdsa_generate_sign_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
+    }
+
     if (NULL == p_hw_sce_ecc_generatesign)
     {
         return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;

@@ -30,48 +30,56 @@
                                                              (uint32_t) R_DMAC0))
 
 /* Transfer Count Register A Bit Field Definitions */
-#define DMAC_PRV_DMCRA_LOW_OFFSET      (0U)
-#define DMAC_PRV_DMCRA_LOW_MASK        (0x3FFU << DMAC_PRV_DMCRA_LOW_OFFSET)
-#define DMAC_PRV_DMCRA_HIGH_OFFSET     (16U)
-#define DMAC_PRV_DMCRA_HIGH_MASK       (0x3FFU << DMAC_PRV_DMCRA_HIGH_OFFSET)
+#define DMAC_PRV_DMCRA_LOW_OFFSET        (0U)
+#define DMAC_PRV_DMCRA_LOW_MASK          (0x3FFU << DMAC_PRV_DMCRA_LOW_OFFSET)
+#define DMAC_PRV_DMCRA_HIGH_OFFSET       (16U)
+#define DMAC_PRV_DMCRA_HIGH_MASK         (0x3FFU << DMAC_PRV_DMCRA_HIGH_OFFSET)
 
 /* Transfer Mode Register Bit Field Definitions */
-#define DMAC_PRV_DMTMD_DCTG_OFFSET     (0U)
-#define DMAC_PRV_DMTMD_DCTG_MASK       (3U << DMAC_PRV_DMTMD_DCTG_OFFSET)
-#define DMAC_PRV_DMTMD_SZ_OFFSET       (8U)
-#define DMAC_PRV_DMTMD_SZ_MASK         (3U << DMAC_PRV_DMTMD_SZ_OFFSET)
-#define DMAC_PRV_DMTMD_DTS_OFFSET      (12U)
-#define DMAC_PRV_DMTMD_DTS_MASK        (3U << DMAC_PRV_DMTMD_DTS_OFFSET)
-#define DMAC_PRV_DMTMD_MD_OFFSET       (14U)
-#define DMAC_PRV_DMTMD_MD_MASK         (3U << DMAC_PRV_DMTMD_MD_OFFSET)
+#define DMAC_PRV_DMTMD_DCTG_OFFSET       (0U)
+#define DMAC_PRV_DMTMD_DCTG_MASK         (3U << DMAC_PRV_DMTMD_DCTG_OFFSET)
+#define DMAC_PRV_DMTMD_SZ_OFFSET         (8U)
+#define DMAC_PRV_DMTMD_SZ_MASK           (3U << DMAC_PRV_DMTMD_SZ_OFFSET)
+#define DMAC_PRV_DMTMD_DTS_OFFSET        (12U)
+#define DMAC_PRV_DMTMD_DTS_MASK          (3U << DMAC_PRV_DMTMD_DTS_OFFSET)
+#define DMAC_PRV_DMTMD_MD_OFFSET         (14U)
+#define DMAC_PRV_DMTMD_MD_MASK           (3U << DMAC_PRV_DMTMD_MD_OFFSET)
 
 /* Interrupt Setting Register Bit Field Definitions */
-#define DMAC_PRV_DMINT_DARIE_OFFSET    (0U)
-#define DMAC_PRV_DMINT_DARIE_MASK      (1U << DMAC_PRV_DMINT_DARIE_OFFSET)
-#define DMAC_PRV_DMINT_SARIE_OFFSET    (1U)
-#define DMAC_PRV_DMINT_SARIE_MASK      (1U << DMAC_PRV_DMINT_SARIE_OFFSET)
-#define DMAC_PRV_DMINT_RPTIE_OFFSET    (2U)
-#define DMAC_PRV_DMINT_RPTIE_MASK      (1U << DMAC_PRV_DMINT_RPTIE_OFFSET)
-#define DMAC_PRV_DMINT_ESIE_OFFSET     (3U)
-#define DMAC_PRV_DMINT_ESIE_MASK       (1U << DMAC_PRV_DMINT_ESIE_OFFSET)
-#define DMAC_PRV_DMINT_DTIE_OFFSET     (4U)
-#define DMAC_PRV_DMINT_DTIE_MASK       (1U << DMAC_PRV_DMINT_DTIE_OFFSET)
+#define DMAC_PRV_DMINT_DARIE_OFFSET      (0U)
+#define DMAC_PRV_DMINT_DARIE_MASK        (1U << DMAC_PRV_DMINT_DARIE_OFFSET)
+#define DMAC_PRV_DMINT_SARIE_OFFSET      (1U)
+#define DMAC_PRV_DMINT_SARIE_MASK        (1U << DMAC_PRV_DMINT_SARIE_OFFSET)
+#define DMAC_PRV_DMINT_RPTIE_OFFSET      (2U)
+#define DMAC_PRV_DMINT_RPTIE_MASK        (1U << DMAC_PRV_DMINT_RPTIE_OFFSET)
+#define DMAC_PRV_DMINT_ESIE_OFFSET       (3U)
+#define DMAC_PRV_DMINT_ESIE_MASK         (1U << DMAC_PRV_DMINT_ESIE_OFFSET)
+#define DMAC_PRV_DMINT_DTIE_OFFSET       (4U)
+#define DMAC_PRV_DMINT_DTIE_MASK         (1U << DMAC_PRV_DMINT_DTIE_OFFSET)
 
 /* Address Mode Register Bit Field Definitions */
-#define DMAC_PRV_DMAMD_DARA_OFFSET     (0U)
-#define DMAC_PRV_DMAMD_DARA_MASK       (0x1FU << DMAC_PRV_DMAMD_DARA_OFFSET)
-#define DMAC_PRV_DMAMD_DM_OFFSET       (6U)
-#define DMAC_PRV_DMAMD_DM_MASK         (3U << DMAC_PRV_DMAMD_DM_OFFSET)
-#define DMAC_PRV_DMAMD_SARA_OFFSET     (8U)
-#define DMAC_PRV_DMAMD_SARA_MASK       (0x1FU << DMAC_PRV_DMAMD_SARA_OFFSET)
-#define DMAC_PRV_DMAMD_SM_OFFSET       (14U)
-#define DMAC_PRV_DMAMD_SM_MASK         (3U << DMAC_PRV_DMAMD_SM_OFFSET)
+#define DMAC_PRV_DMAMD_DARA_OFFSET       (0U)
+#define DMAC_PRV_DMAMD_DARA_MASK         (0x1FU << DMAC_PRV_DMAMD_DARA_OFFSET)
+#define DMAC_PRV_DMAMD_DM_OFFSET         (6U)
+#define DMAC_PRV_DMAMD_DM_MASK           (3U << DMAC_PRV_DMAMD_DM_OFFSET)
+#define DMAC_PRV_DMAMD_SARA_OFFSET       (8U)
+#define DMAC_PRV_DMAMD_SARA_MASK         (0x1FU << DMAC_PRV_DMAMD_SARA_OFFSET)
+#define DMAC_PRV_DMAMD_SM_OFFSET         (14U)
+#define DMAC_PRV_DMAMD_SM_MASK           (3U << DMAC_PRV_DMAMD_SM_OFFSET)
 
 /* Software Start Register Bit Field Definitions */
-#define DMAC_PRV_DMREQ_SWREQ_OFFSET    (0U)
-#define DMAC_PRV_DMREQ_SWREQ_MASK      (1U << DMAC_PRV_DMREQ_SWREQ_OFFSET)
-#define DMAC_PRV_DMREQ_CLRS_OFFSET     (4U)
-#define DMAC_PRV_DMREQ_CLRS_MASK       (1U << DMAC_PRV_DMREQ_CLRS_OFFSET)
+#define DMAC_PRV_DMREQ_SWREQ_OFFSET      (0U)
+#define DMAC_PRV_DMREQ_SWREQ_MASK        (1U << DMAC_PRV_DMREQ_SWREQ_OFFSET)
+#define DMAC_PRV_DMREQ_CLRS_OFFSET       (4U)
+#define DMAC_PRV_DMREQ_CLRS_MASK         (1U << DMAC_PRV_DMREQ_CLRS_OFFSET)
+
+#ifndef DMAC_CFG_ERROR_CHANNEL_CLEAR
+ #define DMAC_CFG_ERROR_CHANNEL_CLEAR    (0)
+#endif
+
+#ifndef DMAC_CFG_PRIORITY_MODE
+ #define DMAC_CFG_PRIORITY_MODE          (0)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -168,6 +176,11 @@ fsp_err_t R_DMAC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const 
     R_BSP_MODULE_START(FSP_IP_DMAC, p_extend->channel);
 
     R_DMA->DMAST = 1;
+
+#if BSP_FEATURE_DMAC_HAS_DMCTL
+    R_DMA->DMCTL = (DMAC_CFG_PRIORITY_MODE << R_DMA_DMCTL_PR_Pos) |
+                   (DMAC_CFG_ERROR_CHANNEL_CLEAR << R_DMA_DMCTL_ERCH_Pos);
+#endif
 
     /* Configure the transfer settings. */
     r_dmac_config_transfer_info(p_ctrl, p_cfg->p_info);
@@ -404,10 +417,10 @@ fsp_err_t R_DMAC_Reload (transfer_ctrl_t * const p_api_ctrl,
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
  **********************************************************************************************************************/
-fsp_err_t R_DMAC_CallbackSet (transfer_ctrl_t * const       p_api_ctrl,
-                              void (                      * p_callback)(dmac_callback_args_t *),
-                              void const * const            p_context,
-                              dmac_callback_args_t * const  p_callback_memory)
+fsp_err_t R_DMAC_CallbackSet (transfer_ctrl_t * const      p_api_ctrl,
+                              void (                     * p_callback)(dmac_callback_args_t *),
+                              void const * const           p_context,
+                              dmac_callback_args_t * const p_callback_memory)
 {
     FSP_PARAMETER_NOT_USED(p_callback_memory);
 
@@ -419,12 +432,11 @@ fsp_err_t R_DMAC_CallbackSet (transfer_ctrl_t * const       p_api_ctrl,
     FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_ctrl->p_callback        = p_callback;
-    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback = p_callback;
+    p_ctrl->p_context  = p_context;
 
     return FSP_SUCCESS;
 }
-
 
 /*******************************************************************************************************************//**
  * Disable transfer and clean up internal data. Implements @ref transfer_api_t::close.
@@ -766,7 +778,7 @@ void dmac_int_isr (void)
     /* Clear IRQ to make sure it doesn't fire again after exiting */
     R_BSP_IrqStatusClear(irq);
 
-    dmac_instance_ctrl_t * p_ctrl   = (dmac_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /* Call the callback routine if one is available */
     dmac_callback_args_t args;

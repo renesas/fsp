@@ -17,18 +17,18 @@
 extern "C" {
  #endif
 
-typedef struct sce_sha_md5_handle bootutil_sha256_context;
-static inline void bootutil_sha256_init (bootutil_sha256_context * ctx)
+typedef struct sce_sha_md5_handle bootutil_sha_context;
+static inline void bootutil_sha_init (bootutil_sha_context * ctx)
 {
     R_SCE_SHA256_Init(ctx);
 }
 
-static inline void bootutil_sha256_drop (bootutil_sha256_context * ctx)
+static inline void bootutil_sha_drop (bootutil_sha_context * ctx)
 {
     (void) ctx;
 }
 
-static inline int bootutil_sha256_update (bootutil_sha256_context * ctx, const void * data, uint32_t data_len)
+static inline int bootutil_sha_update (bootutil_sha_context * ctx, const void * data, uint32_t data_len)
 {
     fsp_err_t fsp_err = FSP_SUCCESS;
     fsp_err = R_SCE_SHA256_Update(ctx, (uint8_t *) data, data_len);
@@ -40,7 +40,7 @@ static inline int bootutil_sha256_update (bootutil_sha256_context * ctx, const v
     return 0;
 }
 
-static inline int bootutil_sha256_finish (bootutil_sha256_context * ctx, uint8_t * output)
+static inline int bootutil_sha_finish (bootutil_sha_context * ctx, uint8_t * output)
 {
     fsp_err_t fsp_err       = FSP_SUCCESS;
     uint32_t  digest_length = 0;

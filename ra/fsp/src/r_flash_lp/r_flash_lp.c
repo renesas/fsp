@@ -193,12 +193,11 @@ static void r_flash_lp_df_enter_pe_mode(flash_lp_instance_ctrl_t * const p_ctrl)
 
  #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
 
-static inline bool r_flash_lp_frdyi_df_bgo_blankcheck(flash_lp_instance_ctrl_t * p_ctrl,
-                                                      flash_callback_args_t    * p_cb_data);
+static bool r_flash_lp_frdyi_df_bgo_blankcheck(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
 
-static inline bool r_flash_lp_frdyi_df_bgo_erase(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
+static bool r_flash_lp_frdyi_df_bgo_erase(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
 
-static inline bool r_flash_lp_frdyi_df_bgo_write(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
+static bool r_flash_lp_frdyi_df_bgo_write(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
 
  #endif
 static fsp_err_t r_flash_lp_df_write_monitor(flash_lp_instance_ctrl_t * const p_ctrl);
@@ -1909,7 +1908,8 @@ static void r_flash_lp_reset (flash_lp_instance_ctrl_t * const p_ctrl)
  *
  * @retval     true       When operation is completed or error has occurred.
  **********************************************************************************************************************/
-static inline bool r_flash_lp_frdyi_df_bgo_write (flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data)
+__STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_write (flash_lp_instance_ctrl_t * p_ctrl,
+                                                    flash_callback_args_t    * p_cb_data)
 {
     bool      operation_complete = false;
     fsp_err_t result             = FSP_SUCCESS;
@@ -1945,7 +1945,8 @@ static inline bool r_flash_lp_frdyi_df_bgo_write (flash_lp_instance_ctrl_t * p_c
  *
  * @retval     true       When operation is completed or error has occurred.
  **********************************************************************************************************************/
-static inline bool r_flash_lp_frdyi_df_bgo_erase (flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data)
+__STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_erase (flash_lp_instance_ctrl_t * p_ctrl,
+                                                    flash_callback_args_t    * p_cb_data)
 {
     fsp_err_t result = FSP_SUCCESS;
 
@@ -1977,8 +1978,8 @@ static inline bool r_flash_lp_frdyi_df_bgo_erase (flash_lp_instance_ctrl_t * p_c
  *
  * @retval     true       When operation is completed or error has occurred.
  **********************************************************************************************************************/
-static inline bool r_flash_lp_frdyi_df_bgo_blankcheck (flash_lp_instance_ctrl_t * p_ctrl,
-                                                       flash_callback_args_t    * p_cb_data)
+__STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_blankcheck (flash_lp_instance_ctrl_t * p_ctrl,
+                                                         flash_callback_args_t    * p_cb_data)
 {
     fsp_err_t result = FSP_SUCCESS;
 
