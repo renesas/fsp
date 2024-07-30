@@ -62,6 +62,10 @@ __STATIC_INLINE void HW_SCE_PowerOff (void)
 {
 #if BSP_FEATURE_TRNG_HAS_MODULE_STOP
 
+    // Disable hardware TRNG before module stop.
+    // Note: Must perform this step BEFORE TRNG module stop, or the TRNG hardware will draw excessive current in power off.
+    R_TRNG->TRNGSCR0_b.SGCEN = 0;
+
     // RA2 MCU series has separate power control for RNG
     R_MSTP->MSTPCRC_b.MSTPC28 = 1;
 #endif
