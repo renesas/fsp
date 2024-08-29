@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -357,7 +357,9 @@ Disable</li>
 <tr class="tree_none">
 <td>DOTF Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Enable</li>
+Enable (Protected Mode)</li>
+<li>
+Enable (Compatibility Mode)</li>
 <li>
 Disable</li>
 </ul>
@@ -529,6 +531,8 @@ No Extension</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">AES Key Length</td><td>MCU Specific Options</td><td></td><td>Select AES key length </td></tr>
 <tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Key Format</td><td>MCU Specific Options</td><td></td><td>Select key format </td></tr>
+<tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Decryption start address</td><td>Value must be an integer between 0x80000000 and 0x9FFFFFFF</td><td>0x90000000 </td><td>OSPI decryption start address </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Decryption end address</td><td>Value must be an integer between 0x80000000 and 0x9FFFFFFF</td><td>0x90001FFF </td><td>OSPI decryption end address </td></tr>
@@ -581,7 +585,15 @@ xSPI Commands</h2>
 <p>If custom DOPI erase commands are not specified, ensure the erase commands are the appropriate 2-byte DOPI commands. The lower byte will be used for 1-byte command protocols.</p>
 <h3><a class="anchor" id="r-ospi-dotf-configuration"></a>
 DOTF Support</h3>
-<p>Decryption-On-The-Fly is configurable for OSPI Flash and is disabled from the build by default. Using the DOTF feature requires first creating the encrypted blob on the PC and then configuring the DOTF module with the appropriate parameters to allow decryption of the blob once it is programmed into OSPI. Use the Security Key Management Tool (<a href="https://www.renesas.com/us/en/software-tool/security-key-management-tool">https://www.renesas.com/us/en/software-tool/security-key-management-tool</a>) to create the encrypted blob. Example: To encrypt a 4096 byte area in a input srec file from 0x90000000 to 0x90000FFF using a 128 AES encryption key "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" and iv "00000000000000000000000000000000" use SKMT with the following arguments: skmt.exe /encdotf /keytype "AES-128" /enckey "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" /nonce "00000000000000000000000000000000" /startaddr "90000000" /endaddr "90000FFF" /prg "input.srec" /incplain /output "encrypted_output.srec"</p>
+<p>Decryption-On-The-Fly is configurable for OSPI Flash and is disabled from the build by default.</p>
+<h4>Supported Key Formats</h4>
+<ul>
+<li>When the Compatibility Mode stack is added for the crypto engine, the user can provide either a wrapped or plaintext AES key to the DOTF module.</li>
+<li>When the Protected Mode stack is used, only wrapped keys are supported.</li>
+</ul>
+<p>When configuring the DOTF options, make sure that the key format is specified.</p>
+<dl class="section note"><dt>Note</dt><dd><b>For a detailed description of the Crypto Engine operating modes, refer to Application Note R11AN0498.</b></dd></dl>
+<p>Using the DOTF feature requires first creating the encrypted blob on the PC and then configuring the DOTF module with the appropriate parameters to allow decryption of the blob once it is programmed into OSPI. Use the Security Key Management Tool (<a href="https://www.renesas.com/us/en/software-tool/security-key-management-tool">https://www.renesas.com/us/en/software-tool/security-key-management-tool</a>) to create the encrypted blob. Example: To encrypt a 4096 byte area in a input srec file from 0x90000000 to 0x90000FFF using a 128 AES encryption key "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" and iv "00000000000000000000000000000000" use SKMT with the following arguments: skmt.exe /encdotf /keytype "AES-128" /enckey "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" /nonce "00000000000000000000000000000000" /startaddr "90000000" /endaddr "90000FFF" /prg "input.srec" /incplain /output "encrypted_output.srec"</p>
 <p>The values for key, iv and decryption area start and end addresses that were used to create the blob using SKMT must be set in the DOTF configuration in FSP.</p>
 <p>Make sure that the Key and IV passed into DOTF configuration are 4 byte aligned. This can be done using a compiler alignment attribute as shown below: uint8_t aes_key[] <b>attribute</b>((aligned(4))) = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f };</p>
 <h2><a class="anchor" id="r-ospi-b-limitations"></a>
@@ -597,6 +609,7 @@ OSPI_B</h3>
 <li>When using Arm LLVM ensure any read-only (<code>const</code>) data used with <code><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a></code> is word (4-byte) aligned if the DMAC is not being used. If parameter checking is enabled, the source pointer alignment will be verified for calls to <code><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a></code>.</li>
 <li>Take care to restrict concurrent accesses of the OSPI memory area. Collisions on the bus can occur if other bus masters attempt to write to the OSPI memory area while another master is reading the OSPI memory area.</li>
 <li>When using 8D-8D-8D mode, care should be taken to access on even-aligned addresses. Problems may occur if odd address alignment is used. This restriction applies to all bus masters using OSPI_B.</li>
+<li>DOTF: AES-192 is not supported when the Protected Mode stack is used.</li>
 </ul>
 <h1><a class="anchor" id="r-ospi-b-examples"></a>
 Examples</h1>
@@ -1575,7 +1588,7 @@ Dummy cycles to be inserted for status read commands. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

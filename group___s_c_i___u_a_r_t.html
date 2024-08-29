@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -285,7 +285,8 @@ Features</h2>
 <li>RS-485 Half Duplex driver support with external RS-485 transceiver<a class="anchor" id="um_sci_uart_rs485"></a></li>
 <li>Integration with the DTC transfer module</li>
 <li>Abort in-progress read/write operations<a class="anchor" id="um_sci_uart_abort"></a></li>
-<li>FIFO support on supported channels<a class="anchor" id="um_sci_uart_fifo_disabled"></a> </li>
+<li>FIFO support on supported channels<a class="anchor" id="um_sci_uart_fifo_disabled"></a></li>
+<li>IrDA is supported on devices that have IrDA interface<a class="anchor" id="um_sci_uart_irda_support"></a> </li>
 </ul>
 <h1><a class="anchor" id="r-sci-uart-configuration"></a>
 Configuration</h1>
@@ -336,6 +337,14 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable support for controlling the RS-485 DE pin. </td></tr>
+<tr class="tree_none">
+<td>IrDA Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable support for IrDA pulse encoding/decoding. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; UART (r_sci_uart)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_sci_uart). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -406,6 +415,32 @@ NOTE: The baud calculation does not show an error in the tool if this percent er
 <td class="tree_lvl_1_cell">Software RTS Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin for the MCU. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra &gt; IrDA  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable IrDA on this channel. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">RXD Polarity Switching</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal</li>
+<li>
+Inverted</li>
+</ul>
+</td><td>Normal </td><td>IRRXD Pulse polarity (Normal: High Pulse=0) and (Inverted: Low Pulse=0).. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">TXD Polarity Switching</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal</li>
+<li>
+Inverted</li>
+</ul>
+</td><td>Normal </td><td>IRTXD Pulse polarity (Normal: High Pulse 0) and (Inverted: Low Pulse=0). </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Extra &gt; RS-485  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -539,7 +574,7 @@ Usage Notes</h1>
 Limitations</h2>
 <ul>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
-<li>The <a class="el" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate()</a> API is used to obtain the baud rate register settings for a specific baudrate. On RA4 and RA6 MCU groups, there is a restriction on SEMR.ABSCE bit for certain channels (refer to 'SEMR : Serial Extended Mode' Register section of MCU User Manual). The API does not enforce this restriction and it may return invalid settings.</li>
+<li>The <a class="el" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate()</a> and <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> APIs are used to obtain the baud rate register settings for a specific baudrate. On RA4 and RA6 MCU groups, there is a restriction on SEMR.ABSCE bit for certain channels (refer to 'SEMR : Serial Extended Mode' Register section of MCU User Manual). The API does not enforce this restriction and it may return invalid settings.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-uart-dtc"></a>
 DTC Limitations</h2>
@@ -547,6 +582,13 @@ DTC Limitations</h2>
 <li>DTC support is available for reception, but labeled as [Not recommended]. This is because the UART bytes are received asynchronously. Bytes can be received between calls to <a class="el" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read()</a>. The logic required to combine bytes received through <a class="el" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read()</a> (UART_EVENT_RX_COMPLETE) and bytes received between calls (UART_EVENT_RX_CHAR) is complex. Reception length may also be unknown, and the driver will not issue an interrupt unless the entire DTC buffer is filled.</li>
 <li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
 <li>When using 9-bit reception with DTC, clear the upper 7 bits of data before processing the read data. The upper 7 bits contain status flags that are part of the register used to read data in 9-bit mode.</li>
+</ul>
+<h2><a class="anchor" id="r-sci-uart-irda"></a>
+IrDA Limitations</h2>
+<ul>
+<li>The IrDA interface works in cooperation with a particular SCI channel based on the IrDA standard 1.0.</li>
+<li>If optics placement yields the echo of transmitted data on the receiver, the application should disable the RX irq during transmission.</li>
+<li><code>R_SCI_UART_BaudCalculate</code> shall not be called for IrDA baud rate calculation. The correct use is to create the baud rate by using the configurator. If run-time changes to baud rate are required, multiple instances of different baud rates should be created with the configurator.</li>
 </ul>
 <h1><a class="anchor" id="r-sci-uart-examples"></a>
 Examples</h1>
@@ -561,6 +603,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structbaud__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsci__uart__rs485__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__rs485__setting__t">sci_uart_rs485_setting_t</a></td></tr>
 <tr class="separator:structsci__uart__rs485__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsci__uart__irda__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__irda__setting__t">sci_uart_irda_setting_t</a></td></tr>
+<tr class="separator:structsci__uart__irda__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsci__uart__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__extended__cfg__t">sci_uart_extended_cfg_t</a></td></tr>
 <tr class="separator:structsci__uart__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -580,6 +624,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga9522502f434bcaa2bbaf9cb1321ce542"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0bd2440ef30f2feca9a2d129989bffce"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga0bd2440ef30f2feca9a2d129989bffce">sci_uart_rs485_de_polarity_t</a> </td></tr>
 <tr class="separator:ga0bd2440ef30f2feca9a2d129989bffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c40e91f58c8e2df936cc1cf88234d91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga1c40e91f58c8e2df936cc1cf88234d91">sci_uart_irda_enable_t</a> </td></tr>
+<tr class="separator:ga1c40e91f58c8e2df936cc1cf88234d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae20e7212083d202fce86a8e35d11d268"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#gae20e7212083d202fce86a8e35d11d268">sci_uart_irda_polarity_t</a> </td></tr>
+<tr class="separator:gae20e7212083d202fce86a8e35d11d268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structsci__uart__instance__ctrl__t" id="structsci__uart__instance__ctrl__t"></a>
@@ -675,6 +723,21 @@ UART Driver Enable pin. </td></tr>
 
 </div>
 </div>
+<a name="structsci__uart__irda__setting__t" id="structsci__uart__irda__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsci__uart__irda__setting__t">&#9670;&nbsp;</a></span>sci_uart_irda_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sci_uart_irda_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration settings for IrDA interface. </p>
+</div>
+</div>
+</div>
 <a name="structsci__uart__extended__cfg__t" id="structsci__uart__extended__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structsci__uart__extended__cfg__t">&#9670;&nbsp;</a></span>sci_uart_extended_cfg_t</h2>
 
@@ -737,6 +800,12 @@ CTS/RTS function of the SSn pin. </td></tr>
 rs485_setting</td>
 <td class="fielddoc">
 RS-485 settings. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae067677c15e9474377c4db77a1ab579c"></a><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__irda__setting__t">sci_uart_irda_setting_t</a></td>
+<td class="fieldname">
+irda_setting</td>
+<td class="fielddoc">
+IrDA settings. </td></tr>
 </table>
 
 </div>
@@ -923,6 +992,48 @@ RS-485 settings. </td></tr>
 
 </div>
 </div>
+<a id="ga1c40e91f58c8e2df936cc1cf88234d91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1c40e91f58c8e2df936cc1cf88234d91">&#9670;&nbsp;</a></span>sci_uart_irda_enable_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_c_i___u_a_r_t.html#ga1c40e91f58c8e2df936cc1cf88234d91">sci_uart_irda_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IrDA Enable/Disable. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1c40e91f58c8e2df936cc1cf88234d91aa883bbd877333d09499f7832dfa4eb5c"></a>SCI_UART_IRDA_DISABLED&#160;</td><td class="fielddoc"><p>IrDA disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c40e91f58c8e2df936cc1cf88234d91a9f804e472051227bca197bd9e3ebe35c"></a>SCI_UART_IRDA_ENABLED&#160;</td><td class="fielddoc"><p>IrDA enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae20e7212083d202fce86a8e35d11d268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae20e7212083d202fce86a8e35d11d268">&#9670;&nbsp;</a></span>sci_uart_irda_polarity_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_c_i___u_a_r_t.html#gae20e7212083d202fce86a8e35d11d268">sci_uart_irda_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IrDA Polarity Switching. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae20e7212083d202fce86a8e35d11d268a39f9ef6809f869234a577a1543d0c1e5"></a>SCI_UART_IRDA_POLARITY_NORMAL&#160;</td><td class="fielddoc"><p>IrDA Tx/Rx polarity not inverted. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae20e7212083d202fce86a8e35d11d268a312284a06bc3e52580fc401309498c69"></a>SCI_UART_IRDA_POLARITY_INVERTED&#160;</td><td class="fielddoc"><p>IrDA Tx/Rx polarity inverted. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaef2636b50df00f5e888e833f0e6bbf6c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaef2636b50df00f5e888e833f0e6bbf6c">&#9670;&nbsp;</a></span>R_SCI_UART_Open()</h2>
@@ -955,8 +1066,9 @@ RS-485 settings. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block or configuration structure is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The requested channel does not exist on this MCU. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flow control is enabled but flow control pin is not defined or selected channel does not support "Hardware CTS and Hardware RTS" flow control. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure.</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flow control is enabled but flow control pin is not defined or selected channel does not support "Hardware CTS and Hardware RTS" flow control. (or) restricted channel is selected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>IrDA is requested for a channel that does not support IrDA.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1178,7 +1290,7 @@ RS-485 settings. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL or the UART is not configured to use the internal clock. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>A restricted channel is selected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Restricted channel is selected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1370,7 +1482,7 @@ RS-485 settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

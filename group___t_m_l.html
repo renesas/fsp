@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -328,6 +328,14 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
+<td>Critical Section Guarding</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable critical section guarding around peripheral configuration updates. This should be enabled if multiple instances of the R_TML module are being used. </td></tr>
+<tr class="tree_none">
 <td>16-bit Capture Mode Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -335,6 +343,14 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Controls whether 16-bit capture mode support is included in the build. This setting applies globally to all r_tml_instances. If 16-bit capture mode is not used by any instance, disable this setting to reduce ROM usage. </td></tr>
+<tr class="tree_none">
+<td>Enable Single Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable single channel to reduce code size. Assumes channel 0. </td></tr>
 <tr class="tree_none">
 <td>Interrupt Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1128,7 +1144,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

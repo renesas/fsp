@@ -9,5 +9,9 @@ var searchData=
   ['levelx_20nor_20port_20_28rm_5flevelx_5fnor_5fspi_29',['LevelX NOR Port (rm_levelx_nor_spi)',['../group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html',1,'']]],
   ['littlefs_20interface',['LittleFS Interface',['../group___r_m___l_i_t_t_l_e_f_s___a_p_i.html',1,'']]],
   ['littlefs_20on_20flash_20_28rm_5flittlefs_5fflash_29',['LittleFS on Flash (rm_littlefs_flash)',['../group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html',1,'']]],
+  ['littlefs_20on_20spi_20flash_20_28rm_5flittlefs_5fspi_5fflash_29',['LittleFS on SPI Flash (rm_littlefs_spi_flash)',['../group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h.html',1,'']]],
+  ['lwip_20ethernet_20driver_20_28rm_5flwip_5fether_29',['lwIP Ethernet Driver (rm_lwip_ether)',['../group___r_m___l_w_i_p___e_t_h_e_r.html',1,'']]],
+  ['lwip_20baremetal_20porting_20layer_20_28rm_5flwip_5fsys_5fbaremetal_29',['lwIP Baremetal Porting Layer (rm_lwip_sys_baremetal)',['../group___r_m___l_w_i_p___s_y_s___b_a_r_e_m_e_t_a_l.html',1,'']]],
+  ['lwip_20freertos_20porting_20layer_20_28rm_5flwip_5fsys_5ffreertos_29',['lwIP FreeRTOS Porting Layer (rm_lwip_sys_freertos)',['../group___r_m___l_w_i_p___s_y_s___f_r_e_e_r_t_o_s.html',1,'']]],
   ['lin_20_28r_5fsci_5fb_5flin_29',['LIN (r_sci_b_lin)',['../group___s_c_i___b___l_i_n.html',1,'']]]
 ];

@@ -7,14 +7,17 @@ var group___u_a_r_t_a =
     [ "uarta_extended_cfg_t", "group___u_a_r_t_a.html#structuarta__extended__cfg__t", [
       [ "transfer_dir", "group___u_a_r_t_a.html#acb2838b0ee81214fdb0fbf987d0f4bfe", null ],
       [ "transfer_level", "group___u_a_r_t_a.html#ad9a55a2bc5c93d5541a884b268edc86d", null ],
+      [ "clock_output", "group___u_a_r_t_a.html#ae73ac23d6f0e2d2b23a77bbd152cd099", null ],
       [ "p_baud_setting", "group___u_a_r_t_a.html#a88b8309638f1a246daf02b8c2bc4e07e", null ]
     ] ],
     [ "uarta_instance_ctrl_t", "group___u_a_r_t_a.html#structuarta__instance__ctrl__t", null ],
     [ "uarta_clock_source_t", "group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d", [
       [ "UARTA_CLOCK_SOURCE_SOSC_LOCO", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613da9843c4b3f12d4be6d402f8b9944ecda7", null ],
+      [ "UARTA_CLOCK_SOURCE_LOCO", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613da8cb267fa3eacc195a5de5d9c2d012288", null ],
       [ "UARTA_CLOCK_SOURCE_MOSC", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613dabf6d88f18042a045d1bd4b0768c76e51", null ],
       [ "UARTA_CLOCK_SOURCE_HOCO", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613da7c677d26414fc62556f3813e1e2c2488", null ],
-      [ "UARTA_CLOCK_SOURCE_MOCO", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613daf95992183c56775459a547279a73b40a", null ]
+      [ "UARTA_CLOCK_SOURCE_MOCO", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613daf95992183c56775459a547279a73b40a", null ],
+      [ "UARTA_CLOCK_SOURCE_SOSC", "group___u_a_r_t_a.html#gga2fc258c61199990159af80fe3df1613da4cd874730c9455dd73570f5539eed9c3", null ]
     ] ],
     [ "uarta_clock_div_t", "group___u_a_r_t_a.html#gab2470b598ae8b90875f185826ca5a110", [
       [ "UARTA_CLOCK_DIV_1", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110a412fe396680ab3ad2d53c84c2cfc2d7e", null ],
@@ -25,6 +28,10 @@ var group___u_a_r_t_a =
       [ "UARTA_CLOCK_DIV_32", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110ab35a2bb66613172b5523b17efdb464b9", null ],
       [ "UARTA_CLOCK_DIV_64", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110a5c20e86b766db45eaf03bc76cc8f1c34", null ],
       [ "UARTA_CLOCK_DIV_COUNT", "group___u_a_r_t_a.html#ggab2470b598ae8b90875f185826ca5a110a0c182ed3cce15a7c16d845d0579d4e20", null ]
+    ] ],
+    [ "uarta_clock_out_t", "group___u_a_r_t_a.html#ga0e64342a238193a4e80e5c6eca9a33c0", [
+      [ "UARTA_CLOCK_OUTPUT_DISABLED", "group___u_a_r_t_a.html#gga0e64342a238193a4e80e5c6eca9a33c0a0062747c8b3fad585e1a0b0ec0a362b9", null ],
+      [ "UARTA_CLOCK_OUTPUT_ENABLED", "group___u_a_r_t_a.html#gga0e64342a238193a4e80e5c6eca9a33c0a6ed41436054453401625599c19ec6ed4", null ]
     ] ],
     [ "uarta_dir_bit_t", "group___u_a_r_t_a.html#ga86e16699bc814301eab02a25c7fbf05f", [
       [ "UARTA_DIR_BIT_MSB_FIRST", "group___u_a_r_t_a.html#gga86e16699bc814301eab02a25c7fbf05fac69e0263b404720810fa7fae869d5469", null ],

@@ -1,7 +1,6 @@
 var group___s_a_u___u_a_r_t =
 [
     [ "sau_uart_extended_cfg_t", "group___s_a_u___u_a_r_t.html#structsau__uart__extended__cfg__t", [
-      [ "transfer_mode", "group___s_a_u___u_a_r_t.html#acd094dded96a4cbc7afd7dde2d50cf69", null ],
       [ "sequence", "group___s_a_u___u_a_r_t.html#afa168b462163ce35954f23c8981d1f60", null ],
       [ "signal_level", "group___s_a_u___u_a_r_t.html#aaab7fc6d2539a49fae9e661b25d3436f", null ],
       [ "p_baudrate", "group___s_a_u___u_a_r_t.html#a086e709e8c5036174f1bf77da4ae31ef", null ]
@@ -25,10 +24,6 @@ var group___s_a_u___u_a_r_t =
     [ "sau_operation_clock_t", "group___s_a_u___u_a_r_t.html#ga744591125c42fee7abe363e198945c5e", [
       [ "SAU_UART_OPERATION_CLOCK_CK0", "group___s_a_u___u_a_r_t.html#gga744591125c42fee7abe363e198945c5ea4040b92a3bf00f44fd0f1ecb2e90a50f", null ],
       [ "SAU_UART_OPERATION_CLOCK_CK1", "group___s_a_u___u_a_r_t.html#gga744591125c42fee7abe363e198945c5eaf663cb1d5a37a9e86c61a69e46048ac4", null ]
-    ] ],
-    [ "sau_uart_transfer_mode_t", "group___s_a_u___u_a_r_t.html#ga1f51ebcde22f72b364dbf55f50573f7e", [
-      [ "SAU_UART_TRANSFER_MODE_SINGLE", "group___s_a_u___u_a_r_t.html#gga1f51ebcde22f72b364dbf55f50573f7ea7df4720f2cc158370b4967a786e68089", null ],
-      [ "SAU_UART_TRANSFER_MODE_CONTINUOUS", "group___s_a_u___u_a_r_t.html#gga1f51ebcde22f72b364dbf55f50573f7eaedea3bb4c3c562a5e9ab7aaf77de37fe", null ]
     ] ],
     [ "sau_uart_signal_level_t", "group___s_a_u___u_a_r_t.html#gaf54caf6e76a362e2ed16f7cfb26408dd", [
       [ "SAU_UART_SIGNAL_LEVEL_STANDARD", "group___s_a_u___u_a_r_t.html#ggaf54caf6e76a362e2ed16f7cfb26408dda696912088d01ac2323a60a865341b926", null ],

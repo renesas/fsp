@@ -7,6 +7,7 @@ var searchData=
   ['uart_5fstop_5fbits_5ft',['uart_stop_bits_t',['../group___u_a_r_t___a_p_i.html#ga6da57a73bbdbf830b845d4116f8341d7',1,'r_uart_api.h']]],
   ['uarta_5falv_5fbit_5ft',['uarta_alv_bit_t',['../group___u_a_r_t_a.html#ga216a258d21194c6a0ff84a4bcb8613e8',1,'r_uarta.h']]],
   ['uarta_5fclock_5fdiv_5ft',['uarta_clock_div_t',['../group___u_a_r_t_a.html#gab2470b598ae8b90875f185826ca5a110',1,'r_uarta.h']]],
+  ['uarta_5fclock_5fout_5ft',['uarta_clock_out_t',['../group___u_a_r_t_a.html#ga0e64342a238193a4e80e5c6eca9a33c0',1,'r_uarta.h']]],
   ['uarta_5fclock_5fsource_5ft',['uarta_clock_source_t',['../group___u_a_r_t_a.html#ga2fc258c61199990159af80fe3df1613d',1,'r_uarta.h']]],
   ['uarta_5fdir_5fbit_5ft',['uarta_dir_bit_t',['../group___u_a_r_t_a.html#ga86e16699bc814301eab02a25c7fbf05f',1,'r_uarta.h']]],
   ['ulpt_5fclock_5ft',['ulpt_clock_t',['../group___u_l_p_t.html#ga1fc0f4ee0861af8dada1b28cc3b3f33b',1,'r_ulpt.h']]],

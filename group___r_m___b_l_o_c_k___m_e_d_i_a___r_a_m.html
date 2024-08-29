@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -263,15 +263,18 @@ Functions</h2></td></tr>
 <tr class="separator:ga99e45bae89d549e96107c84cda7ed94b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Middleware that implements a block media interface on the media of your choice. This module implements the <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html">Block Media Interface</a>. </p>
+<p>Middleware that implements a block media interface on RAM. This module implements the <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html">Block Media Interface</a>. </p>
 <h1><a class="anchor" id="rm-block-media-ram-overview"></a>
 Overview</h1>
 <h2><a class="anchor" id="rm-block-media-ram-features"></a>
 Features</h2>
 <ul>
-<li>This module is for using internal RAM as a media area.</li>
+<li>This module is for using RAM as a media area.</li>
+<li>Supports using any read/write section of the address space as the media area.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>When using PMSC driver in combination with this module, the API of this module is called from the PMSC driver.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When using an external RAM as the media area (like SDRAM or OctaRAM), it must be initialized before calling <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#ga644acae40f6fce1a0057bf6de3281fac">RM_BLOCK_MEDIA_RAM_Open()</a>. </dd>
+<dd>
+When using PMSC driver in combination with this module, the API of this module is called from the PMSC driver.</dd></dl>
 <h1><a class="anchor" id="rm-block-media-ram-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_block_media_ram</h2>
@@ -291,6 +294,8 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
 <td>RAM Media Size</td><td>Please enter the RAM media size.</td><td>65536 </td><td>Enter a RAM media size of 20K bytes or more. </td></tr>
+<tr class="tree_none">
+<td>Memory Storage Section</td><td>Manual Entry</td><td>.bss </td><td>This is the section of memory that will be used for the backing storage. Must be a valid Linker section. ('.bss', '.sdram', '.OSPI_DEVICE_0_RAM', etc) </td></tr>
 </table>
  <h2>Configurations for Storage &gt; Block Media RAM Implementation (rm_block_media_ram)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Block Media RAM Implementation (rm_block_media_ram).<br />
@@ -642,7 +647,7 @@ Pin Configuration</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

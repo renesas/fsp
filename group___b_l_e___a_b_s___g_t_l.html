@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -276,6 +276,12 @@ Features</h2>
 <li>Read/Write of GATT Profile from host.</li>
 </ul>
 </li>
+<li>Security functionality (DA14531/DA14535 module acting as Peripheral)<ul>
+<li>Legacy Pairing supporting Just works functionality.</li>
+<li>Legacy Pairing supporting Passkey functionality.</li>
+<li>Initiate security request procedure from Peripheral as well.</li>
+</ul>
+</li>
 </ul>
 <h1><a class="anchor" id="rm_ble_abs_gtl-configuration"></a>
 Configuration</h1>
@@ -308,6 +314,7 @@ Limitations</h2>
 <p>Following a power on reset, the R_BLE_VS_GetRand function always returns the same number. Subsequent calls to this function produce random numbers.</p>
 <p>Service and characteristic write callback functions, created when using the QE Tool are not supported</p>
 <p>The boot from host feature currently supports 1-wire and 2-wire UART operation. If using a 1-wire boot from host the UART RX and TX pins on the host RA MCU must be tied together using a 1K ohm resistor in order to boot the DA14531/DA14535 - this resistor can remain in place after the boot operation has been completed. Boot from host using 2-wire UART is not supported when using a DA14531MOD module because not all the required pins are exposed. Boot from host using 2-wire UART is supported when a DA14535PMOD with SmartBoot (UM-B-171) is already flashed in DA14535. In this case the same pins used for GTL communication are also used for 2-wire boot.</p>
+<p>Legacy pairing functionality currently works with the DA14531/DA14535 module acting as a Peripheral. Bonding data supports only one connection. Bonding data is stored in RAM and not in Flash. Data will be lost after a reset.</p>
 <p>Currently supported rm_ble_abs_gtl interface functions:</p><ul>
 <li>RM_BLE_ABS_Open</li>
 <li>RM_BLE_ABS_Close</li>
@@ -356,6 +363,11 @@ Limitations</h2>
 <li>R_BLE_VS_GetBdAddr</li>
 <li>R_BLE_VS_SetBdAddr</li>
 <li>R_BLE_VS_GetRand</li>
+<li>R_BLE_GAP_SetPairingParams</li>
+<li>R_BLE_GAP_ReplyPairing</li>
+<li>R_BLE_GAP_ReplyLtkReq</li>
+<li>R_BLE_GAP_ReplyExKeyInfoReq</li>
+<li>R_BLE_GAP_StartPairing</li>
 </ul>
 <p>Currently supported callback events:</p><ul>
 <li>BLE_GAP_EVENT_STACK_ON</li>
@@ -378,6 +390,13 @@ Limitations</h2>
 <li>BLE_GATTC_EVENT_PRIM_SERV_16_DISC_IND</li>
 <li>BLE_GATTC_EVENT_PRIM_SERV_128_DISC_IND</li>
 <li>BLE_GATTC_EVENT_ALL_PRIM_SERV_DISC_COMP</li>
+<li>BLE_GAP_EVENT_EX_KEY_REQ</li>
+<li>BLE_GAP_EVENT_PASSKEY_ENTRY_REQ</li>
+<li>BLE_GAP_EVENT_PEER_KEY_INFO</li>
+<li>BLE_GAP_EVENT_PAIRING_COMP</li>
+<li>BLE_GAP_EVENT_LTK_REQ</li>
+<li>BLE_GAP_EVENT_ENC_CHG</li>
+<li>BLE_GAP_EVENT_LTK_RSP_COMP</li>
 </ul>
 <h1><a class="anchor" id="rm_ble_abs_gtl-examples"></a>
 Examples</h1>
@@ -389,7 +408,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

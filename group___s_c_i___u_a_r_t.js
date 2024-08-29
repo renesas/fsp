@@ -11,6 +11,7 @@ var group___s_c_i___u_a_r_t =
       [ "polarity", "group___s_c_i___u_a_r_t.html#aafcbd1f2c02e2f81d81371bb9e6b895d", null ],
       [ "de_control_pin", "group___s_c_i___u_a_r_t.html#a2e764fad5f11c412720a531a8e1b6815", null ]
     ] ],
+    [ "sci_uart_irda_setting_t", "group___s_c_i___u_a_r_t.html#structsci__uart__irda__setting__t", null ],
     [ "sci_uart_extended_cfg_t", "group___s_c_i___u_a_r_t.html#structsci__uart__extended__cfg__t", [
       [ "clock", "group___s_c_i___u_a_r_t.html#aee928f639adab85124e31e500bfa6559", null ],
       [ "rx_edge_start", "group___s_c_i___u_a_r_t.html#a553d9e2a24e696b7ef0e4621a2db01d9", null ],
@@ -19,7 +20,8 @@ var group___s_c_i___u_a_r_t =
       [ "rx_fifo_trigger", "group___s_c_i___u_a_r_t.html#a4f1ca52116b41cfc8ef07758a0554c2f", null ],
       [ "flow_control_pin", "group___s_c_i___u_a_r_t.html#ac5ec261549de2cae5c3a48abe9e2ee67", null ],
       [ "flow_control", "group___s_c_i___u_a_r_t.html#aa97993b4804fd761a731322038ec7730", null ],
-      [ "rs485_setting", "group___s_c_i___u_a_r_t.html#afbddfe3e0c2394d7cfd9db923078404f", null ]
+      [ "rs485_setting", "group___s_c_i___u_a_r_t.html#afbddfe3e0c2394d7cfd9db923078404f", null ],
+      [ "irda_setting", "group___s_c_i___u_a_r_t.html#ae067677c15e9474377c4db77a1ab579c", null ]
     ] ],
     [ "sci_clk_src_t", "group___s_c_i___u_a_r_t.html#ga5775d25bc461e9b175b7fcb87d71b7c7", [
       [ "SCI_UART_CLOCK_INT", "group___s_c_i___u_a_r_t.html#gga5775d25bc461e9b175b7fcb87d71b7c7a628202878594fe0e906308ede0258d0f", null ],
@@ -65,6 +67,14 @@ var group___s_c_i___u_a_r_t =
     [ "sci_uart_rs485_de_polarity_t", "group___s_c_i___u_a_r_t.html#ga0bd2440ef30f2feca9a2d129989bffce", [
       [ "SCI_UART_RS485_DE_POLARITY_HIGH", "group___s_c_i___u_a_r_t.html#gga0bd2440ef30f2feca9a2d129989bffcea7cfd9e1ff7eca0657388f7cf9ce708fc", null ],
       [ "SCI_UART_RS485_DE_POLARITY_LOW", "group___s_c_i___u_a_r_t.html#gga0bd2440ef30f2feca9a2d129989bffceac1a061d1cb22d6b336e23185af20e089", null ]
+    ] ],
+    [ "sci_uart_irda_enable_t", "group___s_c_i___u_a_r_t.html#ga1c40e91f58c8e2df936cc1cf88234d91", [
+      [ "SCI_UART_IRDA_DISABLED", "group___s_c_i___u_a_r_t.html#gga1c40e91f58c8e2df936cc1cf88234d91aa883bbd877333d09499f7832dfa4eb5c", null ],
+      [ "SCI_UART_IRDA_ENABLED", "group___s_c_i___u_a_r_t.html#gga1c40e91f58c8e2df936cc1cf88234d91a9f804e472051227bca197bd9e3ebe35c", null ]
+    ] ],
+    [ "sci_uart_irda_polarity_t", "group___s_c_i___u_a_r_t.html#gae20e7212083d202fce86a8e35d11d268", [
+      [ "SCI_UART_IRDA_POLARITY_NORMAL", "group___s_c_i___u_a_r_t.html#ggae20e7212083d202fce86a8e35d11d268a39f9ef6809f869234a577a1543d0c1e5", null ],
+      [ "SCI_UART_IRDA_POLARITY_INVERTED", "group___s_c_i___u_a_r_t.html#ggae20e7212083d202fce86a8e35d11d268a312284a06bc3e52580fc401309498c69", null ]
     ] ],
     [ "R_SCI_UART_Open", "group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c", null ],
     [ "R_SCI_UART_Close", "group___s_c_i___u_a_r_t.html#ga49e8b74b71d1901a209a94ed4c220d4d", null ],

@@ -1,0 +1,486 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: LittleFS on SPI Flash (rm_littlefs_spi_flash)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.5.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle">
+<div class="title">LittleFS on SPI Flash (rm_littlefs_spi_flash)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html">Storage</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaf3fb712b778f60f3ed76a460ba24df24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h.html#gaf3fb712b778f60f3ed76a460ba24df24">RM_LITTLEFS_SPI_FLASH_Open</a> (<a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ga343f6d7a2dffa306f3ab00c0eb9391b2">rm_littlefs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#structrm__littlefs__cfg__t">rm_littlefs_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gaf3fb712b778f60f3ed76a460ba24df24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53664725f6955aa28b27962314a9d55a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h.html#ga53664725f6955aa28b27962314a9d55a">RM_LITTLEFS_SPI_FLASH_Close</a> (<a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ga343f6d7a2dffa306f3ab00c0eb9391b2">rm_littlefs_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga53664725f6955aa28b27962314a9d55a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Middleware for the LittleFS File System control on RA MCUs using external SPI Flash. </p>
+<h1><a class="anchor" id="rm-littlefs-spi-flash-overview"></a>
+Overview</h1>
+<p>This module provides the hardware port layer for the LittleFS file system. After initializing this module, refer to the LittleFS documentation to use the file system: <a href="https://github.com/ARMmbed/littlefs">https://github.com/ARMmbed/littlefs</a></p>
+<h1><a class="anchor" id="rm-littlefs-spi-flash-configurations"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_littlefs_spi_flash</h2>
+The following build time configurations are defined in fsp_cfg/rm_littlefs_spi_flash_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Storage &gt; LittleFS on SPI Flash (rm_littlefs_spi_flash)</h2>
+<table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_littlefs0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Delay Callback</td><td>Manual Entry</td><td>g_rm_littlefs_spi_flash0_callback </td><td>Optional delay callback for custom delay while waiting for the flash erase/write operation to complete. </td></tr>
+<tr class="tree_none">
+<td>Read Size</td><td>Must be a non-negative integer</td><td>1 </td><td>Minimum size of a block read. All read operations will be a multiple of this value. </td></tr>
+<tr class="tree_none">
+<td>Program Size</td><td>Must be a non-negative integer</td><td>4 </td><td>Minimum size of a block program. All program operations will be a multiple of this value. </td></tr>
+<tr class="tree_none">
+<td>Block Size (bytes)</td><td>Must be a multiple of 64</td><td>4096 </td><td>Size of an erasable block. This does not impact RAM consumption and may be larger than the physical erase size. However, non-inlined files take up at minimum one block. Must be a multiple of the read and program sizes. </td></tr>
+<tr class="tree_none">
+<td>Block Cycles</td><td>Must be an integer</td><td>1024 </td><td>Number of erase cycles before LittleFS evicts metadata logs and moves the metadata to another block. Suggested values are in the range 100-1000, with large values having better performance at the cost of less consistent wear distribution. Set to -1 to disable block-level wear-leveling. </td></tr>
+<tr class="tree_none">
+<td>Cache Size</td><td>Must be a non-negative integer</td><td>64 </td><td>Size of block caches. Each cache buffers a portion of a block in RAM. The LittleFS needs a read cache, a program cache, and one additional cache per file. Larger caches can improve performance by storing more data and reducing the number of disk accesses. Must be a multiple of the read and program sizes, and a factor of the block size. </td></tr>
+<tr class="tree_none">
+<td>Lookahead Size</td><td>Must be a non-negative multiple of 8</td><td>16 </td><td>Size of the lookahead buffer in bytes. A larger lookahead buffer increases the number of blocks found during an allocation pass. The lookahead buffer is stored as a compact bitmap, so each byte of RAM can track 8 blocks. Must be a multiple of 8. </td></tr>
+<tr class="tree_none">
+<td>Memory Start Adress Offset (bytes)</td><td>Offset should be greater than or equal to zero</td><td>0 </td><td>Enter the starting offset to use in the SPI memory. The starting address for LittleFS memory will be the SPI memory base address plus this offset. </td></tr>
+<tr class="tree_none">
+<td>Memory Size (bytes)</td><td>Size should be greater than zero</td><td>33554432 </td><td>Enter the size that the LittleFS Memory should be. This can be smaller than the SPI memory size in order to use a subset of SPI memory. </td></tr>
+<tr class="tree_none">
+<td>Poll Status Count</td><td>Poll Status Count should be greater than or equal to zero</td><td>0xFFFFFFFF </td><td>Number of times to poll for operation complete status for blocking memory operations. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm-littlefs-spi-flash-common-configurations"></a>
+Common LittleFS Configuration</h2>
+<p><h2>Build Time Configurations for LittleFS</h2>
+The following build time configurations are defined in arm/littlefs/lfs_util.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Custom lfs_util.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom lfs_util.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
+<tr class="tree_none">
+<td>Thread Safe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enables thread safety in LittleFS. </td></tr>
+<tr class="tree_none">
+<td>Read Only</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enables Read Only mode in LittleFS. </td></tr>
+<tr class="tree_none">
+<td>Use Malloc</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Configures the use of malloc by LittleFS. </td></tr>
+<tr class="tree_none">
+<td>Use Assert</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Configures the use of assert by LittleFS. </td></tr>
+<tr class="tree_none">
+<td>Debug Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Configures debug messages. </td></tr>
+<tr class="tree_none">
+<td>Warning Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Configures warning messages. </td></tr>
+<tr class="tree_none">
+<td>Error Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Configures error messages. </td></tr>
+<tr class="tree_none">
+<td>Trace Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Configures trace messages. </td></tr>
+<tr class="tree_none">
+<td>Intrinsics</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Configures intrinsic functions such as __builtin_clz. </td></tr>
+<tr class="tree_none">
+<td>Instance Name for STDIO wrapper</td><td>Name must be a valid C symbol</td><td>g_rm_littlefs0 </td><td>The rm_littlefs instance name to use with the STDIO wrapper. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="rm-littlefs-spi-flash-usage-notes"></a>
+Usage Notes</h1>
+<h2>Blocking Read/Write/Erase</h2>
+<p>The LittleFS port blocks on Read/Write/Erase calls until the operation has completed.</p>
+<h2>Memory Constraints</h2>
+<p>The block size defined in the LittleFS configuration must be a multiple of the sector erase size of the SPI Flash. It must be greater than 104 bytes which is the minimum block size of a LittleFS block.</p>
+<h1><a class="anchor" id="rm-littlefs-spi-flash-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of LittleFS on Flash in an application.<a class="anchor" id="um_rm_littlefs_example_code"></a> </p><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#structrm__littlefs__cfg__t">rm_littlefs_cfg_t</a> g_rm_littlefs_spi_flash0_cfg;</div><div class="line"></div><div class="line"><span class="preprocessor">#ifdef LFS_NO_MALLOC</span></div><div class="line"><span class="keyword">static</span> uint8_t                g_file_buffer[LFS_CACHE_SIZE];</div><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span>lfs_file_config g_file_cfg =</div><div class="line">{</div><div class="line">    .buffer = g_file_buffer</div><div class="line">};</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_littlefs_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t    buffer[30];</div><div class="line">    lfs_file_t file;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open LittleFS Flash port.*/</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h.html#gaf3fb712b778f60f3ed76a460ba24df24">RM_LITTLEFS_SPI_FLASH_Open</a>(&amp;g_rm_littlefs_spi_flash0_ctrl, &amp;g_rm_littlefs_spi_flash0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Format the filesystem. */</span></div><div class="line">    <span class="keywordtype">int</span> lfs_err = lfs_format(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;g_rm_littlefs_spi_flash0_lfs_cfg);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Mount the filesystem. */</span></div><div class="line">    lfs_err = lfs_mount(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;g_rm_littlefs_spi_flash0_lfs_cfg);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create a breakfast directory. */</span></div><div class="line">    lfs_err = lfs_mkdir(&amp;g_rm_littlefs_spi_flash0_lfs, <span class="stringliteral">&quot;breakfast&quot;</span>);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create a file toast in the breakfast directory. */</span></div><div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> * path = <span class="stringliteral">&quot;breakfast/toast&quot;</span>;</div><div class="line"><span class="preprocessor">#ifdef LFS_NO_MALLOC</span></div><div class="line"></div><div class="line">    <span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment">     * By default LittleFS uses malloc to allocate buffers. This can be disabled in the RA Configuration editor.</span></div><div class="line"><span class="comment">     * Buffers will be generated from the configuration for the read, program and lookahead buffers.</span></div><div class="line"><span class="comment">     * When opening a file a unique buffer must be passed in for use as a file buffer.</span></div><div class="line"><span class="comment">     * The buffer size must be equal to the cache size.</span></div><div class="line"><span class="comment">     **********************************************************************************************************************/</span></div><div class="line">    lfs_err = lfs_file_opencfg(&amp;g_rm_littlefs_spi_flash0_lfs,</div><div class="line">                               &amp;file,</div><div class="line">                               path,</div><div class="line">                               LFS_O_WRONLY | LFS_O_CREAT | LFS_O_APPEND,</div><div class="line">                               &amp;g_file_cfg);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    lfs_err = lfs_file_open(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file, path, LFS_O_WRONLY | LFS_O_CREAT | LFS_O_APPEND);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> * contents = <span class="stringliteral">&quot;butter&quot;</span>;</div><div class="line">    lfs_size_t   len      = strlen(contents);</div><div class="line"></div><div class="line">    <span class="comment">/* Apply butter to toast 10 times. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 10; i++)</div><div class="line">    {</div><div class="line">        lfs_err = lfs_file_write(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file, contents, len);</div><div class="line">        <span class="keywordflow">if</span> (lfs_err &lt; 0)</div><div class="line">        {</div><div class="line">            handle_lfs_error(lfs_err);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the file. */</span></div><div class="line">    lfs_err = lfs_file_close(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Unmount the filesystem. */</span></div><div class="line">    lfs_err = lfs_unmount(&amp;g_rm_littlefs_spi_flash0_lfs);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Remount the filesystem. */</span></div><div class="line">    lfs_err = lfs_mount(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;g_rm_littlefs_spi_flash0_lfs_cfg);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Open breakfast/toast. */</span></div><div class="line"><span class="preprocessor">#ifdef LFS_NO_MALLOC</span></div><div class="line">    lfs_err = lfs_file_opencfg(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file, path, LFS_O_RDONLY, &amp;g_file_cfg);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    lfs_err = lfs_file_open(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file, path, LFS_O_RDONLY);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the toast is buttered the correct amount. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 10; i++)</div><div class="line">    {</div><div class="line">        lfs_err = lfs_file_read(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file, buffer, len);</div><div class="line">        <span class="keywordflow">if</span> (lfs_err &lt; 0)</div><div class="line">        {</div><div class="line">            handle_lfs_error(lfs_err);</div><div class="line">        }</div><div class="line"></div><div class="line">        assert(0 == memcmp(buffer, contents, len));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the file. */</span></div><div class="line">    lfs_err = lfs_file_close(&amp;g_rm_littlefs_spi_flash0_lfs, &amp;file);</div><div class="line">    handle_lfs_error(lfs_err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<a id="gaf3fb712b778f60f3ed76a460ba24df24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3fb712b778f60f3ed76a460ba24df24">&#9670;&nbsp;</a></span>RM_LITTLEFS_SPI_FLASH_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_LITTLEFS_SPI_FLASH_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ga343f6d7a2dffa306f3ab00c0eb9391b2">rm_littlefs_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#structrm__littlefs__cfg__t">rm_littlefs_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Opens the driver and initializes lower layer driver.</p>
+<p>Implements <a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#a4031c0c73be211bf2fae77c88c1e2b3e">rm_littlefs_api_t::open()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>The provided block size is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flash BGO mode must be disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INTERNAL</td><td>Failed to create the semaphore.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a75a4468493abb92f6bf484ed93718f6f">spi_flash_api_t::open</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga53664725f6955aa28b27962314a9d55a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga53664725f6955aa28b27962314a9d55a">&#9670;&nbsp;</a></span>RM_LITTLEFS_SPI_FLASH_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_LITTLEFS_SPI_FLASH_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ga343f6d7a2dffa306f3ab00c0eb9391b2">rm_littlefs_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the lower level driver.</p>
+<p>Implements <a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#a2c9719932ae0325a6efd7dd4caf33330">rm_littlefs_api_t::close()</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Media device closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module not open.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a28bdae798428b85222739a0b9fd43a15">spi_flash_api_t::close</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

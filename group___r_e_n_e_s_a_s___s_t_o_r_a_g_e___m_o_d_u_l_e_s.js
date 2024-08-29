@@ -12,6 +12,7 @@ var group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s =
     [ "FreeRTOS+FAT Port for RA (rm_freertos_plus_fat)", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t.html", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t" ],
     [ "LevelX NOR Port (rm_levelx_nor_spi)", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i" ],
     [ "LittleFS on Flash (rm_littlefs_flash)", "group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html", "group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h" ],
+    [ "LittleFS on SPI Flash (rm_littlefs_spi_flash)", "group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h.html", "group___r_m___l_i_t_t_l_e_f_s___s_p_i___f_l_a_s_h" ],
     [ "OSPI Flash (r_ospi)", "group___o_s_p_i.html", "group___o_s_p_i" ],
     [ "OSPI Flash (r_ospi_b)", "group___o_s_p_i___b.html", "group___o_s_p_i___b" ],
     [ "QSPI (r_qspi)", "group___q_s_p_i.html", "group___q_s_p_i" ],

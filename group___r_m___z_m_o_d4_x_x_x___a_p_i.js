@@ -36,6 +36,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     ] ],
     [ "rm_zmod4xxx_oaq_2nd_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a32901d3e447bf2fc0642b3c54be98d9a", null ],
+      [ "temperature", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a180a69369d3f3683839ec1eb816a05a0", null ],
       [ "ozone_concentration", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a492587fbeb536fcd7994596a6f2c4176", null ],
       [ "fast_aqi", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84160c2d9ba22577f86b7bbdb3521845", null ],
       [ "epa_aqi", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aeb49c4d0925d19ef93f1b7836acbcaf1", null ]
@@ -57,6 +58,14 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "tvoc", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a20cacee1933b041699cb0ddc40cffeb2", null ],
       [ "etoh", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5bcd90e4eb1d705a71453a5c35229719", null ],
       [ "sample_id", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5b4b384231c7e7aa9d782c94abd2e1f3", null ]
+    ] ],
+    [ "rm_zmod4xxx_no2_o3_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__no2__o3__data__t", [
+      [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6d11fbea1e18b24730b88ac06af769d4", null ],
+      [ "temperature", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a87c0eec4c3cd74617550d0fc4c978513", null ],
+      [ "ozone_concentration", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae448813453a0b9ffa2e52aa670384e01", null ],
+      [ "no2_concentration", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a9e3471dc95eec68df543078297796f6b", null ],
+      [ "fast_aqi", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a81c1b1c279e49c3c12d25c030090f6b2", null ],
+      [ "epa_aqi", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a7bf817e48e12da59867cdd0ac0073820", null ]
     ] ],
     [ "rm_zmod4xxx_cfg_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t", [
       [ "p_comms_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8cce7b013ebccc3b0b0aed0e9436e922", null ],
@@ -81,6 +90,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "raqDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a557c09febce20b7bd5e1e7418d760f9a", null ],
       [ "relIaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a417eb9005c2cabc805e5176bd409b838", null ],
       [ "pbaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a32c2fe41b4db79301c8a1b294809a25d", null ],
+      [ "no2O3DataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af901e053d4de7823c96984f1832d9968", null ],
       [ "temperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1240e62119dd4d148dd4ec393e234447", null ],
       [ "deviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a96bea17094f7a5933ab13d77d7d86699", null ],
       [ "close", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8858935263e54d095b16b998cebcf40d", null ]

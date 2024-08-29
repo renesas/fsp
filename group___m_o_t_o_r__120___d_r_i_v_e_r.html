@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -363,11 +363,11 @@ Hall</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">PWM output port WN</td><td>Manual Entry</td><td>BSP_IO_PORT_01_PIN_12 </td><td>PWM output port WN </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PWM timer frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120.0 </td><td>GPT PWM timer frequency </td></tr>
+<td class="tree_lvl_1_cell">PWM timer frequency (MHz)</td><td>Must be a valid positive integer.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PWM carrier period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50.0 </td><td>GPT PWM carrier period </td></tr>
+<td class="tree_lvl_1_cell">PWM carrier period (Microseconds)</td><td>Must be a valid positive integer.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Dead time (Raw counts)</td><td>Must be a valid non-negative value.</td><td>240 </td><td>GPT PWM dead time </td></tr>
+<td class="tree_lvl_1_cell">Dead time (Raw counts)</td><td>Must be a valid positive integer.</td><td>240 </td><td>GPT PWM dead time </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Current range (A)</td><td>Must be a valid non-negative value.</td><td>27.5 </td><td>Current range to measure(Maximum input current) </td></tr>
 <tr class="tree_lvl_1_item">
@@ -379,7 +379,7 @@ Hall</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Conversion level of A/D conversion for voltage</td><td>Must be a valid non-negative value.</td><td>0.66 </td><td>Conversion level of A/D conversion for voltage </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Counts for current offset measurement</td><td>Must be a valid non-negative value.</td><td>500 </td><td>How many times to measure current offset </td></tr>
+<td class="tree_lvl_1_cell">Counts for current offset measurement</td><td>Must be a valid positive integer.</td><td>500 </td><td>How many times to measure current offset </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Input voltage</td><td>Must be a valid non-negative value.</td><td>24.0 </td><td>Input voltage </td></tr>
 <tr class="tree_lvl_1_item">
@@ -700,9 +700,15 @@ u4_pwm_timer_freq</td>
 <td class="fielddoc">
 PWM timer frequency (MHz) </td></tr>
 <tr><td class="fieldtype">
-<a id="afe5ae4a29ab0a1293dd39da32b7456a8"></a>uint32_t</td>
+<a id="ac6c88b8a59ce9f96198e9764833d5600"></a>float</td>
 <td class="fieldname">
 u4_pwm_carrier_freq</td>
+<td class="fielddoc">
+PWM carrier frequency (kHz) [DEPRECATED]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a360d1c2f85f478d4a779b02da36d21ac"></a>float</td>
+<td class="fieldname">
+pwm_carrier_freq</td>
 <td class="fielddoc">
 PWM carrier frequency (kHz) </td></tr>
 <tr><td class="fieldtype">
@@ -1226,7 +1232,7 @@ shared extended config </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

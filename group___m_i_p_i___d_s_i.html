@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -267,7 +267,7 @@ Functions</h2></td></tr>
 <p>Driver for the MIPI DSI peripheral on RA MCUs. This module implements the <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html">Display Interface</a>. </p>
 <h1><a class="anchor" id="r-mipi-dsi-overview"></a>
 Overview</h1>
-<p>The MIPI DSI peripheral consists of the Display Serial Interface (DSI-2) Host, physical layer (D-PHY), and supporting sub-systems. Together, these form a high-speed graphics serial bus that formats data from the GLCDC layer and sends it to an external display. The DSI-2 and D-Phy support MIPI Alliance Specification 2 and 2.1 respectively.</p>
+<p>The MIPI DSI peripheral consists of the Display Serial Interface (DSI-2) Host, physical layer (D-PHY), and supporting sub-systems. Together, these form a high-speed graphics serial bus that formats data from the GLCDC layer and sends it to an external display. The DSI-2 and D-Phy peripherals support MIPI Alliance for Display Serial Interface 2 Version 1.1 (with Errata 01) and MIPI Alliance Specification for D-PHY Version 2.1 (with Errata 01).</p>
 <h2><a class="anchor" id="r-mipi-dsi-features"></a>
 Features</h2>
 <p><a class="anchor" id="um_TC_SourceVideoFormat"></a><a class="anchor" id="um_TC_CksmGeneration"></a><a class="anchor" id="um_TC_EccVerification"></a><a class="anchor" id="um_TC_ScrambledPackets"></a> The following features are available:</p>
@@ -656,6 +656,7 @@ Usage Notes</h1>
 <li>GLCDC Video Clock bandwidth is defined as: (<code>Panel Clock MHz</code>) * (<code>Bits per pixel</code>)</li>
 <li>MIPI Phy PLL bandwidth is defined as: (<code>MIPI Phy PLL Clock MHz</code> / 2) * (<code>Number of MIPI data lanes</code>) * 8 - (Configuration Dependent Transmission Overhead)</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd>Consult the MIPI DSI Specification and the connected display's User Manual to calculate the desired bandwidth utilization. Additionally, especially with strict timing requirements, it is recommended to empirically validate the configuration and use the API to check for reported errors.</dd></dl>
 <h2>MIPI PHY Data Lanes</h2>
 <p>The DSI-2 Host supports two basic types of operations: Command Mode and Video Mode. While a data lane is in Low-Power (LP) operation, Command Mode may be used for bi-directional communication with a connected display using a pre-defined set of command descriptors.</p>
 <dl class="section note"><dt>Note</dt><dd>GLCDC Video Clock bandwidth must not exceed Data Bus bandwidth or MIPI Phy PLL bandwidth.</dd></dl>
@@ -666,7 +667,7 @@ Usage Notes</h1>
 <div class="caption">
 High-Speed data transmission in normal mode</div></div>
  <h2>Command Mode Operation</h2>
-<p><a class="anchor" id="um_mipi_dsi_low_power"></a><a class="anchor" id="um_mipi_dsi_high_speed"></a>Two internal channels may be used for command mode operations, available for all physical lane configurations. Channel-0 supports only LP mode (LP-TX, LP-RX), while Channel-1 supports LP mode (LP-TX, LP-RX) and HS mode (HS-TX).</p>
+<p><a class="anchor" id="um_mipi_dsi_low_power"></a><a class="anchor" id="um_mipi_dsi_high_speed"></a><a class="anchor" id="um_mipi_dsi_command"></a>Two internal channels may be used for command mode operations, available for all physical lane configurations. Channel-0 supports only LP mode (LP-TX, LP-RX), while Channel-1 supports LP mode (LP-TX, LP-RX) and HS mode (HS-TX).</p>
 <p>There are two basic packet formats, short and long. Each format may be transmitted in high-speed or low-power modes. Packets may be followed by a Bus Turn-Around (BTA) request for reading information from the display. Once configured and started, video packets are transmitted automatically, until video output is stopped.</p>
 <p>In addition to the full set of MIPI DSI commands, the application may trigger any of four special commands by setting flags in the message structure. These special commands are Reset Signal, Initial Skew Calibration, Periodic Skew Calibration, and No-Operation.</p>
 <dl class="section note"><dt>Note</dt><dd>For peripherals with more than one lane, physical Lane 0 is used for all peripheral-to-processor transmissions. Other lanes are unidirectional, from the host processor to the peripheral.</dd></dl>
@@ -1108,7 +1109,6 @@ p_data memory must not be updated until sequence operation is complete if byte_c
     <tr><td class="paramname">FSP_ERR_IN_USE</td><td>The physical interface is currently in use or video mode is in operation. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Invalid pointer provided </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid message configuration </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid channel for provided message configuration </td></tr>
   </table>
   </dd>
 </dl>
@@ -1141,7 +1141,7 @@ p_data memory must not be updated until sequence operation is complete if byte_c
       </table>
 </div><div class="memdoc">
 <p>Provide information about current MIPI DSI status.</p>
-<p>Note: Acknowledge and Error Status is only cleared when read by calling this function.</p>
+<p>Note: Accumulated Acknowledge and Error (AwER) Status is cleared by calling this function. Latest AwER status is only set upon reception from peripheral.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Information read successfully. </td></tr>
@@ -1159,7 +1159,7 @@ p_data memory must not be updated until sequence operation is complete if byte_c
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

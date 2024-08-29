@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -295,7 +295,7 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
-<td>Max Number Of DC Instances</td><td>Value must be a positive integer that less than or equal to 8</td><td>8 </td><td>Max number of DC instances to be sent. </td></tr>
+<td>Max Number Of DC Instances</td><td>Value must be a positive integer between 1 and 8</td><td>8 </td><td>Max number of DC instances to be sent. </td></tr>
 </table>
  <h2>Configurations for AI &gt; Data Shipper (rm_rai_data_shipper)</h2>
 This module can be added to the Stacks tab via New Stack &gt; AI &gt; Data Shipper (rm_rai_data_shipper).<br />
@@ -323,6 +323,7 @@ Limitations</h2>
 <li>Users shall take care to avoid race condition in the case of multiple data collector instances.</li>
 <li>To use RM COMMS USB PCDC with Full Speed mode and DMA, frame buffer length needs to be multiple of 2 when 8-bit channel is used.</li>
 <li>To use RM COMMS USB PCDC with High Speed mode and DMA, frame buffer length needs to be multiple of 2 when 16-bit channel is used. If 8-bit channel is used, its frame buffer length needs to be a multiple of 4.</li>
+<li>RAI Data Collector (snapshot mode) and RM COMMS USB PCDC must use different timers. They are independent of each other.</li>
 </ol>
 <h1><a class="anchor" id="rm-rai-data-shipper-examples"></a>
 Examples</h1>
@@ -505,7 +506,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

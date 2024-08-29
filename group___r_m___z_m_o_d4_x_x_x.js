@@ -38,6 +38,7 @@ var group___r_m___z_m_o_d4_x_x_x =
     [ "RM_ZMOD4XXX_RaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gadaee5fde2afbb40e28f40b1de50daf45", null ],
     [ "RM_ZMOD4XXX_RelIaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga88a9173f1eb50d4c2f7ca7b310c98957", null ],
     [ "RM_ZMOD4XXX_PbaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga0c5aac5f58a3e8053557d02e3e781f3b", null ],
+    [ "RM_ZMOD4XXX_No2O3DataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gac519d673353c988ae2af67b0db274045", null ],
     [ "RM_ZMOD4XXX_TemperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477", null ],
     [ "RM_ZMOD4XXX_DeviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94", null ]
 ];

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -605,6 +605,9 @@ ADC Operational Modes</h2>
 <td>Enabled </td><td>(Scan &lt; Low Ref) OR (Scan &gt; High Ref) </td><td>Low Ref &lt; Scan &lt; High Ref </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>The window setting applies to all channels configured on a unit.</dd></dl>
+<h2>Event Output Function</h2>
+<p>To use the event output of compare function, Set the mode of operation to Single Scan Mode. The compare function can be configured by enabling both Window A and Window B. Select the channel of Window A. Select Window B channel to NOT SELECTED. Set the upper and lower reference values for both Window A and Window B.</p>
+<dl class="section note"><dt>Note</dt><dd>When using ADC12 in Snooze Mode, both Compare Window A and Compare Window B must be enabled.</dd></dl>
 <h2>Sample-State Count Setting</h2>
 <p>The application program can modify the setting of the sample-state count for analog channels by calling the <a class="el" href="group___a_d_c.html#gaf0701bf45818dee071cb12e979017bce">R_ADC_SampleStateCountSet()</a> API function. The application program only needs to modify the sample-state count settings from their default values to increase the sampling time. This can be either because the impedance of the input signal is too high to secure sufficient sampling time under the default setting or if the ADCLK is too slow. To modify the sample-state count for a given channel, set the channel number and the number of states when calling the <a class="el" href="group___a_d_c.html#gaf0701bf45818dee071cb12e979017bce">R_ADC_SampleStateCountSet()</a> API function. Valid sample state counts are 7-255.</p>
 <dl class="section note"><dt>Note</dt><dd>Although the hardware supports a minimum number of sample states of 5, some MCUs require 7 states, so the minimum is set to 7. At the lowest supported ADC conversion clock rate (1 MHz), these extra states will lead to, at worst case, a 2 microsecond increase in conversion time. At 60 MHz the extra states will add 33.4 ns to the conversion time.</dd></dl>
@@ -1882,7 +1885,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

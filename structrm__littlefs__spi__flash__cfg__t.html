@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: .xml_tests Directory Reference</title>
+<title>RA Flexible Software Package Documentation: rm_littlefs_spi_flash_cfg_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_94c6da31d503f5691a8dfc8c46e75a4c.html','');});
+$(document).ready(function(){initNavTree('structrm__littlefs__spi__flash__cfg__t.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -236,18 +236,59 @@ $(document).ready(function(){initNavTree('dir_94c6da31d503f5691a8dfc8c46e75a4c.h
     <div id="searchResults"></div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">.xml_tests Directory Reference</div>  </div>
+<div class="title">rm_littlefs_spi_flash_cfg_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;rm_littlefs_spi_flash.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:abd70f689cabe159d7ca63953aecd30b3"><td class="memItemLeft" align="right" valign="top"><a id="abd70f689cabe159d7ca63953aecd30b3"></a>
+<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__instance__t">spi_flash_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#abd70f689cabe159d7ca63953aecd30b3">p_lower_lvl</a></td></tr>
+<tr class="memdesc:abd70f689cabe159d7ca63953aecd30b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a spi flash instance. <br /></td></tr>
+<tr class="separator:abd70f689cabe159d7ca63953aecd30b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a420a70f977c30f9bd2a23ac0b3467c96"><td class="memItemLeft" align="right" valign="top"><a id="a420a70f977c30f9bd2a23ac0b3467c96"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#a420a70f977c30f9bd2a23ac0b3467c96">base_address</a></td></tr>
+<tr class="memdesc:a420a70f977c30f9bd2a23ac0b3467c96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base address of memory mapped region. <br /></td></tr>
+<tr class="separator:a420a70f977c30f9bd2a23ac0b3467c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28f8c19e4135250ce5de3b3cd03dad4d"><td class="memItemLeft" align="right" valign="top"><a id="a28f8c19e4135250ce5de3b3cd03dad4d"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#a28f8c19e4135250ce5de3b3cd03dad4d">address_offset</a></td></tr>
+<tr class="memdesc:a28f8c19e4135250ce5de3b3cd03dad4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset to use subset of available flash size if desired. <br /></td></tr>
+<tr class="separator:a28f8c19e4135250ce5de3b3cd03dad4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c6084283abb75cc4b2f275a6298319"><td class="memItemLeft" align="right" valign="top"><a id="a18c6084283abb75cc4b2f275a6298319"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#a18c6084283abb75cc4b2f275a6298319">size</a></td></tr>
+<tr class="memdesc:a18c6084283abb75cc4b2f275a6298319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the partitioned region. <br /></td></tr>
+<tr class="separator:a18c6084283abb75cc4b2f275a6298319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97dc66e4e46d6f0b3322791fda75637f"><td class="memItemLeft" align="right" valign="top"><a id="a97dc66e4e46d6f0b3322791fda75637f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#a97dc66e4e46d6f0b3322791fda75637f">poll_status_count</a></td></tr>
+<tr class="memdesc:a97dc66e4e46d6f0b3322791fda75637f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of times to poll for operation complete status before returning an error. <br /></td></tr>
+<tr class="separator:a97dc66e4e46d6f0b3322791fda75637f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8e9617d2d3d0736ce63b77dea2c4135"><td class="memItemLeft" align="right" valign="top"><a id="ab8e9617d2d3d0736ce63b77dea2c4135"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#ab8e9617d2d3d0736ce63b77dea2c4135">p_context</a></td></tr>
+<tr class="memdesc:ab8e9617d2d3d0736ce63b77dea2c4135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback. <br /></td></tr>
+<tr class="separator:ab8e9617d2d3d0736ce63b77dea2c4135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ae7afefa44b1eeaf83fb1022f8d5de2"><td class="memItemLeft" align="right" valign="top"><a id="a1ae7afefa44b1eeaf83fb1022f8d5de2"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html#a1ae7afefa44b1eeaf83fb1022f8d5de2">p_callback</a> )(<a class="el" href="structrm__littlefs__spi__flash__callback__args__t.html">rm_littlefs_spi_flash_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a1ae7afefa44b1eeaf83fb1022f8d5de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function. <br /></td></tr>
+<tr class="separator:a1ae7afefa44b1eeaf83fb1022f8d5de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>User configuration structure, used in open function </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>rm_littlefs_spi_flash.h</li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_0a8e033ed87b9795a871f6d0fb9daf11.html">rm_azure_ewf_ryz</a></li><li class="navelem"><a class="el" href="dir_94c6da31d503f5691a8dfc8c46e75a4c.html">.xml_tests</a></li>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+    <li class="navelem"><a class="el" href="structrm__littlefs__spi__flash__cfg__t.html">rm_littlefs_spi_flash_cfg_t</a></li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

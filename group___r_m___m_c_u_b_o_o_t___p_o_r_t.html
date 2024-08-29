@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -368,6 +368,10 @@ Encryption Disabled</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Scratch Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the scratch area. Only required for swap update method. </td></tr>
 <tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Flash Configuration  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Dual Bank Mode</td><td>MCU Specific Options</td><td></td><td>Enable dual bank mode for Direct XIP. </td></tr>
+<tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Data Sharing  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Maximum Measured Boot Record Size (Bytes)</td><td>Value must be an integer.</td><td>0x64 </td><td>Maximum size of the boot record. </td></tr>
@@ -454,22 +458,30 @@ Usage Notes</h1>
 <h2>XIP Mode operation</h2>
 <p>XIP mode is enabled selecting "Direct XIP" as the Upgrade Mode option in the configurator or by defining "MCUBOOT_DIRECT_XIP" in the mcuboot config file. The linker script defines the symbol "XIP_SECONDARY_SLOT_IMAGE" by default to 0. To link an application to the secondar slot in XIP mode, set XIP_SECONDARY_SLOT_IMAGE to 1 in the application linker script. Direct XIP mode does not support TrustZone projects.</p>
 <h2>Dual Bank operation</h2>
-<p>MCUboot can be used with Dual bank mode to leverage the advantages of dual bank flash operation. When Dual Bank mode is enabled, only the XIP upgrade mode can be used.</p>
+<p>MCUboot can be used with Dual bank mode (with Flash HP or Flash LP) to leverage the advantages of dual bank flash operation. When Dual Bank mode is enabled, only the XIP upgrade mode can be used.</p>
 <dl class="section note"><dt>Note</dt><dd>Unlike in normal XIP Mode operation, the linker script symbol "XIP_SECONDARY_SLOT_IMAGE" must be undefined in Dual Bank mode. An example flash layout in this configuration for a 1 MB is shown below. Note that there are 2 copies of the bootloader, one in Bank 0 and another in Bank 1.</dd></dl>
 <div class="image">
 <img src="rm_mcuboot_port_map_dualbank.png" alt="rm_mcuboot_port_map_dualbank.png"/>
 <div class="caption">
-MCUboot Dual Bank layout for 1 MB Memory</div></div>
+MCUboot Dual Bank layout of Flash HP for 1 MB Memory</div></div>
 <p> For this example layout, the following files are generated when Dual Bank mode with XIP is enabled:</p>
 <ol type="1">
 <li>Bootloader Project: srec file linked to address 0 and includes the OFS region.</li>
 <li>Application Project (Primary): signed bin file linked to address 0x20000.</li>
 <li>Application Project (Secondary): signed bin file linked to address 0x20000.</li>
 </ol>
-<p>In Dual Bank mode, the available flash memory is split into two halves and referred to as Bank 0 and 1. In this example Bank 0 would span from address 0x0 - 0x7FFFF and Bank 1 from 0x200000 - 0x27FFFF. In Linear mode, it is possible to program the Bank 1 area by programming to 0x80000 - 0xFFFFF.</p>
-<h3>Programming in Dual Bank Mode</h3>
+<p>With Flash HP in Dual Bank mode, the available flash memory is split into two halves and referred to as Bank 0 and 1. In this example Bank 0 would span from address 0x0 - 0x7FFFF and Bank 1 from 0x200000 - 0x27FFFF. In Linear mode, it is possible to program the Bank 1 area by programming to 0x80000 - 0xFFFFF.</p>
+<div class="image">
+<img src="rm_mcuboot_port_map_dualbank_lp.png" alt="rm_mcuboot_port_map_dualbank_lp.png"/>
+<div class="caption">
+MCUboot Dual Bank layout of Flash LP for 512 KB Memory</div></div>
+<p> With Flash LP in Dual Bank mode, the available flash memory is also split into two bank areas and referred to as Bank 0 and 1. In this example Bank 0 would span from address 0x0 - 0x3FFFF and Bank 1 from 0x40000 - 0x7FFFF. In Linear mode, it is possible to program the Bank 1 area by programming to 0x40000 - 0x7FFFF.</p>
+<h3>Programming in Dual Bank Mode with Flash HP</h3>
 <p>The bootloader must be duplicated in Dual Bank mode. Bank 0 can be programmed using the srec file generated from the MCUboot project; this will also program the OFS region which contains the dual bank enable bit, so it must either be programmed last if each file is programmed independently. Another option is to combine all images: MCUboot in Bank 0, primary image, MCUboot in Bank 1 (no OFS), and secondary image (optional). To program MCUboot to Bank 1, offset MCUboot by half the flash size and cut off the OFS region (0x0100A100 to address 0x0100A2FF on CM33 MCUs that support dual bank). Using srec-cat for a 1 MB flash MCU (0x80000 flash per bank), an example command to create the bootloader image for Bank 1: "srec_cat MCUboot_dualbank.srec -crop 0 0x80000 -offset 0x80000 -o MCUboot_dualbank_offset.srec". The application project for Bank 1 can be similarly offset using srec_cat: "srec_cat app1.bin.signed -binary -offset 0xA0000 -o app1_offset.srec", where 0xA0000 is 0x80000 (half the flash) + 0x20000 (MCUboot size). The signed binary file for Bank 0 can be converted to srec format using srec_cat: "srec_cat app0.bin.signed -binary -offset 0x20000 -o app0.srec"</p>
 <p>To combine all the files into one srec file, use "srec_cat MCUboot_dualbank.srec MCUboot_dualbank_offset.srec app0.srec app1_offset.srec -o combined_srec".</p>
+<h3>Programming in Dual Bank Mode with Flash LP</h3>
+<p>To use Dual Bank Mode with Flash LP, enable Dual Bank Mode (Flash LP) in the MCUboot stack under Property &gt; Common &gt; General.</p>
+<p>Similar to Dual Bank Mode with Flash HP, the bootloader must also be duplicated in Dual Bank mode. But the MCUBoot project does not need to be programmed last, because Flash LP does not use the OFS region to enable/disable the dual bank mode.</p>
 <h2>External Memory Support</h2>
 <h1>QSPI</h1>
 <p>QSPI support for secondary image storage can be enabled in the configurator. The bootloader expects the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For example, on the EK_RA6M4 which has the MX25L25645G QSPI flash, after adding the QSPI module to the project, calling the following snippet will configure the QSPI for read/write operation:</p>
@@ -542,7 +554,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

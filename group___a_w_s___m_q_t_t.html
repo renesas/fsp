@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.4.0</span>
+   &#160;<span id="projectnumber">Release v5.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -267,6 +267,7 @@ Usage Notes</h1>
 <li>A transport interface is required to use the CoreMQTT library (<a href="https://www.freertos.org/network-interface.html">https://www.freertos.org/network-interface.html</a>).</li>
 <li>For FSP, a transport interface over MbedTLS is provided. This transport interface can connect to RA ethernet, WiFi, and cellular modules via sockets wrappers for each module.</li>
 <li>TLS_FreeRTOS_Connect should be used before calling any CoreMQTT APIs. See the example for more information.</li>
+<li>Not all MQTT servers support maintaining a TLS session after a MQTT disconnect. <code>TLS_FreeRTOS_Disconnect</code> and <code>TLS_FreeRTOS_Connect</code> should be called to establish a new TLS session before attempting to reconnect with CoreMQTT APIs if the server does not support TLS session resumption.</li>
 </ul>
 <h2><a class="anchor" id="r-AWS_MQTT-limiitations"></a>
 Limitations</h2>
@@ -283,7 +284,7 @@ Examples</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.4.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
